@@ -18,6 +18,10 @@ const TROPHY_GENERIC_ASSETS = {
 };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const WEEK_MS = 7 * DAY_MS;
+const IMAGE_WARM_STORAGE_KEY = "univlr-image-warm-v1";
+const IMAGE_WARM_MAX_AGE_MS = 7 * DAY_MS;
+const IMAGE_WARM_SPLASH_TIMEOUT_MS = 12000;
+const IMAGE_WARM_CONCURRENCY = 6;
 const RANKING_UPDATE_DAY = 2;
 const PLAYER_OF_WEEK_INTERVAL_MS = 4500;
 const PLAYER_OF_WEEK_IDLE_RESUME_MS = 5000;
@@ -1727,11 +1731,120 @@ async function init() {
     state.tournamentRankingCache.clear();
     state.ready = true;
     window.addEventListener("hashchange", render);
+    if (!connectionBlocksImageWarm() && !imageWarmIsFresh()) {
+      await runImageSplash();
+    }
     render();
+    if (window.requestIdleCallback) window.requestIdleCallback(() => warmImageCache(), { timeout: 4000 });
+    else window.setTimeout(() => warmImageCache(), 2500);
   } catch (error) {
     state.error = error;
     renderLoading();
   }
+}
+
+// Aquece o cache de imagens: logos pequenos que aparecem em listas primeiro,
+// fotos de jogadores e banners pesados por último. Na primeira visita recente
+// roda na frente do usuário como tela de preparação (runImageSplash); nas
+// demais, em segundo plano depois do primeiro render.
+function collectWarmImageSources() {
+  const db = state.db;
+  if (!db) return [];
+  const seen = new Set();
+  const collect = (paths) =>
+    (paths || [])
+      .map((path) => assetPath(path || ""))
+      .filter((src) => src && !seen.has(src) && Boolean(seen.add(src)));
+
+  return [
+    ...collect([PLAYER_FALLBACK_PHOTO]),
+    ...collect(db.teams.map((team) => team.profile?.logo || team.logo)),
+    ...collect(db.tournaments.map((event) => event.logo)),
+    ...collect(db.tournaments.map((event) => event.organizerLogo || event.organizerLogoPath)),
+    ...collect((db.metadata.agents || []).map((agent) => agent.icon)),
+    ...collect((db.metadata.states || []).map((item) => item.flag || item.flagSrc)),
+    ...collect(Object.values(TROPHY_GENERIC_ASSETS)),
+    ...collect(db.players.map((player) => player.photo)),
+    ...collect(db.maps.map((map) => map.icon)),
+    ...collect(db.tournaments.map((event) => event.banner || event.bannerPath)),
+  ];
+}
+
+function connectionBlocksImageWarm() {
+  const connection = navigator.connection || {};
+  return Boolean(connection.saveData) || /(^|-)2g/.test(connection.effectiveType || "");
+}
+
+function loadImageQueue(queue, onProgress) {
+  return new Promise((resolve) => {
+    if (!queue.length) return resolve();
+    let index = 0;
+    let settled = 0;
+    const next = () => {
+      if (index >= queue.length) return;
+      const image = new Image();
+      image.fetchPriority = "low";
+      image.onload = image.onerror = () => {
+        settled += 1;
+        if (onProgress) onProgress(settled, queue.length);
+        if (settled >= queue.length) resolve();
+        else next();
+      };
+      image.src = queue[index++];
+    };
+    for (let i = 0; i < IMAGE_WARM_CONCURRENCY; i += 1) next();
+  });
+}
+
+function warmImageCache(onProgress) {
+  if (warmImageCache.started || !state.db) return Promise.resolve();
+  warmImageCache.started = true;
+  if (connectionBlocksImageWarm()) return Promise.resolve();
+  return loadImageQueue(collectWarmImageSources(), onProgress);
+}
+
+function imageWarmIsFresh() {
+  try {
+    const stamp = Number(localStorage.getItem(IMAGE_WARM_STORAGE_KEY) || 0);
+    return stamp > 0 && Date.now() - stamp < IMAGE_WARM_MAX_AGE_MS;
+  } catch (error) {
+    return true; // sem localStorage não há como lembrar; não bloqueia o usuário
+  }
+}
+
+function markImageWarmDone() {
+  try {
+    localStorage.setItem(IMAGE_WARM_STORAGE_KEY, String(Date.now()));
+  } catch (error) {
+    /* modo privado: segue sem marcar */
+  }
+}
+
+async function runImageSplash() {
+  Shell(
+    `
+    <section class="image-splash" aria-live="polite">
+      <img class="image-splash-logo" src="${SITE_LOGO_SRC}" alt="" />
+      <h1>Preparando o site...</h1>
+      <p>Baixando logos e fotos para uma navegação instantânea. Isso só acontece na primeira visita.</p>
+      <div class="image-splash-track"><div class="image-splash-bar" id="image-splash-bar"></div></div>
+      <span class="image-splash-count" id="image-splash-count">0%</span>
+    </section>
+  `,
+    { skipSearch: true },
+  );
+  const bar = document.getElementById("image-splash-bar");
+  const count = document.getElementById("image-splash-count");
+  const warm = warmImageCache((done, total) => {
+    const pct = Math.round((done / total) * 100);
+    if (bar) bar.style.width = `${pct}%`;
+    if (count) count.textContent = `${pct}%`;
+  });
+  // Conexões lentas não ficam presas na tela: libera após o timeout e o
+  // restante das imagens continua baixando em segundo plano.
+  const timeout = new Promise((resolve) => window.setTimeout(resolve, IMAGE_WARM_SPLASH_TIMEOUT_MS));
+  await Promise.race([warm, timeout]);
+  markImageWarmDone();
 }
 
 function prepareMetadata(rawMetadata = {}) {

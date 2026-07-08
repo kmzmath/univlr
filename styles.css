@@ -15477,3 +15477,55 @@ img.search-state-flag + .search-state-flag.placeholder {
     text-align: left;
   }
 }
+
+/* Tela de preparação de imagens (primeira visita recente) */
+.image-splash {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+  padding: 48px 16px;
+}
+
+.image-splash-logo {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+}
+
+.image-splash h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.image-splash p {
+  margin: 0;
+  max-width: 420px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.image-splash-track {
+  width: min(320px, 80vw);
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(127, 127, 127, 0.25);
+  overflow: hidden;
+}
+
+.image-splash-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: var(--red);
+  transition: width 0.2s ease;
+}
+
+.image-splash-count {
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,999 @@
+{
+  "description": "Modelo de pesos do ranking. Ajuste pesos de campeonatos, fases, colocacoes e resultados manuais sem alterar o codigo.",
+  "minimumMatches": 9,
+  "halfLives": {
+    "matches": 150,
+    "achievements": 210,
+    "recentForm": 30,
+    "playerRating": 90
+  },
+  "recentWindowDays": 60,
+  "seriesWeights": {
+    "MD1": 1,
+    "MD3": 1.1,
+    "MD5": 1.15
+  },
+  "achievements": {
+    "inferFromEventResults": true,
+    "antiFarmFullResults": 3,
+    "additionalResultMultiplier": 0.5,
+    "placementPoints": {
+      "1": 100,
+      "2": 70,
+      "3": 50,
+      "4": 40,
+      "5": 28,
+      "6": 24,
+      "7": 20,
+      "8": 16,
+      "participation": 8
+    },
+    "sizeWeights": [
+      {
+        "minTeams": 2,
+        "weight": 0.8
+      },
+      {
+        "minTeams": 4,
+        "weight": 0.9
+      },
+      {
+        "minTeams": 8,
+        "weight": 1
+      },
+      {
+        "minTeams": 16,
+        "weight": 1.12
+      },
+      {
+        "minTeams": 32,
+        "weight": 1.25
+      }
+    ],
+    "manualResults": []
+  },
+  "tournaments": {
+    "aoc": {
+      "weight": 1.1,
+      "defaultPhase": "playoffs",
+      "phases": {
+        "regular": 1,
+        "playoffs": 1.15,
+        "final": 1.35
+      },
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 15
+        }
+      ],
+      "name": "AOC",
+      "logo": "assets/tournament-icons/aoc.png",
+      "teams": 10,
+      "endAt": "2026-06-07T16:00:00.000Z",
+      "placements": [
+        {
+          "teamId": "ceub_octopus",
+          "placement": 1
+        },
+        {
+          "teamId": "azure_bears_golden",
+          "placement": 2
+        },
+        {
+          "teamId": "macklogic_red",
+          "placement": 3
+        },
+        {
+          "teamId": "uninassau_griffins",
+          "placement": 4
+        },
+        {
+          "teamId": "dark_ufrj",
+          "placement": 5
+        },
+        {
+          "teamId": "caap_hellhounds",
+          "placement": 5
+        },
+        {
+          "teamId": "ufu_saints",
+          "placement": 5
+        },
+        {
+          "teamId": "azure_bears_black",
+          "placement": 5
+        },
+        {
+          "teamId": "ufmt_turuna",
+          "placement": 9
+        },
+        {
+          "teamId": "green_owls_noctua",
+          "placement": 9
+        }
+      ]
+    },
+    "cia-2026": {
+      "weight": 1.05,
+      "defaultPhase": "playoffs",
+      "phases": {
+        "regular": 1,
+        "playoffs": 1.12,
+        "final": 1.3
+      },
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 6
+        }
+      ],
+      "name": "CIA 2026",
+      "logo": "assets/tournament-icons/cia.png",
+      "teams": 4,
+      "endAt": "2026-05-09T19:00:00.000Z",
+      "placements": [
+        {
+          "teamId": "caap_hellhounds",
+          "placement": 1
+        },
+        {
+          "teamId": "ufu_saints",
+          "placement": 2
+        },
+        {
+          "teamId": "unifacens_fodens",
+          "placement": 3
+        },
+        {
+          "teamId": "grifo_ufmg",
+          "placement": 4
+        }
+      ]
+    },
+    "jubs": {
+      "weight": 1.25,
+      "defaultPhase": "regular",
+      "phases": {
+        "regular": 1,
+        "playoffs": 1.2,
+        "final": 1.45
+      },
+      "phaseRules": [
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 32,
+          "seriesCodeMax": 37
+        },
+        {
+          "phase": "final",
+          "seriesCodeMin": 38
+        }
+      ],
+      "name": "JUBS - Fase inicial",
+      "logo": "assets/tournament-banners/banner_jubs.png",
+      "teams": 40,
+      "endAt": "2026-10-01T16:00:00.000Z",
+      "placements": [
+        {
+          "teamId": "green_owls_noctua",
+          "placement": 1
+        },
+        {
+          "teamId": "uninassau_griffins",
+          "placement": 2
+        },
+        {
+          "teamId": "wolf_gaming",
+          "placement": 3
+        },
+        {
+          "teamId": "azure_bears_golden",
+          "placement": 4
+        },
+        {
+          "teamId": "macklogic_red",
+          "placement": 5
+        },
+        {
+          "teamId": "pucc_cardinals",
+          "placement": 6
+        },
+        {
+          "teamId": "ceub_octopus",
+          "placement": 7
+        },
+        {
+          "teamId": "fametro_berserkers",
+          "placement": 8
+        },
+        {
+          "teamId": "inatel",
+          "placement": 9
+        },
+        {
+          "teamId": "furia_utfpr",
+          "placement": 10
+        },
+        {
+          "teamId": "ufmt_turuna",
+          "placement": 11
+        },
+        {
+          "teamId": "caap_hellhounds",
+          "placement": 12
+        },
+        {
+          "teamId": "ufs_bugados",
+          "placement": 13
+        },
+        {
+          "teamId": "milionaria_ufam",
+          "placement": 14
+        },
+        {
+          "teamId": "a2e_uff",
+          "placement": 15
+        },
+        {
+          "teamId": "ufg_eagles",
+          "placement": 16
+        },
+        {
+          "teamId": "ufpr_bbn",
+          "placement": 17
+        },
+        {
+          "teamId": "rahnag",
+          "placement": 18
+        },
+        {
+          "teamId": "ufpe_virtus",
+          "placement": 19
+        },
+        {
+          "teamId": "unirio_krakens",
+          "placement": 20
+        },
+        {
+          "teamId": "univasf",
+          "placement": 21
+        },
+        {
+          "teamId": "ufrj_minerva",
+          "placement": 22
+        },
+        {
+          "teamId": "uepa_imperadores",
+          "placement": 23
+        },
+        {
+          "teamId": "axis_anteaters",
+          "placement": 24
+        },
+        {
+          "teamId": "unifor",
+          "placement": 25
+        },
+        {
+          "teamId": "acucarados",
+          "placement": 26
+        },
+        {
+          "teamId": "ufrn_carcaras",
+          "placement": 27
+        },
+        {
+          "teamId": "ueg_hipertensa",
+          "placement": 28
+        },
+        {
+          "teamId": "undbala",
+          "placement": 29
+        },
+        {
+          "teamId": "ufma_naotemclutch",
+          "placement": 30
+        },
+        {
+          "teamId": "unisc_ladaiada",
+          "placement": 31
+        },
+        {
+          "teamId": "ufg_gc_eagles",
+          "placement": 32
+        },
+        {
+          "teamId": "ucb_dogs",
+          "placement": 33
+        },
+        {
+          "teamId": "lunatica_ufms",
+          "placement": 34
+        },
+        {
+          "teamId": "ufu_saints",
+          "placement": 35
+        },
+        {
+          "teamId": "unit_troianos",
+          "placement": 36
+        },
+        {
+          "teamId": "carrascos_fd8j",
+          "placement": 37
+        },
+        {
+          "teamId": "ufcg_pensaopet",
+          "placement": 38
+        },
+        {
+          "teamId": "uema_turbulencia",
+          "placement": 39
+        },
+        {
+          "teamId": "limpezinha",
+          "placement": 40
+        }
+      ]
+    },
+    "jubs-pre-jubs-sp": {
+      "weight": 0.95,
+      "defaultPhase": "qualifier",
+      "phases": {
+        "qualifier": 0.95,
+        "final": 1.12
+      },
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 10
+        }
+      ],
+      "name": "Pré-JUBS SP",
+      "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+      "teams": 6,
+      "endAt": "2026-05-17T18:43:12.710Z",
+      "placements": [
+        {
+          "teamId": "pucc_cardinals",
+          "placement": 1
+        },
+        {
+          "teamId": "caap_hellhounds",
+          "placement": 2
+        },
+        {
+          "teamId": "axis_ego",
+          "placement": 3
+        },
+        {
+          "teamId": "totale_umc",
+          "placement": 4
+        },
+        {
+          "teamId": "unicamp_tritons_black",
+          "placement": 5
+        },
+        {
+          "teamId": "poli_plague",
+          "placement": 6
+        }
+      ]
+    },
+    "lpe": {
+      "weight": 0.85,
+      "defaultPhase": "regular",
+      "phases": {
+        "regular": 1
+      },
+      "name": "LPE",
+      "logo": "assets/tournament-icons/LPE.png",
+      "teams": 6,
+      "endAt": "2026-05-02T23:00:00.000Z",
+      "placements": [
+        {
+          "teamId": "caap_hellhounds",
+          "placement": 1
+        },
+        {
+          "teamId": "unicamp_tritons_black",
+          "placement": 2
+        },
+        {
+          "teamId": "totale_umc",
+          "placement": 3
+        },
+        {
+          "teamId": "fei_darkowls",
+          "placement": 4
+        },
+        {
+          "teamId": "unifacens_fodens",
+          "placement": 5
+        },
+        {
+          "teamId": "axis_aura",
+          "placement": 6
+        }
+      ]
+    },
+    "rivvalsgg": {
+      "weight": 1,
+      "defaultPhase": "showmatch",
+      "phases": {
+        "showmatch": 0.95,
+        "final": 1.1
+      },
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 7
+        }
+      ],
+      "name": "RivvalsGG",
+      "logo": "assets/tournament-icons/rivvalsGG.png",
+      "teams": 8,
+      "endAt": "2026-01-22T23:00:00.000Z",
+      "placements": [
+        {
+          "teamId": "usp_stars",
+          "placement": 1
+        },
+        {
+          "teamId": "caap_hellhounds",
+          "placement": 2
+        },
+        {
+          "teamId": "axis_anteaters",
+          "placement": 3
+        },
+        {
+          "teamId": "pucc_cardinals",
+          "placement": 4
+        },
+        {
+          "teamId": "azure_bears",
+          "placement": 5
+        },
+        {
+          "teamId": "macklogic_red",
+          "placement": 6
+        },
+        {
+          "teamId": "fei_darkowls",
+          "placement": 7
+        },
+        {
+          "teamId": "unicamp_tritons_red",
+          "placement": 8
+        }
+      ]
+    },
+    "rush-series-esquenta": {
+      "weight": 1.1,
+      "defaultPhase": "regular",
+      "phases": {
+        "regular": 1,
+        "final": 1.15
+      },
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 30
+        }
+      ],
+      "name": "Rush Series Esquenta",
+      "logo": "assets/tournament-icons/rushSeries.png",
+      "teams": 16,
+      "endAt": "2026-06-08T01:00:00.000Z",
+      "placements": [
+        {
+          "teamId": "azure_bears_golden",
+          "placement": 1
+        },
+        {
+          "teamId": "ceub_octopus_vulgaris",
+          "placement": 2
+        },
+        {
+          "teamId": "ufmt_turuna",
+          "placement": 3
+        },
+        {
+          "teamId": "fei_darkowls",
+          "placement": 4
+        },
+        {
+          "teamId": "ufpr_bbn",
+          "placement": 5
+        },
+        {
+          "teamId": "uscs_hawks",
+          "placement": 5
+        },
+        {
+          "teamId": "fei_whiteowls",
+          "placement": 7
+        },
+        {
+          "teamId": "a2e_uff",
+          "placement": 7
+        },
+        {
+          "teamId": "tigre_branco",
+          "placement": 9
+        },
+        {
+          "teamId": "inatel_legacy",
+          "placement": 9
+        },
+        {
+          "teamId": "unicamp_tritons_black",
+          "placement": 9
+        },
+        {
+          "teamId": "octacore_javascript",
+          "placement": 9
+        },
+        {
+          "teamId": "azure_bears_black",
+          "placement": 13
+        },
+        {
+          "teamId": "ufu_saints_auryn",
+          "placement": 13
+        },
+        {
+          "teamId": "ime_wolves_red",
+          "placement": 13
+        },
+        {
+          "teamId": "caap_auroras",
+          "placement": 13
+        }
+      ]
+    },
+    "rush-series-esquenta-2": {
+      "weight": 1.1,
+      "defaultPhase": "regular",
+      "phases": {
+        "regular": 1,
+        "final": 1.15
+      },
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 30
+        }
+      ],
+      "name": "Rush Series Esquenta 2 Edição",
+      "logo": "assets/tournament-icons/rushSeries.png",
+      "teams": 14,
+      "endAt": "2026-06-21T22:00:00.000Z",
+      "placements": [
+        {
+          "teamId": "azure_bears_golden",
+          "placement": 1
+        },
+        {
+          "teamId": "ufmt_turuna",
+          "placement": 2
+        },
+        {
+          "teamId": "totale_umc",
+          "placement": 3
+        },
+        {
+          "teamId": "azure_bears_black",
+          "placement": 4
+        },
+        {
+          "teamId": "inatel",
+          "placement": 5
+        },
+        {
+          "teamId": "uscs_hawks",
+          "placement": 5
+        },
+        {
+          "teamId": "ibmec_sharks",
+          "placement": 7
+        },
+        {
+          "teamId": "unicamp_tritons_red",
+          "placement": 7
+        },
+        {
+          "teamId": "fatec_pg",
+          "placement": 9
+        },
+        {
+          "teamId": "inatel_gray",
+          "placement": 9
+        },
+        {
+          "teamId": "octacore_python",
+          "placement": 9
+        },
+        {
+          "teamId": "panterao_gaming",
+          "placement": 9
+        },
+        {
+          "teamId": "macklogic_rainbow",
+          "placement": 13
+        },
+        {
+          "teamId": "octacore_javascript",
+          "placement": 13
+        }
+      ]
+    },
+    "univava-classificatoria-1": {
+      "weight": 1.1,
+      "defaultPhase": "regular",
+      "phases": {
+        "regular": 1,
+        "qualifier": 1.15
+      },
+      "phaseRules": [
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 57,
+          "seriesCodeMax": 62
+        },
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 120
+        }
+      ],
+      "name": "UNIVAV\u00c1 - Classificat\u00f3rias 1",
+      "logo": "assets/tournament-icons/UNIVAVA.png",
+      "teams": 36,
+      "endAt": "2026-06-29T02:00:00.000Z",
+      "placements": [
+        {
+          "teamId": "azure_bears_golden",
+          "placement": 1
+        },
+        {
+          "teamId": "ceub_octopus",
+          "placement": 1
+        },
+        {
+          "teamId": "macklogic_red",
+          "placement": 1
+        },
+        {
+          "teamId": "wolf_gaming",
+          "placement": 1
+        },
+        {
+          "teamId": "caap_hellhounds",
+          "placement": 5
+        },
+        {
+          "teamId": "uscs_hawks",
+          "placement": 5
+        },
+        {
+          "teamId": "ufu_saints",
+          "placement": 7
+        },
+        {
+          "teamId": "ufmt_turuna",
+          "placement": 7
+        },
+        {
+          "teamId": "totale_umc",
+          "placement": 9
+        },
+        {
+          "teamId": "octacore_python",
+          "placement": 9
+        },
+        {
+          "teamId": "azure_bears_black",
+          "placement": 9
+        },
+        {
+          "teamId": "caap_momentum",
+          "placement": 9
+        },
+        {
+          "teamId": "poli_plague",
+          "placement": 13
+        },
+        {
+          "teamId": "macklogic_white",
+          "placement": 13
+        },
+        {
+          "teamId": "ceub_octopus_vulgaris",
+          "placement": 13
+        },
+        {
+          "teamId": "fei_whiteowls",
+          "placement": 13
+        },
+        {
+          "teamId": "ufpr_bbn",
+          "placement": 17
+        },
+        {
+          "teamId": "pucc_cardinals",
+          "placement": 17
+        },
+        {
+          "teamId": "gdu_ufpb",
+          "placement": 17
+        },
+        {
+          "teamId": "ufg_eagles",
+          "placement": 17
+        },
+        {
+          "teamId": "unifesp_erex",
+          "placement": 17
+        },
+        {
+          "teamId": "pucgo_sistematica_academy",
+          "placement": 17
+        },
+        {
+          "teamId": "axis_aura",
+          "placement": 17
+        },
+        {
+          "teamId": "unicamp_tritons_red",
+          "placement": 17
+        },
+        {
+          "teamId": "ufmg_fenix_b",
+          "placement": 25
+        },
+        {
+          "teamId": "inatel_legacy",
+          "placement": 25
+        },
+        {
+          "teamId": "unicamp_tritons_black",
+          "placement": 25
+        },
+        {
+          "teamId": "azure_bears_silver",
+          "placement": 25
+        },
+        {
+          "teamId": "fei_darkowls",
+          "placement": 25
+        },
+        {
+          "teamId": "ufg_gc_eagles",
+          "placement": 25
+        },
+        {
+          "teamId": "ufg_eagles_blue",
+          "placement": 25
+        },
+        {
+          "teamId": "a2e_uff",
+          "placement": 25
+        },
+        {
+          "teamId": "ufrj_minerva",
+          "placement": 33
+        },
+        {
+          "teamId": "axis_anteaters",
+          "placement": 33
+        },
+        {
+          "teamId": "homem_passaro",
+          "placement": 33
+        },
+        {
+          "teamId": "octacore_javascript",
+          "placement": 33
+        }
+      ]
+    },
+    "uni-ascension": {
+      "weight": 1.05,
+      "defaultPhase": "regular",
+      "phases": {
+        "regular": 1,
+        "playoffs": 1.15,
+        "final": 1.3
+      },
+      "phaseRules": [
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 18,
+          "seriesCodeMax": 21
+        },
+        {
+          "phase": "final",
+          "seriesCodeMin": 22
+        }
+      ],
+      "name": "UNI Ascension",
+      "logo": "assets/tournament-icons/uniAsc.png",
+      "teams": 12,
+      "endAt": "2026-05-25T02:00:00.000Z",
+      "placements": [
+        {
+          "teamId": "ufu_saints",
+          "placement": 1
+        },
+        {
+          "teamId": "wolf_gaming",
+          "placement": 2
+        },
+        {
+          "teamId": "azure_bears_black",
+          "placement": 3
+        },
+        {
+          "teamId": "azure_bears_s",
+          "placement": 4
+        },
+        {
+          "teamId": "octacore_python",
+          "placement": 5
+        },
+        {
+          "teamId": "brutal_esports",
+          "placement": 6
+        },
+        {
+          "teamId": "macklogic_white",
+          "placement": 7
+        },
+        {
+          "teamId": "unirv_rushone",
+          "placement": 8
+        },
+        {
+          "teamId": "octacore_javascript",
+          "placement": 9
+        },
+        {
+          "teamId": "cyberkongs",
+          "placement": 10
+        },
+        {
+          "teamId": "a2e_uff",
+          "placement": 11
+        },
+        {
+          "teamId": "ufpr_bbn",
+          "placement": 12
+        }
+      ]
+    },
+    "uni-kickoff-inters": {
+      "weight": 1,
+      "defaultPhase": "regular",
+      "phases": {
+        "regular": 1,
+        "playoffs": 1.12,
+        "final": 1.3
+      },
+      "phaseRules": [
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 37,
+          "seriesCodeMax": 42
+        },
+        {
+          "phase": "final",
+          "seriesCodeMin": 43
+        }
+      ],
+      "name": "Uni Kick-OFF Inters",
+      "logo": "assets/tournament-icons/unikickoff.png",
+      "teams": 24,
+      "endAt": "2026-04-06T02:00:00.000Z",
+      "placements": [
+        {
+          "teamId": "ceub_octopus",
+          "placement": 1
+        },
+        {
+          "teamId": "azure_bears_golden",
+          "placement": 2
+        },
+        {
+          "teamId": "caap_hellhounds",
+          "placement": 3
+        },
+        {
+          "teamId": "fei_darkowls",
+          "placement": 4
+        },
+        {
+          "teamId": "octacore_python",
+          "placement": 5
+        },
+        {
+          "teamId": "pucc_cardinals",
+          "placement": 6
+        },
+        {
+          "teamId": "ufu_saints",
+          "placement": 7
+        },
+        {
+          "teamId": "dark_ufrj",
+          "placement": 8
+        },
+        {
+          "teamId": "fei_whiteowls",
+          "placement": 9
+        },
+        {
+          "teamId": "a2e_uff",
+          "placement": 10
+        },
+        {
+          "teamId": "green_owls_noctua",
+          "placement": 11
+        },
+        {
+          "teamId": "unicamp_tritons_black",
+          "placement": 12
+        },
+        {
+          "teamId": "axis_ego",
+          "placement": 13
+        },
+        {
+          "teamId": "unifacens_fodens",
+          "placement": 14
+        },
+        {
+          "teamId": "unirv_rushone",
+          "placement": 15
+        },
+        {
+          "teamId": "ceub_octopus_vulgaris",
+          "placement": 16
+        },
+        {
+          "teamId": "azure_bears_black",
+          "placement": 17
+        },
+        {
+          "teamId": "pucgo_sistematica",
+          "placement": 18
+        },
+        {
+          "teamId": "green_owls_pulsatrix",
+          "placement": 19
+        },
+        {
+          "teamId": "sixa_eaters",
+          "placement": 20
+        },
+        {
+          "teamId": "totale_umc",
+          "placement": 21
+        },
+        {
+          "teamId": "aaeu_cerberus",
+          "placement": 22
+        },
+        {
+          "teamId": "gambiarra_ufg",
+          "placement": 23
+        },
+        {
+          "teamId": "xxii_setembro_fatec",
+          "placement": 24
+        }
+      ]
+    }
+  }
+}

@@ -14822,9 +14822,11 @@ img.search-state-flag + .search-state-flag.placeholder {
   border: 1px solid rgba(245, 241, 242, 0.1);
   border-radius: 8px;
   background:
-    radial-gradient(ellipse at 18% 45%, color-mix(in srgb, var(--team-accent, #d8323c) 72%, #050507) 0%, color-mix(in srgb, var(--team-accent, #d8323c) 38%, #050507) 38%, transparent 70%),
-    radial-gradient(ellipse at 66% 48%, color-mix(in srgb, var(--team-accent-2, #009a96) 42%, #050507) 0%, transparent 58%),
-    linear-gradient(90deg, color-mix(in srgb, var(--team-accent, #d8323c) 46%, #050507) 0%, color-mix(in srgb, var(--team-accent, #d8323c) 28%, #050507) 30%, color-mix(in srgb, var(--team-accent-2, #009a96) 22%, #050507) 62%, #050507 100%);
+    linear-gradient(180deg, transparent 72%, rgba(4, 3, 6, 0.42) 100%),
+    radial-gradient(ellipse at 16% 42%, color-mix(in srgb, var(--team-accent, #d8323c) 78%, #07070c) 0%, color-mix(in srgb, var(--team-accent, #d8323c) 42%, #07070c) 40%, transparent 72%),
+    radial-gradient(ellipse at 68% 22%, color-mix(in srgb, var(--team-accent-2, #009a96) 46%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse at 94% 92%, color-mix(in srgb, var(--team-accent, #d8323c) 32%, transparent) 0%, transparent 54%),
+    linear-gradient(90deg, color-mix(in srgb, var(--team-accent, #d8323c) 52%, #07070c) 0%, color-mix(in srgb, var(--team-accent, #d8323c) 34%, #07070c) 34%, color-mix(in srgb, var(--team-accent-2, #009a96) 32%, #07070c) 70%, color-mix(in srgb, var(--team-accent-2, #009a96) 22%, #07070c) 100%);
   color: var(--univlr-white, #f5f1f2);
   box-shadow:
     inset 0 1px 0 rgba(245, 241, 242, 0.08),
@@ -14842,7 +14844,7 @@ img.search-state-flag + .search-state-flag.placeholder {
     linear-gradient(rgba(245, 241, 242, 0.34) 1px, transparent 1px),
     linear-gradient(90deg, rgba(245, 241, 242, 0.34) 1px, transparent 1px);
   background-size: 46px 46px;
-  mask-image: linear-gradient(90deg, #000, transparent 82%);
+  mask-image: linear-gradient(90deg, #000, rgba(0, 0, 0, 0.35) 58%, transparent 96%);
   pointer-events: none;
 }
 
@@ -14953,11 +14955,11 @@ img.search-state-flag + .search-state-flag.placeholder {
 .team-page .team-hero-cover::before {
   content: "";
   position: absolute;
-  inset: 22px -42px 0;
+  inset: 10px -34px 0;
   z-index: 0;
   background:
-    radial-gradient(ellipse at 50% 92%, rgba(245, 241, 242, 0.1), transparent 46%),
-    linear-gradient(90deg, transparent, rgba(4, 3, 6, 0.28) 20%, rgba(4, 3, 6, 0.24) 80%, transparent);
+    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--team-accent, #d8323c) 36%, transparent), transparent 58%),
+    radial-gradient(ellipse at 50% 98%, rgba(245, 241, 242, 0.12), transparent 42%);
   pointer-events: none;
 }
 
@@ -14978,9 +14980,11 @@ img.search-state-flag + .search-state-flag.placeholder {
 .team-page .team-hero-cover-player::after {
   content: "";
   position: absolute;
-  inset: auto 0 0;
-  height: 54px;
-  background: linear-gradient(180deg, transparent, rgba(4, 3, 6, 0.88));
+  inset: auto 12% 2px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(4, 3, 6, 0.5), transparent 72%);
+  filter: blur(3px);
   pointer-events: none;
 }
 
@@ -15003,24 +15007,38 @@ img.search-state-flag + .search-state-flag.placeholder {
   object-position: bottom center;
   padding: 0;
   background: transparent;
-  filter: brightness(1.08) contrast(1.04) drop-shadow(0 14px 22px rgba(0, 0, 0, 0.48));
+  filter:
+    brightness(1.06) contrast(1.05) saturate(1.05)
+    drop-shadow(0 16px 24px rgba(0, 0, 0, 0.45))
+    drop-shadow(0 0 24px color-mix(in srgb, var(--team-accent, #d8323c) 28%, transparent));
   transform: scale(1.1);
   transform-origin: bottom center;
+  mask-image: linear-gradient(180deg, #000 82%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 82%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
+  transition: transform 0.25s ease;
+}
+
+.team-page a.team-hero-cover-player:hover img {
+  transform: scale(1.15);
 }
 
 .team-page .team-hero-cover-player > span:last-child {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 4px;
+  bottom: 6px;
   z-index: 2;
   overflow: hidden;
   color: var(--univlr-white, #f5f1f2);
-  font-size: 0.78rem;
+  font-size: 0.73rem;
   font-weight: 950;
+  letter-spacing: 0.05em;
   text-align: center;
   text-overflow: ellipsis;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
+  text-shadow:
+    0 2px 10px rgba(4, 3, 6, 0.92),
+    0 0 18px color-mix(in srgb, var(--team-accent, #d8323c) 60%, transparent);
+  text-transform: uppercase;
   white-space: nowrap;
 }
 

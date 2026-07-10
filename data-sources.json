@@ -62,7 +62,7 @@
       ]
     },
     {
-      "id": "jubs",
+      "id": "jubs-fase-inicial",
       "name": "Fase Inicial",
       "organizer": "UNIVLR",
       "source": "Histórico",
@@ -414,7 +414,7 @@
       "sourceId": "",
       "startAt": "",
       "endAt": "",
-      "logo": "assets/tournament-icons/rushSeries.png",
+      "logo": "",
       "folder": "campeonatos/Rush Series Esquenta 2",
       "files": [
         "campeonatos/Rush Series Esquenta 2/RUSH2_002_20-06-26_fatec_pg_10_x_13_panterao_gaming_ascent.json",

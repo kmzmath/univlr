@@ -9435,13 +9435,23 @@ function teamRankHero(team) {
 function teamHeroCover(team, currentLineup, observedPlayers = []) {
   const lineupPlayers = currentLineup.map((entry) => ({ entry, player: entry.playerId ? playerById(entry.playerId) : null }));
   const fallbackPlayers = observedPlayers.filter((player) => !lineupPlayers.some((row) => row.player?.id === player.id)).map((player) => ({ entry: { playerId: player.id, name: player.nick }, player }));
-  const rows = [...lineupPlayers, ...fallbackPlayers].slice(0, 5);
+  const rows = lineupPlayers.length ? teamHeroCoverSelection(lineupPlayers) : fallbackPlayers.slice(0, 5);
   if (!rows.length) return "";
   return `
     <div class="team-hero-cover" aria-label="${escapeHtml(`Elenco ${team.name}`)}">
       ${rows.map(teamHeroCoverPlayer).join("")}
     </div>
   `;
+}
+
+function teamHeroCoverSelection(lineupPlayers) {
+  if (lineupPlayers.length <= 5) return lineupPlayers;
+  const chosen = new Set(
+    [...lineupPlayers]
+      .sort((a, b) => Number(b.player?.matches || 0) - Number(a.player?.matches || 0) || Number(Boolean(b.player?.photo)) - Number(Boolean(a.player?.photo)))
+      .slice(0, 5),
+  );
+  return lineupPlayers.filter((row) => chosen.has(row));
 }
 
 function teamHeroCoverPlayer({ entry, player }) {
@@ -10109,8 +10119,16 @@ function bestRank(history) {
 }
 
 function teamHistoricalPlayers(team) {
+  const registeredLineup = team.currentLineup || [];
+  const lineupIds = new Set(registeredLineup.map((entry) => entry.playerId).filter(Boolean));
+  const lineupNameKeys = new Set(registeredLineup.map((entry) => normalizeNameKey(entry.name)).filter(Boolean));
   return state.db.players
-    .filter((player) => (player.teamHistory || []).includes(team.id) && player.teamId !== team.id)
+    .filter((player) => {
+      if (!(player.teamHistory || []).includes(team.id)) return false;
+      if (!registeredLineup.length) return player.teamId !== team.id;
+      if (lineupIds.has(player.id) || playerLookupKeys(player).some((key) => lineupNameKeys.has(key))) return false;
+      return player.currentTeam !== team.id;
+    })
     .sort((a, b) => a.nick.localeCompare(b.nick));
 }
 

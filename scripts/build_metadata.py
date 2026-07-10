@@ -20,6 +20,8 @@ KNOWN_BAD_TEAM_LOGOS = {
 PHOTO_ALIASES = {
     "fillip1n": ["filip1n"],
     "pagode": ["pagod"],
+    "gbzz": ["gbz"],
+    "japinha99": ["jeyp"],
 }
 
 

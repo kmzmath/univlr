@@ -253,7 +253,34 @@
         "campeonatos/JUBS/Fase Inicial/JUBS_091b_04-07-26_caap_hellhounds_7_x_13_inatel_ascent.json",
         "campeonatos/JUBS/Fase Inicial/JUBS_091c_04-07-26_caap_hellhounds_13_x_11_inatel_breeze.json",
         "campeonatos/JUBS/Fase Inicial/JUBS_092a_02-07-26_ceub_octopus_13_x_2_wolf_gaming_breeze.json",
-        "campeonatos/JUBS/Fase Inicial/JUBS_092b_02-07-26_ceub_octopus_13_x_7_wolf_gaming_split.json"
+        "campeonatos/JUBS/Fase Inicial/JUBS_092b_02-07-26_ceub_octopus_13_x_7_wolf_gaming_split.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_093a_09-07-26_axis_anteaters_13_x_11_wolf_gaming_split.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_093b_09-07-26_axis_anteaters_13_x_6_wolf_gaming_breeze.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_094a_09-07-26_green_owls_noctua_7_x_13_ufmt_turuna_ascent.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_094b_09-07-26_green_owls_noctua_11_x_13_ufmt_turuna_breeze.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_096a_08-07-26_azure_bears_golden_13_x_3_ucb_dogs_ascent.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_096b_08-07-26_azure_bears_golden_13_x_8_ucb_dogs_lotus.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_097a_08-07-26_ceub_octopus_13_x_2_uninassau_griffins_haven.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_097b_08-07-26_ceub_octopus_13_x_9_uninassau_griffins_lotus.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_098a_09-07-26_a2e_uff_13_x_7_pucc_cardinals_ascent.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_098b_09-07-26_a2e_uff_13_x_11_pucc_cardinals_haven.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_099b_06-07-26_furia_utfpr_13_x_1_unisc_ladaiada_split.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_100a_08-07-26_ufs_bugados_3_x_13_ufu_saints_lotus.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_100b_08-07-26_ufs_bugados_4_x_13_ufu_saints_ascent.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_101a_09-07-26_caap_hellhounds_13_x_4_macklogic_red_pearl.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_101b_09-07-26_caap_hellhounds_13_x_9_macklogic_red_haven.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_102a_09-07-26_fametro_berserkers_12_x_14_inatel_lotus.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_102b_09-07-26_fametro_berserkers_9_x_13_inatel_breeze.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_103a_11-07-26_ceub_octopus_13_x_7_ucb_dogs_haven.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_103b_11-07-26_ceub_octopus_13_x_1_ucb_dogs_lotus.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_104a_11-07-26_fametro_berserkers_15_x_13_ufs_bugados_lotus.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_104b_11-07-26_fametro_berserkers_14_x_12_ufs_bugados_ascent.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_106a_11-07-26_inatel_11_x_13_ufu_saints_ascent.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_106b_11-07-26_inatel_8_x_13_ufu_saints_lotus.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_108a_11-07-26_a2e_uff_13_x_4_ufrj_minerva_lotus.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_108b_11-07-26_a2e_uff_13_x_7_ufrj_minerva_haven.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_109a_11-07-26_azure_bears_golden_13_x_6_furia_utfpr_sunset.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_109b_11-07-26_azure_bears_golden_13_x_6_furia_utfpr_split.json"
       ]
     },
     {
@@ -443,6 +470,29 @@
         "campeonatos/Rush Series Esquenta 2/RUSH2_029_21-06-26_azure_bears_golden_13_x_5_totale_umc_ascent.json",
         "campeonatos/Rush Series Esquenta 2/RUSH2_030a_21-06-26_azure_bears_golden_13_x_9_ufmt_turuna_fracture.json",
         "campeonatos/Rush Series Esquenta 2/RUSH2_030b_21-06-26_azure_bears_golden_13_x_11_ufmt_turuna_ascent.json"
+      ]
+    },
+    {
+      "id": "totale-inters",
+      "name": "Totale Inters",
+      "organizer": "UNIVLR",
+      "source": "Histórico",
+      "sourceId": "",
+      "startAt": "",
+      "endAt": "",
+      "logo": "",
+      "folder": "campeonatos/TOTALE Inters",
+      "files": [
+        "campeonatos/TOTALE Inters/TOTALE_003_10-07-26_caap_momentum_13_x_7_pucc_cardinals_haven.json",
+        "campeonatos/TOTALE Inters/TOTALE_004_01-07-26_ufu_saints_13_x_7_wolf_gaming_split.json",
+        "campeonatos/TOTALE Inters/TOTALE_007_08-07-26_caap_momentum_12_x_14_fei_darkowls_split.json",
+        "campeonatos/TOTALE Inters/TOTALE_008_04-07-26_caap_hellhounds_8_x_13_ufu_saints_ascent.json",
+        "campeonatos/TOTALE Inters/TOTALE_010_08-07-26_caap_hellhounds_13_x_7_wolf_gaming_lotus.json",
+        "campeonatos/TOTALE Inters/TOTALE_011_08-07-26_caap_momentum_13_x_11_totale_umc_haven.json",
+        "campeonatos/TOTALE Inters/TOTALE_015_01-07-26_pucc_cardinals_14_x_12_totale_umc_split.json",
+        "campeonatos/TOTALE Inters/TOTALE_018_07-07-26_macklogic_red_13_x_7_ufu_saints_ascent.json",
+        "campeonatos/TOTALE Inters/TOTALE_019_09-07-26_fei_darkowls_13_x_6_totale_umc_split.json",
+        "campeonatos/TOTALE Inters/TOTALE_020_09-07-26_axis_anteaters_7_x_13_caap_hellhounds_split.json"
       ]
     },
     {

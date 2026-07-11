@@ -342,7 +342,7 @@ const TOURNAMENT_OVERRIDES = {
   "jubs-pre-jubs": {
     hidden: true,
   },
-  jubs: {
+  "jubs-fase-inicial": {
     name: "JUBS - Fase inicial",
     organizer: "CBDU",
     organizerLogo: "assets/organizers-logos/logo_CBDU.png",
@@ -352,7 +352,7 @@ const TOURNAMENT_OVERRIDES = {
     status: "Em andamento",
     teamCount: 40,
     type: "Online",
-    mapPool: ["Ascent", "Lotus", "Haven", "Split", "Breeze", "Pearl", "Fracture"],
+    mapPool: ["Ascent", "Lotus", "Haven", "Split", "Breeze", "Pearl", "Fracture", "Sunset"],
     format: {
       summary: "Sistema Su\u00ed\u00e7o",
       details: ["Todos os jogos MD3", "Equipes com 3 derrotas sao eliminadas"],
@@ -401,8 +401,8 @@ const TOURNAMENT_OVERRIDES = {
       "carrascos_fd8j",
     ],
     swiss: {
-      seriesCount: 92,
-      standingsLabel: "Tabela ap\u00f3s a Rodada 5",
+      seriesCount: 110,
+      standingsLabel: "Tabela ap\u00f3s a Rodada 7",
       rounds: [
         {
           title: "Rodada 1",
@@ -533,45 +533,60 @@ const TOURNAMENT_OVERRIDES = {
         },
         {
           title: "Rodada 6",
-          status: "Agendada",
+          status: "Concluida",
           bestOf: "MD3",
           matches: [
-            { code: "Partida 93", a: "axis_anteaters", b: "wolf_gaming" },
-            { code: "Partida 94", a: "ufmt_turuna", b: "green_owls_noctua" },
-            { code: "Partida 95", a: "ufpe_virtus", b: "ufrj_minerva" },
-            { code: "Partida 96", a: "ucb_dogs", b: "azure_bears_golden" },
-            { code: "Partida 97", a: "uninassau_griffins", b: "ceub_octopus" },
-            { code: "Partida 98", a: "pucc_cardinals", b: "a2e_uff" },
-            { code: "Partida 99", a: "unisc_ladaiada", b: "furia_utfpr" },
-            { code: "Partida 100", a: "ufs_bugados", b: "ufu_saints" },
-            { code: "Partida 101", a: "caap_hellhounds", b: "macklogic_red" },
-            { code: "Partida 102", a: "inatel", b: "fametro_berserkers" },
+            { code: "Partida 93", a: "axis_anteaters", scoreA: 2, b: "wolf_gaming", scoreB: 0, winner: "axis_anteaters" },
+            { code: "Partida 94", a: "ufmt_turuna", scoreA: 2, b: "green_owls_noctua", scoreB: 0, winner: "ufmt_turuna" },
+            { code: "Partida 95", a: "ufpe_virtus", scoreA: 0, b: "ufrj_minerva", scoreB: 2, winner: "ufrj_minerva", status: "W.O." },
+            { code: "Partida 96", a: "ucb_dogs", scoreA: 0, b: "azure_bears_golden", scoreB: 2, winner: "azure_bears_golden" },
+            { code: "Partida 97", a: "uninassau_griffins", scoreA: 0, b: "ceub_octopus", scoreB: 2, winner: "ceub_octopus" },
+            { code: "Partida 98", a: "pucc_cardinals", scoreA: 0, b: "a2e_uff", scoreB: 2, winner: "a2e_uff" },
+            { code: "Partida 99", a: "unisc_ladaiada", scoreA: 0, b: "furia_utfpr", scoreB: 2, winner: "furia_utfpr" },
+            { code: "Partida 100", a: "ufs_bugados", scoreA: 0, b: "ufu_saints", scoreB: 2, winner: "ufu_saints" },
+            { code: "Partida 101", a: "caap_hellhounds", scoreA: 2, b: "macklogic_red", scoreB: 0, winner: "caap_hellhounds" },
+            { code: "Partida 102", a: "inatel", scoreA: 2, b: "fametro_berserkers", scoreB: 0, winner: "inatel" },
+          ],
+        },
+        {
+          title: "Rodada 7",
+          status: "Em andamento",
+          bestOf: "MD3",
+          matches: [
+            { code: "Partida 103", a: "ceub_octopus", scoreA: 2, b: "ucb_dogs", scoreB: 0, winner: "ceub_octopus" },
+            { code: "Partida 104", a: "fametro_berserkers", scoreA: 2, b: "ufs_bugados", scoreB: 0, winner: "fametro_berserkers" },
+            { code: "Partida 105", a: "caap_hellhounds", b: "macklogic_red", status: "Agendada" },
+            { code: "Partida 106", a: "ufu_saints", scoreA: 2, b: "inatel", scoreB: 0, winner: "ufu_saints" },
+            { code: "Partida 107", a: "uninassau_griffins", scoreA: 2, b: "ufpe_virtus", scoreB: 0, winner: "uninassau_griffins", status: "W.O." },
+            { code: "Partida 108", a: "a2e_uff", scoreA: 2, b: "ufrj_minerva", scoreB: 0, winner: "a2e_uff" },
+            { code: "Partida 109", a: "azure_bears_golden", scoreA: 2, b: "furia_utfpr", scoreB: 0, winner: "azure_bears_golden" },
+            { code: "Partida 110", a: "ufmt_turuna", scoreA: 2, b: "unisc_ladaiada", scoreB: 0, winner: "ufmt_turuna", status: "W.O." },
           ],
         },
       ],
       standings: [
-        { id: "ceub_octopus", wins: 5, losses: 0, points: 15 },
-        { id: "uninassau_griffins", wins: 5, losses: 0, points: 15 },
-        { id: "azure_bears_golden", wins: 4, losses: 1, points: 12 },
-        { id: "macklogic_red", wins: 4, losses: 1, points: 12 },
-        { id: "ucb_dogs", wins: 4, losses: 1, points: 12 },
-        { id: "pucc_cardinals", wins: 4, losses: 1, points: 12 },
-        { id: "caap_hellhounds", wins: 4, losses: 1, points: 12 },
-        { id: "a2e_uff", wins: 3, losses: 2, points: 9 },
-        { id: "green_owls_noctua", wins: 3, losses: 2, points: 9 },
-        { id: "wolf_gaming", wins: 3, losses: 2, points: 9 },
-        { id: "ufs_bugados", wins: 3, losses: 2, points: 9 },
-        { id: "inatel", wins: 3, losses: 2, points: 9 },
-        { id: "unisc_ladaiada", wins: 3, losses: 2, points: 9 },
-        { id: "fametro_berserkers", wins: 3, losses: 2, points: 9 },
-        { id: "ufrj_minerva", wins: 3, losses: 2, points: 9 },
-        { id: "ufu_saints", wins: 3, losses: 2, points: 9 },
-        { id: "furia_utfpr", wins: 3, losses: 2, points: 9 },
-        { id: "ufpe_virtus", wins: 3, losses: 2, points: 9 },
-        { id: "axis_anteaters", wins: 3, losses: 2, points: 9 },
-        { id: "ufmt_turuna", wins: 3, losses: 2, points: 9 },
+        { id: "ceub_octopus", wins: 7, losses: 0, points: 21 },
+        { id: "azure_bears_golden", wins: 6, losses: 1, points: 18 },
+        { id: "uninassau_griffins", wins: 6, losses: 1, points: 18 },
+        { id: "caap_hellhounds", wins: 5, losses: 1, points: 15 },
+        { id: "a2e_uff", wins: 5, losses: 2, points: 15 },
+        { id: "ufu_saints", wins: 5, losses: 2, points: 15 },
+        { id: "ufmt_turuna", wins: 5, losses: 2, points: 15 },
+        { id: "axis_anteaters", wins: 4, losses: 2, points: 12 },
+        { id: "macklogic_red", wins: 4, losses: 2, points: 12 },
+        { id: "pucc_cardinals", wins: 4, losses: 2, points: 12 },
       ],
       eliminated: [
+        { id: "fametro_berserkers", wins: 4, losses: 3, points: 12, range: "11º - 15º lugar" },
+        { id: "furia_utfpr", wins: 4, losses: 3, points: 12, range: "11º - 15º lugar" },
+        { id: "inatel", wins: 4, losses: 3, points: 12, range: "11º - 15º lugar" },
+        { id: "ucb_dogs", wins: 4, losses: 3, points: 12, range: "11º - 15º lugar" },
+        { id: "ufrj_minerva", wins: 4, losses: 3, points: 12, range: "11º - 15º lugar" },
+        { id: "green_owls_noctua", wins: 3, losses: 3, points: 9, range: "16º - 20º lugar" },
+        { id: "wolf_gaming", wins: 3, losses: 3, points: 9, range: "16º - 20º lugar" },
+        { id: "ufpe_virtus", wins: 3, losses: 4, points: 9, range: "16º - 20º lugar" },
+        { id: "ufs_bugados", wins: 3, losses: 4, points: 9, range: "16º - 20º lugar" },
+        { id: "unisc_ladaiada", wins: 3, losses: 4, points: 9, range: "16º - 20º lugar" },
         { id: "univasf", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
         { id: "milionaria_ufam", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
         { id: "uepa_imperadores", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
@@ -1024,6 +1039,96 @@ const TOURNAMENT_OVERRIDES = {
             },
           ],
         },
+      ],
+    },
+  },
+  "totale-inters": {
+    name: "TOTALE Inters",
+    organizer: "TOTALE",
+    prizePool: "-",
+    tier: "B",
+    type: "Online - Inters",
+    status: "Em andamento",
+    startAt: "2026-06-29T00:00:00",
+    teamCount: 10,
+    format: {
+      summary: "Grupos + Playoffs",
+      details: ["2 grupos de 5 equipes em turno único", "Todos os jogos da fase de grupos MD1"],
+      standings: "Classificação da fase de grupos",
+    },
+    teams: [
+      "fei_darkowls",
+      "caap_momentum",
+      "fei_whiteowls",
+      "pucc_cardinals",
+      "totale_umc",
+      "ufu_saints",
+      "caap_hellhounds",
+      "macklogic_red",
+      "axis_anteaters",
+      "wolf_gaming",
+    ],
+    bracket: {
+      title: "Fase de grupos",
+      regions: [
+        {
+          name: "Grupo A",
+          className: "group-stage",
+          columns: [
+            {
+              title: "Confrontos",
+              matches: [
+                { code: "Partida 1", a: "totale_umc", b: "fei_whiteowls", status: "Agendada" },
+                { code: "Partida 3", a: "caap_momentum", scoreA: 13, b: "pucc_cardinals", scoreB: 7, winner: "caap_momentum" },
+                { code: "Partida 5", a: "fei_whiteowls", scoreA: 13, b: "pucc_cardinals", scoreB: 11, winner: "fei_whiteowls" },
+                { code: "Partida 7", a: "fei_darkowls", scoreA: 14, b: "caap_momentum", scoreB: 12, winner: "fei_darkowls" },
+                { code: "Partida 9", a: "fei_darkowls", b: "pucc_cardinals", status: "Agendada" },
+                { code: "Partida 11", a: "caap_momentum", scoreA: 13, b: "totale_umc", scoreB: 11, winner: "caap_momentum" },
+                { code: "Partida 13", a: "fei_darkowls", b: "fei_whiteowls", status: "Agendada" },
+                { code: "Partida 15", a: "pucc_cardinals", scoreA: 14, b: "totale_umc", scoreB: 12, winner: "pucc_cardinals" },
+                { code: "Partida 17", a: "caap_momentum", b: "fei_whiteowls", status: "Agendada" },
+                { code: "Partida 19", a: "fei_darkowls", scoreA: 13, b: "totale_umc", scoreB: 6, winner: "fei_darkowls" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Grupo B",
+          className: "group-stage",
+          columns: [
+            {
+              title: "Confrontos",
+              matches: [
+                { code: "Partida 2", a: "axis_anteaters", b: "macklogic_red", status: "Agendada" },
+                { code: "Partida 4", a: "ufu_saints", scoreA: 13, b: "wolf_gaming", scoreB: 7, winner: "ufu_saints" },
+                { code: "Partida 6", a: "wolf_gaming", b: "macklogic_red", status: "Agendada" },
+                { code: "Partida 8", a: "ufu_saints", scoreA: 13, b: "caap_hellhounds", scoreB: 8, winner: "ufu_saints" },
+                { code: "Partida 10", a: "caap_hellhounds", scoreA: 13, b: "wolf_gaming", scoreB: 7, winner: "caap_hellhounds" },
+                { code: "Partida 12", a: "ufu_saints", b: "axis_anteaters", status: "Agendada" },
+                { code: "Partida 14", a: "caap_hellhounds", b: "macklogic_red", status: "Agendada" },
+                { code: "Partida 16", a: "axis_anteaters", b: "wolf_gaming", status: "Agendada" },
+                { code: "Partida 18", a: "macklogic_red", scoreA: 13, b: "ufu_saints", scoreB: 7, winner: "macklogic_red" },
+                { code: "Partida 20", a: "caap_hellhounds", scoreA: 13, b: "axis_anteaters", scoreB: 7, winner: "caap_hellhounds" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    swiss: {
+      seriesCount: 20,
+      standingsLabel: "Classificação da fase de grupos",
+      standings: [
+        { rank: 1, id: "fei_darkowls", wins: 2, losses: 0, status: "Grupo A" },
+        { rank: 2, id: "caap_momentum", wins: 2, losses: 1, status: "Grupo A" },
+        { rank: 3, id: "fei_whiteowls", wins: 1, losses: 0, status: "Grupo A" },
+        { rank: 4, id: "pucc_cardinals", wins: 1, losses: 2, status: "Grupo A" },
+        { rank: 5, id: "totale_umc", wins: 0, losses: 3, status: "Grupo A" },
+        { rank: 1, id: "ufu_saints", wins: 2, losses: 1, status: "Grupo B" },
+        { rank: 2, id: "caap_hellhounds", wins: 2, losses: 1, status: "Grupo B" },
+        { rank: 3, id: "macklogic_red", wins: 1, losses: 0, status: "Grupo B" },
+        { rank: 4, id: "axis_anteaters", wins: 0, losses: 1, status: "Grupo B" },
+        { rank: 5, id: "wolf_gaming", wins: 0, losses: 2, status: "Grupo B" },
       ],
     },
   },
@@ -2260,7 +2365,7 @@ function parseMatchFile(file, metadata) {
     player.agentList = [{ slug: player.agentSlug, name: player.agent, icon: player.agentIcon, role: player.agentClass, rounds: player.rounds }];
   });
 
-  const playerTeamByPuuid = new Map(players.map((player) => [player.id, player.teamColor === teamA.color ? teamA.id : teamB.id]));
+  const playerTeamByPuuid = new Map(players.map((player) => [player.puuid, player.teamColor === teamA.color ? teamA.id : teamB.id]));
   const teamStats = calculateMatchTeamStats(raw.roundResults || [], teamA, teamB, playerTeamByPuuid);
   const mapMeta = resolveMapMeta(raw.matchInfo.mapId, meta.map, metadata);
   const mapName = mapMeta.name;
@@ -2541,7 +2646,9 @@ function normalizeMatchPlayer(player, roundAgg, metadata) {
   const headshotTotal = roundAgg.headshots + roundAgg.bodyshots + roundAgg.legshots;
 
   const output = {
-    id: player.puuid,
+    // id = identidade da pessoa (une contas alternativas via metadata);
+    // puuid = conta Riot usada nesta partida (chave para roundResults brutos).
+    id: registered ? registered.puuid || `registered-${slugify(registered.name)}` : player.puuid,
     puuid: player.puuid,
     nick: registered?.name || player.gameName || "Jogador",
     apiNick: player.gameName || "Jogador",
@@ -3115,7 +3222,9 @@ function aggregateTeams(matches, metadata) {
       row.opponents.set(side.opponent.id, updateCount(row.opponents.get(side.opponent.id), won));
 
       const observedPlayers = match.players.filter((player) => player.teamColor === side.team.color);
-      for (const player of observedPlayers) row.players.set(player.id, player.handle);
+      for (const player of observedPlayers) {
+        if (!row.players.has(player.id)) row.players.set(player.id, player.handle);
+      }
 
       const roundStats = match.teamStats[row.id] || emptyTeamRoundStats();
       row.attackWins += roundStats.attackWins;
@@ -3425,6 +3534,7 @@ function ensurePlayer(map, player, teamId) {
       nickHistory: player.nickHistory || [],
       photo: player.photo || "",
       teamId,
+      accounts: [],
       teams: new Map(),
       agents: new Map(),
       maps: new Map(),
@@ -3448,15 +3558,20 @@ function ensurePlayer(map, player, teamId) {
     });
   } else if (player.registered) {
     const row = map.get(player.id);
+    // Não sobrescreve handle/tagLine: as partidas iteram da mais recente para a
+    // mais antiga, então o handle registrado na criação já é o "nick atual".
     row.nick = player.nick || row.nick;
-    row.handle = player.handle || row.handle;
     row.registered = true;
     row.currentTeam = player.currentTeam || row.currentTeam;
     row.teamHistory = player.teamHistory || row.teamHistory;
     row.nickHistory = player.nickHistory || row.nickHistory;
     row.photo = player.photo || row.photo;
   }
-  return map.get(player.id);
+  const row = map.get(player.id);
+  if (player.puuid && !row.accounts.some((account) => account.puuid === player.puuid)) {
+    row.accounts.push({ puuid: player.puuid, handle: player.handle || "" });
+  }
+  return row;
 }
 
 function applyTeamMetadata(teams, players, metadata, teamProfiles) {
@@ -3593,7 +3708,7 @@ function aggregateMaps(matches, teams) {
 function aggregateWeapons(matches) {
   const byId = new Map();
   for (const match of matches) {
-    const playersById = new Map(match.players.map((player) => [player.id, player]));
+    const playersByPuuid = new Map(match.players.map((player) => [player.puuid, player]));
     for (const round of match.roundResults || []) {
       for (const row of round.playerStats || []) {
         for (const kill of row.kills || []) {
@@ -3601,7 +3716,7 @@ function aggregateWeapons(matches) {
           const weaponId = String(damage.damageItem || "").toLowerCase();
           if (damage.damageType !== "Weapon" || !weaponId) continue;
           const weapon = ensureWeaponBucket(byId, weaponId);
-          const killer = playersById.get(String(kill.killer || ""));
+          const killer = playersByPuuid.get(String(kill.killer || ""));
           weapon.kills += 1;
           weapon.secondaryKills += damage.isSecondaryFireMode ? 1 : 0;
           weapon.matchIds.add(match.id);
@@ -6745,7 +6860,10 @@ function tournamentBracketSection(event, matches) {
 
 function tournamentSwissBracketSection(event, matches) {
   const rounds = event.swiss?.rounds || [];
-  const activeIndex = Math.max(0, rounds.findIndex((round) => normalize(round.status || "").includes("agendada")));
+  const activeIndex = Math.max(0, rounds.findIndex((round) => {
+    const status = normalize(round.status || "");
+    return status.includes("agendada") || status.includes("andamento");
+  }));
   const roundTabs = tournamentSwissRoundTabs(event, rounds, activeIndex);
   return `
     <section class="tournament-section tournament-swiss-section">
@@ -12962,7 +13080,7 @@ function playerById(id) {
   const key = String(id || "");
   if (!key) return null;
   const routeKey = slugify(key);
-  return state.db?.players.find((player) => player.id === key || player.puuid === key || player.routeSlug === routeKey);
+  return state.db?.players.find((player) => player.id === key || player.puuid === key || (player.accounts || []).some((account) => account.puuid === key) || player.routeSlug === routeKey);
 }
 
 function playerRouteId(playerOrId) {

@@ -355,7 +355,12 @@ const TOURNAMENT_OVERRIDES = {
     mapPool: ["Ascent", "Lotus", "Haven", "Split", "Breeze", "Pearl", "Fracture", "Sunset"],
     format: {
       summary: "Sistema Su\u00ed\u00e7o",
-      details: ["Todos os jogos MD3", "Equipes com 3 derrotas sao eliminadas"],
+      details: [
+        "Todos os jogos MD3",
+        "Equipes com 3 derrotas sao eliminadas",
+        "M\u00e1ximo de 2 equipes por estado ap\u00f3s a Rodada 6",
+        "Rodada 7 decisiva: quem vence classifica, quem perde est\u00e1 eliminado",
+      ],
       standings: "Classifica\u00e7\u00e3o su\u00ed\u00e7a atual",
     },
     teams: [
@@ -402,6 +407,7 @@ const TOURNAMENT_OVERRIDES = {
     ],
     swiss: {
       seriesCount: 110,
+      stateTables: true,
       standingsLabel: "Tabela ap\u00f3s a Rodada 7",
       rounds: [
         {
@@ -565,28 +571,28 @@ const TOURNAMENT_OVERRIDES = {
         },
       ],
       standings: [
-        { id: "ceub_octopus", wins: 7, losses: 0, points: 21 },
-        { id: "azure_bears_golden", wins: 6, losses: 1, points: 18 },
-        { id: "uninassau_griffins", wins: 6, losses: 1, points: 18 },
-        { id: "caap_hellhounds", wins: 5, losses: 1, points: 15 },
-        { id: "a2e_uff", wins: 5, losses: 2, points: 15 },
-        { id: "ufu_saints", wins: 5, losses: 2, points: 15 },
-        { id: "ufmt_turuna", wins: 5, losses: 2, points: 15 },
-        { id: "axis_anteaters", wins: 4, losses: 2, points: 12 },
-        { id: "macklogic_red", wins: 4, losses: 2, points: 12 },
-        { id: "pucc_cardinals", wins: 4, losses: 2, points: 12 },
+        { id: "ceub_octopus", wins: 7, losses: 0, points: 21, status: "Classificado" },
+        { id: "azure_bears_golden", wins: 6, losses: 1, points: 18, status: "Classificado" },
+        { id: "uninassau_griffins", wins: 6, losses: 1, points: 18, status: "Classificado" },
+        { id: "caap_hellhounds", wins: 5, losses: 1, points: 15, status: "Em disputa" },
+        { id: "a2e_uff", wins: 5, losses: 2, points: 15, status: "Classificado" },
+        { id: "ufu_saints", wins: 5, losses: 2, points: 15, status: "Classificado" },
+        { id: "ufmt_turuna", wins: 5, losses: 2, points: 15, status: "Classificado" },
+        { id: "macklogic_red", wins: 4, losses: 2, points: 12, status: "Em disputa" },
+        { id: "fametro_berserkers", wins: 4, losses: 3, points: 12, status: "Classificado" },
       ],
       eliminated: [
-        { id: "fametro_berserkers", wins: 4, losses: 3, points: 12, range: "11º - 15º lugar" },
-        { id: "furia_utfpr", wins: 4, losses: 3, points: 12, range: "11º - 15º lugar" },
-        { id: "inatel", wins: 4, losses: 3, points: 12, range: "11º - 15º lugar" },
-        { id: "ucb_dogs", wins: 4, losses: 3, points: 12, range: "11º - 15º lugar" },
-        { id: "ufrj_minerva", wins: 4, losses: 3, points: 12, range: "11º - 15º lugar" },
-        { id: "green_owls_noctua", wins: 3, losses: 3, points: 9, range: "16º - 20º lugar" },
-        { id: "wolf_gaming", wins: 3, losses: 3, points: 9, range: "16º - 20º lugar" },
-        { id: "ufpe_virtus", wins: 3, losses: 4, points: 9, range: "16º - 20º lugar" },
-        { id: "ufs_bugados", wins: 3, losses: 4, points: 9, range: "16º - 20º lugar" },
-        { id: "unisc_ladaiada", wins: 3, losses: 4, points: 9, range: "16º - 20º lugar" },
+        { id: "ucb_dogs", wins: 4, losses: 3, points: 12, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
+        { id: "inatel", wins: 4, losses: 3, points: 12, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
+        { id: "ufrj_minerva", wins: 4, losses: 3, points: 12, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
+        { id: "furia_utfpr", wins: 4, losses: 3, points: 12, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
+        { id: "ufpe_virtus", wins: 3, losses: 4, points: 9, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
+        { id: "ufs_bugados", wins: 3, losses: 4, points: 9, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
+        { id: "unisc_ladaiada", wins: 3, losses: 4, points: 9, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
+        { id: "axis_anteaters", wins: 4, losses: 2, points: 12, range: "17º - 20º lugar", note: "Limite de 2 equipes por estado (SP)" },
+        { id: "pucc_cardinals", wins: 4, losses: 2, points: 12, range: "17º - 20º lugar", note: "Limite de 2 equipes por estado (SP)" },
+        { id: "wolf_gaming", wins: 3, losses: 3, points: 9, range: "17º - 20º lugar", note: "Limite de 2 equipes por estado (RJ)" },
+        { id: "green_owls_noctua", wins: 3, losses: 3, points: 9, range: "17º - 20º lugar", note: "Limite de 2 equipes por estado (DF)" },
         { id: "univasf", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
         { id: "milionaria_ufam", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
         { id: "uepa_imperadores", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
@@ -1118,17 +1124,27 @@ const TOURNAMENT_OVERRIDES = {
     swiss: {
       seriesCount: 20,
       standingsLabel: "Classificação da fase de grupos",
-      standings: [
-        { rank: 1, id: "fei_darkowls", wins: 2, losses: 0, status: "Grupo A" },
-        { rank: 2, id: "caap_momentum", wins: 2, losses: 1, status: "Grupo A" },
-        { rank: 3, id: "fei_whiteowls", wins: 1, losses: 0, status: "Grupo A" },
-        { rank: 4, id: "pucc_cardinals", wins: 1, losses: 2, status: "Grupo A" },
-        { rank: 5, id: "totale_umc", wins: 0, losses: 3, status: "Grupo A" },
-        { rank: 1, id: "ufu_saints", wins: 2, losses: 1, status: "Grupo B" },
-        { rank: 2, id: "caap_hellhounds", wins: 2, losses: 1, status: "Grupo B" },
-        { rank: 3, id: "macklogic_red", wins: 1, losses: 0, status: "Grupo B" },
-        { rank: 4, id: "axis_anteaters", wins: 0, losses: 1, status: "Grupo B" },
-        { rank: 5, id: "wolf_gaming", wins: 0, losses: 2, status: "Grupo B" },
+      groups: [
+        {
+          title: "Grupo A",
+          standings: [
+            { id: "fei_darkowls", wins: 2, losses: 0 },
+            { id: "caap_momentum", wins: 2, losses: 1 },
+            { id: "fei_whiteowls", wins: 1, losses: 0 },
+            { id: "pucc_cardinals", wins: 1, losses: 2 },
+            { id: "totale_umc", wins: 0, losses: 3 },
+          ],
+        },
+        {
+          title: "Grupo B",
+          standings: [
+            { id: "ufu_saints", wins: 2, losses: 1 },
+            { id: "caap_hellhounds", wins: 2, losses: 1 },
+            { id: "macklogic_red", wins: 1, losses: 0 },
+            { id: "axis_anteaters", wins: 0, losses: 1 },
+            { id: "wolf_gaming", wins: 0, losses: 2 },
+          ],
+        },
       ],
     },
   },
@@ -7114,35 +7130,56 @@ function tournamentSwissMatchKey(roundIndex, matchIndex, code) {
 }
 
 function tournamentSwissStandingsSection(event) {
-  if (!event.swiss?.standings?.length) return "";
-  const stateRows = tournamentSwissStandingRows(event, [
-    ...(event.swiss.standings || []).map((row) => ({ ...row, status: row.status || "Em disputa" })),
-    ...(event.swiss.eliminated || []).map((row) => ({ ...row, status: row.status || "Eliminado" })),
-  ]);
-  const activeRows = stateRows.filter((row) => !normalize(row.status).includes("eliminado"));
-  const eliminatedRows = stateRows.filter((row) => normalize(row.status).includes("eliminado"));
+  const groups = (event.swiss?.groups || []).filter((group) => group?.standings?.length);
+  if (!groups.length && !event.swiss?.standings?.length) return "";
   return `
     <section class="tournament-section tournament-swiss-table-section">
       <div class="tournament-section-head">
         <h2>Tabela</h2>
         <span>${escapeHtml(event.swiss.standingsLabel || "Classificacao atual")}</span>
       </div>
-      <div class="tournament-swiss-table-wrap">
-        <input class="swiss-table-view-mode-input swiss-table-view-mode-general" type="radio" name="swiss-table-view-${escapeHtml(event.id)}" id="swiss-table-view-${escapeHtml(event.id)}-general" checked />
-        <input class="swiss-table-view-mode-input swiss-table-view-mode-states" type="radio" name="swiss-table-view-${escapeHtml(event.id)}" id="swiss-table-view-${escapeHtml(event.id)}-states" />
-        <div class="swiss-table-view-toggle" aria-label="Modo de exibicao da tabela">
-          <label class="swiss-table-view-option general" for="swiss-table-view-${escapeHtml(event.id)}-general">Geral</label>
-          <label class="swiss-table-view-option states" for="swiss-table-view-${escapeHtml(event.id)}-states">Estados</label>
-        </div>
-        <div class="swiss-table-view swiss-table-view-general-panel">
-          ${tournamentSwissTable(event, activeRows, "Classificacao atual")}
-          ${eliminatedRows.length ? tournamentSwissTable(event, eliminatedRows, "Eliminados") : ""}
-        </div>
-        <div class="swiss-table-view swiss-table-view-states-panel">
-          ${tournamentSwissStateTables(event, stateRows)}
-        </div>
-      </div>
+      ${groups.length ? tournamentSwissGroupTables(event, groups) : tournamentSwissGeneralTables(event)}
     </section>
+  `;
+}
+
+function tournamentSwissGroupTables(event, groups) {
+  return `
+    <div class="tournament-swiss-table-wrap swiss-group-tables">
+      ${groups.map((group) => tournamentSwissTable(event, tournamentSwissStandingRows(event, group.standings), group.title || "Grupo", { compact: true })).join("")}
+    </div>
+  `;
+}
+
+function tournamentSwissGeneralTables(event) {
+  const stateRows = tournamentSwissStandingRows(event, [
+    ...(event.swiss.standings || []).map((row) => ({ ...row, status: row.status || "Em disputa" })),
+    ...(event.swiss.eliminated || []).map((row) => ({ ...row, status: row.status || "Eliminado" })),
+  ]);
+  const activeRows = stateRows.filter((row) => !normalize(row.status).includes("eliminado"));
+  const eliminatedRows = stateRows.filter((row) => normalize(row.status).includes("eliminado"));
+  const generalTables = `
+    ${tournamentSwissTable(event, activeRows, "Classificacao atual")}
+    ${eliminatedRows.length ? tournamentSwissTable(event, eliminatedRows, "Eliminados") : ""}
+  `;
+  if (!event.swiss.stateTables) {
+    return `<div class="tournament-swiss-table-wrap">${generalTables}</div>`;
+  }
+  return `
+    <div class="tournament-swiss-table-wrap">
+      <input class="swiss-table-view-mode-input swiss-table-view-mode-general" type="radio" name="swiss-table-view-${escapeHtml(event.id)}" id="swiss-table-view-${escapeHtml(event.id)}-general" checked />
+      <input class="swiss-table-view-mode-input swiss-table-view-mode-states" type="radio" name="swiss-table-view-${escapeHtml(event.id)}" id="swiss-table-view-${escapeHtml(event.id)}-states" />
+      <div class="swiss-table-view-toggle" aria-label="Modo de exibicao da tabela">
+        <label class="swiss-table-view-option general" for="swiss-table-view-${escapeHtml(event.id)}-general">Geral</label>
+        <label class="swiss-table-view-option states" for="swiss-table-view-${escapeHtml(event.id)}-states">Estados</label>
+      </div>
+      <div class="swiss-table-view swiss-table-view-general-panel">
+        ${generalTables}
+      </div>
+      <div class="swiss-table-view swiss-table-view-states-panel">
+        ${tournamentSwissStateTables(event, stateRows)}
+      </div>
+    </div>
   `;
 }
 
@@ -7155,12 +7192,12 @@ function tournamentSwissStandingRows(event, rows) {
   }));
 }
 
-function tournamentSwissTable(event, rows, title) {
+function tournamentSwissTable(event, rows, title, options = {}) {
   if (!rows.length) return "";
   return `
     <div class="swiss-standings-block">
       <h3>${escapeHtml(title)}</h3>
-      ${tournamentSwissTableMarkup(rows)}
+      ${tournamentSwissTableMarkup(rows, options)}
     </div>
   `;
 }
@@ -7306,7 +7343,8 @@ function tournamentSeriesBracketMatch(series) {
 
 function tournamentCuratedBracketSection(event) {
   const regions = tournamentBracketDisplayRegions(event.bracket.regions);
-  const layoutClass = regions.length === 1 ? "single-region" : "";
+  const isGroupStage = regions.length > 0 && regions.every((region) => String(region.className || "").includes("group-stage"));
+  const layoutClass = isGroupStage ? "groups-layout" : regions.length === 1 ? "single-region" : "";
   return `
     <section class="tournament-section">
       <div class="tournament-section-head">
@@ -7895,7 +7933,8 @@ function tournamentEliminatedRows(event) {
   const rows = event.eliminated || event.swiss?.eliminated || [];
   return rows.map((row) => ({
     ...row,
-    note: row.note || `${row.wins ?? 0}-${row.losses ?? 0}`,
+    note: `${row.wins ?? 0}-${row.losses ?? 0}`,
+    reason: row.reason || row.note || "",
     range: row.range || "Eliminado",
   }));
 }
@@ -7917,6 +7956,7 @@ function tournamentPlacementCard(event, row, index) {
       ${teamLogo(team.id, "large")}
       <strong>${escapeHtml(team.name)}</strong>
       <small>${escapeHtml(detail)}</small>
+      ${row.reason ? `<small class="placement-reason">${escapeHtml(row.reason)}</small>` : ""}
     </${tag}>
   `;
 }
@@ -8018,17 +8058,38 @@ function tournamentFirstMatchTimestamp(event, matches = []) {
 
 function tournamentTeamsSection(event, standings, matches = []) {
   const rows = tournamentTeamRows(event, standings, matches);
+  const columns = tournamentTeamGridColumns(rows.length);
   return `
     <section class="tournament-section">
       <div class="tournament-section-head">
         <h2>Equipes Participantes</h2>
         <span>${rows.length} times</span>
       </div>
-      <div class="tournament-team-grid" data-tournament-teams>
+      <div class="tournament-team-grid ${columns ? "balanced-columns" : ""}"${columns ? ` style="--team-columns:${columns}"` : ""} data-tournament-teams>
         ${rows.map((row, index) => tournamentTeamCard(row, index)).join("") || `<div class="empty-state">Nenhum time detectado.</div>`}
       </div>
     </section>
   `;
+}
+
+// Escolhe quantos cards por linha para que todas as linhas fiquem com a mesma
+// quantidade (ex.: 40 times -> 5x8, 36 -> 4x9, 12 -> 2x6, 10 -> 2x5).
+function tournamentTeamGridColumns(count) {
+  if (!count) return 0;
+  if (count <= 9) return count;
+  for (let columns = 9; columns >= 4; columns--) {
+    if (count % columns === 0) return columns;
+  }
+  let best = 9;
+  let bestEmpty = Infinity;
+  for (let columns = 9; columns >= 4; columns--) {
+    const empty = (columns - (count % columns)) % columns;
+    if (empty < bestEmpty) {
+      best = columns;
+      bestEmpty = empty;
+    }
+  }
+  return best;
 }
 
 function tournamentTeamRows(event, standings, matches = []) {

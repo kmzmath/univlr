@@ -7200,6 +7200,12 @@ td {
   font-weight: 800;
 }
 
+.tournament-placement-card small.placement-reason {
+  margin-top: -3px;
+  color: #7c8ca2;
+  font-size: 0.68rem;
+}
+
 .tournament-bracket {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -7222,6 +7228,22 @@ td {
 .tournament-curated-bracket.single-region {
   grid-template-columns: 1fr;
   grid-template-areas: "upper";
+}
+
+.tournament-curated-bracket.groups-layout {
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-areas: none;
+}
+
+.tournament-curated-bracket.groups-layout .tournament-bracket-region {
+  grid-area: auto;
+}
+
+.tournament-curated-bracket.groups-layout .tournament-bracket.curated {
+  --bracket-row-height: 64px;
+  --bracket-card-height: 108px;
+  --bracket-column-width: minmax(0, 1fr);
+  overflow-x: hidden;
 }
 
 .tournament-bracket-note {
@@ -8102,6 +8124,11 @@ td {
   display: grid;
 }
 
+.swiss-group-tables {
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  align-items: start;
+}
+
 .swiss-standings-block {
   display: grid;
   gap: 8px;
@@ -8349,6 +8376,16 @@ td {
   grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
   gap: 12px;
   padding: 12px;
+}
+
+.tournament-team-grid.balanced-columns {
+  grid-template-columns: repeat(var(--team-columns, 8), minmax(0, 1fr));
+}
+
+@media (max-width: 1080px) {
+  .tournament-team-grid.balanced-columns {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
 }
 
 .tournament-team-card {

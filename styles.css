@@ -7239,11 +7239,29 @@ td {
   grid-area: auto;
 }
 
-.tournament-curated-bracket.groups-layout .tournament-bracket.curated {
+.tournament-bracket-region.group-stage .tournament-bracket.curated {
   --bracket-row-height: 64px;
   --bracket-card-height: 108px;
   --bracket-column-width: minmax(0, 1fr);
   overflow-x: hidden;
+}
+
+.tournament-curated-bracket.has-groups {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.tournament-curated-bracket.has-groups .tournament-bracket-region.group-stage {
+  grid-area: auto;
+}
+
+@media (max-width: 1080px) {
+  .tournament-curated-bracket.has-groups {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "final"
+      "upper"
+      "lower";
+  }
 }
 
 .tournament-bracket-note {

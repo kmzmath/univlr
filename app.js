@@ -349,7 +349,7 @@ const TOURNAMENT_OVERRIDES = {
     banner: "assets/tournament-banners/banner_jubs.png",
     prizePool: "-",
     tier: "A",
-    status: "Em andamento",
+    status: "Finalizado",
     teamCount: 40,
     type: "Online",
     mapPool: ["Ascent", "Lotus", "Haven", "Split", "Breeze", "Pearl", "Fracture", "Sunset"],
@@ -405,10 +405,52 @@ const TOURNAMENT_OVERRIDES = {
       "limpezinha",
       "carrascos_fd8j",
     ],
+    placements: [
+      { range: "Classificado", id: "ceub_octopus", note: "7-0" },
+      { range: "Classificado", id: "azure_bears_golden", note: "6-1" },
+      { range: "Classificado", id: "uninassau_griffins", note: "6-1" },
+      { range: "Classificado", id: "a2e_uff", note: "5-2" },
+      { range: "Classificado", id: "ufu_saints", note: "5-2" },
+      { range: "Classificado", id: "ufmt_turuna", note: "5-2" },
+      { range: "Classificado", id: "macklogic_red", note: "5-2" },
+      { range: "Classificado", id: "fametro_berserkers", note: "4-3" },
+      { range: "9-16", id: "caap_hellhounds", note: "5-2", reason: "Perdeu a decisiva da Rodada 7" },
+      { range: "9-16", id: "ucb_dogs", note: "4-3", reason: "Perdeu a decisiva da Rodada 7" },
+      { range: "9-16", id: "inatel", note: "4-3", reason: "Perdeu a decisiva da Rodada 7" },
+      { range: "9-16", id: "ufrj_minerva", note: "4-3", reason: "Perdeu a decisiva da Rodada 7" },
+      { range: "9-16", id: "furia_utfpr", note: "4-3", reason: "Perdeu a decisiva da Rodada 7" },
+      { range: "9-16", id: "ufpe_virtus", note: "3-4", reason: "Perdeu a decisiva da Rodada 7" },
+      { range: "9-16", id: "ufs_bugados", note: "3-4", reason: "Perdeu a decisiva da Rodada 7" },
+      { range: "9-16", id: "unisc_ladaiada", note: "3-4", reason: "Perdeu a decisiva da Rodada 7" },
+      { range: "17-20", id: "axis_anteaters", note: "4-2", reason: "Limite de 2 equipes por estado (SP)" },
+      { range: "17-20", id: "pucc_cardinals", note: "4-2", reason: "Limite de 2 equipes por estado (SP)" },
+      { range: "17-20", id: "wolf_gaming", note: "3-3", reason: "Limite de 2 equipes por estado (RJ)" },
+      { range: "17-20", id: "green_owls_noctua", note: "3-3", reason: "Limite de 2 equipes por estado (DF)" },
+      { range: "21-28", id: "univasf", note: "2-3" },
+      { range: "21-28", id: "milionaria_ufam", note: "2-3" },
+      { range: "21-28", id: "uepa_imperadores", note: "2-3" },
+      { range: "21-28", id: "ufg_eagles", note: "2-3" },
+      { range: "21-28", id: "rahnag", note: "2-3" },
+      { range: "21-28", id: "ufrn_carcaras", note: "2-3" },
+      { range: "21-28", id: "acucarados", note: "2-3" },
+      { range: "21-28", id: "ufpr_bbn", note: "2-3" },
+      { range: "29-35", id: "uema_turbulencia", note: "1-3" },
+      { range: "29-35", id: "ufma_naotemclutch", note: "1-3" },
+      { range: "29-35", id: "unifor", note: "1-3" },
+      { range: "29-35", id: "unirio_krakens", note: "1-3" },
+      { range: "29-35", id: "ueg_hipertensa", note: "1-3" },
+      { range: "29-35", id: "unit_troianos", note: "1-3" },
+      { range: "29-35", id: "undbala", note: "1-3" },
+      { range: "36-40", id: "ufcg_pensaopet", note: "0-3" },
+      { range: "36-40", id: "ufg_gc_eagles", note: "0-3" },
+      { range: "36-40", id: "lunatica_ufms", note: "0-3" },
+      { range: "36-40", id: "limpezinha", note: "0-3" },
+      { range: "36-40", id: "carrascos_fd8j", note: "0-3" },
+    ],
     swiss: {
       seriesCount: 110,
       stateTables: true,
-      standingsLabel: "Tabela ap\u00f3s a Rodada 7",
+      standingsLabel: "Tabela final - 8 equipes classificadas",
       rounds: [
         {
           title: "Rodada 1",
@@ -556,12 +598,12 @@ const TOURNAMENT_OVERRIDES = {
         },
         {
           title: "Rodada 7",
-          status: "Em andamento",
+          status: "Concluida",
           bestOf: "MD3",
           matches: [
             { code: "Partida 103", a: "ceub_octopus", scoreA: 2, b: "ucb_dogs", scoreB: 0, winner: "ceub_octopus" },
             { code: "Partida 104", a: "fametro_berserkers", scoreA: 2, b: "ufs_bugados", scoreB: 0, winner: "fametro_berserkers" },
-            { code: "Partida 105", a: "caap_hellhounds", b: "macklogic_red", status: "Agendada" },
+            { code: "Partida 105", a: "caap_hellhounds", scoreA: 1, b: "macklogic_red", scoreB: 2, winner: "macklogic_red" },
             { code: "Partida 106", a: "ufu_saints", scoreA: 2, b: "inatel", scoreB: 0, winner: "ufu_saints" },
             { code: "Partida 107", a: "uninassau_griffins", scoreA: 2, b: "ufpe_virtus", scoreB: 0, winner: "uninassau_griffins", status: "W.O." },
             { code: "Partida 108", a: "a2e_uff", scoreA: 2, b: "ufrj_minerva", scoreB: 0, winner: "a2e_uff" },
@@ -574,14 +616,14 @@ const TOURNAMENT_OVERRIDES = {
         { id: "ceub_octopus", wins: 7, losses: 0, points: 21, status: "Classificado" },
         { id: "azure_bears_golden", wins: 6, losses: 1, points: 18, status: "Classificado" },
         { id: "uninassau_griffins", wins: 6, losses: 1, points: 18, status: "Classificado" },
-        { id: "caap_hellhounds", wins: 5, losses: 1, points: 15, status: "Em disputa" },
         { id: "a2e_uff", wins: 5, losses: 2, points: 15, status: "Classificado" },
         { id: "ufu_saints", wins: 5, losses: 2, points: 15, status: "Classificado" },
         { id: "ufmt_turuna", wins: 5, losses: 2, points: 15, status: "Classificado" },
-        { id: "macklogic_red", wins: 4, losses: 2, points: 12, status: "Em disputa" },
+        { id: "macklogic_red", wins: 5, losses: 2, points: 15, status: "Classificado" },
         { id: "fametro_berserkers", wins: 4, losses: 3, points: 12, status: "Classificado" },
       ],
       eliminated: [
+        { id: "caap_hellhounds", wins: 5, losses: 2, points: 15, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
         { id: "ucb_dogs", wins: 4, losses: 3, points: 12, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
         { id: "inatel", wins: 4, losses: 3, points: 12, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
         { id: "ufrj_minerva", wins: 4, losses: 3, points: 12, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
@@ -1051,15 +1093,23 @@ const TOURNAMENT_OVERRIDES = {
   "totale-inters": {
     name: "TOTALE Inters",
     organizer: "TOTALE",
+    organizerLogo: "assets/team-logos/totale_umc.png",
+    logo: "assets/team-logos/totale_umc.png",
     prizePool: "-",
     tier: "B",
     type: "Online - Inters",
-    status: "Em andamento",
+    status: "Finalizado",
     startAt: "2026-06-29T00:00:00",
+    endAt: "2026-07-18T23:00:00",
     teamCount: 10,
     format: {
       summary: "Grupos + Playoffs",
-      details: ["2 grupos de 5 equipes em turno único", "Todos os jogos da fase de grupos MD1"],
+      details: [
+        "2 grupos de 5 equipes em turno único, jogos MD1",
+        "Top 2 de cada grupo avança aos playoffs",
+        "Playoffs em eliminação dupla MD1",
+        "Grande final MD3",
+      ],
       standings: "Classificação da fase de grupos",
     },
     teams: [
@@ -1074,9 +1124,70 @@ const TOURNAMENT_OVERRIDES = {
       "axis_anteaters",
       "wolf_gaming",
     ],
+    placements: [
+      { range: "1", id: "caap_momentum" },
+      { range: "2", id: "axis_anteaters" },
+      { range: "3", id: "caap_hellhounds" },
+      { range: "4", id: "fei_darkowls" },
+      { range: "5-6", id: "fei_whiteowls", note: "1-3", reason: "3º do Grupo A" },
+      { range: "5-6", id: "ufu_saints", note: "2-2", reason: "3º do Grupo B" },
+      { range: "7-8", id: "totale_umc", note: "1-3", reason: "4º do Grupo A" },
+      { range: "7-8", id: "macklogic_red", note: "2-2", reason: "4º do Grupo B" },
+      { range: "9-10", id: "pucc_cardinals", note: "1-3", reason: "5º do Grupo A" },
+      { range: "9-10", id: "wolf_gaming", note: "0-4", reason: "5º do Grupo B" },
+    ],
     bracket: {
-      title: "Fase de grupos",
+      title: "Grupos + Playoffs",
       regions: [
+        {
+          name: "Grande final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Grande final",
+              matches: [
+                { code: "Partida 26", bestOf: "MD3", a: "axis_anteaters", scoreA: 1, b: "caap_momentum", scoreB: 2, winner: "caap_momentum" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Semifinais superior",
+              matches: [
+                { code: "Partida 21", a: "axis_anteaters", scoreA: 16, b: "fei_darkowls", scoreB: 14, winner: "axis_anteaters" },
+                { code: "Partida 22", a: "caap_hellhounds", scoreA: 9, b: "caap_momentum", scoreB: 13, winner: "caap_momentum" },
+              ],
+            },
+            {
+              title: "Final superior",
+              matches: [
+                { code: "Partida 23", a: "axis_anteaters", scoreA: 7, b: "caap_momentum", scoreB: 13, winner: "caap_momentum" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada 1 inferior",
+              matches: [
+                { code: "Partida 24", a: "caap_hellhounds", scoreA: 13, b: "fei_darkowls", scoreB: 5, winner: "caap_hellhounds" },
+              ],
+            },
+            {
+              title: "Final inferior",
+              matches: [
+                { code: "Partida 25", a: "axis_anteaters", scoreA: 13, b: "caap_hellhounds", scoreB: 9, winner: "axis_anteaters" },
+              ],
+            },
+          ],
+        },
         {
           name: "Grupo A",
           className: "group-stage",
@@ -1084,15 +1195,15 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Confrontos",
               matches: [
-                { code: "Partida 1", a: "totale_umc", b: "fei_whiteowls", status: "Agendada" },
+                { code: "Partida 1", a: "totale_umc", scoreA: 1, b: "fei_whiteowls", scoreB: 0, winner: "totale_umc", status: "W.O." },
                 { code: "Partida 3", a: "caap_momentum", scoreA: 13, b: "pucc_cardinals", scoreB: 7, winner: "caap_momentum" },
                 { code: "Partida 5", a: "fei_whiteowls", scoreA: 13, b: "pucc_cardinals", scoreB: 11, winner: "fei_whiteowls" },
                 { code: "Partida 7", a: "fei_darkowls", scoreA: 14, b: "caap_momentum", scoreB: 12, winner: "fei_darkowls" },
-                { code: "Partida 9", a: "fei_darkowls", b: "pucc_cardinals", status: "Agendada" },
+                { code: "Partida 9", a: "fei_darkowls", scoreA: 1, b: "pucc_cardinals", scoreB: 0, winner: "fei_darkowls", status: "W.O." },
                 { code: "Partida 11", a: "caap_momentum", scoreA: 13, b: "totale_umc", scoreB: 11, winner: "caap_momentum" },
-                { code: "Partida 13", a: "fei_darkowls", b: "fei_whiteowls", status: "Agendada" },
+                { code: "Partida 13", a: "fei_darkowls", scoreA: 1, b: "fei_whiteowls", scoreB: 0, winner: "fei_darkowls", status: "W.O." },
                 { code: "Partida 15", a: "pucc_cardinals", scoreA: 14, b: "totale_umc", scoreB: 12, winner: "pucc_cardinals" },
-                { code: "Partida 17", a: "caap_momentum", b: "fei_whiteowls", status: "Agendada" },
+                { code: "Partida 17", a: "caap_momentum", scoreA: 1, b: "fei_whiteowls", scoreB: 0, winner: "caap_momentum", status: "W.O." },
                 { code: "Partida 19", a: "fei_darkowls", scoreA: 13, b: "totale_umc", scoreB: 6, winner: "fei_darkowls" },
               ],
             },
@@ -1105,14 +1216,14 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Confrontos",
               matches: [
-                { code: "Partida 2", a: "axis_anteaters", b: "macklogic_red", status: "Agendada" },
+                { code: "Partida 2", a: "axis_anteaters", scoreA: 13, b: "macklogic_red", scoreB: 11, winner: "axis_anteaters" },
                 { code: "Partida 4", a: "ufu_saints", scoreA: 13, b: "wolf_gaming", scoreB: 7, winner: "ufu_saints" },
-                { code: "Partida 6", a: "wolf_gaming", b: "macklogic_red", status: "Agendada" },
+                { code: "Partida 6", a: "wolf_gaming", scoreA: 0, b: "macklogic_red", scoreB: 1, winner: "macklogic_red", status: "W.O." },
                 { code: "Partida 8", a: "ufu_saints", scoreA: 13, b: "caap_hellhounds", scoreB: 8, winner: "ufu_saints" },
                 { code: "Partida 10", a: "caap_hellhounds", scoreA: 13, b: "wolf_gaming", scoreB: 7, winner: "caap_hellhounds" },
-                { code: "Partida 12", a: "ufu_saints", b: "axis_anteaters", status: "Agendada" },
-                { code: "Partida 14", a: "caap_hellhounds", b: "macklogic_red", status: "Agendada" },
-                { code: "Partida 16", a: "axis_anteaters", b: "wolf_gaming", status: "Agendada" },
+                { code: "Partida 12", a: "ufu_saints", scoreA: 0, b: "axis_anteaters", scoreB: 1, winner: "axis_anteaters", status: "W.O." },
+                { code: "Partida 14", a: "caap_hellhounds", scoreA: 1, b: "macklogic_red", scoreB: 0, winner: "caap_hellhounds", status: "W.O." },
+                { code: "Partida 16", a: "axis_anteaters", scoreA: 1, b: "wolf_gaming", scoreB: 0, winner: "axis_anteaters", status: "W.O." },
                 { code: "Partida 18", a: "macklogic_red", scoreA: 13, b: "ufu_saints", scoreB: 7, winner: "macklogic_red" },
                 { code: "Partida 20", a: "caap_hellhounds", scoreA: 13, b: "axis_anteaters", scoreB: 7, winner: "caap_hellhounds" },
               ],
@@ -1122,27 +1233,27 @@ const TOURNAMENT_OVERRIDES = {
       ],
     },
     swiss: {
-      seriesCount: 20,
-      standingsLabel: "Classificação da fase de grupos",
+      seriesCount: 26,
+      standingsLabel: "Classificação final da fase de grupos",
       groups: [
         {
           title: "Grupo A",
           standings: [
-            { id: "fei_darkowls", wins: 2, losses: 0 },
-            { id: "caap_momentum", wins: 2, losses: 1 },
-            { id: "fei_whiteowls", wins: 1, losses: 0 },
-            { id: "pucc_cardinals", wins: 1, losses: 2 },
-            { id: "totale_umc", wins: 0, losses: 3 },
+            { id: "fei_darkowls", wins: 4, losses: 0 },
+            { id: "caap_momentum", wins: 3, losses: 1 },
+            { id: "fei_whiteowls", wins: 1, losses: 3 },
+            { id: "totale_umc", wins: 1, losses: 3 },
+            { id: "pucc_cardinals", wins: 1, losses: 3 },
           ],
         },
         {
           title: "Grupo B",
           standings: [
-            { id: "ufu_saints", wins: 2, losses: 1 },
-            { id: "caap_hellhounds", wins: 2, losses: 1 },
-            { id: "macklogic_red", wins: 1, losses: 0 },
-            { id: "axis_anteaters", wins: 0, losses: 1 },
-            { id: "wolf_gaming", wins: 0, losses: 2 },
+            { id: "caap_hellhounds", wins: 3, losses: 1 },
+            { id: "axis_anteaters", wins: 3, losses: 1 },
+            { id: "ufu_saints", wins: 2, losses: 2 },
+            { id: "macklogic_red", wins: 2, losses: 2 },
+            { id: "wolf_gaming", wins: 0, losses: 4 },
           ],
         },
       ],
@@ -7343,8 +7454,15 @@ function tournamentSeriesBracketMatch(series) {
 
 function tournamentCuratedBracketSection(event) {
   const regions = tournamentBracketDisplayRegions(event.bracket.regions);
-  const isGroupStage = regions.length > 0 && regions.every((region) => String(region.className || "").includes("group-stage"));
-  const layoutClass = isGroupStage ? "groups-layout" : regions.length === 1 ? "single-region" : "";
+  const groupRegions = regions.filter((region) => String(region.className || "").includes("group-stage"));
+  const layoutClass =
+    regions.length > 0 && groupRegions.length === regions.length
+      ? "groups-layout"
+      : groupRegions.length
+        ? "has-groups"
+        : regions.length === 1
+          ? "single-region"
+          : "";
   return `
     <section class="tournament-section">
       <div class="tournament-section-head">
@@ -7404,7 +7522,9 @@ function tournamentCuratedBracketColumn(event, column, region, columnIndex, maxM
 
 function tournamentCuratedBracketMatch(event, match, context = {}) {
   const hasResult = tournamentBracketMatchHasResult(match);
-  const winner = hasResult ? match.winner || (Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b) : "";
+  const winner = hasResult
+    ? match.winner || (Number(match.scoreA) === Number(match.scoreB) ? "" : Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b)
+    : "";
   const key = tournamentBracketMatchKey(context.columnIndex, context.matchIndex, match.code);
   const connectorMode = context.connectorMode || "terminal";
   const branch = connectorMode === "merge" ? (context.matchIndex % 2 === 0 ? "top" : "bottom") : "straight";
@@ -7943,7 +8063,7 @@ function tournamentPlacementCard(event, row, index) {
   const team = tournamentTeamById(event, row.id || row.teamId);
   if (!team) return "";
   const rawLabel = row.range || placementLabel(index);
-  const label = placementIsOngoing(rawLabel) && !eventIsDone(event) ? "Em andamento" : rankingPlacementLabel(rawLabel);
+  const label = tournamentPlacementDisplayLabel(event, rawLabel);
   const detail = row.note || (Number.isFinite(row.seriesWins) ? `${row.seriesWins}-${row.seriesLosses}` : "Colocação oficial");
   const isFeatured = tournamentPlacementIsFeatured(label, index);
   const podiumClass = tournamentPlacementPodiumClass(label);
@@ -7980,9 +8100,16 @@ function tournamentPlacementPodiumClass(label) {
 function tournamentFeaturedPlacementCount(event, rows) {
   return rows.filter((row, index) => {
     const rawLabel = row.range || placementLabel(index);
-    const label = placementIsOngoing(rawLabel) && !eventIsDone(event) ? "Em andamento" : rankingPlacementLabel(rawLabel);
+    const label = tournamentPlacementDisplayLabel(event, rawLabel);
     return tournamentPlacementIsFeatured(label, index);
   }).length;
+}
+
+// Rotulos como "Classificado" continuam visiveis quando o evento termina;
+// "Em andamento" so aparece enquanto a disputa nao acabou.
+function tournamentPlacementDisplayLabel(event, rawLabel) {
+  if (placementIsOngoing(rawLabel)) return eventIsDone(event) ? String(rawLabel) : "Em andamento";
+  return rankingPlacementLabel(rawLabel);
 }
 
 function tournamentOfficialPlacements(event) {

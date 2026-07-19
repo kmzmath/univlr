@@ -275,6 +275,9 @@
         "campeonatos/JUBS/Fase Inicial/JUBS_103b_11-07-26_ceub_octopus_13_x_1_ucb_dogs_lotus.json",
         "campeonatos/JUBS/Fase Inicial/JUBS_104a_11-07-26_fametro_berserkers_15_x_13_ufs_bugados_lotus.json",
         "campeonatos/JUBS/Fase Inicial/JUBS_104b_11-07-26_fametro_berserkers_14_x_12_ufs_bugados_ascent.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_105a_11-07-26_caap_hellhounds_13_x_15_macklogic_red_lotus.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_105b_11-07-26_caap_hellhounds_13_x_9_macklogic_red_breeze.json",
+        "campeonatos/JUBS/Fase Inicial/JUBS_105c_11-07-26_caap_hellhounds_11_x_13_macklogic_red_haven.json",
         "campeonatos/JUBS/Fase Inicial/JUBS_106a_11-07-26_inatel_11_x_13_ufu_saints_ascent.json",
         "campeonatos/JUBS/Fase Inicial/JUBS_106b_11-07-26_inatel_8_x_13_ufu_saints_lotus.json",
         "campeonatos/JUBS/Fase Inicial/JUBS_108a_11-07-26_a2e_uff_13_x_4_ufrj_minerva_lotus.json",
@@ -483,6 +486,7 @@
       "logo": "",
       "folder": "campeonatos/TOTALE Inters",
       "files": [
+        "campeonatos/TOTALE Inters/TOTALE_002_12-07-26_axis_anteaters_13_x_11_macklogic_red_split.json",
         "campeonatos/TOTALE Inters/TOTALE_003_10-07-26_caap_momentum_13_x_7_pucc_cardinals_haven.json",
         "campeonatos/TOTALE Inters/TOTALE_004_01-07-26_ufu_saints_13_x_7_wolf_gaming_split.json",
         "campeonatos/TOTALE Inters/TOTALE_007_08-07-26_caap_momentum_12_x_14_fei_darkowls_split.json",
@@ -492,7 +496,15 @@
         "campeonatos/TOTALE Inters/TOTALE_015_01-07-26_pucc_cardinals_14_x_12_totale_umc_split.json",
         "campeonatos/TOTALE Inters/TOTALE_018_07-07-26_macklogic_red_13_x_7_ufu_saints_ascent.json",
         "campeonatos/TOTALE Inters/TOTALE_019_09-07-26_fei_darkowls_13_x_6_totale_umc_split.json",
-        "campeonatos/TOTALE Inters/TOTALE_020_09-07-26_axis_anteaters_7_x_13_caap_hellhounds_split.json"
+        "campeonatos/TOTALE Inters/TOTALE_020_09-07-26_axis_anteaters_7_x_13_caap_hellhounds_split.json",
+        "campeonatos/TOTALE Inters/TOTALE_021_18-07-26_axis_anteaters_16_x_14_fei_darkowls_ascent.json",
+        "campeonatos/TOTALE Inters/TOTALE_022_18-07-26_caap_hellhounds_9_x_13_caap_momentum_split.json",
+        "campeonatos/TOTALE Inters/TOTALE_023_18-07-26_axis_anteaters_7_x_13_caap_momentum_sunset.json",
+        "campeonatos/TOTALE Inters/TOTALE_024_18-07-26_caap_hellhounds_13_x_5_fei_darkowls_lotus.json",
+        "campeonatos/TOTALE Inters/TOTALE_025_18-07-26_axis_anteaters_13_x_9_caap_hellhounds_lotus.json",
+        "campeonatos/TOTALE Inters/TOTALE_026a_18-07-26_axis_anteaters_13_x_7_caap_momentum_haven.json",
+        "campeonatos/TOTALE Inters/TOTALE_026b_18-07-26_axis_anteaters_6_x_13_caap_momentum_split.json",
+        "campeonatos/TOTALE Inters/TOTALE_026c_18-07-26_caap_momentum_15_x_13_axis_anteaters_ascent.json"
       ]
     },
     {

@@ -64,7 +64,7 @@ Meias-vidas:
 
 ## Recálculo
 
-O ranking é recalculado no carregamento do app, mas a versão oficial é congelada em snapshots semanais publicados toda terça-feira. Partidas novas só entram no ranking quando chegam ao próximo snapshot de terça. Ao navegar por semanas, notas, amostra de partidas e lineup exibida usam apenas dados disponíveis até aquele snapshot.
+O ranking é recalculado no carregamento do app, mas a versão oficial é congelada em snapshots semanais publicados toda terça-feira às 00:00. Uma nova semana é publicada mesmo quando não há partidas desde o corte anterior, pois recência e decay ainda podem alterar as notas. Partidas novas só entram no ranking quando chegam ao próximo snapshot de terça. Ao navegar por semanas, notas, amostra de partidas e lineup exibida usam apenas dados disponíveis até aquele snapshot.
 
 Histórico de lineups:
 

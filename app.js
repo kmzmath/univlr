@@ -1259,6 +1259,203 @@ const TOURNAMENT_OVERRIDES = {
       ],
     },
   },
+  "univava-classificatoria-2": {
+    name: "UNIVAV\u00c1 - Classificat\u00f3ria 2",
+    organizer: "AcadArena",
+    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
+    banner: "assets/tournament-banners/banner_univava_c2.webp",
+    logo: "assets/tournament-icons/UNIVAVA.png",
+    prizePool: "-",
+    tier: "A",
+    type: "Online - Classificat\u00f3ria",
+    status: "Finalizado",
+    teamCount: 25,
+    mapPool: ["Ascent", "Breeze", "Haven", "Lotus", "Split", "Sunset"],
+    teams: [
+      "inatel_dois",
+      "poli_plague",
+      "caap_momentum",
+      "pucc_cardinals",
+      "caap_auroras",
+      "octacore_python",
+      "inatel_gray",
+      "fei_darkowls",
+      "caap_hellhounds",
+      "liga_vulkanica",
+      "inatel",
+      "uscs_hawks",
+      "ime_wolves_red",
+      "ceub_octopus_vulgaris",
+      "inatel_legacy",
+      "axis_anteaters",
+      "maua_blue",
+      "unicamp_tritons_black",
+      "ufmt_turuna",
+      "green_owls_noctua",
+      "rahnag",
+      "ufu_saints",
+      "ufpr_bbn",
+      "a2e_uff",
+      "azure_bears_black",
+    ],
+    placements: [
+      { range: "Classificado", id: "caap_hellhounds", note: "Chave superior" },
+      { range: "Classificado", id: "ufu_saints", note: "Chave superior" },
+      { range: "Classificado", id: "ufmt_turuna", note: "Chave inferior" },
+      { range: "Classificado", id: "axis_anteaters", note: "Chave inferior" },
+      { range: "5-6", id: "pucc_cardinals", note: "Decis\u00e3o de vaga inferior" },
+      { range: "5-6", id: "uscs_hawks", note: "Decis\u00e3o de vaga inferior" },
+      { range: "7-8", id: "octacore_python", note: "Rodada de 4 inferior" },
+      { range: "7-8", id: "ufpr_bbn", note: "Rodada de 4 inferior" },
+      { range: "9-12", id: "a2e_uff", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "inatel_legacy", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "maua_blue", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "caap_momentum", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "azure_bears_black", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "fei_darkowls", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "ceub_octopus_vulgaris", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "green_owls_noctua", note: "Rodada de 8 inferior" },
+      { range: "17-24", id: "inatel_dois", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "rahnag", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "unicamp_tritons_black", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "inatel", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "ime_wolves_red", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "liga_vulkanica", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "caap_auroras", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "poli_plague", note: "Rodada de 16 inferior" },
+      { range: "25", id: "inatel_gray", note: "Primeira rodada inferior" },
+    ],
+    format: {
+      summary: "Elimina\u00e7\u00e3o dupla",
+      details: ["Classificat\u00f3ria com 4 vagas", "2 vagas pela chave superior", "2 vagas pela chave inferior", "Jogos MD1"],
+      standings: "Classificados oficiais",
+    },
+    bracket: {
+      title: "Elimina\u00e7\u00e3o dupla",
+      regions: [
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Rodada de 32 superior",
+              matches: [
+                { code: "Partida 1", a: "inatel_dois", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "inatel_dois" },
+                { code: "Partida 2", a: "poli_plague", scoreA: 2, b: "caap_momentum", scoreB: 13, winner: "caap_momentum" },
+                { code: "Partida 3", a: "pucc_cardinals", scoreA: 13, b: "caap_auroras", scoreB: 4, winner: "pucc_cardinals" },
+                { code: "Partida 4", a: "octacore_python", scoreA: 13, b: "inatel_gray", scoreB: 2, winner: "octacore_python" },
+                { code: "Partida 5", a: "fei_darkowls", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "fei_darkowls" },
+                { code: "Partida 6", a: "caap_hellhounds", scoreA: 13, b: "liga_vulkanica", scoreB: 0, winner: "caap_hellhounds" },
+                { code: "Partida 7", a: "inatel", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "inatel" },
+                { code: "Partida 8", a: "uscs_hawks", scoreA: 13, b: "ime_wolves_red", scoreB: 3, winner: "uscs_hawks" },
+                { code: "Partida 9", a: "ceub_octopus_vulgaris", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "ceub_octopus_vulgaris" },
+                { code: "Partida 10", a: "inatel_legacy", scoreA: 6, b: "axis_anteaters", scoreB: 13, winner: "axis_anteaters" },
+                { code: "Partida 11", a: "maua_blue", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "maua_blue" },
+                { code: "Partida 12", a: "unicamp_tritons_black", scoreA: 8, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
+                { code: "Partida 13", a: "green_owls_noctua", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "green_owls_noctua" },
+                { code: "Partida 14", a: "rahnag", scoreA: 3, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
+                { code: "Partida 15", a: "ufpr_bbn", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "ufpr_bbn" },
+                { code: "Partida 16", a: "a2e_uff", scoreA: 13, b: "azure_bears_black", scoreB: 6, winner: "a2e_uff" },
+              ],
+            },
+            {
+              title: "Rodada de 16 superior",
+              matches: [
+                { code: "Partida 17", a: "inatel_dois", scoreA: 1, b: "caap_momentum", scoreB: 13, winner: "caap_momentum" },
+                { code: "Partida 18", a: "pucc_cardinals", scoreA: 13, b: "octacore_python", scoreB: 9, winner: "pucc_cardinals" },
+                { code: "Partida 19", a: "fei_darkowls", scoreA: 5, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
+                { code: "Partida 20", a: "inatel", scoreA: 0, b: "uscs_hawks", scoreB: 1, winner: "uscs_hawks", status: "W.O." },
+                { code: "Partida 21", a: "ceub_octopus_vulgaris", scoreA: 8, b: "axis_anteaters", scoreB: 13, winner: "axis_anteaters" },
+                { code: "Partida 22", a: "maua_blue", scoreA: 5, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
+                { code: "Partida 23", a: "green_owls_noctua", scoreA: 8, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
+                { code: "Partida 24", a: "ufpr_bbn", scoreA: 10, b: "a2e_uff", scoreB: 13, winner: "a2e_uff" },
+              ],
+            },
+            {
+              title: "Quartas de final superior",
+              matches: [
+                { code: "Partida 25", a: "caap_momentum", scoreA: 6, b: "pucc_cardinals", scoreB: 13, winner: "pucc_cardinals" },
+                { code: "Partida 26", a: "caap_hellhounds", scoreA: 13, b: "uscs_hawks", scoreB: 6, winner: "caap_hellhounds" },
+                { code: "Partida 27", a: "axis_anteaters", scoreA: 13, b: "ufmt_turuna", scoreB: 0, winner: "axis_anteaters" },
+                { code: "Partida 28", a: "ufu_saints", scoreA: 13, b: "a2e_uff", scoreB: 6, winner: "ufu_saints" },
+              ],
+            },
+            {
+              title: "Semifinais superiores",
+              matches: [
+                { code: "Partida 29", a: "pucc_cardinals", scoreA: 7, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
+                { code: "Partida 30", a: "axis_anteaters", scoreA: 2, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada de 16 inferior",
+              matches: [
+                { code: "Partida 32", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "azure_bears_black", scoreB: 1, winner: "azure_bears_black" },
+                { code: "Partida 33", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "rahnag", scoreB: 1, winner: "rahnag" },
+                { code: "Partida 34", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "unicamp_tritons_black", scoreB: 1, winner: "unicamp_tritons_black" },
+                { code: "Partida 35", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "inatel_legacy", scoreB: 1, winner: "inatel_legacy" },
+                { code: "Partida 36", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "ime_wolves_red", scoreB: 1, winner: "ime_wolves_red" },
+                { code: "Partida 37", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "liga_vulkanica", scoreB: 1, winner: "liga_vulkanica" },
+                { code: "Partida 38", a: "caap_auroras", scoreA: 13, b: "inatel_gray", scoreB: 7, winner: "caap_auroras" },
+                { code: "Partida 39", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "poli_plague", scoreB: 1, winner: "poli_plague" },
+              ],
+            },
+            {
+              title: "Rodada de 16 inferior",
+              matches: [
+                { code: "Partida 40", a: "inatel_dois", scoreA: 3, b: "azure_bears_black", scoreB: 13, winner: "azure_bears_black" },
+                { code: "Partida 41", a: "octacore_python", scoreA: 1, b: "rahnag", scoreB: 0, winner: "octacore_python", status: "W.O." },
+                { code: "Partida 42", a: "fei_darkowls", scoreA: 13, b: "unicamp_tritons_black", scoreB: 9, winner: "fei_darkowls" },
+                { code: "Partida 43", a: "inatel", scoreA: 0, b: "inatel_legacy", scoreB: 1, winner: "inatel_legacy", status: "W.O." },
+                { code: "Partida 44", a: "ceub_octopus_vulgaris", scoreA: 13, b: "ime_wolves_red", scoreB: 3, winner: "ceub_octopus_vulgaris" },
+                { code: "Partida 45", a: "maua_blue", scoreA: 13, b: "liga_vulkanica", scoreB: 4, winner: "maua_blue" },
+                { code: "Partida 46", a: "green_owls_noctua", scoreA: 13, b: "caap_auroras", scoreB: 8, winner: "green_owls_noctua" },
+                { code: "Partida 47", a: "ufpr_bbn", scoreA: 13, b: "poli_plague", scoreB: 5, winner: "ufpr_bbn" },
+              ],
+            },
+            {
+              title: "Rodada de 8 inferior",
+              matches: [
+                { code: "Partida 48", a: "azure_bears_black", scoreA: 11, b: "octacore_python", scoreB: 13, winner: "octacore_python" },
+                { code: "Partida 49", a: "fei_darkowls", scoreA: 10, b: "inatel_legacy", scoreB: 13, winner: "inatel_legacy" },
+                { code: "Partida 50", a: "ceub_octopus_vulgaris", scoreA: 9, b: "maua_blue", scoreB: 13, winner: "maua_blue" },
+                { code: "Partida 51", a: "green_owls_noctua", scoreA: 0, b: "ufpr_bbn", scoreB: 1, winner: "ufpr_bbn", status: "W.O." },
+              ],
+            },
+            {
+              title: "Rodada de 8 inferior",
+              matches: [
+                { code: "Partida 52", a: "a2e_uff", scoreA: 10, b: "octacore_python", scoreB: 13, winner: "octacore_python" },
+                { code: "Partida 53", a: "ufmt_turuna", scoreA: 13, b: "inatel_legacy", scoreB: 4, winner: "ufmt_turuna" },
+                { code: "Partida 54", a: "uscs_hawks", scoreA: 1, b: "maua_blue", scoreB: 0, winner: "uscs_hawks", status: "W.O." },
+                { code: "Partida 55", a: "caap_momentum", scoreA: 9, b: "ufpr_bbn", scoreB: 13, winner: "ufpr_bbn" },
+              ],
+            },
+            {
+              title: "Rodada de 4 inferior",
+              matches: [
+                { code: "Partida 56", a: "octacore_python", scoreA: 2, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
+                { code: "Partida 57", a: "uscs_hawks", scoreA: 13, b: "ufpr_bbn", scoreB: 5, winner: "uscs_hawks" },
+              ],
+            },
+            {
+              title: "Quartas de final inferior",
+              matches: [
+                { code: "Partida 58", a: "pucc_cardinals", scoreA: 4, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
+                { code: "Partida 59", a: "axis_anteaters", scoreA: 14, b: "uscs_hawks", scoreB: 12, winner: "axis_anteaters" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
   "univava-classificatoria-1": {
     name: "UNIVAV\u00c1 - Classificat\u00f3rias 1",
     organizer: "AcadArena",
@@ -1509,7 +1706,7 @@ const TOURNAMENT_OVERRIDES = {
       "octacore_python",
       "octacore_javascript",
       "azure_bears_black",
-      "azure_bears_s",
+      "azure_bears_silver",
       "wolf_gaming",
       "cyberkongs",
       "brutal_esports",
@@ -1523,7 +1720,7 @@ const TOURNAMENT_OVERRIDES = {
       { range: "1", id: "ufu_saints" },
       { range: "2", id: "wolf_gaming" },
       { range: "3", id: "azure_bears_black" },
-      { range: "4", id: "azure_bears_s" },
+      { range: "4", id: "azure_bears_silver" },
       { range: "5-6", id: "octacore_python" },
       { range: "5-6", id: "brutal_esports" },
       { range: "7-8", id: "macklogic_white" },
@@ -1561,7 +1758,7 @@ const TOURNAMENT_OVERRIDES = {
               title: "Rodada de 16 superior",
               matches: [
                 { code: "Partida 1", a: "octacore_python", scoreA: 1, bLabel: "Sem adversario", scoreB: 0, winner: "octacore_python" },
-                { code: "Partida 2", a: "octacore_javascript", scoreA: 5, b: "azure_bears_s", scoreB: 13, winner: "azure_bears_s" },
+                { code: "Partida 2", a: "octacore_javascript", scoreA: 5, b: "azure_bears_silver", scoreB: 13, winner: "azure_bears_silver" },
                 { code: "Partida 3", a: "azure_bears_black", scoreA: 1, bLabel: "Sem adversario", scoreB: 0, winner: "azure_bears_black" },
                 { code: "Partida 4", a: "a2e_uff", scoreA: 13, b: "wolf_gaming", scoreB: 10, winner: "a2e_uff" },
                 { code: "Partida 5", a: "cyberkongs", scoreA: 1, bLabel: "Sem adversario", scoreB: 0, winner: "cyberkongs" },
@@ -1573,7 +1770,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Quartas de final superior",
               matches: [
-                { code: "Partida 9", a: "octacore_python", scoreA: 13, b: "azure_bears_s", scoreB: 11, winner: "octacore_python" },
+                { code: "Partida 9", a: "octacore_python", scoreA: 13, b: "azure_bears_silver", scoreB: 11, winner: "octacore_python" },
                 { code: "Partida 10", a: "azure_bears_black", scoreA: 13, b: "a2e_uff", scoreB: 6, winner: "azure_bears_black" },
                 { code: "Partida 11", a: "cyberkongs", scoreA: 10, b: "brutal_esports", scoreB: 13, winner: "brutal_esports" },
                 { code: "Partida 12", a: "macklogic_white", scoreA: 14, b: "ufu_saints", scoreB: 16, winner: "ufu_saints" },
@@ -1613,27 +1810,27 @@ const TOURNAMENT_OVERRIDES = {
                 { code: "Partida 20", a: "macklogic_white", scoreA: 13, b: "octacore_javascript", scoreB: 7, winner: "macklogic_white" },
                 { code: "Partida 21", a: "cyberkongs", scoreA: 8, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
                 { code: "Partida 22", a: "a2e_uff", scoreA: 11, b: "unirv_rushone", scoreB: 13, winner: "unirv_rushone" },
-                { code: "Partida 23", a: "azure_bears_s", scoreA: 13, b: "ufpr_bbn", scoreB: 11, winner: "azure_bears_s" },
+                { code: "Partida 23", a: "azure_bears_silver", scoreA: 13, b: "ufpr_bbn", scoreB: 11, winner: "azure_bears_silver" },
               ],
             },
             {
               title: "Rodada de 4 inferior",
               matches: [
                 { code: "Partida 24", a: "macklogic_white", scoreA: 4, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
-                { code: "Partida 25", a: "unirv_rushone", scoreA: 11, b: "azure_bears_s", scoreB: 13, winner: "azure_bears_s" },
+                { code: "Partida 25", a: "unirv_rushone", scoreA: 11, b: "azure_bears_silver", scoreB: 13, winner: "azure_bears_silver" },
               ],
             },
             {
               title: "Quartas de final inferior",
               matches: [
                 { code: "Partida 26", a: "octacore_python", scoreA: 9, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
-                { code: "Partida 27", a: "brutal_esports", scoreA: 10, b: "azure_bears_s", scoreB: 13, winner: "azure_bears_s" },
+                { code: "Partida 27", a: "brutal_esports", scoreA: 10, b: "azure_bears_silver", scoreB: 13, winner: "azure_bears_silver" },
               ],
             },
             {
               title: "Semifinal inferior",
               matches: [
-                { code: "Partida 28", a: "wolf_gaming", scoreA: 13, b: "azure_bears_s", scoreB: 7, winner: "wolf_gaming" },
+                { code: "Partida 28", a: "wolf_gaming", scoreA: 13, b: "azure_bears_silver", scoreB: 7, winner: "wolf_gaming" },
               ],
             },
             {
@@ -1921,6 +2118,7 @@ const state = {
   rankingShowDetails: false,
   rankingSort: { key: "", direction: "default" },
   rankingVersionId: "",
+  rankingRefreshTimer: 0,
   homePlayerWeekTimer: 0,
   homePlayerWeekResumeTimer: 0,
   tournamentStatsSort: {
@@ -1960,6 +2158,7 @@ async function init() {
       const loaded = await loadEventFiles(manifest.events);
       state.db = buildDatabase(manifest.events, loaded, metadata, teamProfiles, rankingWeights);
     }
+    ensureCurrentRankingSnapshot(state.db);
     state.tournamentRankingCache.clear();
     state.ready = true;
     window.addEventListener("hashchange", render);
@@ -1967,6 +2166,7 @@ async function init() {
       await runImageSplash();
     }
     render();
+    scheduleRankingWeeklyRefresh();
     if (window.requestIdleCallback) window.requestIdleCallback(() => warmImageCache(), { timeout: 4000 });
     else window.setTimeout(() => warmImageCache(), 2500);
   } catch (error) {
@@ -2379,8 +2579,7 @@ function rankingSnapshotCutoffs(matches, matchSeries) {
   const latestActiveCutoff = rankingTuesdayStartOnOrBefore(Date.now());
   if (!dates.length) return [latestActiveCutoff];
   const firstCutoff = rankingTuesdayStartOnOrAfter(Math.min(...dates));
-  const latestDataCutoff = rankingTuesdayStartOnOrAfter(Math.max(...dates));
-  const lastCutoff = Math.max(firstCutoff, Math.min(latestActiveCutoff, latestDataCutoff));
+  const lastCutoff = Math.max(firstCutoff, latestActiveCutoff);
   const cutoffs = [];
   for (let cutoff = lastCutoff; cutoff >= firstCutoff; cutoff -= WEEK_MS) {
     cutoffs.push(cutoff);
@@ -2399,6 +2598,50 @@ function rankingTuesdayStartOnOrBefore(timestamp) {
 function rankingTuesdayStartOnOrAfter(timestamp) {
   const cutoff = rankingTuesdayStartOnOrBefore(timestamp);
   return cutoff < timestamp ? cutoff + WEEK_MS : cutoff;
+}
+
+function ensureCurrentRankingSnapshot(db, now = Date.now()) {
+  if (!db || !window.RankingCore?.calculateTeamRankings) return false;
+  const cutoffAt = rankingTuesdayStartOnOrBefore(now);
+  const snapshots = db.rankingSnapshots || [];
+  if (snapshots.some((snapshot) => Number(snapshot.cutoffAt || 0) === cutoffAt)) return false;
+
+  try {
+    const ranking = calculateRankingForCutoff({
+      teams: db.teams || [],
+      matches: db.matches || [],
+      matchSeries: db.matchSeries || [],
+      players: db.players || [],
+      tournaments: db.tournaments || [],
+      rankingWeights: db.rankingWeights || {},
+      cutoffAt,
+    });
+    const snapshot = rankingSnapshotShell(cutoffAt, ranking);
+    delete snapshot.ranking;
+    db.rankingSnapshots = [snapshot, ...snapshots].sort((a, b) => Number(b.cutoffAt || 0) - Number(a.cutoffAt || 0));
+    db.ranking = ranking;
+    applyRankingResultToTeams(db.teams || [], ranking);
+    db.teams?.sort(compareTeamsByCanonicalRank);
+    return true;
+  } catch (error) {
+    console.error("Falha ao publicar o snapshot semanal do ranking", error);
+    return false;
+  }
+}
+
+function scheduleRankingWeeklyRefresh() {
+  if (!state.db || typeof window.setTimeout !== "function") return;
+  if (state.rankingRefreshTimer) window.clearTimeout(state.rankingRefreshTimer);
+  const now = Date.now();
+  const nextCutoff = rankingTuesdayStartOnOrBefore(now) + WEEK_MS;
+  const delay = Math.max(250, nextCutoff - now + 250);
+  state.rankingRefreshTimer = window.setTimeout(() => {
+    if (ensureCurrentRankingSnapshot(state.db)) {
+      state.tournamentRankingCache.clear();
+      render();
+    }
+    scheduleRankingWeeklyRefresh();
+  }, delay);
 }
 
 function applyRankingResultToTeams(teams, ranking) {
@@ -3466,30 +3709,86 @@ function addRaatingAggregateFields(row, player) {
   }
 }
 
+function emptyPlayerStatTotals() {
+  return {
+    matches: 0,
+    rounds: 0,
+    kills: 0,
+    deaths: 0,
+    assists: 0,
+    score: 0,
+    damage: 0,
+    firstKills: 0,
+    firstDeaths: 0,
+    kastRounds: 0,
+    impactTotal: 0,
+    ...emptyRaatingAggregateFields(),
+    headshots: 0,
+    bodyshots: 0,
+    legshots: 0,
+  };
+}
+
+function addPlayerMatchTotals(row, player) {
+  row.matches += 1;
+  row.rounds += player.rounds;
+  row.kills += player.kills;
+  row.deaths += player.deaths;
+  row.assists += player.assists;
+  row.score += player.score;
+  row.damage += player.damage;
+  row.firstKills += player.firstKills;
+  row.firstDeaths += player.firstDeaths;
+  row.kastRounds += player.kastRounds;
+  row.impactTotal += player.impactTotal;
+  addRaatingAggregateFields(row, player);
+  row.headshots += player.headshots;
+  row.bodyshots += player.bodyshots;
+  row.legshots += player.legshots;
+}
+
+function finalizePlayerStatRow(row) {
+  row.acs = row.rounds ? row.score / row.rounds : 0;
+  row.adr = row.rounds ? row.damage / row.rounds : 0;
+  row.kpr = row.rounds ? row.kills / row.rounds : 0;
+  row.dpr = row.rounds ? row.deaths / row.rounds : 0;
+  row.apr = row.rounds ? row.assists / row.rounds : 0;
+  row.kd = row.deaths ? row.kills / row.deaths : row.kills;
+  row.kastFrac = row.rounds ? row.kastRounds / row.rounds : 0;
+  row.kast = row.kastFrac * 100;
+  row.impactRound = row.rounds ? row.impactTotal / row.rounds : 0;
+  row.impactRoundLegacy = row.rounds ? Number(row.impactTotalLegacy || 0) / row.rounds : 0;
+  row.kastLegacyFrac = row.rounds ? Number(row.kastLegacyRounds || 0) / row.rounds : row.kastFrac;
+  row.kastLegacy = row.kastLegacyFrac * 100;
+  applyRaatingFields(row);
+  const shots = row.headshots + row.bodyshots + row.legshots;
+  row.hs = shots ? (row.headshots / shots) * 100 : 0;
+  return row;
+}
+
+// Stats do jogador restritas aos mapas jogados por uma equipe específica
+// (perfil da equipe). Sem passagem registrada, retorna uma linha zerada.
+function playerStatsForTeam(player, teamId) {
+  const stint = (player?.teamStats || []).find((row) => row.teamId === teamId);
+  return stint || finalizePlayerStatRow({ teamId, ...emptyPlayerStatTotals() });
+}
+
 function aggregatePlayers(matches, teams, metadata) {
   const teamByObservedPlayer = new Map();
   teams.forEach((team) => team.lineup.forEach((player) => teamByObservedPlayer.set(player.id, team.id)));
 
   const byId = new Map();
+  const teamTotalsByRow = new Map();
   for (const match of matches) {
     for (const player of match.players) {
       const teamId = match.teamA.color === player.teamColor ? match.teamA.id : match.teamB.id;
       const row = ensurePlayer(byId, player, teamId);
-      row.matches += 1;
-      row.rounds += player.rounds;
-      row.kills += player.kills;
-      row.deaths += player.deaths;
-      row.assists += player.assists;
-      row.score += player.score;
-      row.damage += player.damage;
-      row.firstKills += player.firstKills;
-      row.firstDeaths += player.firstDeaths;
-      row.kastRounds += player.kastRounds;
-      row.impactTotal += player.impactTotal;
-      addRaatingAggregateFields(row, player);
-      row.headshots += player.headshots;
-      row.bodyshots += player.bodyshots;
-      row.legshots += player.legshots;
+      addPlayerMatchTotals(row, player);
+      let rowTeamTotals = teamTotalsByRow.get(row);
+      if (!rowTeamTotals) teamTotalsByRow.set(row, (rowTeamTotals = new Map()));
+      let stint = rowTeamTotals.get(teamId);
+      if (!stint) rowTeamTotals.set(teamId, (stint = emptyPlayerStatTotals()));
+      addPlayerMatchTotals(stint, player);
       row.teams.set(teamId, (row.teams.get(teamId) || 0) + 1);
       row.agents.set(player.agentSlug || player.agent, updateAgentBucket(row.agents.get(player.agentSlug || player.agent), player));
       row.maps.set(match.mapName, updateStatBucket(row.maps.get(match.mapName), player.rating, player.acs, player.rounds));
@@ -3512,21 +3811,10 @@ function aggregatePlayers(matches, teams, metadata) {
       const observedTeamId = [...player.teams.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || teamByObservedPlayer.get(player.id);
       player.observedTeamId = observedTeamId || "";
       player.teamId = player.currentTeam || observedTeamId || "";
-      player.acs = player.rounds ? player.score / player.rounds : 0;
-      player.adr = player.rounds ? player.damage / player.rounds : 0;
-      player.kpr = player.rounds ? player.kills / player.rounds : 0;
-      player.dpr = player.rounds ? player.deaths / player.rounds : 0;
-      player.apr = player.rounds ? player.assists / player.rounds : 0;
-      player.kd = player.deaths ? player.kills / player.deaths : player.kills;
-      player.kastFrac = player.rounds ? player.kastRounds / player.rounds : 0;
-      player.kast = player.kastFrac * 100;
-      player.impactRound = player.rounds ? player.impactTotal / player.rounds : 0;
-      player.impactRoundLegacy = player.rounds ? Number(player.impactTotalLegacy || 0) / player.rounds : 0;
-      player.kastLegacyFrac = player.rounds ? Number(player.kastLegacyRounds || 0) / player.rounds : player.kastFrac;
-      player.kastLegacy = player.kastLegacyFrac * 100;
-      applyRaatingFields(player);
-      const shots = player.headshots + player.bodyshots + player.legshots;
-      player.hs = shots ? (player.headshots / shots) * 100 : 0;
+      finalizePlayerStatRow(player);
+      player.teamStats = [...(teamTotalsByRow.get(player)?.entries() || [])]
+        .map(([teamId, stint]) => finalizePlayerStatRow({ teamId, ...stint }))
+        .sort((a, b) => b.matches - a.matches || b.rounds - a.rounds);
       player.agentStats = [...player.agents.values()]
         .map((agent) => ({ ...agent, rate: pctValue(agent.rounds, player.rounds) }))
         .sort((a, b) => b.rounds - a.rounds);
@@ -3667,21 +3955,7 @@ function ensurePlayer(map, player, teamId) {
       maps: new Map(),
       events: new Map(),
       recent: [],
-      matches: 0,
-      rounds: 0,
-      kills: 0,
-      deaths: 0,
-      assists: 0,
-      score: 0,
-      damage: 0,
-      firstKills: 0,
-      firstDeaths: 0,
-      kastRounds: 0,
-      impactTotal: 0,
-      ...emptyRaatingAggregateFields(),
-      headshots: 0,
-      bodyshots: 0,
-      legshots: 0,
+      ...emptyPlayerStatTotals(),
     });
   } else if (player.registered) {
     const row = map.get(player.id);
@@ -3788,6 +4062,7 @@ function updateAgentBucket(bucket, player) {
     name: player.agent,
     icon: player.agentIcon || "",
     role: player.agentClass || "",
+    picks: (bucket?.picks || 0) + 1,
     rounds: (bucket?.rounds || 0) + player.rounds,
   };
 }
@@ -3824,8 +4099,8 @@ function aggregateMaps(matches, teams) {
         .map(([teamId, row]) => ({ teamId, wins: row.wins, matches: row.matches, winRate: pctValue(row.wins, row.matches) }))
         .sort((a, b) => b.winRate - a.winRate || b.matches - a.matches);
       map.agentStats = [...map.agents.values()]
-        .map((agent) => ({ ...agent, rate: pctValue(agent.rounds, map.rounds * 10) }))
-        .sort((a, b) => b.rounds - a.rounds);
+        .map((agent) => ({ ...agent, rate: pctValue(agent.picks, map.matches * 2) }))
+        .sort((a, b) => b.picks - a.picks || b.rounds - a.rounds);
       map.colors = mapColors(map.name);
       return map;
     })
@@ -7486,37 +7761,105 @@ function tournamentBracketDisplayRegions(regions = []) {
 }
 
 function tournamentBracketRegionKind(region = {}) {
-  const className = String(region.className || "");
-  if (className.includes("upper-bracket")) return "upper-bracket";
-  if (className.includes("lower-bracket")) return "lower-bracket";
-  if (className.includes("grand-final")) return "grand-final";
+  const descriptor = normalize(`${region.className || ""} ${region.name || ""}`);
+  if (descriptor.includes("upper bracket") || descriptor.includes("chave superior")) return "upper-bracket";
+  if (descriptor.includes("lower bracket") || descriptor.includes("chave inferior")) return "lower-bracket";
+  if (descriptor.includes("grand final") || descriptor.includes("grande final")) return "grand-final";
   return "";
 }
 
+function tournamentPlacementBracketRegionKind(row = {}) {
+  const explicit = normalize(row.bracket || "");
+  const description = normalize([row.note, row.reason].filter(Boolean).join(" "));
+  const upper = [explicit, description].some((value) =>
+    ["upper", "upper bracket", "superior", "chave superior"].includes(value)
+      || value.includes("upper bracket")
+      || value.includes("chave superior"));
+  const lower = [explicit, description].some((value) =>
+    ["lower", "lower bracket", "inferior", "chave inferior"].includes(value)
+      || value.includes("lower bracket")
+      || value.includes("chave inferior"));
+  if (upper === lower) return "";
+  return upper ? "upper-bracket" : "lower-bracket";
+}
+
+function tournamentClassifiedPlacementCards(event = {}, region = {}) {
+  const regionKind = tournamentBracketRegionKind(region);
+  if (!regionKind || regionKind === "grand-final") return [];
+
+  const seen = new Set();
+  const cards = (event.placements || []).flatMap((row) => {
+    const placement = normalize(row.range || placementRawValue(row));
+    const id = row.id || row.teamId;
+    if (!placement.startsWith("classificad") || !id || tournamentPlacementBracketRegionKind(row) !== regionKind || seen.has(id)) return [];
+    seen.add(id);
+    return [{ id }];
+  });
+
+  const lastMatches = [...(region.columns || [])].reverse().find((column) => column.matches?.length)?.matches || [];
+  const winnerOrder = new Map(lastMatches.map((match, index) => [match.winner, index]));
+  return cards.sort((a, b) => (winnerOrder.get(a.id) ?? Number.MAX_SAFE_INTEGER) - (winnerOrder.get(b.id) ?? Number.MAX_SAFE_INTEGER));
+}
+
+function tournamentCuratedBracketColumns(event = {}, region = {}) {
+  const columns = [...(region.columns || [])];
+  if (region.terminalColumn === false) return columns;
+  // Configuracao explicita fica reservada para formatos excepcionais;
+  // classificatorias comuns derivam os cards das colocacoes oficiais.
+  const explicitCards = region.terminalColumn?.cards || [];
+  const terminalCards = explicitCards.length ? explicitCards : tournamentClassifiedPlacementCards(event, region);
+  if (terminalCards.length) {
+    columns.push({ title: "Classificados", ...(region.terminalColumn || {}), terminalCards });
+  }
+  return columns;
+}
+
+function tournamentCuratedBracketColumnEntries(column = {}) {
+  return column.terminalCards || column.matches || [];
+}
+
 function tournamentCuratedBracketRegion(event, region) {
-  const maxMatches = Math.max(...region.columns.map((column) => column.matches.length), 1);
+  const columns = tournamentCuratedBracketColumns(event, region);
+  const maxMatches = Math.max(...columns.map((column) => tournamentCuratedBracketColumnEntries(column).length), 1);
   const totalRows = maxMatches * 2;
   return `
     <section class="tournament-bracket-region ${escapeHtml(region.className || "")}">
       <h3>${escapeHtml(region.name || "Chave")}</h3>
-      <div class="tournament-bracket curated" style="--max-matches:${maxMatches}; --bracket-rows:${totalRows}; --bracket-columns:${Math.max(region.columns.length, 1)}">
-        ${region.columns.map((column, columnIndex) => tournamentCuratedBracketColumn(event, column, region, columnIndex, maxMatches)).join("")}
+      <div class="tournament-bracket curated" style="--max-matches:${maxMatches}; --bracket-rows:${totalRows}; --bracket-columns:${Math.max(columns.length, 1)}">
+        ${columns.map((column, columnIndex) => tournamentCuratedBracketColumn(event, column, columns, columnIndex, maxMatches)).join("")}
       </div>
     </section>
   `;
 }
 
-function tournamentCuratedBracketColumn(event, column, region, columnIndex, maxMatches) {
-  const currentMatches = Math.max(column.matches.length, 1);
-  const nextMatches = region.columns[columnIndex + 1]?.matches.length || 0;
+function tournamentCuratedBracketColumn(event, column, columns, columnIndex, maxMatches) {
+  const entries = tournamentCuratedBracketColumnEntries(column);
+  const currentMatches = Math.max(entries.length, 1);
+  const nextMatches = tournamentCuratedBracketColumnEntries(columns[columnIndex + 1]).length;
   const connectorMode = tournamentBracketConnectorMode(currentMatches, nextMatches);
+  const renderEntry = column.terminalCards ? tournamentCuratedBracketQualifiedCard : tournamentCuratedBracketMatch;
   return `
     <div class="tournament-bracket-col" style="--column-matches:${currentMatches}">
       <h3>${escapeHtml(column.title)}</h3>
       <div class="tournament-bracket-stack">
-        ${column.matches.map((match, matchIndex) => tournamentCuratedBracketMatch(event, match, { columnIndex, matchIndex, connectorMode, maxMatches, columnMatches: currentMatches })).join("")}
+        ${entries.map((entry, matchIndex) => renderEntry(event, entry, { columnIndex, matchIndex, connectorMode, maxMatches, columnMatches: currentMatches })).join("")}
       </div>
     </div>
+  `;
+}
+
+function tournamentCuratedBracketQualifiedCard(event, card, context = {}) {
+  const team = tournamentTeamById(event, card.id);
+  const name = card.label || team?.name || card.id || "Equipe";
+  const rowStart = tournamentBracketRowStart(card.slot ?? context.matchIndex, context.maxMatches || 1, card.slot == null ? context.columnMatches || 1 : context.maxMatches || 1);
+  return `
+    <article class="tournament-bracket-match curated-match qualified-card terminal" aria-label="${escapeHtml(`Classificado: ${name}`)}" style="--match-row:${rowStart}">
+      <span class="tournament-bracket-meta"><span>Classificado</span></span>
+      <span class="tournament-bracket-team winner tournament-bracket-qualified-team">
+        ${card.id ? teamLogo(card.id, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}
+        <strong>${escapeHtml(name)}</strong>
+      </span>
+    </article>
   `;
 }
 
@@ -8337,6 +8680,7 @@ function tournamentMapAnalyticsRows(event, mapMatches) {
         attackWins: 0,
         defenseWins: 0,
         totalPicks: 0,
+        pickOpportunities: 0,
         agents: new Map(),
         poolIndex: (event.mapPool || event.maps || []).findIndex((name) => normalizeNameKey(name) === normalizeNameKey(meta.name || match.mapName || id)),
       });
@@ -8347,6 +8691,7 @@ function tournamentMapAnalyticsRows(event, mapMatches) {
   for (const match of mapMatches || []) {
     const row = ensure(match);
     row.matches += 1;
+    row.pickOpportunities += 2;
     row.rounds += Number(match.rounds || match.roundResults?.length || 0);
     if (match.sideSummary && !(match.roundResults || []).length) {
       // roundResults podados do database.json; usa o resumo pré-computado.
@@ -8365,8 +8710,7 @@ function tournamentMapAnalyticsRows(event, mapMatches) {
       }
     }
     for (const player of match.players || []) {
-      if (Number(player.rounds || 0) <= 0) continue;
-      const key = player.agentSlug || slugify(player.agent || "agent");
+      const key = agentStatsKey(player);
       const agent = row.agents.get(key) || {
         slug: player.agentSlug || key,
         name: displayAgentName(player.agent, player.agentSlug || key),
@@ -8385,7 +8729,7 @@ function tournamentMapAnalyticsRows(event, mapMatches) {
       ...row,
       attackRate: row.sideRounds ? pctValue(row.attackWins, row.sideRounds) : 0,
       defenseRate: row.sideRounds ? pctValue(row.defenseWins, row.sideRounds) : 0,
-      agentRates: new Map([...row.agents.entries()].map(([key, agent]) => [key, { ...agent, rate: row.totalPicks ? pctValue(agent.picks, row.totalPicks) : 0 }])),
+      agentRates: new Map([...row.agents.entries()].map(([key, agent]) => [key, { ...agent, rate: pctValue(agent.picks, row.pickOpportunities) }])),
     }))
     .sort((a, b) => b.matches - a.matches || (a.poolIndex < 0 ? 999 : a.poolIndex) - (b.poolIndex < 0 ? 999 : b.poolIndex) || a.name.localeCompare(b.name, "pt-BR"));
 }
@@ -8471,7 +8815,7 @@ function tournamentMapAgentPickrateTable(rows, agentColumns) {
       <div class="tournament-stat-card-head">
         <span>
           <strong>Pickrate por agente em cada mapa</strong>
-          <small>Percentual de picks observados por mapa</small>
+          <small>Picks divididos por 2 seleções possíveis em cada mapa</small>
         </span>
       </div>
       <div class="table-wrap tournament-map-agent-table-wrap">
@@ -8503,13 +8847,14 @@ function tournamentMapTotalAgentRow(rows, agentColumns) {
     attackWins: rows.reduce((sum, row) => sum + row.attackWins, 0),
     defenseWins: rows.reduce((sum, row) => sum + row.defenseWins, 0),
     totalPicks: rows.reduce((sum, row) => sum + row.totalPicks, 0),
+    pickOpportunities: rows.reduce((sum, row) => sum + row.pickOpportunities, 0),
     agentRates: new Map(),
   };
   total.attackRate = total.sideRounds ? pctValue(total.attackWins, total.sideRounds) : 0;
   total.defenseRate = total.sideRounds ? pctValue(total.defenseWins, total.sideRounds) : 0;
   for (const agent of agentColumns || []) {
     const picks = rows.reduce((sum, row) => sum + Number(row.agents.get(agent.key)?.picks || 0), 0);
-    total.agentRates.set(agent.key, { ...agent, picks, rate: total.totalPicks ? pctValue(picks, total.totalPicks) : 0 });
+    total.agentRates.set(agent.key, { ...agent, picks, rate: pctValue(picks, total.pickOpportunities) });
   }
   return total;
 }
@@ -9015,7 +9360,7 @@ function tournamentAgentsSection(event, matches) {
       <div class="tournament-stats-shell">
         ${tournamentMapFilterControl(event.id, matches, "agents")}
         <div class="tournament-stats-top-grid tournament-agents-top-grid">
-          ${tournamentStatsTopList("Mais escolhidos", "Volume, pick rate e aproveitamento no campeonato", sortedTop.slice(0, 8).map((row, index) => tournamentTopAgentRow(row, index, "volume")), "Nenhum agente registrado.")}
+          ${tournamentStatsTopList("Mais escolhidos", "Volume, pick rate e aproveitamento sem espelhamentos", sortedTop.slice(0, 8).map((row, index) => tournamentTopAgentRow(row, index, "volume")), "Nenhum agente registrado.")}
           ${tournamentStatsTopList("Melhor rAAting 3.0", "Agentes com maior rAAting 3.0 agregado por round", agents.slice().sort((a, b) => b.rating - a.rating || b.rounds - a.rounds || a.name.localeCompare(b.name, "pt-BR")).slice(0, 8).map((row, index) => tournamentTopAgentRow(row, index, "rating")), "Nenhum agente com estatísticas disponíveis.")}
         </div>
         <div class="tournament-stat-tables">
@@ -9028,18 +9373,51 @@ function tournamentAgentsSection(event, matches) {
 
 function tournamentAgentRows(mapMatches) {
   const rows = new Map();
-  let totalPicks = 0;
+  const pickOpportunities = (mapMatches || []).length * 2;
 
   for (const match of mapMatches || []) {
     for (const player of match.players || []) {
-      const key = player.agentSlug || slugify(player.agent || "agent");
+      const key = agentStatsKey(player);
       if (!rows.has(key)) rows.set(key, tournamentAgentEmptyRow(key, player));
       updateTournamentAgentRow(rows.get(key), player, match);
-      totalPicks += 1;
     }
   }
 
-  return [...rows.values()].map((row) => tournamentFinalizeAgentRow(row, totalPicks)).sort(tournamentAgentStatSort);
+  return [...rows.values()].map((row) => tournamentFinalizeAgentRow(row, pickOpportunities)).sort(tournamentAgentStatSort);
+}
+
+function agentStatsKey(player = {}) {
+  const agentId = String(player.agentId || "");
+  return player.agentSlug || AGENT_API_SLUGS[agentId] || slugify(player.agent || agentId || "agent");
+}
+
+function agentStatsTeamId(match, player = {}) {
+  if (player.teamId) return player.teamId;
+  if (player.teamColor && player.teamColor === match?.teamA?.color) return match.teamA.id;
+  if (player.teamColor && player.teamColor === match?.teamB?.color) return match.teamB.id;
+  return "";
+}
+
+function isMirroredAgentPick(match, player) {
+  const agentKey = agentStatsKey(player);
+  const teamId = agentStatsTeamId(match, player);
+  if (!agentKey || !teamId) return false;
+  const opponentId = teamId === match?.teamA?.id ? match?.teamB?.id : teamId === match?.teamB?.id ? match?.teamA?.id : "";
+  return (match?.players || []).some((other) => {
+    if (other === player || agentStatsKey(other) !== agentKey) return false;
+    const otherTeamId = agentStatsTeamId(match, other);
+    return opponentId ? otherTeamId === opponentId : Boolean(otherTeamId && otherTeamId !== teamId);
+  });
+}
+
+function agentStatsHasCompleteOpponentLineup(match, player) {
+  const teamId = agentStatsTeamId(match, player);
+  const opponentId = teamId === match?.teamA?.id ? match?.teamB?.id : teamId === match?.teamB?.id ? match?.teamA?.id : "";
+  if (!opponentId) return false;
+  return (match?.players || []).filter((other) => {
+    const hasAgent = Boolean(other.agentSlug || other.agentId || other.agent);
+    return hasAgent && agentStatsTeamId(match, other) === opponentId;
+  }).length === 5;
 }
 
 function updateTournamentAgentRow(row, player, match) {
@@ -9059,8 +9437,20 @@ function updateTournamentAgentRow(row, player, match) {
   row.headshots += Number(player.headshots || 0);
   row.bodyshots += Number(player.bodyshots || 0);
   row.legshots += Number(player.legshots || 0);
-  row.mapWins += match.winnerId === player.teamId ? 1 : 0;
-  row.mapLosses += match.winnerId === player.teamId ? 0 : 1;
+  const teamId = agentStatsTeamId(match, player);
+  const matchTeamIds = [match?.teamA?.id, match?.teamB?.id];
+  const hasResolvedOutcome = Boolean(teamId && match?.winnerId && matchTeamIds.includes(teamId) && matchTeamIds.includes(match.winnerId));
+  const won = match.winnerId === teamId;
+  row.mapWins += hasResolvedOutcome && won ? 1 : 0;
+  row.mapLosses += hasResolvedOutcome && !won ? 1 : 0;
+  if (isMirroredAgentPick(match, player)) {
+    row.mirroredPicks += 1;
+  } else if (!hasResolvedOutcome || !agentStatsHasCompleteOpponentLineup(match, player)) {
+    row.unknownMirrorPicks += 1;
+  } else {
+    row.nonMirroredWins += won ? 1 : 0;
+    row.nonMirroredLosses += won ? 0 : 1;
+  }
   if (player.id) row.players.add(player.id);
   if (player.teamId) row.teams.add(player.teamId);
   if (match.mapId || match.mapName) row.maps.add(match.mapId || normalizeNameKey(match.mapName));
@@ -9090,13 +9480,17 @@ function tournamentAgentEmptyRow(key, player) {
     legshots: 0,
     mapWins: 0,
     mapLosses: 0,
+    mirroredPicks: 0,
+    unknownMirrorPicks: 0,
+    nonMirroredWins: 0,
+    nonMirroredLosses: 0,
     players: new Set(),
     teams: new Set(),
     maps: new Set(),
   };
 }
 
-function tournamentFinalizeAgentRow(row, totalPicks) {
+function tournamentFinalizeAgentRow(row, pickOpportunities) {
   row.acs = row.rounds ? row.score / row.rounds : 0;
   row.adr = row.rounds ? row.damage / row.rounds : 0;
   row.kpr = row.rounds ? row.kills / row.rounds : 0;
@@ -9112,8 +9506,11 @@ function tournamentFinalizeAgentRow(row, totalPicks) {
   const shots = row.headshots + row.bodyshots + row.legshots;
   row.hs = shots ? (row.headshots / shots) * 100 : 0;
   applyRaatingFields(row);
-  row.pickRate = totalPicks ? pctValue(row.picks, totalPicks) : 0;
-  row.winRate = row.picks ? pctValue(row.mapWins, row.picks) : 0;
+  row.pickOpportunities = Number(pickOpportunities || 0);
+  row.pickRate = pctValue(row.picks, row.pickOpportunities);
+  row.nonMirroredPicks = row.nonMirroredWins + row.nonMirroredLosses;
+  row.winRateNM = pctValue(row.nonMirroredWins, row.nonMirroredPicks);
+  row.winRate = row.winRateNM;
   row.uniquePlayers = row.players.size;
   row.uniqueTeams = row.teams.size;
   row.uniqueMaps = row.maps.size;
@@ -9127,7 +9524,7 @@ function tournamentAgentStatSort(a, b) {
 function tournamentTopAgentRow(row, index, mode = "volume") {
   const metrics = tournamentTopAgentMetrics(row, mode);
   const detail = mode === "rating"
-    ? `${row.picks} pick${row.picks === 1 ? "" : "s"} · ${row.rounds} rounds · ${row.mapWins}-${row.mapLosses} mapas`
+    ? `${row.picks} pick${row.picks === 1 ? "" : "s"} · ${row.rounds} rounds · ${row.nonMirroredWins}-${row.nonMirroredLosses} mapas NM`
     : `${row.uniqueTeams} equipe${row.uniqueTeams === 1 ? "" : "s"} · ${row.uniquePlayers} jogador${row.uniquePlayers === 1 ? "" : "es"} · ${row.rounds} rounds`;
   return `
     <article class="tournament-stat-list-row tournament-agent-highlight-row">
@@ -9159,9 +9556,13 @@ function tournamentTopAgentMetrics(row, mode) {
   return [
     ["Picks", String(row.picks)],
     ["Pick%", pct(row.pickRate)],
-    ["Win%", pct(row.winRate)],
-    ["Mapas", `${row.mapWins}-${row.mapLosses}`],
+    ["Win% (NM)", tournamentAgentNonMirroredWinRate(row)],
+    ["Mapas NM", `${row.nonMirroredWins}-${row.nonMirroredLosses}`],
   ];
+}
+
+function tournamentAgentNonMirroredWinRate(row) {
+  return row.nonMirroredPicks ? pct(row.winRateNM) : "-";
 }
 
 function tournamentAgentStatsTable(eventId, agents, columns = tournamentAgentStatColumns()) {
@@ -9173,7 +9574,7 @@ function tournamentAgentStatsTable(eventId, agents, columns = tournamentAgentSta
       <div class="tournament-stat-card-head">
         <span>
           <strong>Tabela de agentes</strong>
-          <small>Uso, aproveitamento e desempenho agregado por agente</small>
+          <small>Uso, aproveitamento sem mapas espelhados e desempenho agregado</small>
         </span>
         ${tournamentStatsExpandButton("agents", sortedRows.length, expanded)}
       </div>
@@ -9198,7 +9599,7 @@ function tournamentAgentStatColumns() {
     { key: "agent", label: "Agente", value: (row) => row.name || row.slug || "", type: "text", direction: "asc" },
     { key: "picks", label: "Picks", value: (row) => Number(row.picks || 0) },
     { key: "pickRate", label: "Pick%", value: (row) => Number(row.pickRate || 0) },
-    { key: "winRate", label: "Win%", value: (row) => Number(row.winRate || 0) },
+    { key: "winRate", label: "Win% (NM)", value: (row) => Number(row.winRateNM || 0) },
     { key: "rounds", label: "RND", value: (row) => Number(row.rounds || 0) },
     { key: "uniquePlayers", label: "Jogadores", value: (row) => Number(row.uniquePlayers || 0) },
     { key: "uniqueTeams", label: "Equipes", value: (row) => Number(row.uniqueTeams || 0) },
@@ -9243,7 +9644,7 @@ function tournamentAgentStatCell(row, column) {
   }
   if (key === "picks") return `<td class="numeric">${escapeHtml(String(row.picks || 0))}</td>`;
   if (key === "pickRate") return tournamentStatValueCell(pct(row.pickRate));
-  if (key === "winRate") return tournamentStatValueCell(pct(row.winRate));
+  if (key === "winRate") return tournamentStatValueCell(tournamentAgentNonMirroredWinRate(row));
   if (key === "rounds") return `<td class="numeric">${escapeHtml(String(row.rounds || 0))}</td>`;
   if (key === "uniquePlayers") return `<td class="numeric">${escapeHtml(String(row.uniquePlayers || 0))}</td>`;
   if (key === "uniqueTeams") return `<td class="numeric">${escapeHtml(String(row.uniqueTeams || 0))}</td>`;
@@ -9674,7 +10075,9 @@ function renderTeamDetail(id) {
   const activeTab = ["ranking", "roster", "matches", "tournaments", "stats"].includes(route().tab) ? route().tab : "ranking";
   const matches = matchSeriesForTeam(id);
   const currentLineup = team.currentLineup || [];
-  const observedPlayers = state.db.players.filter((player) => player.observedTeamId === id && player.matches > 0).sort((a, b) => Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0));
+  const observedPlayers = state.db.players
+    .filter((player) => player.observedTeamId === id && player.matches > 0)
+    .sort((a, b) => Number(officialRatingValue(playerStatsForTeam(b, id)) || 0) - Number(officialRatingValue(playerStatsForTeam(a, id)) || 0));
   const historicalPlayers = teamHistoricalPlayers(team).filter((player) => !currentLineup.some((entry) => entry.playerId === player.id));
   const tournaments = visibleTournaments().filter((event) => event.teams.includes(team.id));
   const trophies = teamTrophyAchievements(team);
@@ -9741,7 +10144,7 @@ function teamRankHero(team) {
 function teamHeroCover(team, currentLineup, observedPlayers = []) {
   const lineupPlayers = currentLineup.map((entry) => ({ entry, player: entry.playerId ? playerById(entry.playerId) : null }));
   const fallbackPlayers = observedPlayers.filter((player) => !lineupPlayers.some((row) => row.player?.id === player.id)).map((player) => ({ entry: { playerId: player.id, name: player.nick }, player }));
-  const rows = lineupPlayers.length ? teamHeroCoverSelection(lineupPlayers) : fallbackPlayers.slice(0, 5);
+  const rows = lineupPlayers.length ? teamHeroCoverSelection(lineupPlayers, team) : fallbackPlayers.slice(0, 5);
   if (!rows.length) return "";
   return `
     <div class="team-hero-cover" aria-label="${escapeHtml(`Elenco ${team.name}`)}">
@@ -9750,11 +10153,12 @@ function teamHeroCover(team, currentLineup, observedPlayers = []) {
   `;
 }
 
-function teamHeroCoverSelection(lineupPlayers) {
+function teamHeroCoverSelection(lineupPlayers, team) {
   if (lineupPlayers.length <= 5) return lineupPlayers;
+  const teamMatches = (row) => Number((row.player ? playerStatsForTeam(row.player, team.id).matches : 0) || 0);
   const chosen = new Set(
     [...lineupPlayers]
-      .sort((a, b) => Number(b.player?.matches || 0) - Number(a.player?.matches || 0) || Number(Boolean(b.player?.photo)) - Number(Boolean(a.player?.photo)))
+      .sort((a, b) => teamMatches(b) - teamMatches(a) || Number(Boolean(b.player?.photo)) - Number(Boolean(a.player?.photo)))
       .slice(0, 5),
   );
   return lineupPlayers.filter((row) => chosen.has(row));
@@ -9991,7 +10395,7 @@ function teamRosterTab(team, currentLineup, historicalPlayers) {
     <div class="stack team-roster-stack">
       <section class="section-band">
         ${sectionHead("Elenco atual", "Jogadores ativos no perfil público da equipe.", null, null)}
-        <div class="roster-grid roster-feature-grid">${currentLineup.length ? currentLineup.map(lineupEntryCard).join("") : `<div class="empty-state">Equipe sem elenco atual cadastrado.</div>`}</div>
+        <div class="roster-grid roster-feature-grid">${currentLineup.length ? currentLineup.map((entry) => lineupEntryCard(entry, team)).join("") : `<div class="empty-state">Equipe sem elenco atual cadastrado.</div>`}</div>
       </section>
       <section class="section-band">
         ${sectionHead("Histórico do elenco", "Linha do tempo das formações registradas em partidas oficiais.", null, null)}
@@ -10128,11 +10532,14 @@ function seriesScoreForTeam(series, teamId) {
 
 function teamStatsTab(team, currentLineup, observedPlayers) {
   const lineupPlayers = currentLineup.map((entry) => playerById(entry.playerId)).filter(Boolean);
-  const tablePlayers = [...new Map([...lineupPlayers, ...observedPlayers].map((player) => [player.id, player])).values()].sort((a, b) => Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0));
+  const stintPlayers = state.db.players.filter((player) => (player.teamStats || []).some((row) => row.teamId === team.id && row.matches > 0));
+  const tablePlayers = [...new Map([...lineupPlayers, ...stintPlayers, ...observedPlayers].map((player) => [player.id, player])).values()]
+    .map((player) => ({ ...player, ...playerStatsForTeam(player, team.id) }))
+    .sort((a, b) => Number(b.matches > 0) - Number(a.matches > 0) || Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0) || Number(b.rounds || 0) - Number(a.rounds || 0));
   return `
     <div class="team-tab-grid">
       <section class="data-panel">
-        <div class="section-head"><h2>Stats dos jogadores</h2><p>Média e volume dos jogadores da equipe.</p></div>
+        <div class="section-head"><h2>Stats dos jogadores</h2><p>Média e volume considerando apenas os mapas jogados pela equipe.</p></div>
         ${teamPlayerStatsTable(tablePlayers)}
       </section>
       <aside class="stack">
@@ -10542,7 +10949,7 @@ function formerMemberCard(team, player) {
         <strong>${escapeHtml(tenure.range)}</strong>
         <small>${escapeHtml(tenure.detail)}</small>
       </span>
-      <span class="chip red">${playerRating(player)} rAAting 3.0</span>
+      <span class="chip red">${playerRating(playerStatsForTeam(player, team.id))} rAAting 3.0</span>
     </a>
   `;
 }
@@ -11053,16 +11460,16 @@ function playerAgentStatColumns() {
 
 function playerAgentRows(playerId, matches, mapFilter = "all") {
   const rows = new Map();
-  let totalPicks = 0;
+  let pickOpportunities = 0;
   for (const match of tournamentFilteredMapMatches(matches, mapFilter)) {
     const player = (match.players || []).find((row) => row.id === playerId);
     if (!player) continue;
-    const key = player.agentSlug || slugify(player.agent || "agent");
+    const key = agentStatsKey(player);
     if (!rows.has(key)) rows.set(key, tournamentAgentEmptyRow(key, player));
     updateTournamentAgentRow(rows.get(key), player, match);
-    totalPicks += 1;
+    pickOpportunities += 1;
   }
-  return [...rows.values()].map((row) => tournamentFinalizeAgentRow(row, totalPicks)).sort(tournamentAgentStatSort);
+  return [...rows.values()].map((row) => tournamentFinalizeAgentRow(row, pickOpportunities)).sort(tournamentAgentStatSort);
 }
 
 function playerAgentStatsScopeId(playerId) {
@@ -11715,7 +12122,7 @@ function renderMapDetail(id) {
         </section>
         <section class="data-panel">
           <div class="section-head"><h2>Agentes</h2></div>
-          ${agentBars(map.agentStats.slice(0, 8))}
+          ${agentBars(map.agentStats.slice(0, 8), { showPickRate: true })}
         </section>
         <section class="data-panel">
           <div class="section-head"><h2>Win rate por equipe</h2></div>
@@ -12951,10 +13358,11 @@ function playerCard(player) {
   `;
 }
 
-function lineupEntryCard(entry) {
+function lineupEntryCard(entry, team) {
   const player = entry.playerId ? playerById(entry.playerId) : null;
   const name = player?.nick || entry.name || "Jogador";
   const handle = player?.handle || "";
+  const stats = player && team ? playerStatsForTeam(player, team.id) : player;
   const body = `
     <div class="roster-photo-wrap">
       ${player ? playerLogo(player.id, "roster-photo") : logo((name || "J").slice(0, 2).toUpperCase(), ["#181715", "#6c665d"], "round roster-photo")}
@@ -12964,9 +13372,9 @@ function lineupEntryCard(entry) {
       <span>${handle ? escapeHtml(handle) : "Perfil em atualização"}</span>
       ${player ? `
         <div class="roster-player-metrics">
-          <span><strong>${escapeHtml(playerRating(player))}</strong><small>rAAting</small></span>
-          <span><strong>${escapeHtml(String(player.matches || 0))}</strong><small>Mapas</small></span>
-          <span><strong>${escapeHtml(fmt(player.acs, 0))}</strong><small>ACS</small></span>
+          <span><strong>${escapeHtml(playerRating(stats))}</strong><small>rAAting</small></span>
+          <span><strong>${escapeHtml(String(stats.matches || 0))}</strong><small>Mapas</small></span>
+          <span><strong>${escapeHtml(fmt(stats.acs, 0))}</strong><small>ACS</small></span>
         </div>
       ` : `<small class="roster-player-empty">Perfil em atualização</small>`}
     </div>
@@ -13163,7 +13571,7 @@ function playerMapTable(player) {
   `;
 }
 
-function agentBars(rows) {
+function agentBars(rows, options = {}) {
   if (!rows.length) return `<div class="empty-state">Sem agentes registrados.</div>`;
   return `
     <div class="bars">
@@ -13173,7 +13581,7 @@ function agentBars(rows) {
             <div class="bar-row agent-bar">
               <span>${agentBadge(agent)}</span>
               <div class="bar-track"><div class="bar-fill" style="width:${clamp(agent.rate, 0, 100)}%"></div></div>
-              <span class="numeric">${escapeHtml(String(agent.rounds))} rounds</span>
+              <span class="numeric">${options.showPickRate ? escapeHtml(`${agent.picks || 0} picks · ${pct(agent.rate)}`) : `${escapeHtml(String(agent.rounds))} rounds`}</span>
             </div>
           `,
         )

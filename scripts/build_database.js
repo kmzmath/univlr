@@ -124,6 +124,10 @@ function main() {
     ["times", decoded.teams.length === db.teams.length],
     ["ranking", decoded.ranking.teams.length === db.ranking.teams.length],
     [
+      "snapshot semanal atual",
+      Number(decoded.rankingSnapshots[0]?.cutoffAt ?? NaN) === Number(rankingTuesdayStartOnOrBefore(Date.now())),
+    ],
+    [
       "nota do líder",
       Number(decoded.ranking.teams[0]?.score ?? NaN) === Number(db.ranking.teams[0]?.score ?? NaN),
     ],

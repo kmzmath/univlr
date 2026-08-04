@@ -17,6 +17,10 @@ const FILENAME_TEAM_ALIASES = {
   axissupernova: "axis_anteaters",
 };
 
+const LEGACY_TEAM_ID_ALIASES = {
+  azure_bears_s: "azure_bears_silver",
+};
+
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, "utf8"));
 }
@@ -352,6 +356,15 @@ function updateTeamProfiles(histories, metadata) {
   profiles.defaults = profiles.defaults || {};
   if (!Array.isArray(profiles.defaults.lineupHistory)) profiles.defaults.lineupHistory = [];
   profiles.teams = profiles.teams || {};
+
+  for (const [legacyId, canonicalId] of Object.entries(LEGACY_TEAM_ID_ALIASES)) {
+    if (!profiles.teams[legacyId]) continue;
+    profiles.teams[canonicalId] = {
+      ...profiles.teams[legacyId],
+      ...(profiles.teams[canonicalId] || {}),
+    };
+    delete profiles.teams[legacyId];
+  }
 
   const teamIds = new Set([...(metadata.teams || []).map((team) => team.id), ...histories.keys()]);
   for (const teamId of [...teamIds].sort()) {

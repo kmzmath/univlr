@@ -630,6 +630,132 @@
         }
       ]
     },
+    "univava-classificatoria-2": {
+      "weight": 1.1,
+      "defaultPhase": "regular",
+      "phases": {
+        "regular": 1,
+        "qualifier": 1.15
+      },
+      "phaseRules": [
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 25,
+          "seriesCodeMax": 30
+        },
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 56,
+          "seriesCodeMax": 59
+        }
+      ],
+      "name": "UNIVAV\u00c1 - Classificat\u00f3ria 2",
+      "logo": "assets/tournament-icons/UNIVAVA.png",
+      "teams": 25,
+      "endAt": "2026-07-27T02:00:00.000Z",
+      "placements": [
+        {
+          "teamId": "caap_hellhounds",
+          "placement": 1
+        },
+        {
+          "teamId": "ufu_saints",
+          "placement": 1
+        },
+        {
+          "teamId": "ufmt_turuna",
+          "placement": 1
+        },
+        {
+          "teamId": "axis_anteaters",
+          "placement": 1
+        },
+        {
+          "teamId": "pucc_cardinals",
+          "placement": 5
+        },
+        {
+          "teamId": "uscs_hawks",
+          "placement": 5
+        },
+        {
+          "teamId": "octacore_python",
+          "placement": 7
+        },
+        {
+          "teamId": "ufpr_bbn",
+          "placement": 7
+        },
+        {
+          "teamId": "a2e_uff",
+          "placement": 9
+        },
+        {
+          "teamId": "inatel_legacy",
+          "placement": 9
+        },
+        {
+          "teamId": "maua_blue",
+          "placement": 9
+        },
+        {
+          "teamId": "caap_momentum",
+          "placement": 9
+        },
+        {
+          "teamId": "azure_bears_black",
+          "placement": 13
+        },
+        {
+          "teamId": "fei_darkowls",
+          "placement": 13
+        },
+        {
+          "teamId": "ceub_octopus_vulgaris",
+          "placement": 13
+        },
+        {
+          "teamId": "green_owls_noctua",
+          "placement": 13
+        },
+        {
+          "teamId": "inatel_dois",
+          "placement": 17
+        },
+        {
+          "teamId": "rahnag",
+          "placement": 17
+        },
+        {
+          "teamId": "unicamp_tritons_black",
+          "placement": 17
+        },
+        {
+          "teamId": "inatel",
+          "placement": 17
+        },
+        {
+          "teamId": "ime_wolves_red",
+          "placement": 17
+        },
+        {
+          "teamId": "liga_vulkanica",
+          "placement": 17
+        },
+        {
+          "teamId": "caap_auroras",
+          "placement": 17
+        },
+        {
+          "teamId": "poli_plague",
+          "placement": 17
+        },
+        {
+          "teamId": "inatel_gray",
+          "placement": 25
+        }
+      ]
+    },
     "univava-classificatoria-1": {
       "weight": 1.1,
       "defaultPhase": "regular",
@@ -836,7 +962,7 @@
           "placement": 3
         },
         {
-          "teamId": "azure_bears_s",
+          "teamId": "azure_bears_silver",
           "placement": 4
         },
         {

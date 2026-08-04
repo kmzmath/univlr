@@ -7412,8 +7412,30 @@ td {
   border-left-color: #d69024;
 }
 
-.tournament-bracket-match:hover {
+button.tournament-bracket-match:hover,
+a.tournament-bracket-match:hover {
   border-color: rgba(65, 212, 155, 0.4);
+}
+
+.tournament-bracket-match.qualified-card {
+  grid-template-rows: 30px 82px;
+  border-color: rgba(65, 212, 155, 0.34);
+  border-left-color: #41d49b;
+  background: linear-gradient(145deg, rgba(29, 94, 76, 0.34), #142033 72%);
+  cursor: default;
+}
+
+.tournament-bracket-match.qualified-card .tournament-bracket-meta span {
+  color: #7cf2b8;
+}
+
+.tournament-bracket-qualified-team {
+  grid-row: 2;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 12px;
+  height: 82px;
+  border-top-color: rgba(65, 212, 155, 0.24);
+  padding-right: 12px;
 }
 
 .tournament-bracket-meta {

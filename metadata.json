@@ -386,24 +386,6 @@
       ]
     },
     {
-      "id": "azure_bears_s",
-      "sourceId": "2287",
-      "slug": "azure_bears_s",
-      "tag": "AZR S",
-      "displayName": "Azure Bears S",
-      "org": "Universidade Tecnológica Federal do Paraná",
-      "orgTag": "UTFPR Curitiba",
-      "logo": "assets/team-logos/azure_bears.png",
-      "state": "PR",
-      "stateName": "Paraná",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Paran%C3%A1.svg",
-      "stateRegion": "Sul",
-      "socials": {
-        "instagram": "https://www.instagram.com/azure_bears/"
-      },
-      "lineup": []
-    },
-    {
       "id": "azure_bears_silver",
       "sourceId": "2815",
       "slug": "azure_bears_silver",
@@ -951,6 +933,18 @@
         {
           "slot": 6,
           "name": "Souza"
+        },
+        {
+          "slot": 7,
+          "name": "fxz"
+        },
+        {
+          "slot": 8,
+          "name": "bibinubogao"
+        },
+        {
+          "slot": 9,
+          "name": "Puosso"
         }
       ]
     },
@@ -981,18 +975,10 @@
         },
         {
           "slot": 3,
-          "name": "Puosso"
-        },
-        {
-          "slot": 4,
           "name": "Kmkz"
         },
         {
-          "slot": 5,
-          "name": "fxz"
-        },
-        {
-          "slot": 6,
+          "slot": 4,
           "name": "motta"
         }
       ]
@@ -1440,6 +1426,45 @@
       ]
     },
     {
+      "id": "inatel_dois",
+      "sourceId": "2828",
+      "slug": "inatel_dois",
+      "tag": "INTL2",
+      "displayName": "Inatel 2",
+      "org": "Instituto Nacional de Telecomunicações",
+      "orgTag": "Inatel",
+      "logo": "assets/team-logos/inatel.png",
+      "state": "MG",
+      "stateName": "Minas Gerais",
+      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Minas_Gerais.svg",
+      "stateRegion": "Sudeste",
+      "socials": {
+        "instagram": "https://www.instagram.com/inatelesports/"
+      },
+      "lineup": [
+        {
+          "slot": 1,
+          "name": "Luurano"
+        },
+        {
+          "slot": 2,
+          "name": "sane"
+        },
+        {
+          "slot": 3,
+          "name": "Toty"
+        },
+        {
+          "slot": 4,
+          "name": "twelve"
+        },
+        {
+          "slot": 5,
+          "name": "jgrb"
+        }
+      ]
+    },
+    {
       "id": "inatel_gray",
       "sourceId": "2821",
       "slug": "inatel_gray",
@@ -1514,6 +1539,45 @@
         {
           "slot": 5,
           "name": "BmZera"
+        }
+      ]
+    },
+    {
+      "id": "liga_vulkanica",
+      "sourceId": "2829",
+      "slug": "liga_vulkanica",
+      "tag": "VULK",
+      "displayName": "Liga Vulkanica",
+      "org": "Universidade do Estado de Mato Grosso",
+      "orgTag": "UNEMAT",
+      "logo": "assets/team-logos/liga_vulkanica.png",
+      "state": "MT",
+      "stateName": "Mato Grosso",
+      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Mato_Grosso.svg",
+      "stateRegion": "Centro-Oeste",
+      "socials": {
+        "instagram": "https://www.instagram.com/ligavulkanica/"
+      },
+      "lineup": [
+        {
+          "slot": 1,
+          "name": "Mateuspa"
+        },
+        {
+          "slot": 2,
+          "name": "BK47"
+        },
+        {
+          "slot": 3,
+          "name": "Kayto"
+        },
+        {
+          "slot": 4,
+          "name": "Slow"
+        },
+        {
+          "slot": 5,
+          "name": "Jfalls"
         }
       ]
     },
@@ -1741,6 +1805,49 @@
         {
           "slot": 8,
           "name": "Gabs"
+        }
+      ]
+    },
+    {
+      "id": "maua_blue",
+      "sourceId": "2830",
+      "slug": "maua_blue",
+      "tag": "MAUA",
+      "displayName": "Mauá Blue",
+      "org": "Instituto Mauá de Tecnologia",
+      "orgTag": "MAUÁ",
+      "logo": "assets/team-logos/maua_blue.png",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateRegion": "Sudeste",
+      "socials": {
+        "instagram": "https://www.instagram.com/esportsmaua/"
+      },
+      "lineup": [
+        {
+          "slot": 1,
+          "name": "Krownnl"
+        },
+        {
+          "slot": 2,
+          "name": "Kikito"
+        },
+        {
+          "slot": 3,
+          "name": "Pipão"
+        },
+        {
+          "slot": 4,
+          "name": "Super"
+        },
+        {
+          "slot": 5,
+          "name": "Greed"
+        },
+        {
+          "slot": 6,
+          "name": "Migg"
         }
       ]
     },
@@ -4086,7 +4193,8 @@
         "univasf"
       ],
       "nickHistory": [
-        "miyu#237"
+        "miyu#237",
+        "phzinn#lara"
       ],
       "photo": ""
     },
@@ -4177,7 +4285,8 @@
         "univasf"
       ],
       "nickHistory": [
-        "GorTzin#ZloLa"
+        "GorTzin#ZloLa",
+        "BaiaKuzin#ZLol"
       ],
       "photo": ""
     },
@@ -4203,7 +4312,8 @@
         "unit_troianos"
       ],
       "nickHistory": [
-        "cetaceo lover#Raio"
+        "cetaceo lover#Raio",
+        "young dumb naza#Raio"
       ],
       "photo": ""
     },
@@ -4454,7 +4564,8 @@
         "unirio_krakens"
       ],
       "nickHistory": [
-        "Mistic#BR3"
+        "Mistic#BR3",
+        "KRK Mistic#BR3"
       ],
       "photo": ""
     },
@@ -4651,7 +4762,8 @@
         "unifor"
       ],
       "nickHistory": [
-        "Nickzz#2306"
+        "Nickzz#2306",
+        "Niko#br01"
       ],
       "photo": ""
     },
@@ -4796,7 +4908,8 @@
       ],
       "nickHistory": [
         "ego#015",
-        "logaritmo#015"
+        "logaritmo#015",
+        "ego#away"
       ],
       "photo": ""
     },
@@ -4863,7 +4976,8 @@
         "unicamp_tritons_red"
       ],
       "nickHistory": [
-        "drs1 rei de itu#dela"
+        "drs1 rei de itu#dela",
+        "drs1 rei de itu#banco"
       ],
       "photo": ""
     },
@@ -5000,7 +5114,8 @@
         "undbala"
       ],
       "nickHistory": [
-        "FabulousEbaileFs#E0000"
+        "FabulousEbaileFs#E0000",
+        "Marlon Brissimo#KidFS"
       ],
       "photo": ""
     },
@@ -5146,7 +5261,8 @@
         "ufu_saints"
       ],
       "nickHistory": [
-        "queijo coalho#praia"
+        "queijo coalho#praia",
+        "marelo#UFU"
       ],
       "photo": "assets/player-photos/ufu_saints/queijo.png"
     },
@@ -5447,7 +5563,8 @@
         "ufrj_minerva"
       ],
       "nickHistory": [
-        "ร σ α p ッ#soso"
+        "ร σ α p ッ#soso",
+        "ブレンノ#jjk"
       ],
       "photo": ""
     },
@@ -5786,7 +5903,8 @@
         "ufmg_fenix_b"
       ],
       "nickHistory": [
-        "Sai#237"
+        "Sai#237",
+        "Indra The Runner#237"
       ],
       "photo": ""
     },
@@ -5968,7 +6086,8 @@
         "ufg_eagles_blue"
       ],
       "nickHistory": [
-        "we cry together#jessa"
+        "we cry together#jessa",
+        "j3ssax#damn"
       ],
       "photo": ""
     },
@@ -6491,7 +6610,8 @@
         "totale_umc"
       ],
       "nickHistory": [
-        "purikywa#web"
+        "purikywa#web",
+        "pdrr#web"
       ],
       "photo": ""
     },
@@ -6743,7 +6863,8 @@
         "rahnag"
       ],
       "nickHistory": [
-        "mistakes#moi"
+        "mistakes#moi",
+        "but who knows#who"
       ],
       "photo": ""
     },
@@ -7394,7 +7515,8 @@
         "milionaria_ufam"
       ],
       "nickHistory": [
-        "Lock Street#exu"
+        "Lock Street#exu",
+        "SmK#0511"
       ],
       "photo": ""
     },
@@ -7543,7 +7665,8 @@
       "nickHistory": [
         "Katojin#fezes",
         "Eu sou o Kato#eumsm",
-        "Katojin#Lena"
+        "Katojin#Lena",
+        "Katojin#tofu"
       ],
       "photo": "assets/player-photos/macklogic/Katojin.png"
     },
@@ -7949,7 +8072,8 @@
         "inatel_gray"
       ],
       "nickHistory": [
-        "INTL chica#ppl"
+        "INTL chica#ppl",
+        "INTL chica#dan"
       ],
       "photo": ""
     },
@@ -8015,7 +8139,8 @@
         "inatel"
       ],
       "nickHistory": [
-        "Kauan#Júlia"
+        "Kauan#Júlia",
+        "疲れた#Júlia"
       ],
       "photo": ""
     },
@@ -8028,7 +8153,8 @@
         "inatel"
       ],
       "nickHistory": [
-        "dan 光环#luiza"
+        "dan 光环#luiza",
+        "INTL dan#chica"
       ],
       "photo": ""
     },
@@ -8788,7 +8914,8 @@
         "furia_utfpr"
       ],
       "nickHistory": [
-        "nssj 11#1999"
+        "nssj 11#1999",
+        "MVPQUALIFYb2025#akdb"
       ],
       "photo": ""
     },
@@ -8841,10 +8968,11 @@
       "id": "khFydt699IQigzJY9zSaAWVEkODol7bZwiESFtYF1eAQOpMTlLg2wrAGYYs5bXuyqac5K3fZHqh_Hg",
       "name": "Puosso",
       "puuid": "khFydt699IQigzJY9zSaAWVEkODol7bZwiESFtYF1eAQOpMTlLg2wrAGYYs5bXuyqac5K3fZHqh_Hg",
-      "currentTeam": "fei_whiteowls",
+      "currentTeam": "fei_darkowls",
       "teamHistory": [
         "fei_darkowls",
-        "fei_whiteowls"
+        "fei_whiteowls",
+        "fei_darkowls"
       ],
       "nickHistory": [
         "Puosso#sccp"
@@ -8871,9 +8999,10 @@
       "id": "EGhBQHDEXsBAc1DryXTp0v3g7E-hkkGZnFoi1_2l1Zzt4SAVUh9gR_9ZYhPu8JW5k9fegie2I-BtZg",
       "name": "fxz",
       "puuid": "EGhBQHDEXsBAc1DryXTp0v3g7E-hkkGZnFoi1_2l1Zzt4SAVUh9gR_9ZYhPu8JW5k9fegie2I-BtZg",
-      "currentTeam": "fei_whiteowls",
+      "currentTeam": "fei_darkowls",
       "teamHistory": [
-        "fei_whiteowls"
+        "fei_whiteowls",
+        "fei_darkowls"
       ],
       "nickHistory": [
         "fxz não choraxx#pedra",
@@ -10330,7 +10459,8 @@
       "nickHistory": [
         "AXIS matemagico#haine",
         "AXIS Bodo Glimt#Haine",
-        "AXIS  Bodo Glimt#Haine"
+        "AXIS  Bodo Glimt#Haine",
+        "larpginger#00000"
       ],
       "photo": "assets/player-photos/axis_anteaters/Bodo-Glimt.png"
     },
@@ -10343,7 +10473,8 @@
         "acucarados"
       ],
       "nickHistory": [
-        "RDC mizeravão#pedro"
+        "RDC mizeravão#pedro",
+        "pedro rasgaku#rdc"
       ],
       "photo": ""
     },
@@ -10881,9 +11012,10 @@
       "id": "YLckYbNDIUHqyLoJeMhaECKqLC4nW4OboUi3qOo2LiwxyG6p59hYLwCbzU5HnLfXQ368G0J1C9UVkw",
       "name": "bibinubogao",
       "puuid": "YLckYbNDIUHqyLoJeMhaECKqLC4nW4OboUi3qOo2LiwxyG6p59hYLwCbzU5HnLfXQ368G0J1C9UVkw",
-      "currentTeam": "",
+      "currentTeam": "fei_darkowls",
       "teamHistory": [
-        "fei_whiteowls"
+        "fei_whiteowls",
+        "fei_darkowls"
       ],
       "nickHistory": [
         "bogao#001"
@@ -11018,7 +11150,8 @@
       ],
       "nickHistory": [
         "Nacaguma#2103",
-        "MEGA BEEDRILL#mog67"
+        "MEGA BEEDRILL#mog67",
+        "maiL#akaN"
       ],
       "photo": ""
     },
@@ -11180,6 +11313,214 @@
       "nickHistory": [
         "vnszera#goti",
         "lil vns#real"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Mateuspa",
+      "name": "Mateuspa",
+      "puuid": "",
+      "currentTeam": "liga_vulkanica",
+      "teamHistory": [
+        "liga_vulkanica"
+      ],
+      "nickHistory": [
+        "Mateuspa#3556"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "BK47",
+      "name": "BK47",
+      "puuid": "",
+      "currentTeam": "liga_vulkanica",
+      "teamHistory": [
+        "liga_vulkanica"
+      ],
+      "nickHistory": [
+        "BK 47#PSBK"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Kayto",
+      "name": "Kayto",
+      "puuid": "",
+      "currentTeam": "liga_vulkanica",
+      "teamHistory": [
+        "liga_vulkanica"
+      ],
+      "nickHistory": [
+        "LHC Kayto#Kayto"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Slow",
+      "name": "Slow",
+      "puuid": "",
+      "currentTeam": "liga_vulkanica",
+      "teamHistory": [
+        "liga_vulkanica"
+      ],
+      "nickHistory": [
+        "SloW aim#noob1"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Jfalls",
+      "name": "Jfalls",
+      "puuid": "",
+      "currentTeam": "liga_vulkanica",
+      "teamHistory": [
+        "liga_vulkanica"
+      ],
+      "nickHistory": [
+        "LHC JF#Bomda"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Luurano",
+      "name": "Luurano",
+      "puuid": "",
+      "currentTeam": "inatel_dois",
+      "teamHistory": [
+        "inatel_dois"
+      ],
+      "nickHistory": [
+        "Nero#1v5"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "sane",
+      "name": "sane",
+      "puuid": "",
+      "currentTeam": "inatel_dois",
+      "teamHistory": [
+        "inatel_dois"
+      ],
+      "nickHistory": [
+        "sane#imfck"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Toty",
+      "name": "Toty",
+      "puuid": "",
+      "currentTeam": "inatel_dois",
+      "teamHistory": [
+        "inatel_dois"
+      ],
+      "nickHistory": [
+        "TotyZ#Lurke"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "twelve",
+      "name": "twelve",
+      "puuid": "",
+      "currentTeam": "inatel_dois",
+      "teamHistory": [
+        "inatel_dois"
+      ],
+      "nickHistory": [
+        "twelve will win#1212"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "jgrb",
+      "name": "jgrb",
+      "puuid": "",
+      "currentTeam": "inatel_dois",
+      "teamHistory": [
+        "inatel_dois"
+      ],
+      "nickHistory": [
+        "JGRB#5926"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Krownnl",
+      "name": "Krownnl",
+      "puuid": "",
+      "currentTeam": "maua_blue",
+      "teamHistory": [
+        "maua_blue"
+      ],
+      "nickHistory": [
+        "IMT krownnl#ttv"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Kikito",
+      "name": "Kikito",
+      "puuid": "",
+      "currentTeam": "maua_blue",
+      "teamHistory": [
+        "maua_blue"
+      ],
+      "nickHistory": [
+        "kikito#cfpq"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Pipão",
+      "name": "Pipão",
+      "puuid": "",
+      "currentTeam": "maua_blue",
+      "teamHistory": [
+        "maua_blue"
+      ],
+      "nickHistory": [
+        "Pipão#RAWR"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Super",
+      "name": "Super",
+      "puuid": "",
+      "currentTeam": "maua_blue",
+      "teamHistory": [
+        "maua_blue"
+      ],
+      "nickHistory": [
+        "super#ruby"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Greed",
+      "name": "Greed",
+      "puuid": "",
+      "currentTeam": "maua_blue",
+      "teamHistory": [
+        "maua_blue"
+      ],
+      "nickHistory": [
+        "IMT Greed#ORV"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Migg",
+      "name": "Migg",
+      "puuid": "",
+      "currentTeam": "maua_blue",
+      "teamHistory": [
+        "maua_blue"
+      ],
+      "nickHistory": [
+        "miglin capudo#zzz"
       ],
       "photo": ""
     }
@@ -11659,200 +12000,200 @@
       "state": "1v1",
       "allies": 1,
       "enemies": 1,
-      "occurrences": "1930",
-      "wins": "965",
+      "occurrences": "3334",
+      "wins": "1667",
       "winRate": 0.5
     },
     {
       "state": "1v2",
       "allies": 1,
       "enemies": 2,
-      "occurrences": "2401",
-      "wins": "386",
-      "winRate": 0.1607663473552687
+      "occurrences": "4226",
+      "wins": "629",
+      "winRate": 0.148840511121628
     },
     {
       "state": "1v3",
       "allies": 1,
       "enemies": 3,
-      "occurrences": "2611",
-      "wins": "115",
-      "winRate": 0.04404442742244351
+      "occurrences": "4459",
+      "wins": "168",
+      "winRate": 0.03767660910518053
     },
     {
       "state": "1v4",
       "allies": 1,
       "enemies": 4,
-      "occurrences": "2067",
-      "wins": "17",
-      "winRate": 0.00822447992259313
+      "occurrences": "3688",
+      "wins": "29",
+      "winRate": 0.007863340563991324
     },
     {
       "state": "1v5",
       "allies": 1,
       "enemies": 5,
-      "occurrences": "947",
-      "wins": "2",
-      "winRate": 0.002111932418162619
+      "occurrences": "1776",
+      "wins": "4",
+      "winRate": 0.002252252252252252
     },
     {
       "state": "2v1",
       "allies": 2,
       "enemies": 1,
-      "occurrences": "2401",
-      "wins": "2015",
-      "winRate": 0.8392336526447314
+      "occurrences": "4226",
+      "wins": "3597",
+      "winRate": 0.851159488878372
     },
     {
       "state": "2v2",
       "allies": 2,
       "enemies": 2,
-      "occurrences": "2900",
-      "wins": "1450",
+      "occurrences": "5162",
+      "wins": "2581",
       "winRate": 0.5
     },
     {
       "state": "2v3",
       "allies": 2,
       "enemies": 3,
-      "occurrences": "3291",
-      "wins": "710",
-      "winRate": 0.2157398966879368
+      "occurrences": "5711",
+      "wins": "1235",
+      "winRate": 0.2162493433724391
     },
     {
       "state": "2v4",
       "allies": 2,
       "enemies": 4,
-      "occurrences": "3050",
-      "wins": "277",
-      "winRate": 0.09081967213114754
+      "occurrences": "5325",
+      "wins": "426",
+      "winRate": 0.08
     },
     {
       "state": "2v5",
       "allies": 2,
       "enemies": 5,
-      "occurrences": "1689",
-      "wins": "50",
-      "winRate": 0.02960331557134399
+      "occurrences": "3063",
+      "wins": "75",
+      "winRate": 0.02448579823702253
     },
     {
       "state": "3v1",
       "allies": 3,
       "enemies": 1,
-      "occurrences": "2611",
-      "wins": "2496",
-      "winRate": 0.9559555725775565
+      "occurrences": "4459",
+      "wins": "4291",
+      "winRate": 0.9623233908948194
     },
     {
       "state": "3v2",
       "allies": 3,
       "enemies": 2,
-      "occurrences": "3291",
-      "wins": "2581",
-      "winRate": 0.7842601033120632
+      "occurrences": "5711",
+      "wins": "4476",
+      "winRate": 0.7837506566275608
     },
     {
       "state": "3v3",
       "allies": 3,
       "enemies": 3,
-      "occurrences": "3928",
-      "wins": "1964",
+      "occurrences": "6894",
+      "wins": "3447",
       "winRate": 0.5
     },
     {
       "state": "3v4",
       "allies": 3,
       "enemies": 4,
-      "occurrences": "4300",
-      "wins": "1086",
-      "winRate": 0.2525581395348837
+      "occurrences": "7525",
+      "wins": "1924",
+      "winRate": 0.2556810631229236
     },
     {
       "state": "3v5",
       "allies": 3,
       "enemies": 5,
-      "occurrences": "3096",
-      "wins": "359",
-      "winRate": 0.1159560723514212
+      "occurrences": "5552",
+      "wins": "611",
+      "winRate": 0.1100504322766571
     },
     {
       "state": "4v1",
       "allies": 4,
       "enemies": 1,
-      "occurrences": "2067",
-      "wins": "2050",
-      "winRate": 0.9917755200774069
+      "occurrences": "3688",
+      "wins": "3659",
+      "winRate": 0.9921366594360087
     },
     {
       "state": "4v2",
       "allies": 4,
       "enemies": 2,
-      "occurrences": "3050",
-      "wins": "2773",
-      "winRate": 0.9091803278688525
+      "occurrences": "5325",
+      "wins": "4899",
+      "winRate": 0.92
     },
     {
       "state": "4v3",
       "allies": 4,
       "enemies": 3,
-      "occurrences": "4300",
-      "wins": "3214",
-      "winRate": 0.7474418604651163
+      "occurrences": "7525",
+      "wins": "5601",
+      "winRate": 0.7443189368770764
     },
     {
       "state": "4v4",
       "allies": 4,
       "enemies": 4,
-      "occurrences": "5822",
-      "wins": "2911",
+      "occurrences": "10128",
+      "wins": "5064",
       "winRate": 0.5
     },
     {
       "state": "4v5",
       "allies": 4,
       "enemies": 5,
-      "occurrences": "5983",
-      "wins": "1652",
-      "winRate": 0.2761156610396122
+      "occurrences": "10594",
+      "wins": "3069",
+      "winRate": 0.2896922786482915
     },
     {
       "state": "5v1",
       "allies": 5,
       "enemies": 1,
-      "occurrences": "947",
-      "wins": "945",
-      "winRate": 0.9978880675818373
+      "occurrences": "1776",
+      "wins": "1772",
+      "winRate": 0.9977477477477478
     },
     {
       "state": "5v2",
       "allies": 5,
       "enemies": 2,
-      "occurrences": "1689",
-      "wins": "1639",
-      "winRate": 0.970396684428656
+      "occurrences": "3063",
+      "wins": "2988",
+      "winRate": 0.9755142017629774
     },
     {
       "state": "5v3",
       "allies": 5,
       "enemies": 3,
-      "occurrences": "3096",
-      "wins": "2737",
-      "winRate": 0.8840439276485789
+      "occurrences": "5552",
+      "wins": "4941",
+      "winRate": 0.889949567723343
     },
     {
       "state": "5v4",
       "allies": 5,
       "enemies": 4,
-      "occurrences": "5983",
-      "wins": "4331",
-      "winRate": 0.7238843389603877
+      "occurrences": "10594",
+      "wins": "7525",
+      "winRate": 0.7103077213517085
     },
     {
       "state": "5v5",
       "allies": 5,
       "enemies": 5,
-      "occurrences": "11862",
-      "wins": "5931",
+      "occurrences": "21018",
+      "wins": "10509",
       "winRate": 0.5
     }
   ]

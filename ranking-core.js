@@ -11,6 +11,7 @@
 
   const DEFAULT_WEIGHTS = {
     minimumMatches: 9,
+    minimumRosterSize: 5,
     finalWeights: {
       competitive: 0.7,
       achievements: 0.15,
@@ -152,6 +153,8 @@
         relevance: safeScore(relevance[id]),
       };
       const provisional = basic.matches < finiteNumber(weights.minimumMatches, 9);
+      const rosterSize = teamRosterSize(teamsById.get(id));
+      const inactive = rosterSize !== null && rosterSize < finiteNumber(weights.minimumRosterSize, 5);
       return {
         id,
         score: safeScore(finalScores[id]),
@@ -169,6 +172,8 @@
         roundsLost: basic.roundsLost,
         roundDiff: basic.roundDiff,
         provisional,
+        rosterSize,
+        inactive,
       };
     });
 
@@ -177,7 +182,7 @@
       row.overallRank = index + 1;
     });
     rows
-      .filter((row) => !row.provisional)
+      .filter((row) => !row.provisional && !row.inactive)
       .forEach((row, index) => {
         row.validRank = index + 1;
         row.canonicalRank = row.validRank;
@@ -199,6 +204,14 @@
         observationCount: observations.length,
       },
     };
+  }
+
+  // Elenco atual da equipe (jogadores registrados). Retorna null quando a
+  // informacao nao foi fornecida, para nao marcar equipes como inativas sem dado.
+  function teamRosterSize(team) {
+    const roster = team && team.activeRoster;
+    if (!Array.isArray(roster)) return null;
+    return roster.filter((entry) => entry && (entry.playerId || entry.id || entry.name || entry.handle)).length;
   }
 
   function createObservations(matches, seriesByKey, tournamentsById, weights, now) {

@@ -51,6 +51,7 @@ const MAP_API_SLUGS = {
   "/Game/Maps/Juliett/Juliett": "sunset",
   "/Game/Maps/Infinity/Infinity": "abyss",
   "/Game/Maps/Rook/Rook": "corrode",
+  "/Game/Maps/Plummet/Plummet": "summit",
 };
 
 const AGENT_API_SLUGS = {
@@ -185,8 +186,8 @@ const TOURNAMENT_OVERRIDES = {
     ],
     placements: [
       { range: "1", id: "ceub_octopus" },
-      { range: "2", id: "azure_bears_golden" },
-      { range: "3", id: "macklogic_red" },
+      { range: "2", id: "macklogic_red" },
+      { range: "3", id: "azure_bears_golden" },
       { range: "4", id: "uninassau_griffins" },
       { range: "5-8", id: "dark_ufrj" },
       { range: "5-8", id: "caap_hellhounds" },
@@ -210,7 +211,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Final",
               matches: [
-                { code: "Partida 16", bestOf: "MD3", a: "azure_bears_golden", scoreA: 0, b: "ceub_octopus", scoreB: 2, winner: "ceub_octopus" },
+                { code: "Partida 14", bestOf: "MD3", a: "ceub_octopus", scoreA: 2, b: "macklogic_red", scoreB: 0, winner: "ceub_octopus" },
               ],
             },
           ],
@@ -244,8 +245,8 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Semi finais",
               matches: [
-                { code: "Partida 13", bestOf: "MD3", a: "uninassau_griffins", scoreA: 0, b: "azure_bears_golden", scoreB: 2, winner: "azure_bears_golden" },
-                { code: "Partida 14", bestOf: "MD3", a: "macklogic_red", scoreA: 0, b: "ceub_octopus", scoreB: 2, winner: "ceub_octopus" },
+                { code: "Partida 15", bestOf: "MD3", a: "macklogic_red", scoreA: 2, b: "uninassau_griffins", scoreB: 0, winner: "macklogic_red" },
+                { code: "Partida 16", bestOf: "MD3", a: "azure_bears_golden", scoreA: 0, b: "ceub_octopus", scoreB: 2, winner: "ceub_octopus" },
               ],
             },
           ],
@@ -257,7 +258,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "3\u00ba lugar",
               matches: [
-                { code: "Partida 15", bestOf: "MD3", a: "macklogic_red", scoreA: 2, b: "uninassau_griffins", scoreB: 0, winner: "macklogic_red" },
+                { code: "Partida 13", bestOf: "MD3", a: "azure_bears_golden", scoreA: 2, b: "uninassau_griffins", scoreB: 0, winner: "azure_bears_golden" },
               ],
             },
           ],
@@ -934,6 +935,116 @@ const TOURNAMENT_OVERRIDES = {
       ],
     },
   },
+  "rush-series-inclusivo": {
+    organizer: "AcadArena",
+    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
+    banner: "assets/tournament-banners/banner_rushseries_inclusivo.jpg",
+    prizePool: "R$1.000",
+    tier: "A",
+    type: "Online",
+    teamCount: 7,
+    mapPool: ["Ascent", "Haven", "Lotus", "Split", "Sunset"],
+    teams: [
+      "azure_bears_white",
+      "inatel_gray",
+      "usp_stars_gc",
+      "ufu_saints_auryn",
+      "macklogic_rainbow",
+      "pucc_canaries",
+      "caap_auroras",
+    ],
+    placements: [
+      { range: "1", id: "macklogic_rainbow" },
+      { range: "2", id: "caap_auroras" },
+      { range: "3", id: "azure_bears_white" },
+      { range: "4", id: "ufu_saints_auryn" },
+      { range: "5-6", id: "usp_stars_gc" },
+      { range: "5-6", id: "inatel_gray" },
+      { range: "7", id: "pucc_canaries" },
+    ],
+    format: {
+      summary: "Elimina\u00e7\u00e3o dupla",
+      details: ["Todos os jogos MD1", "Grande final MD3"],
+      standings: "Coloca\u00e7\u00e3o oficial do campeonato",
+    },
+    bracket: {
+      title: "Elimina\u00e7\u00e3o dupla",
+      regions: [
+        {
+          name: "Grande final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Grande final",
+              matches: [
+                { code: "Partida 14", bestOf: "MD3", a: "macklogic_rainbow", scoreA: 2, b: "caap_auroras", scoreB: 0, winner: "macklogic_rainbow" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Quartas de final superior",
+              matches: [
+                { code: "Partida 1", a: "azure_bears_white", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "azure_bears_white" },
+                { code: "Partida 2", a: "inatel_gray", scoreA: 5, b: "usp_stars_gc", scoreB: 13, winner: "usp_stars_gc" },
+                { code: "Partida 3", a: "ufu_saints_auryn", scoreA: 6, b: "macklogic_rainbow", scoreB: 13, winner: "macklogic_rainbow" },
+                { code: "Partida 4", a: "pucc_canaries", scoreA: 8, b: "caap_auroras", scoreB: 13, winner: "caap_auroras" },
+              ],
+            },
+            {
+              title: "Semifinais superior",
+              matches: [
+                { code: "Partida 5", a: "azure_bears_white", scoreA: 13, b: "usp_stars_gc", scoreB: 7, winner: "azure_bears_white" },
+                { code: "Partida 6", a: "macklogic_rainbow", scoreA: 13, b: "caap_auroras", scoreB: 5, winner: "macklogic_rainbow" },
+              ],
+            },
+            {
+              title: "Final superior",
+              matches: [
+                { code: "Partida 7", a: "azure_bears_white", scoreA: 2, b: "macklogic_rainbow", scoreB: 13, winner: "macklogic_rainbow" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada de 4 inferior",
+              matches: [
+                { code: "Partida 8", a: "ufu_saints_auryn", scoreA: 13, b: "pucc_canaries", scoreB: 9, winner: "ufu_saints_auryn" },
+                { code: "Partida 9", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "inatel_gray", scoreB: 1, winner: "inatel_gray" },
+              ],
+            },
+            {
+              title: "Quartas de final inferior",
+              matches: [
+                { code: "Partida 10", a: "usp_stars_gc", scoreA: 4, b: "ufu_saints_auryn", scoreB: 13, winner: "ufu_saints_auryn" },
+                { code: "Partida 11", a: "caap_auroras", scoreA: 13, b: "inatel_gray", scoreB: 4, winner: "caap_auroras" },
+              ],
+            },
+            {
+              title: "Semifinal inferior",
+              matches: [
+                { code: "Partida 12", a: "ufu_saints_auryn", scoreA: 6, b: "caap_auroras", scoreB: 13, winner: "caap_auroras" },
+              ],
+            },
+            {
+              title: "Final inferior",
+              matches: [
+                { code: "Partida 13", a: "azure_bears_white", scoreA: 5, b: "caap_auroras", scoreB: 13, winner: "caap_auroras" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
   "rush-series-esquenta-2": {
     organizer: "AcadArena",
     organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
@@ -1254,6 +1365,205 @@ const TOURNAMENT_OVERRIDES = {
             { id: "ufu_saints", wins: 2, losses: 2 },
             { id: "macklogic_red", wins: 2, losses: 2 },
             { id: "wolf_gaming", wins: 0, losses: 4 },
+          ],
+        },
+      ],
+    },
+  },
+  "univava-classificatoria-3": {
+    name: "UNIVAV\u00c1 - Classificat\u00f3ria 3",
+    organizer: "AcadArena",
+    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
+    banner: "assets/tournament-banners/banner_univava_c3.jpg",
+    logo: "assets/tournament-icons/UNIVAVA.png",
+    prizePool: "-",
+    tier: "A",
+    type: "Online - Classificat\u00f3ria",
+    status: "Finalizado",
+    teamCount: 26,
+    mapPool: ["Ascent", "Haven", "Lotus", "Split", "Summit", "Sunset"],
+    teams: [
+      "pucgo_sistematica_academy",
+      "liga_vulkanica",
+      "poli_plague",
+      "inatel_dois",
+      "a2e_uff",
+      "green_owls_noctua",
+      "unifesp_erex",
+      "ufscar_fire",
+      "inatel",
+      "ufpr_bbn",
+      "inatel_legacy",
+      "pucgo_sistematica",
+      "totale_umc",
+      "ufmg_fenix_b",
+      "azure_bears_silver",
+      "caap_malditos",
+      "ceub_octopus_vulgaris",
+      "unicamp_tritons_black",
+      "ufg_eagles_blue",
+      "furia_utfpr",
+      "minerva_thunders",
+      "uscs_hawks",
+      "azure_bears_black",
+      "fei_darkowls",
+      "maua_blue",
+      "fei_whiteowls",
+    ],
+    placements: [
+      { range: "Classificado", id: "minerva_thunders", note: "Chave superior" },
+      { range: "Classificado", id: "green_owls_noctua", note: "Chave superior" },
+      { range: "Classificado", id: "totale_umc", note: "Chave inferior" },
+      { range: "Classificado", id: "furia_utfpr", note: "Chave inferior" },
+      { range: "5-6", id: "inatel_legacy", note: "Decis\u00e3o de vaga inferior" },
+      { range: "5-6", id: "caap_malditos", note: "Decis\u00e3o de vaga inferior" },
+      { range: "7-8", id: "maua_blue", note: "Rodada de 4 inferior" },
+      { range: "7-8", id: "fei_darkowls", note: "Rodada de 4 inferior" },
+      { range: "9-12", id: "uscs_hawks", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "ceub_octopus_vulgaris", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "inatel", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "poli_plague", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "pucgo_sistematica_academy", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "unicamp_tritons_black", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "pucgo_sistematica", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "azure_bears_black", note: "Rodada de 8 inferior" },
+      { range: "17-24", id: "fei_whiteowls", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "inatel_dois", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "ufscar_fire", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "azure_bears_silver", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "ufmg_fenix_b", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "ufpr_bbn", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "a2e_uff", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "liga_vulkanica", note: "Rodada de 16 inferior" },
+      { range: "25-26", id: "ufg_eagles_blue", note: "Primeira rodada inferior" },
+      { range: "25-26", id: "unifesp_erex", note: "Primeira rodada inferior" },
+    ],
+    format: {
+      summary: "Elimina\u00e7\u00e3o dupla",
+      details: ["Classificat\u00f3ria com 4 vagas", "2 vagas pela chave superior", "2 vagas pela chave inferior", "Jogos MD1"],
+      standings: "Classificados oficiais",
+    },
+    bracket: {
+      title: "Elimina\u00e7\u00e3o dupla",
+      regions: [
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Rodada de 32 superior",
+              matches: [
+                { code: "Partida 1", a: "pucgo_sistematica_academy", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "pucgo_sistematica_academy" },
+                { code: "Partida 2", a: "liga_vulkanica", scoreA: 8, b: "poli_plague", scoreB: 13, winner: "poli_plague" },
+                { code: "Partida 3", a: "inatel_dois", scoreA: 13, b: "a2e_uff", scoreB: 2, winner: "inatel_dois" },
+                { code: "Partida 4", a: "green_owls_noctua", scoreA: 13, b: "unifesp_erex", scoreB: 6, winner: "green_owls_noctua" },
+                { code: "Partida 5", a: "ufscar_fire", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "ufscar_fire" },
+                { code: "Partida 6", a: "inatel", scoreA: 13, b: "ufpr_bbn", scoreB: 6, winner: "inatel" },
+                { code: "Partida 7", a: "inatel_legacy", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "inatel_legacy" },
+                { code: "Partida 8", a: "pucgo_sistematica", scoreA: 5, b: "totale_umc", scoreB: 13, winner: "totale_umc" },
+                { code: "Partida 9", a: "ufmg_fenix_b", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "ufmg_fenix_b" },
+                { code: "Partida 10", a: "azure_bears_silver", scoreA: 11, b: "caap_malditos", scoreB: 13, winner: "caap_malditos" },
+                { code: "Partida 11", a: "ceub_octopus_vulgaris", scoreA: 13, b: "unicamp_tritons_black", scoreB: 7, winner: "ceub_octopus_vulgaris" },
+                { code: "Partida 12", a: "ufg_eagles_blue", scoreA: 7, b: "furia_utfpr", scoreB: 13, winner: "furia_utfpr" },
+                { code: "Partida 13", a: "minerva_thunders", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "minerva_thunders" },
+                { code: "Partida 14", a: "uscs_hawks", scoreA: 6, b: "azure_bears_black", scoreB: 13, winner: "azure_bears_black" },
+                { code: "Partida 15", a: "fei_darkowls", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "fei_darkowls" },
+                { code: "Partida 16", a: "maua_blue", scoreA: 13, b: "fei_whiteowls", scoreB: 1, winner: "maua_blue" },
+              ],
+            },
+            {
+              title: "Rodada de 16 superior",
+              matches: [
+                { code: "Partida 17", a: "pucgo_sistematica_academy", scoreA: 11, b: "poli_plague", scoreB: 13, winner: "poli_plague" },
+                { code: "Partida 18", a: "inatel_dois", scoreA: 4, b: "green_owls_noctua", scoreB: 13, winner: "green_owls_noctua" },
+                { code: "Partida 19", a: "ufscar_fire", scoreA: 0, b: "inatel", scoreB: 1, winner: "inatel", status: "W.O." },
+                { code: "Partida 20", a: "inatel_legacy", scoreA: 7, b: "totale_umc", scoreB: 13, winner: "totale_umc" },
+                { code: "Partida 21", a: "ufmg_fenix_b", scoreA: 6, b: "caap_malditos", scoreB: 13, winner: "caap_malditos" },
+                { code: "Partida 22", a: "ceub_octopus_vulgaris", scoreA: 13, b: "furia_utfpr", scoreB: 5, winner: "ceub_octopus_vulgaris" },
+                { code: "Partida 23", a: "minerva_thunders", scoreA: 13, b: "azure_bears_black", scoreB: 6, winner: "minerva_thunders" },
+                { code: "Partida 24", a: "fei_darkowls", scoreA: 10, b: "maua_blue", scoreB: 13, winner: "maua_blue" },
+              ],
+            },
+            {
+              title: "Quartas de final superior",
+              matches: [
+                { code: "Partida 25", a: "poli_plague", scoreA: 6, b: "green_owls_noctua", scoreB: 13, winner: "green_owls_noctua" },
+                { code: "Partida 26", a: "inatel", scoreA: 11, b: "totale_umc", scoreB: 13, winner: "totale_umc" },
+                { code: "Partida 27", a: "caap_malditos", scoreA: 13, b: "ceub_octopus_vulgaris", scoreB: 11, winner: "caap_malditos" },
+                { code: "Partida 28", a: "minerva_thunders", scoreA: 13, b: "maua_blue", scoreB: 5, winner: "minerva_thunders" },
+              ],
+            },
+            {
+              title: "Semifinais superior",
+              matches: [
+                { code: "Partida 29", a: "green_owls_noctua", scoreA: 13, b: "totale_umc", scoreB: 11, winner: "green_owls_noctua" },
+                { code: "Partida 30", a: "caap_malditos", scoreA: 6, b: "minerva_thunders", scoreB: 13, winner: "minerva_thunders" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada de 16 inferior",
+              matches: [
+                { code: "Partida 32", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "fei_whiteowls", scoreB: 1, winner: "fei_whiteowls" },
+                { code: "Partida 33", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "uscs_hawks", scoreB: 1, winner: "uscs_hawks" },
+                { code: "Partida 34", a: "unicamp_tritons_black", scoreA: 13, b: "ufg_eagles_blue", scoreB: 3, winner: "unicamp_tritons_black" },
+                { code: "Partida 35", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "azure_bears_silver", scoreB: 1, winner: "azure_bears_silver" },
+                { code: "Partida 36", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "pucgo_sistematica", scoreB: 1, winner: "pucgo_sistematica" },
+                { code: "Partida 37", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "ufpr_bbn", scoreB: 1, winner: "ufpr_bbn" },
+                { code: "Partida 38", a: "a2e_uff", scoreA: 14, b: "unifesp_erex", scoreB: 12, winner: "a2e_uff" },
+                { code: "Partida 39", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "liga_vulkanica", scoreB: 1, winner: "liga_vulkanica" },
+              ],
+            },
+            {
+              title: "Rodada de 16 inferior",
+              matches: [
+                { code: "Partida 40", a: "pucgo_sistematica_academy", scoreA: 13, b: "fei_whiteowls", scoreB: 9, winner: "pucgo_sistematica_academy" },
+                { code: "Partida 41", a: "inatel_dois", scoreA: 15, b: "uscs_hawks", scoreB: 17, winner: "uscs_hawks" },
+                { code: "Partida 42", a: "ufscar_fire", scoreA: 0, b: "unicamp_tritons_black", scoreB: 1, winner: "unicamp_tritons_black", status: "W.O." },
+                { code: "Partida 43", a: "inatel_legacy", scoreA: 13, b: "azure_bears_silver", scoreB: 7, winner: "inatel_legacy" },
+                { code: "Partida 44", a: "ufmg_fenix_b", scoreA: 7, b: "pucgo_sistematica", scoreB: 13, winner: "pucgo_sistematica" },
+                { code: "Partida 45", a: "furia_utfpr", scoreA: 13, b: "ufpr_bbn", scoreB: 8, winner: "furia_utfpr" },
+                { code: "Partida 46", a: "azure_bears_black", scoreA: 13, b: "a2e_uff", scoreB: 8, winner: "azure_bears_black" },
+                { code: "Partida 47", a: "fei_darkowls", scoreA: 13, b: "liga_vulkanica", scoreB: 5, winner: "fei_darkowls" },
+              ],
+            },
+            {
+              title: "Rodada de 8 inferior",
+              matches: [
+                { code: "Partida 48", a: "pucgo_sistematica_academy", scoreA: 10, b: "uscs_hawks", scoreB: 13, winner: "uscs_hawks" },
+                { code: "Partida 49", a: "unicamp_tritons_black", scoreA: 5, b: "inatel_legacy", scoreB: 13, winner: "inatel_legacy" },
+                { code: "Partida 50", a: "pucgo_sistematica", scoreA: 11, b: "furia_utfpr", scoreB: 13, winner: "furia_utfpr" },
+                { code: "Partida 51", a: "azure_bears_black", scoreA: 5, b: "fei_darkowls", scoreB: 13, winner: "fei_darkowls" },
+              ],
+            },
+            {
+              title: "Rodada de 8 inferior",
+              matches: [
+                { code: "Partida 52", a: "maua_blue", scoreA: 13, b: "uscs_hawks", scoreB: 11, winner: "maua_blue" },
+                { code: "Partida 53", a: "ceub_octopus_vulgaris", scoreA: 3, b: "inatel_legacy", scoreB: 13, winner: "inatel_legacy" },
+                { code: "Partida 54", a: "inatel", scoreA: 11, b: "furia_utfpr", scoreB: 13, winner: "furia_utfpr" },
+                { code: "Partida 55", a: "poli_plague", scoreA: 0, b: "fei_darkowls", scoreB: 1, winner: "fei_darkowls", status: "W.O." },
+              ],
+            },
+            {
+              title: "Rodada de 4 inferior",
+              matches: [
+                { code: "Partida 56", a: "maua_blue", scoreA: 10, b: "inatel_legacy", scoreB: 13, winner: "inatel_legacy" },
+                { code: "Partida 57", a: "furia_utfpr", scoreA: 13, b: "fei_darkowls", scoreB: 11, winner: "furia_utfpr" },
+              ],
+            },
+            {
+              title: "Quartas de final inferior",
+              matches: [
+                { code: "Partida 58", a: "totale_umc", scoreA: 14, b: "inatel_legacy", scoreB: 12, winner: "totale_umc" },
+                { code: "Partida 59", a: "caap_malditos", scoreA: 9, b: "furia_utfpr", scoreB: 13, winner: "furia_utfpr" },
+              ],
+            },
           ],
         },
       ],
@@ -1837,6 +2147,80 @@ const TOURNAMENT_OVERRIDES = {
               title: "Final inferior",
               matches: [
                 { code: "Partida 29", a: "azure_bears_black", scoreA: 11, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "unicup-rj": {
+    organizer: "FERJEE",
+    organizerLogo: "assets/organizers-logos/logo_ferjee.png",
+    banner: "assets/tournament-banners/acadarena_banner_generic.jpeg",
+    prizePool: "R$2.000",
+    tier: "A",
+    type: "Online/Presencial",
+    teamCount: 8,
+    mapPool: ["Ascent", "Haven", "Lotus", "Split", "Sunset"],
+    teams: [
+      "baroes_da_uff",
+      "ufrj_minerva",
+      "unirio_krakens",
+      "wolf_gaming",
+      "a2e_uff",
+      "made_in_cefet_rj",
+      "minerva_thunders",
+      "ufrj_canis",
+    ],
+    placements: [
+      { range: "1", id: "wolf_gaming" },
+      { range: "2", id: "a2e_uff" },
+      { range: "3-4", id: "ufrj_minerva" },
+      { range: "3-4", id: "minerva_thunders" },
+      { range: "5-8", id: "baroes_da_uff" },
+      { range: "5-8", id: "unirio_krakens" },
+      { range: "5-8", id: "made_in_cefet_rj" },
+      { range: "5-8", id: "ufrj_canis" },
+    ],
+    format: {
+      summary: "Elimina\u00e7\u00e3o simples",
+      details: ["Quartas e semifinais MD1", "Final MD3"],
+      standings: "Coloca\u00e7\u00e3o oficial do campeonato",
+    },
+    bracket: {
+      title: "Elimina\u00e7\u00e3o simples",
+      regions: [
+        {
+          name: "Final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Final",
+              matches: [
+                { code: "Partida 7", bestOf: "MD3", a: "wolf_gaming", scoreA: 2, b: "a2e_uff", scoreB: 1, winner: "wolf_gaming" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave principal",
+          className: "upper-bracket single-elimination",
+          columns: [
+            {
+              title: "Quartas de final",
+              matches: [
+                { code: "Partida 1", a: "baroes_da_uff", scoreA: 3, b: "ufrj_minerva", scoreB: 13, winner: "ufrj_minerva" },
+                { code: "Partida 2", a: "unirio_krakens", scoreA: 6, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
+                { code: "Partida 3", a: "a2e_uff", scoreA: 13, b: "made_in_cefet_rj", scoreB: 4, winner: "a2e_uff" },
+                { code: "Partida 4", a: "minerva_thunders", scoreA: 13, b: "ufrj_canis", scoreB: 8, winner: "minerva_thunders" },
+              ],
+            },
+            {
+              title: "Semifinais",
+              matches: [
+                { code: "Partida 5", a: "ufrj_minerva", scoreA: 2, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
+                { code: "Partida 6", a: "a2e_uff", scoreA: 13, b: "minerva_thunders", scoreB: 10, winner: "a2e_uff" },
               ],
             },
           ],
@@ -2466,14 +2850,17 @@ function buildRaatingContext(matchFiles) {
 
 function applyTeamRankings(teams, matches, matchSeries, players, tournaments, rankingWeights) {
   const minimumMatches = rankingMinimumMatches(rankingWeights);
+  const minimumRosterSize = rankingMinimumRosterSize(rankingWeights);
   const fallback = () => {
     let validIndex = 0;
     teams
       .sort((a, b) => b.points - a.points || b.winRate - a.winRate || b.roundDiff - a.roundDiff)
       .forEach((team, index) => {
         const provisional = team.matches < minimumMatches;
+        const rosterSize = teamActiveRoster(team).length;
+        const inactive = rosterSize < minimumRosterSize;
         const overallRank = index + 1;
-        const validRank = provisional ? null : ++validIndex;
+        const validRank = provisional || inactive ? null : ++validIndex;
         team.rank = validRank || overallRank;
         team.validRank = validRank;
         team.canonicalRank = validRank;
@@ -2487,6 +2874,8 @@ function applyTeamRankings(teams, matches, matchSeries, players, tournaments, ra
           overallRank,
           score: team.rankingScore,
           provisional,
+          rosterSize,
+          inactive,
           blocks: {
             competitive: team.rankingScore,
             achievements: 50,
@@ -2544,6 +2933,9 @@ function teamsForRankingCutoff(teams, matches, cutoffAt) {
     const lineup = rankingLineupEntriesForMatches(team, matches, cutoffAt);
     return {
       ...team,
+      // O core usa currentLineup para a forca de elenco (observada na semana) e
+      // activeRoster para saber se a equipe esta completa hoje.
+      activeRoster: teamActiveRoster(team),
       currentLineup: lineup,
       observedLineup: lineup,
       lineup,
@@ -2664,8 +3056,26 @@ function rankingMinimumMatches(weights) {
   return Number.isFinite(value) && value > 0 ? Math.floor(value) : 9;
 }
 
+function rankingMinimumRosterSize(weights) {
+  const value = Number(weights?.minimumRosterSize);
+  return Number.isFinite(value) && value > 0 ? Math.floor(value) : 5;
+}
+
+// Elenco atual cadastrado da equipe (metadata/planilha), sem depender de partidas.
+function teamActiveRoster(team) {
+  return (team?.currentLineup || []).filter((entry) => entry && (entry.playerId || entry.name || entry.handle));
+}
+
+function rankingIsInactive(ranking) {
+  return Boolean(ranking?.inactive);
+}
+
+function rankingIsValid(ranking) {
+  return Boolean(ranking) && !ranking.provisional && !rankingIsInactive(ranking);
+}
+
 function teamIsRankingValid(team) {
-  return !team.ranking?.provisional;
+  return rankingIsValid(team.ranking || {});
 }
 
 function teamValidRank(team) {
@@ -2693,12 +3103,14 @@ function compareTeamsByOverallRank(a, b) {
 
 function teamCanonicalRankLabel(team) {
   const rank = teamValidRank(team);
-  return rank ? `#${rank}` : "Provisório";
+  if (rank) return `#${rank}`;
+  return rankingIsInactive(team.ranking) ? "Inativo" : "Provisório";
 }
 
 function teamShortRankLabel(team) {
   const rank = teamValidRank(team);
-  return rank ? `#${rank}` : "prov";
+  if (rank) return `#${rank}`;
+  return rankingIsInactive(team.ranking) ? "inativo" : "prov";
 }
 
 function parseMatchFile(file, metadata) {
@@ -4350,7 +4762,7 @@ function renderHome() {
           <div class="card-grid">${topTeams.map(teamCard).join("")}</div>
         </section>
         <section class="section-band">
-          ${sectionHead("Jogadores em destaque", "rAAting 3.0 com amostra mínima oficial de 60 rounds.", "players", "Ver jogadores")}
+          ${sectionHead("Jogadores em destaque", `rAAting 3.0, mínimo ${RaaRatingCore.SAMPLE_MIN_ROUNDS} rounds.`, "players", "Ver jogadores")}
           ${playerTable(topPlayers)}
         </section>
       </div>
@@ -4885,12 +5297,13 @@ function renderRankingPage(teamId = route().id || "") {
   const rows = rankingRowsForScope(state.db.teams, scope);
   const snapshot = selectedRankingSnapshot();
   const minimumMatches = state.db.rankingMinimumMatches || 9;
+  const minimumRosterSize = rankingMinimumRosterSize(state.db?.rankingWeights);
   Shell(`
     <header class="page-header slim-header">
       <div class="page-title">
         <span class="eyebrow">Ranking</span>
         <h1>Ranking Universitário de Valorant</h1>
-        <p>Nota final: 70% desempenho, 15% conquistas, 10% forma recente e 5% rAAting 3.0 dos jogadores. Equipes com menos de ${minimumMatches} partidas ficam marcadas como provisórias.</p>
+        <p>Nota final: 70% desempenho, 15% conquistas, 10% forma recente e 5% rAAting 3.0 dos jogadores. Equipes com menos de ${minimumMatches} partidas ficam marcadas como provisórias e equipes com elenco incompleto (menos de ${minimumRosterSize} jogadores) ficam inativas.</p>
       </div>
     </header>
     <section class="hub-panel ranking-full-panel">
@@ -4931,7 +5344,7 @@ function rankingRouteTeamId(teamId) {
 
 function ensureRankingScopeIncludesTeam(teamId) {
   const ranking = selectedRankingSnapshot()?.byTeamId?.[teamId] || teamById(teamId)?.ranking;
-  if (ranking?.provisional) state.rankingScope = "all";
+  if (ranking && !rankingIsValid(ranking)) state.rankingScope = "all";
 }
 
 function rankingRowsForScope(teams, scope) {
@@ -4941,13 +5354,15 @@ function rankingRowsForScope(teams, scope) {
     .filter((row) => row.team && rankingRowExistsInSnapshot(row.ranking));
   const sorted = scope === "all"
     ? rows.slice().sort((a, b) => (a.ranking.overallRank || 9999) - (b.ranking.overallRank || 9999) || b.ranking.score - a.ranking.score || a.team.name.localeCompare(b.team.name))
-    : rows.filter((row) => !row.ranking.provisional).sort((a, b) => (a.ranking.validRank || 9999) - (b.ranking.validRank || 9999) || b.ranking.score - a.ranking.score || a.team.name.localeCompare(b.team.name));
+    : rows.filter((row) => rankingIsValid(row.ranking)).sort((a, b) => (a.ranking.validRank || 9999) - (b.ranking.validRank || 9999) || b.ranking.score - a.ranking.score || a.team.name.localeCompare(b.team.name));
   return applyRankingSort(sorted.map((row, index) => ({ ...row, displayRank: index + 1, defaultIndex: index })));
 }
 
 function rankingRowExistsInSnapshot(ranking) {
   const matches = Number(ranking?.matches || 0);
-  return Number.isFinite(matches) && matches > 0;
+  if (!Number.isFinite(matches) || matches <= 0) return false;
+  // Equipe sem nenhum jogador no elenco atual nao aparece nem no escopo "Todos".
+  return Number(ranking?.rosterSize ?? -1) !== 0;
 }
 
 function rankingExistingSnapshotTeams(snapshot = selectedRankingSnapshot()) {
@@ -4997,7 +5412,7 @@ function rankingSortValue(row, key) {
     achievements: blocks.achievements,
     recentForm: blocks.recentForm,
     rosterStrength: blocks.rosterStrength,
-    status: ranking.provisional ? "Provisório" : "Validado",
+    status: rankingStatusLabel(ranking),
   };
   return values[key] ?? "";
 }
@@ -5057,7 +5472,7 @@ function rankingScopeSummary(scope) {
   const snapshot = selectedRankingSnapshot();
   const snapshotTeams = rankingExistingSnapshotTeams(snapshot);
   const total = snapshotTeams.length || state.db.teams.filter((team) => Number(team.matches || 0) > 0).length;
-  const validCount = snapshotTeams.length ? snapshotTeams.filter((row) => !row.provisional).length : state.db.teams.filter((team) => Number(team.matches || 0) > 0 && teamIsRankingValid(team)).length;
+  const validCount = snapshotTeams.length ? snapshotTeams.filter(rankingIsValid).length : state.db.teams.filter((team) => Number(team.matches || 0) > 0 && teamIsRankingValid(team)).length;
   const minimumMatches = state.db.rankingMinimumMatches || 9;
   return scope === "all" ? `${total} equipes exibidas · ${validCount} válidas · mínimo ${minimumMatches} partidas` : "";
 }
@@ -5144,8 +5559,14 @@ function rankingAccordionItem(row) {
   `;
 }
 
+function rankingStatusLabel(ranking) {
+  if (rankingIsInactive(ranking)) return "Inativo";
+  return ranking?.provisional ? "Provisório" : "Validado";
+}
+
 function rankingStatusChip(team, ranking = team.ranking) {
-  return ranking?.provisional ? `<span class="chip">Provisório</span>` : `<span class="chip green">Validado</span>`;
+  const label = rankingStatusLabel(ranking);
+  return `<span class="${label === "Validado" ? "chip green" : "chip"}">${label}</span>`;
 }
 
 function rankingTeamPreviewPanel(team, cutoffAt = null) {
@@ -5163,16 +5584,42 @@ function rankingTeamPreviewPanel(team, cutoffAt = null) {
   `;
 }
 
+// Lineup do ranking: na semana atual, apenas quem esta no elenco cadastrado da
+// equipe (com mais de cinco registrados, os cinco com mais partidas pela equipe).
+// Semanas anteriores mantem a lineup que jogou naquela semana.
 function rankingLineupEntries(team, cutoffAt = null) {
-  if (Number.isFinite(Number(cutoffAt))) {
-    const observed = rankingLineupEntriesForMatches(team, state.db?.matches || [], Number(cutoffAt));
-    if (observed.length) return observed;
-    return rankingProfileLineupAt(team, Number(cutoffAt));
-  }
-  const current = team.currentLineup || [];
-  const observed = team.observedLineup || team.lineup || [];
-  const source = current.length ? current : observed;
-  return source.slice(0, 5);
+  const cutoff = Number(cutoffAt);
+  if (Number.isFinite(cutoff) && cutoff < currentRankingCutoff()) return rankingObservedLineupAt(team, cutoff);
+  const roster = teamActiveRoster(team);
+  if (roster.length) return rankingRosterTopFive(team, roster);
+  // Equipe sem elenco cadastrado: mantem o observado nas partidas como fallback.
+  if (Number.isFinite(cutoff)) return rankingObservedLineupAt(team, cutoff);
+  return (team.observedLineup || team.lineup || []).slice(0, 5);
+}
+
+function currentRankingCutoff() {
+  return Number(latestRankingSnapshot()?.cutoffAt) || rankingTuesdayStartOnOrBefore(Date.now());
+}
+
+function rankingObservedLineupAt(team, cutoffAt) {
+  const observed = rankingLineupEntriesForMatches(team, state.db?.matches || [], cutoffAt);
+  return observed.length ? observed : rankingProfileLineupAt(team, cutoffAt);
+}
+
+function rankingRosterTopFive(team, roster = teamActiveRoster(team)) {
+  if (roster.length <= 5) return roster;
+  return roster
+    .map((entry, index) => ({ entry, index, matches: rosterEntryTeamMatches(entry, team.id) }))
+    .sort((a, b) => b.matches - a.matches || a.index - b.index)
+    .slice(0, 5)
+    .sort((a, b) => a.index - b.index)
+    .map((row) => row.entry);
+}
+
+function rosterEntryTeamMatches(entry, teamId) {
+  const player = entry.playerId ? playerById(entry.playerId) : null;
+  if (!player) return 0;
+  return Number(playerStatsForTeam(player, teamId)?.matches || 0);
 }
 
 function rankingProfileLineupAt(team, cutoffAt) {
@@ -6780,7 +7227,7 @@ function formatMaybeSwing(row) {
 
 function sampleStatusChip(player) {
   if (!player || isOfficialRatingSample(player) || Number(player.matches || 0) <= 0) return "";
-  return `<span class="chip low-sample-chip" title="Fora do ranking oficial por sample_status diferente de OK.">baixa amostra</span>`;
+  return `<span class="chip low-sample-chip" title="Fora do ranking oficial: menos de ${RaaRatingCore.SAMPLE_MIN_ROUNDS} rounds jogados.">baixa amostra</span>`;
 }
 
 function ratingFormulaText(separator = "\n") {
@@ -8627,7 +9074,7 @@ function tournamentStatsSection(event, matches, standings) {
       </div>
       <div class="tournament-stats-shell">
         <div class="tournament-stats-top-grid">
-          ${tournamentStatsTopList("Top jogadores", "rAAting 3.0 com sample_status = OK", officialPlayers.slice(0, 8).map(tournamentTopPlayerRow), "Nenhum jogador com amostra oficial disponível.")}
+          ${tournamentStatsTopList("Top jogadores", `rAAting 3.0, mínimo ${RaaRatingCore.SAMPLE_MIN_ROUNDS} rounds`, officialPlayers.slice(0, 8).map(tournamentTopPlayerRow), "Nenhum jogador com amostra oficial disponível.")}
           ${tournamentStatsTopList("Top equipes", "Campanha agregada das séries registradas", teams.filter((row) => row.seriesPlayed || row.playerRounds).slice(0, 8).map(tournamentTopTeamRow), "Nenhuma equipe com estatísticas disponíveis.")}
         </div>
         <div class="tournament-stat-tables">
@@ -9229,7 +9676,7 @@ function tournamentPlayerStatsTable(eventId, players) {
       <div class="tournament-stat-card-head">
         <span>
           <strong>Tabela de jogadores</strong>
-          <small>Ranking oficial por rAAting 3.0 com sample_status = OK</small>
+          <small>Ranking oficial por rAAting 3.0, mínimo ${RaaRatingCore.SAMPLE_MIN_ROUNDS} rounds</small>
         </span>
         ${tournamentStatsExpandButton("players", sortedRows.length, expanded)}
       </div>
@@ -10343,7 +10790,7 @@ function teamCompetitiveSummary(team, history) {
       ${stat(fmt(team.rankingScore ?? team.points, 1), "Nota")}
     </div>
     <div class="team-insight-list">
-      ${teamInsightRow("Status", team.ranking?.provisional ? "Em validação" : "Validado", `${team.ranking?.matches ?? team.matches} partidas consideradas`)}
+      ${teamInsightRow("Status", teamRankingStatusLabel(team), teamRankingStatusDetail(team))}
       ${teamInsightRow("Tendência", trend.label, trend.detail)}
       ${teamInsightRow("Campanha geral", `${team.wins}-${team.losses}`, `${pct(team.winRate)} de aproveitamento`)}
       ${teamInsightRow("Forma recente", `${recent.matches ?? 0} partidas`, `Desempenho ajustado ${fmt(recent.adjustedPerformance ?? 0, 1)}`)}
@@ -10358,6 +10805,18 @@ function teamCompetitiveSummary(team, history) {
       ])}
     </div>
   `;
+}
+
+function teamRankingStatusLabel(team) {
+  if (rankingIsInactive(team.ranking)) return "Inativo";
+  return team.ranking?.provisional ? "Em validação" : "Validado";
+}
+
+function teamRankingStatusDetail(team) {
+  if (rankingIsInactive(team.ranking)) {
+    return `Elenco incompleto: ${teamActiveRoster(team).length} de ${rankingMinimumRosterSize(state.db?.rankingWeights)} jogadores`;
+  }
+  return `${team.ranking?.matches ?? team.matches} partidas consideradas`;
 }
 
 function teamInsightRow(label, value, detail) {
@@ -10760,7 +11219,7 @@ function teamRankingSnapshotHistory(teamId) {
         date: snapshot.cutoffAt,
         rank: row.validRank || null,
         points: row.score,
-        note: row.provisional ? `${snapshot.label} - provisório` : snapshot.label,
+        note: rankingIsValid(row) ? snapshot.label : `${snapshot.label} - ${rankingStatusLabel(row).toLowerCase()}`,
       };
     })
     .filter(Boolean);
@@ -11070,7 +11529,7 @@ function renderPlayers(id) {
       <div class="page-title">
         <span class="eyebrow">Jogadores cadastrados</span>
         <h1>Perfis de jogadores e histórico.</h1>
-        <p>Ranking oficial ordenado por rAAting 3.0 usa somente jogadores com sample_status = OK.</p>
+        <p>Ranking oficial ordenado por rAAting 3.0 usa somente jogadores com no mínimo ${RaaRatingCore.SAMPLE_MIN_ROUNDS} rounds.</p>
       </div>
       <div class="toolbar">
         <select id="player-sort" class="filter-control">
@@ -13343,7 +13802,7 @@ function teamCard(team) {
   return `
     <a class="entity-card" href="#/teams/${team.id}">
       <div class="entity-row">${teamLogo(team.id)}<span class="entity-main"><strong>${escapeHtml(team.name)}</strong><span>tag: ${escapeHtml(team.sourceTag || team.id)} - nota ${fmt(team.rankingScore ?? team.points, 1)} - ${team.wins}-${team.losses}</span></span></div>
-      <div class="chip-row"><span class="chip red">${teamCanonicalRankLabel(team)}</span><span class="chip">${pct(team.winRate)} WR</span><span class="chip">${lineupCount} lineup</span>${team.ranking?.provisional ? `<span class="chip">prov</span>` : ""}</div>
+      <div class="chip-row"><span class="chip red">${teamCanonicalRankLabel(team)}</span><span class="chip">${pct(team.winRate)} WR</span><span class="chip">${lineupCount} lineup</span>${!teamIsRankingValid(team) && !rankingIsInactive(team.ranking) ? `<span class="chip">prov</span>` : ""}</div>
     </a>
   `;
 }

@@ -8,7 +8,7 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   const RATING_MIN = 0.3;
   const RATING_MAX = 1.8;
-  const SAMPLE_MIN_ROUNDS = 60;
+  const SAMPLE_MIN_ROUNDS = 50;
   const ECO_BUCKETS = [
     { label: "$0-$1000", min: 0, max: 1000 },
     { label: "$1000-$1700", min: 1000, max: 1700 },

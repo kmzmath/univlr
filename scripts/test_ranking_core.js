@@ -115,6 +115,29 @@ assert.equal(validRankResult.byTeamId.alpha.provisional, false, "teams over the 
 assert.equal(validRankResult.byTeamId.alpha.validRank, 1, "canonical rank is assigned inside the valid-only ranking");
 assert.equal(validRankResult.byTeamId.alpha.rank, validRankResult.byTeamId.alpha.validRank, "rank points to canonical rank for valid teams");
 assert.equal(validRankResult.byTeamId.delta.validRank, null, "teams below the minimum stay outside the canonical ranking");
+assert.equal(validRankResult.byTeamId.alpha.inactive, false, "teams without roster data are not marked inactive");
+assert.equal(validRankResult.byTeamId.alpha.rosterSize, null, "roster size stays unknown when activeRoster is not provided");
+
+const roster = (size) => Array.from({ length: size }, (_, index) => ({ slot: index + 1, name: `p${index + 1}` }));
+const incompleteRosterResult = RankingCore.calculateTeamRankings({
+  teams: teams.map((row) => ({ ...row, activeRoster: row.id === "alpha" ? roster(2) : roster(5) })),
+  matches,
+  matchSeries: matches.map(seriesFromMatch),
+  tournaments: [],
+  players: [],
+  weights: {
+    minimumMatches: 3,
+    achievements: { inferFromEventResults: false, manualResults: [] },
+  },
+  now,
+});
+
+assert.equal(incompleteRosterResult.byTeamId.alpha.inactive, true, "teams with fewer than five current players are inactive");
+assert.equal(incompleteRosterResult.byTeamId.alpha.rosterSize, 2, "row carries the current roster size");
+assert.equal(incompleteRosterResult.byTeamId.alpha.validRank, null, "inactive teams stay outside the canonical ranking");
+assert(Number.isFinite(incompleteRosterResult.byTeamId.alpha.overallRank), "inactive teams keep an overall rank for the Todos view");
+assert.equal(incompleteRosterResult.byTeamId.beta.inactive, false, "complete rosters stay active");
+assert.equal(incompleteRosterResult.byTeamId.beta.validRank, 1, "canonical ranking skips inactive teams");
 
 const achievementResult = RankingCore.calculateTeamRankings({
   teams,

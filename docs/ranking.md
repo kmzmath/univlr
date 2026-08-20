@@ -44,7 +44,9 @@ Os pesos de campeonatos, fases, séries e pontos por colocação ficam em `ranki
 - Sem estatísticas de jogadores: rAAting 3.0 dos jogadores fica neutro em 50.
 - Sem dados suficientes em um modelo estatístico: o modelo usa um resultado neutro/regularizado e ainda entra normalizado.
 - Times com menos de `minimumMatches` partidas são marcados como provisórios. O valor atual em `ranking-weights.json` é 9 partidas.
-- A posição canônica é sempre a posição no ranking "Apenas válidos"; a visualização "Todos" recalcula a numeração incluindo equipes provisórias, sem alterar históricos ou snapshots.
+- Times com elenco atual incompleto (menos de `minimumRosterSize` jogadores cadastrados, hoje 5) são marcados como inativos e ficam fora do ranking válido, independentemente do número de partidas. Sem nenhum jogador cadastrado, a equipe some do ranking (inclusive do escopo "Todos").
+- A posição canônica é sempre a posição no ranking "Apenas válidos"; a visualização "Todos" recalcula a numeração incluindo equipes provisórias e inativas, sem alterar históricos ou snapshots.
+- A lineup exibida na semana atual é o elenco cadastrado da equipe; com mais de cinco jogadores registrados, aparecem os cinco com mais partidas pela equipe. Semanas anteriores mantêm a lineup observada nas partidas daquela semana.
 - Valores `NaN`, infinito ou ausentes são tratados como neutros e nunca chegam ao resultado final.
 
 ## Recência

@@ -62,6 +62,18 @@
       ]
     },
     {
+      "id": "jubs-etapa-presencial",
+      "name": "JUBS Goiás 2026 - Etapa Presencial",
+      "organizer": "CBDU",
+      "source": "Histórico",
+      "sourceId": "",
+      "startAt": "2026-08-30T00:00:00",
+      "endAt": "2026-09-05T23:00:00",
+      "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+      "folder": "campeonatos/JUBS/Etapa Presencial",
+      "files": []
+    },
+    {
       "id": "jubs-fase-inicial",
       "name": "Fase Inicial",
       "organizer": "UNIVLR",

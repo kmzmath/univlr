@@ -165,27 +165,31 @@ def local_logos():
     return {path.stem.lower(): normalize_public_path(path.relative_to(ROOT).as_posix()) for path in folder.glob("*") if path.is_file()}
 
 
-def asset_lookup(folder_name):
-    folder = ROOT / folder_name
+# As fotos ficam em assets/player-photos/<pasta da equipe>/<nome do jogador>.
+# O indice guarda a pasta de cada arquivo para nunca emprestar a foto de um
+# jogador homonimo de outra equipe.
+def player_photo_index():
+    folder = ROOT / "assets" / "player-photos"
+    index = {"scoped": {}, "bare": {}}
     if not folder.exists():
-        return {}
-    assets = {}
+        return index
     for path in sorted(folder.rglob("*")):
         if not path.is_file() or path.suffix.lower() not in ASSET_EXTENSIONS:
             continue
-        public_path = normalize_public_path(path.relative_to(ROOT).as_posix())
         stem_key = slug_key(path.stem)
-        if stem_key:
-            assets.setdefault(stem_key, public_path)
-        scoped_parts = [slug_key(part) for part in path.relative_to(folder).with_suffix("").parts]
-        scoped_key = "/".join(part for part in scoped_parts if part)
-        if scoped_key:
-            assets[scoped_key] = public_path
-    return assets
+        if not stem_key:
+            continue
+        public_path = normalize_public_path(path.relative_to(ROOT).as_posix())
+        relative = path.relative_to(folder)
+        folder_key = "/".join(part for part in (slug_key(item) for item in relative.parts[:-1]) if part)
+        index["scoped"].setdefault(f"{folder_key}/{stem_key}", public_path)
+        index["bare"].setdefault(stem_key, []).append((folder_key, public_path))
+    return index
 
 
-def player_photo_keys(name, current_team, nick_history):
-    team_key = slug_key(current_team)
+# O nome do arquivo segue o nome do jogador (nunca o nick in-game), com o
+# primeiro token como alternativa para nomes compostos ("Queijo Coallho").
+def player_photo_keys(name):
     keys = []
 
     def add_key(value):
@@ -200,11 +204,38 @@ def player_photo_keys(name, current_team, nick_history):
     add_key(name)
     for alias in PHOTO_ALIASES.get(slug_key(name), []):
         add_key(alias)
-    for nick in nick_history:
-        add_key(nick.split("#", 1)[0])
+    return keys
 
-    scoped = [f"{team_key}/{key}" for key in keys] if team_key else []
-    return scoped + keys
+
+# Pastas por organizacao ("macklogic" para "macklogic_red") e por equipe antiga
+# do jogador continuam valendo; pasta de outra equipe, nao.
+def photo_folder_matches_team(folder_key, team_keys):
+    if not folder_key:
+        return True
+    for team in team_keys:
+        if not team:
+            continue
+        if folder_key == team or team.startswith(f"{folder_key}_") or folder_key.startswith(f"{team}_"):
+            return True
+    return False
+
+
+def resolve_player_photo(index, name, current_team, team_history):
+    team_keys = []
+    for team in [current_team, *team_history]:
+        if team and team not in team_keys:
+            team_keys.append(team)
+    keys = player_photo_keys(name)
+    for key in keys:
+        for team in team_keys:
+            scoped = index["scoped"].get(f"{team}/{key}")
+            if scoped:
+                return scoped
+    for key in keys:
+        for folder_key, public_path in index["bare"].get(key, []):
+            if photo_folder_matches_team(folder_key, team_keys):
+                return public_path
+    return ""
 
 
 def slug_key(value):
@@ -230,6 +261,17 @@ def event_name_from_folder(folder):
         return EVENT_NAME_OVERRIDES[key]
     parts = clean(folder.name).replace("-", " ").split()
     return " ".join(part.upper() if part.lower() in KNOWN_ACRONYMS else part.capitalize() for part in parts)
+
+
+def has_match_files(folder):
+    return any(
+        path.is_file() and path.suffix.lower() == ".json" and path.name.lower() not in EVENT_META_FILES
+        for path in folder.iterdir()
+    )
+
+
+def has_event_metadata(folder):
+    return any((folder / filename).exists() for filename in EVENT_META_FILES)
 
 
 def read_event_metadata(folder):
@@ -300,11 +342,12 @@ def build_data_sources():
         return {"events": events}
     tournament_infos = read_tournament_infos()
 
+    # Campeonatos ja disputados sao descobertos pelos JSONs de partida; campeonatos
+    # futuros entram com uma pasta contendo apenas o campeonato.json (files vazio).
     event_folders = [
         folder
         for folder in EVENTS_ROOT.rglob("*")
-        if folder.is_dir()
-        and any(path.is_file() and path.suffix.lower() == ".json" and path.name.lower() not in EVENT_META_FILES for path in folder.iterdir())
+        if folder.is_dir() and (has_match_files(folder) or has_event_metadata(folder))
     ]
 
     for folder in sorted(event_folders, key=lambda item: item.relative_to(EVENTS_ROOT).as_posix().lower()):
@@ -314,7 +357,7 @@ def build_data_sources():
             for path in sorted(folder.glob("*.json"), key=lambda item: item.name.lower())
             if path.name.lower() not in EVENT_META_FILES
         ]
-        if not files:
+        if not files and not meta:
             continue
 
         relative_folder = folder.relative_to(EVENTS_ROOT)
@@ -561,7 +604,7 @@ def read_players():
     if not path.exists():
         return []
     players = []
-    photos = asset_lookup("assets/player-photos")
+    photos = player_photo_index()
 
     for row in load_rows(path):
         name = row.get("Jogador", "")
@@ -572,7 +615,7 @@ def read_players():
         puuid = row.get("puuid", "")
         current_team = slug_key(row.get("current_team", ""))
         team_history = [slug_key(team_id) for team_id in team_history]
-        photo = next((photos[key] for key in player_photo_keys(name, current_team, nick_history) if key in photos), "")
+        photo = resolve_player_photo(photos, name, current_team, team_history)
         players.append(
             {
                 "id": puuid or name,

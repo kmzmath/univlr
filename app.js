@@ -344,7 +344,7 @@ const TOURNAMENT_OVERRIDES = {
     hidden: true,
   },
   "jubs-fase-inicial": {
-    name: "JUBS - Fase inicial",
+    name: "JUBS Goiás 2026 - Fase inicial",
     organizer: "CBDU",
     organizerLogo: "assets/organizers-logos/logo_CBDU.png",
     banner: "assets/tournament-banners/banner_jubs.png",
@@ -656,6 +656,182 @@ const TOURNAMENT_OVERRIDES = {
         { id: "lunatica_ufms", wins: 0, losses: 3, points: 0, range: "36\u00ba - 40\u00ba lugar" },
         { id: "limpezinha", wins: 0, losses: 3, points: 0, range: "36\u00ba - 40\u00ba lugar" },
         { id: "carrascos_fd8j", wins: 0, losses: 3, points: 0, range: "36\u00ba - 40\u00ba lugar" },
+      ],
+    },
+  },
+  "jubs-etapa-presencial": {
+    name: "JUBS Goiás 2026 - Etapa Presencial",
+    organizer: "CBDU",
+    organizerLogo: "assets/organizers-logos/logo_CBDU.png",
+    banner: "assets/tournament-banners/banner_jubs.png",
+    prizePool: "-",
+    tier: "S",
+    status: "Agendado",
+    type: "Presencial",
+    startAt: "2026-08-30T00:00:00",
+    endAt: "2026-09-05T23:00:00",
+    teamCount: 8,
+    format: {
+      summary: "Grupos + Playoffs",
+      details: [
+        "2 grupos de 4 equipes em eliminação dupla (GSL)",
+        "Opening e Winner's Match em MD1; Elimination e Decider em MD3",
+        "Top 2 de cada grupo avança aos playoffs",
+        "Playoffs em eliminação dupla, todos os jogos MD3",
+        "Disputa de terceiro lugar em MD3",
+      ],
+      standings: "Chaveamento da fase de grupos",
+    },
+    teams: [
+      "ceub_octopus",
+      "fametro_berserkers",
+      "macklogic_red",
+      "ufmt_turuna",
+      "uninassau_griffins",
+      "azure_bears_golden",
+      "a2e_uff",
+      "ufu_saints",
+    ],
+    bracket: {
+      title: "Grupos + Playoffs",
+      regions: [
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Semifinais superior",
+              matches: [
+                { code: "Partida 11", bestOf: "MD3", aLabel: "1º Grupo A", bLabel: "2º Grupo B" },
+                { code: "Partida 12", bestOf: "MD3", aLabel: "1º Grupo B", bLabel: "2º Grupo A" },
+              ],
+            },
+            {
+              title: "Final superior",
+              matches: [
+                { code: "Partida 14", bestOf: "MD3", aLabel: "TBD", bLabel: "TBD" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada 1 inferior",
+              matches: [
+                { code: "Partida 13", bestOf: "MD3", aLabel: "TBD", bLabel: "TBD" },
+              ],
+            },
+            {
+              title: "Final inferior",
+              matches: [
+                { code: "Partida 15", bestOf: "MD3", aLabel: "TBD", bLabel: "TBD" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Grande final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Grande final",
+              matches: [
+                { code: "Partida 17", bestOf: "MD3", aLabel: "TBD", bLabel: "TBD" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Disputa de 3º lugar",
+          className: "third-place",
+          columns: [
+            {
+              title: "Disputa de 3º lugar",
+              matches: [
+                { code: "Partida 16", bestOf: "MD3", aLabel: "TBD", bLabel: "TBD" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Grupo A",
+          className: "group-stage gsl-group",
+          columns: [
+            {
+              title: "Opening (MD1)",
+              matches: [
+                { code: "Partida 1", bestOf: "MD1", status: "Agendada", slot: 0, a: "ceub_octopus", b: "fametro_berserkers" },
+                { code: "Partida 2", bestOf: "MD1", status: "Agendada", slot: 1, a: "macklogic_red", b: "ufmt_turuna" },
+              ],
+            },
+            {
+              title: "Winner's (MD1)",
+              matches: [
+                { code: "Partida 5", bestOf: "MD1", slot: 0, aLabel: "TBD", bLabel: "TBD" },
+              ],
+            },
+            {
+              title: "Elimination (MD3)",
+              matches: [
+                { code: "Partida 7", bestOf: "MD3", slot: 1, aLabel: "TBD", bLabel: "TBD" },
+              ],
+            },
+            {
+              title: "Decider (MD3)",
+              matches: [
+                { code: "Partida 9", bestOf: "MD3", slot: 1, aLabel: "TBD", bLabel: "TBD" },
+              ],
+            },
+          ],
+          terminalColumn: {
+            title: "Classificado",
+            cards: [
+              { label: "TBD", slot: 0 },
+              { label: "TBD", slot: 1 },
+            ],
+          },
+        },
+        {
+          name: "Grupo B",
+          className: "group-stage gsl-group",
+          columns: [
+            {
+              title: "Opening (MD1)",
+              matches: [
+                { code: "Partida 3", bestOf: "MD1", status: "Agendada", slot: 0, a: "uninassau_griffins", b: "a2e_uff" },
+                { code: "Partida 4", bestOf: "MD1", status: "Agendada", slot: 1, a: "azure_bears_golden", b: "ufu_saints" },
+              ],
+            },
+            {
+              title: "Winner's (MD1)",
+              matches: [
+                { code: "Partida 6", bestOf: "MD1", slot: 0, aLabel: "TBD", bLabel: "TBD" },
+              ],
+            },
+            {
+              title: "Elimination (MD3)",
+              matches: [
+                { code: "Partida 8", bestOf: "MD3", slot: 1, aLabel: "TBD", bLabel: "TBD" },
+              ],
+            },
+            {
+              title: "Decider (MD3)",
+              matches: [
+                { code: "Partida 10", bestOf: "MD3", slot: 1, aLabel: "TBD", bLabel: "TBD" },
+              ],
+            },
+          ],
+          terminalColumn: {
+            title: "Classificado",
+            cards: [
+              { label: "TBD", slot: 0 },
+              { label: "TBD", slot: 1 },
+            ],
+          },
+        },
       ],
     },
   },
@@ -2454,6 +2630,15 @@ const navItems = [
   ["ranking", "Ranking"],
 ];
 
+// Transicao padrao de troca de conteudo (ver playPanelSlide). Declarada aqui em
+// cima porque init() roda antes do bloco das funcoes de slide.
+const PANEL_SLIDE_MS = 220;
+// Uma "view" por grupo de abas: guarda o que esta na tela para saber o sentido
+// do slide na proxima troca.
+const panelSlideViews = {};
+const NAV_INDICATOR_HEIGHT = 2;
+let navIndicatorGeometry = null;
+
 const STATIC_DOCUMENT_TITLES = {
   home: "Home",
   matches: "Partidas",
@@ -2546,6 +2731,8 @@ async function init() {
     state.tournamentRankingCache.clear();
     state.ready = true;
     window.addEventListener("hashchange", render);
+    bindFilterDropdownMotion();
+    window.addEventListener("resize", () => syncNavIndicator(false));
     if (!connectionBlocksImageWarm() && !imageWarmIsFresh()) {
       await runImageSplash();
     }
@@ -4641,6 +4828,12 @@ function renderLoading() {
 function Shell(content, options = {}) {
   const { section } = route();
   const searchValue = escapeHtml(state.search);
+  const sectionSlide = panelSlideSnapshot("site-sections", {
+    selector: ".main",
+    scope: "site",
+    key: section,
+    order: navItems.map(([key]) => key),
+  });
   app.innerHTML = `
     <div class="app-shell">
       <header class="topbar">
@@ -4651,6 +4844,7 @@ function Shell(content, options = {}) {
           </a>
           <nav class="nav" aria-label="Navegação principal">
             ${navItems.map(([key, label]) => `<a class="nav-link ${section === key ? "active" : ""}" href="#/${key}">${label}</a>`).join("")}
+            <span class="nav-indicator" aria-hidden="true"></span>
           </nav>
           <div class="global-search">
             <input id="global-search" type="search" placeholder="Buscar time, jogador, campeonato, partida ou mapa" autocomplete="off" value="${searchValue}" ${options.skipSearch ? "disabled" : ""} />
@@ -4670,6 +4864,48 @@ function Shell(content, options = {}) {
     </div>
   `;
   if (!options.skipSearch) bindSearch();
+  syncNavIndicator();
+  playPanelSlide(sectionSlide);
+}
+
+// A linha do header e um elemento so, que anda da aba anterior para a atual no
+// mesmo tempo do slide do conteudo. Sem posicao anterior (primeiro render, F5,
+// volta de uma pagina fora do menu) ela so aparece no lugar certo, sem viajar.
+function syncNavIndicator(animate = true) {
+  const nav = document.querySelector(".nav");
+  const indicator = nav?.querySelector(".nav-indicator");
+  if (!nav || !indicator) return;
+  const active = nav.querySelector(".nav-link.active");
+  if (!active) {
+    indicator.style.opacity = "0";
+    navIndicatorGeometry = null;
+    return;
+  }
+  const navBox = nav.getBoundingClientRect();
+  const activeBox = active.getBoundingClientRect();
+  const next = {
+    x: Math.round(activeBox.left - navBox.left),
+    y: Math.round(activeBox.bottom - navBox.top - NAV_INDICATOR_HEIGHT),
+    width: Math.round(activeBox.width),
+  };
+  const from = (animate && navIndicatorGeometry) || next;
+  navIndicatorGeometry = next;
+  indicator.style.transition = "none";
+  indicator.style.opacity = "1";
+  indicator.style.width = `${from.width}px`;
+  indicator.style.transform = `translate3d(${from.x}px, ${from.y}px, 0)`;
+  if (from === next) return;
+
+  let started = false;
+  const start = () => {
+    if (started) return;
+    started = true;
+    indicator.style.transition = "";
+    indicator.style.width = `${next.width}px`;
+    indicator.style.transform = `translate3d(${next.x}px, ${next.y}px, 0)`;
+  };
+  requestAnimationFrame(start);
+  setTimeout(start, 32);
 }
 
 function render() {
@@ -4972,27 +5208,35 @@ function matchFilterSidebar() {
       <button type="button" class="filter-reset-button" data-match-filter="reset">${resetIcon()}<span>Reset</span></button>
       <details class="filter-dropdown" data-filter-group="bestOf"${resultFilterOpenAttr("bestOf")}>
         <summary>${filterIcon()}<span>Melhor de</span><strong>${matchBestOfLabel()}</strong></summary>
-        <div class="filter-button-grid best-of-grid">
-          ${[1, 3, 5].map((value) => filterPill("bestOf", String(value), String(value), state.matchBestOf === String(value))).join("")}
+        <div class="filter-dropdown-body">
+          <div class="filter-button-grid best-of-grid">
+            ${[1, 3, 5].map((value) => filterPill("bestOf", String(value), String(value), state.matchBestOf === String(value))).join("")}
+          </div>
         </div>
       </details>
       <details class="filter-dropdown" data-filter-group="maps"${resultFilterOpenAttr("maps")}>
         <summary>${filterIcon()}<span>Mapa</span><strong>${mapFilterSummary()}</strong></summary>
-        <div class="filter-option-stack map-filter-options">
-          ${state.db.maps.map(mapFilterButton).join("")}
+        <div class="filter-dropdown-body">
+          <div class="filter-option-stack map-filter-options">
+            ${state.db.maps.map(mapFilterButton).join("")}
+          </div>
         </div>
       </details>
       <details class="filter-dropdown" data-filter-group="tournaments"${resultFilterOpenAttr("tournaments")}>
         <summary>${filterIcon()}<span>Campeonato</span><strong>${tournamentFilterSummary()}</strong></summary>
-        <div class="filter-option-stack event-filter-options">
-          ${visibleTournaments().map(eventFilterButton).join("")}
+        <div class="filter-dropdown-body">
+          <div class="filter-option-stack event-filter-options">
+            ${visibleTournaments().map(eventFilterButton).join("")}
+          </div>
         </div>
       </details>
       <details class="filter-dropdown" data-filter-group="teams"${resultFilterOpenAttr("teams")}>
         <summary>${filterIcon()}<span>Equipe</span><strong>${teamFilterSummary()}</strong></summary>
-        <input id="match-team-query" class="filter-control team-filter-search" type="search" placeholder="Buscar equipe" value="${escapeHtml(state.matchTeamQuery)}" autocomplete="off" />
-        <div class="team-filter-options" data-team-options>
-          ${matchTeamOptionsHtml()}
+        <div class="filter-dropdown-body">
+          <input id="match-team-query" class="filter-control team-filter-search" type="search" placeholder="Buscar equipe" value="${escapeHtml(state.matchTeamQuery)}" autocomplete="off" />
+          <div class="team-filter-options" data-team-options>
+            ${matchTeamOptionsHtml()}
+          </div>
         </div>
       </details>
     </aside>
@@ -5157,9 +5401,11 @@ function playerTeamDropdown() {
   return `
     <details class="filter-dropdown player-team-dropdown">
       <summary>${filterIcon()}<span>Equipe</span><strong>${playerTeamFilterSummary()}</strong></summary>
-      <div class="filter-option-stack player-team-options">
-        ${playerTeamOptionButton(null)}
-        ${teams.map(playerTeamOptionButton).join("")}
+      <div class="filter-dropdown-body">
+        <div class="filter-option-stack player-team-options">
+          ${playerTeamOptionButton(null)}
+          ${teams.map(playerTeamOptionButton).join("")}
+        </div>
       </div>
     </details>
   `;
@@ -6230,6 +6476,12 @@ function renderMatchDetail(id) {
   const scopeLabel = aggregateMode ? score.label : match.mapName;
   const scoreboardMode = matchScoreboardMode();
   const scoreboardColumnsList = scoreboardColumns(scoreboardMode);
+  const mapSlide = panelSlideSnapshot("match-maps", {
+    selector: ".match-tab-panel",
+    scope: match.seriesKey,
+    key: aggregateMode ? "all" : match.id,
+    order: ["all", ...series.map((item) => item.id)],
+  });
   Shell(`
     <section class="match-page">
       <header class="match-hero ${aggregateMode ? "series-hero" : "map-hero"}">
@@ -6254,6 +6506,8 @@ function renderMatchDetail(id) {
       </header>
 
       ${matchMapTabs(match, series, aggregateMode)}
+
+      <div class="match-tab-panel">
       ${matchMapOverview(match, selectedMatches, aggregateMode)}
 
       <div class="match-detail-grid">
@@ -6291,10 +6545,12 @@ function renderMatchDetail(id) {
           </section>
         </aside>
       </div>
+      </div>
     </section>
   `);
   bindScoreboardSort();
   bindLineupCompare();
+  playPanelSlide(mapSlide);
 }
 
 function matchHeroMeta(match, event, score, aggregateMode) {
@@ -7314,6 +7570,12 @@ function renderTournamentDetail(id) {
   const matches = matchSeriesForEvent(event.id);
   const standings = tournamentStandingsRows(event, matches);
   const activeTab = tournamentActiveTab();
+  const tabTransition = panelSlideSnapshot("tournament-tabs", {
+    selector: ".tournament-tab-panel",
+    scope: event.id,
+    key: activeTab,
+    order: TOURNAMENT_TAB_KEYS,
+  });
   Shell(`
     <article class="tournament-hub">
       ${tournamentHero(event, matches, standings)}
@@ -7329,6 +7591,7 @@ function renderTournamentDetail(id) {
   } else if (activeTab === "estatisticas" || activeTab === "agentes" || activeTab === "composicoes") {
     bindTournamentStatsControls(event.id);
   }
+  playPanelSlide(tabTransition);
   /* Legacy compact tournament layout disabled after hub refresh.
   Shell(`
     <article class="tournament-hub">
@@ -7370,9 +7633,146 @@ function renderTournamentDetail(id) {
   */
 }
 
+const TOURNAMENT_TAB_KEYS = ["overview", "jogos", "estatisticas", "mapas", "agentes", "composicoes"];
+
 function tournamentActiveTab() {
   const tab = route().tab || "overview";
-  return ["overview", "jogos", "estatisticas", "mapas", "agentes", "composicoes"].includes(tab) ? tab : "overview";
+  return TOURNAMENT_TAB_KEYS.includes(tab) ? tab : "overview";
+}
+
+// Trocar de aba/secao re-renderiza a pagina inteira, entao o conteudo que esta
+// saindo e guardado antes do Shell para o slide ter os dois lados (mesma
+// transicao do line-up da equipe, onde os dois paineis vivem juntos no DOM).
+// <details> abre e fecha na hora; a animacao roda na altura do corpo do filtro,
+// entao o toggle nativo e substituido por um controlado.
+function bindFilterDropdownMotion() {
+  document.addEventListener("click", (clickEvent) => {
+    const summary = clickEvent.target.closest?.(".filter-dropdown > summary");
+    const details = summary?.parentElement;
+    const body = details?.querySelector(":scope > .filter-dropdown-body");
+    if (!summary || !body) return;
+    clickEvent.preventDefault();
+    if (details.dataset.motion === "running") return;
+    details.dataset.motion = "running";
+    const opening = !details.open;
+    if (opening) details.open = true;
+    body.style.overflow = "hidden";
+    body.style.height = `${opening ? 0 : body.scrollHeight}px`;
+
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      body.style.height = "";
+      body.style.overflow = "";
+      body.style.transition = "";
+      delete details.dataset.motion;
+      if (!opening) details.open = false;
+    };
+    body.addEventListener("transitionend", (motionEvent) => {
+      if (motionEvent.target === body && motionEvent.propertyName === "height") finish();
+    });
+    setTimeout(finish, PANEL_SLIDE_MS * 3);
+
+    let started = false;
+    const start = () => {
+      if (started || done) return;
+      started = true;
+      body.style.transition = `height ${PANEL_SLIDE_MS}ms ease`;
+      body.style.height = `${opening ? body.scrollHeight : 0}px`;
+    };
+    requestAnimationFrame(start);
+    setTimeout(start, 32);
+  });
+}
+
+function panelSlideSnapshot(group, { selector, scope, key, order = [] }) {
+  const previous = panelSlideViews[group];
+  panelSlideViews[group] = { scope, key };
+  if (!previous || previous.scope !== scope || previous.key === key) return null;
+  const panel = document.querySelector(selector);
+  if (!panel || !panel.firstChild) return null;
+  return {
+    selector,
+    html: panel.innerHTML,
+    height: Math.round(panel.getBoundingClientRect().height),
+    forward: panelSlideOrderIndex(order, key) > panelSlideOrderIndex(order, previous.key),
+  };
+}
+
+// Chave fora da ordem conhecida (ex.: pagina de detalhe) conta como "mais para
+// dentro": entrar desliza para frente e voltar desliza para tras.
+function panelSlideOrderIndex(order, key) {
+  const index = order.indexOf(key);
+  return index >= 0 ? index : order.length;
+}
+
+function playPanelSlide(snapshot) {
+  const panel = snapshot ? document.querySelector(snapshot.selector) : null;
+  if (!panel || !panel.firstChild) return;
+  const incoming = document.createElement("div");
+  incoming.className = "panel-slide";
+  // Move os nos (em vez de copiar o HTML) para nao perder os listeners ja ligados.
+  while (panel.firstChild) incoming.appendChild(panel.firstChild);
+  const outgoing = document.createElement("div");
+  outgoing.className = "panel-slide";
+  outgoing.innerHTML = snapshot.html;
+  applyPanelSlideLayout(panel, [outgoing, incoming]);
+  const track = document.createElement("div");
+  track.className = "panel-slide-track";
+  track.append(...(snapshot.forward ? [outgoing, incoming] : [incoming, outgoing]));
+  panel.classList.add("panel-sliding");
+  panel.style.height = `${snapshot.height}px`;
+  panel.appendChild(track);
+  track.style.transform = snapshot.forward ? "translateX(0)" : "translateX(-50%)";
+
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    while (incoming.firstChild) panel.appendChild(incoming.firstChild);
+    track.remove();
+    panel.classList.remove("panel-sliding");
+    panel.style.height = "";
+  };
+  track.addEventListener("transitionend", (animationEvent) => {
+    if (animationEvent.target === track && animationEvent.propertyName === "transform") finish();
+  });
+  setTimeout(finish, PANEL_SLIDE_MS * 3);
+
+  // rAF da o frame certo para o transform inicial "pegar"; o timeout cobre o caso
+  // de a aba do navegador estar em segundo plano, onde o rAF nao roda.
+  let started = false;
+  const start = () => {
+    if (started || done) return;
+    started = true;
+    track.classList.add("animating");
+    track.style.transform = snapshot.forward ? "translateX(-50%)" : "translateX(0)";
+    // A altura de origem veio do bounding box (com padding), entao a de destino
+    // tambem precisa somar o padding do painel para nao saltar no fim.
+    panel.style.height = `${incoming.scrollHeight + panelVerticalPadding(panel)}px`;
+  };
+  requestAnimationFrame(start);
+  setTimeout(start, 32);
+}
+
+function panelVerticalPadding(panel) {
+  const style = typeof getComputedStyle === "function" ? getComputedStyle(panel) : null;
+  if (!style || style.boxSizing !== "border-box") return 0;
+  return (parseFloat(style.paddingTop) || 0) + (parseFloat(style.paddingBottom) || 0);
+}
+
+// Cada lado do slide precisa se comportar como o painel original, senao o
+// conteudo perde o grid/gap enquanto a animacao roda.
+function applyPanelSlideLayout(panel, slides) {
+  const style = typeof getComputedStyle === "function" ? getComputedStyle(panel) : null;
+  const display = style?.display === "grid" || style?.display === "flex" ? style.display : "block";
+  const gap = style?.gap && style.gap !== "normal" ? style.gap : "";
+  slides.forEach((slide) => {
+    slide.style.display = display;
+    if (gap) slide.style.gap = gap;
+    if (display === "grid") slide.style.alignContent = "start";
+  });
 }
 
 function tournamentTabNav(event, activeTab) {
@@ -7478,7 +7878,7 @@ function tournamentOverviewSection(event, matches, standings) {
           <span><strong>${escapeHtml(tournamentDurationLabel(event))}</strong><small>Duração</small></span>
         </div>
         <div class="tournament-podium-grid">
-          ${podium.length ? podium.map((row) => tournamentPodiumCard(event, row)).join("") : `<div class="empty-state compact-empty">Pódio Não definido.</div>`}
+          ${(podium.length ? podium : tournamentPodiumPlaceholderRows()).map((row) => tournamentPodiumCard(event, row)).join("")}
         </div>
       </article>
       <article class="tournament-overview-card tournament-map-pool-card">
@@ -7550,13 +7950,19 @@ function tournamentPodiumRowsFromBracket(event, matches) {
   return rows;
 }
 
+// Sem resultado ainda o podio aparece com as vagas em aberto, nao com um aviso.
+function tournamentPodiumPlaceholderRows() {
+  return ["1", "2", "3"].map((range) => ({ range, team: null }));
+}
+
 function tournamentPodiumCard(event, row) {
   const label = tournamentPodiumLabel(row.range);
+  const team = row.team;
   return `
-    <span class="tournament-podium-card podium-${escapeHtml(slugify(label))}">
+    <span class="tournament-podium-card podium-${escapeHtml(slugify(label))}${team ? "" : " podium-pending"}">
       <b>${escapeHtml(label)}</b>
-      ${teamLogo(row.team.id, "tiny")}
-      <strong>${escapeHtml(row.team.name)}</strong>
+      ${team ? teamLogo(team.id, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}
+      <strong>${escapeHtml(team ? team.name : "TBD")}</strong>
     </span>
   `;
 }
@@ -9020,7 +9426,18 @@ function tournamentTeamRows(event, standings, matches = []) {
       eventRanking: rankingSnapshot?.byTeamId?.[teamId] || null,
       eventRankingDate: rankingSnapshot?.eventDate || rankingSnapshot?.cutoffAt || null,
     }))
-    .filter((row) => row.team);
+    .filter((row) => row.team)
+    .sort(compareTournamentTeamByRank);
+}
+
+// Ranking oficial na frente (do melhor para o pior); quem ainda esta com rank
+// provisorio vai para o fim da lista, em ordem alfabetica entre si.
+function compareTournamentTeamByRank(a, b) {
+  const rankA = Number(a.eventRanking?.validRank || 0);
+  const rankB = Number(b.eventRanking?.validRank || 0);
+  if (rankA && rankB) return rankA - rankB;
+  if (rankA !== rankB) return rankA ? -1 : 1;
+  return String(a.team?.name || "").localeCompare(String(b.team?.name || ""), "pt-BR");
 }
 
 function tournamentTeamCard(row, index) {
@@ -10435,8 +10852,8 @@ function tournamentDataPanel(event) {
     <section class="data-panel tournament-side-panel">
       <div class="section-head"><h2>Event data</h2></div>
       <dl class="tournament-info-list">
-        <div><dt>Inicio</dt><dd>${escapeHtml(formatDate(event.start, "time"))}</dd></div>
-        <div><dt>Fim</dt><dd>${escapeHtml(formatDate(event.end, "time"))}</dd></div>
+        <div><dt>Inicio</dt><dd>${escapeHtml(formatDate(event.start))}</dd></div>
+        <div><dt>Fim</dt><dd>${escapeHtml(formatDate(event.end))}</dd></div>
         <div><dt>Prize Pool</dt><dd>${escapeHtml(event.prizePool || "-")}</dd></div>
         <div><dt>Tier</dt><dd>${escapeHtml(event.tier || "A definir")}</dd></div>
         <div><dt>Tipo</dt><dd>${escapeHtml(event.type || "A definir")}</dd></div>
@@ -10519,7 +10936,7 @@ function renderTeams(id) {
 function renderTeamDetail(id) {
   const team = teamById(id);
   if (!team) return renderNotFound("Equipe");
-  const activeTab = ["ranking", "roster", "matches", "tournaments", "stats"].includes(route().tab) ? route().tab : "ranking";
+  const activeTab = TEAM_TAB_KEYS.includes(route().tab) ? route().tab : "ranking";
   const matches = matchSeriesForTeam(id);
   const currentLineup = team.currentLineup || [];
   const observedPlayers = state.db.players
@@ -10528,6 +10945,12 @@ function renderTeamDetail(id) {
   const historicalPlayers = teamHistoricalPlayers(team).filter((player) => !currentLineup.some((entry) => entry.playerId === player.id));
   const tournaments = visibleTournaments().filter((event) => event.teams.includes(team.id));
   const trophies = teamTrophyAchievements(team);
+  const tabSlide = panelSlideSnapshot("team-tabs", {
+    selector: ".team-tab-panel",
+    scope: team.id,
+    key: activeTab,
+    order: TEAM_TAB_KEYS,
+  });
   Shell(`
     <section class="team-page" ${teamAccentStyle(team)}>
       <div class="team-hero">
@@ -10564,7 +10987,10 @@ function renderTeamDetail(id) {
       </section>
     </section>
   `);
+  playPanelSlide(tabSlide);
 }
+
+const TEAM_TAB_KEYS = ["ranking", "roster", "matches", "tournaments", "stats"];
 
 function renderTeamTab(activeTab, team, context) {
   const renderers = {
@@ -11561,6 +11987,12 @@ function renderPlayerDetail(id) {
   const tournamentRows = playerTournamentRows(player, matches);
   const teamRows = playerTeamHistoryRows(player, matches, tournamentRows);
   const trophies = playerTrophyAchievements(player, tournamentRows);
+  const tabSlide = panelSlideSnapshot("player-tabs", {
+    selector: ".player-tab-panel",
+    scope: player.id,
+    key: activeTab,
+    order: PLAYER_TAB_KEYS,
+  });
   Shell(`
     <section class="player-page" ${playerAccentStyle(team)}>
       <div class="player-hero">
@@ -11597,7 +12029,10 @@ function renderPlayerDetail(id) {
   `);
   if (activeTab === "agentes") bindPlayerAgentStatsControls(player.id);
   if (activeTab === "mapas") bindPlayerMapStatsControls(player.id);
+  playPanelSlide(tabSlide);
 }
+
+const PLAYER_TAB_KEYS = ["resumo", "equipes", "partidas", "agentes", "mapas", "resultados", "trofeus"];
 
 function normalizePlayerTab(tab) {
   if (tab === "equipes" || tab === "teams") return "equipes";
@@ -13868,12 +14303,15 @@ function mapRow(map) {
   return `<a class="simple-row" href="#/maps/${map.id}">${mapLogo(map.id)}<span><strong>${escapeHtml(map.name)}</strong><br><span class="tiny">${map.matches} partidas - ${map.rounds} rounds</span></span><span class="chip">${map.agentStats[0]?.name || "-"}</span></a>`;
 }
 
+// Campeonato e sempre exibido por dia (sem horario); o horario continua valendo
+// so para partidas, que acontecem em um horario especifico.
 function eventTimeRange(event) {
   if (!event?.start && !event?.end) return "Sem janela definida";
-  if (!event?.start) return `Termina ${formatDate(event.end, "time")}`;
-  if (!event?.end) return `Inicio ${formatDate(event.start, "time")}`;
-  const endLabel = !eventIsDone(event) && periodEndIsCurrent(event.end) ? "Atualmente" : formatDate(event.end, "time");
-  return `${formatDate(event.start, "time")} - ${endLabel}`;
+  if (!event?.start) return `Termina ${formatDate(event.end)}`;
+  if (!event?.end) return `Inicio ${formatDate(event.start)}`;
+  const endLabel = !eventIsDone(event) && periodEndIsCurrent(event.end) ? "Atualmente" : formatDate(event.end);
+  if (formatDate(event.start) === endLabel) return formatDate(event.start);
+  return `${formatDate(event.start)} - ${endLabel}`;
 }
 
 function eventStatusClass(status) {

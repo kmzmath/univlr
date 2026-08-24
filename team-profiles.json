@@ -4126,388 +4126,24 @@
       "lineupHistory": [
         {
           "from": "2026-05-30",
-          "to": "2026-05-30",
-          "firstSeenAt": 1780165331493,
-          "lastSeenAt": 1780172660272,
-          "matches": 3,
-          "source": "auto-json+players-history",
-          "profileConfidence": 60,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "_DNLp68AbYPBp8CBmCjmvCOQrEMdfa60V-XjnDfNjL07KHFZ-a4YMB2z8n62vT97Qm3CES-3PNFcXg",
-              "name": "DOCTORdoctor",
-              "handle": "Doctor 大混乱#JOTAB",
-              "firstSeenAt": "2026-05-30",
-              "lastSeenAt": "2026-05-30",
-              "matches": 3,
-              "rounds": 67,
-              "profileMatches": 3,
-              "profileConfidence": 12,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "93NHneE4SvxA-CW5WaxdEKdrimqkBzF4RUgtrPeHkkdNIrtm3JwjADfBtqExVW6jfH98zwhIm7IfaQ",
-              "name": "Lock",
-              "handle": "Lock Street#exu",
-              "firstSeenAt": "2026-05-30",
-              "lastSeenAt": "2026-05-30",
-              "matches": 3,
-              "rounds": 67,
-              "profileMatches": 3,
-              "profileConfidence": 12,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "ikkLmxM8ZaJBlba_WxX8OhNJg8Q2Lvf2nahc2dGUdkXnP3IuO5Jckk3Ok-YJ4Ccyz9ArlA4C0SLxTg",
-              "name": "Olk",
-              "handle": "oLK#JExMR",
-              "firstSeenAt": "2026-05-30",
-              "lastSeenAt": "2026-05-30",
-              "matches": 3,
-              "rounds": 67,
-              "profileMatches": 3,
-              "profileConfidence": 12,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 4,
-              "playerId": "0uFnLwd5_J9Q3dVf6onsOAbrKxvylA6-ngoN8o7_9iUT_abZfUrJqKdJr6drIDBFakZDPGEytAcMHA",
-              "name": "pemi",
-              "handle": "pemi 恨#star",
-              "firstSeenAt": "2026-05-30",
-              "lastSeenAt": "2026-05-30",
-              "matches": 3,
-              "rounds": 67,
-              "profileMatches": 3,
-              "profileConfidence": 12,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 5,
-              "playerId": "Db2KIXvthyNybHbAxXsZFnk8yJCaIZ7EKcbnh7uKh6JPPivK_QPY52W2d0E2mfzbSyRGS0OO-iin4w",
-              "name": "phbg",
-              "handle": "phbg 碧昂卡#biank",
-              "firstSeenAt": "2026-05-30",
-              "lastSeenAt": "2026-05-30",
-              "matches": 3,
-              "rounds": 67,
-              "profileMatches": 3,
-              "profileConfidence": 12,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            }
-          ]
-        },
-        {
-          "from": "2026-06-05",
-          "to": "2026-06-05",
-          "firstSeenAt": 1780693093447,
-          "lastSeenAt": 1780693093447,
-          "matches": 1,
-          "source": "auto-json+players-history",
-          "profileConfidence": 0,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "T1yB9hmkqeeYoz6JQdYtvtBUoYAYllfU4IRzZEKr0QDQRz4p3H6O-5Z_Rh_xlai6p_H8Lb7duwPU7Q",
-              "name": "Falcão",
-              "handle": "Falcão#0604",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "Hwg3ijHpDF9B5L_zt9bnkLPNqB-9y6cWSa5ccMhTb9XMKqIqi8hL8vo9wVHigcliEIl2fE6bNn4HcA",
-              "name": "FelipiN=)",
-              "handle": "FelipiN ツ#1204",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "yD4m19kYYR9V5YkIp7XobJXHrXsKJNTurWftBjx2TFZXooIPRBUNp0evY-iF83biWfOncR8gSzS__g",
-              "name": "GorTzin",
-              "handle": "GorTzin#ZloLa",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            },
-            {
-              "slot": 4,
-              "playerId": "8liPcRvanlkzl78ZZFPxD1xXnv6Cu_Njf0nAsYGjfftxEcUouY6aNDejbl4WQW8YlGKdT3PqZzqEUw",
-              "name": "GregoZin",
-              "handle": "GregoZin#six",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            },
-            {
-              "slot": 5,
-              "playerId": "2gbliB4kZJHsCgxzb9-iDemZ_oqDt1D5rN4Tjpq7tVK6UIub2UYsViOyOAkusf7k6Vns2UaTE_Yecw",
-              "name": "Miyu",
-              "handle": "miyu#237",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            }
-          ]
-        },
-        {
-          "from": "2026-06-05",
-          "to": "2026-06-05",
-          "firstSeenAt": 1780693093447,
-          "lastSeenAt": 1780693093447,
-          "matches": 1,
-          "source": "auto-json+players-history",
-          "profileConfidence": 20,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "_DNLp68AbYPBp8CBmCjmvCOQrEMdfa60V-XjnDfNjL07KHFZ-a4YMB2z8n62vT97Qm3CES-3PNFcXg",
-              "name": "DOCTORdoctor",
-              "handle": "Doctor 大混乱#JOTAB",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 1,
-              "profileConfidence": 4,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "93NHneE4SvxA-CW5WaxdEKdrimqkBzF4RUgtrPeHkkdNIrtm3JwjADfBtqExVW6jfH98zwhIm7IfaQ",
-              "name": "Lock",
-              "handle": "Lock Street#exu",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 1,
-              "profileConfidence": 4,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "ikkLmxM8ZaJBlba_WxX8OhNJg8Q2Lvf2nahc2dGUdkXnP3IuO5Jckk3Ok-YJ4Ccyz9ArlA4C0SLxTg",
-              "name": "Olk",
-              "handle": "oLK#JExMR",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 1,
-              "profileConfidence": 4,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 4,
-              "playerId": "0uFnLwd5_J9Q3dVf6onsOAbrKxvylA6-ngoN8o7_9iUT_abZfUrJqKdJr6drIDBFakZDPGEytAcMHA",
-              "name": "pemi",
-              "handle": "pemi 恨#star",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 1,
-              "profileConfidence": 4,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 5,
-              "playerId": "Db2KIXvthyNybHbAxXsZFnk8yJCaIZ7EKcbnh7uKh6JPPivK_QPY52W2d0E2mfzbSyRGS0OO-iin4w",
-              "name": "phbg",
-              "handle": "phbg 碧昂卡#biank",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 1,
-              "profileConfidence": 4,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            }
-          ]
-        },
-        {
-          "from": "2026-06-05",
-          "to": "2026-06-05",
-          "firstSeenAt": 1780695365986,
-          "lastSeenAt": 1780695365986,
-          "matches": 1,
-          "source": "auto-json+players-history",
-          "profileConfidence": 0,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "T1yB9hmkqeeYoz6JQdYtvtBUoYAYllfU4IRzZEKr0QDQRz4p3H6O-5Z_Rh_xlai6p_H8Lb7duwPU7Q",
-              "name": "Falcão",
-              "handle": "Falcão#0604",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 20,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "Hwg3ijHpDF9B5L_zt9bnkLPNqB-9y6cWSa5ccMhTb9XMKqIqi8hL8vo9wVHigcliEIl2fE6bNn4HcA",
-              "name": "FelipiN=)",
-              "handle": "FelipiN ツ#1204",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 20,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "yD4m19kYYR9V5YkIp7XobJXHrXsKJNTurWftBjx2TFZXooIPRBUNp0evY-iF83biWfOncR8gSzS__g",
-              "name": "GorTzin",
-              "handle": "GorTzin#ZloLa",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 20,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            },
-            {
-              "slot": 4,
-              "playerId": "8liPcRvanlkzl78ZZFPxD1xXnv6Cu_Njf0nAsYGjfftxEcUouY6aNDejbl4WQW8YlGKdT3PqZzqEUw",
-              "name": "GregoZin",
-              "handle": "GregoZin#six",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 20,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            },
-            {
-              "slot": 5,
-              "playerId": "2gbliB4kZJHsCgxzb9-iDemZ_oqDt1D5rN4Tjpq7tVK6UIub2UYsViOyOAkusf7k6Vns2UaTE_Yecw",
-              "name": "Miyu",
-              "handle": "miyu#237",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 20,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            }
-          ]
-        },
-        {
-          "from": "2026-06-05",
           "to": "2026-07-04",
-          "firstSeenAt": 1780695365986,
+          "firstSeenAt": 1780165331493,
           "lastSeenAt": 1783188480661,
-          "matches": 7,
+          "matches": 11,
           "source": "auto-json+players-history",
-          "profileConfidence": 140,
+          "profileConfidence": 220,
           "players": [
             {
               "slot": 1,
               "playerId": "_DNLp68AbYPBp8CBmCjmvCOQrEMdfa60V-XjnDfNjL07KHFZ-a4YMB2z8n62vT97Qm3CES-3PNFcXg",
               "name": "DOCTORdoctor",
               "handle": "Doctor 大混乱#JOTAB",
-              "firstSeenAt": "2026-06-05",
+              "firstSeenAt": "2026-05-30",
               "lastSeenAt": "2026-07-04",
-              "matches": 7,
-              "rounds": 131,
-              "profileMatches": 7,
-              "profileConfidence": 28,
+              "matches": 11,
+              "rounds": 216,
+              "profileMatches": 11,
+              "profileConfidence": 44,
               "currentTeam": "milionaria_ufam",
               "teamHistory": [
                 "milionaria_ufam"
@@ -4518,12 +4154,12 @@
               "playerId": "93NHneE4SvxA-CW5WaxdEKdrimqkBzF4RUgtrPeHkkdNIrtm3JwjADfBtqExVW6jfH98zwhIm7IfaQ",
               "name": "Lock",
               "handle": "Lock Street#exu",
-              "firstSeenAt": "2026-06-05",
+              "firstSeenAt": "2026-05-30",
               "lastSeenAt": "2026-07-04",
-              "matches": 7,
-              "rounds": 131,
-              "profileMatches": 7,
-              "profileConfidence": 28,
+              "matches": 11,
+              "rounds": 216,
+              "profileMatches": 11,
+              "profileConfidence": 44,
               "currentTeam": "milionaria_ufam",
               "teamHistory": [
                 "milionaria_ufam"
@@ -4534,12 +4170,12 @@
               "playerId": "ikkLmxM8ZaJBlba_WxX8OhNJg8Q2Lvf2nahc2dGUdkXnP3IuO5Jckk3Ok-YJ4Ccyz9ArlA4C0SLxTg",
               "name": "Olk",
               "handle": "oLK#JExMR",
-              "firstSeenAt": "2026-06-05",
+              "firstSeenAt": "2026-05-30",
               "lastSeenAt": "2026-07-04",
-              "matches": 7,
-              "rounds": 131,
-              "profileMatches": 7,
-              "profileConfidence": 28,
+              "matches": 11,
+              "rounds": 216,
+              "profileMatches": 11,
+              "profileConfidence": 44,
               "currentTeam": "milionaria_ufam",
               "teamHistory": [
                 "milionaria_ufam"
@@ -4550,12 +4186,12 @@
               "playerId": "0uFnLwd5_J9Q3dVf6onsOAbrKxvylA6-ngoN8o7_9iUT_abZfUrJqKdJr6drIDBFakZDPGEytAcMHA",
               "name": "pemi",
               "handle": "pemi 恨#star",
-              "firstSeenAt": "2026-06-05",
+              "firstSeenAt": "2026-05-30",
               "lastSeenAt": "2026-07-04",
-              "matches": 7,
-              "rounds": 131,
-              "profileMatches": 7,
-              "profileConfidence": 28,
+              "matches": 11,
+              "rounds": 216,
+              "profileMatches": 11,
+              "profileConfidence": 44,
               "currentTeam": "milionaria_ufam",
               "teamHistory": [
                 "milionaria_ufam"
@@ -4566,12 +4202,12 @@
               "playerId": "Db2KIXvthyNybHbAxXsZFnk8yJCaIZ7EKcbnh7uKh6JPPivK_QPY52W2d0E2mfzbSyRGS0OO-iin4w",
               "name": "phbg",
               "handle": "phbg 碧昂卡#biank",
-              "firstSeenAt": "2026-06-05",
+              "firstSeenAt": "2026-05-30",
               "lastSeenAt": "2026-07-04",
-              "matches": 7,
-              "rounds": 131,
-              "profileMatches": 7,
-              "profileConfidence": 28,
+              "matches": 11,
+              "rounds": 216,
+              "profileMatches": 11,
+              "profileConfidence": 44,
               "currentTeam": "milionaria_ufam",
               "teamHistory": [
                 "milionaria_ufam"
@@ -8806,285 +8442,12 @@
       "lineupHistory": [
         {
           "from": "2026-06-05",
-          "to": "2026-06-05",
-          "firstSeenAt": 1780693093447,
-          "lastSeenAt": 1780693093447,
-          "matches": 1,
-          "source": "auto-json+players-history",
-          "profileConfidence": 0,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "_DNLp68AbYPBp8CBmCjmvCOQrEMdfa60V-XjnDfNjL07KHFZ-a4YMB2z8n62vT97Qm3CES-3PNFcXg",
-              "name": "DOCTORdoctor",
-              "handle": "Doctor 大混乱#JOTAB",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "93NHneE4SvxA-CW5WaxdEKdrimqkBzF4RUgtrPeHkkdNIrtm3JwjADfBtqExVW6jfH98zwhIm7IfaQ",
-              "name": "Lock",
-              "handle": "Lock Street#exu",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "ikkLmxM8ZaJBlba_WxX8OhNJg8Q2Lvf2nahc2dGUdkXnP3IuO5Jckk3Ok-YJ4Ccyz9ArlA4C0SLxTg",
-              "name": "Olk",
-              "handle": "oLK#JExMR",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 4,
-              "playerId": "0uFnLwd5_J9Q3dVf6onsOAbrKxvylA6-ngoN8o7_9iUT_abZfUrJqKdJr6drIDBFakZDPGEytAcMHA",
-              "name": "pemi",
-              "handle": "pemi 恨#star",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 5,
-              "playerId": "Db2KIXvthyNybHbAxXsZFnk8yJCaIZ7EKcbnh7uKh6JPPivK_QPY52W2d0E2mfzbSyRGS0OO-iin4w",
-              "name": "phbg",
-              "handle": "phbg 碧昂卡#biank",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            }
-          ]
-        },
-        {
-          "from": "2026-06-05",
-          "to": "2026-06-05",
-          "firstSeenAt": 1780693093447,
-          "lastSeenAt": 1780693093447,
-          "matches": 1,
-          "source": "auto-json+players-history",
-          "profileConfidence": 20,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "T1yB9hmkqeeYoz6JQdYtvtBUoYAYllfU4IRzZEKr0QDQRz4p3H6O-5Z_Rh_xlai6p_H8Lb7duwPU7Q",
-              "name": "Falcão",
-              "handle": "Falcão#0604",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 1,
-              "profileConfidence": 4,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "Hwg3ijHpDF9B5L_zt9bnkLPNqB-9y6cWSa5ccMhTb9XMKqIqi8hL8vo9wVHigcliEIl2fE6bNn4HcA",
-              "name": "FelipiN=)",
-              "handle": "FelipiN ツ#1204",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 1,
-              "profileConfidence": 4,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "yD4m19kYYR9V5YkIp7XobJXHrXsKJNTurWftBjx2TFZXooIPRBUNp0evY-iF83biWfOncR8gSzS__g",
-              "name": "GorTzin",
-              "handle": "GorTzin#ZloLa",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 1,
-              "profileConfidence": 4,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            },
-            {
-              "slot": 4,
-              "playerId": "8liPcRvanlkzl78ZZFPxD1xXnv6Cu_Njf0nAsYGjfftxEcUouY6aNDejbl4WQW8YlGKdT3PqZzqEUw",
-              "name": "GregoZin",
-              "handle": "GregoZin#six",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 1,
-              "profileConfidence": 4,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            },
-            {
-              "slot": 5,
-              "playerId": "2gbliB4kZJHsCgxzb9-iDemZ_oqDt1D5rN4Tjpq7tVK6UIub2UYsViOyOAkusf7k6Vns2UaTE_Yecw",
-              "name": "Miyu",
-              "handle": "miyu#237",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 18,
-              "profileMatches": 1,
-              "profileConfidence": 4,
-              "currentTeam": "univasf",
-              "teamHistory": [
-                "univasf"
-              ]
-            }
-          ]
-        },
-        {
-          "from": "2026-06-05",
-          "to": "2026-06-05",
-          "firstSeenAt": 1780695365986,
-          "lastSeenAt": 1780695365986,
-          "matches": 1,
-          "source": "auto-json+players-history",
-          "profileConfidence": 0,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "_DNLp68AbYPBp8CBmCjmvCOQrEMdfa60V-XjnDfNjL07KHFZ-a4YMB2z8n62vT97Qm3CES-3PNFcXg",
-              "name": "DOCTORdoctor",
-              "handle": "Doctor 大混乱#JOTAB",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 20,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "93NHneE4SvxA-CW5WaxdEKdrimqkBzF4RUgtrPeHkkdNIrtm3JwjADfBtqExVW6jfH98zwhIm7IfaQ",
-              "name": "Lock",
-              "handle": "Lock Street#exu",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 20,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "ikkLmxM8ZaJBlba_WxX8OhNJg8Q2Lvf2nahc2dGUdkXnP3IuO5Jckk3Ok-YJ4Ccyz9ArlA4C0SLxTg",
-              "name": "Olk",
-              "handle": "oLK#JExMR",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 20,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 4,
-              "playerId": "0uFnLwd5_J9Q3dVf6onsOAbrKxvylA6-ngoN8o7_9iUT_abZfUrJqKdJr6drIDBFakZDPGEytAcMHA",
-              "name": "pemi",
-              "handle": "pemi 恨#star",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 20,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            },
-            {
-              "slot": 5,
-              "playerId": "Db2KIXvthyNybHbAxXsZFnk8yJCaIZ7EKcbnh7uKh6JPPivK_QPY52W2d0E2mfzbSyRGS0OO-iin4w",
-              "name": "phbg",
-              "handle": "phbg 碧昂卡#biank",
-              "firstSeenAt": "2026-06-05",
-              "lastSeenAt": "2026-06-05",
-              "matches": 1,
-              "rounds": 20,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "milionaria_ufam",
-              "teamHistory": [
-                "milionaria_ufam"
-              ]
-            }
-          ]
-        },
-        {
-          "from": "2026-06-05",
           "to": "2026-06-27",
-          "firstSeenAt": 1780695365986,
+          "firstSeenAt": 1780693093447,
           "lastSeenAt": 1782582178852,
-          "matches": 7,
+          "matches": 8,
           "source": "auto-json+players-history",
-          "profileConfidence": 140,
+          "profileConfidence": 160,
           "players": [
             {
               "slot": 1,
@@ -9093,10 +8456,10 @@
               "handle": "Falcão#0604",
               "firstSeenAt": "2026-06-05",
               "lastSeenAt": "2026-06-27",
-              "matches": 7,
-              "rounds": 118,
-              "profileMatches": 7,
-              "profileConfidence": 28,
+              "matches": 8,
+              "rounds": 136,
+              "profileMatches": 8,
+              "profileConfidence": 32,
               "currentTeam": "univasf",
               "teamHistory": [
                 "univasf"
@@ -9109,10 +8472,10 @@
               "handle": "FelipiN ツ#1204",
               "firstSeenAt": "2026-06-05",
               "lastSeenAt": "2026-06-27",
-              "matches": 7,
-              "rounds": 118,
-              "profileMatches": 7,
-              "profileConfidence": 28,
+              "matches": 8,
+              "rounds": 136,
+              "profileMatches": 8,
+              "profileConfidence": 32,
               "currentTeam": "univasf",
               "teamHistory": [
                 "univasf"
@@ -9125,10 +8488,10 @@
               "handle": "GorTzin#ZloLa",
               "firstSeenAt": "2026-06-05",
               "lastSeenAt": "2026-06-27",
-              "matches": 7,
-              "rounds": 118,
-              "profileMatches": 7,
-              "profileConfidence": 28,
+              "matches": 8,
+              "rounds": 136,
+              "profileMatches": 8,
+              "profileConfidence": 32,
               "currentTeam": "univasf",
               "teamHistory": [
                 "univasf"
@@ -9141,10 +8504,10 @@
               "handle": "GregoZin#six",
               "firstSeenAt": "2026-06-05",
               "lastSeenAt": "2026-06-27",
-              "matches": 7,
-              "rounds": 118,
-              "profileMatches": 7,
-              "profileConfidence": 28,
+              "matches": 8,
+              "rounds": 136,
+              "profileMatches": 8,
+              "profileConfidence": 32,
               "currentTeam": "univasf",
               "teamHistory": [
                 "univasf"
@@ -9157,10 +8520,10 @@
               "handle": "miyu#237",
               "firstSeenAt": "2026-06-05",
               "lastSeenAt": "2026-06-27",
-              "matches": 7,
-              "rounds": 118,
-              "profileMatches": 7,
-              "profileConfidence": 28,
+              "matches": 8,
+              "rounds": 136,
+              "profileMatches": 8,
+              "profileConfidence": 32,
               "currentTeam": "univasf",
               "teamHistory": [
                 "univasf"

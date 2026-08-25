@@ -2691,8 +2691,6 @@ const state = {
   rankingSort: { key: "", direction: "default" },
   rankingVersionId: "",
   rankingRefreshTimer: 0,
-  homePlayerWeekTimer: 0,
-  homePlayerWeekResumeTimer: 0,
   tournamentStatsSort: {
     players: { key: "rating", direction: "desc" },
     teams: { key: "seriesWins", direction: "desc" },
@@ -2736,6 +2734,10 @@ async function init() {
     window.addEventListener("hashchange", render);
     bindFilterDropdownMotion();
     window.addEventListener("resize", () => syncNavIndicator(false));
+    // A Barlow entra depois do primeiro render (font-display: swap) e o menu
+    // re-layouta quando ela aplica. Sem re-sincronizar, o indicador fica travado
+    // na medida feita com a fonte de fallback e aponta para o item errado.
+    document.fonts?.ready?.then(() => syncNavIndicator(false));
     if (!connectionBlocksImageWarm() && !imageWarmIsFresh()) {
       await runImageSplash();
     }
@@ -4919,12 +4921,6 @@ function render() {
   const routeKey = currentRouteKey();
   const routeChanged = routeKey !== state.routeKey;
   state.routeKey = routeKey;
-  if (section !== "home") {
-    window.clearInterval(state.homePlayerWeekTimer);
-    window.clearTimeout(state.homePlayerWeekResumeTimer);
-    state.homePlayerWeekTimer = 0;
-    state.homePlayerWeekResumeTimer = 0;
-  }
   const pages = {
     home: renderHomeCompact,
     matches: renderMatchesCompact,

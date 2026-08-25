@@ -14625,3 +14625,193 @@ small,
   margin: 0 6px;
   color: var(--muted);
 }
+
+/* ==========================================================================
+   Página de Métricas
+   O rAAting 3.0 e as siglas nao tinham explicacao em lugar nenhum do produto;
+   /stats era uma imagem de manutencao. As duas coisas se resolvem aqui.
+   ========================================================================== */
+
+.metric-explainer,
+.metric-glossary,
+.metric-where {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: clamp(16px, 2vw, 24px);
+  margin-bottom: 16px;
+}
+
+.metric-explainer h2,
+.metric-glossary h2,
+.metric-where h2 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.metric-explainer h3 {
+  margin: 20px 0 8px;
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Medida de leitura: prosa passa de 75 caracteres fica cansativa. */
+.metric-lede,
+.metric-where > p {
+  max-width: 68ch;
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--text-md);
+  line-height: 1.55;
+}
+
+.metric-note {
+  max-width: 68ch;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.metric-scale,
+.metric-weights {
+  display: grid;
+  gap: 1px;
+  margin: 16px 0 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--line);
+  overflow: hidden;
+  list-style: none;
+}
+
+.metric-scale {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.metric-weights {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.metric-scale li,
+.metric-weights li {
+  display: grid;
+  gap: 3px;
+  background: var(--surface-2);
+  padding: 12px;
+}
+
+.metric-scale strong,
+.metric-weights strong {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-scale span,
+.metric-weights span {
+  color: var(--muted);
+  /* frase corrida, nao rotulo: 11px e piso de label, nao de prosa */
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  letter-spacing: 0.012em;
+}
+
+.metric-glossary dl {
+  display: grid;
+  grid-template-columns: minmax(88px, auto) minmax(0, 1fr);
+  gap: 0;
+  margin: 0;
+}
+
+.metric-glossary dt {
+  border-top: 1px solid var(--line);
+  padding: 12px 16px 12px 0;
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.metric-glossary dd {
+  border-top: 1px solid var(--line);
+  margin: 0;
+  padding: 12px 0;
+  max-width: 68ch;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.metric-glossary dt:first-of-type,
+.metric-glossary dt:first-of-type + dd {
+  border-top: 0;
+}
+
+.metric-links {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.metric-links li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.metric-links a {
+  color: var(--brand-text);
+  font-weight: 800;
+}
+
+.metric-links a:hover {
+  text-decoration: underline;
+}
+
+.metric-links span {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+/* Residuo azul-naval no tooltip do ranking. */
+.has-ranking-tooltip::after {
+  border-color: var(--line-dark);
+  background: var(--surface-3);
+  color: var(--ink);
+}
+
+@media (max-width: 760px) {
+  .metric-scale {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metric-weights {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .metric-glossary dl {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .metric-glossary dt {
+    padding-bottom: 2px;
+  }
+
+  .metric-glossary dd {
+    border-top: 0;
+    padding-top: 0;
+  }
+}

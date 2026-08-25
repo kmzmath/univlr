@@ -2629,7 +2629,8 @@ const navItems = [
   ["matches", "Partidas"],
   ["events", "Eventos"],
   ["players", "Players"],
-  ["stats", "Stats"],
+  // A rota continua /stats; o rotulo diz o que a pagina de fato entrega hoje.
+  ["stats", "Métricas"],
   ["ranking", "Ranking"],
 ];
 
@@ -2648,7 +2649,7 @@ const STATIC_DOCUMENT_TITLES = {
   events: "Eventos",
   tournaments: "Eventos",
   players: "Players",
-  stats: "Ranking",
+  stats: "Métricas",
   ranking: "Ranking",
   rankings: "Ranking",
   teams: "Equipes",
@@ -5441,11 +5442,104 @@ function renderStatsPlaceholderPage() {
   `);
 }
 
+
+// Glossario unico das metricas. Serve a pagina /stats e as dicas dos
+// cabecalhos do placar, para a definicao nao divergir entre os dois lugares.
+// Conferido em raating-core.js e no agregador do app.js.
+const METRIC_GLOSSARY = [
+  {
+    key: "rating",
+    term: "rAAting 3.0",
+    short: "Nota geral do jogador. 1.00 é o desempenho mediano do cenário.",
+    long: "Nota geral do jogador no cenário universitário. 1.00 é o desempenho mediano: metade dos jogadores fica acima, metade abaixo. Cada 0,28 acima ou abaixo equivale a um intervalo interquartil de distância dessa mediana, e a escala é travada entre 0,30 e 1,80.",
+  },
+  { key: "acs", term: "ACS", short: "Pontuação de combate da partida dividida pelos rounds jogados.", long: "Average Combat Score: a pontuação de combate registrada na partida, dividida pelos rounds jogados." },
+  { key: "adr", term: "ADR", short: "Dano causado por round jogado.", long: "Average Damage per Round: dano total causado dividido pelos rounds jogados." },
+  { key: "kast", term: "KAST", short: "Percentual de rounds com abate, assistência, sobrevivência em round vencido ou morte trocada.", long: "Percentual de rounds em que o jogador teve pelo menos uma destas: abate, assistência, morte trocada pelo time, ou sobreviveu a um round vencido. Sobreviver a um round perdido (o \u0022save\u0022) não conta aqui." },
+  { key: "kd", term: "K/D", short: "Abates divididos por mortes.", long: "Abates divididos por mortes." },
+  { key: "kpr", term: "KPR", short: "Abates por round jogado.", long: "Abates por round jogado." },
+  { key: "dpr", term: "DPR", short: "Mortes por round jogado. Aqui, menor é melhor.", long: "Mortes por round jogado. É a única métrica desta lista em que um número menor é melhor." },
+  { key: "apr", term: "APR", short: "Assistências por round jogado.", long: "Assistências por round jogado." },
+  { key: "swing", term: "Swing/R", short: "Quanto o jogador move a chance de vitória do round, em pontos percentuais.", long: "Round Swing por round: quanto as ações do jogador movem a probabilidade de o time vencer o round, medido em pontos percentuais. É zero-sum entre os dois times, então o que um ganha o outro perde." },
+  { key: "hs", term: "HS%", short: "Percentual de acertos na cabeça.", long: "Percentual dos acertos que foram na cabeça." },
+  { key: "fk", term: "FK", short: "First Kill: primeiro abate do round.", long: "First Kill: quantas vezes o jogador abriu o round com o primeiro abate." },
+  { key: "fd", term: "FD", short: "First Death: primeira morte do round.", long: "First Death: quantas vezes o jogador foi o primeiro a cair no round." },
+  { key: "fkfd", term: "FK-FD", short: "Saldo entre primeiros abates e primeiras mortes.", long: "Saldo de abertura: primeiros abates menos primeiras mortes. Positivo significa que o jogador abriu mais rounds do que perdeu." },
+  { key: "fkpr", term: "FKPR", short: "Primeiros abates por round.", long: "First Kills por round jogado." },
+  { key: "fdpr", term: "FDPR", short: "Primeiras mortes por round.", long: "First Deaths por round jogado." },
+  { key: "mks", term: "MKs", short: "Rounds com mais de um abate.", long: "Quantidade de rounds em que o jogador conseguiu mais de um abate." },
+  { key: "plusminus", term: "+/-", short: "Abates menos mortes.", long: "Saldo simples: abates menos mortes." },
+  { key: "kdd", term: "K:D", short: "Abates divididos por mortes.", long: "Abates divididos por mortes." },
+  { key: "mk", term: "MK/R", short: "Multi-kills por round.", long: "Rounds com mais de um abate, ponderados pelo tamanho do multi-kill e divididos pelos rounds jogados." },
+];
+
+const METRIC_GLOSSARY_BY_TERM = new Map(METRIC_GLOSSARY.map((item) => [item.term, item]));
+
+function metricHint(label) {
+  return METRIC_GLOSSARY_BY_TERM.get(label)?.short || "";
+}
+
 function renderStatsPage() {
+  const minRounds = RaaRatingCore?.SAMPLE_MIN_ROUNDS ?? 50;
+  const escala = [
+    ["0,72", "um intervalo abaixo da mediana"],
+    ["1,00", "mediana do cenário"],
+    ["1,28", "um intervalo acima"],
+    ["1,56", "dois intervalos acima"],
+  ];
+  const pesos = [
+    ["33%", "Round Swing"],
+    ["25%", "Abates"],
+    ["15%", "Dano"],
+    ["15%", "Sobrevivência"],
+    ["8%", "KAST"],
+    ["4%", "Multi-kills"],
+  ];
   Shell(`
-    <section class="stats-maintenance-page" aria-labelledby="stats-maintenance-title">
-      <img class="stats-maintenance-image" src="${escapeHtml(assetPath("assets/manutencao.png"))}" alt="Página em manutenção" loading="eager" />
-      <h1 id="stats-maintenance-title">Essa página está em construção, voltamos em breve!</h1>
+    <header class="page-header slim-header">
+      <div class="page-title">
+        <h1>Métricas</h1>
+      </div>
+    </header>
+
+    <section class="metric-explainer" aria-labelledby="metric-rating-title">
+      <h2 id="metric-rating-title">Como ler o rAAting 3.0</h2>
+      <p class="metric-lede">
+        É a nota geral de um jogador no cenário universitário. <strong>1.00 é o desempenho mediano</strong>:
+        metade dos jogadores fica acima, metade abaixo. Cada 0,28 acima ou abaixo equivale a um
+        intervalo interquartil de distância dessa mediana. A escala é travada entre 0,30 e 1,80.
+      </p>
+      <ul class="metric-scale">
+        ${escala.map(([valor, texto]) => `<li><strong>${escapeHtml(valor)}</strong><span>${escapeHtml(texto)}</span></li>`).join("")}
+      </ul>
+
+      <h3>Do que ela é feita</h3>
+      <ul class="metric-weights">
+        ${pesos.map(([peso, nome]) => `<li><strong>${escapeHtml(peso)}</strong><span>${escapeHtml(nome)}</span></li>`).join("")}
+      </ul>
+      <p class="metric-note">
+        Para entrar no ranking oficial de jogadores é preciso ter jogado ao menos
+        ${minRounds} rounds. Quem está abaixo disso aparece marcado como baixa amostra.
+      </p>
+    </section>
+
+    <section class="metric-glossary" aria-labelledby="metric-glossary-title">
+      <h2 id="metric-glossary-title">Glossário</h2>
+      <dl>
+        ${METRIC_GLOSSARY.filter((item) => item.key !== "rating")
+          .map((item) => `<dt>${escapeHtml(item.term)}</dt><dd>${escapeHtml(item.long)}</dd>`)
+          .join("")}
+      </dl>
+    </section>
+
+    <section class="metric-where" aria-labelledby="metric-where-title">
+      <h2 id="metric-where-title">Onde ver os números</h2>
+      <p>A página de estatísticas agregadas ainda está em construção. Enquanto isso, os mesmos dados estão em:</p>
+      <ul class="metric-links">
+        <li><a href="#/ranking">Ranking</a><span>nota das equipes e histórico por semana</span></li>
+        <li><a href="#/players">Players</a><span>rAAting e médias de cada jogador</span></li>
+        <li><a href="#/matches">Partidas</a><span>placar completo de cada mapa, com todas as colunas</span></li>
+      </ul>
     </section>
   `);
 }
@@ -6958,7 +7052,7 @@ function scoreboardHeaderCell(boardKey, column) {
   const nextLabel = direction === "asc" ? "decrescente" : direction === "desc" ? "padrão" : "crescente";
   return `
     <th class="${escapeHtml(className)}" aria-sort="${direction === "asc" ? "ascending" : direction === "desc" ? "descending" : "none"}">
-      <button type="button" class="score-sort-button" data-board-key="${escapeHtml(boardKey)}" data-scoreboard-sort="${escapeHtml(column.key)}" aria-label="Ordenar por ${escapeHtml(column.label)}: ${nextLabel}">
+      <button type="button" class="score-sort-button" data-board-key="${escapeHtml(boardKey)}" data-scoreboard-sort="${escapeHtml(column.key)}" aria-label="Ordenar por ${escapeHtml(column.label)}: ${nextLabel}" title="${escapeHtml(metricHint(column.label))}">
         <span>${escapeHtml(column.label)}</span><i aria-hidden="true">${escapeHtml(indicator)}</i>
       </button>
     </th>

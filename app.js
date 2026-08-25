@@ -6,10 +6,19 @@ const RANKING_WEIGHTS_MANIFEST = "ranking-weights.json";
 const SITE_NAME = "UNIVLR";
 const SITE_LOGO_SRC = "assets/logo_univlr.png";
 const SITE_WORDMARK_SRC = "assets/univlr_logo_longa.png";
-const HOME_RANKING_LIMIT = 15;
+// Pesos diferentes de proposito: partidas e o que muda todo dia e leva a
+// coluna mais longa; ranking e referencia (tem "Ver completo"); campeonato
+// e contexto. Antes eram 15/15/15, o que dava 45 linhas de peso identico.
+const HOME_RANKING_LIMIT = 10;
 const HOME_RECENT_MATCH_LIMIT = 15;
-const HOME_EVENT_LIMIT = 15;
+const HOME_EVENT_LIMIT = 8;
 const PLAYER_FALLBACK_PHOTO = "assets/user-silhouette.png";
+
+// Os renderizadores de busca por tipo chamam renderSearchButton sem saber a
+// posicao; guardar o indice aqui evita mudar a assinatura dos seis. Declarado
+// aqui em cima porque init() roda no meio do arquivo (linha ~2709) e uma
+// declaracao la embaixo cairia em temporal dead zone na primeira render.
+let searchResultIndex = 0;
 const TROPHY_ASSET_ROOT = "assets/trofeus-campeonatos";
 const TROPHY_GENERIC_ASSETS = {
   champion: `${TROPHY_ASSET_ROOT}/campeao-generico.png`,
@@ -2626,7 +2635,8 @@ const navItems = [
   ["matches", "Partidas"],
   ["events", "Eventos"],
   ["players", "Players"],
-  ["stats", "Stats"],
+  // A rota continua /stats; o rotulo diz o que a pagina de fato entrega hoje.
+  ["stats", "Métricas"],
   ["ranking", "Ranking"],
 ];
 
@@ -2645,7 +2655,7 @@ const STATIC_DOCUMENT_TITLES = {
   events: "Eventos",
   tournaments: "Eventos",
   players: "Players",
-  stats: "Ranking",
+  stats: "Métricas",
   ranking: "Ranking",
   rankings: "Ranking",
   teams: "Equipes",
@@ -2688,8 +2698,6 @@ const state = {
   rankingSort: { key: "", direction: "default" },
   rankingVersionId: "",
   rankingRefreshTimer: 0,
-  homePlayerWeekTimer: 0,
-  homePlayerWeekResumeTimer: 0,
   tournamentStatsSort: {
     players: { key: "rating", direction: "desc" },
     teams: { key: "seriesWins", direction: "desc" },
@@ -2732,7 +2740,14 @@ async function init() {
     state.ready = true;
     window.addEventListener("hashchange", render);
     bindFilterDropdownMotion();
-    window.addEventListener("resize", () => syncNavIndicator(false));
+    window.addEventListener("resize", () => {
+      syncNavIndicator(false);
+      syncTopbarHeight();
+    });
+    // A Barlow entra depois do primeiro render (font-display: swap) e o menu
+    // re-layouta quando ela aplica. Sem re-sincronizar, o indicador fica travado
+    // na medida feita com a fonte de fallback e aponta para o item errado.
+    document.fonts?.ready?.then(() => syncNavIndicator(false));
     if (!connectionBlocksImageWarm() && !imageWarmIsFresh()) {
       await runImageSplash();
     }
@@ -4819,9 +4834,22 @@ function eventStatus(start, end) {
 
 function renderLoading() {
   updateDocumentTitle();
+  // O database.json tem ~6 MB comprimidos. Numa conexao lenta a espera e longa
+  // o bastante para valer dizer o que esta acontecendo, em vez de "Carregando".
   const message = state.error
-    ? `<div class="empty-state">Erro ao carregar os dados: ${escapeHtml(state.error.message)}</div>`
-    : `<div class="empty-state">Carregando dados...</div>`;
+    ? `
+      <div class="boot-state boot-error" role="alert">
+        <strong>Não foi possível carregar os dados das partidas.</strong>
+        <p>${escapeHtml(state.error.message || "A conexão falhou no meio do download.")}</p>
+        <button type="button" class="boot-retry" onclick="window.location.reload()">Tentar de novo</button>
+      </div>
+    `
+    : `
+      <div class="boot-state" role="status" aria-live="polite">
+        <strong>Carregando o histórico de partidas</strong>
+        <p>São alguns megabytes de dados. Na primeira visita costuma demorar mais; depois fica em cache.</p>
+      </div>
+    `;
   Shell(message, { skipSearch: true });
 }
 
@@ -4843,13 +4871,14 @@ function Shell(content, options = {}) {
             <span class="sr-only">${SITE_NAME}</span>
           </a>
           <nav class="nav" aria-label="Navegação principal">
-            ${navItems.map(([key, label]) => `<a class="nav-link ${section === key ? "active" : ""}" href="#/${key}">${label}</a>`).join("")}
+            ${navItems.map(([key, label]) => `<a class="nav-link ${section === key ? "active" : ""}"${section === key ? ` aria-current="page"` : ""} href="#/${key}">${label}</a>`).join("")}
             <span class="nav-indicator" aria-hidden="true"></span>
           </nav>
           <div class="global-search">
-            <input id="global-search" type="search" placeholder="Buscar time, jogador, campeonato, partida ou mapa" autocomplete="off" value="${searchValue}" ${options.skipSearch ? "disabled" : ""} />
+            <input id="global-search" type="search" placeholder="Buscar time, jogador, campeonato, partida ou mapa" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" aria-label="Buscar no site" value="${searchValue}" ${options.skipSearch ? "disabled" : ""} />
             <span class="search-token">/</span>
-            <div id="search-results" class="search-results ${state.searchOpen ? "open" : ""}"></div>
+            <div id="search-results" class="search-results ${state.searchOpen ? "open" : ""}" role="listbox" aria-label="Resultados da busca"></div>
+            <span id="search-status" class="sr-only" role="status" aria-live="polite"></span>
           </div>
         </div>
       </header>
@@ -4916,12 +4945,6 @@ function render() {
   const routeKey = currentRouteKey();
   const routeChanged = routeKey !== state.routeKey;
   state.routeKey = routeKey;
-  if (section !== "home") {
-    window.clearInterval(state.homePlayerWeekTimer);
-    window.clearTimeout(state.homePlayerWeekResumeTimer);
-    state.homePlayerWeekTimer = 0;
-    state.homePlayerWeekResumeTimer = 0;
-  }
   const pages = {
     home: renderHomeCompact,
     matches: renderMatchesCompact,
@@ -4935,7 +4958,9 @@ function render() {
     maps: renderMapsCompact,
   };
   (pages[section] || renderHomeCompact)(id);
+  syncTopbarHeight();
   scrollToRouteTop(routeChanged);
+  restoreFilterFocus();
 }
 
 function normalizeCanonicalRoute() {
@@ -5086,49 +5111,6 @@ function renderHomeCompact() {
   `);
 }
 
-function renderRankingsCompact() {
-  const teams = state.db.teams;
-  Shell(`
-    <header class="page-header">
-      <div class="page-title">
-        <span class="eyebrow">Ranking</span>
-        <h1>Equipes</h1>
-      </div>
-    </header>
-    <div class="layout-grid">
-      <div class="stack">
-        <section class="section-band">
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>#</th><th>Equipe</th><th class="numeric">Nota</th><th class="numeric">V-D</th><th class="numeric">Win rate</th><th class="numeric">Rounds</th><th class="numeric">Saldo</th></tr></thead>
-              <tbody>${teams.map((team) => `<tr><td>${teamCanonicalRankLabel(team)}</td><td>${teamLogo(team.id)} ${entityLink("teams", team.id, team.name)}</td><td class="numeric">${fmt(team.rankingScore ?? team.points, 1)}</td><td class="numeric">${team.wins}-${team.losses}</td><td class="numeric">${pct(team.winRate)}</td><td class="numeric">${team.roundsWon}-${team.roundsLost}</td><td class="numeric">${signed(team.roundDiff)}</td></tr>`).join("")}</tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-      <aside class="side-rail">
-        <section class="data-panel dark">
-          <div class="section-head"><h2>Top 5</h2></div>
-          <div class="ranking-list">${teams.slice(0, 5).map(rankingRow).join("")}</div>
-        </section>
-      </aside>
-    </div>
-  `);
-}
-
-function renderTournamentsCompact(id) {
-  if (id) return renderTournamentDetail(id);
-  Shell(`
-    <header class="page-header">
-      <div class="page-title">
-        <span class="eyebrow">Campeonatos</span>
-        <h1>Eventos</h1>
-      </div>
-    </header>
-    <div class="card-grid three">${sortedEvents("end").map(tournamentCard).join("")}</div>
-  `);
-}
-
 function renderTeamsCompact(id) {
   if (id) return renderTeamDetail(id);
   return renderNotFound("Recurso");
@@ -5152,13 +5134,8 @@ function renderHomeCompact() {
   const topTeams = state.db.teams.slice(0, HOME_RANKING_LIMIT);
   const recentMatches = allMatchSeries().slice().sort(compareSeriesDateDesc).slice(0, HOME_RECENT_MATCH_LIMIT);
   Shell(`
-    <div class="home-topline">
-      <header class="univlr-title univlr-wordmark-title">
-        <h1 class="sr-only">${SITE_NAME}</h1>
-        <img class="home-wordmark" src="${SITE_WORDMARK_SRC}" alt="" loading="eager" decoding="async" />
-      </header>
-      ${playerOfWeekCarousel()}
-    </div>
+    <h1 class="sr-only">${SITE_NAME}</h1>
+    ${weekHighlights()}
     <div class="home-board univlr-home">
       <section class="hub-panel ranking-panel">
         ${panelTitle("Ranking")}
@@ -5178,13 +5155,15 @@ function renderHomeCompact() {
     </div>
   `);
   bindHomeRankingPanel();
-  bindHomePlayerWeekCarousel();
 }
 
 function renderMatchesCompact(id) {
   if (id) return renderMatchDetail(id);
+  // a URL e a fonte da verdade do filtro: query ausente significa sem filtro
+  applyMatchFiltersFromQuery(routeQuery());
   ensureResultFilterDefaults();
   const filtered = filteredMatches();
+  const limite = limiteDaLista(routeQuery());
   Shell(`
     <header class="page-header slim-header">
       <div class="page-title">
@@ -5195,11 +5174,65 @@ function renderMatchesCompact(id) {
     <div class="results-layout">
       ${matchFilterSidebar()}
       <section class="hub-panel full-list-panel results-panel">
-        <div class="result-list">${filtered.length ? filtered.map(matchResultRow).join("") : `<div class="empty-state">Nenhuma partida encontrada.</div>`}</div>
+        ${contagemDaLista(Math.min(limite, filtered.length), filtered.length, "partidas")}
+        <div class="result-list">${listaDeResultados(filtered, limite)}</div>
+        ${verMaisBotao("matches", Math.min(limite, filtered.length), filtered.length, matchFiltersToQuery())}
       </section>
     </div>
   `);
   bindMatchFilters();
+}
+
+const LISTA_PAGINA = 50;
+
+function limiteDaLista(p, padrao = LISTA_PAGINA) {
+  const bruto = Number.parseInt(p.get("limite") || "", 10);
+  if (!Number.isFinite(bruto) || bruto <= 0) return padrao;
+  return Math.min(bruto, 5000);
+}
+
+// Agrupa por dia para a data sair de dentro de cada linha e virar marco de
+// rolagem. Sem isso, "16 de ago de 2026" aparecia 419 vezes.
+function agruparPorDia(series) {
+  const grupos = [];
+  let atual = null;
+  series.forEach((item) => {
+    const chave = dayKey(item.sortAt || item.startedAt);
+    if (!atual || atual.chave !== chave) {
+      atual = { chave, rotulo: formatDate(item.sortAt || item.startedAt, "date"), itens: [] };
+      grupos.push(atual);
+    }
+    atual.itens.push(item);
+  });
+  return grupos;
+}
+
+function listaDeResultados(filtered, limite) {
+  if (!filtered.length) return `<div class="empty-state">Nenhuma partida encontrada com esses filtros.</div>`;
+  return agruparPorDia(filtered.slice(0, limite))
+    .map(
+      (grupo) => `
+        <div class="result-day">
+          <h2 class="result-day-label">${escapeHtml(grupo.rotulo)}</h2>
+          <span class="result-day-count">${grupo.itens.length} ${grupo.itens.length === 1 ? "partida" : "partidas"}</span>
+        </div>
+        ${grupo.itens.map(matchResultRow).join("")}
+      `,
+    )
+    .join("");
+}
+
+function verMaisBotao(section, mostrando, total, params) {
+  if (mostrando >= total) return "";
+  const proximo = new URLSearchParams(params);
+  proximo.set("limite", String(mostrando + LISTA_PAGINA));
+  const restante = total - mostrando;
+  const passo = Math.min(LISTA_PAGINA, restante);
+  return `<a class="lista-ver-mais" href="#/${section}?${proximo.toString()}">Ver mais ${passo} de ${restante} restantes</a>`;
+}
+
+function contagemDaLista(mostrando, total, rotulo) {
+  return `<p class="lista-contagem" role="status" aria-live="polite">Mostrando ${mostrando} de ${total} ${rotulo}.</p>`;
 }
 
 function matchFilterSidebar() {
@@ -5241,6 +5274,117 @@ function matchFilterSidebar() {
       </details>
     </aside>
   `;
+}
+
+const LISTA_SEP = ",";
+
+function mesmaLista(a, b) {
+  if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+  const x = [...a].sort();
+  const y = [...b].sort();
+  return x.every((v, i) => v === y[i]);
+}
+
+// So entra na URL o que difere do padrao: link curto para o caso comum.
+function matchFiltersToQuery() {
+  const p = new URLSearchParams();
+  const todosMapas = state.db.maps.map((m) => m.id);
+  const todosEventos = visibleTournaments().map((e) => e.id);
+  if (state.matchBestOf && state.matchBestOf !== "all") p.set("md", state.matchBestOf);
+  // Serializa o lado mais curto. Desmarcar 1 de 12 mapas vira "sem-mapas=lotus"
+  // em vez de listar os outros 11.
+  escreverSelecao(p, "mapas", state.matchMaps, todosMapas);
+  escreverSelecao(p, "eventos", state.matchTournaments, todosEventos);
+  if (Array.isArray(state.matchTeams) && state.matchTeams.length) p.set("equipes", state.matchTeams.join(LISTA_SEP));
+  if (state.matchDateFrom) p.set("de", state.matchDateFrom);
+  if (state.matchDateTo) p.set("ate", state.matchDateTo);
+  return p;
+}
+
+function escreverSelecao(p, chave, selecionados, todos) {
+  if (!Array.isArray(selecionados) || mesmaLista(selecionados, todos)) return;
+  const fora = todos.filter((id) => !selecionados.includes(id));
+  if (fora.length && fora.length < selecionados.length) p.set("sem-" + chave, fora.join(LISTA_SEP));
+  else p.set(chave, selecionados.join(LISTA_SEP));
+}
+
+function lerSelecao(p, chave, todos) {
+  const validos = new Set(todos);
+  const lista = (v) => (v || "").split(LISTA_SEP).filter((id) => validos.has(id));
+  if (p.has("sem-" + chave)) {
+    const fora = new Set(lista(p.get("sem-" + chave)));
+    return todos.filter((id) => !fora.has(id));
+  }
+  if (p.has(chave)) return lista(p.get(chave));
+  return null;
+}
+
+function applyMatchFiltersFromQuery(p) {
+  // resetResultFilters tambem fecha os <details>; preservar aqui, senao o
+  // dropdown se fecha a cada clique e o botao clicado some da tela
+  const aberto = state.resultFilterOpen;
+  resetResultFilters();
+  if (aberto) state.resultFilterOpen = aberto;
+  const lista = (chave) => (p.get(chave) || "").split(LISTA_SEP).filter(Boolean);
+  if (p.get("md")) state.matchBestOf = p.get("md");
+  const mapas = lerSelecao(p, "mapas", state.db.maps.map((m) => m.id));
+  if (mapas) state.matchMaps = mapas;
+  const eventos = lerSelecao(p, "eventos", visibleTournaments().map((e) => e.id));
+  if (eventos) state.matchTournaments = eventos;
+  if (p.has("equipes")) {
+    const validos = new Set(state.db.teams.map((t) => t.id));
+    state.matchTeams = lista("equipes").filter((id) => validos.has(id));
+  }
+  if (p.get("de")) state.matchDateFrom = p.get("de");
+  if (p.get("ate")) state.matchDateTo = p.get("ate");
+}
+
+function playerFiltersToQuery() {
+  const p = new URLSearchParams();
+  if (state.playerQuery) p.set("q", state.playerQuery);
+  if (state.playerTeam && state.playerTeam !== "all") p.set("equipe", state.playerTeam);
+  if (state.playerInitial && state.playerInitial !== "all") p.set("letra", state.playerInitial);
+  return p;
+}
+
+function applyPlayerFiltersFromQuery(p) {
+  state.playerQuery = p.get("q") || "";
+  state.playerTeam = p.get("equipe") || "all";
+  state.playerInitial = p.get("letra") || "all";
+  state.playerTeamQuery = "";
+}
+
+// Escreve o filtro no hash. O hashchange existente re-renderiza, entao Back
+// desfaz um filtro por vez em vez de sair da pagina.
+function pushFilterState(section, params, focoSeletor) {
+  state.filterFocus = focoSeletor || null;
+  const q = params.toString();
+  const alvo = "#/" + section + (q ? "?" + q : "");
+  if (window.location.hash === alvo) {
+    render();
+    return;
+  }
+  window.location.hash = alvo;
+}
+
+// Depois de re-renderizar, o foco voltava para <body> e a segunda desmarcacao
+// exigia re-tabular desde o logo.
+// A topbar e sticky e tem altura variavel (211px no celular, onde a navegacao
+// quebra em duas linhas). Publicar a altura real permite que o cabecalho de dia
+// gruda logo abaixo dela em vez de sumir por tras.
+function syncTopbarHeight() {
+  const topbar = document.querySelector(".topbar");
+  if (!topbar) return;
+  const altura = Math.round(topbar.getBoundingClientRect().height);
+  document.documentElement.style.setProperty("--topbar-h", altura + "px");
+}
+
+function restoreFilterFocus() {
+  const sel = state.filterFocus;
+  if (!sel) return;
+  state.filterFocus = null;
+  const alvo = document.querySelector(sel);
+  if (alvo) alvo.focus({ preventScroll: true });
 }
 
 function ensureResultFilterDefaults() {
@@ -5373,8 +5517,15 @@ function renderEventsPage(id) {
 }
 
 function renderPlayersCompact(id) {
+  // Texto digitado vive local ate o campo perder o foco: hidratar a cada tecla
+  // apagaria o que a pessoa esta escrevendo, e escrever no hash a cada tecla
+  // encheria o historico.
+  if (!id && !state.skipFilterHydration) applyPlayerFiltersFromQuery(routeQuery());
+  state.skipFilterHydration = false;
   if (id) return renderPlayerDetail(id);
   const players = filteredPlayers();
+  const limite = limiteDaLista(routeQuery());
+  const visiveis = players.slice(0, limite);
   Shell(`
     <header class="page-header slim-header">
       <div class="page-title">
@@ -5390,7 +5541,9 @@ function renderPlayersCompact(id) {
     </header>
     <div class="letter-filter">${playerInitialOptions().map((letter) => `<button class="${state.playerInitial === letter ? "active" : ""}" data-letter="${escapeHtml(letter)}">${escapeHtml(letter === "all" ? "Todos" : letter)}</button>`).join("")}</div>
     <section class="hub-panel full-list-panel">
-      ${playerDirectoryTable(players)}
+      ${contagemDaLista(visiveis.length, players.length, "jogadores")}
+      ${playerDirectoryTable(visiveis)}
+      ${verMaisBotao("players", visiveis.length, players.length, playerFiltersToQuery())}
     </section>
   `);
   bindPlayerFilters();
@@ -5433,26 +5586,104 @@ function sortedTeamsByName(teams) {
   return teams.slice().sort((a, b) => String(a.name || a.tag || a.id || "").localeCompare(String(b.name || b.tag || b.id || ""), "pt-BR", { numeric: true, sensitivity: "base" }));
 }
 
-function renderStatsPlaceholderPage() {
-  Shell(`
-    <header class="page-header slim-header">
-      <div class="page-title">
-        <span class="eyebrow">Stats</span>
-        <h1>Estatísticas</h1>
-      </div>
-    </header>
-    <section class="hub-panel placeholder-panel">
-      <strong>Stats</strong>
-      <span>Em montagem.</span>
-    </section>
-  `);
+
+// Glossario unico das metricas. Serve a pagina /stats e as dicas dos
+// cabecalhos do placar, para a definicao nao divergir entre os dois lugares.
+// Conferido em raating-core.js e no agregador do app.js.
+const METRIC_GLOSSARY = [
+  {
+    key: "rating",
+    term: "rAAting 3.0",
+    short: "Nota geral do jogador. 1.00 é o desempenho mediano do cenário.",
+    long: "Nota geral do jogador no cenário universitário. 1.00 é o desempenho mediano: metade dos jogadores fica acima, metade abaixo. Cada 0,28 acima ou abaixo equivale a um intervalo interquartil de distância dessa mediana, e a escala é travada entre 0,30 e 1,80.",
+  },
+  { key: "acs", term: "ACS", short: "Pontuação de combate da partida dividida pelos rounds jogados.", long: "Average Combat Score: a pontuação de combate registrada na partida, dividida pelos rounds jogados." },
+  { key: "adr", term: "ADR", short: "Dano causado por round jogado.", long: "Average Damage per Round: dano total causado dividido pelos rounds jogados." },
+  { key: "kast", term: "KAST", short: "Percentual de rounds com abate, assistência, sobrevivência em round vencido ou morte trocada.", long: "Percentual de rounds em que o jogador teve pelo menos uma destas: abate, assistência, morte trocada pelo time, ou sobreviveu a um round vencido. Sobreviver a um round perdido (o \u0022save\u0022) não conta aqui." },
+  { key: "kd", term: "K/D", short: "Abates divididos por mortes.", long: "Abates divididos por mortes." },
+  { key: "kpr", term: "KPR", short: "Abates por round jogado.", long: "Abates por round jogado." },
+  { key: "dpr", term: "DPR", short: "Mortes por round jogado. Aqui, menor é melhor.", long: "Mortes por round jogado. É a única métrica desta lista em que um número menor é melhor." },
+  { key: "apr", term: "APR", short: "Assistências por round jogado.", long: "Assistências por round jogado." },
+  { key: "swing", term: "Swing/R", short: "Quanto o jogador move a chance de vitória do round, em pontos percentuais.", long: "Round Swing por round: quanto as ações do jogador movem a probabilidade de o time vencer o round, medido em pontos percentuais. É zero-sum entre os dois times, então o que um ganha o outro perde." },
+  { key: "hs", term: "HS%", short: "Percentual de acertos na cabeça.", long: "Percentual dos acertos que foram na cabeça." },
+  { key: "fk", term: "FK", short: "First Kill: primeiro abate do round.", long: "First Kill: quantas vezes o jogador abriu o round com o primeiro abate." },
+  { key: "fd", term: "FD", short: "First Death: primeira morte do round.", long: "First Death: quantas vezes o jogador foi o primeiro a cair no round." },
+  { key: "fkfd", term: "FK-FD", short: "Saldo entre primeiros abates e primeiras mortes.", long: "Saldo de abertura: primeiros abates menos primeiras mortes. Positivo significa que o jogador abriu mais rounds do que perdeu." },
+  { key: "fkpr", term: "FKPR", short: "Primeiros abates por round.", long: "First Kills por round jogado." },
+  { key: "fdpr", term: "FDPR", short: "Primeiras mortes por round.", long: "First Deaths por round jogado." },
+  { key: "mks", term: "MKs", short: "Rounds com mais de um abate.", long: "Quantidade de rounds em que o jogador conseguiu mais de um abate." },
+  { key: "plusminus", term: "+/-", short: "Abates menos mortes.", long: "Saldo simples: abates menos mortes." },
+  { key: "kdd", term: "K:D", short: "Abates divididos por mortes.", long: "Abates divididos por mortes." },
+  { key: "mk", term: "MK/R", short: "Multi-kills por round.", long: "Rounds com mais de um abate, ponderados pelo tamanho do multi-kill e divididos pelos rounds jogados." },
+];
+
+const METRIC_GLOSSARY_BY_TERM = new Map(METRIC_GLOSSARY.map((item) => [item.term, item]));
+
+function metricHint(label) {
+  return METRIC_GLOSSARY_BY_TERM.get(label)?.short || "";
 }
 
 function renderStatsPage() {
+  const minRounds = RaaRatingCore?.SAMPLE_MIN_ROUNDS ?? 50;
+  const escala = [
+    ["0,72", "um intervalo abaixo da mediana"],
+    ["1,00", "mediana do cenário"],
+    ["1,28", "um intervalo acima"],
+    ["1,56", "dois intervalos acima"],
+  ];
+  const pesos = [
+    ["33%", "Round Swing"],
+    ["25%", "Abates"],
+    ["15%", "Dano"],
+    ["15%", "Sobrevivência"],
+    ["8%", "KAST"],
+    ["4%", "Multi-kills"],
+  ];
   Shell(`
-    <section class="stats-maintenance-page" aria-labelledby="stats-maintenance-title">
-      <img class="stats-maintenance-image" src="${escapeHtml(assetPath("assets/manutencao.png"))}" alt="Página em manutenção" loading="eager" />
-      <h1 id="stats-maintenance-title">Essa página está em construção, voltamos em breve!</h1>
+    <header class="page-header slim-header">
+      <div class="page-title">
+        <h1>Métricas</h1>
+      </div>
+    </header>
+
+    <section class="metric-explainer" aria-labelledby="metric-rating-title">
+      <h2 id="metric-rating-title">Como ler o rAAting 3.0</h2>
+      <p class="metric-lede">
+        É a nota geral de um jogador no cenário universitário. <strong>1.00 é o desempenho mediano</strong>:
+        metade dos jogadores fica acima, metade abaixo. Cada 0,28 acima ou abaixo equivale a um
+        intervalo interquartil de distância dessa mediana. A escala é travada entre 0,30 e 1,80.
+      </p>
+      <ul class="metric-scale">
+        ${escala.map(([valor, texto]) => `<li><strong>${escapeHtml(valor)}</strong><span>${escapeHtml(texto)}</span></li>`).join("")}
+      </ul>
+
+      <h3>Do que ela é feita</h3>
+      <ul class="metric-weights">
+        ${pesos.map(([peso, nome]) => `<li><strong>${escapeHtml(peso)}</strong><span>${escapeHtml(nome)}</span></li>`).join("")}
+      </ul>
+      <p class="metric-note">
+        Para entrar no ranking oficial de jogadores é preciso ter jogado ao menos
+        ${minRounds} rounds. Quem está abaixo disso aparece marcado como baixa amostra.
+      </p>
+    </section>
+
+    <section class="metric-glossary" aria-labelledby="metric-glossary-title">
+      <h2 id="metric-glossary-title">Glossário</h2>
+      <dl>
+        ${METRIC_GLOSSARY.filter((item) => item.key !== "rating")
+          .map((item) => `<dt>${escapeHtml(item.term)}</dt><dd>${escapeHtml(item.long)}</dd>`)
+          .join("")}
+      </dl>
+    </section>
+
+    <section class="metric-where" aria-labelledby="metric-where-title">
+      <h2 id="metric-where-title">Onde ver os números</h2>
+      <p>A página de estatísticas agregadas ainda está em construção. Enquanto isso, os mesmos dados estão em:</p>
+      <ul class="metric-links">
+        <li><a href="#/ranking">Ranking</a><span>nota das equipes e histórico por semana</span></li>
+        <li><a href="#/players">Players</a><span>rAAting e médias de cada jogador</span></li>
+        <li><a href="#/matches">Partidas</a><span>placar completo de cada mapa, com todas as colunas</span></li>
+      </ul>
     </section>
   `);
 }
@@ -5793,10 +6024,10 @@ function rankingAccordionItem(row) {
         <span class="ranking-status-cell">${rankingStatusChip(team, ranking)}</span>
         <span class="ranking-toggle-mark" aria-hidden="true">+</span>
       </button>
-      <div id="${panelId}" class="ranking-dropdown" aria-hidden="true">
+      <div id="${panelId}" class="ranking-dropdown" aria-hidden="true" inert>
         <div class="ranking-dropdown-inner">
           ${rankingTeamPreviewPanel(team, cutoffAt)}
-          <div class="ranking-detail-dropdown" aria-hidden="true">
+          <div class="ranking-detail-dropdown" aria-hidden="true" inert>
             ${rankingExplanationPanel(team, ranking, cutoffAt)}
           </div>
         </div>
@@ -5948,7 +6179,7 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null) 
           <span>nota final</span>
         </div>
         <div class="ranking-score-copy">
-          <h3>${escapeHtml(team.name)}</h3>
+          <h2>${escapeHtml(team.name)}</h2>
           <p>Passe o mouse nos gráficos para mais detalhes e explicações.</p>
           <div class="ranking-formula-chips">
             <span>70% desempenho</span>
@@ -6412,14 +6643,21 @@ function openRankingRouteTeam(teamId) {
 function setRankingAccordionItem(item, open) {
   item.classList.toggle("open", open);
   item.querySelector("[data-ranking-toggle]")?.setAttribute("aria-expanded", String(open));
-  item.querySelector(".ranking-dropdown")?.setAttribute("aria-hidden", String(!open));
+  const painel = item.querySelector(".ranking-dropdown");
+  painel?.setAttribute("aria-hidden", String(!open));
+  // aria-hidden esconde da leitura de tela mas NAO tira do tab order: com 44
+  // sanfonas fechadas eram 1609 controles focaveis dentro de caixas de altura
+  // zero. inert remove as duas coisas de uma vez.
+  if (painel) painel.inert = !open;
   if (!open) setRankingDetailsOpen(item, false);
 }
 
 function setRankingDetailsOpen(item, open) {
   item.classList.toggle("details-open", open);
   item.querySelector("[data-ranking-details]")?.setAttribute("aria-expanded", String(open));
-  item.querySelector(".ranking-detail-dropdown")?.setAttribute("aria-hidden", String(!open));
+  const detalhe = item.querySelector(".ranking-detail-dropdown");
+  detalhe?.setAttribute("aria-hidden", String(!open));
+  if (detalhe) detalhe.inert = !open;
 }
 
 function safeDomId(value) {
@@ -6965,7 +7203,7 @@ function scoreboardHeaderCell(boardKey, column) {
   const nextLabel = direction === "asc" ? "decrescente" : direction === "desc" ? "padrão" : "crescente";
   return `
     <th class="${escapeHtml(className)}" aria-sort="${direction === "asc" ? "ascending" : direction === "desc" ? "descending" : "none"}">
-      <button type="button" class="score-sort-button" data-board-key="${escapeHtml(boardKey)}" data-scoreboard-sort="${escapeHtml(column.key)}" aria-label="Ordenar por ${escapeHtml(column.label)}: ${nextLabel}">
+      <button type="button" class="score-sort-button" data-board-key="${escapeHtml(boardKey)}" data-scoreboard-sort="${escapeHtml(column.key)}" aria-label="Ordenar por ${escapeHtml(column.label)}: ${nextLabel}" title="${escapeHtml(metricHint(column.label))}">
         <span>${escapeHtml(column.label)}</span><i aria-hidden="true">${escapeHtml(indicator)}</i>
       </button>
     </th>
@@ -11447,8 +11685,8 @@ function teamProfileLogo(team) {
 
 function teamAccentStyle(team) {
   const [primary, secondary] = team.colors || [];
-  const accent = safeCssColor(primary, "#d8323c");
-  const accent2 = safeCssColor(secondary, "#009a96");
+  const accent = safeCssColor(primary, "#f6132a");
+  const accent2 = safeCssColor(secondary, "#2ad4c1");
   return `style="--team-accent:${accent};--team-accent-2:${accent2};"`;
 }
 
@@ -13156,9 +13394,11 @@ function bindMatchFilters() {
     if (!button) return;
     const filter = button.dataset.matchFilter;
     const value = button.dataset.value || "all";
+    // devolve o foco ao mesmo controle depois da re-renderizacao
+    const foco = `[data-match-filter="${filter}"]` + (button.dataset.value ? `[data-value="${button.dataset.value}"]` : "");
     if (filter === "reset") {
       resetResultFilters();
-      renderMatchesCompact();
+      pushFilterState("matches", new URLSearchParams(), foco);
       return;
     }
     if (filter === "bestOf") {
@@ -13167,7 +13407,7 @@ function bindMatchFilters() {
     if (filter === "map") toggleResultFilterValue("matchMaps", value);
     if (filter === "tournament") toggleResultFilterValue("matchTournaments", value);
     if (filter === "team") toggleResultFilterValue("matchTeams", value);
-    renderMatchesCompact();
+    pushFilterState("matches", matchFiltersToQuery(), foco);
   });
   document.getElementById("match-team-query")?.addEventListener("input", (event) => {
     state.matchTeamQuery = event.target.value;
@@ -13221,6 +13461,9 @@ function bindPlayerFilters() {
     state.playerQuery = event.target.value;
     refreshPlayersKeepingFocus("player-query", event.target.selectionStart);
   });
+  document.getElementById("player-query")?.addEventListener("change", () => {
+    pushFilterState("players", playerFiltersToQuery(), "#player-query");
+  });
   document.getElementById("player-team-query")?.addEventListener("input", (event) => {
     state.playerTeamQuery = event.target.value;
     refreshPlayersKeepingFocus("player-team-query", event.target.selectionStart);
@@ -13228,22 +13471,23 @@ function bindPlayerFilters() {
   document.querySelectorAll("[data-player-team-filter]").forEach((button) => {
     button.addEventListener("click", () => {
       state.playerTeam = button.dataset.playerTeamFilter || "all";
-      renderPlayersCompact();
+      pushFilterState("players", playerFiltersToQuery(), `[data-player-team-filter="${button.dataset.playerTeamFilter || "all"}"]`);
     });
   });
   document.getElementById("player-team")?.addEventListener("change", (event) => {
     state.playerTeam = event.target.value;
-    renderPlayersCompact();
+    pushFilterState("players", playerFiltersToQuery(), "#player-team");
   });
   document.querySelectorAll("[data-letter]").forEach((button) => {
     button.addEventListener("click", () => {
       state.playerInitial = button.dataset.letter;
-      renderPlayersCompact();
+      pushFilterState("players", playerFiltersToQuery(), `[data-letter="${button.dataset.letter}"]`);
     });
   });
 }
 
 function refreshPlayersKeepingFocus(inputId, caret) {
+  state.skipFilterHydration = true;
   renderPlayersCompact();
   const input = document.getElementById(inputId);
   if (!input) return;
@@ -13256,72 +13500,88 @@ function playerInitialOptions() {
   return ["all", ...[...letters].sort((a, b) => a.localeCompare(b))];
 }
 
-function playerOfWeekCarousel() {
+function playerFigure(player, team, extra = "") {
+  // Monograma nas cores da equipe no lugar da silhueta cinza generica.
+  // Ele fica sempre no DOM, atras da foto: se a imagem falhar, e so revelar.
+  const initials = String(player?.nick || "?")
+    .replace(/[^\p{L}\p{N}]/gu, "")
+    .slice(0, 2)
+    .toUpperCase();
+  const accent = team ? teamAccentStyle(team) : "";
+  const photo = player?.photo ? assetPath(player.photo) : "";
+  const mono = `<span class="player-figure-mono" aria-hidden="true">${escapeHtml(initials)}</span>`;
+  if (!photo) {
+    return `<span class="player-figure is-monogram ${escapeHtml(extra)}" ${accent}>${mono}</span>`;
+  }
+  return `<span class="player-figure ${escapeHtml(extra)}" ${accent}>${mono}<img src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="playerFigureError(this)" /></span>`;
+}
+
+function playerFigureError(image) {
+  const figure = image?.closest(".player-figure");
+  if (!figure) return;
+  figure.classList.add("is-monogram");
+  image.remove();
+}
+
+function weekHighlights() {
   const leaders = playerOfWeekLeaders();
-  const minimumNote = `Mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas jogados no período exibido para entrar.`;
+  const note = `Mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas jogados no período exibido para entrar.`;
   if (!leaders.length) {
     return `
-      <div class="player-week-shell">
-        <section class="player-week-panel player-week-empty-panel" aria-label="Melhores da semana">
-          <div class="player-week-empty">
-            <span class="player-week-title">Melhores da semana</span>
-            <strong>Sem jogadores elegíveis</strong>
-            <small>Nenhum jogador atingiu o mínimo de mapas nesta janela.</small>
-          </div>
-        </section>
-        <small class="player-week-note">${escapeHtml(minimumNote)}</small>
-      </div>
+      <section class="week-board week-board-empty" aria-labelledby="week-board-title">
+        <header class="week-board-head">
+          <h2 id="week-board-title">Melhores da semana</h2>
+        </header>
+        <p class="empty-state">Nenhum jogador atingiu o mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas nesta janela.</p>
+      </section>
     `;
   }
+  const [lead, ...rest] = leaders;
   return `
-    <div class="player-week-shell">
-      <section class="player-week-panel" data-player-week-carousel data-player-week-manual="false" tabindex="0" aria-label="Player of the week">
-        <div class="player-week-track">
-          ${leaders.map(playerOfWeekCard).join("")}
-        </div>
-        <button class="player-week-nav prev" type="button" data-player-week-prev aria-label="Player anterior">&lt;</button>
-        <button class="player-week-nav next" type="button" data-player-week-next aria-label="Proximo player">&gt;</button>
-        <div class="player-week-dots" aria-label="Categorias do player of the week">
-          ${leaders.map((_, index) => `<button type="button" data-player-week-dot="${index}" aria-label="Categoria ${index + 1}" ${index === 0 ? `aria-current="true"` : ""}></button>`).join("")}
-        </div>
-      </section>
-      <small class="player-week-note">${escapeHtml(minimumNote)}</small>
-    </div>
+    <section class="week-board" aria-labelledby="week-board-title">
+      <header class="week-board-head">
+        <h2 id="week-board-title">Melhores da semana</h2>
+        <span class="week-board-range">${escapeHtml(lead.windowLabel)}</span>
+        <small class="week-board-note">${escapeHtml(note)}</small>
+      </header>
+      <div class="week-board-body">
+        ${weekLeadCard(lead)}
+        <ul class="week-rail">${rest.map(weekTile).join("")}</ul>
+      </div>
+    </section>
   `;
 }
 
-function playerOfWeekCard(item, index) {
-  const { category, player, windowLabel } = item;
-  const active = index === 0;
+function weekLeadCard({ category, player }) {
   const team = teamById(player.teamId);
-  const photo = playerPhotoSrc(player);
-  const metric = category.format(player);
-  const meta = [
-    team?.sourceTag || team?.tag || player.teamTag || "",
-    `${player.matches} mapa${player.matches === 1 ? "" : "s"}`,
-    `${player.rounds} rounds`,
-  ].filter(Boolean).join(" - ");
+  const tag = team?.sourceTag || team?.tag || player.teamTag || "";
   return `
-    <a class="player-week-card ${active ? "active" : ""}" href="${playerHref(player)}" data-player-week-slide="${index}" aria-hidden="${active ? "false" : "true"}" tabindex="${active ? "0" : "-1"}">
-      <span class="player-week-photo">
-        <img src="${escapeHtml(photo)}" alt="${escapeHtml(player.nick)}" loading="lazy" onerror="playerPhotoError(this)" />
+    <a class="week-lead" href="${playerHref(player)}">
+      ${playerFigure(player, team, "week-lead-figure")}
+      <span class="week-lead-copy">
+        <small class="week-lead-category">${escapeHtml(category.label)}</small>
+        <strong class="week-lead-nick" title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong>
+        <span class="week-lead-team">${team ? teamLogo(team.id, "tiny") : ""}<em>${escapeHtml(tag)}</em></span>
       </span>
-      <span class="player-week-copy">
-        <span class="player-week-title">Melhores da semana</span>
-        <small>${escapeHtml(category.label)}</small>
-        <strong title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong>
-        <em>${escapeHtml(category.title)}</em>
-      </span>
-      <span class="player-week-value">
-        <strong>${escapeHtml(metric)}</strong>
+      <span class="week-lead-value">
+        <strong>${escapeHtml(category.format(player))}</strong>
         <small>${escapeHtml(category.statLabel)}</small>
       </span>
-      <span class="player-week-meta">
-        ${team ? teamLogo(team.id, "tiny") : ""}
-        <span>${escapeHtml(meta)}</span>
-      </span>
-      <span class="player-week-range">${escapeHtml(windowLabel)}</span>
+      <span class="week-lead-context">${escapeHtml(`${player.matches} mapas · ${player.rounds} rounds`)}</span>
     </a>
+  `;
+}
+
+function weekTile({ category, player }) {
+  const team = teamById(player.teamId);
+  return `
+    <li>
+      <a class="week-tile" href="${playerHref(player)}">
+        <small class="week-tile-category">${escapeHtml(category.statLabel)}</small>
+        <strong class="week-tile-value">${escapeHtml(category.format(player))}</strong>
+        <span class="week-tile-player">${team ? teamLogo(team.id, "tiny") : ""}<span title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</span></span>
+      </a>
+    </li>
   `;
 }
 
@@ -13440,93 +13700,6 @@ function playerWeekDateLabel(value) {
   return new Date(value).toLocaleDateString("pt-BR", { day: "2-digit", month: "short" }).replace(".", "");
 }
 
-function bindHomePlayerWeekCarousel() {
-  window.clearInterval(state.homePlayerWeekTimer);
-  window.clearTimeout(state.homePlayerWeekResumeTimer);
-  state.homePlayerWeekTimer = 0;
-  state.homePlayerWeekResumeTimer = 0;
-
-  const root = document.querySelector("[data-player-week-carousel]");
-  if (!root) return;
-  const slides = [...root.querySelectorAll("[data-player-week-slide]")];
-  const dots = [...root.querySelectorAll("[data-player-week-dot]")];
-  if (slides.length <= 1) return;
-
-  let activeIndex = 0;
-  const setActive = (index) => {
-    activeIndex = (index + slides.length) % slides.length;
-    slides.forEach((slide, slideIndex) => {
-      const active = slideIndex === activeIndex;
-      slide.classList.toggle("active", active);
-      slide.setAttribute("aria-hidden", String(!active));
-      slide.setAttribute("tabindex", active ? "0" : "-1");
-    });
-    dots.forEach((dot, dotIndex) => {
-      if (dotIndex === activeIndex) dot.setAttribute("aria-current", "true");
-      else dot.removeAttribute("aria-current");
-    });
-  };
-
-  const stopAutoplay = () => {
-    window.clearInterval(state.homePlayerWeekTimer);
-    state.homePlayerWeekTimer = 0;
-  };
-  const startAutoplay = () => {
-    stopAutoplay();
-    state.homePlayerWeekTimer = window.setInterval(() => {
-      if (!root.isConnected) {
-        stopAutoplay();
-        window.clearTimeout(state.homePlayerWeekResumeTimer);
-        state.homePlayerWeekResumeTimer = 0;
-        return;
-      }
-      setActive(activeIndex + 1);
-    }, PLAYER_OF_WEEK_INTERVAL_MS);
-  };
-  const scheduleAutoplayResume = () => {
-    window.clearTimeout(state.homePlayerWeekResumeTimer);
-    state.homePlayerWeekResumeTimer = window.setTimeout(() => {
-      state.homePlayerWeekResumeTimer = 0;
-      if (!root.isConnected) return;
-      root.dataset.playerWeekManual = "false";
-      startAutoplay();
-    }, PLAYER_OF_WEEK_IDLE_RESUME_MS);
-  };
-  const enterManualMode = () => {
-    root.dataset.playerWeekManual = "true";
-    stopAutoplay();
-    scheduleAutoplayResume();
-  };
-  const move = (delta) => {
-    enterManualMode();
-    setActive(activeIndex + delta);
-  };
-
-  root.addEventListener("pointerenter", enterManualMode);
-  root.addEventListener("pointermove", enterManualMode);
-  root.addEventListener("focusin", enterManualMode);
-  root.addEventListener("pointerdown", enterManualMode);
-  root.addEventListener("keydown", enterManualMode);
-  root.querySelector("[data-player-week-prev]")?.addEventListener("click", (event) => {
-    event.preventDefault();
-    move(-1);
-  });
-  root.querySelector("[data-player-week-next]")?.addEventListener("click", (event) => {
-    event.preventDefault();
-    move(1);
-  });
-  dots.forEach((dot, index) => {
-    dot.addEventListener("click", (event) => {
-      event.preventDefault();
-      enterManualMode();
-      setActive(index);
-    });
-  });
-
-  setActive(0);
-  startAutoplay();
-}
-
 function bindHomeRankingPanel() {
   const panel = document.querySelector(".ranking-panel");
   panel?.addEventListener("click", (event) => {
@@ -13582,11 +13755,11 @@ function matchResultRow(item) {
   const event = state.db.tournaments.find((row) => row.id === series.eventId);
   return `
     <a class="result-row" href="${matchSeriesHref(series)}">
-      <span class="result-team left">${teamLogo(series.teamA.id)}<strong>${escapeHtml(series.teamA.name)}</strong></span>
+      <span class="result-team left">${teamLogo(series.teamA.id)}<strong title="${escapeHtml(series.teamA.name)}">${escapeHtml(series.teamA.name)}</strong></span>
       <span class="result-score"><b class="${scoreNumberClass(score.a, score.b)}">${score.a}</b><i>:</i><b class="${scoreNumberClass(score.b, score.a)}">${score.b}</b><small>${escapeHtml(score.label)}</small></span>
-      <span class="result-team right"><strong>${escapeHtml(series.teamB.name)}</strong>${teamLogo(series.teamB.id)}</span>
+      <span class="result-team right"><strong title="${escapeHtml(series.teamB.name)}">${escapeHtml(series.teamB.name)}</strong>${teamLogo(series.teamB.id)}</span>
       ${matchMapStrip(series)}
-      <span class="result-meta"><span>${escapeHtml(formatDate(series.startedAt, "time"))}<br>${escapeHtml(event?.name || "Evento")}</span>${event ? eventLogo(event, "tiny") : ""}</span>
+      <span class="result-meta"><span class="result-meta-when">${escapeHtml(formatDate(series.startedAt, "hour"))}</span><span class="result-meta-where">${escapeHtml(event?.name || "Evento")}</span>${event ? eventLogo(event, "tiny") : ""}</span>
     </a>
   `;
 }
@@ -13775,25 +13948,99 @@ function bindSearch() {
     const rows = searchEntities().filter((item) => normalize(item.searchText || `${item.label} ${item.meta || ""}`).includes(query)).slice(0, 10);
     state.searchOpen = true;
     results.classList.add("open");
+    input.setAttribute("aria-expanded", "true");
     results.innerHTML = rows.length
-      ? rows.map(renderSearchResult).join("")
+      ? rows.map((item, index) => renderSearchResult(item, index)).join("")
       : `<div class="empty-state">Nenhuma entidade encontrada.</div>`;
+    anunciar(rows.length);
+    ativo = -1;
+    sincronizarAtivo();
     results.querySelectorAll("[data-path]").forEach((button) => {
-      button.addEventListener("click", () => {
-        state.search = "";
-        state.searchOpen = false;
-        window.location.hash = `#/${button.dataset.path}`;
-      });
+      button.addEventListener("click", () => abrir(button));
     });
   };
 
+  const status = document.getElementById("search-status");
+  let ativo = -1;
+
+  const anunciar = (n) => {
+    if (!status) return;
+    status.textContent = n === 0 ? "Nenhum resultado." : n === 1 ? "1 resultado." : `${n} resultados.`;
+  };
+
+  const opcoes = () => [...results.querySelectorAll("[data-path]")];
+
+  const sincronizarAtivo = () => {
+    const lista = opcoes();
+    lista.forEach((el, i) => {
+      const marcado = i === ativo;
+      el.setAttribute("aria-selected", String(marcado));
+      el.classList.toggle("is-active", marcado);
+      if (marcado) el.scrollIntoView({ block: "nearest" });
+    });
+    if (ativo >= 0 && lista[ativo]) input.setAttribute("aria-activedescendant", lista[ativo].id);
+    else input.removeAttribute("aria-activedescendant");
+  };
+
+  const mover = (passo) => {
+    const lista = opcoes();
+    if (!lista.length) return;
+    const n = lista.length;
+    if (ativo === -1) ativo = passo > 0 ? 0 : n - 1;
+    else {
+      ativo += passo;
+      if (ativo < 0) ativo = n - 1;
+      else if (ativo >= n) ativo = 0;
+    }
+    sincronizarAtivo();
+  };
+
+  const fechar = () => {
+    state.searchOpen = false;
+    results.classList.remove("open");
+    input.setAttribute("aria-expanded", "false");
+    input.removeAttribute("aria-activedescendant");
+    ativo = -1;
+  };
+
+  function abrir(button) {
+    state.search = "";
+    fechar();
+    window.location.hash = `#/${button.dataset.path}`;
+  }
+
   input.addEventListener("input", renderResults);
   input.addEventListener("focus", renderResults);
-  document.addEventListener("click", (event) => {
-    if (!event.target.closest(".global-search")) {
-      state.searchOpen = false;
-      results.classList.remove("open");
+
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowDown") { event.preventDefault(); mover(1); return; }
+    if (event.key === "ArrowUp") { event.preventDefault(); mover(-1); return; }
+    if (event.key === "Enter") {
+      const lista = opcoes();
+      if (ativo >= 0 && lista[ativo]) { event.preventDefault(); abrir(lista[ativo]); }
+      return;
     }
+    if (event.key === "Escape") { event.preventDefault(); fechar(); input.blur(); }
+  });
+
+  // O selo "/" ao lado do campo prometia este atalho desde sempre.
+  if (!state.searchHotkeyBound) {
+    state.searchHotkeyBound = true;
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "/" || event.ctrlKey || event.metaKey || event.altKey) return;
+      const alvo = event.target;
+      const digitando = alvo && (alvo.isContentEditable || /^(input|textarea|select)$/i.test(alvo.tagName));
+      if (digitando) return;
+      const campo = document.getElementById("global-search");
+      if (!campo || campo.disabled) return;
+      event.preventDefault();
+      campo.focus();
+      campo.select();
+    });
+  }
+
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".global-search")) fechar();
   });
   renderResults();
 }
@@ -13931,7 +14178,8 @@ function matchSearchScoreVariants(a, b) {
   ];
 }
 
-function renderSearchResult(item) {
+function renderSearchResult(item, index = 0) {
+  searchResultIndex = index;
   const renderers = {
     team: renderTeamSearchResult,
     player: renderPlayerSearchResult,
@@ -13942,9 +14190,10 @@ function renderSearchResult(item) {
   return (renderers[item.type] || renderGenericSearchResult)(item);
 }
 
-function renderSearchButton(item, content) {
+function renderSearchButton(item, content, index = 0) {
   const type = item.type || "generic";
-  return `<button class="search-result search-result-${escapeHtml(type)}" type="button" data-path="${escapeHtml(item.path)}" aria-label="${escapeHtml(`Abrir ${item.label}`)}">${content}</button>`;
+  const pos = index || searchResultIndex;
+  return `<button class="search-result search-result-${escapeHtml(type)}" type="button" role="option" id="search-option-${pos}" aria-selected="false" data-path="${escapeHtml(item.path)}" aria-label="${escapeHtml(`Abrir ${item.label}`)}">${content}</button>`;
 }
 
 function renderTeamSearchResult(item) {
@@ -14315,7 +14564,12 @@ function eventTimeRange(event) {
 }
 
 function eventStatusClass(status) {
-  return String(status || "").toLowerCase().includes("finalizado") ? "done" : "live";
+  // "Agendado" nao e "ao vivo": antes os dois caiam na mesma classe e um
+  // campeonato marcado para daqui a um mes usava o selo de partida rolando.
+  const value = String(status || "").toLowerCase();
+  if (value.includes("finalizado")) return "done";
+  if (value.includes("agendad") || value.includes("em breve")) return "scheduled";
+  return "live";
 }
 
 function eventIsDone(event) {
@@ -14665,12 +14919,26 @@ function cleanDocumentTitleSegment(value) {
 
 function route() {
   const hash = window.location.hash.replace(/^#\/?/, "");
-  const [section = "home", id, tab] = hash.split("/");
+  // o estado de filtro viaja depois do "?", entao o caminho para de ler ali
+  const [caminho] = hash.split("?");
+  const [section = "home", id, tab] = caminho.split("/");
   return { section, id, tab };
 }
 
+function routeQuery() {
+  const hash = window.location.hash.replace(/^#\/?/, "");
+  const i = hash.indexOf("?");
+  return new URLSearchParams(i >= 0 ? hash.slice(i + 1) : "");
+}
+
+function routePath() {
+  return "#/" + window.location.hash.replace(/^#\/?/, "").split("?")[0];
+}
+
+// A chave de rota ignora a query de proposito: trocar um filtro nao e mudar de
+// pagina, entao nao deve jogar a rolagem para o topo.
 function currentRouteKey() {
-  return window.location.hash || "#/home";
+  return routePath();
 }
 
 function scrollToRouteTop(routeChanged) {
@@ -14825,6 +15093,9 @@ function clamp(value, min, max) {
 function formatDate(value, mode = "date") {
   if (!value) return "-";
   const date = new Date(value);
+  // "hour" existe para a lista agrupada por dia: o dia ja e o cabecalho do
+  // grupo, entao a linha so precisa da hora.
+  if (mode === "hour") return date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
   const options =
     mode === "time"
       ? { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }
@@ -14848,6 +15119,26 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
+// Cada entidade carrega o proprio genero e o proprio caminho de volta: antes
+// era `${entity} não encontrado.` para todas, produzindo "Equipe nao
+// encontrado." e "Partida nao encontrado.", e sem nenhuma saida - num produto
+// que se espalha por link colado, o link velho era um beco sem saida.
+const NOT_FOUND_ENTITIES = {
+  Partida: { frase: "Partida não encontrada", volta: "#/matches", voltaLabel: "Ver todas as partidas" },
+  Campeonato: { frase: "Campeonato não encontrado", volta: "#/events", voltaLabel: "Ver todos os campeonatos" },
+  Equipe: { frase: "Equipe não encontrada", volta: "#/ranking", voltaLabel: "Ver o ranking de equipes" },
+  Jogador: { frase: "Jogador não encontrado", volta: "#/players", voltaLabel: "Ver todos os jogadores" },
+  Mapa: { frase: "Mapa não encontrado", volta: "#/maps", voltaLabel: "Ver todos os mapas" },
+  Recurso: { frase: "Página não encontrada", volta: "#/home", voltaLabel: "Voltar para a inicial" },
+};
+
 function renderNotFound(entity) {
-  Shell(`<div class="empty-state">${escapeHtml(entity)} não encontrado.</div>`);
+  const info = NOT_FOUND_ENTITIES[entity] || NOT_FOUND_ENTITIES.Recurso;
+  Shell(`
+    <div class="boot-state" role="alert">
+      <strong>${escapeHtml(info.frase)}</strong>
+      <p>O link pode estar velho, ou o item pode ter saído do site desde que ele foi compartilhado.</p>
+      <a class="boot-retry" href="${info.volta}">${escapeHtml(info.voltaLabel)}</a>
+    </div>
+  `);
 }

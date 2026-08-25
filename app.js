@@ -14315,7 +14315,12 @@ function eventTimeRange(event) {
 }
 
 function eventStatusClass(status) {
-  return String(status || "").toLowerCase().includes("finalizado") ? "done" : "live";
+  // "Agendado" nao e "ao vivo": antes os dois caiam na mesma classe e um
+  // campeonato marcado para daqui a um mes usava o selo de partida rolando.
+  const value = String(status || "").toLowerCase();
+  if (value.includes("finalizado")) return "done";
+  if (value.includes("agendad") || value.includes("em breve")) return "scheduled";
+  return "live";
 }
 
 function eventIsDone(event) {

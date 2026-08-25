@@ -223,10 +223,31 @@
   --line: rgba(245, 241, 242, 0.12);
   --line-dark: rgba(245, 241, 242, 0.18);
   --red: #f6132a;
-  --teal: #f6132a;
-  --amber: #f5f1f2;
-  --green: #f6132a;
-  --blue: #f5f1f2;
+  --teal: #2ad4c1;
+  --amber: #ffb340;
+  --green: #31e981;
+  --blue: #8ab4ff;
+
+  /* Papeis semanticos. O vermelho da marca voltou a ser identidade: ele marca
+     o UNIVLR (indicador de nav, barra de painel, ao vivo), nunca um dado.
+     Por isso derrota NAO e vermelha - ela recua para o neutro, e o vermelho
+     de alerta e um tom proprio, separado da marca. */
+  --brand: #f6132a;
+  --brand-text: #ff5f6d;   /* o vermelho quando e texto sobre grafite: 6,3:1 */
+  --on-brand: #040306;     /* preto sobre a marca da 4,9:1; branco so da 3,7:1 */
+  --win: #31e981;
+  --win-soft: rgba(49, 233, 129, 0.14);
+  --win-line: rgba(49, 233, 129, 0.34);
+  --loss-surface: #1a1d26;
+  --loss-ink: rgba(245, 241, 242, 0.62);
+  --danger: #ff6678;
+  /* Lado do round: ataque e defesa sao informacao de jogo, entao ganham token
+     proprio em vez de gradiente solto. Chapado, porque num quadrado de 25px
+     um degrade vertical e so ruido. */
+  --side-attack: #d1122a;
+  --side-defense: #17808f;
+  --warn: #ffb340;
+  --info: #8ab4ff;
 }
 
 .sr-only {
@@ -677,15 +698,15 @@ h1 {
 }
 
 .chip.green {
-  border-color: rgba(43, 139, 87, 0.24);
-  color: var(--green);
-  background: rgba(43, 139, 87, 0.09);
+  border-color: var(--win-line);
+  color: var(--win);
+  background: var(--win-soft);
 }
 
 .chip.teal {
-  border-color: rgba(0, 140, 137, 0.24);
+  border-color: rgba(42, 212, 193, 0.3);
   color: var(--teal);
-  background: rgba(0, 140, 137, 0.08);
+  background: rgba(42, 212, 193, 0.1);
 }
 
 .chip.low-sample-chip {
@@ -982,10 +1003,14 @@ tr:last-child td {
   background: #fff;
 }
 
+/* Herdava background: #fff de .state-flag e escrevia com --ink (quase branco):
+   quando a bandeira do estado nao carregava, a sigla ficava invisivel. */
 .state-flag.placeholder {
   display: inline-grid;
   place-items: center;
+  background: var(--surface-2);
   color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line);
   font-size: var(--text-2xs);
   font-weight: 800;
 }
@@ -1251,7 +1276,7 @@ img.state-flag + .state-flag.placeholder {
 }
 
 .timeline-date {
-  color: var(--red);
+  color: var(--brand-text);
   font-weight: 800;
   font-size: var(--text-md);
 }
@@ -1941,7 +1966,7 @@ img.state-flag + .state-flag.placeholder {
   border-radius: var(--radius-sm);
   background: #2e3d45;
   padding: 8px 4px 8px;
-  color: #eaf5f6;
+  color: var(--ink);
   cursor: pointer;
   font: inherit;
   overflow: hidden;
@@ -2012,7 +2037,7 @@ img.state-flag + .state-flag.placeholder {
   display: grid;
   justify-items: center;
   gap: 8px;
-  color: #eaf5f6;
+  color: var(--ink);
   text-align: center;
 }
 
@@ -2062,7 +2087,7 @@ img.state-flag + .state-flag.placeholder {
   border: 1px solid rgba(124, 176, 210, 0.42);
   border-radius: var(--radius-md);
   background: rgba(17, 31, 41, 0.82);
-  color: #eaf5f6;
+  color: var(--ink);
   padding: 8px 8px;
   font-size: var(--text-xs);
   font-weight: 700;
@@ -2130,9 +2155,8 @@ img.state-flag + .state-flag.placeholder {
 }
 
 .lineup-stat-value.better {
-  color: #ffffff;
+  color: var(--win);
   font-weight: 800;
-  text-shadow: 0 0 14px rgba(154, 219, 238, 0.36);
 }
 
 .mvp-identity {
@@ -2140,7 +2164,7 @@ img.state-flag + .state-flag.placeholder {
   grid-template-columns: 112px minmax(0, 1fr);
   gap: 12px;
   align-items: center;
-  color: #eaf5f6;
+  color: var(--ink);
 }
 
 .mvp-identity .player-portrait {
@@ -2184,7 +2208,7 @@ img.state-flag + .state-flag.placeholder {
 }
 
 .mvp-bar strong {
-  color: #eaf5f6;
+  color: var(--ink);
   text-align: right;
 }
 
@@ -2205,7 +2229,7 @@ img.state-flag + .state-flag.placeholder {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #eaf5f6;
+  color: var(--ink);
   font-size: var(--text-md);
   font-weight: 800;
 }
@@ -2472,7 +2496,7 @@ h1 {
 .eyebrow {
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--brand-text);
   font-size: var(--text-2xs);
   letter-spacing: 0;
 }
@@ -2566,7 +2590,13 @@ h1 {
 }
 
 .event-status.live {
-  background: rgba(0, 212, 200, 0.14);
+  background: rgba(246, 19, 42, 0.14);
+}
+
+.event-status.scheduled,
+.event-chip.scheduled {
+  color: var(--warn);
+  background: rgba(255, 179, 64, 0.13);
 }
 
 .event-status.done {
@@ -2642,7 +2672,7 @@ tr:hover td {
 }
 
 .placeholder-panel strong {
-  color: #f5f8fb;
+  color: var(--ink);
   font-size: var(--text-xl);
 }
 
@@ -2728,7 +2758,7 @@ tr:hover td {
   border-color: rgba(255, 255, 255, 0.14);
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
-    linear-gradient(90deg, color-mix(in srgb, var(--team-accent, #d8323c) 20%, transparent), transparent);
+    linear-gradient(90deg, color-mix(in srgb, var(--team-accent, var(--brand)) 20%, transparent), transparent);
 }
 
 .team-summary-grid {
@@ -2741,7 +2771,7 @@ tr:hover td {
 .team-ranking-main,
 .team-ranking-explainer,
 .team-roster-stack .section-band {
-  border-color: #253443;
+  border-color: var(--line-dark);
   background: #121a24;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
@@ -2749,11 +2779,11 @@ tr:hover td {
 .team-mini-stats .stat-card,
 .team-results-summary .stat-card,
 .team-competitive-kpis .stat-card {
-  border: 1px solid #26384a;
+  border: 1px solid var(--line-dark);
   border-radius: var(--radius-md);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
-    #101820;
+    var(--surface);
 }
 
 .team-ranking-layout {
@@ -2767,7 +2797,7 @@ tr:hover td {
   display: grid;
   gap: 12px;
   overflow: visible;
-  border: 1px solid #253443;
+  border: 1px solid var(--line-dark);
   border-radius: var(--radius-lg);
   padding: 12px;
 }
@@ -2786,14 +2816,14 @@ tr:hover td {
   border: 1px solid #2b3d50;
   border-radius: var(--radius-pill);
   background: #111c27;
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-xs);
   font-weight: 700;
   padding: 8px 8px;
 }
 
 .ranking-chart-kpis strong {
-  color: #f5f8fb;
+  color: var(--ink);
 }
 
 .ranking-line-chart {
@@ -2819,7 +2849,7 @@ tr:hover td {
 }
 
 .ranking-chart-area {
-  fill: color-mix(in srgb, var(--team-accent-2, #009a96) 18%, transparent);
+  fill: color-mix(in srgb, var(--team-accent-2, var(--teal)) 18%, transparent);
 }
 
 .ranking-chart-line {
@@ -2832,7 +2862,7 @@ tr:hover td {
 }
 
 .ranking-chart-points circle {
-  fill: #f5f8fb;
+  fill: var(--ink);
   stroke: var(--team-accent-2, #35d0b8);
   stroke-width: 3;
 }
@@ -2873,17 +2903,17 @@ tr:hover td {
   max-width: 260px;
   display: grid;
   gap: 4px;
-  border: 1px solid rgba(104, 222, 210, 0.32);
+  border: 1px solid var(--line-dark);
   border-radius: var(--radius-md);
-  background: #071014;
-  color: #eaf5f6;
+  background: var(--surface-3);
+  color: var(--ink);
   padding: 8px 12px;
   opacity: 0;
   pointer-events: none;
   text-align: left;
   transform: translate(-50%, 6px);
   transition: opacity 0.16s ease, transform 0.16s ease;
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
 .ranking-chart-tooltip strong {
@@ -2958,14 +2988,14 @@ tr:hover td {
   grid-template-rows: auto 1fr;
   overflow: hidden;
   min-height: 286px;
-  border: 1px solid #26384a;
+  border: 1px solid var(--line-dark);
   border-radius: var(--radius-lg);
   transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 
 .roster-player-card:hover {
-  border-color: color-mix(in srgb, var(--team-accent-2, #009a96) 58%, #26384a);
-  background: #101820;
+  border-color: color-mix(in srgb, var(--team-accent-2, var(--teal)) 58%, var(--line-dark));
+  background: var(--surface);
   transform: translateY(-2px);
 }
 
@@ -2974,7 +3004,7 @@ tr:hover td {
   display: grid;
   place-items: end center;
   overflow: hidden;
-  background: #101820;
+  background: var(--surface);
 }
 
 .logo.player-avatar.roster-photo,
@@ -3001,7 +3031,7 @@ tr:hover td {
 
 .roster-card-body strong {
   overflow: hidden;
-  color: #f5f8fb;
+  color: var(--ink);
   font-size: var(--text-lg);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -3009,7 +3039,7 @@ tr:hover td {
 
 .roster-card-body > span {
   overflow: hidden;
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -3017,9 +3047,9 @@ tr:hover td {
 
 .lineup-timeline-chart {
   overflow-x: auto;
-  border: 1px solid #26384a;
+  border: 1px solid var(--line-dark);
   border-radius: var(--radius-lg);
-  background: #0d141d;
+  background: var(--surface);
   padding: 12px;
 }
 
@@ -3112,7 +3142,7 @@ tr:hover td {
 }
 
 .lineup-timeline-meta {
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-xs);
   font-weight: 700;
 }
@@ -3128,9 +3158,9 @@ tr:hover td {
   gap: 12px;
   align-items: center;
   min-height: 58px;
-  border: 1px solid #26384a;
+  border: 1px solid var(--line-dark);
   border-radius: var(--radius-lg);
-  background: #101820;
+  background: var(--surface);
   color: #eaf2f8;
   padding: 8px;
 }
@@ -3155,7 +3185,7 @@ tr:hover td {
 .former-member-main strong,
 .former-member-period strong {
   overflow: hidden;
-  color: #f5f8fb;
+  color: var(--ink);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -3163,7 +3193,7 @@ tr:hover td {
 .former-member-main small,
 .former-member-period small {
   overflow: hidden;
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -3182,7 +3212,7 @@ tr:hover td {
 
 .team-result-list {
   overflow: hidden;
-  border: 1px solid #253443;
+  border: 1px solid var(--line-dark);
   border-radius: var(--radius-lg);
   background: #121a24;
 }
@@ -3196,13 +3226,13 @@ tr:hover td {
 .team-tournament-card {
   display: grid;
   gap: 12px;
-  border: 1px solid #26384a;
+  border: 1px solid var(--line-dark);
   border-radius: var(--radius-lg);
   padding: 12px;
 }
 
 .team-tournament-card:hover {
-  border-color: color-mix(in srgb, var(--team-accent-2, #009a96) 50%, #26384a);
+  border-color: color-mix(in srgb, var(--team-accent-2, var(--teal)) 50%, var(--line-dark));
   background: #142131;
 }
 
@@ -3221,13 +3251,13 @@ tr:hover td {
 
 .team-tournament-title strong {
   overflow: hidden;
-  color: #f5f8fb;
+  color: var(--ink);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .team-tournament-title small {
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-xs);
 }
 
@@ -3247,7 +3277,7 @@ tr:hover td {
 }
 
 .team-placement-badge small {
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 800;
   text-transform: uppercase;
@@ -3262,27 +3292,27 @@ tr:hover td {
 .team-tournament-stats span {
   display: grid;
   gap: 2px;
-  border: 1px solid #26384a;
+  border: 1px solid var(--line-dark);
   border-radius: var(--radius-md);
-  background: #0d141d;
+  background: var(--surface);
   padding: 8px;
 }
 
 .team-tournament-stats strong {
-  color: #f5f8fb;
+  color: var(--ink);
 }
 
 .team-tournament-stats small {
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 700;
 }
 
 .team-player-stats-wrap {
   overflow: hidden;
-  border-color: #26384a;
+  border-color: var(--line-dark);
   border-radius: var(--radius-lg);
-  background: #0d141d;
+  background: var(--surface);
 }
 
 .team-player-stats-table {
@@ -3300,7 +3330,7 @@ tr:hover td {
 
 .team-player-stats-table td {
   border-bottom: 1px solid rgba(48, 66, 85, 0.74);
-  background: #101820;
+  background: var(--surface);
   color: #eaf2f8;
   font-size: var(--text-md);
   vertical-align: middle;
@@ -3323,7 +3353,7 @@ tr:hover td {
   align-items: center;
   gap: 12px;
   min-width: 0;
-  color: #f5f8fb;
+  color: var(--ink);
 }
 
 .team-stats-player span {
@@ -3334,14 +3364,14 @@ tr:hover td {
 
 .team-stats-player strong {
   overflow: hidden;
-  color: #f5f8fb;
+  color: var(--ink);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .team-stats-player small {
   overflow: hidden;
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -3351,7 +3381,7 @@ tr:hover td {
   width: 42px;
   height: 42px;
   border: 1px solid #2b3d50;
-  background: #101820;
+  background: var(--surface);
   box-shadow: none;
 }
 
@@ -4006,7 +4036,7 @@ tr:hover td {
 
 .ranking-action-button:hover,
 .ranking-action-button[aria-expanded="true"] {
-  background: #142033;
+  background: var(--univlr-graphite-3);
   color: #eef3f9;
 }
 
@@ -4177,15 +4207,16 @@ tr:hover td {
   height: 8px;
   overflow: hidden;
   border-radius: var(--radius-pill);
-  background: #202b3c;
+  background: var(--surface-2);
 }
 
+/* A barra ja se le pelo preenchimento; o halo verde de deslocamento zero em
+   volta dela so embaçava, e aparecia 26 vezes numa pagina de equipe. */
 .ranking-bar-track i {
   width: calc(var(--value) * 1%);
   height: 100%;
   display: block;
   border-radius: inherit;
-  box-shadow: 0 0 18px rgba(112, 227, 166, 0.18);
 }
 
 .ranking-competitive-layout {
@@ -4964,7 +4995,7 @@ body {
   background:
     linear-gradient(135deg, rgba(16, 34, 52, 0.96), rgba(31, 43, 60, 0.78)),
     #121d2b;
-  color: #f5f8fb;
+  color: var(--ink);
 }
 
 .result-map-tile::after {
@@ -5531,7 +5562,7 @@ td {
 
 .tournament-card-kicker,
 .tournament-section-head span {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -5551,7 +5582,7 @@ td {
 .tournament-facts {
   display: grid;
   grid-template-columns: minmax(260px, 1.55fr) repeat(5, minmax(112px, 1fr));
-  border: 1px solid #223147;
+  border: 1px solid var(--line-dark);
   background: #111b2a;
 }
 
@@ -5559,7 +5590,7 @@ td {
   display: grid;
   gap: 8px;
   min-width: 0;
-  border-right: 1px solid #223147;
+  border-right: 1px solid var(--line-dark);
   padding: 12px 16px;
 }
 
@@ -5599,7 +5630,7 @@ td {
 
 .tournament-overview-card strong {
   min-width: 0;
-  color: #f6f9fd;
+  color: var(--ink);
   font-size: var(--text-lg);
 }
 
@@ -5679,7 +5710,7 @@ td {
   border: 1px solid rgba(142, 162, 193, 0.18);
   background:
     linear-gradient(135deg, rgba(22, 34, 51, 0.95), rgba(13, 22, 35, 0.95)),
-    #142033;
+    var(--univlr-graphite-3);
   color: #fff;
   padding: 8px;
 }
@@ -5773,7 +5804,7 @@ td {
   border-style: dashed;
   border-color: rgba(142, 162, 193, 0.22);
   background: rgba(7, 14, 24, 0.16);
-  color: #8fa0b7;
+  color: var(--muted);
 }
 
 .tournament-podium-card.podium-pending .logo-empty {
@@ -5782,7 +5813,7 @@ td {
 }
 
 .tournament-podium-card b {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   text-transform: uppercase;
 }
@@ -5810,7 +5841,7 @@ td {
 .tournament-tabs {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  border: 1px solid #223147;
+  border: 1px solid var(--line-dark);
   background: #0d1623;
 }
 
@@ -5819,7 +5850,7 @@ td {
   min-height: 38px;
   display: grid;
   place-items: center;
-  border-right: 1px solid #223147;
+  border-right: 1px solid var(--line-dark);
   color: #aebbd0;
   font-size: var(--text-xs);
   font-weight: 800;
@@ -5840,7 +5871,7 @@ td {
   display: flex;
   gap: 0;
   overflow-x: auto;
-  border: 1px solid #223147;
+  border: 1px solid var(--line-dark);
   background: #0d1623;
   scrollbar-width: thin;
 }
@@ -5850,7 +5881,7 @@ td {
   display: inline-grid;
   place-items: center;
   min-width: 150px;
-  border-right: 1px solid #223147;
+  border-right: 1px solid var(--line-dark);
   color: #91a2b8;
   font-size: var(--text-xs);
   font-weight: 800;
@@ -5943,7 +5974,7 @@ td {
 .tournament-section,
 .tournament-side-panel {
   overflow: hidden;
-  border: 1px solid #223147;
+  border: 1px solid var(--line-dark);
   border-radius: var(--radius-sm);
   background: #101927;
 }
@@ -5954,7 +5985,7 @@ td {
   justify-content: space-between;
   gap: 12px;
   align-items: center;
-  border-bottom: 1px solid #223147;
+  border-bottom: 1px solid var(--line-dark);
   background: #1a283a;
   padding: 0 12px;
 }
@@ -5989,7 +6020,7 @@ td {
 .tournament-placement-card strong {
   display: block;
   overflow: hidden;
-  color: #f5f8fb;
+  color: var(--ink);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -6150,7 +6181,7 @@ td {
 
 .tournament-bracket-col h3 {
   margin: 0;
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-xs);
   font-weight: 800;
   text-transform: uppercase;
@@ -6168,7 +6199,7 @@ td {
   gap: 0;
   width: 100%;
   border: 1px solid rgba(134, 157, 190, 0.16);
-  background: #142033;
+  background: var(--univlr-graphite-3);
   color: inherit;
   cursor: pointer;
   font: inherit;
@@ -6239,7 +6270,7 @@ a.tournament-bracket-match:hover {
   grid-template-rows: 30px 82px;
   border-color: rgba(65, 212, 155, 0.34);
   border-left-color: #41d49b;
-  background: linear-gradient(145deg, rgba(29, 94, 76, 0.34), #142033 72%);
+  background: linear-gradient(145deg, rgba(29, 94, 76, 0.34), var(--univlr-graphite-3) 72%);
   cursor: default;
 }
 
@@ -6358,7 +6389,7 @@ a.tournament-bracket-match:hover {
   display: inline-grid;
   place-items: center;
   min-height: 30px;
-  color: #8fa0b7;
+  color: var(--muted);
   cursor: pointer;
   font-size: var(--text-2xs);
   font-weight: 800;
@@ -6367,7 +6398,7 @@ a.tournament-bracket-match:hover {
 }
 
 .swiss-view-option:hover {
-  color: #f6f9fd;
+  color: var(--ink);
 }
 
 .tournament-swiss-bracket:has(> .swiss-view-mode-map:checked) .swiss-view-option.map,
@@ -6419,7 +6450,7 @@ a.tournament-bracket-match:hover {
   height: 30px;
   border: 1px solid rgba(105, 183, 255, 0.28);
   background: rgba(5, 12, 20, 0.78);
-  color: #dbe7f6;
+  color: var(--ink);
   cursor: pointer;
   font-size: var(--text-lg);
   font-weight: 800;
@@ -6509,7 +6540,7 @@ a.tournament-bracket-match:hover {
   gap: 12px;
   min-height: 36px;
   border-bottom: 1px solid rgba(142, 162, 193, 0.16);
-  color: #f6f9fd;
+  color: var(--ink);
   padding-bottom: 8px;
 }
 
@@ -6529,7 +6560,7 @@ a.tournament-bracket-match:hover {
 
 .swiss-flow-round-head small,
 .swiss-flow-round-head em {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-style: normal;
   font-weight: 800;
@@ -6543,7 +6574,7 @@ a.tournament-bracket-match:hover {
   min-height: 22px;
   border: 1px solid rgba(142, 162, 193, 0.2);
   background: rgba(255, 255, 255, 0.04);
-  color: #dbe7f6;
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 
@@ -6628,7 +6659,7 @@ a.tournament-bracket-match:hover {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  color: #f6f9fd;
+  color: var(--ink);
 }
 
 .swiss-flow-group-head strong {
@@ -6669,7 +6700,7 @@ a.tournament-bracket-match:hover {
   border: 1px solid rgba(142, 162, 193, 0.12);
   background: rgba(4, 10, 18, 0.34);
   box-sizing: border-box;
-  color: #dbe7f6;
+  color: var(--ink);
   cursor: pointer;
   font: inherit;
   padding: 8px 8px;
@@ -6793,19 +6824,19 @@ a.tournament-bracket-match:hover {
   gap: 4px;
   border: 1px solid rgba(142, 162, 193, 0.16);
   background: #121d2e;
-  color: #dbe7f6;
+  color: var(--ink);
   cursor: pointer;
   padding: 12px 12px;
 }
 
 .swiss-round-tabs label strong {
-  color: #f6f9fd;
+  color: var(--ink);
   font-size: var(--text-sm);
   font-weight: 800;
 }
 
 .swiss-round-tabs label small {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 800;
   text-transform: uppercase;
@@ -6813,7 +6844,7 @@ a.tournament-bracket-match:hover {
 
 .swiss-round-tabs label.is-active {
   border-color: rgba(65, 212, 155, 0.42);
-  background: linear-gradient(180deg, rgba(65, 212, 155, 0.14), #142033);
+  background: linear-gradient(180deg, rgba(65, 212, 155, 0.14), var(--univlr-graphite-3));
 }
 
 .swiss-round-panels {
@@ -6834,7 +6865,7 @@ a.tournament-bracket-match:hover {
   justify-content: space-between;
   gap: 12px;
   align-items: center;
-  color: #dbe7f6;
+  color: var(--ink);
 }
 
 .swiss-round-header span {
@@ -6843,14 +6874,14 @@ a.tournament-bracket-match:hover {
 }
 
 .swiss-round-header strong {
-  color: #f6f9fd;
+  color: var(--ink);
   font-size: var(--text-md);
   font-weight: 800;
 }
 
 .swiss-round-header small,
 .swiss-round-header em {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-xs);
   font-style: normal;
   font-weight: 800;
@@ -6889,14 +6920,14 @@ a.tournament-bracket-match:hover {
 }
 
 .swiss-score-group-head strong {
-  color: #f6f9fd;
+  color: var(--ink);
   font-size: var(--text-md);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
 .swiss-score-group-head small {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 800;
   text-transform: uppercase;
@@ -6908,7 +6939,7 @@ a.tournament-bracket-match:hover {
   min-width: 0;
   border: 1px solid rgba(134, 157, 190, 0.16);
   border-left: 2px solid #41566f;
-  background: #142033;
+  background: var(--univlr-graphite-3);
   color: inherit;
   cursor: pointer;
   font: inherit;
@@ -6952,7 +6983,7 @@ a.tournament-bracket-match:hover {
   display: inline-grid;
   place-items: center;
   min-height: 30px;
-  color: #8fa0b7;
+  color: var(--muted);
   cursor: pointer;
   font-size: var(--text-2xs);
   font-weight: 800;
@@ -6961,7 +6992,7 @@ a.tournament-bracket-match:hover {
 }
 
 .swiss-table-view-option:hover {
-  color: #f6f9fd;
+  color: var(--ink);
 }
 
 .tournament-swiss-table-wrap:has(> .swiss-table-view-mode-general:checked) .swiss-table-view-option.general,
@@ -6994,7 +7025,7 @@ a.tournament-bracket-match:hover {
 
 .swiss-standings-block h3 {
   margin: 0;
-  color: #f6f9fd;
+  color: var(--ink);
   font-size: var(--text-sm);
   font-weight: 800;
 }
@@ -7049,7 +7080,7 @@ a.tournament-bracket-match:hover {
   border: 1px solid rgba(142, 162, 193, 0.14);
   border-left: 3px solid rgba(65, 212, 155, 0.54);
   background: #152338;
-  color: #f6f9fd;
+  color: var(--ink);
   padding: 8px 12px;
 }
 
@@ -7073,7 +7104,7 @@ a.tournament-bracket-match:hover {
 }
 
 .swiss-state-standings-head small {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 800;
   text-transform: uppercase;
@@ -7093,14 +7124,14 @@ a.tournament-bracket-match:hover {
 }
 
 .tournament-swiss-table th {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 800;
   text-transform: uppercase;
 }
 
 .tournament-swiss-table td {
-  color: #dbe7f6;
+  color: var(--ink);
   font-size: var(--text-xs);
   font-weight: 700;
 }
@@ -7141,7 +7172,7 @@ a.tournament-bracket-match:hover {
 }
 
 .swiss-state-cell.empty {
-  color: #8fa0b7;
+  color: var(--muted);
 }
 
 .swiss-status {
@@ -7196,7 +7227,7 @@ a.tournament-bracket-match:hover {
   border-color: rgba(255, 203, 87, 0.48);
   background:
     radial-gradient(circle at 50% 0%, rgba(255, 206, 91, 0.24), transparent 52%),
-    linear-gradient(180deg, rgba(48, 39, 18, 0.95), #142033);
+    linear-gradient(180deg, rgba(48, 39, 18, 0.95), var(--univlr-graphite-3));
   box-shadow: inset 0 1px 0 rgba(255, 230, 153, 0.18);
 }
 
@@ -7204,7 +7235,7 @@ a.tournament-bracket-match:hover {
   border-color: rgba(203, 216, 230, 0.42);
   background:
     radial-gradient(circle at 50% 0%, rgba(214, 229, 242, 0.2), transparent 52%),
-    linear-gradient(180deg, rgba(40, 49, 61, 0.94), #142033);
+    linear-gradient(180deg, rgba(40, 49, 61, 0.94), var(--univlr-graphite-3));
 }
 
 .tournament-placement-card.place-3,
@@ -7212,7 +7243,7 @@ a.tournament-bracket-match:hover {
   border-color: rgba(205, 132, 72, 0.46);
   background:
     radial-gradient(circle at 50% 0%, rgba(205, 132, 72, 0.22), transparent 52%),
-    linear-gradient(180deg, rgba(54, 35, 24, 0.94), #142033);
+    linear-gradient(180deg, rgba(54, 35, 24, 0.94), var(--univlr-graphite-3));
 }
 
 .tournament-placement-card > span {
@@ -7254,7 +7285,7 @@ a.tournament-bracket-match:hover {
   min-height: 218px;
   min-width: 0;
   border: 1px solid rgba(142, 162, 193, 0.14);
-  background: #142033;
+  background: var(--univlr-graphite-3);
   color: inherit;
   cursor: pointer;
   font: inherit;
@@ -7294,7 +7325,7 @@ a.tournament-bracket-match:hover {
 }
 
 .tournament-results .result-row {
-  border-bottom-color: #223147;
+  border-bottom-color: var(--line-dark);
 }
 
 .tournament-stats-shell {
@@ -7315,7 +7346,7 @@ a.tournament-bracket-match:hover {
   border: 1px solid rgba(142, 162, 193, 0.16);
   background:
     linear-gradient(180deg, rgba(20, 32, 51, 0.98), rgba(13, 22, 35, 0.98)),
-    #142033;
+    var(--univlr-graphite-3);
 }
 
 .tournament-map-charts {
@@ -7351,7 +7382,7 @@ a.tournament-bracket-match:hover {
   align-items: center;
   gap: 8px;
   min-width: 0;
-  color: #dbe7f6;
+  color: var(--ink);
   font-size: var(--text-xs);
   font-weight: 800;
 }
@@ -7395,7 +7426,7 @@ a.tournament-bracket-match:hover {
 
 .tournament-map-side-label {
   overflow: hidden;
-  color: #dbe7f6;
+  color: var(--ink);
   font-size: var(--text-xs);
   font-weight: 800;
   text-overflow: ellipsis;
@@ -7440,7 +7471,7 @@ a.tournament-bracket-match:hover {
 
 .tournament-map-side-bars b,
 .tournament-map-bar-row .numeric {
-  color: #f6f9fd;
+  color: var(--ink);
   font-size: var(--text-xs);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
@@ -7451,7 +7482,7 @@ a.tournament-bracket-match:hover {
   justify-content: center;
   gap: 16px;
   border-top: 1px solid rgba(142, 162, 193, 0.12);
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 800;
   padding: 8px 12px 12px;
@@ -7518,14 +7549,14 @@ a.tournament-bracket-match:hover {
 
 .tournament-map-agent-table th {
   background: #0f1928;
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 800;
   text-transform: uppercase;
 }
 
 .tournament-map-agent-table td {
-  color: #dbe7f6;
+  color: var(--ink);
   font-size: var(--text-xs);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -7546,7 +7577,7 @@ a.tournament-bracket-match:hover {
 }
 
 .tournament-map-agent-map-cell small {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 700;
 }
@@ -7563,7 +7594,7 @@ a.tournament-bracket-match:hover {
   background:
     linear-gradient(135deg, rgba(65, 212, 155, 0.16), transparent 46%),
     #111d2d;
-  color: #f6f9fd;
+  color: var(--ink);
   text-decoration: none;
   box-shadow: inset 0 1px 0 rgba(246, 249, 253, 0.07);
 }
@@ -7615,13 +7646,13 @@ a.tournament-bracket-match:hover {
 }
 
 .tournament-map-agent-table tr.summary-row td {
-  background: #142033;
+  background: var(--univlr-graphite-3);
   color: #fff;
   font-weight: 800;
 }
 
 .tournament-map-agent-table tr.summary-row td:first-child {
-  background: #142033;
+  background: var(--univlr-graphite-3);
 }
 
 .tournament-map-agent-logo {
@@ -7633,7 +7664,7 @@ a.tournament-bracket-match:hover {
 .map-agent-rate {
   background:
     linear-gradient(180deg, var(--heat-bg), rgba(12, 21, 34, 0.74));
-  color: #f6f9fd;
+  color: var(--ink);
   box-shadow:
     inset 0 0 0 1px var(--heat-border),
     inset 0 -14px 22px rgba(0, 0, 0, 0.12);
@@ -7670,13 +7701,13 @@ a.tournament-bracket-match:hover {
 }
 
 .tournament-stat-card-head strong {
-  color: #f6f9fd;
+  color: var(--ink);
   font-size: var(--text-md);
   font-weight: 800;
 }
 
 .tournament-stat-card-head small {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-xs);
   font-weight: 700;
 }
@@ -7686,7 +7717,7 @@ a.tournament-bracket-match:hover {
   border: 1px solid rgba(142, 162, 193, 0.22);
   border-radius: var(--radius-sm);
   background: #17263b;
-  color: #dbe7f6;
+  color: var(--ink);
   cursor: pointer;
   font: inherit;
   font-size: var(--text-2xs);
@@ -7711,7 +7742,7 @@ a.tournament-bracket-match:hover {
   align-items: center;
   min-height: 58px;
   border-bottom: 1px solid rgba(142, 162, 193, 0.12);
-  color: #dbe7f6;
+  color: var(--ink);
   padding: 8px 12px;
 }
 
@@ -7767,7 +7798,7 @@ a.tournament-bracket-match:hover {
 }
 
 .stat-row-metric strong {
-  color: #f6f9fd;
+  color: var(--ink);
   font-size: var(--text-md);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
@@ -7799,7 +7830,7 @@ a.tournament-bracket-match:hover {
 
 .tournament-agent-highlight-main .stat-row-main > small {
   overflow: hidden;
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 700;
   text-overflow: ellipsis;
@@ -7825,7 +7856,7 @@ a.tournament-bracket-match:hover {
 
 .tournament-agent-highlight-metrics strong {
   overflow: hidden;
-  color: #f6f9fd;
+  color: var(--ink);
   font-size: var(--text-sm);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
@@ -7852,7 +7883,7 @@ a.tournament-bracket-match:hover {
 }
 
 .tournament-stat-filter span {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -7892,7 +7923,7 @@ a.tournament-bracket-match:hover {
   border-right: 1px solid rgba(142, 162, 193, 0.18);
   border-bottom: 1px solid rgba(142, 162, 193, 0.14);
   background: #111b2a;
-  color: #dbe7f6;
+  color: var(--ink);
   font-size: var(--text-xs);
   padding: 8px 8px;
   vertical-align: middle;
@@ -7908,7 +7939,7 @@ a.tournament-bracket-match:hover {
   top: 0;
   z-index: 1;
   background: #1a283a;
-  color: #dbe7f6;
+  color: var(--ink);
   font-size: var(--text-2xs);
   font-weight: 800;
   letter-spacing: 0.02em;
@@ -7934,7 +7965,7 @@ a.tournament-bracket-match:hover {
 
 .tournament-stat-sort i {
   width: 10px;
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-style: normal;
 }
@@ -7959,7 +7990,7 @@ a.tournament-bracket-match:hover {
   gap: 8px;
   align-items: center;
   min-width: 180px;
-  color: #f6f9fd;
+  color: var(--ink);
 }
 
 .tournament-stats-team-cell,
@@ -7973,7 +8004,7 @@ a.tournament-bracket-match:hover {
   display: inline-grid;
   place-items: center;
   overflow: visible;
-  color: #dbe7f6;
+  color: var(--ink);
   font-size: var(--text-2xs);
   font-weight: 800;
 }
@@ -8086,7 +8117,7 @@ a.tournament-bracket-match:hover {
 }
 
 .tournament-stat-value {
-  color: #dbe7f6;
+  color: var(--ink);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
@@ -8131,7 +8162,7 @@ a.tournament-bracket-match:hover {
   display: grid;
   grid-template-columns: minmax(105px, 0.78fr) minmax(0, 1fr);
   gap: 12px;
-  border-top: 1px solid #223147;
+  border-top: 1px solid var(--line-dark);
   padding: 8px 12px;
 }
 
@@ -8146,7 +8177,7 @@ a.tournament-bracket-match:hover {
 }
 
 .tournament-info-list dt {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-xs);
   font-weight: 800;
 }
@@ -8173,7 +8204,7 @@ a.tournament-bracket-match:hover {
   align-items: center;
   overflow: hidden;
   border: 1px solid rgba(142, 162, 193, 0.14);
-  background: #142033;
+  background: var(--univlr-graphite-3);
   padding: 8px 12px;
 }
 
@@ -8470,7 +8501,7 @@ a.tournament-bracket-match:hover {
 }
 
 .lineup-preview-header small {
-  color: #8fa0b7;
+  color: var(--muted);
   font-size: var(--text-xs);
   font-weight: 800;
 }
@@ -8504,7 +8535,7 @@ a.tournament-bracket-match:hover {
   display: grid;
   place-items: center;
   border-right: 1px solid #24364b;
-  color: #8fa0b7;
+  color: var(--muted);
   cursor: pointer;
   font-size: var(--text-xs);
   font-weight: 800;
@@ -8707,7 +8738,7 @@ a.tournament-bracket-match:hover {
   }
 
   .tournament-facts span {
-    border-bottom: 1px solid #223147;
+    border-bottom: 1px solid var(--line-dark);
   }
 }
 
@@ -8751,7 +8782,7 @@ a.tournament-bracket-match:hover {
   .tournament-tabs span,
   .tournament-facts span {
     border-right: 0;
-    border-bottom: 1px solid #223147;
+    border-bottom: 1px solid var(--line-dark);
   }
 
   .tournament-page-tabs a {
@@ -8940,13 +8971,15 @@ a.tournament-bracket-match:hover {
 .event-status.live,
 .event-chip.live,
 .score-win,
-.ranking-score-cell,
-.ranking-score-head,
 .rank-change-cell.up,
 .rank-delta.up,
 .trend.up {
-  color: var(--univlr-red);
-  text-shadow: 0 0 22px rgba(246, 19, 42, 0.22);
+  color: var(--win);
+}
+
+.ranking-score-cell,
+.ranking-score-head {
+  color: var(--ink);
 }
 
 .rank-change-cell.down,
@@ -9025,7 +9058,7 @@ a.tournament-bracket-match:hover {
 .team-tab.active,
 .ranking-sort-header.active,
 .ranking-sort-header:hover {
-  color: var(--univlr-red);
+  color: var(--brand-text);
 }
 
 .filter-control::placeholder,
@@ -9192,7 +9225,7 @@ input::placeholder {
 
 .match-event-link,
 .match-event-link:hover {
-  color: var(--univlr-red);
+  color: var(--brand-text);
 }
 
 .match-series-info > span:not(.event-logo),
@@ -9212,7 +9245,6 @@ input::placeholder {
   display: flex;
   gap: 20px;
   min-width: 0;
-  text-shadow: 0 0 22px rgba(246, 19, 42, 0.16);
 }
 
 .match-score-core > span,
@@ -9312,7 +9344,7 @@ input::placeholder {
 
 .match-scoreboard th.sorted,
 .score-sort-button:hover {
-  color: var(--univlr-red);
+  color: var(--brand-text);
 }
 
 .match-scoreboard td,
@@ -9432,8 +9464,9 @@ body {
   height: 24px;
   top: 8px;
   right: 8px;
-  background: var(--red);
-  color: var(--ink);
+  /* branco sobre a marca da 3,7:1 e reprova; preto da 4,9:1 */
+  background: var(--brand);
+  color: var(--on-brand);
 }
 
 .footer {
@@ -9547,22 +9580,17 @@ body {
 }
 
 .chip.red,
-.event-status.live,
-.event-chip.live,
+/* Antes, esta era uma regra so: tudo que era positivo (.up, .good, .score-win)
+   virava vermelho da marca com !important, e tudo que era negativo virava cinza.
+   Subir uma posicao no ranking tinha a mesma cor de um alerta. Separado por
+   significado: estado positivo, estado negativo e acento de interface. */
 .score-win,
-.ranking-score-cell,
-.ranking-score-head,
 .rank-change-cell.up,
 .rank-delta.up,
 .trend.up,
 .rating-cell.good,
-.numeric.good,
-.score-sort-button i,
-.match-event-link,
-.team-tab.active,
-.ranking-sort-header.active,
-.ranking-sort-header:hover {
-  color: var(--red) !important;
+.numeric.good {
+  color: var(--win) !important;
 }
 
 .rank-change-cell.down,
@@ -9570,17 +9598,35 @@ body {
 .trend.down,
 .numeric.bad,
 .rating-cell.bad {
-  color: rgba(245, 241, 242, 0.56);
+  color: var(--danger) !important;
 }
 
+.event-status.live,
+.event-chip.live,
+.score-sort-button i,
+.match-event-link,
+.team-tab.active,
+.ranking-sort-header.active,
+.ranking-sort-header:hover {
+  color: var(--brand-text) !important;
+}
+
+/* A nota do ranking e dado neutro: quem colore ela e a escala perf-*, nao a marca. */
+.ranking-score-cell,
+.ranking-score-head {
+  color: var(--ink) !important;
+}
+
+/* Vencedor e perdedor eram dois vermelhos (marca e #451019): nao dava para
+   saber quem ganhou de relance. Agora o vencedor se acende e o perdedor recua. */
 .result-score .score-number.win {
-  background: var(--red);
-  color: var(--ink);
+  background: var(--win);
+  color: var(--on-brand);
 }
 
 .result-score .score-number.loss {
-  background: #451019;
-  color: rgba(245, 241, 242, 0.82);
+  background: var(--loss-surface);
+  color: var(--loss-ink);
 }
 
 .result-score,
@@ -9599,7 +9645,7 @@ body {
 .team-compare-track i,
 .bar-fill,
 .lineup-timeline-bar.current {
-  background: linear-gradient(135deg, var(--red), #ff5565);
+  background: linear-gradient(135deg, var(--brand), #ff3d4e);
 }
 
 .filter-control,
@@ -9762,7 +9808,6 @@ select {
 .univlr-title h1 {
   max-width: none;
   line-height: 0.92;
-  text-shadow: 0 0 32px rgba(246, 19, 42, 0.2);
   color: var(--ink);
   font-size: clamp(2.1rem, 2.7vw, 3.45rem);
   letter-spacing: 0;
@@ -10325,7 +10370,7 @@ select {
 .player-week-copy small {
   display: block;
   margin-bottom: 4px;
-  color: var(--red);
+  color: var(--brand-text);
   font-size: var(--text-2xs);
   font-weight: 800;
   letter-spacing: 0.06em;
@@ -10594,13 +10639,13 @@ select {
 
 /* Match-side and performance tones applied after the UNIVLR theme overrides. */
 .round-cell.side-attack {
-  border-color: rgba(246, 19, 42, 0.76) !important;
-  background: linear-gradient(180deg, #ff4655, #b91427) !important;
+  border-color: var(--side-attack) !important;
+  background: var(--side-attack) !important;
 }
 
 .round-cell.side-defense {
-  border-color: rgba(35, 218, 202, 0.78) !important;
-  background: linear-gradient(180deg, #23dac9, #168fc9) !important;
+  border-color: var(--side-defense) !important;
+  background: var(--side-defense) !important;
 }
 
 .round-cell.side-attack img,
@@ -10723,29 +10768,24 @@ select {
 }
 
 .lineup-stat-value.better span {
-  color: #31e981;
-  text-shadow:
-    0 1px 5px rgba(0, 0, 0, 0.78),
-    0 0 14px rgba(49, 233, 129, 0.42);
+  color: var(--win);
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.78);
 }
 
+/* O melhor valor da comparacao e destaque de dado, nao de marca: contorno
+   verde solido em vez de trio de halos vermelhos e verdes. */
 .lineup-stat-value.best {
-  box-shadow:
-    inset 0 0 0 1px rgba(246, 19, 42, 0.5),
-    0 0 18px rgba(246, 19, 42, 0.22);
+  box-shadow: inset 0 0 0 1px var(--win-line);
+  background: var(--win-soft);
 }
 
 .lineup-stat-value.best::before {
   opacity: 1;
-  box-shadow: 0 0 20px rgba(246, 19, 42, 0.5);
 }
 
 .lineup-stat-value.best span {
-  color: #5cff93;
-  text-shadow:
-    0 1px 5px rgba(0, 0, 0, 0.78),
-    0 0 10px rgba(92, 255, 147, 0.7),
-    0 0 22px rgba(49, 233, 129, 0.42);
+  color: var(--win);
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.78);
 }
 
 .player-hero {
@@ -10963,7 +11003,7 @@ select {
   border-radius: var(--radius-md);
   background:
     linear-gradient(180deg, rgba(245, 241, 242, 0.055), rgba(245, 241, 242, 0.018)),
-    #0d141d;
+    var(--surface);
 }
 
 .player-summary-layout {
@@ -10983,7 +11023,7 @@ select {
 .player-tab-panel > .data-panel,
 .player-tab-panel > .team-trophy-panel,
 .player-summary-layout .data-panel {
-  border-color: #253443;
+  border-color: var(--line-dark);
   background: #121a24;
 }
 
@@ -11005,9 +11045,9 @@ select {
 
 .player-team-history-list {
   overflow: hidden;
-  border: 1px solid #253443;
+  border: 1px solid var(--line-dark);
   border-radius: var(--radius-lg);
-  background: #0d141d;
+  background: var(--surface);
 }
 
 .player-team-history-row {
@@ -11017,13 +11057,13 @@ select {
   align-items: center;
   min-height: 68px;
   border-bottom: 1px solid rgba(48, 66, 85, 0.7);
-  background: #101820;
+  background: var(--surface);
   color: #eaf2f8;
   padding: 12px 12px;
 }
 
 .player-team-history-row:nth-child(even) {
-  background: #0d141d;
+  background: var(--surface);
 }
 
 .player-team-history-row:last-child {
@@ -11041,14 +11081,14 @@ select {
 .player-team-name {
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  color: #f5f8fb;
+  color: var(--ink);
 }
 
 .player-team-period strong,
 .player-team-name strong,
 .player-team-volume strong {
   overflow: hidden;
-  color: #f5f8fb;
+  color: var(--ink);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -11058,7 +11098,7 @@ select {
 .player-team-volume small,
 .player-team-trophies small {
   overflow: hidden;
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -11098,9 +11138,9 @@ select {
 
 .player-results-table-wrap {
   overflow: hidden;
-  border-color: #26384a;
+  border-color: var(--line-dark);
   border-radius: var(--radius-lg);
-  background: #0d141d;
+  background: var(--surface);
 }
 
 .player-event-cell,
@@ -11110,7 +11150,7 @@ select {
   align-items: center;
   gap: 8px;
   min-width: 0;
-  color: #f5f8fb;
+  color: var(--ink);
 }
 
 .player-event-cell span {
@@ -11123,13 +11163,13 @@ select {
 .player-result-team-cell span,
 .player-trophy-team strong {
   overflow: hidden;
-  color: #f5f8fb;
+  color: var(--ink);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .player-event-cell small {
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-xs);
 }
 
@@ -11140,13 +11180,13 @@ select {
   border: 1px solid rgba(245, 241, 242, 0.12);
   border-radius: var(--radius-md);
   background: rgba(245, 241, 242, 0.05);
-  color: #f5f8fb;
+  color: var(--ink);
   padding: 8px 8px;
   font-weight: 800;
 }
 
 .player-placement-badge small {
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 700;
 }
@@ -11158,9 +11198,9 @@ select {
 .player-trophy-list {
   display: grid;
   overflow: hidden;
-  border: 1px solid #253443;
+  border: 1px solid var(--line-dark);
   border-radius: var(--radius-lg);
-  background: #0d141d;
+  background: var(--surface);
 }
 
 .player-trophy-row {
@@ -11170,13 +11210,13 @@ select {
   align-items: center;
   min-height: 76px;
   border-bottom: 1px solid rgba(48, 66, 85, 0.7);
-  background: #101820;
+  background: var(--surface);
   color: #eaf2f8;
   padding: 12px 12px;
 }
 
 .player-trophy-row:nth-child(even) {
-  background: #0d141d;
+  background: var(--surface);
 }
 
 .player-trophy-row:last-child {
@@ -11191,13 +11231,13 @@ select {
 
 .player-trophy-main strong {
   overflow: hidden;
-  color: #f5f8fb;
+  color: var(--ink);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .player-trophy-main small {
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-xs);
 }
 
@@ -11293,8 +11333,8 @@ select {
   border-radius: var(--radius-lg);
   background:
     linear-gradient(180deg, rgba(245, 241, 242, 0.045), rgba(245, 241, 242, 0.012)),
-    #0d141d;
-  color: #f5f8fb;
+    var(--surface);
+  color: var(--ink);
   text-decoration: none;
   transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
@@ -11303,7 +11343,7 @@ select {
   border-color: rgba(246, 19, 42, 0.46);
   background:
     linear-gradient(180deg, rgba(246, 19, 42, 0.12), rgba(245, 241, 242, 0.015)),
-    #101820;
+    var(--surface);
   transform: translateY(-2px);
 }
 
@@ -11355,7 +11395,7 @@ select {
 
 .player-directory-field small,
 .player-directory-team small {
-  color: #8fa0b1;
+  color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0;
@@ -11440,7 +11480,7 @@ select {
 .player-directory-team strong {
   display: block;
   max-width: 100%;
-  color: #f5f8fb;
+  color: var(--ink);
   font-size: var(--text-lg);
   line-height: 1.15;
 }
@@ -11448,7 +11488,7 @@ select {
 .player-directory-team em {
   display: block;
   max-width: 100%;
-  color: #8fa0b1;
+  color: var(--muted);
   margin-top: 2px;
   font-size: var(--text-sm);
   font-style: normal;
@@ -11806,7 +11846,6 @@ select {
 
 .player-page .player-metric-line:first-child dd {
   color: var(--univlr-white, #f5f1f2);
-  text-shadow: 0 0 18px rgba(246, 19, 42, 0.22);
 }
 
 .player-page .player-hero-metrics {
@@ -13235,10 +13274,10 @@ img.search-state-flag + .search-state-flag.placeholder {
   border-radius: var(--radius-lg);
   background:
     linear-gradient(180deg, transparent 72%, rgba(4, 3, 6, 0.42) 100%),
-    radial-gradient(ellipse at 16% 42%, color-mix(in srgb, var(--team-accent, #d8323c) 78%, #07070c) 0%, color-mix(in srgb, var(--team-accent, #d8323c) 42%, #07070c) 40%, transparent 72%),
-    radial-gradient(ellipse at 68% 22%, color-mix(in srgb, var(--team-accent-2, #009a96) 46%, transparent) 0%, transparent 60%),
-    radial-gradient(ellipse at 94% 92%, color-mix(in srgb, var(--team-accent, #d8323c) 32%, transparent) 0%, transparent 54%),
-    linear-gradient(90deg, color-mix(in srgb, var(--team-accent, #d8323c) 52%, #07070c) 0%, color-mix(in srgb, var(--team-accent, #d8323c) 34%, #07070c) 34%, color-mix(in srgb, var(--team-accent-2, #009a96) 32%, #07070c) 70%, color-mix(in srgb, var(--team-accent-2, #009a96) 22%, #07070c) 100%);
+    radial-gradient(ellipse at 16% 42%, color-mix(in srgb, var(--team-accent, var(--brand)) 78%, var(--surface-3)) 0%, color-mix(in srgb, var(--team-accent, var(--brand)) 42%, var(--surface-3)) 40%, transparent 72%),
+    radial-gradient(ellipse at 68% 22%, color-mix(in srgb, var(--team-accent-2, var(--teal)) 46%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse at 94% 92%, color-mix(in srgb, var(--team-accent, var(--brand)) 32%, transparent) 0%, transparent 54%),
+    linear-gradient(90deg, color-mix(in srgb, var(--team-accent, var(--brand)) 52%, var(--surface-3)) 0%, color-mix(in srgb, var(--team-accent, var(--brand)) 34%, var(--surface-3)) 34%, color-mix(in srgb, var(--team-accent-2, var(--teal)) 32%, var(--surface-3)) 70%, color-mix(in srgb, var(--team-accent-2, var(--teal)) 22%, var(--surface-3)) 100%);
   color: var(--univlr-white, #f5f1f2);
   box-shadow:
     inset 0 1px 0 rgba(245, 241, 242, 0.08),
@@ -13370,7 +13409,7 @@ img.search-state-flag + .search-state-flag.placeholder {
   inset: 10px -34px 0;
   z-index: 0;
   background:
-    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--team-accent, #d8323c) 36%, transparent), transparent 58%),
+    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--team-accent, var(--brand)) 36%, transparent), transparent 58%),
     radial-gradient(ellipse at 50% 98%, rgba(245, 241, 242, 0.12), transparent 42%);
   pointer-events: none;
 }
@@ -13422,7 +13461,7 @@ img.search-state-flag + .search-state-flag.placeholder {
   filter:
     brightness(1.06) contrast(1.05) saturate(1.05)
     drop-shadow(0 16px 24px rgba(0, 0, 0, 0.45))
-    drop-shadow(0 0 24px color-mix(in srgb, var(--team-accent, #d8323c) 28%, transparent));
+    drop-shadow(0 0 24px color-mix(in srgb, var(--team-accent, var(--brand)) 28%, transparent));
   transform: scale(1.1);
   transform-origin: bottom center;
   mask-image: linear-gradient(180deg, #000 82%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
@@ -13447,9 +13486,7 @@ img.search-state-flag + .search-state-flag.placeholder {
   letter-spacing: 0.05em;
   text-align: center;
   text-overflow: ellipsis;
-  text-shadow:
-    0 2px 10px rgba(4, 3, 6, 0.92),
-    0 0 18px color-mix(in srgb, var(--team-accent, #d8323c) 60%, transparent);
+  text-shadow: 0 2px 10px rgba(4, 3, 6, 0.92);
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -13483,7 +13520,9 @@ img.search-state-flag + .search-state-flag.placeholder {
 
 .team-page .team-rank-box strong {
   order: 1;
-  color: rgba(245, 241, 242, 0.16);
+  /* 0.16 dava 1,4:1 - o numero do rank era praticamente invisivel. 0.38 e o
+     minimo para passar 3:1 em texto grande sem deixar de ser recuado. */
+  color: rgba(245, 241, 242, 0.38);
   font-size: var(--text-7xl);
   font-weight: 800;
   line-height: 0.76;
@@ -13515,7 +13554,7 @@ img.search-state-flag + .search-state-flag.placeholder {
   border: 1px solid var(--team-border);
   border-radius: var(--radius-lg);
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--team-accent, #d8323c) 10%, transparent), transparent 34%),
+    linear-gradient(90deg, color-mix(in srgb, var(--team-accent, var(--brand)) 10%, transparent), transparent 34%),
     var(--team-panel);
   color: var(--univlr-white, #f5f1f2);
   padding: 12px;
@@ -13591,8 +13630,8 @@ img.search-state-flag + .search-state-flag.placeholder {
   min-height: 440px;
   border-color: rgba(245, 241, 242, 0.1);
   background:
-    radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--team-accent-2, #009a96) 22%, transparent), transparent 36%),
-    radial-gradient(circle at 78% 16%, color-mix(in srgb, var(--team-accent, #d8323c) 16%, transparent), transparent 34%),
+    radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--team-accent-2, var(--teal)) 22%, transparent), transparent 36%),
+    radial-gradient(circle at 78% 16%, color-mix(in srgb, var(--team-accent, var(--brand)) 16%, transparent), transparent 34%),
     var(--team-panel-strong);
 }
 
@@ -13645,7 +13684,7 @@ img.search-state-flag + .search-state-flag.placeholder {
 .team-page .roster-photo-wrap {
   min-height: 184px;
   background:
-    radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--team-accent, #d8323c) 18%, transparent), transparent 50%),
+    radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--team-accent, var(--brand)) 18%, transparent), transparent 50%),
     #0b0b10;
 }
 

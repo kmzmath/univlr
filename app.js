@@ -4825,9 +4825,22 @@ function eventStatus(start, end) {
 
 function renderLoading() {
   updateDocumentTitle();
+  // O database.json tem ~6 MB comprimidos. Numa conexao lenta a espera e longa
+  // o bastante para valer dizer o que esta acontecendo, em vez de "Carregando".
   const message = state.error
-    ? `<div class="empty-state">Erro ao carregar os dados: ${escapeHtml(state.error.message)}</div>`
-    : `<div class="empty-state">Carregando dados...</div>`;
+    ? `
+      <div class="boot-state boot-error" role="alert">
+        <strong>Não foi possível carregar os dados das partidas.</strong>
+        <p>${escapeHtml(state.error.message || "A conexão falhou no meio do download.")}</p>
+        <button type="button" class="boot-retry" onclick="window.location.reload()">Tentar de novo</button>
+      </div>
+    `
+    : `
+      <div class="boot-state" role="status" aria-live="polite">
+        <strong>Carregando o histórico de partidas</strong>
+        <p>São alguns megabytes de dados. Na primeira visita costuma demorar mais; depois fica em cache.</p>
+      </div>
+    `;
   Shell(message, { skipSearch: true });
 }
 
@@ -6035,7 +6048,7 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null) 
           <span>nota final</span>
         </div>
         <div class="ranking-score-copy">
-          <h3>${escapeHtml(team.name)}</h3>
+          <h2>${escapeHtml(team.name)}</h2>
           <p>Passe o mouse nos gráficos para mais detalhes e explicações.</p>
           <div class="ranking-formula-chips">
             <span>70% desempenho</span>

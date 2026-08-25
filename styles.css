@@ -14815,3 +14815,230 @@ small,
     padding-top: 0;
   }
 }
+
+/* ==========================================================================
+   Passo 6: foco, alvo de toque, tempo de animação e estados de carga
+   ========================================================================== */
+
+/* --- Sistema de foco -------------------------------------------------------
+   Havia 10 regras de :focus-visible para mais de mil elementos interativos, e
+   varios `outline: none` sem substituto. Aqui todo elemento focavel ganha um
+   anel visivel. Vem no fim do arquivo para vencer empate de especificidade, e
+   os seletores compostos abaixo repetem os casos que anulavam o contorno. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible,
+.trophy-item:focus-visible,
+.swiss-flow-nav:focus-visible,
+.swiss-flow-match:focus-visible,
+.swiss-match-card:focus-visible,
+.filter-control:focus-visible,
+.global-search input:focus-visible,
+.tournament-bracket-match.curated-match:focus-visible {
+  outline: 2px solid var(--brand-text);
+  outline-offset: 2px;
+}
+
+/* O anel precisa aparecer tambem sobre superficie clara (a bandeira de estado
+   tem fundo branco): o offset deixa o fundo aparecer entre o elemento e o anel. */
+.state-flag:focus-visible,
+.clean-logo:focus-visible {
+  outline-offset: 3px;
+}
+
+/* --- Alvo de toque ---------------------------------------------------------
+   WCAG 2.2 pede 24x24 no minimo. 52 elementos ficavam abaixo, quase todos
+   botoes de ordenar cabecalho, com 17px de altura. */
+.score-sort-button,
+.ranking-sort-header,
+.subtle-link,
+.action-link {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.score-sort-button {
+  padding: 4px 2px;
+}
+
+.filter-control,
+.ranking-version-picker,
+select {
+  min-height: 28px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  /* a area clicavel real cresce sem mudar o desenho da caixa */
+  padding: 3px;
+  box-sizing: content-box;
+}
+
+/* --- Tempo real das sanfonas do ranking ------------------------------------
+   Era max-height: 0 -> 2400px em 0,34s. Com o conteudo real perto de 400px, a
+   altura verdadeira era atingida nos primeiros ~57ms e sobravam 280ms sem nada
+   acontecer: abrir parecia instantaneo e fechar parecia travado.
+   grid-template-rows: 0fr -> 1fr anima a altura de verdade, com o mesmo tempo
+   e a mesma curva, e funciona em todos os navegadores (interpolate-size ainda
+   e so Chrome/Edge e degradaria para salto seco no Safari e no Firefox). */
+.ranking-dropdown {
+  display: grid;
+  grid-template-rows: 0fr;
+  max-height: none;
+  transition: grid-template-rows 0.34s ease, opacity 0.22s ease;
+}
+
+.ranking-accordion-item.open .ranking-dropdown {
+  grid-template-rows: 1fr;
+  max-height: none;
+}
+
+.ranking-detail-dropdown {
+  display: grid;
+  grid-template-rows: 0fr;
+  max-height: none;
+  transition: grid-template-rows 0.34s ease, opacity 0.22s ease, padding-top 0.22s ease;
+}
+
+.ranking-accordion-item.details-open .ranking-detail-dropdown {
+  grid-template-rows: 1fr;
+  max-height: none;
+}
+
+/* filho de grid precisa de min-height: 0 para poder ser comprimido a zero */
+.ranking-dropdown > *,
+.ranking-detail-dropdown > * {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* --- Estados de carga e erro ----------------------------------------------- */
+
+.boot-state {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  max-width: 56ch;
+  margin: clamp(40px, 8vh, 96px) auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: 24px;
+}
+
+.boot-state strong {
+  color: var(--ink);
+  font-size: var(--text-lg);
+  font-weight: 800;
+}
+
+.boot-state p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.boot-error {
+  border-color: rgba(255, 102, 120, 0.4);
+}
+
+.boot-error strong {
+  color: var(--danger);
+}
+
+.boot-retry {
+  margin-top: 10px;
+  min-height: 36px;
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  color: var(--ink);
+  padding: 0 16px;
+  font-size: var(--text-sm);
+  font-weight: 800;
+}
+
+.boot-retry:hover {
+  background: var(--univlr-graphite-3);
+  border-color: var(--brand);
+}
+
+/* O track de 0fr nao consegue descer abaixo do tamanho minimo automatico do
+   filho, e .ranking-dropdown-inner tem 16px de padding vertical mais 1px de
+   borda: eram os 33px que sobravam com a sanfona fechada. Zera os dois no
+   estado fechado, no mesmo tempo da altura. */
+.ranking-dropdown-inner {
+  border-top-color: var(--line);
+  border-top-width: 0;
+  padding-block: 0;
+  transition: padding-block 0.34s ease, border-top-width 0.34s ease;
+}
+
+.ranking-accordion-item.open .ranking-dropdown-inner {
+  border-top-width: 1px;
+  padding-block: 16px;
+}
+
+/* O nome da equipe na sanfona virou h2 (era h3, e pulava o nivel depois do h1
+   da pagina). O estilo acompanha o elemento novo. */
+.ranking-score-copy h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+/* Links curtos como "Psy" ficavam com 19px de largura. */
+.subtle-link {
+  min-width: 24px;
+  justify-content: center;
+}
+
+/* Conteudo encostado no contorno da tabela. */
+.table-wrap {
+  padding: 4px;
+}
+
+.table-wrap.match-scoreboard-wrap {
+  padding: 6px;
+}
+
+/* Frase corrida a 11px: 11px e piso de rotulo curto, nao de texto descritivo. */
+.player-metric-line dt,
+.event-fact small,
+.event-row-facts small {
+  font-size: var(--text-xs);
+}
+
+/* .lineup-stat-center ainda era cartao dentro de cartao. As linhas de dentro ja
+   viraram fio no passo 4, entao o contorno proprio virou moldura sobre moldura. */
+.lineup-stat-center {
+  border: 0;
+  background: transparent;
+}
+
+/* Titulo de campeonato truncava em 64.8px em vez de quebrar linha. */
+.tournament-hero h1,
+.tournament-title-row h1 {
+  overflow: visible;
+  white-space: normal;
+  text-overflow: clip;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+/* Rotulos descritivos que ainda estavam no piso de 11px. */
+.player-page .player-metric-line dt,
+.tournament-organizer-card small {
+  font-size: var(--text-xs);
+}

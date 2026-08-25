@@ -14603,3 +14603,25 @@ small,
 .filter-dropdown {
   border-color: var(--line);
 }
+
+/* Data e campeonato eram um span so separado por <br>. Agora sao dois, para
+   poderem ficar lado a lado com separador na home e empilhados nas listas
+   cheias, sem grudar ("16:17UNIVAVÁ"). */
+.result-meta-when,
+.result-meta-where {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-board.univlr-home .result-meta-when,
+.home-board.univlr-home .result-meta-where {
+  display: inline;
+}
+
+.home-board.univlr-home .result-meta-where::before {
+  content: "·";
+  margin: 0 6px;
+  color: var(--muted);
+}

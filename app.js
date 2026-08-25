@@ -4956,6 +4956,7 @@ function render() {
   };
   (pages[section] || renderHomeCompact)(id);
   scrollToRouteTop(routeChanged);
+  restoreFilterFocus();
 }
 
 function normalizeCanonicalRoute() {
@@ -5154,6 +5155,8 @@ function renderHomeCompact() {
 
 function renderMatchesCompact(id) {
   if (id) return renderMatchDetail(id);
+  // a URL e a fonte da verdade do filtro: query ausente significa sem filtro
+  applyMatchFiltersFromQuery(routeQuery());
   ensureResultFilterDefaults();
   const filtered = filteredMatches();
   Shell(`
@@ -5212,6 +5215,107 @@ function matchFilterSidebar() {
       </details>
     </aside>
   `;
+}
+
+const LISTA_SEP = ",";
+
+function mesmaLista(a, b) {
+  if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+  const x = [...a].sort();
+  const y = [...b].sort();
+  return x.every((v, i) => v === y[i]);
+}
+
+// So entra na URL o que difere do padrao: link curto para o caso comum.
+function matchFiltersToQuery() {
+  const p = new URLSearchParams();
+  const todosMapas = state.db.maps.map((m) => m.id);
+  const todosEventos = visibleTournaments().map((e) => e.id);
+  if (state.matchBestOf && state.matchBestOf !== "all") p.set("md", state.matchBestOf);
+  // Serializa o lado mais curto. Desmarcar 1 de 12 mapas vira "sem-mapas=lotus"
+  // em vez de listar os outros 11.
+  escreverSelecao(p, "mapas", state.matchMaps, todosMapas);
+  escreverSelecao(p, "eventos", state.matchTournaments, todosEventos);
+  if (Array.isArray(state.matchTeams) && state.matchTeams.length) p.set("equipes", state.matchTeams.join(LISTA_SEP));
+  if (state.matchDateFrom) p.set("de", state.matchDateFrom);
+  if (state.matchDateTo) p.set("ate", state.matchDateTo);
+  return p;
+}
+
+function escreverSelecao(p, chave, selecionados, todos) {
+  if (!Array.isArray(selecionados) || mesmaLista(selecionados, todos)) return;
+  const fora = todos.filter((id) => !selecionados.includes(id));
+  if (fora.length && fora.length < selecionados.length) p.set("sem-" + chave, fora.join(LISTA_SEP));
+  else p.set(chave, selecionados.join(LISTA_SEP));
+}
+
+function lerSelecao(p, chave, todos) {
+  const validos = new Set(todos);
+  const lista = (v) => (v || "").split(LISTA_SEP).filter((id) => validos.has(id));
+  if (p.has("sem-" + chave)) {
+    const fora = new Set(lista(p.get("sem-" + chave)));
+    return todos.filter((id) => !fora.has(id));
+  }
+  if (p.has(chave)) return lista(p.get(chave));
+  return null;
+}
+
+function applyMatchFiltersFromQuery(p) {
+  // resetResultFilters tambem fecha os <details>; preservar aqui, senao o
+  // dropdown se fecha a cada clique e o botao clicado some da tela
+  const aberto = state.resultFilterOpen;
+  resetResultFilters();
+  if (aberto) state.resultFilterOpen = aberto;
+  const lista = (chave) => (p.get(chave) || "").split(LISTA_SEP).filter(Boolean);
+  if (p.get("md")) state.matchBestOf = p.get("md");
+  const mapas = lerSelecao(p, "mapas", state.db.maps.map((m) => m.id));
+  if (mapas) state.matchMaps = mapas;
+  const eventos = lerSelecao(p, "eventos", visibleTournaments().map((e) => e.id));
+  if (eventos) state.matchTournaments = eventos;
+  if (p.has("equipes")) {
+    const validos = new Set(state.db.teams.map((t) => t.id));
+    state.matchTeams = lista("equipes").filter((id) => validos.has(id));
+  }
+  if (p.get("de")) state.matchDateFrom = p.get("de");
+  if (p.get("ate")) state.matchDateTo = p.get("ate");
+}
+
+function playerFiltersToQuery() {
+  const p = new URLSearchParams();
+  if (state.playerQuery) p.set("q", state.playerQuery);
+  if (state.playerTeam && state.playerTeam !== "all") p.set("equipe", state.playerTeam);
+  if (state.playerInitial && state.playerInitial !== "all") p.set("letra", state.playerInitial);
+  return p;
+}
+
+function applyPlayerFiltersFromQuery(p) {
+  state.playerQuery = p.get("q") || "";
+  state.playerTeam = p.get("equipe") || "all";
+  state.playerInitial = p.get("letra") || "all";
+  state.playerTeamQuery = "";
+}
+
+// Escreve o filtro no hash. O hashchange existente re-renderiza, entao Back
+// desfaz um filtro por vez em vez de sair da pagina.
+function pushFilterState(section, params, focoSeletor) {
+  state.filterFocus = focoSeletor || null;
+  const q = params.toString();
+  const alvo = "#/" + section + (q ? "?" + q : "");
+  if (window.location.hash === alvo) {
+    render();
+    return;
+  }
+  window.location.hash = alvo;
+}
+
+// Depois de re-renderizar, o foco voltava para <body> e a segunda desmarcacao
+// exigia re-tabular desde o logo.
+function restoreFilterFocus() {
+  const sel = state.filterFocus;
+  if (!sel) return;
+  state.filterFocus = null;
+  const alvo = document.querySelector(sel);
+  if (alvo) alvo.focus({ preventScroll: true });
 }
 
 function ensureResultFilterDefaults() {
@@ -5344,6 +5448,11 @@ function renderEventsPage(id) {
 }
 
 function renderPlayersCompact(id) {
+  // Texto digitado vive local ate o campo perder o foco: hidratar a cada tecla
+  // apagaria o que a pessoa esta escrevendo, e escrever no hash a cada tecla
+  // encheria o historico.
+  if (!id && !state.skipFilterHydration) applyPlayerFiltersFromQuery(routeQuery());
+  state.skipFilterHydration = false;
   if (id) return renderPlayerDetail(id);
   const players = filteredPlayers();
   Shell(`
@@ -13212,9 +13321,11 @@ function bindMatchFilters() {
     if (!button) return;
     const filter = button.dataset.matchFilter;
     const value = button.dataset.value || "all";
+    // devolve o foco ao mesmo controle depois da re-renderizacao
+    const foco = `[data-match-filter="${filter}"]` + (button.dataset.value ? `[data-value="${button.dataset.value}"]` : "");
     if (filter === "reset") {
       resetResultFilters();
-      renderMatchesCompact();
+      pushFilterState("matches", new URLSearchParams(), foco);
       return;
     }
     if (filter === "bestOf") {
@@ -13223,7 +13334,7 @@ function bindMatchFilters() {
     if (filter === "map") toggleResultFilterValue("matchMaps", value);
     if (filter === "tournament") toggleResultFilterValue("matchTournaments", value);
     if (filter === "team") toggleResultFilterValue("matchTeams", value);
-    renderMatchesCompact();
+    pushFilterState("matches", matchFiltersToQuery(), foco);
   });
   document.getElementById("match-team-query")?.addEventListener("input", (event) => {
     state.matchTeamQuery = event.target.value;
@@ -13277,6 +13388,9 @@ function bindPlayerFilters() {
     state.playerQuery = event.target.value;
     refreshPlayersKeepingFocus("player-query", event.target.selectionStart);
   });
+  document.getElementById("player-query")?.addEventListener("change", () => {
+    pushFilterState("players", playerFiltersToQuery(), "#player-query");
+  });
   document.getElementById("player-team-query")?.addEventListener("input", (event) => {
     state.playerTeamQuery = event.target.value;
     refreshPlayersKeepingFocus("player-team-query", event.target.selectionStart);
@@ -13284,22 +13398,23 @@ function bindPlayerFilters() {
   document.querySelectorAll("[data-player-team-filter]").forEach((button) => {
     button.addEventListener("click", () => {
       state.playerTeam = button.dataset.playerTeamFilter || "all";
-      renderPlayersCompact();
+      pushFilterState("players", playerFiltersToQuery(), `[data-player-team-filter="${button.dataset.playerTeamFilter || "all"}"]`);
     });
   });
   document.getElementById("player-team")?.addEventListener("change", (event) => {
     state.playerTeam = event.target.value;
-    renderPlayersCompact();
+    pushFilterState("players", playerFiltersToQuery(), "#player-team");
   });
   document.querySelectorAll("[data-letter]").forEach((button) => {
     button.addEventListener("click", () => {
       state.playerInitial = button.dataset.letter;
-      renderPlayersCompact();
+      pushFilterState("players", playerFiltersToQuery(), `[data-letter="${button.dataset.letter}"]`);
     });
   });
 }
 
 function refreshPlayersKeepingFocus(inputId, caret) {
+  state.skipFilterHydration = true;
   renderPlayersCompact();
   const input = document.getElementById(inputId);
   if (!input) return;
@@ -14731,12 +14846,26 @@ function cleanDocumentTitleSegment(value) {
 
 function route() {
   const hash = window.location.hash.replace(/^#\/?/, "");
-  const [section = "home", id, tab] = hash.split("/");
+  // o estado de filtro viaja depois do "?", entao o caminho para de ler ali
+  const [caminho] = hash.split("?");
+  const [section = "home", id, tab] = caminho.split("/");
   return { section, id, tab };
 }
 
+function routeQuery() {
+  const hash = window.location.hash.replace(/^#\/?/, "");
+  const i = hash.indexOf("?");
+  return new URLSearchParams(i >= 0 ? hash.slice(i + 1) : "");
+}
+
+function routePath() {
+  return "#/" + window.location.hash.replace(/^#\/?/, "").split("?")[0];
+}
+
+// A chave de rota ignora a query de proposito: trocar um filtro nao e mudar de
+// pagina, entao nao deve jogar a rolagem para o topo.
 function currentRouteKey() {
-  return window.location.hash || "#/home";
+  return routePath();
 }
 
 function scrollToRouteTop(routeChanged) {

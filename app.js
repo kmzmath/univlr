@@ -5099,49 +5099,6 @@ function renderHomeCompact() {
   `);
 }
 
-function renderRankingsCompact() {
-  const teams = state.db.teams;
-  Shell(`
-    <header class="page-header">
-      <div class="page-title">
-        <span class="eyebrow">Ranking</span>
-        <h1>Equipes</h1>
-      </div>
-    </header>
-    <div class="layout-grid">
-      <div class="stack">
-        <section class="section-band">
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>#</th><th>Equipe</th><th class="numeric">Nota</th><th class="numeric">V-D</th><th class="numeric">Win rate</th><th class="numeric">Rounds</th><th class="numeric">Saldo</th></tr></thead>
-              <tbody>${teams.map((team) => `<tr><td>${teamCanonicalRankLabel(team)}</td><td>${teamLogo(team.id)} ${entityLink("teams", team.id, team.name)}</td><td class="numeric">${fmt(team.rankingScore ?? team.points, 1)}</td><td class="numeric">${team.wins}-${team.losses}</td><td class="numeric">${pct(team.winRate)}</td><td class="numeric">${team.roundsWon}-${team.roundsLost}</td><td class="numeric">${signed(team.roundDiff)}</td></tr>`).join("")}</tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-      <aside class="side-rail">
-        <section class="data-panel dark">
-          <div class="section-head"><h2>Top 5</h2></div>
-          <div class="ranking-list">${teams.slice(0, 5).map(rankingRow).join("")}</div>
-        </section>
-      </aside>
-    </div>
-  `);
-}
-
-function renderTournamentsCompact(id) {
-  if (id) return renderTournamentDetail(id);
-  Shell(`
-    <header class="page-header">
-      <div class="page-title">
-        <span class="eyebrow">Campeonatos</span>
-        <h1>Eventos</h1>
-      </div>
-    </header>
-    <div class="card-grid three">${sortedEvents("end").map(tournamentCard).join("")}</div>
-  `);
-}
-
 function renderTeamsCompact(id) {
   if (id) return renderTeamDetail(id);
   return renderNotFound("Recurso");
@@ -5438,21 +5395,6 @@ function playerTeamOptionButton(team) {
 
 function sortedTeamsByName(teams) {
   return teams.slice().sort((a, b) => String(a.name || a.tag || a.id || "").localeCompare(String(b.name || b.tag || b.id || ""), "pt-BR", { numeric: true, sensitivity: "base" }));
-}
-
-function renderStatsPlaceholderPage() {
-  Shell(`
-    <header class="page-header slim-header">
-      <div class="page-title">
-        <span class="eyebrow">Stats</span>
-        <h1>Estatísticas</h1>
-      </div>
-    </header>
-    <section class="hub-panel placeholder-panel">
-      <strong>Stats</strong>
-      <span>Em montagem.</span>
-    </section>
-  `);
 }
 
 

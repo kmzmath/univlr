@@ -2563,6 +2563,7 @@ h1 {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
 }
 
 .result-score {
@@ -5113,6 +5114,7 @@ body {
 
 .compact-ranking-row .row-main strong,
 .result-team strong {
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -9817,7 +9819,9 @@ select {
   display: grid;
   grid-template-columns: minmax(360px, 0.9fr) minmax(420px, 1.1fr) minmax(300px, 0.75fr);
   gap: clamp(18px, 2vw, 32px);
-  align-items: stretch;
+  /* start e nao stretch: cada painel termina onde o conteudo termina, em vez
+     de as tres colunas serem esticadas ate a mesma altura. */
+  align-items: start;
 }
 
 .hub-panel {
@@ -14118,4 +14122,484 @@ small,
 .result-meta,
 .row-main small {
   letter-spacing: 0.012em;
+}
+
+/* ==========================================================================
+   Faixa "Melhores da semana"
+   Substitui o topo antigo (coluna vazia de 426px + wordmark de 132px +
+   carrossel de 355px girando sozinho). As 9 categorias ficam visiveis de uma
+   vez: o lider em destaque e as outras oito num trilho.
+   O quadro NAO e um cartao com cartoes dentro - as celulas sao separadas por
+   fios de 1px, que e como um bloco de dado se le.
+   ========================================================================== */
+
+.week-board {
+  display: grid;
+  gap: 12px;
+  margin-bottom: clamp(18px, 2vw, 32px);
+}
+
+.week-board-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.week-board-head h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.week-board-head h2::before {
+  content: "";
+  width: 5px;
+  height: 16px;
+  border-radius: var(--radius-sm);
+  background: var(--brand);
+}
+
+.week-board-range {
+  color: var(--muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.week-board-note {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.012em;
+}
+
+.week-board-body {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(0, 2fr);
+  gap: 1px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--line);
+  overflow: hidden;
+}
+
+/* --- lider --- */
+
+.week-lead {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "figure copy value"
+    "figure context context";
+  align-items: center;
+  gap: 2px 16px;
+  background: var(--surface-2);
+  padding: 16px;
+}
+
+.week-lead:hover {
+  background: var(--univlr-graphite-3);
+}
+
+.week-lead-figure {
+  grid-area: figure;
+  width: 96px;
+  height: 96px;
+}
+
+.week-lead-copy {
+  grid-area: copy;
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.week-lead-category {
+  color: var(--brand-text);
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.week-lead-nick {
+  color: var(--ink);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  line-height: 1.1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.week-lead-team {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.week-lead-team em {
+  font-style: normal;
+}
+
+.week-lead-value {
+  grid-area: value;
+  display: grid;
+  justify-items: end;
+  gap: 0;
+}
+
+.week-lead-value strong {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.week-lead-value small {
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.week-lead-context {
+  grid-area: context;
+  align-self: start;
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.012em;
+}
+
+/* --- trilho das outras oito --- */
+
+.week-rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  background: var(--line);
+  list-style: none;
+}
+
+.week-tile {
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  height: 100%;
+  background: var(--surface);
+  padding: 10px 12px;
+}
+
+.week-tile:hover {
+  background: var(--surface-2);
+}
+
+.week-tile-category {
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.week-tile-value {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.week-tile-player {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--ink);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.week-tile-player > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- foto com fallback de monograma --- */
+
+.player-figure {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--team-accent, var(--brand)) 26%, var(--surface-3));
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.player-figure img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.player-figure.is-monogram img {
+  display: none;
+}
+
+.player-figure-mono {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+@media (max-width: 940px) {
+  .week-board-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .week-rail {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .week-board-note {
+    margin-left: 0;
+  }
+
+  .week-lead {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "figure copy"
+      "figure value"
+      "context context";
+    gap: 6px 12px;
+  }
+
+  .week-lead-value {
+    justify-items: start;
+  }
+
+  .week-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ==========================================================================
+   Ajustes de layout da home (passo 4)
+   ========================================================================== */
+
+/* Frase corrida a 11px e apertada demais; 11px e piso de rotulo, nao de prosa. */
+.week-board-note {
+  font-size: var(--text-xs);
+}
+
+/* Os paineis tinham padding 0: as linhas encostavam na borda do cartao dos dois
+   lados. Um respiro lateral separa o conteudo do contorno. */
+.home-board.univlr-home > .hub-panel {
+  padding: 0 10px 10px;
+}
+
+.home-board.univlr-home > .hub-panel > .panel-title {
+  padding: 10px 2px 8px;
+}
+
+.home-board.univlr-home .panel-footer-link {
+  padding: 10px 2px;
+}
+
+/* A coluna de partidas tem 521px. Com data e campeonato ocupando 120px na
+   mesma linha, sobravam 105px para o nome do time - e nome de universidade
+   brasileira ("PUCGO Sistematica Academy") nao cabe em 105px. A meta desce
+   para a segunda linha e os nomes ficam com ~180px cada. */
+.home-board.univlr-home .result-row {
+  grid-template-columns: minmax(0, 1fr) 78px minmax(0, 1fr);
+  grid-template-areas:
+    "teamA score teamB"
+    "meta meta meta";
+  row-gap: 6px;
+}
+
+.home-board.univlr-home .result-team.left {
+  grid-area: teamA;
+}
+
+.home-board.univlr-home .result-score {
+  grid-area: score;
+}
+
+.home-board.univlr-home .result-team.right {
+  grid-area: teamB;
+}
+
+.home-board.univlr-home .result-meta {
+  grid-area: meta;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.home-board.univlr-home .result-meta br {
+  display: none;
+}
+
+.home-board.univlr-home .result-meta > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Quatro dos cinco nomes que ainda truncavam na home erravam por menos de 8px.
+   Logo um pouco menor so na coluna compacta compra a diferenca; a versao
+   grande continua nas listas cheias. */
+.home-board.univlr-home .result-team .clean-logo {
+  width: 26px;
+  height: 26px;
+}
+
+/* Cartao dentro de cartao: .lineup-stat-row tinha borda, raio, fundo proprio e
+   sombra interna, tudo dentro de .lineup-stat-center, que ja e um cartao.
+   Vira linha separada por fio - que e o que uma tabela de comparacao e. */
+.lineup-stat-list {
+  gap: 0;
+}
+
+.lineup-stat-row {
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 6px 0;
+}
+
+.lineup-stat-row:last-child {
+  border-bottom: 0;
+}
+
+.lineup-stat-center {
+  border-color: var(--line);
+}
+
+/* Conteudo encostado na borda do contorno da tabela. */
+.table-wrap.match-scoreboard-wrap {
+  padding: 2px;
+}
+
+/* Fatos de campeonato ("Online - Classificatória", "5x Monitores AGON CS24A/P")
+   estavam em 5 colunas fixas de 103px com nowrap, entao truncavam. Sao texto
+   descritivo, nao coluna alinhada: podem quebrar em duas linhas. */
+.event-row-facts {
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+}
+
+.event-row-facts .event-fact strong {
+  overflow: visible;
+  white-space: normal;
+  line-height: 1.25;
+}
+
+/* Rodape do painel encostava nas laterais. */
+.home-board.univlr-home .panel-footer-link {
+  padding: 10px 12px;
+}
+
+/* A coluna do nome no ranking sobrava com 105px porque as colunas fixas e os
+   vaos comiam 226px dos 382px disponiveis. Menos vao e badge de rank mais
+   justo devolvem ~22px ao nome. A borda azulada era residuo da camada antiga. */
+.compact-ranking-row {
+  border-color: var(--line);
+  grid-template-columns: 38px 30px 42px minmax(0, 1fr) 58px;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   Ranking e Players: recuo e truncamento
+   ========================================================================== */
+
+/* 44 linhas com as acoes encostadas na borda do cartao. */
+.ranking-team-actions {
+  padding: 10px 12px;
+}
+
+.hub-panel.ranking-full-panel {
+  padding: 0 10px 10px;
+}
+
+.hub-panel.ranking-full-panel > .panel-title {
+  padding: 10px 2px 8px;
+}
+
+/* Line-up inline em 1.2 de entrelinha; texto claro sobre fundo quase preto
+   precisa de um respiro a mais. */
+.ranking-lineup-inline {
+  line-height: 1.45;
+}
+
+/* Nome de equipe e Riot ID no diretorio de jogadores: sem min-width: 0 o filho
+   do flex nao encolhe, entao o texto vazava em vez de truncar. */
+.player-directory-card,
+.player-directory-card .player-directory-copy {
+  min-width: 0;
+}
+
+.player-directory-card strong,
+.player-directory-card .player-directory-riot,
+.player-directory-card span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.letter-filter {
+  padding: 4px 2px;
+}
+
+/* O nome que vazava no /players era do botao do filtro de equipe, nao do card:
+   o <strong> herdava min-width: auto e nao encolhia dentro do botao. */
+.team-filter-button strong,
+.team-filter-button span,
+.player-team-option strong,
+.player-team-option span {
+  min-width: 0;
+}
+
+/* O menu de equipes tinha 220px fixos; nome de universidade brasileira nao
+   cabe e 29 itens truncavam. A lista flutua (position: absolute no corpo),
+   entao pode ser mais larga que o gatilho sem mexer no restante da barra. */
+.player-team-dropdown {
+  min-width: 260px;
+}
+
+.player-team-dropdown .filter-dropdown-body {
+  min-width: 300px;
+}
+
+/* Borda azulada residual da camada antiga. */
+.filter-dropdown {
+  border-color: var(--line);
 }

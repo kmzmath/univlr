@@ -6,9 +6,12 @@ const RANKING_WEIGHTS_MANIFEST = "ranking-weights.json";
 const SITE_NAME = "UNIVLR";
 const SITE_LOGO_SRC = "assets/logo_univlr.png";
 const SITE_WORDMARK_SRC = "assets/univlr_logo_longa.png";
-const HOME_RANKING_LIMIT = 15;
+// Pesos diferentes de proposito: partidas e o que muda todo dia e leva a
+// coluna mais longa; ranking e referencia (tem "Ver completo"); campeonato
+// e contexto. Antes eram 15/15/15, o que dava 45 linhas de peso identico.
+const HOME_RANKING_LIMIT = 10;
 const HOME_RECENT_MATCH_LIMIT = 15;
-const HOME_EVENT_LIMIT = 15;
+const HOME_EVENT_LIMIT = 8;
 const PLAYER_FALLBACK_PHOTO = "assets/user-silhouette.png";
 const TROPHY_ASSET_ROOT = "assets/trofeus-campeonatos";
 const TROPHY_GENERIC_ASSETS = {
@@ -5152,13 +5155,8 @@ function renderHomeCompact() {
   const topTeams = state.db.teams.slice(0, HOME_RANKING_LIMIT);
   const recentMatches = allMatchSeries().slice().sort(compareSeriesDateDesc).slice(0, HOME_RECENT_MATCH_LIMIT);
   Shell(`
-    <div class="home-topline">
-      <header class="univlr-title univlr-wordmark-title">
-        <h1 class="sr-only">${SITE_NAME}</h1>
-        <img class="home-wordmark" src="${SITE_WORDMARK_SRC}" alt="" loading="eager" decoding="async" />
-      </header>
-      ${playerOfWeekCarousel()}
-    </div>
+    <h1 class="sr-only">${SITE_NAME}</h1>
+    ${weekHighlights()}
     <div class="home-board univlr-home">
       <section class="hub-panel ranking-panel">
         ${panelTitle("Ranking")}
@@ -5178,7 +5176,6 @@ function renderHomeCompact() {
     </div>
   `);
   bindHomeRankingPanel();
-  bindHomePlayerWeekCarousel();
 }
 
 function renderMatchesCompact(id) {
@@ -11447,8 +11444,8 @@ function teamProfileLogo(team) {
 
 function teamAccentStyle(team) {
   const [primary, secondary] = team.colors || [];
-  const accent = safeCssColor(primary, "#d8323c");
-  const accent2 = safeCssColor(secondary, "#009a96");
+  const accent = safeCssColor(primary, "#f6132a");
+  const accent2 = safeCssColor(secondary, "#2ad4c1");
   return `style="--team-accent:${accent};--team-accent-2:${accent2};"`;
 }
 
@@ -13256,72 +13253,88 @@ function playerInitialOptions() {
   return ["all", ...[...letters].sort((a, b) => a.localeCompare(b))];
 }
 
-function playerOfWeekCarousel() {
+function playerFigure(player, team, extra = "") {
+  // Monograma nas cores da equipe no lugar da silhueta cinza generica.
+  // Ele fica sempre no DOM, atras da foto: se a imagem falhar, e so revelar.
+  const initials = String(player?.nick || "?")
+    .replace(/[^\p{L}\p{N}]/gu, "")
+    .slice(0, 2)
+    .toUpperCase();
+  const accent = team ? teamAccentStyle(team) : "";
+  const photo = player?.photo ? assetPath(player.photo) : "";
+  const mono = `<span class="player-figure-mono" aria-hidden="true">${escapeHtml(initials)}</span>`;
+  if (!photo) {
+    return `<span class="player-figure is-monogram ${escapeHtml(extra)}" ${accent}>${mono}</span>`;
+  }
+  return `<span class="player-figure ${escapeHtml(extra)}" ${accent}>${mono}<img src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="playerFigureError(this)" /></span>`;
+}
+
+function playerFigureError(image) {
+  const figure = image?.closest(".player-figure");
+  if (!figure) return;
+  figure.classList.add("is-monogram");
+  image.remove();
+}
+
+function weekHighlights() {
   const leaders = playerOfWeekLeaders();
-  const minimumNote = `Mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas jogados no período exibido para entrar.`;
+  const note = `Mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas jogados no período exibido para entrar.`;
   if (!leaders.length) {
     return `
-      <div class="player-week-shell">
-        <section class="player-week-panel player-week-empty-panel" aria-label="Melhores da semana">
-          <div class="player-week-empty">
-            <span class="player-week-title">Melhores da semana</span>
-            <strong>Sem jogadores elegíveis</strong>
-            <small>Nenhum jogador atingiu o mínimo de mapas nesta janela.</small>
-          </div>
-        </section>
-        <small class="player-week-note">${escapeHtml(minimumNote)}</small>
-      </div>
+      <section class="week-board week-board-empty" aria-labelledby="week-board-title">
+        <header class="week-board-head">
+          <h2 id="week-board-title">Melhores da semana</h2>
+        </header>
+        <p class="empty-state">Nenhum jogador atingiu o mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas nesta janela.</p>
+      </section>
     `;
   }
+  const [lead, ...rest] = leaders;
   return `
-    <div class="player-week-shell">
-      <section class="player-week-panel" data-player-week-carousel data-player-week-manual="false" tabindex="0" aria-label="Player of the week">
-        <div class="player-week-track">
-          ${leaders.map(playerOfWeekCard).join("")}
-        </div>
-        <button class="player-week-nav prev" type="button" data-player-week-prev aria-label="Player anterior">&lt;</button>
-        <button class="player-week-nav next" type="button" data-player-week-next aria-label="Proximo player">&gt;</button>
-        <div class="player-week-dots" aria-label="Categorias do player of the week">
-          ${leaders.map((_, index) => `<button type="button" data-player-week-dot="${index}" aria-label="Categoria ${index + 1}" ${index === 0 ? `aria-current="true"` : ""}></button>`).join("")}
-        </div>
-      </section>
-      <small class="player-week-note">${escapeHtml(minimumNote)}</small>
-    </div>
+    <section class="week-board" aria-labelledby="week-board-title">
+      <header class="week-board-head">
+        <h2 id="week-board-title">Melhores da semana</h2>
+        <span class="week-board-range">${escapeHtml(lead.windowLabel)}</span>
+        <small class="week-board-note">${escapeHtml(note)}</small>
+      </header>
+      <div class="week-board-body">
+        ${weekLeadCard(lead)}
+        <ul class="week-rail">${rest.map(weekTile).join("")}</ul>
+      </div>
+    </section>
   `;
 }
 
-function playerOfWeekCard(item, index) {
-  const { category, player, windowLabel } = item;
-  const active = index === 0;
+function weekLeadCard({ category, player }) {
   const team = teamById(player.teamId);
-  const photo = playerPhotoSrc(player);
-  const metric = category.format(player);
-  const meta = [
-    team?.sourceTag || team?.tag || player.teamTag || "",
-    `${player.matches} mapa${player.matches === 1 ? "" : "s"}`,
-    `${player.rounds} rounds`,
-  ].filter(Boolean).join(" - ");
+  const tag = team?.sourceTag || team?.tag || player.teamTag || "";
   return `
-    <a class="player-week-card ${active ? "active" : ""}" href="${playerHref(player)}" data-player-week-slide="${index}" aria-hidden="${active ? "false" : "true"}" tabindex="${active ? "0" : "-1"}">
-      <span class="player-week-photo">
-        <img src="${escapeHtml(photo)}" alt="${escapeHtml(player.nick)}" loading="lazy" onerror="playerPhotoError(this)" />
+    <a class="week-lead" href="${playerHref(player)}">
+      ${playerFigure(player, team, "week-lead-figure")}
+      <span class="week-lead-copy">
+        <small class="week-lead-category">${escapeHtml(category.label)}</small>
+        <strong class="week-lead-nick" title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong>
+        <span class="week-lead-team">${team ? teamLogo(team.id, "tiny") : ""}<em>${escapeHtml(tag)}</em></span>
       </span>
-      <span class="player-week-copy">
-        <span class="player-week-title">Melhores da semana</span>
-        <small>${escapeHtml(category.label)}</small>
-        <strong title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong>
-        <em>${escapeHtml(category.title)}</em>
-      </span>
-      <span class="player-week-value">
-        <strong>${escapeHtml(metric)}</strong>
+      <span class="week-lead-value">
+        <strong>${escapeHtml(category.format(player))}</strong>
         <small>${escapeHtml(category.statLabel)}</small>
       </span>
-      <span class="player-week-meta">
-        ${team ? teamLogo(team.id, "tiny") : ""}
-        <span>${escapeHtml(meta)}</span>
-      </span>
-      <span class="player-week-range">${escapeHtml(windowLabel)}</span>
+      <span class="week-lead-context">${escapeHtml(`${player.matches} mapas · ${player.rounds} rounds`)}</span>
     </a>
+  `;
+}
+
+function weekTile({ category, player }) {
+  const team = teamById(player.teamId);
+  return `
+    <li>
+      <a class="week-tile" href="${playerHref(player)}">
+        <small class="week-tile-category">${escapeHtml(category.statLabel)}</small>
+        <strong class="week-tile-value">${escapeHtml(category.format(player))}</strong>
+        <span class="week-tile-player">${team ? teamLogo(team.id, "tiny") : ""}<span title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</span></span>
+      </a>
+    </li>
   `;
 }
 
@@ -13440,93 +13453,6 @@ function playerWeekDateLabel(value) {
   return new Date(value).toLocaleDateString("pt-BR", { day: "2-digit", month: "short" }).replace(".", "");
 }
 
-function bindHomePlayerWeekCarousel() {
-  window.clearInterval(state.homePlayerWeekTimer);
-  window.clearTimeout(state.homePlayerWeekResumeTimer);
-  state.homePlayerWeekTimer = 0;
-  state.homePlayerWeekResumeTimer = 0;
-
-  const root = document.querySelector("[data-player-week-carousel]");
-  if (!root) return;
-  const slides = [...root.querySelectorAll("[data-player-week-slide]")];
-  const dots = [...root.querySelectorAll("[data-player-week-dot]")];
-  if (slides.length <= 1) return;
-
-  let activeIndex = 0;
-  const setActive = (index) => {
-    activeIndex = (index + slides.length) % slides.length;
-    slides.forEach((slide, slideIndex) => {
-      const active = slideIndex === activeIndex;
-      slide.classList.toggle("active", active);
-      slide.setAttribute("aria-hidden", String(!active));
-      slide.setAttribute("tabindex", active ? "0" : "-1");
-    });
-    dots.forEach((dot, dotIndex) => {
-      if (dotIndex === activeIndex) dot.setAttribute("aria-current", "true");
-      else dot.removeAttribute("aria-current");
-    });
-  };
-
-  const stopAutoplay = () => {
-    window.clearInterval(state.homePlayerWeekTimer);
-    state.homePlayerWeekTimer = 0;
-  };
-  const startAutoplay = () => {
-    stopAutoplay();
-    state.homePlayerWeekTimer = window.setInterval(() => {
-      if (!root.isConnected) {
-        stopAutoplay();
-        window.clearTimeout(state.homePlayerWeekResumeTimer);
-        state.homePlayerWeekResumeTimer = 0;
-        return;
-      }
-      setActive(activeIndex + 1);
-    }, PLAYER_OF_WEEK_INTERVAL_MS);
-  };
-  const scheduleAutoplayResume = () => {
-    window.clearTimeout(state.homePlayerWeekResumeTimer);
-    state.homePlayerWeekResumeTimer = window.setTimeout(() => {
-      state.homePlayerWeekResumeTimer = 0;
-      if (!root.isConnected) return;
-      root.dataset.playerWeekManual = "false";
-      startAutoplay();
-    }, PLAYER_OF_WEEK_IDLE_RESUME_MS);
-  };
-  const enterManualMode = () => {
-    root.dataset.playerWeekManual = "true";
-    stopAutoplay();
-    scheduleAutoplayResume();
-  };
-  const move = (delta) => {
-    enterManualMode();
-    setActive(activeIndex + delta);
-  };
-
-  root.addEventListener("pointerenter", enterManualMode);
-  root.addEventListener("pointermove", enterManualMode);
-  root.addEventListener("focusin", enterManualMode);
-  root.addEventListener("pointerdown", enterManualMode);
-  root.addEventListener("keydown", enterManualMode);
-  root.querySelector("[data-player-week-prev]")?.addEventListener("click", (event) => {
-    event.preventDefault();
-    move(-1);
-  });
-  root.querySelector("[data-player-week-next]")?.addEventListener("click", (event) => {
-    event.preventDefault();
-    move(1);
-  });
-  dots.forEach((dot, index) => {
-    dot.addEventListener("click", (event) => {
-      event.preventDefault();
-      enterManualMode();
-      setActive(index);
-    });
-  });
-
-  setActive(0);
-  startAutoplay();
-}
-
 function bindHomeRankingPanel() {
   const panel = document.querySelector(".ranking-panel");
   panel?.addEventListener("click", (event) => {
@@ -13582,9 +13508,9 @@ function matchResultRow(item) {
   const event = state.db.tournaments.find((row) => row.id === series.eventId);
   return `
     <a class="result-row" href="${matchSeriesHref(series)}">
-      <span class="result-team left">${teamLogo(series.teamA.id)}<strong>${escapeHtml(series.teamA.name)}</strong></span>
+      <span class="result-team left">${teamLogo(series.teamA.id)}<strong title="${escapeHtml(series.teamA.name)}">${escapeHtml(series.teamA.name)}</strong></span>
       <span class="result-score"><b class="${scoreNumberClass(score.a, score.b)}">${score.a}</b><i>:</i><b class="${scoreNumberClass(score.b, score.a)}">${score.b}</b><small>${escapeHtml(score.label)}</small></span>
-      <span class="result-team right"><strong>${escapeHtml(series.teamB.name)}</strong>${teamLogo(series.teamB.id)}</span>
+      <span class="result-team right"><strong title="${escapeHtml(series.teamB.name)}">${escapeHtml(series.teamB.name)}</strong>${teamLogo(series.teamB.id)}</span>
       ${matchMapStrip(series)}
       <span class="result-meta"><span>${escapeHtml(formatDate(series.startedAt, "time"))}<br>${escapeHtml(event?.name || "Evento")}</span>${event ? eventLogo(event, "tiny") : ""}</span>
     </a>

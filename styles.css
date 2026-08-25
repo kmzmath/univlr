@@ -14182,3 +14182,80 @@ input[type="radio"] {
 .tournament-organizer-card small {
   font-size: var(--text-xs);
 }
+
+/* ==========================================================================
+   Corte horizontal na página de partida (P0)
+   A 375px os painéis renderizavam com 984px dentro de uma coluna de 347px, e
+   623px de conteúdo ficavam inalcançáveis: nenhum ancestral rolava e
+   `body { overflow-x: clip }` escondia o estouro em vez de resolvê-lo.
+   Causa: item de grid nasce com `min-width: auto`, então a trilha cresce até o
+   min-content do conteúdo mais largo (aqui, a linha do tempo de 52 rounds e os
+   banners de mapa em 1600px). Deixando os containers encolherem, o que é largo
+   de verdade rola dentro da própria caixa.
+   ========================================================================== */
+
+/* Imagem nunca deve empurrar a largura do container. */
+img {
+  max-width: 100%;
+}
+
+.match-page,
+.match-page > *,
+.match-page :is(header, section, article, div, span, a, ul, ol, li, table, dl) {
+  min-width: 0;
+}
+
+.match-page img {
+  height: auto;
+}
+
+/* O que e largo por natureza rola na propria caixa, nunca na pagina:
+   linha do tempo de rounds, placar completo e tabelas. */
+.round-timeline,
+.match-map-overview,
+.match-scoreboard-wrap,
+.table-wrap,
+.lineup-timeline-wrap {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+/* O site esconde barra de rolagem globalmente, o que e razoavel na pagina mas
+   deixa uma faixa rolavel sem nenhuma pista: o conteudo simplesmente parece
+   cortado. Nestes containers a barra volta, fina e na cor do sistema - ela
+   aparece so quando ha o que rolar e mostra a posicao. */
+.round-timeline,
+.match-map-overview,
+.match-scoreboard-wrap,
+.table-wrap,
+.lineup-timeline-wrap {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-dark) transparent;
+}
+
+.round-timeline::-webkit-scrollbar,
+.match-map-overview::-webkit-scrollbar,
+.match-scoreboard-wrap::-webkit-scrollbar,
+.table-wrap::-webkit-scrollbar,
+.lineup-timeline-wrap::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+  height: 8px;
+}
+
+.round-timeline::-webkit-scrollbar-thumb,
+.match-map-overview::-webkit-scrollbar-thumb,
+.match-scoreboard-wrap::-webkit-scrollbar-thumb,
+.table-wrap::-webkit-scrollbar-thumb,
+.lineup-timeline-wrap::-webkit-scrollbar-thumb {
+  border-radius: var(--radius-pill);
+  background: var(--line-dark);
+}
+
+.round-timeline::-webkit-scrollbar-track,
+.match-map-overview::-webkit-scrollbar-track,
+.match-scoreboard-wrap::-webkit-scrollbar-track,
+.table-wrap::-webkit-scrollbar-track,
+.lineup-timeline-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}

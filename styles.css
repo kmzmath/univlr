@@ -1,4 +1,191 @@
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/barlow-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/barlow-400-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/barlow-500-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/barlow-500-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/barlow-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/barlow-600-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/barlow-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/barlow-700-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/barlow-800-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/barlow-800-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("assets/fonts/barlow-900-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("assets/fonts/barlow-900-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/barlow-condensed-500-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/barlow-condensed-500-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/barlow-condensed-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/barlow-condensed-600-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/barlow-condensed-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/barlow-condensed-700-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Fallback com metrica ajustada: a Barlow e mais estreita que as fontes de
+   sistema, entao sem isso o texto salta ao trocar. size-adjust medido no navegador. */
+@font-face {
+  font-family: "Barlow Fallback";
+  src: local("Segoe UI"), local("Roboto"), local("Helvetica Neue"), local("Arial");
+  size-adjust: 96%;
+  ascent-override: 92%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
 :root {
+  --font-text: "Barlow", "Barlow Fallback", system-ui, sans-serif;
+  --font-display: "Barlow Condensed", "Barlow", "Barlow Fallback", system-ui, sans-serif;
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-md: 0.875rem;
+  --text-lg: 1rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3.5rem;
+  --text-6xl: 5rem;
+  --text-7xl: 8rem;
   --page-gutter: clamp(20px, 2.8vw, 64px);
   --wide-rail: clamp(390px, 24vw, 520px);
   --compact-rail: clamp(330px, 20vw, 440px);
@@ -109,7 +296,7 @@ button {
 }
 
 .home-header h1 {
-  font-size: 2.35rem;
+  font-size: var(--text-4xl);
   line-height: 1.05;
 }
 
@@ -125,7 +312,7 @@ button {
 }
 
 .home-header .metric-value {
-  font-size: 1.28rem;
+  font-size: var(--text-xl);
 }
 
 .hero-band {
@@ -155,13 +342,13 @@ p {
 
 h1 {
   line-height: 1.02;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .hero-copy p {
   max-width: 760px;
   color: var(--muted);
-  font-size: 1.05rem;
+  font-size: var(--text-lg);
   line-height: 1.65;
 }
 
@@ -181,15 +368,15 @@ h1 {
 
 .metric-value {
   display: block;
-  font-size: 1.42rem;
-  font-weight: 900;
+  font-size: var(--text-2xl);
+  font-weight: 800;
 }
 
 .metric-label {
   display: block;
   margin-top: 4px;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: var(--text-sm);
   line-height: 1.25;
 }
 
@@ -231,7 +418,7 @@ h1 {
   background: rgba(255, 255, 255, 0.11);
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(8px);
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .node.primary {
@@ -241,7 +428,7 @@ h1 {
   height: 128px;
   transform: translate(-50%, -50%);
   background: rgba(255, 255, 255, 0.2);
-  font-size: 1.65rem;
+  font-size: var(--text-2xl);
 }
 
 .node.a {
@@ -347,7 +534,7 @@ h1 {
   background: transparent;
   color: var(--muted);
   padding: 0 12px;
-  font-weight: 780;
+  font-weight: 600;
 }
 
 .segmented button.active {
@@ -387,8 +574,8 @@ h1 {
 
 .section-head h2,
 .section-head h3 {
-  font-size: 1.05rem;
-  font-weight: 900;
+  font-size: var(--text-lg);
+  font-weight: 800;
 }
 
 .card-grid {
@@ -431,13 +618,13 @@ h1 {
 
 .entity-main strong {
   display: block;
-  font-size: 0.98rem;
+  font-size: var(--text-lg);
 }
 
 .entity-main span,
 .tiny {
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: var(--text-sm);
 }
 
 .logo {
@@ -449,7 +636,7 @@ h1 {
   place-items: center;
   border-radius: var(--radius-lg);
   color: #fff;
-  font-weight: 900;
+  font-weight: 800;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
   overflow: hidden;
 }
@@ -476,7 +663,7 @@ h1 {
 .logo.large {
   width: 72px;
   height: 72px;
-  font-size: 1.15rem;
+  font-size: var(--text-xl);
 }
 
 .logo.round {
@@ -544,14 +731,14 @@ h1 {
 }
 
 .score-box strong {
-  font-size: 1.26rem;
+  font-size: var(--text-xl);
 }
 
 .score-box span {
   margin-top: 4px;
   color: rgba(255, 255, 255, 0.68);
-  font-size: 0.72rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .match-meta span,
@@ -626,12 +813,12 @@ h1 {
   display: grid;
   place-items: center;
   border-radius: var(--radius-md);
-  font-size: 0.82rem;
-  font-weight: 900;
+  font-size: var(--text-sm);
+  font-weight: 800;
 }
 
 .trend {
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .trend.same {
@@ -666,15 +853,15 @@ tr:last-child td {
 .agent-badge strong {
   display: block;
   color: var(--ink);
-  font-size: 0.84rem;
+  font-size: var(--text-sm);
   line-height: 1.1;
 }
 
 .agent-badge small {
   display: block;
   color: var(--muted);
-  font-size: 0.68rem;
-  font-weight: 780;
+  font-size: var(--text-2xs);
+  font-weight: 600;
   line-height: 1.1;
 }
 
@@ -690,8 +877,8 @@ tr:last-child td {
   overflow: visible;
   background: transparent;
   color: var(--muted);
-  font-size: 0.64rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
 }
 
 .agent-icon img {
@@ -725,7 +912,7 @@ tr:last-child td {
 }
 
 .profile-header h1 {
-  font-size: 2.45rem;
+  font-size: var(--text-4xl);
 }
 
 .profile-actions {
@@ -749,7 +936,7 @@ tr:last-child td {
 .team-logo-frame .logo {
   width: 92px;
   height: 92px;
-  font-size: 1rem;
+  font-size: var(--text-lg);
 }
 
 .team-logo-frame .image-logo img {
@@ -764,7 +951,7 @@ tr:last-child td {
 }
 
 .team-title-block h1 {
-  font-size: 2.25rem;
+  font-size: var(--text-3xl);
 }
 
 .team-meta-row {
@@ -783,8 +970,8 @@ tr:last-child td {
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.86);
   padding: 0 12px;
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .state-flag {
@@ -799,8 +986,8 @@ tr:last-child td {
   display: inline-grid;
   place-items: center;
   color: var(--ink);
-  font-size: 0.62rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
 }
 
 img.state-flag + .state-flag.placeholder {
@@ -815,13 +1002,13 @@ img.state-flag + .state-flag.placeholder {
 
 .team-rank-box span {
   color: rgba(255, 255, 255, 0.66);
-  font-size: 0.82rem;
-  font-weight: 800;
+  font-size: var(--text-sm);
+  font-weight: 700;
 }
 
 .team-rank-box strong {
   margin-top: 4px;
-  font-size: 2.35rem;
+  font-size: var(--text-4xl);
   line-height: 1;
 }
 
@@ -956,7 +1143,7 @@ img.state-flag + .state-flag.placeholder {
   border-radius: 50%;
   background: rgba(199, 131, 32, 0.14);
   color: var(--amber);
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .team-tabs {
@@ -996,8 +1183,8 @@ img.state-flag + .state-flag.placeholder {
   border: 1px solid var(--line);
   border-radius: var(--radius-pill);
   padding: 0 12px;
-  font-size: 0.84rem;
-  font-weight: 820;
+  font-size: var(--text-sm);
+  font-weight: 700;
 }
 
 .stats-grid {
@@ -1013,8 +1200,8 @@ img.state-flag + .state-flag.placeholder {
 
 .stat-card strong {
   display: block;
-  font-size: 1.45rem;
-  font-weight: 900;
+  font-size: var(--text-2xl);
+  font-weight: 800;
   overflow-wrap: anywhere;
 }
 
@@ -1022,7 +1209,7 @@ img.state-flag + .state-flag.placeholder {
   display: block;
   margin-top: 4px;
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
 }
 
 .bars {
@@ -1035,7 +1222,7 @@ img.state-flag + .state-flag.placeholder {
   grid-template-columns: minmax(82px, 110px) minmax(0, 1fr) minmax(48px, auto);
   gap: 12px;
   align-items: center;
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   min-width: 0;
 }
 
@@ -1065,8 +1252,8 @@ img.state-flag + .state-flag.placeholder {
 
 .timeline-date {
   color: var(--red);
-  font-weight: 900;
-  font-size: 0.86rem;
+  font-weight: 800;
+  font-size: var(--text-md);
 }
 
 .bracket {
@@ -1083,8 +1270,8 @@ img.state-flag + .state-flag.placeholder {
 
 .bracket-title {
   color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -1111,7 +1298,7 @@ img.state-flag + .state-flag.placeholder {
   color: #171a21;
   text-align: center;
   background: rgba(245, 241, 242, 0.92);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.45;
 }
 
@@ -1167,7 +1354,7 @@ img.state-flag + .state-flag.placeholder {
 
 .match-hero-meta {
   color: rgba(255, 255, 255, 0.74);
-  font-size: 0.95rem;
+  font-size: var(--text-lg);
 }
 
 .match-series-info {
@@ -1178,13 +1365,13 @@ img.state-flag + .state-flag.placeholder {
 
 .match-series-info > span:not(.event-logo),
 .match-series-info small {
-  font-size: 0.86rem;
-  font-weight: 850;
+  font-size: var(--text-md);
+  font-weight: 700;
 }
 
 .match-series-info strong {
   font-size: clamp(1.15rem, 1.7vw, 1.75rem);
-  font-weight: 950;
+  font-weight: 800;
   line-height: 1;
 }
 
@@ -1199,8 +1386,8 @@ img.state-flag + .state-flag.placeholder {
   align-items: center;
   justify-content: flex-start;
   gap: 8px;
-  font-size: 1.02rem;
-  font-weight: 950;
+  font-size: var(--text-lg);
+  font-weight: 800;
   text-align: left;
 }
 
@@ -1216,13 +1403,13 @@ img.state-flag + .state-flag.placeholder {
 }
 
 .match-date strong {
-  font-size: 1rem;
+  font-size: var(--text-lg);
   line-height: 1.1;
 }
 
 .match-date span {
-  font-size: 0.88rem;
-  font-weight: 850;
+  font-size: var(--text-md);
+  font-weight: 700;
 }
 
 .match-hero-date strong {
@@ -1241,7 +1428,7 @@ img.state-flag + .state-flag.placeholder {
 .match-team-name {
   align-items: center;
   font-size: clamp(1.7rem, 2vw, 2.28rem);
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .match-team-name .team-logo.large {
@@ -1261,9 +1448,9 @@ img.state-flag + .state-flag.placeholder {
 
 .match-score-core > span,
 .match-score-core em {
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   font-style: normal;
-  font-weight: 850;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -1313,14 +1500,14 @@ img.state-flag + .state-flag.placeholder {
 }
 
 .map-score-side strong {
-  font-size: 2.25rem;
+  font-size: var(--text-3xl);
   line-height: 1;
 }
 
 .map-score-side span,
 .map-center span {
-  font-size: 0.84rem;
-  font-weight: 800;
+  font-size: var(--text-sm);
+  font-weight: 700;
 }
 
 .map-center {
@@ -1331,7 +1518,7 @@ img.state-flag + .state-flag.placeholder {
 }
 
 .map-center h2 {
-  font-size: 1.45rem;
+  font-size: var(--text-2xl);
 }
 
 .map-mini-list {
@@ -1347,7 +1534,7 @@ img.state-flag + .state-flag.placeholder {
   border-radius: var(--radius-pill);
   color: #dcecf1;
   padding: 4px 8px;
-  font-size: 0.76rem;
+  font-size: var(--text-xs);
 }
 
 .round-timeline {
@@ -1360,7 +1547,7 @@ img.state-flag + .state-flag.placeholder {
   justify-content: flex-end;
   gap: 8px;
   min-width: 0;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   text-align: right;
 }
 
@@ -1386,7 +1573,7 @@ img.state-flag + .state-flag.placeholder {
 }
 
 .round-row.numbers span {
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
 }
 
 .round-cell {
@@ -1495,8 +1682,8 @@ img.state-flag + .state-flag.placeholder {
 
 .vlr-board-identity small {
   margin-left: auto;
-  font-size: 0.78rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .vlr-board-metric {
@@ -1508,8 +1695,8 @@ img.state-flag + .state-flag.placeholder {
 
 .vlr-board-metric small {
   display: block;
-  font-size: 0.58rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   line-height: 1;
 }
 
@@ -1517,8 +1704,8 @@ img.state-flag + .state-flag.placeholder {
   display: block;
   min-width: 0;
   overflow: hidden;
-  font-size: 0.76rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   line-height: 1;
   text-overflow: ellipsis;
 }
@@ -1618,7 +1805,7 @@ img.state-flag + .state-flag.placeholder {
   color: inherit;
   cursor: pointer;
   font: inherit;
-  font-weight: 900;
+  font-weight: 800;
   padding: 0;
   text-align: right;
 }
@@ -1654,12 +1841,12 @@ img.state-flag + .state-flag.placeholder {
 .rating-cell.good,
 .numeric.good {
   color: #35dc74;
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .rating-cell.bad,
 .numeric.bad {
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .match-scoreboard .agent-stack {
@@ -1679,8 +1866,8 @@ img.state-flag + .state-flag.placeholder {
   overflow: visible;
   background: transparent;
   color: #9fb8cb;
-  font-size: 0.58rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
 }
 
 .agent-mini img {
@@ -1701,8 +1888,8 @@ img.state-flag + .state-flag.placeholder {
   display: inline-grid;
   place-items: center;
   color: #9fb8cb;
-  font-size: 0.58rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
 }
 
 .role-mini img {
@@ -1733,7 +1920,7 @@ img.state-flag + .state-flag.placeholder {
 .lineup-team-panel header span {
   margin-left: auto;
   color: rgba(234, 245, 246, 0.58);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
 }
 
 .lineup-photo-grid {
@@ -1772,7 +1959,7 @@ img.state-flag + .state-flag.placeholder {
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
 }
 
 .player-portrait {
@@ -1849,7 +2036,7 @@ img.state-flag + .state-flag.placeholder {
 
 .lineup-selected-player strong {
   color: #f5fbfd;
-  font-size: 1.2rem;
+  font-size: var(--text-xl);
   line-height: 1;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
 }
@@ -1859,8 +2046,8 @@ img.state-flag + .state-flag.placeholder {
   align-items: center;
   gap: 8px;
   color: rgba(234, 245, 246, 0.68);
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .lineup-selected-actions {
@@ -1877,8 +2064,8 @@ img.state-flag + .state-flag.placeholder {
   background: rgba(17, 31, 41, 0.82);
   color: #eaf5f6;
   padding: 8px 8px;
-  font-size: 0.72rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .lineup-selected-actions span {
@@ -1903,15 +2090,15 @@ img.state-flag + .state-flag.placeholder {
 
 .lineup-stat-center h3 {
   color: #e9f7fb;
-  font-size: 1.16rem;
+  font-size: var(--text-xl);
   line-height: 1.05;
   letter-spacing: 0;
 }
 
 .lineup-stat-center > small {
   color: rgba(214, 231, 241, 0.68);
-  font-size: 0.74rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .lineup-stat-list {
@@ -1928,8 +2115,8 @@ img.state-flag + .state-flag.placeholder {
 
 .lineup-stat-label {
   color: rgba(234, 245, 246, 0.58);
-  font-size: 0.72rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
@@ -1944,7 +2131,7 @@ img.state-flag + .state-flag.placeholder {
 
 .lineup-stat-value.better {
   color: #ffffff;
-  font-weight: 950;
+  font-weight: 800;
   text-shadow: 0 0 14px rgba(154, 219, 238, 0.36);
 }
 
@@ -1962,11 +2149,11 @@ img.state-flag + .state-flag.placeholder {
 
 .mvp-identity strong {
   display: block;
-  font-size: 1.05rem;
+  font-size: var(--text-lg);
 }
 
 .mvp-identity small {
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .mvp-bars {
@@ -1981,8 +2168,8 @@ img.state-flag + .state-flag.placeholder {
   gap: 8px;
   align-items: center;
   color: rgba(234, 245, 246, 0.72);
-  font-size: 0.78rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .mvp-bar div {
@@ -2019,8 +2206,8 @@ img.state-flag + .state-flag.placeholder {
   align-items: center;
   gap: 8px;
   color: #eaf5f6;
-  font-size: 0.86rem;
-  font-weight: 950;
+  font-size: var(--text-md);
+  font-weight: 800;
 }
 
 .team-compare-row {
@@ -2029,8 +2216,8 @@ img.state-flag + .state-flag.placeholder {
   gap: 8px;
   align-items: center;
   color: rgba(234, 245, 246, 0.72);
-  font-size: 0.74rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .team-compare-track {
@@ -2103,7 +2290,7 @@ img.state-flag + .state-flag.placeholder {
   h1,
   .page-title h1,
   .profile-header h1 {
-    font-size: 2rem;
+    font-size: var(--text-3xl);
     line-height: 1.12;
   }
 
@@ -2130,7 +2317,7 @@ img.state-flag + .state-flag.placeholder {
   }
 
   .team-title-block h1 {
-    font-size: 1.75rem;
+    font-size: var(--text-2xl);
   }
 
   .match-card {
@@ -2201,7 +2388,7 @@ img.state-flag + .state-flag.placeholder {
   .node.d {
     width: 90px;
     height: 58px;
-    font-size: 0.78rem;
+    font-size: var(--text-xs);
   }
 }
 
@@ -2209,7 +2396,7 @@ img.state-flag + .state-flag.placeholder {
 
   .nav-link {
     padding: 0 12px;
-    font-size: 0.84rem;
+    font-size: var(--text-sm);
   }
 
   .hero-copy {
@@ -2217,7 +2404,7 @@ img.state-flag + .state-flag.placeholder {
   }
 
   .hero-copy p {
-    font-size: 0.96rem;
+    font-size: var(--text-lg);
   }
 
   .bar-row {
@@ -2229,7 +2416,7 @@ img.state-flag + .state-flag.placeholder {
   }
 
   .match-team-name {
-    font-size: 1.22rem;
+    font-size: var(--text-xl);
   }
 
   .lineup-photo-grid {
@@ -2264,12 +2451,12 @@ img.state-flag + .state-flag.placeholder {
 .global-search input {
   outline: none;
   border-color: #3a4b5d;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
 }
 
 h1 {
   max-width: 760px;
-  font-size: 1.85rem;
+  font-size: var(--text-3xl);
 }
 
 .slim-header {
@@ -2283,10 +2470,10 @@ h1 {
 }
 
 .eyebrow {
-  font-weight: 850;
+  font-weight: 700;
   text-transform: uppercase;
   color: var(--red);
-  font-size: 0.66rem;
+  font-size: var(--text-2xs);
   letter-spacing: 0;
 }
 
@@ -2308,8 +2495,8 @@ h1 {
 
 .panel-title a,
 .subtle-link {
-  font-size: 0.75rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .ranking-list,
@@ -2345,7 +2532,7 @@ h1 {
 
 .row-main small,
 .tiny {
-  font-size: 0.76rem;
+  font-size: var(--text-xs);
 }
 
 .result-team {
@@ -2373,8 +2560,8 @@ h1 {
   min-height: 21px;
   place-items: center;
   border-radius: var(--radius-sm);
-  font-size: 0.66rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -2387,7 +2574,7 @@ h1 {
 }
 
 .event-numbers {
-  font-size: 0.74rem;
+  font-size: var(--text-xs);
   line-height: 1.35;
   text-align: right;
 }
@@ -2404,7 +2591,7 @@ h1 {
 }
 
 th {
-  font-size: 0.77rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   border-bottom-color: #344557;
   background: #1d2935;
@@ -2412,7 +2599,7 @@ th {
 }
 
 td {
-  font-size: 0.88rem;
+  font-size: var(--text-md);
   border-bottom-color: #24313e;
 }
 
@@ -2456,7 +2643,7 @@ tr:hover td {
 
 .placeholder-panel strong {
   color: #f5f8fb;
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
 }
 
 .chip {
@@ -2466,8 +2653,8 @@ tr:hover td {
   border: 1px solid var(--line);
   border-radius: var(--radius-pill);
   padding: 0 8px;
-  font-size: 0.76rem;
-  font-weight: 760;
+  font-size: var(--text-xs);
+  font-weight: 600;
   white-space: nowrap;
   border-color: #3a4b5d;
 }
@@ -2600,8 +2787,8 @@ tr:hover td {
   border-radius: var(--radius-pill);
   background: #111c27;
   color: #8fa0b1;
-  font-size: 0.76rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
   padding: 8px 8px;
 }
 
@@ -2622,8 +2809,8 @@ tr:hover td {
 
 .ranking-chart-grid text {
   fill: #738699;
-  font-size: 11px;
-  font-weight: 800;
+  font-size: var(--text-2xs);
+  font-weight: 700;
   text-anchor: middle;
 }
 
@@ -2701,14 +2888,14 @@ tr:hover td {
 
 .ranking-chart-tooltip strong {
   color: #fff;
-  font-size: 1rem;
+  font-size: var(--text-lg);
 }
 
 .ranking-chart-tooltip span,
 .ranking-chart-tooltip small {
   color: #9fb8cb;
-  font-size: 0.74rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
   line-height: 1.35;
 }
 
@@ -2743,8 +2930,8 @@ tr:hover td {
 
 .team-insight-row span {
   color: rgba(255, 255, 255, 0.58);
-  font-size: 0.72rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -2755,7 +2942,7 @@ tr:hover td {
 .team-insight-row small {
   grid-column: 2;
   color: rgba(255, 255, 255, 0.64);
-  font-size: 0.74rem;
+  font-size: var(--text-xs);
 }
 
 .team-summary-bars {
@@ -2815,7 +3002,7 @@ tr:hover td {
 .roster-card-body strong {
   overflow: hidden;
   color: #f5f8fb;
-  font-size: 1rem;
+  font-size: var(--text-lg);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -2823,7 +3010,7 @@ tr:hover td {
 .roster-card-body > span {
   overflow: hidden;
   color: #8fa0b1;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -2847,8 +3034,8 @@ tr:hover td {
 .lineup-timeline-axis {
   min-height: 32px;
   color: #738699;
-  font-size: 0.72rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .lineup-axis-track {
@@ -2891,8 +3078,8 @@ tr:hover td {
 
 .lineup-timeline-name small {
   color: #35dc74;
-  font-size: 0.68rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -2926,8 +3113,8 @@ tr:hover td {
 
 .lineup-timeline-meta {
   color: #8fa0b1;
-  font-size: 0.74rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .former-member-list {
@@ -2977,7 +3164,7 @@ tr:hover td {
 .former-member-period small {
   overflow: hidden;
   color: #8fa0b1;
-  font-size: 0.74rem;
+  font-size: var(--text-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -3041,7 +3228,7 @@ tr:hover td {
 
 .team-tournament-title small {
   color: #8fa0b1;
-  font-size: 0.76rem;
+  font-size: var(--text-xs);
 }
 
 .team-placement-badge {
@@ -3056,13 +3243,13 @@ tr:hover td {
 
 .team-placement-badge strong {
   color: #fff;
-  font-size: 1.2rem;
+  font-size: var(--text-xl);
 }
 
 .team-placement-badge small {
   color: #8fa0b1;
-  font-size: 0.64rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -3087,8 +3274,8 @@ tr:hover td {
 
 .team-tournament-stats small {
   color: #8fa0b1;
-  font-size: 0.68rem;
-  font-weight: 850;
+  font-size: var(--text-2xs);
+  font-weight: 700;
 }
 
 .team-player-stats-wrap {
@@ -3107,7 +3294,7 @@ tr:hover td {
   border-bottom: 1px solid #304255;
   background: #192637;
   color: #a8c7e4;
-  font-size: 0.76rem;
+  font-size: var(--text-xs);
   letter-spacing: 0;
 }
 
@@ -3115,7 +3302,7 @@ tr:hover td {
   border-bottom: 1px solid rgba(48, 66, 85, 0.74);
   background: #101820;
   color: #eaf2f8;
-  font-size: 0.86rem;
+  font-size: var(--text-md);
   vertical-align: middle;
 }
 
@@ -3155,7 +3342,7 @@ tr:hover td {
 .team-stats-player small {
   overflow: hidden;
   color: #8fa0b1;
-  font-size: 0.74rem;
+  font-size: var(--text-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -3288,8 +3475,8 @@ tr:hover td {
   margin-top: 8px;
   border: 1px solid rgba(83, 104, 135, 0.24);
   border-radius: var(--radius-md);
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-align: center;
 }
 
@@ -3298,14 +3485,14 @@ tr:hover td {
 }
 
 .rank-position {
-  font-weight: 900;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
   min-width: 24px;
   min-height: 24px;
   display: grid;
   place-items: center;
   border-radius: var(--radius-md);
-  font-size: 0.76rem;
+  font-size: var(--text-xs);
 }
 
 .compact-ranking-row .rank-delta {
@@ -3314,7 +3501,7 @@ tr:hover td {
 
 .row-main strong {
   display: block;
-  font-size: 0.9rem;
+  font-size: var(--text-md);
 }
 
 .row-main small {
@@ -3323,8 +3510,8 @@ tr:hover td {
 }
 
 .row-score {
-  font-weight: 900;
-  font-size: 0.95rem;
+  font-weight: 800;
+  font-size: var(--text-lg);
   text-align: right;
 }
 
@@ -3337,8 +3524,8 @@ tr:hover td {
 }
 
 .ranking-page-toolbar > span {
-  font-size: 0.76rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-align: left;
 }
 
@@ -3364,8 +3551,8 @@ tr:hover td {
   border-radius: var(--radius-pill);
   color: #a9b7c8;
   cursor: pointer;
-  font-size: 0.76rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   white-space: nowrap;
 }
 
@@ -3378,8 +3565,8 @@ tr:hover td {
   border: 1px solid rgba(83, 104, 135, 0.24);
   border-radius: var(--radius-pill);
   color: #a9b7c8;
-  font-size: 0.76rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   white-space: nowrap;
 }
 
@@ -3446,8 +3633,8 @@ tr:hover td {
   color: #91a0b3;
   cursor: pointer;
   font: inherit;
-  font-size: 0.76rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   transition: color 0.18s ease;
 }
 
@@ -3492,8 +3679,8 @@ tr:hover td {
 .ranking-accordion-head {
   min-height: 34px;
   padding: 0 12px;
-  font-size: 0.68rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -3521,7 +3708,7 @@ tr:hover td {
 .ranking-sort-header i {
   width: 10px;
   color: #33d982;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   font-style: normal;
   line-height: 1;
 }
@@ -3554,8 +3741,8 @@ tr:hover td {
   display: grid;
   place-items: center;
   border-radius: var(--radius-md);
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .rank-change-head {
@@ -3566,8 +3753,8 @@ tr:hover td {
 .rank-delta {
   min-width: 0;
   color: #7d8da1;
-  font-size: 0.72rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   line-height: 1;
   text-align: center;
   text-transform: uppercase;
@@ -3577,7 +3764,7 @@ tr:hover td {
 .rank-change-cell.new,
 .rank-delta.new {
   color: #f2f6fb;
-  font-size: 0.64rem;
+  font-size: var(--text-2xs);
   letter-spacing: 0.02em;
 }
 
@@ -3614,21 +3801,21 @@ tr:hover td {
 }
 
 .ranking-team-cell strong {
-  font-size: 0.92rem;
+  font-size: var(--text-md);
 }
 
 .ranking-team-cell small {
   margin-top: 2px;
-  font-size: 0.74rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .ranking-lineup-inline {
   min-width: 0;
   overflow: hidden;
   color: #aab8c9;
-  font-size: 0.76rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
   line-height: 1.25;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -3651,8 +3838,8 @@ tr:hover td {
 .ranking-score-cell {
   justify-self: center;
   min-width: 64px;
-  font-size: 1.28rem;
-  font-weight: 950;
+  font-size: var(--text-xl);
+  font-weight: 800;
   letter-spacing: 0.01em;
   line-height: 1;
   transition: background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, padding 0.22s ease, font-size 0.22s ease;
@@ -3668,14 +3855,14 @@ tr:hover td {
   background:
     linear-gradient(135deg, rgba(39, 221, 128, 0.18), rgba(105, 224, 160, 0.08)),
     rgba(39, 221, 128, 0.08);
-  font-size: 1.18rem;
+  font-size: var(--text-xl);
   box-shadow: 0 0 0 1px rgba(39, 221, 128, 0.08), 0 10px 28px rgba(12, 140, 73, 0.14);
   text-shadow: none;
 }
 
 .ranking-score-head {
   justify-self: center;
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   letter-spacing: 0.04em;
 }
 
@@ -3713,7 +3900,7 @@ tr:hover td {
   border-radius: var(--radius-md);
   background: rgba(135, 154, 180, 0.12);
   color: #adc0d5;
-  font-weight: 900;
+  font-weight: 800;
   transition: transform 0.22s ease, background 0.22s ease;
 }
 
@@ -3786,13 +3973,13 @@ tr:hover td {
 }
 
 .ranking-lineup-card strong {
-  font-size: 0.84rem;
+  font-size: var(--text-sm);
 }
 
 .ranking-lineup-card small {
   color: #aab7c7;
-  font-size: 0.7rem;
-  font-weight: 800;
+  font-size: var(--text-2xs);
+  font-weight: 700;
 }
 
 .ranking-team-actions {
@@ -3808,8 +3995,8 @@ tr:hover td {
   border: 0;
   cursor: pointer;
   font: inherit;
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-align: center;
 }
 
@@ -3870,8 +4057,8 @@ tr:hover td {
 
 .ranking-score-ring strong {
   color: #f5fafc;
-  font-size: 2rem;
-  font-weight: 950;
+  font-size: var(--text-3xl);
+  font-weight: 800;
   line-height: 1;
   transform: translateY(-8px);
 }
@@ -3883,8 +4070,8 @@ tr:hover td {
   left: 0;
   text-align: center;
   color: #8fa2b8;
-  font-size: 0.68rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -3896,13 +4083,13 @@ tr:hover td {
 .ranking-score-copy h3,
 .ranking-visual-explainer h3 {
   color: #f2f6fb;
-  font-size: 1rem;
+  font-size: var(--text-lg);
 }
 
 .ranking-score-copy p,
 .ranking-note {
   color: #9ba9bb;
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   line-height: 1.45;
 }
 
@@ -3917,8 +4104,8 @@ tr:hover td {
   border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.05);
   color: #dbe5ee;
-  font-size: 0.72rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   padding: 8px 8px;
 }
 
@@ -3936,8 +4123,8 @@ tr:hover td {
 
 .ranking-section-title span {
   color: #74849a;
-  font-size: 0.72rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -3974,7 +4161,7 @@ tr:hover td {
 .ranking-fallback-card strong,
 .ranking-achievement-list strong {
   color: #f2f6fb;
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .ranking-weight-meta span,
@@ -3982,8 +4169,8 @@ tr:hover td {
 .ranking-fallback-card span,
 .ranking-achievement-list small {
   color: #8796aa;
-  font-size: 0.72rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .ranking-bar-track {
@@ -4031,7 +4218,7 @@ tr:hover td {
 
 .ranking-mini-card strong,
 .ranking-fallback-card strong {
-  font-size: 1.15rem;
+  font-size: var(--text-xl);
 }
 
 .ranking-achievement-card {
@@ -4084,8 +4271,8 @@ tr:hover td {
   border-radius: var(--radius-md);
   background: #060a12;
   color: #dce8f4;
-  font-size: 0.74rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
   line-height: 1.42;
   opacity: 0;
   pointer-events: none;
@@ -4218,11 +4405,11 @@ tr:hover td {
 }
 
 .result-score b {
-  font-size: 0.88rem;
+  font-size: var(--text-md);
 }
 
 .result-team strong {
-  font-size: 0.82rem;
+  font-size: var(--text-sm);
 }
 
 .page-header {
@@ -4233,7 +4420,7 @@ tr:hover td {
 }
 
 .page-title h1 {
-  font-size: 1.85rem;
+  font-size: var(--text-3xl);
 }
 
 .filters-toolbar {
@@ -4255,8 +4442,8 @@ tr:hover td {
   border-radius: var(--radius-sm);
   color: #b8c7d6;
   padding: 0 8px;
-  font-size: 0.72rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
   border-color: rgba(83, 104, 135, 0.34);
   background: #101827;
 }
@@ -4358,7 +4545,7 @@ body {
 .result-score {
   display: grid;
   font-variant-numeric: tabular-nums;
-  font-weight: 900;
+  font-weight: 800;
   min-height: 30px;
   border-radius: var(--radius-sm);
   color: #fff;
@@ -4381,14 +4568,14 @@ body {
   grid-column: 1 / -1;
   line-height: 1;
   color: rgba(255, 255, 255, 0.86);
-  font-size: 0.62rem;
+  font-size: var(--text-2xs);
   text-transform: uppercase;
   margin-top: 2px;
 }
 
 .result-meta {
   line-height: 1.35;
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   display: grid;
   grid-template-columns: minmax(0, 1fr) 28px;
   gap: 8px;
@@ -4457,8 +4644,8 @@ body {
   max-width: 100%;
   margin: 0;
   color: var(--univlr-white, #f5f1f2);
-  font-size: 2.1rem;
-  font-weight: 950;
+  font-size: var(--text-3xl);
+  font-weight: 800;
   line-height: 1.05;
   white-space: nowrap;
 }
@@ -4470,13 +4657,13 @@ body {
   }
 
   .stats-maintenance-page h1 {
-    font-size: 1.1rem;
+    font-size: var(--text-lg);
   }
 }
 
 @media (max-width: 560px) {
   .stats-maintenance-page h1 {
-    font-size: 0.86rem;
+    font-size: var(--text-md);
   }
 }
 
@@ -4502,8 +4689,8 @@ body {
   border-radius: var(--radius-md);
   cursor: pointer;
   font: inherit;
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   padding: 0 12px;
   text-align: left;
 }
@@ -4518,8 +4705,8 @@ body {
   list-style: none;
   border-bottom: 1px solid rgba(83, 104, 135, 0.16);
   padding: 0 12px;
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .filter-dropdown summary::-webkit-details-marker {
@@ -4529,7 +4716,7 @@ body {
 .filter-dropdown summary strong {
   overflow: hidden;
   color: #8fa2b8;
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -4576,13 +4763,13 @@ body {
   background: #0b121c;
   color: #dce8f6;
   font: inherit;
-  font-weight: 900;
+  font-weight: 800;
   cursor: pointer;
 }
 
 .filter-pill {
   min-height: 32px;
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
 }
 
 .filter-pill:hover,
@@ -4647,7 +4834,7 @@ body {
   position: relative;
   z-index: 1;
   overflow: hidden;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   text-overflow: ellipsis;
   text-transform: uppercase;
   white-space: nowrap;
@@ -4752,14 +4939,14 @@ body {
 .team-filter-empty {
   min-width: 28px;
   color: #8ea2b8;
-  font-size: 0.62rem;
+  font-size: var(--text-2xs);
   text-align: center;
   text-transform: uppercase;
 }
 
 .compact-empty {
   padding: 12px 8px;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
 }
 
 .full-list-panel .result-maps {
@@ -4831,8 +5018,8 @@ body {
   border-radius: var(--radius-sm);
   background: rgba(8, 17, 28, 0.68);
   color: #b9cbe0;
-  font-size: 0.58rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   letter-spacing: 0;
   line-height: 1.35;
   text-align: center;
@@ -4843,8 +5030,8 @@ body {
   background: rgba(8, 17, 28, 0.58);
   padding: 2px 4px;
   color: #fff;
-  font-size: 0.72rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
@@ -4860,8 +5047,8 @@ body {
   display: grid;
   place-items: center;
   color: #a8b7c8;
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .result-team.left {
@@ -4919,7 +5106,7 @@ body {
   width: 36px;
   height: 36px;
   border-radius: var(--radius-md);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
 }
 
 .event-logo.clean-logo {
@@ -4945,13 +5132,13 @@ body {
   width: 24px;
   height: 24px;
   border-radius: var(--radius-md);
-  font-size: 0.54rem;
+  font-size: var(--text-2xs);
 }
 
 .event-logo.large {
   width: 82px;
   height: 82px;
-  font-size: 1rem;
+  font-size: var(--text-lg);
 }
 
 .map-logo.image-logo img {
@@ -4974,7 +5161,7 @@ body {
   display: grid;
   gap: 4px;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: var(--text-sm);
   min-width: 0;
   grid-template-columns: 24px minmax(0, 1fr);
   align-items: center;
@@ -5001,7 +5188,7 @@ body {
   border: 1px solid var(--line);
   outline: none;
   padding: 0 8px;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   min-height: 34px;
   border-radius: var(--radius-md);
   min-width: 170px;
@@ -5034,7 +5221,7 @@ body {
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   color: var(--muted);
   padding: 0 16px;
-  font-weight: 880;
+  font-weight: 800;
   white-space: normal;
 }
 
@@ -5136,7 +5323,7 @@ td {
 .match-scoreboard th,
 .match-scoreboard td {
   padding: 8px 4px;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
 }
 
 .agent-stack {
@@ -5238,8 +5425,8 @@ td {
   border: 1px solid rgba(199, 214, 234, 0.18);
   background: rgba(6, 14, 25, 0.72);
   color: #d9e5f3;
-  font-size: 0.82rem;
-  font-weight: 800;
+  font-size: var(--text-sm);
+  font-weight: 700;
   padding: 8px 12px;
 }
 
@@ -5251,8 +5438,8 @@ td {
   min-height: 30px;
   background: #2ed28f;
   color: #06101a;
-  font-size: 0.74rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   letter-spacing: 0.06em;
   padding: 0 20px 0 12px;
   text-transform: uppercase;
@@ -5332,28 +5519,28 @@ td {
 .tournament-organizer-card strong {
   overflow: hidden;
   color: #fff;
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .tournament-organizer-card small {
   color: #aebbd0;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .tournament-card-kicker,
 .tournament-section-head span {
   color: #8fa0b7;
-  font-size: 0.7rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .tournament-hero-card strong {
   color: #fff;
-  font-size: 1.16rem;
+  font-size: var(--text-xl);
 }
 
 .tournament-hero-card small {
@@ -5382,14 +5569,14 @@ td {
 
 .tournament-facts small {
   color: #7f8ea3;
-  font-size: 0.7rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
 .tournament-facts strong {
   color: #edf4fb;
-  font-size: 0.86rem;
+  font-size: var(--text-md);
   line-height: 1.35;
   overflow-wrap: anywhere;
 }
@@ -5413,13 +5600,13 @@ td {
 .tournament-overview-card strong {
   min-width: 0;
   color: #f6f9fd;
-  font-size: 1rem;
+  font-size: var(--text-lg);
 }
 
 .tournament-overview-card small {
   color: #9fb0c5;
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
   line-height: 1.45;
 }
 
@@ -5468,8 +5655,8 @@ td {
   border: 1px solid rgba(142, 162, 193, 0.18);
   background: rgba(7, 14, 24, 0.32);
   color: #dce7f5;
-  font-size: 0.72rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   padding: 8px 8px;
 }
 
@@ -5522,15 +5709,15 @@ td {
 }
 
 .tournament-map-banner strong {
-  font-size: 0.78rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.58);
 }
 
 .tournament-map-banner small {
   color: #d7e5f4;
-  font-size: 0.64rem;
-  font-weight: 850;
+  font-size: var(--text-2xs);
+  font-weight: 700;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.58);
 }
 
@@ -5549,12 +5736,12 @@ td {
 }
 
 .tournament-mini-stats strong {
-  font-size: 1rem;
+  font-size: var(--text-lg);
 }
 
 .tournament-mini-stats small {
   color: #7f8ea3;
-  font-size: 0.66rem;
+  font-size: var(--text-2xs);
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
@@ -5575,8 +5762,8 @@ td {
   border: 1px solid rgba(142, 162, 193, 0.14);
   background: rgba(7, 14, 24, 0.28);
   color: #dce7f5;
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   padding: 12px;
   text-align: center;
 }
@@ -5596,7 +5783,7 @@ td {
 
 .tournament-podium-card b {
   color: #8fa0b7;
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   text-transform: uppercase;
 }
 
@@ -5634,8 +5821,8 @@ td {
   place-items: center;
   border-right: 1px solid #223147;
   color: #aebbd0;
-  font-size: 0.78rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .tournament-tabs a:last-child,
@@ -5665,8 +5852,8 @@ td {
   min-width: 150px;
   border-right: 1px solid #223147;
   color: #91a2b8;
-  font-size: 0.78rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   letter-spacing: 0.02em;
   padding: 0 20px;
   text-transform: uppercase;
@@ -5775,8 +5962,8 @@ td {
 .tournament-section-head h2 {
   margin: 0;
   color: #f2f6fb;
-  font-size: 0.86rem;
-  font-weight: 950;
+  font-size: var(--text-md);
+  font-weight: 800;
 }
 
 .tournament-stage-track {
@@ -5813,15 +6000,15 @@ td {
 .tournament-team-card em,
 .tournament-placement-card small {
   color: #90a0b4;
-  font-size: 0.74rem;
+  font-size: var(--text-xs);
   font-style: normal;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .tournament-placement-card small.placement-reason {
   margin-top: -3px;
   color: #7c8ca2;
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
 }
 
 .tournament-bracket {
@@ -5898,8 +6085,8 @@ td {
 .tournament-bracket-note {
   margin: 0;
   color: #91a2b8;
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .tournament-bracket-region {
@@ -5926,8 +6113,8 @@ td {
 .tournament-bracket-region > h3 {
   margin: 0;
   color: #edf4fb;
-  font-size: 0.78rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -5964,8 +6151,8 @@ td {
 .tournament-bracket-col h3 {
   margin: 0;
   color: #8fa0b7;
-  font-size: 0.72rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -6076,8 +6263,8 @@ a.tournament-bracket-match:hover {
   align-items: center;
   height: 30px;
   color: #7f8ea3;
-  font-size: 0.68rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   overflow: hidden;
   padding: 0 8px;
 }
@@ -6102,7 +6289,7 @@ a.tournament-bracket-match:hover {
   border-top: 1px solid rgba(134, 157, 190, 0.16);
   background: rgba(9, 17, 28, 0.22);
   color: #aebbd0;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   overflow: hidden;
   padding: 0 0 0 8px;
 }
@@ -6173,8 +6360,8 @@ a.tournament-bracket-match:hover {
   min-height: 30px;
   color: #8fa0b7;
   cursor: pointer;
-  font-size: 0.68rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   padding: 0 12px;
   text-transform: uppercase;
 }
@@ -6234,8 +6421,8 @@ a.tournament-bracket-match:hover {
   background: rgba(5, 12, 20, 0.78);
   color: #dbe7f6;
   cursor: pointer;
-  font-size: 1.1rem;
-  font-weight: 950;
+  font-size: var(--text-lg);
+  font-weight: 800;
   line-height: 1;
   transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, opacity 0.16s ease;
 }
@@ -6334,8 +6521,8 @@ a.tournament-bracket-match:hover {
 
 .swiss-flow-round-head strong {
   overflow: hidden;
-  font-size: 0.86rem;
-  font-weight: 950;
+  font-size: var(--text-md);
+  font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -6343,9 +6530,9 @@ a.tournament-bracket-match:hover {
 .swiss-flow-round-head small,
 .swiss-flow-round-head em {
   color: #8fa0b7;
-  font-size: 0.62rem;
+  font-size: var(--text-2xs);
   font-style: normal;
-  font-weight: 950;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -6445,8 +6632,8 @@ a.tournament-bracket-match:hover {
 }
 
 .swiss-flow-group-head strong {
-  font-size: 0.86rem;
-  font-weight: 950;
+  font-size: var(--text-md);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
@@ -6457,8 +6644,8 @@ a.tournament-bracket-match:hover {
   min-height: 20px;
   background: rgba(255, 255, 255, 0.08);
   color: #c8d6e8;
-  font-size: 0.58rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
@@ -6536,8 +6723,8 @@ a.tournament-bracket-match:hover {
   max-width: 84px;
   min-width: 0;
   overflow: hidden;
-  font-size: 0.74rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-overflow: ellipsis;
   text-transform: uppercase;
   white-space: nowrap;
@@ -6564,14 +6751,14 @@ a.tournament-bracket-match:hover {
   place-items: center;
   min-height: 34px;
   color: #57de9d;
-  font-size: 0.82rem;
-  font-weight: 950;
+  font-size: var(--text-sm);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
 .swiss-flow-match.pending .swiss-flow-score {
   color: #9fb1c8;
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
 }
 
 .swiss-flow-match small {
@@ -6579,8 +6766,8 @@ a.tournament-bracket-match:hover {
   max-height: 0;
   overflow: hidden;
   color: #73869e;
-  font-size: 0.56rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   opacity: 0;
   text-align: center;
   text-transform: uppercase;
@@ -6613,14 +6800,14 @@ a.tournament-bracket-match:hover {
 
 .swiss-round-tabs label strong {
   color: #f6f9fd;
-  font-size: 0.8rem;
-  font-weight: 950;
+  font-size: var(--text-sm);
+  font-weight: 800;
 }
 
 .swiss-round-tabs label small {
   color: #8fa0b7;
-  font-size: 0.68rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -6657,16 +6844,16 @@ a.tournament-bracket-match:hover {
 
 .swiss-round-header strong {
   color: #f6f9fd;
-  font-size: 0.9rem;
-  font-weight: 950;
+  font-size: var(--text-md);
+  font-weight: 800;
 }
 
 .swiss-round-header small,
 .swiss-round-header em {
   color: #8fa0b7;
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   font-style: normal;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -6703,15 +6890,15 @@ a.tournament-bracket-match:hover {
 
 .swiss-score-group-head strong {
   color: #f6f9fd;
-  font-size: 0.9rem;
-  font-weight: 950;
+  font-size: var(--text-md);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
 .swiss-score-group-head small {
   color: #8fa0b7;
-  font-size: 0.68rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -6767,8 +6954,8 @@ a.tournament-bracket-match:hover {
   min-height: 30px;
   color: #8fa0b7;
   cursor: pointer;
-  font-size: 0.68rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   padding: 0 12px;
   text-transform: uppercase;
 }
@@ -6808,8 +6995,8 @@ a.tournament-bracket-match:hover {
 .swiss-standings-block h3 {
   margin: 0;
   color: #f6f9fd;
-  font-size: 0.84rem;
-  font-weight: 950;
+  font-size: var(--text-sm);
+  font-weight: 800;
 }
 
 .swiss-state-standing-groups {
@@ -6879,16 +7066,16 @@ a.tournament-bracket-match:hover {
 
 .swiss-state-standings-head strong {
   overflow: hidden;
-  font-size: 0.82rem;
-  font-weight: 950;
+  font-size: var(--text-sm);
+  font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .swiss-state-standings-head small {
   color: #8fa0b7;
-  font-size: 0.64rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -6907,15 +7094,15 @@ a.tournament-bracket-match:hover {
 
 .tournament-swiss-table th {
   color: #8fa0b7;
-  font-size: 0.68rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
 .tournament-swiss-table td {
   color: #dbe7f6;
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .tournament-swiss-table td:nth-child(2) {
@@ -6964,8 +7151,8 @@ a.tournament-bracket-match:hover {
   border: 1px solid rgba(65, 212, 155, 0.24);
   background: rgba(65, 212, 155, 0.1);
   color: #69e7aa;
-  font-size: 0.66rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   padding: 0 8px;
   text-transform: uppercase;
 }
@@ -7030,8 +7217,8 @@ a.tournament-bracket-match:hover {
 
 .tournament-placement-card > span {
   color: #b8c4d4;
-  font-size: 0.92rem;
-  font-weight: 950;
+  font-size: var(--text-md);
+  font-weight: 800;
 }
 
 .tournament-placement-card:hover,
@@ -7094,8 +7281,8 @@ a.tournament-bracket-match:hover {
   place-items: center;
   border-radius: var(--radius-sm);
   padding: 0 8px;
-  font-size: 0.68rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   right: 7px;
   background: #d98c21;
   color: #111820;
@@ -7165,8 +7352,8 @@ a.tournament-bracket-match:hover {
   gap: 8px;
   min-width: 0;
   color: #dbe7f6;
-  font-size: 0.76rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .tournament-map-bar-label strong {
@@ -7209,8 +7396,8 @@ a.tournament-bracket-match:hover {
 .tournament-map-side-label {
   overflow: hidden;
   color: #dbe7f6;
-  font-size: 0.74rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -7254,8 +7441,8 @@ a.tournament-bracket-match:hover {
 .tournament-map-side-bars b,
 .tournament-map-bar-row .numeric {
   color: #f6f9fd;
-  font-size: 0.72rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
@@ -7265,8 +7452,8 @@ a.tournament-bracket-match:hover {
   gap: 16px;
   border-top: 1px solid rgba(142, 162, 193, 0.12);
   color: #8fa0b7;
-  font-size: 0.68rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   padding: 8px 12px 12px;
   text-transform: uppercase;
 }
@@ -7332,15 +7519,15 @@ a.tournament-bracket-match:hover {
 .tournament-map-agent-table th {
   background: #0f1928;
   color: #8fa0b7;
-  font-size: 0.64rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
 .tournament-map-agent-table td {
   color: #dbe7f6;
-  font-size: 0.72rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
@@ -7360,8 +7547,8 @@ a.tournament-bracket-match:hover {
 
 .tournament-map-agent-map-cell small {
   color: #8fa0b7;
-  font-size: 0.64rem;
-  font-weight: 850;
+  font-size: var(--text-2xs);
+  font-weight: 700;
 }
 
 .tournament-map-agent-banner {
@@ -7414,8 +7601,8 @@ a.tournament-bracket-match:hover {
 .tournament-map-agent-banner strong {
   overflow: hidden;
   color: #fff;
-  font-size: 0.78rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   line-height: 1.05;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -7423,14 +7610,14 @@ a.tournament-bracket-match:hover {
 
 .tournament-map-agent-banner small {
   color: rgba(246, 249, 253, 0.72);
-  font-size: 0.63rem;
-  font-weight: 850;
+  font-size: var(--text-2xs);
+  font-weight: 700;
 }
 
 .tournament-map-agent-table tr.summary-row td {
   background: #142033;
   color: #fff;
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .tournament-map-agent-table tr.summary-row td:first-child {
@@ -7484,14 +7671,14 @@ a.tournament-bracket-match:hover {
 
 .tournament-stat-card-head strong {
   color: #f6f9fd;
-  font-size: 0.9rem;
-  font-weight: 950;
+  font-size: var(--text-md);
+  font-weight: 800;
 }
 
 .tournament-stat-card-head small {
   color: #8fa0b7;
-  font-size: 0.72rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .tournament-stat-expand {
@@ -7502,8 +7689,8 @@ a.tournament-bracket-match:hover {
   color: #dbe7f6;
   cursor: pointer;
   font: inherit;
-  font-size: 0.7rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   padding: 0 12px;
   white-space: nowrap;
 }
@@ -7538,8 +7725,8 @@ a.tournament-bracket-match:hover {
 
 .stat-rank {
   color: #73849b;
-  font-size: 0.74rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-align: center;
 }
 
@@ -7558,8 +7745,8 @@ a.tournament-bracket-match:hover {
 .stat-row-main strong {
   overflow: hidden;
   color: #fff;
-  font-size: 0.82rem;
-  font-weight: 950;
+  font-size: var(--text-sm);
+  font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -7567,8 +7754,8 @@ a.tournament-bracket-match:hover {
 .stat-row-main small,
 .stat-row-metric small {
   color: #8697ad;
-  font-size: 0.66rem;
-  font-weight: 800;
+  font-size: var(--text-2xs);
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -7581,8 +7768,8 @@ a.tournament-bracket-match:hover {
 
 .stat-row-metric strong {
   color: #f6f9fd;
-  font-size: 0.86rem;
-  font-weight: 950;
+  font-size: var(--text-md);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
@@ -7613,8 +7800,8 @@ a.tournament-bracket-match:hover {
 .tournament-agent-highlight-main .stat-row-main > small {
   overflow: hidden;
   color: #8fa0b7;
-  font-size: 0.68rem;
-  font-weight: 800;
+  font-size: var(--text-2xs);
+  font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -7639,8 +7826,8 @@ a.tournament-bracket-match:hover {
 .tournament-agent-highlight-metrics strong {
   overflow: hidden;
   color: #f6f9fd;
-  font-size: 0.84rem;
-  font-weight: 950;
+  font-size: var(--text-sm);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -7648,8 +7835,8 @@ a.tournament-bracket-match:hover {
 
 .tournament-agent-highlight-metrics small {
   color: #7f8ea3;
-  font-size: 0.62rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -7666,8 +7853,8 @@ a.tournament-bracket-match:hover {
 
 .tournament-stat-filter span {
   color: #8fa0b7;
-  font-size: 0.68rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -7706,7 +7893,7 @@ a.tournament-bracket-match:hover {
   border-bottom: 1px solid rgba(142, 162, 193, 0.14);
   background: #111b2a;
   color: #dbe7f6;
-  font-size: 0.74rem;
+  font-size: var(--text-xs);
   padding: 8px 8px;
   vertical-align: middle;
 }
@@ -7722,8 +7909,8 @@ a.tournament-bracket-match:hover {
   z-index: 1;
   background: #1a283a;
   color: #dbe7f6;
-  font-size: 0.68rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
@@ -7748,7 +7935,7 @@ a.tournament-bracket-match:hover {
 .tournament-stat-sort i {
   width: 10px;
   color: #8fa0b7;
-  font-size: 0.62rem;
+  font-size: var(--text-2xs);
   font-style: normal;
 }
 
@@ -7787,8 +7974,8 @@ a.tournament-bracket-match:hover {
   place-items: center;
   overflow: visible;
   color: #dbe7f6;
-  font-size: 0.62rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
 }
 
 .tournament-agent-logo img {
@@ -7804,8 +7991,8 @@ a.tournament-bracket-match:hover {
   align-items: center;
   min-width: 0;
   color: #8798af;
-  font-size: 0.68rem;
-  font-weight: 800;
+  font-size: var(--text-2xs);
+  font-weight: 700;
 }
 
 .role-pill.compact .role-mini {
@@ -7844,7 +8031,7 @@ a.tournament-bracket-match:hover {
 .tournament-agent-cell strong {
   overflow: hidden;
   color: #fff;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -7853,8 +8040,8 @@ a.tournament-bracket-match:hover {
 .tournament-stats-team-cell small,
 .tournament-agent-cell small {
   color: #8798af;
-  font-size: 0.68rem;
-  font-weight: 800;
+  font-size: var(--text-2xs);
+  font-weight: 700;
 }
 
 .tournament-stats-table .agent-stack {
@@ -7892,15 +8079,15 @@ a.tournament-bracket-match:hover {
   max-width: 290px;
   overflow: hidden;
   color: #8798af;
-  font-size: 0.68rem;
-  font-weight: 800;
+  font-size: var(--text-2xs);
+  font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .tournament-stat-value {
   color: #dbe7f6;
-  font-weight: 900;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
@@ -7926,13 +8113,13 @@ a.tournament-bracket-match:hover {
 
 .tournament-mini-meta strong {
   color: #fff;
-  font-size: 0.88rem;
+  font-size: var(--text-md);
 }
 
 .tournament-mini-meta small {
   color: #94a4ba;
-  font-size: 0.7rem;
-  font-weight: 850;
+  font-size: var(--text-2xs);
+  font-weight: 700;
 }
 
 .tournament-info-list {
@@ -7960,14 +8147,14 @@ a.tournament-bracket-match:hover {
 
 .tournament-info-list dt {
   color: #8fa0b7;
-  font-size: 0.72rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .tournament-info-list dd {
   color: #eef4fb;
-  font-size: 0.78rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
   overflow-wrap: anywhere;
 }
 
@@ -8007,13 +8194,13 @@ a.tournament-bracket-match:hover {
 
 .tournament-map-card span {
   color: #fff;
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .tournament-map-card small {
   color: #d0d9e5;
-  font-size: 0.72rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .tournament-match-preview {
@@ -8057,7 +8244,7 @@ a.tournament-bracket-match:hover {
   border-radius: var(--radius-sm);
   background: #101b2a;
   color: #b8c7d8;
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .preview-close:hover,
@@ -8068,8 +8255,8 @@ a.tournament-bracket-match:hover {
 
 .preview-kicker {
   color: #91a2b8;
-  font-size: 0.72rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -8081,14 +8268,14 @@ a.tournament-bracket-match:hover {
   align-items: center;
   margin: 0;
   color: #fff;
-  font-size: 1.35rem;
+  font-size: var(--text-xl);
 }
 
 .tournament-match-preview-card h3 span {
   border: 1px solid #2d4057;
   border-radius: var(--radius-pill);
   color: #91a2b8;
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   padding: 4px 8px;
 }
 
@@ -8120,8 +8307,8 @@ a.tournament-bracket-match:hover {
 
 .preview-team small {
   color: #7f90a5;
-  font-size: 0.72rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .preview-team.winner strong,
@@ -8135,15 +8322,15 @@ a.tournament-bracket-match:hover {
   justify-content: center;
   gap: 12px;
   color: #fff;
-  font-size: 2rem;
-  font-weight: 950;
+  font-size: var(--text-3xl);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
 .preview-score small {
   align-self: center;
   color: #64768a;
-  font-size: 1rem;
+  font-size: var(--text-lg);
 }
 
 .preview-summary-grid,
@@ -8166,8 +8353,8 @@ a.tournament-bracket-match:hover {
 .preview-summary-grid small,
 .preview-map-list small {
   color: #8797aa;
-  font-size: 0.68rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -8175,16 +8362,16 @@ a.tournament-bracket-match:hover {
 .preview-map-list strong {
   overflow: hidden;
   color: #f2f7fb;
-  font-size: 0.84rem;
+  font-size: var(--text-sm);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .preview-map-list em {
   color: #41d49b;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   font-style: normal;
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .preview-series {
@@ -8209,8 +8396,8 @@ a.tournament-bracket-match:hover {
   background: #101b2a;
   color: #d7e2ee;
   font: inherit;
-  font-size: 0.82rem;
-  font-weight: 950;
+  font-size: var(--text-sm);
+  font-weight: 800;
   padding: 0 16px;
 }
 
@@ -8237,8 +8424,8 @@ a.tournament-bracket-match:hover {
   border-radius: var(--radius-sm);
   background: rgba(65, 212, 155, 0.1);
   color: #bff7dc;
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   padding: 8px 12px;
 }
 
@@ -8254,8 +8441,8 @@ a.tournament-bracket-match:hover {
   border-radius: var(--radius-pill);
   background: #41d49b;
   color: #04100b;
-  font-size: 0.72rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .tournament-lineup-preview-card {
@@ -8284,8 +8471,8 @@ a.tournament-bracket-match:hover {
 
 .lineup-preview-header small {
   color: #8fa0b7;
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .tournament-lineup-grid {
@@ -8319,8 +8506,8 @@ a.tournament-bracket-match:hover {
   border-right: 1px solid #24364b;
   color: #8fa0b7;
   cursor: pointer;
-  font-size: 0.76rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -8392,7 +8579,7 @@ a.tournament-bracket-match:hover {
 .lineup-player-main strong {
   overflow: hidden;
   color: #f2f7fb;
-  font-size: 0.92rem;
+  font-size: var(--text-md);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -8400,8 +8587,8 @@ a.tournament-bracket-match:hover {
 .lineup-player-main small {
   overflow: hidden;
   color: #7f90a5;
-  font-size: 0.72rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -8421,8 +8608,8 @@ a.tournament-bracket-match:hover {
   border: 1px solid #25364a;
   background: #162337;
   color: #9fb0c5;
-  font-size: 0.62rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
 }
 
 .lineup-agent-pile img {
@@ -8436,13 +8623,13 @@ a.tournament-bracket-match:hover {
   justify-items: end;
   gap: 2px;
   color: #f2f7fb;
-  font-size: 0.78rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .lineup-player-stat small {
   color: #718399;
-  font-size: 0.62rem;
+  font-size: var(--text-2xs);
   text-transform: uppercase;
 }
 
@@ -8471,7 +8658,7 @@ a.tournament-bracket-match:hover {
 }
 
 .lineup-match-list .result-team strong {
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
 }
 
 .lineup-match-list .result-score {
@@ -8536,7 +8723,7 @@ a.tournament-bracket-match:hover {
   }
 
   .tournament-title-row h1 {
-    font-size: 2rem;
+    font-size: var(--text-3xl);
   }
 
   .tournament-hero .event-logo.hero {
@@ -8644,7 +8831,7 @@ a.tournament-bracket-match:hover {
 }
 
 .univlr-title h1 {
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .hub-panel,
@@ -8692,7 +8879,7 @@ a.tournament-bracket-match:hover {
 }
 
 .panel-title h2 {
-  font-size: 0.82rem;
+  font-size: var(--text-sm);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -8918,7 +9105,7 @@ input::placeholder {
 
 .full-list-panel .result-meta {
   grid-template-columns: minmax(0, 1fr);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
 }
 
 .full-list-panel .result-maps {
@@ -8948,14 +9135,14 @@ input::placeholder {
   overflow: hidden;
   content: attr(data-map);
   color: rgba(255, 255, 255, 0.2);
-  font-weight: 900;
+  font-weight: 800;
   line-height: 1;
   text-overflow: clip;
   text-transform: uppercase;
   white-space: nowrap;
   right: 6px;
   max-width: 76%;
-  font-size: 0.92rem;
+  font-size: var(--text-md);
 }
 
 .filter-dropdown,
@@ -9070,7 +9257,7 @@ input::placeholder {
   border: 1px solid #071116;
   border-radius: var(--radius-sm);
   color: #f1f3e8;
-  font-weight: 860;
+  font-weight: 700;
   isolation: isolate;
   padding: 0 12px;
   text-align: center;
@@ -9143,8 +9330,8 @@ input::placeholder {
   min-width: 25px;
   min-height: 25px;
   color: #fff;
-  font-size: 0.66rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   background: rgba(245, 241, 242, 0.08);
 }
 
@@ -9176,8 +9363,8 @@ input::placeholder {
   inset: 0;
   display: grid;
   place-items: center;
-  font-size: 0.7rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.74);
   color: var(--univlr-white);
 }
@@ -9188,10 +9375,10 @@ body {
   margin: 0;
   min-width: 320px;
   font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+    var(--font-text);
   letter-spacing: 0;
-  font-size: 13px;
+  font-size: var(--text-sm);
+  line-height: 1.45;
   color: var(--ink);
   background:
     linear-gradient(180deg, rgba(246, 19, 42, 0.08), transparent 240px),
@@ -9239,8 +9426,8 @@ body {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  font-weight: 900;
-  font-size: 0.62rem;
+  font-weight: 800;
+  font-size: var(--text-2xs);
   width: 24px;
   height: 24px;
   top: 8px;
@@ -9251,7 +9438,7 @@ body {
 
 .footer {
   color: var(--muted);
-  font-size: 0.86rem;
+  font-size: var(--text-md);
   padding: 16px 0;
   border: 0;
   text-align: center;
@@ -9546,11 +9733,11 @@ select {
 .nav-link {
   display: inline-flex;
   align-items: center;
-  font-weight: 750;
+  font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: rgba(245, 241, 242, 0.66);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   min-height: 42px;
   border: 0;
   border-radius: 0;
@@ -9790,8 +9977,8 @@ select {
 .event-fact strong {
   overflow: hidden;
   color: var(--ink);
-  font-size: 0.9rem;
-  font-weight: 900;
+  font-size: var(--text-md);
+  font-weight: 800;
   line-height: 1.15;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -9799,8 +9986,8 @@ select {
 
 .event-fact small {
   color: rgba(245, 241, 242, 0.54);
-  font-size: 0.7rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   line-height: 1;
   text-transform: uppercase;
 }
@@ -9854,16 +10041,16 @@ select {
   border: 0;
   background: transparent;
   color: var(--ink);
-  font-size: 0.72rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .event-row-participants small {
   overflow: hidden;
   max-width: 100%;
   color: rgba(245, 241, 242, 0.58);
-  font-size: 0.66rem;
-  font-weight: 800;
+  font-size: var(--text-2xs);
+  font-weight: 700;
   text-align: right;
   text-overflow: ellipsis;
   text-transform: uppercase;
@@ -9945,8 +10132,8 @@ select {
 /* Official UNIVLR marks, applied after the layout reset so they do not affect content grids. */
 .brand {
   display: inline-flex;
-  font-weight: 900;
-  font-size: 1.08rem;
+  font-weight: 800;
+  font-size: var(--text-lg);
   letter-spacing: 0.03em;
   color: var(--ink);
   min-width: 124px;
@@ -10029,8 +10216,8 @@ select {
   display: block;
   margin-top: 8px;
   color: rgba(245, 241, 242, 0.72);
-  font-size: 0.66rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
   line-height: 1.2;
   text-align: center;
 }
@@ -10049,14 +10236,14 @@ select {
 
 .player-week-empty strong {
   color: var(--ink);
-  font-size: 1rem;
-  font-weight: 950;
+  font-size: var(--text-lg);
+  font-weight: 800;
 }
 
 .player-week-empty small {
   color: rgba(245, 241, 242, 0.82);
-  font-size: 0.72rem;
-  font-weight: 800;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .player-week-panel:focus-visible {
@@ -10129,8 +10316,8 @@ select {
   display: block;
   margin-bottom: 4px;
   color: var(--ink);
-  font-size: 0.74rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -10139,8 +10326,8 @@ select {
   display: block;
   margin-bottom: 4px;
   color: var(--red);
-  font-size: 0.68rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -10150,7 +10337,7 @@ select {
   overflow: hidden;
   color: var(--ink);
   font-size: clamp(1rem, 1.1vw, 1.25rem);
-  font-weight: 950;
+  font-weight: 800;
   line-height: 1.05;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -10160,9 +10347,9 @@ select {
   display: block;
   margin-top: 4px;
   overflow: hidden;
-  font-size: 0.74rem;
+  font-size: var(--text-xs);
   font-style: normal;
-  font-weight: 800;
+  font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -10177,15 +10364,15 @@ select {
   display: block;
   color: var(--ink);
   font-size: clamp(1.34rem, 1.6vw, 1.75rem);
-  font-weight: 950;
+  font-weight: 800;
   line-height: 1;
 }
 
 .player-week-value small {
   display: block;
   margin-top: 4px;
-  font-size: 0.68rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
 }
 
 .player-week-meta {
@@ -10194,8 +10381,8 @@ select {
   min-width: 0;
   align-items: center;
   gap: 8px;
-  font-size: 0.68rem;
-  font-weight: 800;
+  font-size: var(--text-2xs);
+  font-weight: 700;
 }
 
 .player-week-meta .team-logo {
@@ -10214,8 +10401,8 @@ select {
   position: absolute;
   right: 12px;
   top: 10px;
-  font-size: 0.64rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
 }
 
 .player-week-nav {
@@ -10231,8 +10418,8 @@ select {
   background: rgba(6, 6, 9, 0.72);
   color: var(--ink);
   cursor: pointer;
-  font-size: 1.15rem;
-  font-weight: 950;
+  font-size: var(--text-xl);
+  font-weight: 800;
   line-height: 1;
   opacity: 0;
   transform: none;
@@ -10388,11 +10575,11 @@ select {
   }
 
   .player-week-title {
-    font-size: 0.68rem;
+    font-size: var(--text-2xs);
   }
 
   .player-week-copy strong {
-    font-size: 1rem;
+    font-size: var(--text-lg);
   }
 
   .player-week-range {
@@ -10425,49 +10612,49 @@ select {
 .rating-cell.perf-strong,
 .vlr-board-metric.perf-strong strong {
   color: #5cff93 !important;
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .numeric.perf-good,
 .rating-cell.perf-good,
 .vlr-board-metric.perf-good strong {
   color: #31e981 !important;
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .numeric.perf-positive,
 .rating-cell.perf-positive,
 .vlr-board-metric.perf-positive strong {
   color: #9af0b8 !important;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .numeric.perf-neutral,
 .rating-cell.perf-neutral,
 .vlr-board-metric.perf-neutral strong {
   color: rgba(245, 241, 242, 0.72) !important;
-  font-weight: 850;
+  font-weight: 700;
 }
 
 .numeric.perf-negative,
 .rating-cell.perf-negative,
 .vlr-board-metric.perf-negative strong {
   color: #ff9faa !important;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .numeric.perf-bad,
 .rating-cell.perf-bad,
 .vlr-board-metric.perf-bad strong {
   color: #ff6678 !important;
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .numeric.perf-danger,
 .rating-cell.perf-danger,
 .vlr-board-metric.perf-danger strong {
   color: #ff2b45 !important;
-  font-weight: 950;
+  font-weight: 800;
 }
 
 .lineup-stat-row {
@@ -10491,8 +10678,8 @@ select {
   overflow: hidden;
   border-radius: var(--radius-sm);
   color: #cfdde3;
-  font-size: 0.94rem;
-  font-weight: 950;
+  font-size: var(--text-lg);
+  font-weight: 800;
   line-height: 1;
   min-height: 30px;
   background:
@@ -10654,8 +10841,8 @@ select {
 .player-hero-copy p {
   overflow-wrap: anywhere;
   color: rgba(245, 241, 242, 0.7);
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: var(--text-lg);
+  font-weight: 700;
 }
 
 .player-hero-chips,
@@ -10675,8 +10862,8 @@ select {
   background: rgba(245, 241, 242, 0.08);
   color: #f5f1f2;
   padding: 4px 12px 4px 8px;
-  font-size: 0.82rem;
-  font-weight: 900;
+  font-size: var(--text-sm);
+  font-weight: 800;
 }
 
 .player-team-pill.muted-pill {
@@ -10697,8 +10884,8 @@ select {
 
 .player-nick-history > span {
   color: rgba(245, 241, 242, 0.56);
-  font-size: 0.72rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -10733,9 +10920,9 @@ select {
 .player-current-team-card small,
 .player-current-team-card em {
   color: rgba(245, 241, 242, 0.62);
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   font-style: normal;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -10746,7 +10933,7 @@ select {
 .player-current-team-card strong {
   overflow: hidden;
   color: #fff;
-  font-size: 1.02rem;
+  font-size: var(--text-lg);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -10872,7 +11059,7 @@ select {
 .player-team-trophies small {
   overflow: hidden;
   color: #8fa0b1;
-  font-size: 0.73rem;
+  font-size: var(--text-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -10943,7 +11130,7 @@ select {
 
 .player-event-cell small {
   color: #8fa0b1;
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
 }
 
 .player-placement-badge {
@@ -10955,13 +11142,13 @@ select {
   background: rgba(245, 241, 242, 0.05);
   color: #f5f8fb;
   padding: 8px 8px;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .player-placement-badge small {
   color: #8fa0b1;
-  font-size: 0.66rem;
-  font-weight: 850;
+  font-size: var(--text-2xs);
+  font-weight: 700;
 }
 
 .player-trophies-panel {
@@ -11011,7 +11198,7 @@ select {
 
 .player-trophy-main small {
   color: #8fa0b1;
-  font-size: 0.76rem;
+  font-size: var(--text-xs);
 }
 
 @media (max-width: 1180px) {
@@ -11056,11 +11243,11 @@ select {
   }
 
   .player-hero-copy h1 {
-    font-size: 2rem;
+    font-size: var(--text-3xl);
   }
 
   .player-hero-copy p {
-    font-size: 0.82rem;
+    font-size: var(--text-sm);
   }
 
   .player-quick-panel,
@@ -11169,8 +11356,8 @@ select {
 .player-directory-field small,
 .player-directory-team small {
   color: #8fa0b1;
-  font-size: 0.68rem;
-  font-weight: 850;
+  font-size: var(--text-2xs);
+  font-weight: 700;
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -11187,13 +11374,13 @@ select {
 
 .player-directory-field strong {
   color: #fff;
-  font-size: 1.06rem;
+  font-size: var(--text-lg);
   line-height: 1.14;
 }
 
 .player-directory-field span {
   color: #d6e0ea;
-  font-size: 0.86rem;
+  font-size: var(--text-md);
 }
 
 .player-directory-field.primary {
@@ -11203,7 +11390,7 @@ select {
 
 .player-directory-field.primary strong {
   max-width: 100%;
-  font-size: 1.32rem;
+  font-size: var(--text-xl);
   line-height: 1.08;
 }
 
@@ -11254,7 +11441,7 @@ select {
   display: block;
   max-width: 100%;
   color: #f5f8fb;
-  font-size: 0.98rem;
+  font-size: var(--text-lg);
   line-height: 1.15;
 }
 
@@ -11263,9 +11450,9 @@ select {
   max-width: 100%;
   color: #8fa0b1;
   margin-top: 2px;
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   font-style: normal;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 @media (max-width: 760px) {
@@ -11401,7 +11588,7 @@ select {
 }
 
 .player-page .player-hero-copy .eyebrow {
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   letter-spacing: 0.07em;
 }
 
@@ -11445,15 +11632,15 @@ select {
 .player-page .player-role-badge strong {
   color: var(--univlr-white, #f5f1f2);
   font-size: clamp(1.08rem, 1.35vw, 1.32rem);
-  font-weight: 920;
+  font-weight: 800;
   line-height: 1.08;
 }
 
 .player-page .player-hero-copy p {
   margin: clamp(8px, 0.75vw, 14px) 0 0;
   color: var(--player-muted);
-  font-size: 0.98rem;
-  font-weight: 800;
+  font-size: var(--text-lg);
+  font-weight: 700;
   line-height: 1.22;
 }
 
@@ -11469,8 +11656,8 @@ select {
   border-radius: var(--radius-pill);
   background: rgba(245, 241, 242, 0.07);
   color: rgba(245, 241, 242, 0.84);
-  font-size: 0.74rem;
-  font-weight: 850;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .player-page .chip.red {
@@ -11503,7 +11690,7 @@ select {
 
 .player-page .player-nick-history > span {
   color: rgba(245, 241, 242, 0.48);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   letter-spacing: 0.06em;
 }
 
@@ -11549,7 +11736,7 @@ select {
 .player-page .player-current-team-card strong {
   overflow: visible;
   color: var(--univlr-white, #f5f1f2);
-  font-size: 1.12rem;
+  font-size: var(--text-lg);
   line-height: 1.08;
   text-overflow: clip;
   white-space: normal;
@@ -11559,9 +11746,9 @@ select {
   justify-self: end;
   border-left: 1px solid rgba(245, 241, 242, 0.13);
   padding-left: 12px;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   font-style: normal;
-  font-weight: 920;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -11602,8 +11789,8 @@ select {
 
 .player-page .player-metric-line dt {
   color: var(--player-muted);
-  font-size: 0.66rem;
-  font-weight: 820;
+  font-size: var(--text-2xs);
+  font-weight: 700;
   line-height: 1.2;
   overflow-wrap: anywhere;
 }
@@ -11611,7 +11798,7 @@ select {
 .player-page .player-metric-line dd {
   color: var(--univlr-white, #f5f1f2);
   font-size: clamp(1.02rem, 1.55vw, 1.34rem);
-  font-weight: 920;
+  font-weight: 800;
   line-height: 1.12;
   padding-bottom: 2px;
   overflow-wrap: anywhere;
@@ -11792,12 +11979,12 @@ select {
 .player-page .section-head h2,
 .player-page .section-head h3 {
   color: var(--univlr-white, #f5f1f2);
-  font-size: 0.9rem;
+  font-size: var(--text-md);
 }
 
 .player-page .section-head p {
   color: var(--player-muted);
-  font-size: 0.74rem;
+  font-size: var(--text-xs);
 }
 
 .player-page .player-summary-layout aside .data-panel {
@@ -11811,7 +11998,7 @@ select {
 .player-page .bar-row {
   grid-template-columns: minmax(112px, 0.86fr) minmax(72px, 1fr) minmax(68px, auto);
   color: rgba(245, 241, 242, 0.82);
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
 }
 
 .player-page .bar-track {
@@ -11963,8 +12150,8 @@ select {
 .player-page .player-map-banner-cell strong {
   overflow: hidden;
   color: var(--univlr-white, #f5f1f2);
-  font-size: 0.82rem;
-  font-weight: 950;
+  font-size: var(--text-sm);
+  font-weight: 800;
   line-height: 1.05;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -11972,8 +12159,8 @@ select {
 
 .player-page .player-map-banner-cell small {
   color: rgba(245, 241, 242, 0.68);
-  font-size: 0.66rem;
-  font-weight: 850;
+  font-size: var(--text-2xs);
+  font-weight: 700;
 }
 
 .player-page .player-agents-section .tournament-agent-cell {
@@ -12023,7 +12210,7 @@ select {
 }
 
 .player-page .player-agents-section .tournament-agent-cell strong {
-  font-size: 0.88rem;
+  font-size: var(--text-md);
 }
 
 @media (max-width: 1180px) {
@@ -12108,11 +12295,11 @@ select {
   }
 
   .player-page .player-role-badge strong {
-    font-size: 0.9rem;
+    font-size: var(--text-md);
   }
 
   .player-page .player-hero-copy p {
-    font-size: 0.82rem;
+    font-size: var(--text-sm);
   }
 
   .player-page .player-quick-panel {
@@ -12132,7 +12319,7 @@ select {
   }
 
   .player-page .player-current-team-card strong {
-    font-size: 1rem;
+    font-size: var(--text-lg);
   }
 
   .player-page .player-hero-stat-grid,
@@ -12426,8 +12613,8 @@ select {
   position: relative;
   z-index: 1;
   color: rgba(245, 241, 242, 0.9);
-  font-size: 0.76rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   padding: 0 0 8px 8px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.72);
 }
@@ -12488,8 +12675,8 @@ select {
   position: relative;
   z-index: 1;
   color: rgba(245, 241, 242, 0.88);
-  font-size: 0.72rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.72);
 }
 
@@ -12511,13 +12698,13 @@ select {
   border-radius: var(--radius-pill);
   color: var(--univlr-white, #f5f1f2);
   background: rgba(246, 19, 42, 0.88);
-  font-size: 0.68rem;
-  font-weight: 950;
+  font-size: var(--text-2xs);
+  font-weight: 800;
 }
 
 .search-result-match-mark {
   color: var(--univlr-white, #f5f1f2);
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: 0;
   background: linear-gradient(135deg, rgba(246, 19, 42, 0.86), rgba(245, 241, 242, 0.12));
 }
@@ -12530,8 +12717,8 @@ select {
 
 .search-result-kicker {
   color: rgba(245, 241, 242, 0.48);
-  font-size: 0.68rem;
-  font-weight: 850;
+  font-size: var(--text-2xs);
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -12540,7 +12727,7 @@ select {
   min-width: 0;
   overflow: hidden;
   color: var(--univlr-white, #f5f1f2);
-  font-size: 0.98rem;
+  font-size: var(--text-lg);
   line-height: 1.18;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -12551,7 +12738,7 @@ select {
   min-width: 0;
   overflow: hidden;
   color: rgba(245, 241, 242, 0.68);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   line-height: 1.25;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -12570,15 +12757,15 @@ select {
 }
 
 .search-result-player .search-result-title {
-  font-size: 1.08rem;
+  font-size: var(--text-lg);
 }
 
 .search-player-handle {
   min-width: 0;
   overflow: hidden;
   color: rgba(245, 241, 242, 0.84);
-  font-size: 0.86rem;
-  font-weight: 820;
+  font-size: var(--text-md);
+  font-weight: 700;
   line-height: 1.22;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -12591,8 +12778,8 @@ select {
   gap: 8px;
   overflow: hidden;
   color: rgba(245, 241, 242, 0.72);
-  font-size: 0.84rem;
-  font-weight: 720;
+  font-size: var(--text-sm);
+  font-weight: 600;
   line-height: 1.24;
 }
 
@@ -12606,9 +12793,9 @@ select {
 .search-player-team-line em {
   flex: 0 0 auto;
   color: rgba(245, 241, 242, 0.5);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   font-style: normal;
-  font-weight: 850;
+  font-weight: 700;
 }
 
 .search-player-team-logo {
@@ -12622,19 +12809,19 @@ select {
 }
 
 .search-result-tournament .search-result-title {
-  font-size: 1.06rem;
+  font-size: var(--text-lg);
 }
 
 .search-result-map .search-result-title {
-  font-size: 1.08rem;
+  font-size: var(--text-lg);
 }
 
 .search-map-stats {
   min-width: 0;
   overflow: hidden;
   color: rgba(245, 241, 242, 0.82);
-  font-size: 0.86rem;
-  font-weight: 820;
+  font-size: var(--text-md);
+  font-weight: 700;
   line-height: 1.22;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -12648,8 +12835,8 @@ select {
   gap: 8px 12px;
   margin-top: 2px;
   color: rgba(245, 241, 242, 0.74);
-  font-size: 0.79rem;
-  font-weight: 780;
+  font-size: var(--text-sm);
+  font-weight: 600;
 }
 
 .search-map-facts > span:first-child {
@@ -12681,8 +12868,8 @@ select {
 
 .search-map-event-extra {
   color: rgba(245, 241, 242, 0.62);
-  font-size: 0.72rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .search-map-events-empty {
@@ -12696,7 +12883,7 @@ select {
   align-items: center;
   gap: 8px;
   color: var(--univlr-white, #f5f1f2);
-  font-size: 0.92rem;
+  font-size: var(--text-md);
   line-height: 1.14;
 }
 
@@ -12705,7 +12892,7 @@ select {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .search-match-team-a {
@@ -12741,8 +12928,8 @@ select {
   align-items: center;
   gap: 4px;
   color: var(--univlr-white, #f5f1f2);
-  font-size: 1.18rem;
-  font-weight: 950;
+  font-size: var(--text-xl);
+  font-weight: 800;
   line-height: 1;
 }
 
@@ -12758,8 +12945,8 @@ select {
   gap: 8px;
   overflow: hidden;
   color: rgba(245, 241, 242, 0.82);
-  font-size: 0.86rem;
-  font-weight: 800;
+  font-size: var(--text-md);
+  font-weight: 700;
   line-height: 1.24;
 }
 
@@ -12787,8 +12974,8 @@ select {
   gap: 8px 16px;
   margin-top: 2px;
   color: rgba(245, 241, 242, 0.74);
-  font-size: 0.79rem;
-  font-weight: 780;
+  font-size: var(--text-sm);
+  font-weight: 600;
 }
 
 .search-match-facts span {
@@ -12805,8 +12992,8 @@ select {
   gap: 8px 16px;
   margin-top: 4px;
   color: rgba(245, 241, 242, 0.8);
-  font-size: 0.82rem;
-  font-weight: 800;
+  font-size: var(--text-sm);
+  font-weight: 700;
 }
 
 .search-tournament-facts span {
@@ -12823,8 +13010,8 @@ select {
   gap: 8px 12px;
   margin-top: 2px;
   color: rgba(245, 241, 242, 0.78);
-  font-size: 0.75rem;
-  font-weight: 820;
+  font-size: var(--text-xs);
+  font-weight: 700;
 }
 
 .search-team-tag,
@@ -12857,8 +13044,8 @@ select {
   border-radius: var(--radius-sm);
   background: rgba(245, 241, 242, 0.1);
   color: rgba(245, 241, 242, 0.72);
-  font-size: 0.58rem;
-  font-weight: 900;
+  font-size: var(--text-2xs);
+  font-weight: 800;
 }
 
 img.search-state-flag + .search-state-flag.placeholder {
@@ -12882,8 +13069,8 @@ img.search-state-flag + .search-state-flag.placeholder {
   padding: 0 8px;
   color: rgba(245, 241, 242, 0.72);
   background: rgba(245, 241, 242, 0.06);
-  font-size: 0.68rem;
-  font-weight: 780;
+  font-size: var(--text-2xs);
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -12973,7 +13160,7 @@ img.search-state-flag + .search-state-flag.placeholder {
   .search-match-score-line {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 8px;
-    font-size: 0.86rem;
+    font-size: var(--text-md);
   }
 
   .search-match-team-a {
@@ -12988,7 +13175,7 @@ img.search-state-flag + .search-state-flag.placeholder {
   }
 
   .search-match-score-line b {
-    font-size: 1.04rem;
+    font-size: var(--text-lg);
   }
 
   .search-match-team-logo {
@@ -12998,12 +13185,12 @@ img.search-state-flag + .search-state-flag.placeholder {
   }
 
   .search-map-stats {
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
   }
 
   .search-map-facts {
     gap: 4px 8px;
-    font-size: 0.72rem;
+    font-size: var(--text-xs);
   }
 
   .search-map-event-logo {
@@ -13013,15 +13200,15 @@ img.search-state-flag + .search-state-flag.placeholder {
   }
 
   .search-result-title {
-    font-size: 0.92rem;
+    font-size: var(--text-md);
   }
 
   .search-result-player .search-result-title {
-    font-size: 1rem;
+    font-size: var(--text-lg);
   }
 
   .search-result-tournament .search-result-title {
-    font-size: 0.98rem;
+    font-size: var(--text-lg);
   }
 
 }
@@ -13124,15 +13311,15 @@ img.search-state-flag + .search-state-flag.placeholder {
 
 .team-page .team-title-block .eyebrow {
   color: var(--univlr-red, #f6132a);
-  font-size: 0.72rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
 .team-page .team-title-block h1 {
   margin: 0;
   color: var(--univlr-white, #f5f1f2);
-  font-size: 3.25rem;
+  font-size: var(--text-5xl);
   line-height: 0.95;
   text-shadow: 0 18px 34px rgba(0, 0, 0, 0.4);
 }
@@ -13153,8 +13340,8 @@ img.search-state-flag + .search-state-flag.placeholder {
   background: transparent;
   color: rgba(245, 241, 242, 0.86);
   padding: 0;
-  font-size: 0.82rem;
-  font-weight: 860;
+  font-size: var(--text-sm);
+  font-weight: 700;
 }
 
 .team-page .state-flag {
@@ -13255,8 +13442,8 @@ img.search-state-flag + .search-state-flag.placeholder {
   z-index: 2;
   overflow: hidden;
   color: var(--univlr-white, #f5f1f2);
-  font-size: 0.73rem;
-  font-weight: 950;
+  font-size: var(--text-xs);
+  font-weight: 800;
   letter-spacing: 0.05em;
   text-align: center;
   text-overflow: ellipsis;
@@ -13290,15 +13477,15 @@ img.search-state-flag + .search-state-flag.placeholder {
   order: 2;
   z-index: 1;
   color: rgba(245, 241, 242, 0.68);
-  font-size: 0.76rem;
-  font-weight: 900;
+  font-size: var(--text-xs);
+  font-weight: 800;
 }
 
 .team-page .team-rank-box strong {
   order: 1;
   color: rgba(245, 241, 242, 0.16);
-  font-size: 8.4rem;
-  font-weight: 950;
+  font-size: var(--text-7xl);
+  font-weight: 800;
   line-height: 0.76;
   transform: translateX(-8px);
 }
@@ -13307,8 +13494,8 @@ img.search-state-flag + .search-state-flag.placeholder {
   order: 3;
   z-index: 1;
   color: var(--univlr-white, #f5f1f2);
-  font-size: 1rem;
-  font-weight: 920;
+  font-size: var(--text-lg);
+  font-weight: 800;
 }
 
 .team-page .team-socials {
@@ -13469,7 +13656,7 @@ img.search-state-flag + .search-state-flag.placeholder {
 
 .team-page .roster-card-body strong {
   color: var(--univlr-white, #f5f1f2);
-  font-size: 1.06rem;
+  font-size: var(--text-lg);
 }
 
 .team-page .roster-card-body > span,
@@ -13492,14 +13679,14 @@ img.search-state-flag + .search-state-flag.placeholder {
 
 .team-page .roster-player-metrics strong {
   color: var(--univlr-white, #f5f1f2);
-  font-size: 0.98rem;
+  font-size: var(--text-lg);
   line-height: 1.1;
 }
 
 .team-page .roster-player-metrics small {
   color: var(--team-muted);
-  font-size: 0.66rem;
-  font-weight: 820;
+  font-size: var(--text-2xs);
+  font-weight: 700;
   line-height: 1.1;
   text-transform: uppercase;
 }
@@ -13566,7 +13753,7 @@ img.search-state-flag + .search-state-flag.placeholder {
 .team-page .team-tournament-event strong {
   overflow: hidden;
   color: var(--univlr-white, #f5f1f2);
-  font-size: 0.96rem;
+  font-size: var(--text-lg);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -13576,8 +13763,8 @@ img.search-state-flag + .search-state-flag.placeholder {
 .team-page .team-tournament-stats small,
 .team-page .team-tournament-status small {
   color: var(--team-muted);
-  font-size: 0.68rem;
-  font-weight: 820;
+  font-size: var(--text-2xs);
+  font-weight: 700;
 }
 
 .team-page .team-placement-badge {
@@ -13591,7 +13778,7 @@ img.search-state-flag + .search-state-flag.placeholder {
 
 .team-page .team-placement-badge strong {
   color: var(--univlr-white, #f5f1f2);
-  font-size: 1.05rem;
+  font-size: var(--text-lg);
   line-height: 1.12;
 }
 
@@ -13610,7 +13797,7 @@ img.search-state-flag + .search-state-flag.placeholder {
 .team-page .team-tournament-stats strong,
 .team-page .team-tournament-status strong {
   color: var(--univlr-white, #f5f1f2);
-  font-size: 1rem;
+  font-size: var(--text-lg);
 }
 
 .team-page .team-tournament-status {
@@ -13636,7 +13823,7 @@ img.search-state-flag + .search-state-flag.placeholder {
   }
 
   .team-page .team-rank-box strong {
-    font-size: 6rem;
+    font-size: var(--text-6xl);
   }
 
   .team-page .team-tournament-card {
@@ -13667,7 +13854,7 @@ img.search-state-flag + .search-state-flag.placeholder {
   }
 
   .team-page .team-title-block h1 {
-    font-size: 2.2rem;
+    font-size: var(--text-3xl);
   }
 
   .team-page .team-hero-cover {
@@ -13686,7 +13873,7 @@ img.search-state-flag + .search-state-flag.placeholder {
   }
 
   .team-page .team-hero-cover-player > span:last-child {
-    font-size: 0.68rem;
+    font-size: var(--text-2xs);
     padding: 0 4px 8px;
   }
 
@@ -13695,7 +13882,7 @@ img.search-state-flag + .search-state-flag.placeholder {
   }
 
   .team-page .team-rank-box strong {
-    font-size: 5rem;
+    font-size: var(--text-6xl);
   }
 
   .team-page .ranking-chart-card {
@@ -13741,14 +13928,14 @@ img.search-state-flag + .search-state-flag.placeholder {
 
 .image-splash h1 {
   margin: 0;
-  font-size: 22px;
+  font-size: var(--text-xl);
 }
 
 .image-splash p {
   margin: 0;
   max-width: 420px;
   color: var(--muted);
-  font-size: 14px;
+  font-size: var(--text-md);
 }
 
 .image-splash-track {
@@ -13768,7 +13955,7 @@ img.search-state-flag + .search-state-flag.placeholder {
 }
 
 .image-splash-count {
-  font-size: 13px;
+  font-size: var(--text-sm);
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
@@ -13807,4 +13994,89 @@ img.search-state-flag + .search-state-flag.placeholder {
 
 .nav-link.active:hover {
   box-shadow: inset 0 -2px 0 var(--red);
+}
+
+/* ==========================================================================
+   Papeis tipograficos
+   A Barlow Condensed entra so nos numeros grandes (>=16px): placar, ranking,
+   metricas de destaque. Em 11-12px o condensado atrapalha mais do que ajuda,
+   entao numero pequeno fica na Barlow normal, so com numeral tabular.
+   ========================================================================== */
+
+/* Numerais tabulares em tudo que alinha em coluna ou muda sozinho na tela. */
+.score-number,
+.score-win,
+.result-score,
+.result-score i,
+.map-score-side strong,
+.match-score-core,
+.match-hero-score,
+.preview-score,
+.team-rank-box strong,
+.ranking-score-ring strong,
+.ranking-mini-card strong,
+.ranking-fallback-card strong,
+.ranking-accordion-button .numeric,
+.ranking-accordion-button .rank-change-cell,
+.compact-ranking-row .row-score,
+.compact-ranking-row .rank-delta,
+.player-week-value strong,
+.player-metric-line dd,
+.vlr-board-metric strong,
+.lineup-stat-value span,
+.team-compare-track strong,
+.mvp-bar strong,
+.round-row span,
+.event-numbers,
+td.numeric,
+.match-scoreboard td,
+.data-panel td,
+.table-wrap td {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Voz de display: numero grande usa a Condensed, que aguenta mais digito na
+   mesma largura e da personalidade ao placar. */
+.score-number,
+.score-win,
+.map-score-side strong,
+.match-score-core,
+.match-hero-score,
+.preview-score,
+.team-rank-box strong,
+.ranking-score-ring strong,
+.ranking-mini-card strong,
+.ranking-fallback-card strong,
+.ranking-accordion-button .numeric,
+.compact-ranking-row .row-score,
+.player-week-value strong,
+.player-metric-line dd,
+.lineup-stat-value span {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+/* Texto claro sobre fundo quase preto precisa de um respiro a mais: o detector
+   acusou entrelinha de 1.20 em texto corrido de apoio. */
+.player-week-note,
+.empty-state,
+.lineup-stat-center > small {
+  line-height: 1.5;
+}
+
+/* <small> sem regra propria cai no padrao do navegador (0.8333em), que numa
+   celula de 13px vira 10,8px. O max() mantem a proporcao mas nunca desce do
+   piso funcional de 11px. */
+small {
+  font-size: max(var(--text-2xs), 0.8333em);
+}
+
+/* Barlow fecha bastante o espacamento no corpo minimo; um fio de tracking
+   devolve legibilidade sem mexer no tamanho. */
+small,
+.event-numbers,
+.result-meta,
+.row-main small {
+  letter-spacing: 0.012em;
 }

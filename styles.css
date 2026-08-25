@@ -14259,3 +14259,13 @@ img {
 .lineup-timeline-wrap::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* Navegação por teclado na busca: a opção sob as setas precisa se distinguir
+   sozinha, e o anel de foco global volta a valer (o `outline: none` daqui
+   trocava um indicador de 6,7:1 por um de 1,4:1). */
+.search-result.is-active,
+.search-result:focus-visible {
+  outline: 2px solid var(--brand-text);
+  outline-offset: -2px;
+  background: var(--surface-2);
+}

@@ -13,6 +13,12 @@ const HOME_RANKING_LIMIT = 10;
 const HOME_RECENT_MATCH_LIMIT = 15;
 const HOME_EVENT_LIMIT = 8;
 const PLAYER_FALLBACK_PHOTO = "assets/user-silhouette.png";
+
+// Os renderizadores de busca por tipo chamam renderSearchButton sem saber a
+// posicao; guardar o indice aqui evita mudar a assinatura dos seis. Declarado
+// aqui em cima porque init() roda no meio do arquivo (linha ~2709) e uma
+// declaracao la embaixo cairia em temporal dead zone na primeira render.
+let searchResultIndex = 0;
 const TROPHY_ASSET_ROOT = "assets/trofeus-campeonatos";
 const TROPHY_GENERIC_ASSETS = {
   champion: `${TROPHY_ASSET_ROOT}/campeao-generico.png`,
@@ -4866,9 +4872,10 @@ function Shell(content, options = {}) {
             <span class="nav-indicator" aria-hidden="true"></span>
           </nav>
           <div class="global-search">
-            <input id="global-search" type="search" placeholder="Buscar time, jogador, campeonato, partida ou mapa" autocomplete="off" value="${searchValue}" ${options.skipSearch ? "disabled" : ""} />
+            <input id="global-search" type="search" placeholder="Buscar time, jogador, campeonato, partida ou mapa" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" aria-label="Buscar no site" value="${searchValue}" ${options.skipSearch ? "disabled" : ""} />
             <span class="search-token">/</span>
-            <div id="search-results" class="search-results ${state.searchOpen ? "open" : ""}"></div>
+            <div id="search-results" class="search-results ${state.searchOpen ? "open" : ""}" role="listbox" aria-label="Resultados da busca"></div>
+            <span id="search-status" class="sr-only" role="status" aria-live="polite"></span>
           </div>
         </div>
       </header>
@@ -13753,25 +13760,99 @@ function bindSearch() {
     const rows = searchEntities().filter((item) => normalize(item.searchText || `${item.label} ${item.meta || ""}`).includes(query)).slice(0, 10);
     state.searchOpen = true;
     results.classList.add("open");
+    input.setAttribute("aria-expanded", "true");
     results.innerHTML = rows.length
-      ? rows.map(renderSearchResult).join("")
+      ? rows.map((item, index) => renderSearchResult(item, index)).join("")
       : `<div class="empty-state">Nenhuma entidade encontrada.</div>`;
+    anunciar(rows.length);
+    ativo = -1;
+    sincronizarAtivo();
     results.querySelectorAll("[data-path]").forEach((button) => {
-      button.addEventListener("click", () => {
-        state.search = "";
-        state.searchOpen = false;
-        window.location.hash = `#/${button.dataset.path}`;
-      });
+      button.addEventListener("click", () => abrir(button));
     });
   };
 
+  const status = document.getElementById("search-status");
+  let ativo = -1;
+
+  const anunciar = (n) => {
+    if (!status) return;
+    status.textContent = n === 0 ? "Nenhum resultado." : n === 1 ? "1 resultado." : `${n} resultados.`;
+  };
+
+  const opcoes = () => [...results.querySelectorAll("[data-path]")];
+
+  const sincronizarAtivo = () => {
+    const lista = opcoes();
+    lista.forEach((el, i) => {
+      const marcado = i === ativo;
+      el.setAttribute("aria-selected", String(marcado));
+      el.classList.toggle("is-active", marcado);
+      if (marcado) el.scrollIntoView({ block: "nearest" });
+    });
+    if (ativo >= 0 && lista[ativo]) input.setAttribute("aria-activedescendant", lista[ativo].id);
+    else input.removeAttribute("aria-activedescendant");
+  };
+
+  const mover = (passo) => {
+    const lista = opcoes();
+    if (!lista.length) return;
+    const n = lista.length;
+    if (ativo === -1) ativo = passo > 0 ? 0 : n - 1;
+    else {
+      ativo += passo;
+      if (ativo < 0) ativo = n - 1;
+      else if (ativo >= n) ativo = 0;
+    }
+    sincronizarAtivo();
+  };
+
+  const fechar = () => {
+    state.searchOpen = false;
+    results.classList.remove("open");
+    input.setAttribute("aria-expanded", "false");
+    input.removeAttribute("aria-activedescendant");
+    ativo = -1;
+  };
+
+  function abrir(button) {
+    state.search = "";
+    fechar();
+    window.location.hash = `#/${button.dataset.path}`;
+  }
+
   input.addEventListener("input", renderResults);
   input.addEventListener("focus", renderResults);
-  document.addEventListener("click", (event) => {
-    if (!event.target.closest(".global-search")) {
-      state.searchOpen = false;
-      results.classList.remove("open");
+
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowDown") { event.preventDefault(); mover(1); return; }
+    if (event.key === "ArrowUp") { event.preventDefault(); mover(-1); return; }
+    if (event.key === "Enter") {
+      const lista = opcoes();
+      if (ativo >= 0 && lista[ativo]) { event.preventDefault(); abrir(lista[ativo]); }
+      return;
     }
+    if (event.key === "Escape") { event.preventDefault(); fechar(); input.blur(); }
+  });
+
+  // O selo "/" ao lado do campo prometia este atalho desde sempre.
+  if (!state.searchHotkeyBound) {
+    state.searchHotkeyBound = true;
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "/" || event.ctrlKey || event.metaKey || event.altKey) return;
+      const alvo = event.target;
+      const digitando = alvo && (alvo.isContentEditable || /^(input|textarea|select)$/i.test(alvo.tagName));
+      if (digitando) return;
+      const campo = document.getElementById("global-search");
+      if (!campo || campo.disabled) return;
+      event.preventDefault();
+      campo.focus();
+      campo.select();
+    });
+  }
+
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".global-search")) fechar();
   });
   renderResults();
 }
@@ -13909,7 +13990,8 @@ function matchSearchScoreVariants(a, b) {
   ];
 }
 
-function renderSearchResult(item) {
+function renderSearchResult(item, index = 0) {
+  searchResultIndex = index;
   const renderers = {
     team: renderTeamSearchResult,
     player: renderPlayerSearchResult,
@@ -13920,9 +14002,10 @@ function renderSearchResult(item) {
   return (renderers[item.type] || renderGenericSearchResult)(item);
 }
 
-function renderSearchButton(item, content) {
+function renderSearchButton(item, content, index = 0) {
   const type = item.type || "generic";
-  return `<button class="search-result search-result-${escapeHtml(type)}" type="button" data-path="${escapeHtml(item.path)}" aria-label="${escapeHtml(`Abrir ${item.label}`)}">${content}</button>`;
+  const pos = index || searchResultIndex;
+  return `<button class="search-result search-result-${escapeHtml(type)}" type="button" role="option" id="search-option-${pos}" aria-selected="false" data-path="${escapeHtml(item.path)}" aria-label="${escapeHtml(`Abrir ${item.label}`)}">${content}</button>`;
 }
 
 function renderTeamSearchResult(item) {

@@ -2740,7 +2740,10 @@ async function init() {
     state.ready = true;
     window.addEventListener("hashchange", render);
     bindFilterDropdownMotion();
-    window.addEventListener("resize", () => syncNavIndicator(false));
+    window.addEventListener("resize", () => {
+      syncNavIndicator(false);
+      syncTopbarHeight();
+    });
     // A Barlow entra depois do primeiro render (font-display: swap) e o menu
     // re-layouta quando ela aplica. Sem re-sincronizar, o indicador fica travado
     // na medida feita com a fonte de fallback e aponta para o item errado.
@@ -4955,6 +4958,7 @@ function render() {
     maps: renderMapsCompact,
   };
   (pages[section] || renderHomeCompact)(id);
+  syncTopbarHeight();
   scrollToRouteTop(routeChanged);
   restoreFilterFocus();
 }
@@ -5159,6 +5163,7 @@ function renderMatchesCompact(id) {
   applyMatchFiltersFromQuery(routeQuery());
   ensureResultFilterDefaults();
   const filtered = filteredMatches();
+  const limite = limiteDaLista(routeQuery());
   Shell(`
     <header class="page-header slim-header">
       <div class="page-title">
@@ -5169,11 +5174,65 @@ function renderMatchesCompact(id) {
     <div class="results-layout">
       ${matchFilterSidebar()}
       <section class="hub-panel full-list-panel results-panel">
-        <div class="result-list">${filtered.length ? filtered.map(matchResultRow).join("") : `<div class="empty-state">Nenhuma partida encontrada.</div>`}</div>
+        ${contagemDaLista(Math.min(limite, filtered.length), filtered.length, "partidas")}
+        <div class="result-list">${listaDeResultados(filtered, limite)}</div>
+        ${verMaisBotao("matches", Math.min(limite, filtered.length), filtered.length, matchFiltersToQuery())}
       </section>
     </div>
   `);
   bindMatchFilters();
+}
+
+const LISTA_PAGINA = 50;
+
+function limiteDaLista(p, padrao = LISTA_PAGINA) {
+  const bruto = Number.parseInt(p.get("limite") || "", 10);
+  if (!Number.isFinite(bruto) || bruto <= 0) return padrao;
+  return Math.min(bruto, 5000);
+}
+
+// Agrupa por dia para a data sair de dentro de cada linha e virar marco de
+// rolagem. Sem isso, "16 de ago de 2026" aparecia 419 vezes.
+function agruparPorDia(series) {
+  const grupos = [];
+  let atual = null;
+  series.forEach((item) => {
+    const chave = dayKey(item.sortAt || item.startedAt);
+    if (!atual || atual.chave !== chave) {
+      atual = { chave, rotulo: formatDate(item.sortAt || item.startedAt, "date"), itens: [] };
+      grupos.push(atual);
+    }
+    atual.itens.push(item);
+  });
+  return grupos;
+}
+
+function listaDeResultados(filtered, limite) {
+  if (!filtered.length) return `<div class="empty-state">Nenhuma partida encontrada com esses filtros.</div>`;
+  return agruparPorDia(filtered.slice(0, limite))
+    .map(
+      (grupo) => `
+        <div class="result-day">
+          <h2 class="result-day-label">${escapeHtml(grupo.rotulo)}</h2>
+          <span class="result-day-count">${grupo.itens.length} ${grupo.itens.length === 1 ? "partida" : "partidas"}</span>
+        </div>
+        ${grupo.itens.map(matchResultRow).join("")}
+      `,
+    )
+    .join("");
+}
+
+function verMaisBotao(section, mostrando, total, params) {
+  if (mostrando >= total) return "";
+  const proximo = new URLSearchParams(params);
+  proximo.set("limite", String(mostrando + LISTA_PAGINA));
+  const restante = total - mostrando;
+  const passo = Math.min(LISTA_PAGINA, restante);
+  return `<a class="lista-ver-mais" href="#/${section}?${proximo.toString()}">Ver mais ${passo} de ${restante} restantes</a>`;
+}
+
+function contagemDaLista(mostrando, total, rotulo) {
+  return `<p class="lista-contagem" role="status" aria-live="polite">Mostrando ${mostrando} de ${total} ${rotulo}.</p>`;
 }
 
 function matchFilterSidebar() {
@@ -5310,6 +5369,16 @@ function pushFilterState(section, params, focoSeletor) {
 
 // Depois de re-renderizar, o foco voltava para <body> e a segunda desmarcacao
 // exigia re-tabular desde o logo.
+// A topbar e sticky e tem altura variavel (211px no celular, onde a navegacao
+// quebra em duas linhas). Publicar a altura real permite que o cabecalho de dia
+// gruda logo abaixo dela em vez de sumir por tras.
+function syncTopbarHeight() {
+  const topbar = document.querySelector(".topbar");
+  if (!topbar) return;
+  const altura = Math.round(topbar.getBoundingClientRect().height);
+  document.documentElement.style.setProperty("--topbar-h", altura + "px");
+}
+
 function restoreFilterFocus() {
   const sel = state.filterFocus;
   if (!sel) return;
@@ -5455,6 +5524,8 @@ function renderPlayersCompact(id) {
   state.skipFilterHydration = false;
   if (id) return renderPlayerDetail(id);
   const players = filteredPlayers();
+  const limite = limiteDaLista(routeQuery());
+  const visiveis = players.slice(0, limite);
   Shell(`
     <header class="page-header slim-header">
       <div class="page-title">
@@ -5470,7 +5541,9 @@ function renderPlayersCompact(id) {
     </header>
     <div class="letter-filter">${playerInitialOptions().map((letter) => `<button class="${state.playerInitial === letter ? "active" : ""}" data-letter="${escapeHtml(letter)}">${escapeHtml(letter === "all" ? "Todos" : letter)}</button>`).join("")}</div>
     <section class="hub-panel full-list-panel">
-      ${playerDirectoryTable(players)}
+      ${contagemDaLista(visiveis.length, players.length, "jogadores")}
+      ${playerDirectoryTable(visiveis)}
+      ${verMaisBotao("players", visiveis.length, players.length, playerFiltersToQuery())}
     </section>
   `);
   bindPlayerFilters();
@@ -13686,7 +13759,7 @@ function matchResultRow(item) {
       <span class="result-score"><b class="${scoreNumberClass(score.a, score.b)}">${score.a}</b><i>:</i><b class="${scoreNumberClass(score.b, score.a)}">${score.b}</b><small>${escapeHtml(score.label)}</small></span>
       <span class="result-team right"><strong title="${escapeHtml(series.teamB.name)}">${escapeHtml(series.teamB.name)}</strong>${teamLogo(series.teamB.id)}</span>
       ${matchMapStrip(series)}
-      <span class="result-meta"><span class="result-meta-when">${escapeHtml(formatDate(series.startedAt, "time"))}</span><span class="result-meta-where">${escapeHtml(event?.name || "Evento")}</span>${event ? eventLogo(event, "tiny") : ""}</span>
+      <span class="result-meta"><span class="result-meta-when">${escapeHtml(formatDate(series.startedAt, "hour"))}</span><span class="result-meta-where">${escapeHtml(event?.name || "Evento")}</span>${event ? eventLogo(event, "tiny") : ""}</span>
     </a>
   `;
 }
@@ -15020,6 +15093,9 @@ function clamp(value, min, max) {
 function formatDate(value, mode = "date") {
   if (!value) return "-";
   const date = new Date(value);
+  // "hour" existe para a lista agrupada por dia: o dia ja e o cabecalho do
+  // grupo, entao a linha so precisa da hora.
+  if (mode === "hour") return date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
   const options =
     mode === "time"
       ? { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }

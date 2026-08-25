@@ -4862,7 +4862,7 @@ function Shell(content, options = {}) {
             <span class="sr-only">${SITE_NAME}</span>
           </a>
           <nav class="nav" aria-label="Navegação principal">
-            ${navItems.map(([key, label]) => `<a class="nav-link ${section === key ? "active" : ""}" href="#/${key}">${label}</a>`).join("")}
+            ${navItems.map(([key, label]) => `<a class="nav-link ${section === key ? "active" : ""}"${section === key ? ` aria-current="page"` : ""} href="#/${key}">${label}</a>`).join("")}
             <span class="nav-indicator" aria-hidden="true"></span>
           </nav>
           <div class="global-search">
@@ -5835,10 +5835,10 @@ function rankingAccordionItem(row) {
         <span class="ranking-status-cell">${rankingStatusChip(team, ranking)}</span>
         <span class="ranking-toggle-mark" aria-hidden="true">+</span>
       </button>
-      <div id="${panelId}" class="ranking-dropdown" aria-hidden="true">
+      <div id="${panelId}" class="ranking-dropdown" aria-hidden="true" inert>
         <div class="ranking-dropdown-inner">
           ${rankingTeamPreviewPanel(team, cutoffAt)}
-          <div class="ranking-detail-dropdown" aria-hidden="true">
+          <div class="ranking-detail-dropdown" aria-hidden="true" inert>
             ${rankingExplanationPanel(team, ranking, cutoffAt)}
           </div>
         </div>
@@ -6454,14 +6454,21 @@ function openRankingRouteTeam(teamId) {
 function setRankingAccordionItem(item, open) {
   item.classList.toggle("open", open);
   item.querySelector("[data-ranking-toggle]")?.setAttribute("aria-expanded", String(open));
-  item.querySelector(".ranking-dropdown")?.setAttribute("aria-hidden", String(!open));
+  const painel = item.querySelector(".ranking-dropdown");
+  painel?.setAttribute("aria-hidden", String(!open));
+  // aria-hidden esconde da leitura de tela mas NAO tira do tab order: com 44
+  // sanfonas fechadas eram 1609 controles focaveis dentro de caixas de altura
+  // zero. inert remove as duas coisas de uma vez.
+  if (painel) painel.inert = !open;
   if (!open) setRankingDetailsOpen(item, false);
 }
 
 function setRankingDetailsOpen(item, open) {
   item.classList.toggle("details-open", open);
   item.querySelector("[data-ranking-details]")?.setAttribute("aria-expanded", String(open));
-  item.querySelector(".ranking-detail-dropdown")?.setAttribute("aria-hidden", String(!open));
+  const detalhe = item.querySelector(".ranking-detail-dropdown");
+  detalhe?.setAttribute("aria-hidden", String(!open));
+  if (detalhe) detalhe.inert = !open;
 }
 
 function safeDomId(value) {
@@ -14824,6 +14831,26 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
+// Cada entidade carrega o proprio genero e o proprio caminho de volta: antes
+// era `${entity} não encontrado.` para todas, produzindo "Equipe nao
+// encontrado." e "Partida nao encontrado.", e sem nenhuma saida - num produto
+// que se espalha por link colado, o link velho era um beco sem saida.
+const NOT_FOUND_ENTITIES = {
+  Partida: { frase: "Partida não encontrada", volta: "#/matches", voltaLabel: "Ver todas as partidas" },
+  Campeonato: { frase: "Campeonato não encontrado", volta: "#/events", voltaLabel: "Ver todos os campeonatos" },
+  Equipe: { frase: "Equipe não encontrada", volta: "#/ranking", voltaLabel: "Ver o ranking de equipes" },
+  Jogador: { frase: "Jogador não encontrado", volta: "#/players", voltaLabel: "Ver todos os jogadores" },
+  Mapa: { frase: "Mapa não encontrado", volta: "#/maps", voltaLabel: "Ver todos os mapas" },
+  Recurso: { frase: "Página não encontrada", volta: "#/home", voltaLabel: "Voltar para a inicial" },
+};
+
 function renderNotFound(entity) {
-  Shell(`<div class="empty-state">${escapeHtml(entity)} não encontrado.</div>`);
+  const info = NOT_FOUND_ENTITIES[entity] || NOT_FOUND_ENTITIES.Recurso;
+  Shell(`
+    <div class="boot-state" role="alert">
+      <strong>${escapeHtml(info.frase)}</strong>
+      <p>O link pode estar velho, ou o item pode ter saído do site desde que ele foi compartilhado.</p>
+      <a class="boot-retry" href="${info.volta}">${escapeHtml(info.voltaLabel)}</a>
+    </div>
+  `);
 }

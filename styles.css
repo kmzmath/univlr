@@ -13170,13 +13170,13 @@ img.search-state-flag + .search-state-flag.placeholder {
     opacity 160ms ease;
 }
 
+/* O sublinhado do item ativo estava desligado no estado base e so voltava no
+   :hover - ou seja, aparecia quando voce ja sabia onde estava o cursor e sumia
+   quando voce precisava dele. Ele volta a ser o sinal base, sempre correto;
+   a barra deslizante do JS fica por cima, so como movimento. */
 .nav-link.active {
   border-color: rgba(246, 19, 42, 0.44);
-  box-shadow: none;
-}
-
-.nav-link.active:hover {
-  box-shadow: inset 0 -2px 0 var(--red);
+  box-shadow: inset 0 -2px 0 var(--brand);
 }
 
 /* ==========================================================================

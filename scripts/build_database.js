@@ -97,6 +97,31 @@ function main() {
   const teamProfiles = prepareTeamProfiles(rawTeamProfiles);
   const db = buildDatabase(manifest.events, loaded, metadata, teamProfiles, rankingWeights);
 
+  // Poda 2: campos que o raating-core produz e ninguém consome. Seis deles são
+  // o mesmo número em duas convenções de nome (damage_rating/DamageRating), e
+  // o resto são intermediários do cálculo que já virou `rating`. Conferido um
+  // a um contra app.js, raating-core.js e ranking-core.js, inclusive contra o
+  // acesso dinâmico por RAATING_AGGREGATE_FIELDS — nenhum aparece lá.
+  // São ~100 mil instâncias: 3,2 MB crus, 0,7 MB no gzip.
+  const DEAD_PLAYER_FIELDS = [
+    "ekpr", "edpr", "eadr", "ekast",
+    "adjusted_swing_percent", "rating_3_like_unadjusted", "rating_recon_proxy", "rating_3_like",
+    "damage_rating", "multi_kill_rating", "kill_rating", "round_swing_rating",
+    "survival_rating", "kast_rating", "mk_per_r",
+  ];
+  let strippedFields = 0;
+  const stripDead = (player) => {
+    if (!player) return;
+    for (const field of DEAD_PLAYER_FIELDS) {
+      if (field in player) {
+        delete player[field];
+        strippedFields += 1;
+      }
+    }
+  };
+  for (const match of db.matches) for (const player of match.players || []) stripDead(player);
+  for (const player of db.players || []) stripDead(player);
+
   // Poda: roundResults fica de fora do payload e é restaurado sob demanda na
   // página da partida (detailPending sinaliza o carregamento preguiçoso).
   let strippedMatches = 0;
@@ -143,6 +168,7 @@ function main() {
   console.log(`database.json gerado em ${((Date.now() - startedAt) / 1000).toFixed(1)}s`);
   console.log(`  arquivos lidos: ${loaded.length} (falhas: ${db.failedFiles.length}, duplicados: ${db.duplicateFiles.length})`);
   console.log(`  partidas: ${db.matches.length} (roundResults podados: ${strippedMatches})`);
+  console.log(`  campos mortos removidos: ${strippedFields}`);
   console.log(`  times: ${db.teams.length} | jogadores: ${db.players.length} | snapshots de ranking: ${db.rankingSnapshots.length}`);
   console.log(`  tamanho: ${mb(json.length)} bruto | ${mb(gzipBytes)} gzip | nós: ${payload.nodes.length}`);
   if (payload.droppedFunctions > 0) {

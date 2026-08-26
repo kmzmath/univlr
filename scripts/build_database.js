@@ -9,7 +9,13 @@
 // O script executa o mesmo pipeline que o navegador executava (buildDatabase
 // em app.js), depois remove o que só a página de detalhe da partida usa
 // (roundResults, restaurado sob demanda via fetch do arquivo bruto) e o que
-// nenhuma tela usa (observations do ranking, ranking aninhado dos snapshots).
+// nenhuma tela usa (observations do ranking, ranking aninhado dos snapshots,
+// e 15 campos que o raating-core produz sem ninguem ler).
+//
+// No fim ele encadeia scripts/build_home.js, que recorta deste arquivo o
+// home.json (~5 KB gzip) usado no primeiro render da pagina inicial. Commite
+// os dois juntos: home.json atrasado faz a home pintar dados velhos ate o
+// banco completo chegar.
 
 const fs = require("fs");
 const path = require("path");
@@ -171,6 +177,14 @@ function main() {
   console.log(`  campos mortos removidos: ${strippedFields}`);
   console.log(`  times: ${db.teams.length} | jogadores: ${db.players.length} | snapshots de ranking: ${db.rankingSnapshots.length}`);
   console.log(`  tamanho: ${mb(json.length)} bruto | ${mb(gzipBytes)} gzip | nós: ${payload.nodes.length}`);
+  // O home.json e um recorte deste arquivo: se ficar para tras, a home pinta o
+  // primeiro render com dados velhos ate o banco completo chegar e corrigir.
+  // Encadear aqui evita depender de alguem lembrar do segundo comando.
+  try {
+    require("child_process").execFileSync(process.execPath, [path.join(__dirname, "build_home.js")], { stdio: "inherit" });
+  } catch (error) {
+    console.error("  aviso: build_home.js falhou - rode `node scripts/build_home.js` antes de commitar");
+  }
   if (payload.droppedFunctions > 0) {
     console.warn(`  aviso: ${payload.droppedFunctions} funções descartadas na serialização`);
   }

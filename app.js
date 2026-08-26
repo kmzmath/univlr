@@ -1,4 +1,5 @@
 ﻿const DATABASE_MANIFEST = "database.json";
+const HOME_MANIFEST = "home.json";
 const SOURCE_MANIFEST = "data-sources.json";
 const METADATA_MANIFEST = "metadata.json";
 const TEAM_PROFILES_MANIFEST = "team-profiles.json";
@@ -70,14 +71,19 @@ const PLAYER_OF_WEEK_SUPPORT = {
 // recebe o nome do jogador e a estatistica principal pelo link, e os mesmos
 // numeros estao inteiros na pagina do jogador, a um clique.
 function weekSupportStats(category, player, extra = "") {
-  const stats = (PLAYER_OF_WEEK_SUPPORT[category?.key] || [])
-    .map((key) => PLAYER_OF_WEEK_CATEGORIES.find((item) => item.key === key))
-    .filter(Boolean);
+  // Vindo do home.json os três já chegam formatados; vindo do banco completo
+  // são calculados aqui. As duas fontes produzem o mesmo par rótulo/valor.
+  const stats =
+    category?.support ||
+    (PLAYER_OF_WEEK_SUPPORT[category?.key] || [])
+      .map((key) => PLAYER_OF_WEEK_CATEGORIES.find((item) => item.key === key))
+      .filter(Boolean)
+      .map((item) => ({ statLabel: item.statLabel, value: item.format(player) }));
   if (!stats.length) return "";
   return `<span class="week-detail ${escapeHtml(extra)}" aria-hidden="true">${stats
     .map(
       (item) =>
-        `<span class="week-detail-stat"><small>${escapeHtml(item.statLabel)}</small><b>${escapeHtml(item.format(player))}</b></span>`,
+        `<span class="week-detail-stat"><small>${escapeHtml(item.statLabel)}</small><b>${escapeHtml(item.value)}</b></span>`,
     )
     .join("")}</span>`;
 }
@@ -2701,6 +2707,8 @@ const state = {
   ready: false,
   error: null,
   db: null,
+  // Resumo da home enquanto o banco completo nao chegou; volta a null no swap.
+  homeSummary: null,
   search: "",
   searchOpen: false,
   matchMap: "all",
@@ -2749,9 +2757,46 @@ const app = document.getElementById("app");
 
 init();
 
+// Monta um state.db parcial a partir do resumo. Os objetos vêm do build com a
+// mesma forma dos reais, então teamLogo, teamShortRankLabel, sortedEvents,
+// matchListScore e companhia funcionam sem saber que estão lendo o resumo.
+function homeSummaryDb(summary) {
+  return {
+    teams: summary.teams || [],
+    tournaments: summary.events || [],
+    matchSeries: summary.series || [],
+    maps: summary.maps || [],
+    matches: [],
+    players: [],
+    weapons: [],
+    rankingSnapshots: summary.rankingSnapshots || [],
+    ranking: { teams: [], byTeamId: {} },
+    metadata: {},
+    teamProfiles: {},
+  };
+}
+
+function routeIsHome() {
+  const section = route().section;
+  return !section || section === "home";
+}
+
 async function init() {
   renderLoading();
   try {
+    // Primeiro render pelo resumo: ~8 KB gzip contra 5,3 MB do banco inteiro,
+    // sem JSON.parse de 96 mil nós no caminho. Só vale para a home - qualquer
+    // outra rota espera o banco completo, que já vem logo atrás.
+    if (routeIsHome()) {
+      const summary = await loadJsonOptional(HOME_MANIFEST);
+      if (summary?.format === "univlr-home@1") {
+        state.homeSummary = summary;
+        state.db = homeSummaryDb(summary);
+        state.ready = true;
+        render();
+      }
+    }
+
     // Caminho rápido: banco pré-agregado por scripts/build_database.js.
     // Sem database.json (ex.: dados novos ainda não processados), cai no
     // pipeline completo no navegador, que baixa todos os arquivos brutos.
@@ -2770,6 +2815,10 @@ async function init() {
       const loaded = await loadEventFiles(manifest.events);
       state.db = buildDatabase(manifest.events, loaded, metadata, teamProfiles, rankingWeights);
     }
+    // O banco completo chegou: o resumo sai de cena e o que estiver na tela é
+    // redesenhado a partir dele. Sem isso a home ficaria presa nos 10 itens do
+    // resumo, e uma janela da semana virada durante a sessão nunca corrigiria.
+    state.homeSummary = null;
     ensureCurrentRankingSnapshot(state.db);
     state.tournamentRankingCache.clear();
     state.ready = true;
@@ -13563,8 +13612,25 @@ function playerFigureError(image) {
   image.src = assetPath(PLAYER_FALLBACK_PHOTO);
 }
 
+// Enquanto o banco completo não chegou, os líderes vêm prontos do home.json.
+// O `category` sintético devolve o valor já formatado no build, então
+// weekLeadCard e weekTile não precisam saber de onde veio.
+function homeSummaryLeaders() {
+  return (state.homeSummary?.leaders || []).map((leader) => ({
+    category: {
+      key: leader.key,
+      label: leader.label,
+      statLabel: leader.statLabel,
+      format: () => leader.value,
+      support: leader.support,
+    },
+    player: leader.player,
+    windowLabel: leader.windowLabel,
+  }));
+}
+
 function weekHighlights() {
-  const leaders = playerOfWeekLeaders();
+  const leaders = state.homeSummary ? homeSummaryLeaders() : playerOfWeekLeaders();
   const note = `Mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas jogados no período exibido para entrar.`;
   if (!leaders.length) {
     return `

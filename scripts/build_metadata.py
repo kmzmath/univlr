@@ -73,6 +73,31 @@ def clean(value):
     return str(value).strip()
 
 
+# A planilha guarda cor1/cor2 como 6 digitos hex SEM o "#". Duas celulas ainda
+# chegam como inteiro: "040101" e "040411" comecam com zero e so tem digitos
+# decimais, entao o Excel guardou 40101 e 40411 e comeu o zero da frente. O
+# zfill devolve os seis digitos.
+def hex_color(value):
+    if value is None:
+        return ""
+    if isinstance(value, bool):
+        return ""
+    if isinstance(value, int):
+        texto = str(value).zfill(6)
+    elif isinstance(value, float) and value.is_integer():
+        texto = str(int(value)).zfill(6)
+    else:
+        texto = str(value).strip().lstrip("#")
+    # load_rows passa tudo por str(), entao o inteiro do Excel chega aqui como
+    # "40101". Digito decimal so, com menos de 6 casas, so pode ter vindo dessa
+    # conversao - um hex de verdade com essa cara seria escrito com o zero.
+    if texto.isdigit() and len(texto) < 6:
+        texto = texto.zfill(6)
+    if len(texto) != 6 or any(c not in "0123456789abcdefABCDEF" for c in texto):
+        return ""
+    return f"#{texto.lower()}"
+
+
 def normalize_public_path(value):
     path = clean(value).replace("\\", "/")
     if not path:
@@ -401,6 +426,13 @@ def build_data_sources():
 
     return {"events": events}
 
+# Grava com fim de linha LF explicito: no Windows o write_text traduz para
+# CRLF, e os artefatos commitados estao em LF - sem isto o rebuild trocaria as
+# 13 mil linhas do metadata.json so por fim de linha.
+def escreve_json(caminho, dados):
+    with open(caminho, "w", encoding="utf-8", newline="\n") as arquivo:
+        arquivo.write(json.dumps(dados, ensure_ascii=False, indent=2) + "\n")
+
 
 def read_states():
     path = DATA_ROOT / "estados.xlsx"
@@ -416,7 +448,10 @@ def read_states():
                 "id": row.get("id", ""),
                 "sigla": sigla,
                 "name": row.get("nome", ""),
-                "icon": public_asset(row.get("icone", "")),
+                # A planilha aponta para o Wikimedia Commons. Prefira a copia
+                # local gerada por scripts/fetch_state_flags.py; a URL remota so
+                # sobrevive para estado que ainda nao tem arquivo em disco.
+                "icon": public_asset(f"assets/state-flags/{sigla.lower()}.webp") or public_asset(row.get("icone", "")),
                 "region": row.get("regiao", ""),
             }
         )
@@ -542,6 +577,7 @@ def read_team_infos(states_by_sigla, logos_by_slug):
             "stateName": state.get("name", ""),
             "stateFlag": state.get("icon", ""),
             "stateRegion": state.get("region", ""),
+            "colors": [c for c in (hex_color(row.get("cor1")), hex_color(row.get("cor2"))) if c],
             "socials": {
                 "instagram": row.get("instagram", ""),
             },
@@ -592,6 +628,7 @@ def read_teams(states_by_sigla):
                 "stateName": info.get("stateName", ""),
                 "stateFlag": info.get("stateFlag", ""),
                 "stateRegion": info.get("stateRegion", ""),
+                "colors": info.get("colors", []),
                 "socials": info.get("socials", {}),
                 "lineup": roster.get("lineup", []),
             }
@@ -657,10 +694,10 @@ def main():
         "stateWinrates": read_state_winrates(),
     }
     output_path = ROOT / "metadata.json"
-    output_path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    escreve_json(output_path, metadata)
     data_sources = build_data_sources()
     sources_path = ROOT / "data-sources.json"
-    sources_path.write_text(json.dumps(data_sources, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    escreve_json(sources_path, data_sources)
     print(
         json.dumps(
             {

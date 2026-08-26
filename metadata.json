@@ -26,8 +26,12 @@
       "logo": "assets/team-logos/a2e_uff.png",
       "state": "RJ",
       "stateName": "Rio de Janeiro",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_do_Rio_de_Janeiro.svg",
+      "stateFlag": "assets/state-flags/rj.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#7617ad",
+        "#a388f8"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/a2euff/"
       },
@@ -77,8 +81,12 @@
       "logo": "assets/team-logos/aaeu_cerberus.png",
       "state": "GO",
       "stateName": "Goiás",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Goi%C3%A1s.svg",
+      "stateFlag": "assets/state-flags/go.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#e10001",
+        "#040101"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/cerberus.oficial/"
       },
@@ -124,8 +132,12 @@
       "logo": "assets/team-logos/umfa_acucarados.png",
       "state": "MA",
       "stateName": "Maranhão",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Maranh%C3%A3o.svg",
+      "stateFlag": "assets/state-flags/ma.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#c7dbe4",
+        "#040411"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -171,8 +183,12 @@
       "logo": "assets/team-logos/axis_anteaters.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#2b772b",
+        "#e1e3e2"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/axis_anteaters/"
       },
@@ -210,8 +226,12 @@
       "logo": "assets/team-logos/axis_anteaters.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#2b772b",
+        "#e1e3e2"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/axis_anteaters/"
       },
@@ -261,8 +281,12 @@
       "logo": "assets/team-logos/axis_anteaters.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#2b772b",
+        "#e1e3e2"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/axis_anteaters/"
       },
@@ -288,8 +312,12 @@
       "logo": "assets/team-logos/azure_bears.png",
       "state": "PR",
       "stateName": "Paraná",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Paran%C3%A1.svg",
+      "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
+      "colors": [
+        "#037aff",
+        "#fefeff"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/azure_bears/"
       },
@@ -306,8 +334,12 @@
       "logo": "assets/team-logos/azure_bears.png",
       "state": "PR",
       "stateName": "Paraná",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Paran%C3%A1.svg",
+      "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
+      "colors": [
+        "#037aff",
+        "#fefeff"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/azure_bears/"
       },
@@ -353,8 +385,12 @@
       "logo": "assets/team-logos/azure_bears.png",
       "state": "PR",
       "stateName": "Paraná",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Paran%C3%A1.svg",
+      "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
+      "colors": [
+        "#037aff",
+        "#fefeff"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/azure_bears/"
       },
@@ -396,8 +432,12 @@
       "logo": "assets/team-logos/azure_bears.png",
       "state": "PR",
       "stateName": "Paraná",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Paran%C3%A1.svg",
+      "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
+      "colors": [
+        "#037aff",
+        "#fefeff"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/azure_bears/"
       },
@@ -439,8 +479,12 @@
       "logo": "assets/team-logos/azure_bears.png",
       "state": "PR",
       "stateName": "Paraná",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Paran%C3%A1.svg",
+      "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
+      "colors": [
+        "#037aff",
+        "#fefeff"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/azure_bears/"
       },
@@ -467,11 +511,15 @@
       "displayName": "Barões da UFF",
       "org": "Universidade Federal Fluminense",
       "orgTag": "UFF",
-      "logo": "assets/team-logos/baroes_uff.webp",
+      "logo": "assets/team-logos/baroes_uff.png",
       "state": "RJ",
       "stateName": "Rio de Janeiro",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_do_Rio_de_Janeiro.svg",
+      "stateFlag": "assets/state-flags/rj.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#000000",
+        "#e6c355"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/atleticariuff/"
       },
@@ -509,8 +557,12 @@
       "logo": "assets/team-logos/brutal_esports.png",
       "state": "MG",
       "stateName": "Minas Gerais",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Minas_Gerais.svg",
+      "stateFlag": "assets/state-flags/mg.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#ca0122",
+        "#f9f9f8"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/brutalufsj/"
       },
@@ -552,8 +604,12 @@
       "logo": "assets/team-logos/caap_hellhounds.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#630002",
+        "#fdfdfd"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/caap.esports/"
       },
@@ -599,8 +655,12 @@
       "logo": "assets/team-logos/caap_hellhounds.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#630002",
+        "#fdfdfd"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/caap.esports/"
       },
@@ -647,11 +707,15 @@
       "displayName": "CAAP Malditos",
       "org": "Universidade Federal do ABC",
       "orgTag": "UFABC",
-      "logo": "assets/team-logos/caap_malditos.webp",
+      "logo": "assets/team-logos/caap_malditos.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#630002",
+        "#fdfdfd"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/caap.esports/"
       },
@@ -693,8 +757,12 @@
       "logo": "assets/team-logos/caap_hellhounds.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#630002",
+        "#fdfdfd"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/caap.esports/"
       },
@@ -720,8 +788,12 @@
       "logo": "assets/team-logos/carrascos_fd8j.png",
       "state": "SE",
       "stateName": "Sergipe",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Sergipe.svg",
+      "stateFlag": "assets/state-flags/se.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#761b21",
+        "#fcfdfc"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -763,8 +835,12 @@
       "logo": "assets/team-logos/ceub_octopus.png",
       "state": "DF",
       "stateName": "Distrito Federal",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Distrito_Federal_%28Brasil%29.svg",
+      "stateFlag": "assets/state-flags/df.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#551d66",
+        "#020103"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ceub.octopus/"
       },
@@ -802,8 +878,12 @@
       "logo": "assets/team-logos/ceub_octopus.png",
       "state": "DF",
       "stateName": "Distrito Federal",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Distrito_Federal_%28Brasil%29.svg",
+      "stateFlag": "assets/state-flags/df.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#551d66",
+        "#020103"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ceub.octopus/"
       },
@@ -845,8 +925,12 @@
       "logo": "assets/team-logos/cyberkongs.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#0f112a",
+        "#546893"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/cyberkongsbr/"
       },
@@ -888,8 +972,12 @@
       "logo": "assets/team-logos/dark_ufrj.png",
       "state": "RJ",
       "stateName": "Rio de Janeiro",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_do_Rio_de_Janeiro.svg",
+      "stateFlag": "assets/state-flags/rj.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#5c59c5",
+        "#fafbfc"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -915,8 +1003,12 @@
       "logo": "assets/team-logos/fametro_berserkers.png",
       "state": "AM",
       "stateName": "Amazonas",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Amazonas.svg",
+      "stateFlag": "assets/state-flags/am.webp",
       "stateRegion": "Norte",
+      "colors": [
+        "#303849",
+        "#503534"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -954,8 +1046,12 @@
       "logo": "assets/team-logos/fatec_pg.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#b1322d",
+        "#fdfdfd"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/atleticafatecpg/"
       },
@@ -993,8 +1089,12 @@
       "logo": "assets/team-logos/fei_darkowls.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#242323",
+        "#fac60a"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/darkowls_fei/"
       },
@@ -1032,8 +1132,12 @@
       "logo": "assets/team-logos/fei_whiteowls.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#242323",
+        "#fdfdfd"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/darkowls_fei/"
       },
@@ -1075,8 +1179,12 @@
       "logo": "assets/team-logos/furia.png",
       "state": "PR",
       "stateName": "Paraná",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Paran%C3%A1.svg",
+      "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
+      "colors": [
+        "#deb924",
+        "#212121"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/furiaesportsxv/"
       },
@@ -1118,8 +1226,12 @@
       "logo": "assets/team-logos/gambiarra_ufg.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#75878d",
+        "#52c4ed"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/atleticaagroufg/"
       },
@@ -1165,8 +1277,12 @@
       "logo": "assets/team-logos/gamers_of_ufpb.png",
       "state": "PB",
       "stateName": "Paraíba",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_da_Para%C3%ADba.svg",
+      "stateFlag": "assets/state-flags/pb.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#021325",
+        "#fdfefd"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -1204,8 +1320,12 @@
       "logo": "assets/team-logos/green_owls.png",
       "state": "DF",
       "stateName": "Distrito Federal",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Distrito_Federal_%28Brasil%29.svg",
+      "stateFlag": "assets/state-flags/df.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#00a675",
+        "#043a58"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/unbgreenowls/"
       },
@@ -1255,8 +1375,12 @@
       "logo": "assets/team-logos/green_owls.png",
       "state": "DF",
       "stateName": "Distrito Federal",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Distrito_Federal_%28Brasil%29.svg",
+      "stateFlag": "assets/state-flags/df.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#00a675",
+        "#043a58"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/unbgreenowls/"
       },
@@ -1310,8 +1434,12 @@
       "logo": "assets/team-logos/grifo_ufmg.png",
       "state": "MG",
       "stateName": "Minas Gerais",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Minas_Gerais.svg",
+      "stateFlag": "assets/state-flags/mg.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#1a3553",
+        "#d8aa45"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/grifo_ufmg/"
       },
@@ -1361,8 +1489,12 @@
       "logo": "assets/team-logos/homem_passaro.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#fce808",
+        "#191919"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/homempassaro/"
       },
@@ -1400,8 +1532,12 @@
       "logo": "assets/team-logos/ibmec_sharks.png",
       "state": "RJ",
       "stateName": "Rio de Janeiro",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_do_Rio_de_Janeiro.svg",
+      "stateFlag": "assets/state-flags/rj.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#6d9bb1",
+        "#5ca2f6"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/sharksibmec/"
       },
@@ -1443,8 +1579,12 @@
       "logo": "assets/team-logos/ime_wolves.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#000000",
+        "#fc1143"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/imewolves/"
       },
@@ -1482,8 +1622,12 @@
       "logo": "assets/team-logos/inatel.png",
       "state": "MG",
       "stateName": "Minas Gerais",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Minas_Gerais.svg",
+      "stateFlag": "assets/state-flags/mg.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#040404",
+        "#e6e6e6"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/inatelesports/"
       },
@@ -1521,8 +1665,12 @@
       "logo": "assets/team-logos/inatel.png",
       "state": "MG",
       "stateName": "Minas Gerais",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Minas_Gerais.svg",
+      "stateFlag": "assets/state-flags/mg.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#040404",
+        "#e6e6e6"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/inatelesports/"
       },
@@ -1560,8 +1708,12 @@
       "logo": "assets/team-logos/inatel.png",
       "state": "MG",
       "stateName": "Minas Gerais",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Minas_Gerais.svg",
+      "stateFlag": "assets/state-flags/mg.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#040404",
+        "#e6e6e6"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/inatelesports/"
       },
@@ -1603,8 +1755,12 @@
       "logo": "assets/team-logos/inatel_legacy.png",
       "state": "MG",
       "stateName": "Minas Gerais",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Minas_Gerais.svg",
+      "stateFlag": "assets/state-flags/mg.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#0b288e",
+        "#040404"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/inatelesports/"
       },
@@ -1643,11 +1799,15 @@
       "displayName": "Liga Vulkanica",
       "org": "Universidade do Estado de Mato Grosso",
       "orgTag": "UNEMAT",
-      "logo": "assets/team-logos/liga_vulkanica.webp",
+      "logo": "assets/team-logos/liga_vulkanica.png",
       "state": "MT",
       "stateName": "Mato Grosso",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Mato_Grosso.svg",
+      "stateFlag": "assets/state-flags/mt.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#030303",
+        "#eb5c17"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ligavulkanica/"
       },
@@ -1685,8 +1845,12 @@
       "logo": "assets/team-logos/limpezinha.png",
       "state": "PB",
       "stateName": "Paraíba",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_da_Para%C3%ADba.svg",
+      "stateFlag": "assets/state-flags/pb.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#081929",
+        "#c72d31"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -1728,8 +1892,12 @@
       "logo": "assets/team-logos/lunatica_ufms.png",
       "state": "MS",
       "stateName": "Mato Grosso do Sul",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Mato_Grosso_do_Sul.svg",
+      "stateFlag": "assets/state-flags/ms.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#39033a",
+        "#fdb509"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/aaacompufms/"
       },
@@ -1783,8 +1951,12 @@
       "logo": "assets/team-logos/macklogic_rainbow.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#f1670b",
+        "#6b37c9"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/mackenzielogic/"
       },
@@ -1826,8 +1998,12 @@
       "logo": "assets/team-logos/macklogic_red.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#e90101",
+        "#ff5556"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/mackenzielogic/"
       },
@@ -1869,8 +2045,12 @@
       "logo": "assets/team-logos/macklogic_white.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#ffffff",
+        "#ffffff"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/mackenzielogic/"
       },
@@ -1917,11 +2097,15 @@
       "displayName": "Made in Cefet",
       "org": "Centro Federal de Educação Tecnológica Celso Suckow da Fonseca",
       "orgTag": "Cefet/RJ",
-      "logo": "assets/team-logos/made_cefet.webp",
+      "logo": "assets/team-logos/made_cefet.png",
       "state": "RJ",
       "stateName": "Rio de Janeiro",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_do_Rio_de_Janeiro.svg",
+      "stateFlag": "assets/state-flags/rj.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#328dfc",
+        "#ffffff"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -1956,11 +2140,15 @@
       "displayName": "Mauá Blue",
       "org": "Instituto Mauá de Tecnologia",
       "orgTag": "MAUÁ",
-      "logo": "assets/team-logos/maua_blue.webp",
+      "logo": "assets/team-logos/maua_blue.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#ffffff",
+        "#2d477c"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/esportsmaua/"
       },
@@ -2006,8 +2194,12 @@
       "logo": "assets/team-logos/milionaria_ufam.png",
       "state": "AM",
       "stateName": "Amazonas",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Amazonas.svg",
+      "stateFlag": "assets/state-flags/am.webp",
       "stateRegion": "Norte",
+      "colors": [
+        "#261139",
+        "#ffffff"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/milionariaufam/"
       },
@@ -2045,8 +2237,12 @@
       "logo": "assets/team-logos/ufrj_minerva.png",
       "state": "RJ",
       "stateName": "Rio de Janeiro",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_do_Rio_de_Janeiro.svg",
+      "stateFlag": "assets/state-flags/rj.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#131732",
+        "#fdc725"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/minervaesports/"
       },
@@ -2092,8 +2288,12 @@
       "logo": "assets/team-logos/octacore.png",
       "state": "PR",
       "stateName": "Paraná",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Paran%C3%A1.svg",
+      "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
+      "colors": [
+        "#e42b21",
+        "#060405"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/aaacpucpr/"
       },
@@ -2135,8 +2335,12 @@
       "logo": "assets/team-logos/octacore.png",
       "state": "PR",
       "stateName": "Paraná",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Paran%C3%A1.svg",
+      "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
+      "colors": [
+        "#e42b21",
+        "#060405"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/aaacpucpr/"
       },
@@ -2174,8 +2378,12 @@
       "logo": "assets/team-logos/panterao.png",
       "state": "MG",
       "stateName": "Minas Gerais",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Minas_Gerais.svg",
+      "stateFlag": "assets/state-flags/mg.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#232a35",
+        "#ffffff"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/atleticaleopoldina/"
       },
@@ -2217,8 +2425,12 @@
       "logo": "assets/team-logos/poli_plague.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#d1ba5e",
+        "#d6d6d5"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/poliplague/"
       },
@@ -2257,11 +2469,15 @@
       "displayName": "PUCC Canaries",
       "org": "Pontifícia Universidade Católica de Campinas",
       "orgTag": "PUCCAMP",
-      "logo": "assets/team-logos/pucc_cardinals.png",
+      "logo": "assets/team-logos/puccCanaries.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#cca900",
+        "#ffffff"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/puccampcardinals/"
       },
@@ -2296,11 +2512,15 @@
       "displayName": "PUCC Cardinals",
       "org": "Pontifícia Universidade Católica de Campinas",
       "orgTag": "PUCCAMP",
-      "logo": "assets/team-logos/pucc_cardinals.png",
+      "logo": "assets/team-logos/puccCanaries.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#1e71b6",
+        "#000001"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/puccampcardinals/"
       },
@@ -2351,11 +2571,15 @@
       "displayName": "PUC Goiás Sistemática",
       "org": "Pontifícia Universidade Católica de Goiás",
       "orgTag": "PUC Goiás",
-      "logo": "assets/team-logos/pucgo_sistematica.png",
+      "logo": "assets/team-logos/pucgo_sistematica_academy.png",
       "state": "GO",
       "stateName": "Goiás",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Goi%C3%A1s.svg",
+      "stateFlag": "assets/state-flags/go.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#b30b21",
+        "#060101"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/sistematica.gg/"
       },
@@ -2402,11 +2626,15 @@
       "displayName": "PUCGO Sistematica Academy",
       "org": "Pontifícia Universidade Católica de Goiás",
       "orgTag": "PUC Goiás",
-      "logo": "assets/team-logos/pucgo_sistematica.png",
+      "logo": "assets/team-logos/pucgo_sistematica_academy.png",
       "state": "GO",
       "stateName": "Goiás",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Goi%C3%A1s.svg",
+      "stateFlag": "assets/state-flags/go.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#0c32bc",
+        "#b23a4b"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/sistematica.gg/"
       },
@@ -2444,8 +2672,12 @@
       "logo": "assets/team-logos/rahnag.png",
       "state": "DF",
       "stateName": "Distrito Federal",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Distrito_Federal_%28Brasil%29.svg",
+      "stateFlag": "assets/state-flags/df.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#51078f",
+        "#090816"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -2491,8 +2723,12 @@
       "logo": "assets/team-logos/tigre_branco.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#b9b9b9",
+        "#eac332"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/atletica_tigrebranco/"
       },
@@ -2550,8 +2786,12 @@
       "logo": "assets/team-logos/totale_umc.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#63367a",
+        "#fdfcfc"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/edftatuzao"
       },
@@ -2589,8 +2829,12 @@
       "logo": "assets/team-logos/ucb_dogs.png",
       "state": "DF",
       "stateName": "Distrito Federal",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Distrito_Federal_%28Brasil%29.svg",
+      "stateFlag": "assets/state-flags/df.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#263783",
+        "#fdfdfd"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -2632,8 +2876,12 @@
       "logo": "assets/team-logos/ueg_hipertensa.png",
       "state": "GO",
       "stateName": "Goiás",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Goi%C3%A1s.svg",
+      "stateFlag": "assets/state-flags/go.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#9a9da1",
+        "#b3d6b3"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/hipertensaueg/"
       },
@@ -2671,8 +2919,12 @@
       "logo": "assets/team-logos/uema_turbulencia.png",
       "state": "MA",
       "stateName": "Maranhão",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Maranh%C3%A3o.svg",
+      "stateFlag": "assets/state-flags/ma.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#f46a2d",
+        "#c9c8c5"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/atletica_turbulencia/"
       },
@@ -2714,8 +2966,12 @@
       "logo": "assets/team-logos/uepa_imperadores.png",
       "state": "PA",
       "stateName": "Pará",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Par%C3%A1.svg",
+      "stateFlag": "assets/state-flags/pa.webp",
       "stateRegion": "Norte",
+      "colors": [
+        "#a7a9ac",
+        "#e21c2d"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/atleticaimperadores/"
       },
@@ -2753,8 +3009,12 @@
       "logo": "assets/team-logos/ufcg_pensaodepet.png",
       "state": "PB",
       "stateName": "Paraíba",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_da_Para%C3%ADba.svg",
+      "stateFlag": "assets/state-flags/pb.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#2faaec",
+        "#2d1e73"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -2800,8 +3060,12 @@
       "logo": "assets/team-logos/ufg_eagles.png",
       "state": "GO",
       "stateName": "Goiás",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Goi%C3%A1s.svg",
+      "stateFlag": "assets/state-flags/go.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#0075c1",
+        "#fefefe"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ufgeagles/"
       },
@@ -2843,8 +3107,12 @@
       "logo": "assets/team-logos/ufg_eagles.png",
       "state": "GO",
       "stateName": "Goiás",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Goi%C3%A1s.svg",
+      "stateFlag": "assets/state-flags/go.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#0075c1",
+        "#fefefe"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ufgeagles/"
       },
@@ -2882,8 +3150,12 @@
       "logo": "assets/team-logos/ufg_eagles.png",
       "state": "GO",
       "stateName": "Goiás",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Goi%C3%A1s.svg",
+      "stateFlag": "assets/state-flags/go.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#0075c1",
+        "#fefefe"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ufgeagles/"
       },
@@ -2929,8 +3201,12 @@
       "logo": "assets/team-logos/ufma_naotemclutch.png",
       "state": "MA",
       "stateName": "Maranhão",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Maranh%C3%A3o.svg",
+      "stateFlag": "assets/state-flags/ma.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#28282d",
+        "#cfcac6"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -2968,8 +3244,12 @@
       "logo": "assets/team-logos/ufmg_fenix.png",
       "state": "MG",
       "stateName": "Minas Gerais",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Minas_Gerais.svg",
+      "stateFlag": "assets/state-flags/mg.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#d50000",
+        "#fdc66e"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ufmgesports/"
       },
@@ -3007,8 +3287,12 @@
       "logo": "assets/team-logos/ufmt_turuna.png",
       "state": "MT",
       "stateName": "Mato Grosso",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Mato_Grosso.svg",
+      "stateFlag": "assets/state-flags/mt.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#b93b07",
+        "#fbfbf9"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/atletica.turuna/"
       },
@@ -3050,8 +3334,12 @@
       "logo": "assets/team-logos/ufpe_virtus.png",
       "state": "PE",
       "stateName": "Pernambuco",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Pernambuco.svg",
+      "stateFlag": "assets/state-flags/pe.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#650909",
+        "#010000"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ufpevirtus/"
       },
@@ -3089,8 +3377,12 @@
       "logo": "assets/team-logos/ufpr_bbn.png",
       "state": "PR",
       "stateName": "Paraná",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Paran%C3%A1.svg",
+      "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
+      "colors": [
+        "#e11e31",
+        "#fefefe"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ufprburningbunnies/"
       },
@@ -3141,11 +3433,15 @@
       "displayName": "UFRJ Canis",
       "org": "Universidade Federal do Rio de Janeiro",
       "orgTag": "UFRJ",
-      "logo": "assets/team-logos/ufrj_canis.webp",
+      "logo": "assets/team-logos/ufrj_canis.png",
       "state": "RJ",
       "stateName": "Rio de Janeiro",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_do_Rio_de_Janeiro.svg",
+      "stateFlag": "assets/state-flags/rj.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#2b2de3",
+        "#ffffff"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ufrjcanis/"
       },
@@ -3179,8 +3475,12 @@
       "logo": "assets/team-logos/ufrj_minerva.png",
       "state": "RJ",
       "stateName": "Rio de Janeiro",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_do_Rio_de_Janeiro.svg",
+      "stateFlag": "assets/state-flags/rj.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#131732",
+        "#fdc725"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/minervaesports/"
       },
@@ -3222,8 +3522,12 @@
       "logo": "assets/team-logos/ufrn_carcaras.png",
       "state": "RN",
       "stateName": "Rio Grande do Norte",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Rio_Grande_do_Norte.svg",
+      "stateFlag": "assets/state-flags/rn.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#010000",
+        "#cc4818"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ufrncarcaras/"
       },
@@ -3269,10 +3573,14 @@
       "logo": "assets/team-logos/ufs_bugados.png",
       "state": "SE",
       "stateName": "Sergipe",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Sergipe.svg",
+      "stateFlag": "assets/state-flags/se.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#343433",
+        "#fcfcfb"
+      ],
       "socials": {
-        "instagram": "https://www.instagram.com/ufswarriowls/"
+        "instagram": "https://www.instagram.com/atleticabugados/"
       },
       "lineup": [
         {
@@ -3313,11 +3621,15 @@
       "displayName": "UFSCar Fire",
       "org": "Universidade Federal de São Carlos",
       "orgTag": "UFSCar",
-      "logo": "assets/team-logos/ufscar_fire.webp",
+      "logo": "assets/team-logos/ufscar_fire.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#d22916",
+        "#000000"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ufscarfire/"
       },
@@ -3359,8 +3671,12 @@
       "logo": "assets/team-logos/ufu_saints.png",
       "state": "MG",
       "stateName": "Minas Gerais",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Minas_Gerais.svg",
+      "stateFlag": "assets/state-flags/mg.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#fefefe",
+        "#d7ad00"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ufuesports/"
       },
@@ -3410,8 +3726,12 @@
       "logo": "assets/team-logos/ufu_saints.png",
       "state": "MG",
       "stateName": "Minas Gerais",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Minas_Gerais.svg",
+      "stateFlag": "assets/state-flags/mg.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#fefefe",
+        "#d7ad00"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/ufuesports/"
       },
@@ -3457,8 +3777,12 @@
       "logo": "assets/team-logos/undbala.png",
       "state": "MA",
       "stateName": "Maranhão",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Maranh%C3%A3o.svg",
+      "stateFlag": "assets/state-flags/ma.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#020202",
+        "#e6e6e6"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -3496,8 +3820,12 @@
       "logo": "assets/team-logos/unicamp_tritons.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#4be8fb",
+        "#ed3845"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/unicamptritons/"
       },
@@ -3535,8 +3863,12 @@
       "logo": "assets/team-logos/unicamp_tritons.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#4be8fb",
+        "#ed3845"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/unicamptritons/"
       },
@@ -3566,8 +3898,12 @@
       "logo": "assets/team-logos/unifacens_fodens.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#7a8a9a",
+        "#fefefe"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -3611,6 +3947,10 @@
       "stateName": "",
       "stateFlag": "",
       "stateRegion": "",
+      "colors": [
+        "#000b07",
+        "#519a21"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/unifesp.erex/"
       },
@@ -3648,8 +3988,12 @@
       "logo": "assets/team-logos/unifor.png",
       "state": "CE",
       "stateName": "Ceará",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Cear%C3%A1.svg",
+      "stateFlag": "assets/state-flags/ce.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#0249f3",
+        "#fefefe"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -3687,8 +4031,12 @@
       "logo": "assets/team-logos/uninassau_griffins.png",
       "state": "PE",
       "stateName": "Pernambuco",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Pernambuco.svg",
+      "stateFlag": "assets/state-flags/pe.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#0d326f",
+        "#fad506"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/uninassau.recife/"
       },
@@ -3742,8 +4090,12 @@
       "logo": "assets/team-logos/unirio_krakens.png",
       "state": "RJ",
       "stateName": "Rio de Janeiro",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_do_Rio_de_Janeiro.svg",
+      "stateFlag": "assets/state-flags/rj.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#53c5f1",
+        "#024778"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/unirioesports/"
       },
@@ -3785,8 +4137,12 @@
       "logo": "assets/team-logos/unirv_rushone.png",
       "state": "GO",
       "stateName": "Goiás",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Goi%C3%A1s.svg",
+      "stateFlag": "assets/state-flags/go.webp",
       "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#f63c0d",
+        "#061608"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/rushone.gg/"
       },
@@ -3836,8 +4192,12 @@
       "logo": "assets/team-logos/unisc_ladaiada.png",
       "state": "RS",
       "stateName": "Rio Grande do Sul",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Rio_Grande_do_Sul.svg",
+      "stateFlag": "assets/state-flags/rs.webp",
       "stateRegion": "Sul",
+      "colors": [
+        "#072357",
+        "#01030e"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -3875,8 +4235,12 @@
       "logo": "assets/team-logos/unit_troianos.png",
       "state": "SE",
       "stateName": "Sergipe",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Sergipe.svg",
+      "stateFlag": "assets/state-flags/se.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#085696",
+        "#212429"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/atleticatroianosunit/"
       },
@@ -3918,8 +4282,12 @@
       "logo": "assets/team-logos/univasf.png",
       "state": "PE",
       "stateName": "Pernambuco",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Pernambuco.svg",
+      "stateFlag": "assets/state-flags/pe.webp",
       "stateRegion": "Nordeste",
+      "colors": [
+        "#07437a",
+        "#e7e5e5"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -3969,8 +4337,12 @@
       "logo": "assets/team-logos/uscs_hawks.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#5b5b5b",
+        "#030203"
+      ],
       "socials": {
         "instagram": ""
       },
@@ -4012,8 +4384,12 @@
       "logo": "assets/team-logos/usp_stars.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#fdb402",
+        "#fcfdfd"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/starsusp/"
       },
@@ -4055,8 +4431,12 @@
       "logo": "assets/team-logos/usp_stars.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#fdb402",
+        "#fcfdfd"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/starsusp/"
       },
@@ -4102,8 +4482,12 @@
       "logo": "assets/team-logos/wolf_gaming.png",
       "state": "RJ",
       "stateName": "Rio de Janeiro",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_do_Rio_de_Janeiro.svg",
+      "stateFlag": "assets/state-flags/rj.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#b60703",
+        "#858585"
+      ],
       "socials": {
         "instagram": "https://www.instagram.com/wg.cefetrj/"
       },
@@ -4149,8 +4533,12 @@
       "logo": "assets/team-logos/xxii_setembro_fatec.png",
       "state": "SP",
       "stateName": "São Paulo",
-      "stateFlag": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
+      "colors": [
+        "#bd3123",
+        "#b1d74b"
+      ],
       "socials": {
         "instagram": "https://www.facebook.com/atletica.fatecsjc/"
       },
@@ -12676,189 +13064,189 @@
       "id": "1",
       "sigla": "AC",
       "name": "Acre",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Acre.svg",
+      "icon": "assets/state-flags/ac.webp",
       "region": "Norte"
     },
     {
       "id": "2",
       "sigla": "AL",
       "name": "Alagoas",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Alagoas.svg",
+      "icon": "assets/state-flags/al.webp",
       "region": "Nordeste"
     },
     {
       "id": "3",
       "sigla": "AP",
       "name": "Amapá",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Amap%C3%A1.svg",
+      "icon": "assets/state-flags/ap.webp",
       "region": "Norte"
     },
     {
       "id": "4",
       "sigla": "AM",
       "name": "Amazonas",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Amazonas.svg",
+      "icon": "assets/state-flags/am.webp",
       "region": "Norte"
     },
     {
       "id": "5",
       "sigla": "BA",
       "name": "Bahia",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_da_Bahia.svg",
+      "icon": "assets/state-flags/ba.webp",
       "region": "Nordeste"
     },
     {
       "id": "6",
       "sigla": "CE",
       "name": "Ceará",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Cear%C3%A1.svg",
+      "icon": "assets/state-flags/ce.webp",
       "region": "Nordeste"
     },
     {
       "id": "7",
       "sigla": "DF",
       "name": "Distrito Federal",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Distrito_Federal_%28Brasil%29.svg",
+      "icon": "assets/state-flags/df.webp",
       "region": "Centro-Oeste"
     },
     {
       "id": "8",
       "sigla": "ES",
       "name": "Espírito Santo",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Esp%C3%ADrito_Santo.svg",
+      "icon": "assets/state-flags/es.webp",
       "region": "Sudeste"
     },
     {
       "id": "9",
       "sigla": "GO",
       "name": "Goiás",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Goi%C3%A1s.svg",
+      "icon": "assets/state-flags/go.webp",
       "region": "Centro-Oeste"
     },
     {
       "id": "10",
       "sigla": "MA",
       "name": "Maranhão",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Maranh%C3%A3o.svg",
+      "icon": "assets/state-flags/ma.webp",
       "region": "Nordeste"
     },
     {
       "id": "11",
       "sigla": "MT",
       "name": "Mato Grosso",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Mato_Grosso.svg",
+      "icon": "assets/state-flags/mt.webp",
       "region": "Centro-Oeste"
     },
     {
       "id": "12",
       "sigla": "MS",
       "name": "Mato Grosso do Sul",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Mato_Grosso_do_Sul.svg",
+      "icon": "assets/state-flags/ms.webp",
       "region": "Centro-Oeste"
     },
     {
       "id": "13",
       "sigla": "MG",
       "name": "Minas Gerais",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Minas_Gerais.svg",
+      "icon": "assets/state-flags/mg.webp",
       "region": "Sudeste"
     },
     {
       "id": "14",
       "sigla": "PA",
       "name": "Pará",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Par%C3%A1.svg",
+      "icon": "assets/state-flags/pa.webp",
       "region": "Norte"
     },
     {
       "id": "15",
       "sigla": "PB",
       "name": "Paraíba",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_da_Para%C3%ADba.svg",
+      "icon": "assets/state-flags/pb.webp",
       "region": "Nordeste"
     },
     {
       "id": "16",
       "sigla": "PR",
       "name": "Paraná",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Paran%C3%A1.svg",
+      "icon": "assets/state-flags/pr.webp",
       "region": "Sul"
     },
     {
       "id": "17",
       "sigla": "PE",
       "name": "Pernambuco",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Pernambuco.svg",
+      "icon": "assets/state-flags/pe.webp",
       "region": "Nordeste"
     },
     {
       "id": "18",
       "sigla": "PI",
       "name": "Piauí",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Piau%C3%AD.svg",
+      "icon": "assets/state-flags/pi.webp",
       "region": "Nordeste"
     },
     {
       "id": "19",
       "sigla": "RJ",
       "name": "Rio de Janeiro",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_do_Rio_de_Janeiro.svg",
+      "icon": "assets/state-flags/rj.webp",
       "region": "Sudeste"
     },
     {
       "id": "20",
       "sigla": "RN",
       "name": "Rio Grande do Norte",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Rio_Grande_do_Norte.svg",
+      "icon": "assets/state-flags/rn.webp",
       "region": "Nordeste"
     },
     {
       "id": "21",
       "sigla": "RS",
       "name": "Rio Grande do Sul",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Rio_Grande_do_Sul.svg",
+      "icon": "assets/state-flags/rs.webp",
       "region": "Sul"
     },
     {
       "id": "22",
       "sigla": "RO",
       "name": "Rondônia",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Rond%C3%B4nia.svg",
+      "icon": "assets/state-flags/ro.webp",
       "region": "Norte"
     },
     {
       "id": "23",
       "sigla": "RR",
       "name": "Roraima",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Roraima.svg",
+      "icon": "assets/state-flags/rr.webp",
       "region": "Norte"
     },
     {
       "id": "24",
       "sigla": "SC",
       "name": "Santa Catarina",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Santa_Catarina.svg",
+      "icon": "assets/state-flags/sc.webp",
       "region": "Sul"
     },
     {
       "id": "25",
       "sigla": "SP",
       "name": "São Paulo",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg",
+      "icon": "assets/state-flags/sp.webp",
       "region": "Sudeste"
     },
     {
       "id": "26",
       "sigla": "SE",
       "name": "Sergipe",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_de_Sergipe.svg",
+      "icon": "assets/state-flags/se.webp",
       "region": "Nordeste"
     },
     {
       "id": "27",
       "sigla": "TO",
       "name": "Tocantins",
-      "icon": "https://commons.wikimedia.org/wiki/Special:FilePath/Bandeira_do_Tocantins.svg",
+      "icon": "assets/state-flags/to.webp",
       "region": "Norte"
     }
   ],

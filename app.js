@@ -2704,6 +2704,13 @@ const STATIC_DOCUMENT_TITLES = {
 };
 
 const state = {
+  // Dias recolhidos na lista de partidas, por chave de dia. Fica na memoria e
+  // nao na URL: recolher um dia e jeito de ler, nao filtro - nao muda o que a
+  // lista contem, e uma URL com dez datas dentro nao ajuda ninguem. Sobrevive
+  // a re-render (filtro, paginacao, troca de semana) porque o Set e do state.
+  diasFechados: new Set(),
+  // Marca que a proxima render do ranking deve animar a volta dos controles.
+  rankingAnimarEntrada: false,
   ready: false,
   error: null,
   db: null,
@@ -2723,6 +2730,7 @@ const state = {
     bestOf: false,
     maps: false,
     tournaments: false,
+    datas: false,
     teams: false,
   },
   matchDateFrom: "",
@@ -2864,7 +2872,10 @@ function collectWarmImageSources() {
     ...collect(db.tournaments.map((event) => event.logo)),
     ...collect(db.tournaments.map((event) => event.organizerLogo || event.organizerLogoPath)),
     ...collect((db.metadata.agents || []).map((agent) => agent.icon)),
-    ...collect((db.metadata.states || []).map((item) => item.flag || item.flagSrc)),
+    // O campo e `icon` (scripts/build_metadata.py, read_states). Enquanto isso
+    // lia `flag || flagSrc`, o aquecimento devolvia lista vazia e nenhuma
+    // bandeira entrava no cache.
+    ...collect((db.metadata.states || []).map((item) => item.icon)),
     ...collect(Object.values(TROPHY_GENERIC_ASSETS)),
     ...collect(db.players.map((player) => player.photo)),
     // A mesma fonte que o render usa, e nao o PNG de origem. Aquecer `map.icon`
@@ -5246,6 +5257,7 @@ function renderHomeCompact() {
     </div>
   `);
   bindHomeRankingPanel();
+  bindHomeEventCovers();
 }
 
 function renderMatchesCompact(id) {
@@ -5272,6 +5284,7 @@ function renderMatchesCompact(id) {
     </div>
   `);
   bindMatchFilters();
+  bindResultDayToggles();
 }
 
 const LISTA_PAGINA = 50;
@@ -5298,19 +5311,72 @@ function agruparPorDia(series) {
   return grupos;
 }
 
+function chevronIcon() {
+  return `<svg class="result-day-mark" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><path d="M3 4.5 6 8l3-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+// Os campeonatos que aconteceram no dia, sem repetir. Medido no banco: o dia
+// mais cheio tem 3 e a mediana e 1, entao cabem todos - nao precisa de "+2".
+function eventosDoDia(itens) {
+  const vistos = new Set();
+  const eventos = [];
+  for (const item of itens) {
+    const id = item.eventId;
+    if (!id || vistos.has(id)) continue;
+    vistos.add(id);
+    const evento = state.db.tournaments.find((row) => row.id === id);
+    if (evento) eventos.push(evento);
+  }
+  return eventos;
+}
+
 function listaDeResultados(filtered, limite) {
   if (!filtered.length) return `<div class="empty-state">Nenhuma partida encontrada com esses filtros.</div>`;
   return agruparPorDia(filtered.slice(0, limite))
-    .map(
-      (grupo) => `
-        <div class="result-day">
-          <h2 class="result-day-label">${escapeHtml(grupo.rotulo)}</h2>
-          <span class="result-day-count">${grupo.itens.length} ${grupo.itens.length === 1 ? "partida" : "partidas"}</span>
-        </div>
-        ${grupo.itens.map((item) => matchResultRow(item, { when: "hour" })).join("")}
-      `,
-    )
+    .map((grupo) => {
+      const aberto = !state.diasFechados.has(grupo.chave);
+      const painelId = `dia-${safeDomId(grupo.chave)}`;
+      const quantas = `${grupo.itens.length} ${grupo.itens.length === 1 ? "partida" : "partidas"}`;
+      return `
+        <section class="result-day-group" data-result-day="${escapeHtml(grupo.chave)}">
+          <h2 class="result-day">
+            <button class="result-day-toggle" type="button" data-result-day-toggle aria-expanded="${aberto}" aria-controls="${painelId}">
+              <span class="result-day-name">
+                <span class="result-day-label">${escapeHtml(grupo.rotulo)}</span>
+                ${chevronIcon()}
+              </span>
+              <span class="result-day-events">${eventosDoDia(grupo.itens).map((evento) => eventLogo(evento, "tiny")).join("")}</span>
+              <span class="result-day-count">${escapeHtml(quantas)}</span>
+            </button>
+          </h2>
+          <div class="result-day-rows" id="${painelId}" ${aberto ? "" : "inert"}>
+            <div class="result-day-rows-inner">
+              ${grupo.itens.map((item) => matchResultRow(item, { when: "hour" })).join("")}
+            </div>
+          </div>
+        </section>
+      `;
+    })
     .join("");
+}
+
+// Alterna sem re-renderizar: o estado vira classe e atributo no lugar. Assim o
+// foco fica no botao que a pessoa acabou de apertar, o que uma re-render
+// perderia - e a lista de /partidas tem 50 linhas para reconstruir a toa.
+function bindResultDayToggles() {
+  document.querySelectorAll("[data-result-day-toggle]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      const grupo = botao.closest(".result-day-group");
+      const painel = grupo?.querySelector(".result-day-rows");
+      const chave = grupo?.dataset.resultDay || "";
+      if (!grupo || !painel || !chave) return;
+      const fechando = botao.getAttribute("aria-expanded") === "true";
+      botao.setAttribute("aria-expanded", String(!fechando));
+      painel.toggleAttribute("inert", fechando);
+      if (fechando) state.diasFechados.add(chave);
+      else state.diasFechados.delete(chave);
+    });
+  });
 }
 
 function verMaisBotao(section, mostrando, total, params) {
@@ -5352,6 +5418,19 @@ function matchFilterSidebar() {
           <div class="filter-option-stack event-filter-options">
             ${visibleTournaments().map(eventFilterButton).join("")}
           </div>
+        </div>
+      </details>
+      <details class="filter-dropdown" data-filter-group="datas"${resultFilterOpenAttr("datas")}>
+        <summary>${filterIcon()}<span>Data</span><strong>${escapeHtml(dateFilterSummary())}</strong></summary>
+        <div class="filter-dropdown-body">
+          <label class="filter-date-field">
+            <span>De</span>
+            <input class="filter-control" type="date" data-match-date="from" value="${escapeHtml(state.matchDateFrom)}" max="${escapeHtml(state.matchDateTo || "")}" />
+          </label>
+          <label class="filter-date-field">
+            <span>Até</span>
+            <input class="filter-control" type="date" data-match-date="to" value="${escapeHtml(state.matchDateTo)}" min="${escapeHtml(state.matchDateFrom || "")}" />
+          </label>
         </div>
       </details>
       <details class="filter-dropdown" data-filter-group="teams"${resultFilterOpenAttr("teams")}>
@@ -5411,11 +5490,20 @@ function lerSelecao(p, chave, todos) {
 }
 
 function applyMatchFiltersFromQuery(p) {
-  // resetResultFilters tambem fecha os <details>; preservar aqui, senao o
-  // dropdown se fecha a cada clique e o botao clicado some da tela
+  // resetResultFilters tambem fecha os <details> e limpa a busca de equipe;
+  // preservar as duas aqui, senao a cada clique o dropdown se fecha e o botao
+  // clicado some da tela, e a lista filtrada volta para as 98 equipes - medido:
+  // buscar "caap" mostra 4 opcoes, e o clique devolvia 98 e esticava a pagina
+  // em 893px debaixo do ponteiro.
+  //
+  // A busca fica fora da URL de proposito, como o estado de aberto/fechado: ela
+  // e ajuda para achar a equipe, nao filtro do resultado - quem filtra e a
+  // selecao, e essa ja viaja em `equipes`.
   const aberto = state.resultFilterOpen;
+  const buscaDeEquipe = state.matchTeamQuery;
   resetResultFilters();
   if (aberto) state.resultFilterOpen = aberto;
+  state.matchTeamQuery = buscaDeEquipe;
   const lista = (chave) => (p.get(chave) || "").split(LISTA_SEP).filter(Boolean);
   if (p.get("md")) state.matchBestOf = p.get("md");
   const mapas = lerSelecao(p, "mapas", state.db.maps.map((m) => m.id));
@@ -5503,6 +5591,16 @@ function filterIcon() {
 
 function resetIcon() {
   return `<span class="filter-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v6h6"></path></svg></span>`;
+}
+
+// Mesmo padrao dos outros resumos: fechado, a gaveta diz o que esta valendo.
+function dateFilterSummary() {
+  const de = formatShortDate(dateInputToStart(state.matchDateFrom));
+  const ate = formatShortDate(dateInputToEnd(state.matchDateTo));
+  if (de && ate) return `${de} - ${ate}`;
+  if (de) return `A partir de ${de}`;
+  if (ate) return `Até ${ate}`;
+  return "Todas";
 }
 
 function matchBestOfLabel() {
@@ -5866,43 +5964,137 @@ function renderRankingPage(teamId = route().id || "") {
   const snapshot = selectedRankingSnapshot();
   const minimumMatches = state.db.rankingMinimumMatches || 9;
   const minimumRosterSize = rankingMinimumRosterSize(state.db?.rankingWeights);
+  const aba = rankingRouteTab();
+  const semanaMatches = rankingWeekMatches(snapshot);
   Shell(`
-    <header class="page-header slim-header">
+    <header class="page-header slim-header ranking-hero">
       <div class="page-title">
-        <span class="eyebrow">Ranking</span>
-        <h1>Ranking Universitário de Valorant</h1>
+        <h1>Ranking</h1>
         <p>Nota final: 70% desempenho, 15% conquistas, 10% forma recente e 5% rAAting 3.0 dos jogadores. Equipes com menos de ${minimumMatches} partidas ficam marcadas como provisórias e equipes com elenco incompleto (menos de ${minimumRosterSize} jogadores) ficam inativas.</p>
       </div>
     </header>
     <section class="hub-panel ranking-full-panel">
       <div class="ranking-page-toolbar">
-        <span data-ranking-count>${rankingScopeSummary(scope)}</span>
-        <div class="ranking-toolbar-actions">
+        <div class="ranking-toolbar-context">
+          <span data-ranking-count>${escapeHtml(aba === "partidas" ? rankingWeekMatchesSummary(semanaMatches, snapshot) : rankingScopeSummary(scope))}</span>
           <label class="ranking-version-picker">
-            <span>Semana</span>
-            <select data-ranking-version>
+            <select data-ranking-version aria-label="Semana do ranking">
               ${rankingVersionOptions(snapshot)}
             </select>
           </label>
+        </div>
+        ${rankingTabSwitch(aba, semanaMatches.length)}
+        ${aba === "partidas" ? "" : `<div class="ranking-toolbar-actions"><div class="ranking-toolbar-actions-inner">
           <label class="ranking-details-toggle">
             <input type="checkbox" data-ranking-score-details ${state.rankingShowDetails ? "checked" : ""} />
-            <span>Exibir detalhes da nota</span>
+            <span>Detalhes da nota</span>
           </label>
           <div class="ranking-scope-switch" data-scope="${scope}" role="group" aria-label="Filtro do ranking">
             <button type="button" data-ranking-scope="valid" aria-pressed="${scope === "valid"}" class="${scope === "valid" ? "active" : ""}">Apenas válidos</button>
             <button type="button" data-ranking-scope="all" aria-pressed="${scope === "all"}" class="${scope === "all" ? "active" : ""}">Todos</button>
           </div>
-        </div>
+        </div></div>`}
       </div>
-      ${rankingAccordion(rows, scope, state.rankingShowDetails)}
+      ${aba === "partidas" ? rankingWeekMatchesSection(semanaMatches) : rankingAccordion(rows, scope, state.rankingShowDetails)}
     </section>
   `);
-  bindRankingScopeToggle();
   bindRankingVersionPicker();
+  bindRankingTabSwitch();
+  if (aba === "partidas") {
+    bindResultDayToggles();
+    return;
+  }
+  animarEntradaDasAcoes();
+  bindRankingScopeToggle();
   bindRankingScoreDetailsToggle();
   bindRankingSortHeaders();
   bindRankingAccordion();
   openRankingRouteTeam(routeTeamId);
+}
+
+// A aba viaja na query, como todo filtro deste site: trocar de aba nao e mudar
+// de pagina, entao o Back desfaz um passo e a rolagem nao pula para o topo.
+// Trocar de aba re-renderiza a pagina inteira, entao o grupo da direita nasce
+// ja ausente e nao teria como animar a saida - o elemento que deveria encolher
+// nem existe mais quando o novo DOM chega. A saida acontece ANTES do
+// pushFilterState: anima, espera, e so entao troca a rota. Na volta e o
+// contrario - a rota troca na hora e a animacao de entrada roda no elemento
+// recem-criado, marcado por rankingAnimarEntrada.
+const RANKING_ABA_MS = 220;
+
+function bindRankingTabSwitch() {
+  document.querySelectorAll("[data-ranking-tab]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const params = routeQuery();
+      if (button.dataset.rankingTab !== "partidas") {
+        params.delete("aba");
+        state.rankingAnimarEntrada = true;
+        pushFilterState("ranking", params);
+        return;
+      }
+      params.set("aba", "partidas");
+      const acoes = document.querySelector(".ranking-toolbar-actions");
+      if (!acoes) {
+        pushFilterState("ranking", params);
+        return;
+      }
+      fecharAcoesDoRanking(acoes);
+      // setTimeout e nao transitionend: em aba oculta o compositor nao avanca a
+      // transicao e o evento nunca chega - a troca de aba ficaria presa.
+      window.setTimeout(() => pushFilterState("ranking", params), RANKING_ABA_MS);
+    });
+  });
+}
+
+// A largura anima em pixel e nao em `fr`. Medido antes de trocar: numa grade de
+// uma coluna indo de 1fr a 0fr, metade do caminho do `fr` ja era 5% da largura
+// em pixel - o bloco sumia num salto e arrastava um rastro. Em pixel a curva
+// vale o que promete, e a largura de partida e medida, nao chutada.
+// No desktop a barra e uma linha e o bloco sai encolhendo para a direita; no
+// celular ela empilha e o bloco e uma faixa larga - encolher a largura ali
+// espremeria os controles em vez de recolhe-los. O eixo sai do proprio layout.
+function eixoDasAcoes(acoes) {
+  const barra = acoes.closest(".ranking-page-toolbar");
+  if (!barra) return "width";
+  // Empilhado, o bloco ocupa a barra inteira - encolher a largura ali
+  // espremeria os controles em vez de recolhe-los. A comparacao sai do layout
+  // e nao de um breakpoint repetido aqui.
+  return acoes.offsetWidth >= barra.clientWidth - 1 ? "height" : "width";
+}
+
+function fecharAcoesDoRanking(acoes) {
+  const eixo = eixoDasAcoes(acoes);
+  acoes.style[eixo] = `${eixo === "height" ? acoes.offsetHeight : acoes.offsetWidth}px`;
+  void acoes.offsetWidth; // forca o reflow para haver de onde interpolar
+  acoes.style[eixo] = "0px";
+  acoes.classList.add("oculto");
+}
+
+// Anima a volta do grupo da direita. O elemento acaba de nascer com a largura
+// natural, entao ela e medida primeiro, o bloco vai a zero e so no quadro
+// seguinte volta - sem os dois quadros o navegador nao tem de onde interpolar.
+function animarEntradaDasAcoes() {
+  if (!state.rankingAnimarEntrada) return;
+  state.rankingAnimarEntrada = false;
+  const acoes = document.querySelector(".ranking-toolbar-actions");
+  if (!acoes) return;
+  const eixo = eixoDasAcoes(acoes);
+  const medida = eixo === "height" ? acoes.offsetHeight : acoes.offsetWidth;
+  acoes.style[eixo] = "0px";
+  acoes.classList.add("oculto");
+  // Reflow sincrono em vez de requestAnimationFrame: em aba de fundo o rAF nao
+  // dispara, e como o estado inicial aqui e "escondido", o callback que nunca
+  // roda deixaria os controles invisiveis para sempre. Lendo offsetWidth o
+  // navegador ja tem de onde interpolar, e se a transicao nao rodar o bloco
+  // simplesmente aparece na hora - falha para o lado visivel.
+  void acoes.offsetWidth;
+  acoes.style[eixo] = `${medida}px`;
+  acoes.classList.remove("oculto");
+  // Solta a medida fixa no fim: presa em pixel, o bloco pararia de responder a
+  // redimensionamento de janela.
+  window.setTimeout(() => {
+    acoes.style[eixo] = "";
+  }, RANKING_ABA_MS);
 }
 
 function rankingRouteTeamId(teamId) {
@@ -6042,14 +6234,102 @@ function rankingScopeSummary(scope) {
   const total = snapshotTeams.length || state.db.teams.filter((team) => Number(team.matches || 0) > 0).length;
   const validCount = snapshotTeams.length ? snapshotTeams.filter(rankingIsValid).length : state.db.teams.filter((team) => Number(team.matches || 0) > 0 && teamIsRankingValid(team)).length;
   const minimumMatches = state.db.rankingMinimumMatches || 9;
-  return scope === "all" ? `${total} equipes exibidas · ${validCount} válidas · mínimo ${minimumMatches} partidas` : "";
+  // Devolvia "" no escopo "Apenas válidos", que e o padrao da pagina: o slot da
+  // esquerda da barra nascia vazio e os 721px de controle ficavam sozinhos
+  // contra 617px de vao. O texto e o contrapeso, e ele tem informacao real.
+  if (scope === "all") return `${total} equipes exibidas · ${validCount} válidas · mínimo ${minimumMatches} partidas`;
+  return `${validCount} equipes válidas · mínimo ${minimumMatches} partidas`;
+}
+
+// "25 Agosto 2026" e "25 ago 2026". formatDate() devolveria "25 de agosto de
+// 2026" - os dois "de" so alongam. formatToParts monta dia, mes e ano soltos.
+function formatShortDate(value, mes = "short") {
+  // `new Date(null)` nao e invalido: e a epoca, e voltava "31 dez 1969" para
+  // campo de data vazio. NaN sozinho nao cobre isso.
+  if (value === null || value === undefined || value === "") return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  const partes = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: mes, year: "numeric" })
+    .formatToParts(date)
+    .filter((parte) => ["day", "month", "year"].includes(parte.type))
+    .map((parte) => parte.value.replace(".", ""));
+  if (mes === "long" && partes[1]) partes[1] = partes[1].charAt(0).toUpperCase() + partes[1].slice(1);
+  return partes.join(" ");
+}
+
+// O `label` que vem no snapshot diz "Semana de 25 de ago de 2026". Sobra a data
+// de corte, que e o que identifica a versao do ranking.
+function rankingVersionLabel(snapshot) {
+  const fim = Number(snapshot?.cutoffAt || 0);
+  if (!fim) return snapshot?.label || "";
+  return formatShortDate(fim, "long");
+}
+
+// A janela que a versao cobre: do corte anterior ate o corte desta. Sem
+// anterior (a semana mais antiga da lista), sete dias antes.
+function rankingWeekWindow(snapshot = selectedRankingSnapshot()) {
+  const fim = Number(snapshot?.cutoffAt || 0);
+  if (!fim) return null;
+  const anterior = previousRankingSnapshot(snapshot);
+  return { inicio: Number(anterior?.cutoffAt || 0) || fim - 7 * DAY_MS, fim };
+}
+
+// As partidas que entraram nesta versao do ranking: as que aconteceram dentro
+// da janela. E o mesmo recorte que /partidas faria filtrando por data.
+function rankingWeekMatches(snapshot = selectedRankingSnapshot()) {
+  const janela = rankingWeekWindow(snapshot);
+  if (!janela) return [];
+  return allMatchSeries()
+    .filter((series) => {
+      const at = Number(series.startedAt || 0);
+      return at > janela.inicio && at <= janela.fim;
+    })
+    .sort(compareSeriesDateDesc);
+}
+
+function rankingRouteTab() {
+  return routeQuery().get("aba") === "partidas" ? "partidas" : "ranking";
 }
 
 function rankingVersionOptions(selectedSnapshot) {
   const snapshots = state.db?.rankingSnapshots || [];
   return snapshots
-    .map((snapshot) => `<option value="${escapeHtml(snapshot.id)}" ${snapshot.id === selectedSnapshot?.id ? "selected" : ""}>${escapeHtml(snapshot.label)}</option>`)
+    .map((snapshot) => `<option value="${escapeHtml(snapshot.id)}" ${snapshot.id === selectedSnapshot?.id ? "selected" : ""}>${escapeHtml(rankingVersionLabel(snapshot))}</option>`)
     .join("");
+}
+
+// O meio da barra e a porta para a segunda aba: as partidas que entraram nesta
+// versao do ranking. Sem partidas na janela o botao continua la, desabilitado -
+// "nenhuma" tambem e resposta, e sumir com o botao mexeria no equilibrio da
+// barra a cada troca de semana.
+function rankingTabSwitch(aba, total) {
+  if (aba === "partidas") {
+    return `<button class="ranking-tab-switch" type="button" data-ranking-tab="ranking">Voltar ao ranking</button>`;
+  }
+  const rotulo = total ? `${total} ${total > 1 ? "novas partidas contabilizadas" : "nova partida contabilizada"}` : "Nenhuma partida nova nesta semana";
+  return `<button class="ranking-tab-switch" type="button" data-ranking-tab="partidas" ${total ? "" : "disabled"}>${escapeHtml(rotulo)}</button>`;
+}
+
+// Reusa a lista de /partidas inteira em vez de montar uma parecida:
+// listaDeResultados ja agrupa por dia com contagem no cabecalho e passa
+// { when: "hour" } para a linha mostrar so o horario. A classe
+// `full-list-panel` nao e decoracao - sao 17 regras no styles.css penduradas
+// nela que ligam a arte do mapa, a coluna de meta e o logo do campeonato, com
+// variantes responsivas. Copiar isso a mao seria manter duas verdades.
+function rankingWeekMatchesSection(matches) {
+  if (!matches.length) {
+    return `<div class="empty-state">Nenhuma partida entrou nesta versão do ranking.</div>`;
+  }
+  const params = routeQuery();
+  params.set("aba", "partidas");
+  const limite = limiteDaLista(routeQuery());
+  const mostrando = Math.min(limite, matches.length);
+  return `
+    <div class="full-list-panel ranking-week-matches">
+      <div class="result-list">${listaDeResultados(matches, limite)}</div>
+      ${verMaisBotao("ranking", mostrando, matches.length, params)}
+    </div>
+  `;
 }
 
 function rankingAccordion(rows, scope = "valid", showDetails = false) {
@@ -6102,7 +6382,7 @@ function rankingAccordionItem(row) {
   const panelId = `ranking-detail-${safeDomId(team.id)}`;
   return `
     <article class="ranking-accordion-item" data-ranking-team-id="${escapeHtml(team.id)}">
-      <button class="ranking-accordion-button" type="button" data-ranking-toggle aria-expanded="false" aria-controls="${panelId}">
+      <button class="ranking-accordion-button pintura-de-equipe" type="button" data-ranking-toggle aria-expanded="false" aria-controls="${panelId}" ${teamAccentStyle(team)}>
         <span class="rank-cell">#${displayRank}</span>
         ${rankingPositionChangeLabel(row)}
         <span class="ranking-team-cell">${teamLogo(team.id)}<span><strong>${escapeHtml(team.name)}</strong><small>${escapeHtml(team.sourceTag || team.tag || team.id)} - ${matchesCount} partidas</small></span></span>
@@ -6594,15 +6874,43 @@ function bindRankingScoreDetailsToggle() {
   });
 }
 
+// Os dois caminhos que trocam as linhas sem re-renderizar a pagina (semana e
+// escopo) precisam mexer nos mesmos tres lugares. Quando o resumo de movimento
+// entrou, ele ficou de fora dos dois e a barra continuava dizendo "5 subiram"
+// depois de trocar para uma semana com 14 quedas. Um helper so, para o proximo
+// campo da barra nao repetir o esquecimento.
+function updateRankingToolbarSummaries(scope) {
+  const count = document.querySelector("[data-ranking-count]");
+  if (count) count.textContent = rankingScopeSummary(scope);
+  const botao = document.querySelector('[data-ranking-tab="partidas"]');
+  if (!botao) return;
+  const total = rankingWeekMatches().length;
+  botao.textContent = total
+    ? `${total} ${total > 1 ? "novas partidas contabilizadas" : "nova partida contabilizada"}`
+    : "Nenhuma partida nova nesta semana";
+  botao.disabled = !total;
+}
+
+// Quantas partidas entraram e de que janela - o contrapeso da esquerda quando a
+// aba de partidas esta aberta.
+function rankingWeekMatchesSummary(matches, snapshot) {
+  const janela = rankingWeekWindow(snapshot);
+  const total = matches.length;
+  const quantas = `${total} ${total === 1 ? "partida" : "partidas"}`;
+  if (!janela) return quantas;
+  return `${quantas} · ${formatShortDate(janela.inicio)} a ${formatShortDate(janela.fim)}`;
+}
+
 function updateRankingVersionView() {
   const rowsRoot = document.querySelector("[data-ranking-rows]");
-  const count = document.querySelector("[data-ranking-count]");
   if (!rowsRoot) {
     renderRankingPage();
     return;
   }
-  rowsRoot.innerHTML = rankingAccordionRows(rankingRowsForScope(state.db.teams, state.rankingScope === "all" ? "all" : "valid"));
-  if (count) count.textContent = rankingScopeSummary(state.rankingScope === "all" ? "all" : "valid");
+  const scope = state.rankingScope === "all" ? "all" : "valid";
+  const rows = rankingRowsForScope(state.db.teams, scope);
+  rowsRoot.innerHTML = rankingAccordionRows(rows);
+  updateRankingToolbarSummaries(scope);
 }
 
 function updateRankingDetailsVisibility(showDetails) {
@@ -6622,7 +6930,6 @@ function updateRankingScopeView(scope) {
   const switcher = document.querySelector(".ranking-scope-switch");
   const accordion = document.querySelector("[data-ranking-accordion]");
   const rowsRoot = document.querySelector("[data-ranking-rows]");
-  const count = document.querySelector("[data-ranking-count]");
   if (!switcher || !accordion || !rowsRoot) {
     renderRankingPage();
     return;
@@ -6634,8 +6941,6 @@ function updateRankingScopeView(scope) {
     button.classList.toggle("active", active);
     button.setAttribute("aria-pressed", String(active));
   });
-  if (count) count.textContent = rankingScopeSummary(scope);
-
   if (scope !== "all" && state.rankingSort?.key === "status") {
     state.rankingSort = { key: "", direction: "default" };
     updateRankingSortIndicators();
@@ -6646,6 +6951,7 @@ function updateRankingScopeView(scope) {
   state.rankingScopeUpdateTimer = window.setTimeout(() => {
     const rows = rankingRowsForScope(state.db.teams, scope);
     rowsRoot.innerHTML = rankingAccordionRows(rows);
+    updateRankingToolbarSummaries(scope);
   }, 170);
 }
 
@@ -8159,7 +8465,7 @@ function tournamentHero(event, matches, standings) {
         </div>
       </div>
       <div class="tournament-organizer-card">
-        <span class="tournament-card-kicker">Organizacao</span>
+        <span class="tournament-card-kicker">Organização</span>
         <div class="tournament-organizer-main">
           ${organizerLogo(event, "large")}
           <strong>${escapeHtml(event.organizer || event.source || SITE_NAME)}</strong>
@@ -11189,7 +11495,7 @@ function tournamentDataPanel(event) {
         <div><dt>Tier</dt><dd>${escapeHtml(event.tier || "A definir")}</dd></div>
         <div><dt>Tipo</dt><dd>${escapeHtml(event.type || "A definir")}</dd></div>
         <div><dt>Teams</dt><dd>${escapeHtml(String(event.teamCount || event.teams.length))}</dd></div>
-        <div><dt>Organizacao</dt><dd>${escapeHtml(event.organizer || event.source || "A definir")}</dd></div>
+        <div><dt>Organização</dt><dd>${escapeHtml(event.organizer || event.source || "A definir")}</dd></div>
         <div><dt>Fonte</dt><dd>${escapeHtml(event.source || "Manifest")}</dd></div>
         <div><dt>Arquivos</dt><dd>${escapeHtml(String(event.sourceFiles || 0))}</dd></div>
       </dl>
@@ -11776,11 +12082,199 @@ function teamProfileLogo(team) {
   return `<span class="team-logo-frame">${teamLogo(team.id, "large")}</span>`;
 }
 
+const TEAM_INK_CLARO = "#f5f1f2";
+const TEAM_INK_ESCURO = "#040306";
+const TEAM_ROW_SURFACE = [11, 11, 16];
+const TEAM_INK_CONTRASTE_MINIMO = 4.5;
+
+// Luminancia relativa (WCAG). Existe porque quando o fundo da linha vira a cor
+// da equipe nao da para escolher a tinta do texto no chute: das 97 equipes, as
+// mais claras sao branco puro e as mais escuras sao preto puro. A mesma tinta
+// nao serve para as duas.
+function relativeLuminance(rgb) {
+  const canal = (v) => {
+    const x = v / 255;
+    return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * canal(rgb[0]) + 0.7152 * canal(rgb[1]) + 0.0722 * canal(rgb[2]);
+}
+
+function hexToRgb(value) {
+  const match = /^#([0-9a-f]{6})$/i.exec(String(value).trim());
+  if (!match) return null;
+  const n = parseInt(match[1], 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+function contrastRatio(a, b) {
+  const [la, lb] = [relativeLuminance(a), relativeLuminance(b)];
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
+// A tinta escura entra so quando a COR PRINCIPAL da equipe e branca ou muito
+// clara - a cor2 nao vota. Antes quem decidia era o pior dos dois tons, e uma
+// cor2 clara virava o nome inteiro para preto mesmo com a cor1 escura.
+//
+// 0,45 de luminancia relativa e onde a lista tem a maior folga: de um lado
+// unirio_krakens (#53c5f1, 0,481) e tigre_branco (#b9b9b9, 0,485), do outro
+// pucc_canaries (#cca900, 0,412). Acima do corte ficam 14 das 97 - os dois
+// brancos puros, os dois UFU Saints, os amarelos fortes e os azuis lavados.
+//
+// Nao e o cruzamento matematico das duas tintas, que fica em 0,171: naquele
+// ponto 36 equipes virariam preto, incluindo azul medio como #037aff, que nao
+// e "muito claro" por nenhuma leitura razoavel.
+const TEAM_INK_LIMIAR = 0.45;
+
+function teamInkFor(cor1) {
+  const cor = hexToRgb(cor1);
+  if (!cor) return TEAM_INK_CLARO;
+  return relativeLuminance(cor) >= TEAM_INK_LIMIAR ? TEAM_INK_ESCURO : TEAM_INK_CLARO;
+}
+
+function piorContraste(tinta, ...tons) {
+  const alvo = hexToRgb(tinta);
+  return Math.min(...tons.filter(Boolean).map((tom) => contrastRatio(alvo, tom)));
+}
+
+// A trama alterna dois tons e o texto atravessa os dois. A tinta ja foi
+// escolhida pela cor1; aqui os dois tons caminham juntos ate ela fechar 4,5:1
+// nos dois - para o branco se a tinta e escura, para a superficie da linha se
+// e clara. Vermelho e azul de saturacao media sao os que mais andam: nem
+// branco nem preto fecham 4,5:1 contra #e90101 ou #037aff sem ajuda.
+const TEAM_WASH_MISTURA = 0.4;
+// Piso de separacao entre os dois tons da trama. Sem ele a trama sumia nas
+// equipes de cor1 e cor2 parecidas: visto na tela, a `faixa` do Azure Bears
+// (#037aff / #67afff, 1,29:1) lia como azul chapado, enquanto o `chevron` do
+// UFU Saints (1,86:1) aparecia inteiro. Nao adianta escolher geometria mais
+// forte quando nao ha diferenca de cor para a geometria mostrar.
+const TEAM_TOM_SEPARACAO_MINIMA = 1.55;
+
+// Afasta o segundo tom do primeiro ate os dois se distinguirem, sem perder os
+// 4,5:1 do texto que o passeio anterior garantiu.
+//
+// Testa as duas direcoes em vez de deduzir uma. Deduzir falhou duas vezes:
+// escolhendo pela tinta, o UFU Saints mandava empurrar #fefefe para o branco, e
+// branco nao clareia; escolhendo pela cor1, os tons medios com tinta clara
+// tinham de clarear e a guarda de contraste barrava no primeiro passo. Os dois
+// criterios brigam em cor media - entao mede os dois e fica com o melhor.
+function afastaSegundoTom(primeiro, segundo, tinta) {
+  const alvoDaTinta = hexToRgb(tinta);
+  let melhor = segundo;
+  let melhorSeparacao = contrastRatio(primeiro, segundo);
+  for (const destino of [[0, 0, 0], [255, 255, 255]]) {
+    for (let passo = 2; passo <= 100; passo += 2) {
+      const f = passo / 100;
+      const tom = segundo.map((c, i) => Math.round(c * (1 - f) + destino[i] * f));
+      if (contrastRatio(alvoDaTinta, tom) < TEAM_INK_CONTRASTE_MINIMO) break;
+      const separacao = contrastRatio(primeiro, tom);
+      if (separacao > melhorSeparacao) {
+        melhorSeparacao = separacao;
+        melhor = tom;
+      }
+      if (separacao >= TEAM_TOM_SEPARACAO_MINIMA) break;
+    }
+    if (melhorSeparacao >= TEAM_TOM_SEPARACAO_MINIMA) break;
+  }
+  return melhor;
+}
+
+function teamWashFor(accent, accent2) {
+  const cor = hexToRgb(accent);
+  if (!cor) return { fundo: accent, fundo2: accent2, tinta: TEAM_INK_CLARO };
+  const segunda = hexToRgb(accent2) || cor;
+  // A cor2 nunca entra pura na trama: puxada 40% para dentro da cor1, ela
+  // aparece como variacao da mesma familia em vez de listra de outro time.
+  const par = segunda.map((c, i) => c * TEAM_WASH_MISTURA + cor[i] * (1 - TEAM_WASH_MISTURA));
+
+  const tinta = teamInkFor(accent);
+  const destino = tinta === TEAM_INK_ESCURO ? [255, 255, 255] : TEAM_ROW_SURFACE;
+  for (let passo = 0; passo <= 100; passo += 1) {
+    const f = passo / 100;
+    // Arredonda ANTES de medir: a conta em float garantia 4,50:1 num valor que
+    // depois virava #rrggbb e caia para 4,48:1. O que vale e a cor emitida.
+    const a = cor.map((c, i) => Math.round(c * (1 - f) + destino[i] * f));
+    const b = par.map((c, i) => Math.round(c * (1 - f) + destino[i] * f));
+    if (piorContraste(tinta, a, b) >= TEAM_INK_CONTRASTE_MINIMO || passo === 100) {
+      // A separacao vem por ultimo: o passeio acima move os dois tons juntos e
+      // comprime a diferenca entre eles. Separar antes dele era desperdicio -
+      // medido, 19 das 97 voltavam para baixo do piso.
+      const segundoTom = contrastRatio(a, b) < TEAM_TOM_SEPARACAO_MINIMA ? afastaSegundoTom(a, b, tinta) : b;
+      return { fundo: rgbToHex(a), fundo2: rgbToHex(segundoTom), tinta };
+    }
+  }
+  return { fundo: accent, fundo2: accent2, tinta: TEAM_INK_CLARO };
+}
+
+function rgbToHex(rgb) {
+  return `#${rgb.map((c) => Math.max(0, Math.min(255, Math.round(c))).toString(16).padStart(2, "0")).join("")}`;
+}
+
+// Cinco tramas, escolhidas pelo jeito que as duas cores da equipe conversam.
+// A regra e explicita de proposito: o insumo e a separacao entre os dois tons
+// (contraste de um contra o outro) e a distancia de matiz. Quanto mais as duas
+// brigam, menos area a segunda ganha - senao a linha vira bandeira listrada.
+//
+// Catorze degrades, escolhidos pelo jeito que as duas cores da equipe
+// conversam. Sao so degrades e fades - nenhuma listra, bolinha, xadrez ou
+// malha. O que distingue um do outro e a direcao, a origem e quantas paradas de
+// cor tem, nao geometria repetida.
+//
+// Os insumos sao a separacao entre os dois tons ja ajustados e a distancia de
+// matiz das cores ORIGINAIS da planilha - depois da mistura o matiz da cor2 e
+// puxado para dentro do da cor1 e a conta perde sentido.
+//
+// Os cortes sao os septis medidos nas 97 depois que o piso de separacao entrou
+// (1,56 / 1,58 / 1,63 / 1,80 / 2,09 / 2,76). Sete faixas x dois matizes dao
+// catorze celulas, todas povoadas.
+//
+// A ordem nao e arbitraria: quanto maior a separacao, MENOS area a cor2 ganha.
+// Duas cores que brigam dividindo a linha ao meio viram bandeira de dois
+// times; a mesma cor2 so na borda vira acabamento.
+const TEAM_PATTERN_TABELA = [
+  { limite: 1.56, perto: "horizonte", longe: "diagonal" },
+  { limite: 1.58, perto: "bordas", longe: "lateral" },
+  { limite: 1.63, perto: "nascente", longe: "canto" },
+  { limite: 1.8, perto: "nucleo", longe: "mare" },
+  { limite: 2.09, perto: "cinta", longe: "varredura" },
+  { limite: 2.76, perto: "aurora", longe: "deriva" },
+  { limite: Infinity, perto: "vinheta", longe: "brilho" },
+];
+
+function hueOf(rgb) {
+  const [r, g, b] = rgb.map((c) => c / 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  if (max === min) return 0;
+  const d = max - min;
+  let h;
+  if (max === r) h = ((g - b) / d) % 6;
+  else if (max === g) h = (b - r) / d + 2;
+  else h = (r - g) / d + 4;
+  return ((h * 60) % 360 + 360) % 360;
+}
+
+// tom1/tom2 sao os tons ja ajustados por contraste (o que aparece na tela) e
+// definem a separacao; cor1/cor2 sao os da planilha e definem o matiz.
+function teamPatternFor(tom1, tom2, cor1, cor2) {
+  const a = hexToRgb(tom1);
+  const b = hexToRgb(tom2);
+  if (!a || !b) return "tecido";
+  const separacao = contrastRatio(a, b);
+  const origem1 = hexToRgb(cor1) || a;
+  const origem2 = hexToRgb(cor2) || b;
+  const bruto = Math.abs(hueOf(origem1) - hueOf(origem2));
+  const matiz = Math.min(bruto, 360 - bruto);
+  const faixa = TEAM_PATTERN_TABELA.find((linha) => separacao < linha.limite);
+  return matiz < 40 ? faixa.perto : faixa.longe;
+}
+
 function teamAccentStyle(team) {
   const [primary, secondary] = team.colors || [];
   const accent = safeCssColor(primary, "#f6132a");
   const accent2 = safeCssColor(secondary, "#2ad4c1");
-  return `style="--team-accent:${accent};--team-accent-2:${accent2};"`;
+  const { fundo, fundo2, tinta } = teamWashFor(accent, accent2);
+  const trama = teamPatternFor(fundo, fundo2, accent, accent2);
+  return `data-trama="${trama}" style="--team-accent:${accent};--team-accent-2:${accent2};--team-wash:${fundo};--team-wash-2:${fundo2};--team-ink:${tinta};"`;
 }
 
 function safeCssColor(value, fallback) {
@@ -13502,6 +13996,21 @@ function bindMatchFilters() {
     if (filter === "team") toggleResultFilterValue("matchTeams", value);
     pushFilterState("matches", matchFiltersToQuery(), foco);
   });
+  // `change` e nao `input`: o seletor de data dispara `input` a cada digito do
+  // ano, e cada disparo empurraria uma entrada no historico do navegador.
+  sidebar?.querySelectorAll("[data-match-date]").forEach((campo) => {
+    campo.addEventListener("change", () => {
+      const alvo = campo.dataset.matchDate === "from" ? "matchDateFrom" : "matchDateTo";
+      state[alvo] = campo.value || "";
+      // Inverteu o intervalo: em vez de devolver lista vazia sem explicacao, a
+      // outra ponta acompanha.
+      if (state.matchDateFrom && state.matchDateTo && state.matchDateFrom > state.matchDateTo) {
+        if (alvo === "matchDateFrom") state.matchDateTo = state.matchDateFrom;
+        else state.matchDateFrom = state.matchDateTo;
+      }
+      pushFilterState("matches", matchFiltersToQuery(), `[data-match-date="${campo.dataset.matchDate}"]`);
+    });
+  });
   document.getElementById("match-team-query")?.addEventListener("input", (event) => {
     state.matchTeamQuery = event.target.value;
     const options = document.querySelector("[data-team-options]");
@@ -13526,6 +14035,7 @@ function resetResultFilters() {
     bestOf: false,
     maps: false,
     tournaments: false,
+    datas: false,
     teams: false,
   };
 }
@@ -13815,6 +14325,32 @@ function playerWeekDateLabel(value) {
   return new Date(value).toLocaleDateString("pt-BR", { day: "2-digit", month: "short" }).replace(".", "");
 }
 
+// A capa so e baixada quando o ponteiro chega na linha: nenhum byte cobrado de
+// quem nunca passa o mouse pelo painel. Depois da primeira vez a classe fica, e
+// entrar e sair da linha vira so opacidade - sem novo pedido, sem piscada.
+// O `img.onload` existe para nao acender a camada em cima de um buraco: o veu
+// escuro sozinho parece um bug ate a arte chegar.
+function bindHomeEventCovers() {
+  // Espelha o @media do CSS: sem ponteiro fino nao ha o que revelar, entao nem
+  // o download acontece.
+  if (!window.matchMedia?.("(hover: hover) and (pointer: fine)").matches) return;
+  const panel = document.querySelector(".events-panel");
+  if (!panel) return;
+  const revelar = (row) => {
+    const capa = row?.dataset?.cover;
+    if (!capa) return;
+    delete row.dataset.cover;
+    const img = new Image();
+    img.onload = () => {
+      row.style.setProperty("--event-capa", `url("${capa}")`);
+      row.classList.add("tem-capa");
+    };
+    img.src = capa;
+  };
+  panel.addEventListener("pointerover", (event) => revelar(event.target.closest(".event-row")));
+  panel.addEventListener("focusin", (event) => revelar(event.target.closest(".event-row")));
+}
+
 function bindHomeRankingPanel() {
   const panel = document.querySelector(".ranking-panel");
   panel?.addEventListener("click", (event) => {
@@ -13829,7 +14365,7 @@ function compactRankingRow(team) {
   const snapshot = latestRankingSnapshot();
   const ranking = snapshot?.byTeamId?.[team.id] || team.ranking;
   return `
-    <a class="compact-ranking-row" href="#/ranking/${escapeHtml(team.id)}" data-home-ranking-team="${escapeHtml(team.id)}">
+    <a class="compact-ranking-row pintura-de-equipe" href="#/ranking/${escapeHtml(team.id)}" data-home-ranking-team="${escapeHtml(team.id)}" ${teamAccentStyle(team)}>
       <span class="rank-position">${teamShortRankLabel(team)}</span>
       ${rankingPositionChangeBadge({ team, ranking, snapshot }, "rank-delta")}
       ${teamLogo(team.id)}
@@ -14000,9 +14536,21 @@ function matchMapTile(match, series, index) {
   `;
 }
 
+// A capa de hero e pesada demais para hover: 121 KB de media, 315 KB no pior
+// caso, e por isso ela ja estava fora do aquecimento de cache. A variante de
+// linha sai de scripts/build_event_row_banners.py e mora em row/ - 17 KB de
+// media, recortada em 646x260, que e 2x a maior linha medida (323x130).
+function eventRowCoverPath(event) {
+  const banner = String(event?.banner || "").trim();
+  if (!banner) return "";
+  const nome = banner.split("/").pop().replace(/\.[^.]+$/, "");
+  return nome ? `assets/tournament-banners/row/${nome}.webp` : "";
+}
+
 function eventListRow(event) {
+  const capa = eventRowCoverPath(event);
   return `
-    <a class="event-row" href="#/events/${event.id}">
+    <a class="event-row" href="#/events/${event.id}"${capa ? ` data-cover="${escapeHtml(assetPath(capa))}"` : ""}>
       ${eventLogo(event, "small")}
       <span class="row-main"><strong>${escapeHtml(event.name)}</strong><small>${escapeHtml(eventTimeRange(event))}</small><span class="event-status ${eventStatusClass(event.status)}">${escapeHtml(event.status || "Evento")}</span></span>
       ${eventTierBadge(event)}

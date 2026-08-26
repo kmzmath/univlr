@@ -41,11 +41,11 @@ const TROCAS = [
   ["assets/team-logos/baroes_uff.webp", "assets/team-logos/baroes_uff.png"],
   ["assets/team-logos/maua_blue.webp", "assets/team-logos/maua_blue.png"],
 
-  // Renomeados na planilha e ja refletidos no metadata.json rebuildado; o
-  // database.json nao reproduz, entao a troca vem por aqui. Sem isto as duas
-  // equipes ficariam com o escudo antigo na tela e o novo no metadata.
-  ["assets/team-logos/pucc_cardinals.png", "assets/team-logos/puccCanaries.png"],
-  ["assets/team-logos/pucgo_sistematica.png", "assets/team-logos/pucgo_sistematica_academy.png"],
+  // NAO ponha aqui troca de logo renomeado. Tentei com pucc_cardinals ->
+  // puccCanaries e o PUCC Cardinals ficou com o escudo do PUCC Canaries: a
+  // troca e por string e cega, e os dois times partilhavam o mesmo caminho
+  // antes do rename. Logo por equipe se resolve em sincronizarLogosPorEquipe(),
+  // que le o metadata e casa por id.
 
   // Nao e caminho de asset, mas e o mesmo problema: a planilha corrigiu o
   // instagram do UFS Bugados, o metadata rebuildado ja tem o novo e o

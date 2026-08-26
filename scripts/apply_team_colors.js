@@ -34,8 +34,9 @@ function mapaDeCores() {
     const par = equipe.colors;
     if (!Array.isArray(par) || par.length !== 2) continue;
     if (!par.every((c) => HEX.test(String(c)))) continue;
+    const campos = { colors: par.slice(), logo: String(equipe.logo || "") };
     for (const chave of [equipe.id, equipe.slug]) {
-      if (chave) mapa.set(String(chave), par.slice());
+      if (chave) mapa.set(String(chave), campos);
     }
   }
   return mapa;
@@ -43,17 +44,29 @@ function mapaDeCores() {
 
 function pinta(equipes, mapa) {
   let pintadas = 0;
+  let logos = 0;
   const semCor = [];
   for (const equipe of equipes) {
-    const par = mapa.get(String(equipe.id || equipe.slug || ""));
-    if (!par) {
+    const campos = mapa.get(String(equipe.id || equipe.slug || ""));
+    if (!campos) {
       semCor.push(equipe.id);
       continue;
     }
-    equipe.colors = par.slice();
+    equipe.colors = campos.colors.slice();
     pintadas += 1;
+    // Logo POR EQUIPE, casando por id. A tabela de rewrite_asset_paths.js nao
+    // serve para isto: ela troca string e e cega, e quando pucc_cardinals e
+    // pucc_canaries partilhavam o mesmo caminho antes do rename, o Cardinals
+    // saiu com o escudo do Canaries.
+    if (campos.logo) {
+      if (equipe.logo && equipe.logo !== campos.logo) { equipe.logo = campos.logo; logos += 1; }
+      if (equipe.profile && equipe.profile.logo && equipe.profile.logo !== campos.logo) {
+        equipe.profile.logo = campos.logo;
+        logos += 1;
+      }
+    }
   }
-  return { pintadas, semCor };
+  return { pintadas, semCor, logos };
 }
 
 function passaDatabase(mapa) {
@@ -61,7 +74,7 @@ function passaDatabase(mapa) {
   const db = codec.decode(JSON.parse(antes));
   const controle = { partidas: db.matches.length, times: db.teams.length, notaLider: db.ranking.teams[0]?.score };
 
-  const { pintadas, semCor } = pinta(db.teams, mapa);
+  const { pintadas, semCor, logos } = pinta(db.teams, mapa);
 
   const depois = JSON.stringify(codec.encode(db));
   const lido = codec.decode(JSON.parse(depois));
@@ -71,6 +84,7 @@ function passaDatabase(mapa) {
     ["nota do líder", lido.ranking.teams[0]?.score === controle.notaLider],
     ["identidade team.ranking", lido.teams[0]?.ranking === lido.ranking.byTeamId?.[lido.teams[0]?.id]],
     ["todo par pintado e #rrggbb", lido.teams.every((t) => !mapa.has(String(t.id)) || (t.colors.length === 2 && t.colors.every((c) => HEX.test(c))))],
+    ["logo de cada equipe bate com o metadata", lido.teams.every((t) => { const c = mapa.get(String(t.id)); return !c || !c.logo || (t.profile?.logo || t.logo) === c.logo; })],
   ];
   const falhas = checks.filter(([, ok]) => !ok);
   if (falhas.length) {
@@ -81,7 +95,7 @@ function passaDatabase(mapa) {
 
   fs.writeFileSync(DB, depois);
   console.log("database.json");
-  console.log(`  equipes pintadas: ${pintadas}/${db.teams.length}`);
+  console.log(`  equipes pintadas: ${pintadas}/${db.teams.length} | logos sincronizados: ${logos}`);
   if (semCor.length) console.log(`  sem linha na planilha: ${semCor.join(", ")}`);
   console.log(`  cru : ${mb(antes.length)} -> ${mb(depois.length)}`);
   console.log(`  gzip: ${mb(zlib.gzipSync(Buffer.from(antes)).length)} -> ${mb(zlib.gzipSync(Buffer.from(depois)).length)}`);
@@ -98,7 +112,7 @@ function passaHome(mapa) {
   const home = JSON.parse(antes);
   const controle = { equipes: (home.teams || []).length, series: (home.series || []).length, lideres: (home.leaders || []).length };
 
-  const { pintadas, semCor } = pinta(home.teams || [], mapa);
+  const { pintadas, semCor, logos } = pinta(home.teams || [], mapa);
 
   // home.json e gerado minificado por scripts/build_home.js - manter assim.
   const depois = JSON.stringify(home);
@@ -118,7 +132,7 @@ function passaHome(mapa) {
 
   fs.writeFileSync(HOME, depois);
   console.log("home.json");
-  console.log(`  equipes pintadas: ${pintadas}/${controle.equipes}`);
+  console.log(`  equipes pintadas: ${pintadas}/${controle.equipes} | logos sincronizados: ${logos}`);
   if (semCor.length) console.log(`  sem linha na planilha: ${semCor.join(", ")}`);
   console.log(`  cru : ${antes.length} B -> ${depois.length} B`);
   for (const [nome] of checks) console.log(`    ok ${nome}`);
@@ -132,7 +146,7 @@ function main() {
     process.exitCode = 1;
     return;
   }
-  console.log(`mapa: ${new Set([...mapa.values()].map((p) => p.join())).size} pares distintos para ${mapa.size} chaves\n`);
+  console.log(`mapa: ${new Set([...mapa.values()].map((c) => c.colors.join())).size} pares distintos para ${mapa.size} chaves\n`);
   if (!passaDatabase(mapa) || !passaHome(mapa)) process.exitCode = 1;
 }
 

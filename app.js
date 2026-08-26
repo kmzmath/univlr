@@ -8465,7 +8465,7 @@ function tournamentHero(event, matches, standings) {
         </div>
       </div>
       <div class="tournament-organizer-card">
-        <span class="tournament-card-kicker">Organizacao</span>
+        <span class="tournament-card-kicker">Organização</span>
         <div class="tournament-organizer-main">
           ${organizerLogo(event, "large")}
           <strong>${escapeHtml(event.organizer || event.source || SITE_NAME)}</strong>
@@ -11495,7 +11495,7 @@ function tournamentDataPanel(event) {
         <div><dt>Tier</dt><dd>${escapeHtml(event.tier || "A definir")}</dd></div>
         <div><dt>Tipo</dt><dd>${escapeHtml(event.type || "A definir")}</dd></div>
         <div><dt>Teams</dt><dd>${escapeHtml(String(event.teamCount || event.teams.length))}</dd></div>
-        <div><dt>Organizacao</dt><dd>${escapeHtml(event.organizer || event.source || "A definir")}</dd></div>
+        <div><dt>Organização</dt><dd>${escapeHtml(event.organizer || event.source || "A definir")}</dd></div>
         <div><dt>Fonte</dt><dd>${escapeHtml(event.source || "Manifest")}</dd></div>
         <div><dt>Arquivos</dt><dd>${escapeHtml(String(event.sourceFiles || 0))}</dd></div>
       </dl>
@@ -12214,7 +12214,11 @@ function rgbToHex(rgb) {
 // (contraste de um contra o outro) e a distancia de matiz. Quanto mais as duas
 // brigam, menos area a segunda ganha - senao a linha vira bandeira listrada.
 //
-// Catorze tramas, escolhidas pelo jeito que as duas cores da equipe conversam.
+// Catorze degrades, escolhidos pelo jeito que as duas cores da equipe
+// conversam. Sao so degrades e fades - nenhuma listra, bolinha, xadrez ou
+// malha. O que distingue um do outro e a direcao, a origem e quantas paradas de
+// cor tem, nao geometria repetida.
+//
 // Os insumos sao a separacao entre os dois tons ja ajustados e a distancia de
 // matiz das cores ORIGINAIS da planilha - depois da mistura o matiz da cor2 e
 // puxado para dentro do da cor1 e a conta perde sentido.
@@ -12225,15 +12229,15 @@ function rgbToHex(rgb) {
 //
 // A ordem nao e arbitraria: quanto maior a separacao, MENOS area a cor2 ganha.
 // Duas cores que brigam dividindo a linha ao meio viram bandeira de dois
-// times; a mesma cor2 como fio ou brilho vira detalhe de uniforme.
+// times; a mesma cor2 so na borda vira acabamento.
 const TEAM_PATTERN_TABELA = [
-  { limite: 1.56, perto: "carbono", longe: "chevron" },
-  { limite: 1.58, perto: "faixa", longe: "losango" },
-  { limite: 1.63, perto: "lanca", longe: "barras" },
-  { limite: 1.8, perto: "hex", longe: "grade" },
-  { limite: 2.09, perto: "onda", longe: "halftone" },
-  { limite: 2.76, perto: "circuito", longe: "velocidade" },
-  { limite: Infinity, perto: "brilho", longe: "nevoa" },
+  { limite: 1.56, perto: "horizonte", longe: "diagonal" },
+  { limite: 1.58, perto: "bordas", longe: "lateral" },
+  { limite: 1.63, perto: "nascente", longe: "canto" },
+  { limite: 1.8, perto: "nucleo", longe: "mare" },
+  { limite: 2.09, perto: "cinta", longe: "varredura" },
+  { limite: 2.76, perto: "aurora", longe: "deriva" },
+  { limite: Infinity, perto: "vinheta", longe: "brilho" },
 ];
 
 function hueOf(rgb) {

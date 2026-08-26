@@ -14481,143 +14481,120 @@ small,
   pointer-events: none;
 }
 
-/* --- as dez tramas ---
-   Todas so usam --team-wash e --team-wash-2, nunca uma terceira cor: como cada
+/* --- os catorze degrades ---
+   So degrade e fade: nenhuma listra, bolinha, xadrez ou malha. O que separa um
+   do outro e direcao, origem e numero de paradas de cor.
+
+   Todos usam so --team-wash e --team-wash-2, nunca uma terceira cor: como cada
    canal do resultado fica entre os dois tons, e os dois ja fecham 4,5:1 com
-   --team-ink, qualquer pixel fecha tambem. A garantia vale para as dez sem
-   medir uma a uma. `transparent` nos degrades cai sobre background-color, que
-   e a cor1. */
+   --team-ink, qualquer pixel fecha tambem. A garantia vale para os catorze sem
+   medir um a um. `transparent` cai sobre background-color, que e a cor1. */
 
-/* carbono: trama fina cruzada, como fibra de carbono. Para o par mais fechado
-   (separacao < 1,35), onde so aresta distingue os dois tons. */
-.pintura-de-equipe[data-trama="carbono"]::before {
-  background-image:
-    repeating-linear-gradient(45deg, var(--team-wash-2) 0 2px, transparent 2px 9px),
-    repeating-linear-gradient(-45deg, var(--team-wash-2) 0 2px, transparent 2px 9px);
+/* horizonte: a travessia mais simples, da esquerda para a direita. */
+.pintura-de-equipe[data-trama="horizonte"]::before {
+  background-image: linear-gradient(90deg, var(--team-wash) 0%, var(--team-wash-2) 100%);
 }
 
-/* chevron: as setas de uniforme. Metade de cima inclina para um lado, a de
-   baixo para o outro - e o encontro das duas que faz a seta. */
-.pintura-de-equipe[data-trama="chevron"]::before {
-  background-image:
-    repeating-linear-gradient(118deg, var(--team-wash-2) 0 6px, transparent 6px 22px),
-    repeating-linear-gradient(62deg, var(--team-wash-2) 0 6px, transparent 6px 22px);
-  background-size: 100% 50%, 100% 50%;
-  background-position: 0 0, 0 100%;
-  background-repeat: no-repeat;
+/* diagonal: a mesma travessia, inclinada - o angulo e a unica diferenca, e e o
+   bastante para nao parecerem a mesma coisa lado a lado. */
+.pintura-de-equipe[data-trama="diagonal"]::before {
+  background-image: linear-gradient(108deg, var(--team-wash) 0%, var(--team-wash-2) 100%);
 }
 
-/* faixa: a banda diagonal da camisa, com uma segunda mais fina atras. */
-.pintura-de-equipe[data-trama="faixa"]::before {
-  background-image:
-    linear-gradient(112deg, transparent 0 28%, var(--team-wash-2) 33%, var(--team-wash-2) 51%, transparent 56%),
-    linear-gradient(112deg, transparent 0 63%, var(--team-wash-2) 65%, var(--team-wash-2) 71%, transparent 73%);
-}
-
-/* lanca: uma cunha angular saindo da esquerda com o fio marcando o corte. */
-.pintura-de-equipe[data-trama="lanca"]::before {
-  background-image:
-    linear-gradient(102deg, transparent 0 44%, var(--team-wash-2) 44.5%, var(--team-wash-2) 46%, transparent 46.5%),
-    linear-gradient(102deg, var(--team-wash-2) 0 16%, transparent 44%);
-}
-
-/* hex: malha tecnica triangular - tres direcoes a 60 graus. */
-.pintura-de-equipe[data-trama="hex"]::before {
-  background-image:
-    repeating-linear-gradient(0deg, var(--team-wash-2) 0 1.5px, transparent 1.5px 18px),
-    repeating-linear-gradient(60deg, var(--team-wash-2) 0 1.5px, transparent 1.5px 18px),
-    repeating-linear-gradient(120deg, var(--team-wash-2) 0 1.5px, transparent 1.5px 18px);
-}
-
-/* grade: grade inclinada, mais aberta e mais dura que a hex. */
-.pintura-de-equipe[data-trama="grade"]::before {
-  background-image:
-    repeating-linear-gradient(20deg, var(--team-wash-2) 0 1px, transparent 1px 15px),
-    repeating-linear-gradient(110deg, var(--team-wash-2) 0 1px, transparent 1px 15px);
-}
-
-/* halftone: retícula de impressao esportiva. O degrade de cor1 por cima come
-   os pontos da esquerda, entao a densidade cresce para a direita. */
-.pintura-de-equipe[data-trama="halftone"]::before {
-  background-image:
-    linear-gradient(100deg, var(--team-wash) 0 16%, transparent 66%),
-    radial-gradient(circle at 50% 50%, var(--team-wash-2) 0 26%, transparent 28%);
-  background-size: auto, 13px 13px;
-}
-
-/* velocidade: riscos de arrasto que se apagam para a direita - a camada de
-   cor1 por cima e o que faz o rastro sumir em vez de terminar cortado. */
-.pintura-de-equipe[data-trama="velocidade"]::before {
-  background-image:
-    linear-gradient(100deg, transparent 0 34%, var(--team-wash) 94%),
-    repeating-linear-gradient(100deg, var(--team-wash-2) 0 2px, transparent 2px 21px);
-}
-
-/* brilho: o lampejo que atravessa a arte. Separacao alta demais para dividir
-   area - a cor2 so passa como reflexo, duas bandas estreitas. */
-.pintura-de-equipe[data-trama="brilho"]::before {
-  background-image:
-    linear-gradient(108deg, transparent 0 40%, var(--team-wash-2) 47%, transparent 55%),
-    linear-gradient(108deg, transparent 0 60%, var(--team-wash-2) 63%, transparent 67%);
-}
-
-/* losango: xadrez diagonal de losangos cheios. Area alta, geometria dura -
-   para o par mais fechado onde so aresta grande distingue. */
-.pintura-de-equipe[data-trama="losango"]::before {
-  background-image: conic-gradient(
-    from 45deg at 50% 50%,
-    var(--team-wash-2) 0 25%,
-    transparent 0 50%,
-    var(--team-wash-2) 0 75%,
-    transparent 0
-  );
-  background-size: 26px 26px;
-}
-
-/* barras: as unicas verticais do conjunto. Duas larguras alternadas, para nao
-   virar listra de codigo de barras. */
-.pintura-de-equipe[data-trama="barras"]::before {
-  background-image: repeating-linear-gradient(
+/* bordas: cor2 nas duas pontas, cor1 segurando o meio - onde mora o texto. */
+.pintura-de-equipe[data-trama="bordas"]::before {
+  background-image: linear-gradient(
     90deg,
-    var(--team-wash-2) 0 4px,
-    transparent 4px 15px,
-    var(--team-wash-2) 15px 21px,
-    transparent 21px 36px
+    var(--team-wash-2) 0%,
+    var(--team-wash) 34%,
+    var(--team-wash) 66%,
+    var(--team-wash-2) 100%
   );
 }
 
-/* onda: escamas moles em duas fileiras deslocadas - a curva que falta entre
-   tanta diagonal e tanta reta. */
-.pintura-de-equipe[data-trama="onda"]::before {
-  background-image:
-    radial-gradient(ellipse 26px 11px at 50% 0%, var(--team-wash-2) 0 58%, transparent 62%),
-    radial-gradient(ellipse 26px 11px at 50% 100%, var(--team-wash-2) 0 58%, transparent 62%);
-  background-size: 34px 22px, 34px 22px;
-  background-position: 0 0, 17px 11px;
+/* lateral: o terco da direita entrega para a cor2, com transicao longa. */
+.pintura-de-equipe[data-trama="lateral"]::before {
+  background-image: linear-gradient(90deg, var(--team-wash) 0%, var(--team-wash) 46%, var(--team-wash-2) 100%);
 }
 
-/* circuito: malha ortogonal com no nos cruzamentos. Separacao alta, entao a
-   cor2 entra so como fio e ponto. */
-.pintura-de-equipe[data-trama="circuito"]::before {
-  background-image:
-    radial-gradient(circle at 50% 50%, var(--team-wash-2) 0 14%, transparent 16%),
-    repeating-linear-gradient(0deg, var(--team-wash-2) 0 1.5px, transparent 1.5px 28px),
-    repeating-linear-gradient(90deg, var(--team-wash-2) 0 1.5px, transparent 1.5px 28px);
-  background-size: 28px 28px, auto, auto;
+/* nascente: clarao saindo da borda esquerda, elipse bem larga. */
+.pintura-de-equipe[data-trama="nascente"]::before {
+  background-image: radial-gradient(ellipse 78% 190% at 0% 50%, var(--team-wash-2) 0%, transparent 72%);
 }
 
-/* nevoa: duas manchas moles, sem aresta nenhuma. E o que dois matizes
-   distantes e muito separados aceitam sem virar bandeira de dois times. */
-.pintura-de-equipe[data-trama="nevoa"]::before {
-  background-image:
-    radial-gradient(ellipse 62% 130% at 16% 18%, var(--team-wash-2), transparent 64%),
-    radial-gradient(ellipse 72% 140% at 80% 86%, var(--team-wash-2), transparent 60%);
+/* canto: mesma ideia, ancorada no canto de cima a esquerda. */
+.pintura-de-equipe[data-trama="canto"]::before {
+  background-image: radial-gradient(ellipse 64% 220% at 8% 0%, var(--team-wash-2) 0%, transparent 76%);
 }
 
-/* A borda de 1px vira o fio de fora do anel e o inset de 2px faz o resto: 3px
-   de cor2 em volta de tudo, seguindo o mesmo raio, sem custar um pixel de
-   layout. Substitui o vermelho da marca que a regra geral de linha punha aqui -
-   neste hover quem identifica e a equipe, nao o site. */
+/* nucleo: o clarao no centro, fechando para as pontas. */
+.pintura-de-equipe[data-trama="nucleo"]::before {
+  background-image: radial-gradient(ellipse 56% 200% at 50% 50%, var(--team-wash-2) 0%, transparent 78%);
+}
+
+/* mare: elipse rasa subindo da base - a unica que vem de baixo. */
+.pintura-de-equipe[data-trama="mare"]::before {
+  background-image: radial-gradient(ellipse 120% 140% at 50% 118%, var(--team-wash-2) 0%, transparent 70%);
+}
+
+/* cinta: faixa macia atravessando na diagonal, sem aresta em lugar nenhum. */
+.pintura-de-equipe[data-trama="cinta"]::before {
+  background-image: linear-gradient(
+    104deg,
+    var(--team-wash) 0%,
+    var(--team-wash-2) 44%,
+    var(--team-wash-2) 56%,
+    var(--team-wash) 100%
+  );
+}
+
+/* varredura: giro conico em vez de reta - a cor gira em torno do centro. */
+.pintura-de-equipe[data-trama="varredura"]::before {
+  background-image: conic-gradient(
+    from 210deg at 50% 50%,
+    var(--team-wash) 0turn,
+    var(--team-wash-2) 0.5turn,
+    var(--team-wash) 1turn
+  );
+}
+
+/* aurora: dois claroes moles sobrepostos, em cantos opostos. */
+.pintura-de-equipe[data-trama="aurora"]::before {
+  background-image:
+    radial-gradient(ellipse 58% 160% at 18% 12%, var(--team-wash-2) 0%, transparent 66%),
+    radial-gradient(ellipse 66% 170% at 82% 88%, var(--team-wash-2) 0%, transparent 62%);
+}
+
+/* deriva: tres paradas assimetricas - a cor2 aparece fora do centro e some
+   antes da outra ponta. */
+.pintura-de-equipe[data-trama="deriva"]::before {
+  background-image: linear-gradient(
+    96deg,
+    var(--team-wash) 0%,
+    var(--team-wash-2) 30%,
+    var(--team-wash) 74%,
+    var(--team-wash) 100%
+  );
+}
+
+/* vinheta: cor1 no meio e a cor2 so fechando a moldura por fora. Area minima -
+   e para os pares mais separados, onde area grande viraria bandeira. */
+.pintura-de-equipe[data-trama="vinheta"]::before {
+  background-image: radial-gradient(ellipse 74% 210% at 50% 50%, transparent 42%, var(--team-wash-2) 100%);
+}
+
+/* brilho: lampejo largo e macio atravessando, quase todo cor1. */
+.pintura-de-equipe[data-trama="brilho"]::before {
+  background-image: linear-gradient(
+    112deg,
+    transparent 0%,
+    transparent 38%,
+    var(--team-wash-2) 50%,
+    transparent 62%,
+    transparent 100%
+  );
+}
+
 /* No touch nao ha hover, e o `:hover` grudado que alguns navegadores deixam
    para tras manteria uma linha pintada depois do toque. Mesmo guard da capa
    do campeonato. */

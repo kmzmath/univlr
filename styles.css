@@ -2463,7 +2463,7 @@ h1 {
 }
 
 .result-score i {
-  color: #6f8193;
+  color: var(--muted);
   font-style: normal;
 }
 
@@ -3390,30 +3390,75 @@ tr:hover td {
   text-align: right;
 }
 
+/* Grade de tres trilhas e nao flex com space-between: no space-between a
+   posicao do meio e resultado da largura das pontas, entao o botao viajava ~250px
+   para o lado enquanto o grupo da direita encolhia. Com `1fr auto 1fr` a trilha
+   do meio e o centro da barra e nao se move - nem durante a animacao, nem quando
+   o bloco da direita some de vez na aba de partidas. */
 .ranking-page-toolbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
   margin-bottom: 16px;
 }
 
-.ranking-page-toolbar > span {
+.ranking-toolbar-context {
+  justify-self: start;
+}
+
+.ranking-page-toolbar .ranking-tab-switch {
+  justify-self: center;
+}
+
+.ranking-toolbar-actions {
+  justify-self: end;
+}
+
+/* O contador era `.ranking-page-toolbar > span` ate ele entrar no grupo de
+   contexto; de la para ca o seletor nao casava mais nada e o texto estava
+   herdando peso 400 e opacidade cheia em vez de 800 e 0,74. */
+.ranking-page-toolbar [data-ranking-count] {
   font-size: var(--text-xs);
   font-weight: 800;
   text-align: left;
 }
 
-.ranking-page-toolbar > span:empty {
+.ranking-page-toolbar [data-ranking-count]:empty {
   display: none;
 }
 
+/* Duas camadas: a de fora e uma grade de uma coluna que vai de 1fr a 0fr, a de
+   dentro segura os controles. E a mesma tecnica do dia dobravel da lista de
+   partidas, e pela mesma razao: e o unico jeito de ir da largura do conteudo
+   ate zero com transicao, sem cravar um valor chutado. Encolher de verdade (e
+   nao so apagar) e o que faz o botao do meio deslizar junto em vez de saltar
+   quando o bloco sai.
+
+   Sem `margin-left: auto`: ela existia para empurrar os controles para a
+   direita quando o slot da esquerda vinha vazio, mas engole todo o espaco
+   livre e deixa o `space-between` do pai sem nada para distribuir. */
 .ranking-toolbar-actions {
+  overflow: hidden;
+  transition:
+    width 220ms cubic-bezier(0.4, 0, 0.2, 1),
+    height 220ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 180ms ease;
+}
+
+/* min-width: max-content para o interior nao se espremer enquanto o pai
+   encolhe: sem isso os dois controles se achatariam durante a saida em vez de
+   deslizarem para fora do corte. */
+.ranking-toolbar-actions-inner {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 12px;
-  margin-left: auto;
+  min-width: max-content;
+}
+
+.ranking-toolbar-actions.oculto {
+  opacity: 0;
 }
 
 .ranking-details-toggle {
@@ -3429,6 +3474,80 @@ tr:hover td {
   font-size: var(--text-xs);
   font-weight: 800;
   white-space: nowrap;
+}
+
+/* A barra deixou de ser "texto de um lado, tudo de controle do outro" e passou
+   a separar por significado: a esquerda diz O QUE voce esta vendo (qual semana,
+   quantas equipes), a direita muda COMO ve (detalhes, escopo). Alem de fazer
+   sentido, equilibra: medido em 1440px, 426px de um lado contra 418px do outro.
+
+   Jogar a semana E os detalhes para a esquerda, que era a outra saida, deixava
+   590px contra 258px - o mesmo desequilibrio espelhado. */
+/* A porta para a aba de partidas fica no meio, entre o contexto e os
+   controles. Como o flex e space-between e os dois grupos das pontas tem
+   largura parecida, ela cai perto do centro sozinha, sem posicionamento.
+
+   Veste o mesmo uniforme do seletor de semana e do toggle de detalhes - pilula,
+   42px, mesma borda - para os tres lerem como uma familia. O que a distingue e
+   o hover: ela leva para outro lugar, os outros dois mudam a mesma tela. */
+.ranking-tab-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid rgba(83, 104, 135, 0.24);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--ink);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+/* Hover so em cor e borda: nada aqui pode mexer em layout, e a barra e uma
+   linha so - um pixel de altura a mais empurraria a tabela inteira. */
+.ranking-tab-switch:hover,
+.ranking-tab-switch:focus-visible {
+  border-color: color-mix(in srgb, var(--brand-text) 52%, transparent);
+  color: var(--brand-text);
+  background: color-mix(in srgb, var(--brand-text) 8%, transparent);
+}
+
+.ranking-tab-switch[disabled] {
+  color: var(--muted);
+  cursor: default;
+  opacity: 0.6;
+}
+
+.ranking-tab-switch[disabled]:hover {
+  border-color: rgba(83, 104, 135, 0.24);
+  color: var(--muted);
+  background: transparent;
+}
+
+/* A lista da aba usa a classe `full-list-panel` para herdar as 17 regras que
+   ligam a arte do mapa, a coluna de meta e o logo do campeonato na linha de
+   resultado - as mesmas que /partidas usa, com as variantes responsivas.
+
+   O que essa classe traz de painel (fundo e borda, da lista de superficies em
+   styles.css:9198) e zerado aqui: este bloco ja mora dentro do
+   .ranking-full-panel, e cartao dentro de cartao e o que este arquivo passa o
+   tempo desfazendo. */
+.ranking-week-matches.full-list-panel {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding-top: 4px;
+}
+
+.ranking-toolbar-context {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
 }
 
 .ranking-version-picker {
@@ -4186,18 +4305,26 @@ tr:hover td {
 
 @media (max-width: 940px) {
   .ranking-page-toolbar {
-    align-items: stretch;
-    flex-direction: column;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: stretch;
   }
 
-  .ranking-page-toolbar > span {
+  .ranking-toolbar-context,
+  .ranking-page-toolbar .ranking-tab-switch,
+  .ranking-toolbar-actions {
+    justify-self: stretch;
+  }
+
+  .ranking-page-toolbar [data-ranking-count] {
     text-align: left;
   }
 
-  .ranking-toolbar-actions {
+  .ranking-toolbar-actions-inner {
     align-items: stretch;
     flex-direction: column;
-    margin-left: 0;
+    /* Em coluna o interior tem de acompanhar a largura da barra; max-content
+       aqui esticaria o bloco alem dela. */
+    min-width: 0;
   }
 
   .ranking-details-toggle {
@@ -4404,21 +4531,24 @@ body {
   font-variant-numeric: tabular-nums;
   font-weight: 800;
   min-height: 30px;
-  border-radius: var(--radius-sm);
   color: #fff;
   grid-template-columns: 30px auto 30px;
   gap: 4px;
   justify-self: center;
 }
 
+/* Sem pastilha: o numero fica solto e a cor vai no proprio algarismo. O
+   min-width segura a coluna alinhada entre linhas, que e o que a pastilha
+   fazia de util. Cresce de 14px para 24px porque o espaco que sobrou pede
+   conteudo maior, nao padding maior - e a Condensed so ajuda a partir de 16px. */
 .result-score .score-number {
   min-width: 30px;
-  min-height: 24px;
   display: grid;
   place-items: center;
-  border-radius: var(--radius-sm);
-  background: #1d2a3b;
-  color: #fff;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: 1;
+  color: var(--ink);
 }
 
 .result-score small {
@@ -4533,6 +4663,56 @@ body {
   stroke: #adc0d5;
   stroke-linejoin: round;
   stroke-width: 2;
+}
+
+/* O funil deita para a direita quando a gaveta abre e levanta ao fechar. Gira
+   so o desenho, nao a plaquinha: um quadrado de canto redondo girado 90 graus
+   fica igual, entao rodar a caixa junto seria animacao que ninguem ve.
+
+   Escopo em .filter-dropdown > summary de proposito: o botao de reset usa a
+   mesma .filter-summary-icon e nao tem estado aberto/fechado para comunicar. */
+.filter-dropdown > summary .filter-summary-icon svg {
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* -90 e nao 90: o bico do funil aponta para baixo, e a rotacao horaria de 90
+   graus leva quem aponta para baixo para a ESQUERDA. Para deitar o bico a
+   direita a volta e anti-horaria. */
+.filter-dropdown[open] > summary .filter-summary-icon svg {
+  transform: rotate(-90deg);
+}
+
+/* Os dois campos de data ocupam a largura da gaveta, com o rotulo em cima. */
+.filter-date-field {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.filter-date-field > span {
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.filter-date-field input {
+  width: 100%;
+  min-height: 34px;
+  min-width: 0;
+}
+
+/* O seletor nativo do Chrome desenha o icone de calendario em preto sobre
+   fundo escuro. Inverter e o unico jeito de mexer nele. */
+.filter-date-field input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+.filter-date-field input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
 }
 
 .filter-button-grid,
@@ -9199,7 +9379,7 @@ body {
 .page-title p,
 .profile-header p,
 .tournament-hero-meta,
-.ranking-page-toolbar > span {
+.ranking-page-toolbar [data-ranking-count] {
   color: rgba(245, 241, 242, 0.74);
 }
 
@@ -9252,23 +9432,14 @@ body {
 }
 
 /* Vencedor e perdedor eram dois vermelhos (marca e #451019): nao dava para
-   saber quem ganhou de relance. Agora o vencedor se acende e o perdedor recua. */
+   saber quem ganhou de relance. Agora o vencedor se acende e o perdedor recua -
+   no proprio algarismo, sem pastilha por tras. */
 .result-score .score-number.win {
-  background: var(--win);
-  color: var(--on-brand);
+  color: var(--win);
 }
 
 .result-score .score-number.loss {
-  background: var(--loss-surface);
   color: var(--loss-ink);
-}
-
-.result-score,
-.match-score-core {
-  border-color: rgba(246, 19, 42, 0.35);
-  background:
-    linear-gradient(180deg, rgba(246, 19, 42, 0.14), rgba(246, 19, 42, 0.04)),
-    #060609;
 }
 
 .ranking-scope-switch::before,
@@ -14112,30 +14283,12 @@ small,
   grid-template-columns: auto auto auto;
   gap: clamp(6px, 0.5vw, 12px);
   min-height: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
 }
 
 .home-board.univlr-home .result-score .score-number {
   min-width: 0;
-  min-height: 0;
-  border-radius: 0;
-  background: none;
-  font-family: var(--font-display);
   font-size: clamp(var(--text-2xl), 3vw, var(--text-5xl));
   font-weight: 800;
-  line-height: 1;
-}
-
-.home-board.univlr-home .result-score .score-number.win {
-  background: none;
-  color: var(--win);
-}
-
-.home-board.univlr-home .result-score .score-number.loss {
-  background: none;
-  color: var(--loss-ink);
 }
 
 .home-board.univlr-home .result-score i {
@@ -14206,6 +14359,401 @@ small,
   gap: 8px;
 }
 
+/* ==========================================================================
+   Hover da linha do ranking na home: a cor da equipe preenche a linha
+   Camada separada, como na capa do campeonato, mas o que anima aqui e o
+   clip-path: a trama entra varrendo da esquerda em 420ms. O hover nao mexe em
+   layout - clip-path e box-shadow nao participam dele. O anel e inset e nao
+   border-width de proposito: engrossar a borda de verdade empurraria o
+   conteudo e faria a linha refluir embaixo do proprio ponteiro.
+
+   --team-wash, --team-wash-2 e --team-ink saem de teamAccentStyle() (app.js).
+   A tinta e decidida so pela COR PRINCIPAL: preta nas 14 equipes cuja cor1 tem
+   luminancia >= 0,45 (branco puro, os UFU Saints, os amarelos fortes, os azuis
+   lavados), branca nas outras 83. Depois disso os dois tons da trama caminham
+   ate essa tinta fechar 4,5:1 nos dois - 47 das 97 nao precisam andar nada.
+   ========================================================================== */
+.pintura-de-equipe {
+  position: relative;
+  isolation: isolate;
+}
+
+/* O botao do acordeao nasce sem raio; ele existe so para o ::before herdar e
+   para o anel do hover seguir o canto do cartao. Nada visivel muda em repouso:
+   o botao nao tem fundo nem borda propria. */
+.ranking-accordion-button.pintura-de-equipe {
+  border-radius: 5px;
+}
+
+/* ==========================================================================
+   Cabecalho da pagina de ranking
+   Eram tres coisas dizendo a mesma: um selo "RANKING", um titulo "Ranking
+   Universitario de Valorant" e uma barra em volta dos dois. Sobrou a palavra,
+   grande e centralizada, na cor de texto da marca - que aqui e identidade e
+   nao dado.
+
+   A barra sai por inteiro: fundo, raio e o gradiente que .page-header herdava
+   da lista de paineis. Era moldura em volta de um titulo. O `p` continua no
+   HTML (ja estava escondido por .page-title p) porque carrega a formula da
+   nota - some da tela, nao do documento.
+
+   Escopo em .ranking-hero de proposito: .page-header e o mesmo de /partidas,
+   /eventos, /players e /stats, e nenhum deles pediu isso.
+   ========================================================================== */
+.page-header.ranking-hero {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.ranking-hero .page-title {
+  justify-items: center;
+  text-align: center;
+}
+
+.ranking-hero h1 {
+  max-width: none;
+  color: var(--brand-text);
+  font-size: clamp(var(--text-4xl), 6vw, var(--text-6xl));
+  /* Caixa alta em corpo grande pede a letra mais junta: no tamanho do selo
+     (11px) o espacamento neutro estava certo, em 80px ele abre buraco. */
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+}
+
+.ranking-accordion-button .rank-cell,
+.ranking-accordion-button .rank-change-cell,
+.ranking-accordion-button .ranking-team-cell strong,
+.ranking-accordion-button .ranking-team-cell small,
+.ranking-accordion-button .ranking-lineup-inline,
+.ranking-accordion-button .ranking-score-cell,
+.ranking-accordion-button .ranking-detail-cell,
+.ranking-accordion-button .ranking-status-cell,
+.ranking-accordion-button .chip,
+.ranking-accordion-button .ranking-toggle-mark,
+.ranking-panel .compact-ranking-row .row-main strong,
+.ranking-panel .compact-ranking-row .row-main small,
+.ranking-panel .compact-ranking-row .row-score,
+.ranking-panel .compact-ranking-row .rank-position,
+.ranking-panel .compact-ranking-row .rank-delta {
+  transition: color 160ms ease;
+}
+
+/* A trama e escolhida por equipe em teamPatternFor() (app.js), pelo jeito que
+   as duas cores conversam: quanto mais elas brigam, menos area a segunda
+   ganha. Sao seis, distribuidas 22/21/21/20/7/6 nas 97 equipes.
+
+   Todas usam so --team-wash e --team-wash-2, e nunca uma terceira cor: como
+   cada canal do resultado fica entre os dois tons, e os dois ja fecham 4,5:1
+   com --team-ink, qualquer pixel da trama tambem fecha. A garantia de
+   contraste vale para as seis sem precisar medir uma a uma.
+
+   O preenchimento e uma elipse que cresce e escorrega - comeca rasteira no
+   canto de baixo a esquerda e termina cobrindo tudo com o centro no meio. A
+   frente curva e o deslocamento do centro sao o que faz parecer liquido
+   entrando em vez de barra crescendo. clip-path nao participa do layout. */
+.pintura-de-equipe::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background-color: var(--team-wash, var(--brand));
+  background-image: repeating-linear-gradient(
+    115deg,
+    var(--team-wash, var(--brand)) 0px,
+    var(--team-wash, var(--brand)) 12px,
+    var(--team-wash-2, var(--team-wash, var(--brand))) 30px,
+    var(--team-wash-2, var(--team-wash, var(--brand))) 42px,
+    var(--team-wash, var(--brand)) 60px
+  );
+  clip-path: ellipse(0% 10% at 4% 88%);
+  /* A curva nao pode ser de saida forte: com ela a elipse cobria a linha
+     inteira em 104ms dos 520 e o resto do tempo era raio crescendo fora da
+     caixa, invisivel. Esta sobe devagar no comeco e passa de 1 no fim - o
+     excesso no final e o assentamento. */
+  transition: clip-path 480ms cubic-bezier(0.5, 0.02, 0.35, 1);
+  pointer-events: none;
+}
+
+/* --- as dez tramas ---
+   Todas so usam --team-wash e --team-wash-2, nunca uma terceira cor: como cada
+   canal do resultado fica entre os dois tons, e os dois ja fecham 4,5:1 com
+   --team-ink, qualquer pixel fecha tambem. A garantia vale para as dez sem
+   medir uma a uma. `transparent` nos degrades cai sobre background-color, que
+   e a cor1. */
+
+/* carbono: trama fina cruzada, como fibra de carbono. Para o par mais fechado
+   (separacao < 1,35), onde so aresta distingue os dois tons. */
+.pintura-de-equipe[data-trama="carbono"]::before {
+  background-image:
+    repeating-linear-gradient(45deg, var(--team-wash-2) 0 2px, transparent 2px 9px),
+    repeating-linear-gradient(-45deg, var(--team-wash-2) 0 2px, transparent 2px 9px);
+}
+
+/* chevron: as setas de uniforme. Metade de cima inclina para um lado, a de
+   baixo para o outro - e o encontro das duas que faz a seta. */
+.pintura-de-equipe[data-trama="chevron"]::before {
+  background-image:
+    repeating-linear-gradient(118deg, var(--team-wash-2) 0 6px, transparent 6px 22px),
+    repeating-linear-gradient(62deg, var(--team-wash-2) 0 6px, transparent 6px 22px);
+  background-size: 100% 50%, 100% 50%;
+  background-position: 0 0, 0 100%;
+  background-repeat: no-repeat;
+}
+
+/* faixa: a banda diagonal da camisa, com uma segunda mais fina atras. */
+.pintura-de-equipe[data-trama="faixa"]::before {
+  background-image:
+    linear-gradient(112deg, transparent 0 28%, var(--team-wash-2) 33%, var(--team-wash-2) 51%, transparent 56%),
+    linear-gradient(112deg, transparent 0 63%, var(--team-wash-2) 65%, var(--team-wash-2) 71%, transparent 73%);
+}
+
+/* lanca: uma cunha angular saindo da esquerda com o fio marcando o corte. */
+.pintura-de-equipe[data-trama="lanca"]::before {
+  background-image:
+    linear-gradient(102deg, transparent 0 44%, var(--team-wash-2) 44.5%, var(--team-wash-2) 46%, transparent 46.5%),
+    linear-gradient(102deg, var(--team-wash-2) 0 16%, transparent 44%);
+}
+
+/* hex: malha tecnica triangular - tres direcoes a 60 graus. */
+.pintura-de-equipe[data-trama="hex"]::before {
+  background-image:
+    repeating-linear-gradient(0deg, var(--team-wash-2) 0 1.5px, transparent 1.5px 18px),
+    repeating-linear-gradient(60deg, var(--team-wash-2) 0 1.5px, transparent 1.5px 18px),
+    repeating-linear-gradient(120deg, var(--team-wash-2) 0 1.5px, transparent 1.5px 18px);
+}
+
+/* grade: grade inclinada, mais aberta e mais dura que a hex. */
+.pintura-de-equipe[data-trama="grade"]::before {
+  background-image:
+    repeating-linear-gradient(20deg, var(--team-wash-2) 0 1px, transparent 1px 15px),
+    repeating-linear-gradient(110deg, var(--team-wash-2) 0 1px, transparent 1px 15px);
+}
+
+/* halftone: retícula de impressao esportiva. O degrade de cor1 por cima come
+   os pontos da esquerda, entao a densidade cresce para a direita. */
+.pintura-de-equipe[data-trama="halftone"]::before {
+  background-image:
+    linear-gradient(100deg, var(--team-wash) 0 16%, transparent 66%),
+    radial-gradient(circle at 50% 50%, var(--team-wash-2) 0 26%, transparent 28%);
+  background-size: auto, 13px 13px;
+}
+
+/* velocidade: riscos de arrasto que se apagam para a direita - a camada de
+   cor1 por cima e o que faz o rastro sumir em vez de terminar cortado. */
+.pintura-de-equipe[data-trama="velocidade"]::before {
+  background-image:
+    linear-gradient(100deg, transparent 0 34%, var(--team-wash) 94%),
+    repeating-linear-gradient(100deg, var(--team-wash-2) 0 2px, transparent 2px 21px);
+}
+
+/* brilho: o lampejo que atravessa a arte. Separacao alta demais para dividir
+   area - a cor2 so passa como reflexo, duas bandas estreitas. */
+.pintura-de-equipe[data-trama="brilho"]::before {
+  background-image:
+    linear-gradient(108deg, transparent 0 40%, var(--team-wash-2) 47%, transparent 55%),
+    linear-gradient(108deg, transparent 0 60%, var(--team-wash-2) 63%, transparent 67%);
+}
+
+/* losango: xadrez diagonal de losangos cheios. Area alta, geometria dura -
+   para o par mais fechado onde so aresta grande distingue. */
+.pintura-de-equipe[data-trama="losango"]::before {
+  background-image: conic-gradient(
+    from 45deg at 50% 50%,
+    var(--team-wash-2) 0 25%,
+    transparent 0 50%,
+    var(--team-wash-2) 0 75%,
+    transparent 0
+  );
+  background-size: 26px 26px;
+}
+
+/* barras: as unicas verticais do conjunto. Duas larguras alternadas, para nao
+   virar listra de codigo de barras. */
+.pintura-de-equipe[data-trama="barras"]::before {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--team-wash-2) 0 4px,
+    transparent 4px 15px,
+    var(--team-wash-2) 15px 21px,
+    transparent 21px 36px
+  );
+}
+
+/* onda: escamas moles em duas fileiras deslocadas - a curva que falta entre
+   tanta diagonal e tanta reta. */
+.pintura-de-equipe[data-trama="onda"]::before {
+  background-image:
+    radial-gradient(ellipse 26px 11px at 50% 0%, var(--team-wash-2) 0 58%, transparent 62%),
+    radial-gradient(ellipse 26px 11px at 50% 100%, var(--team-wash-2) 0 58%, transparent 62%);
+  background-size: 34px 22px, 34px 22px;
+  background-position: 0 0, 17px 11px;
+}
+
+/* circuito: malha ortogonal com no nos cruzamentos. Separacao alta, entao a
+   cor2 entra so como fio e ponto. */
+.pintura-de-equipe[data-trama="circuito"]::before {
+  background-image:
+    radial-gradient(circle at 50% 50%, var(--team-wash-2) 0 14%, transparent 16%),
+    repeating-linear-gradient(0deg, var(--team-wash-2) 0 1.5px, transparent 1.5px 28px),
+    repeating-linear-gradient(90deg, var(--team-wash-2) 0 1.5px, transparent 1.5px 28px);
+  background-size: 28px 28px, auto, auto;
+}
+
+/* nevoa: duas manchas moles, sem aresta nenhuma. E o que dois matizes
+   distantes e muito separados aceitam sem virar bandeira de dois times. */
+.pintura-de-equipe[data-trama="nevoa"]::before {
+  background-image:
+    radial-gradient(ellipse 62% 130% at 16% 18%, var(--team-wash-2), transparent 64%),
+    radial-gradient(ellipse 72% 140% at 80% 86%, var(--team-wash-2), transparent 60%);
+}
+
+/* A borda de 1px vira o fio de fora do anel e o inset de 2px faz o resto: 3px
+   de cor2 em volta de tudo, seguindo o mesmo raio, sem custar um pixel de
+   layout. Substitui o vermelho da marca que a regra geral de linha punha aqui -
+   neste hover quem identifica e a equipe, nao o site. */
+/* No touch nao ha hover, e o `:hover` grudado que alguns navegadores deixam
+   para tras manteria uma linha pintada depois do toque. Mesmo guard da capa
+   do campeonato. */
+@media (hover: hover) and (pointer: fine) {
+  .ranking-panel .compact-ranking-row:hover,
+  .ranking-panel .compact-ranking-row:focus-visible {
+    border-color: var(--team-accent-2, var(--teal));
+    box-shadow: inset 0 0 0 2px var(--team-accent-2, var(--teal));
+    background: #0b0b10;
+  }
+
+  /* O escudo e feito da propria cor da equipe, entao sobre a trama ele some:
+     medido nas 10 da home, 42% dos pixels do escudo ficavam abaixo de 1,5:1
+     contra o fundo, e no UFU Saints eram 95% - sumia inteiro.
+
+     Sao quatro sombras de 0,75px em quatro direcoes e nao uma sombra difusa:
+     isso e traco, nao brilho.
+
+     A cor e a mesma --team-ink do nome, e pela mesma razao: branca em 83 das
+     97 equipes, preta so nas 14 cuja COR PRINCIPAL e branca ou muito clara
+     (luminancia >= 0,45). Contorno branco fixo foi testado e custava caro
+     justamente onde ele importa - no UFU Saints, de trama #fefefe, branco
+     sobre branco devolvia os 95% de escudo invisivel. */
+  .pintura-de-equipe .team-logo img {
+    transition: filter 200ms ease;
+  }
+
+  .pintura-de-equipe:hover .team-logo img,
+  .pintura-de-equipe:focus-visible .team-logo img {
+    filter:
+      drop-shadow(0.75px 0 0 var(--team-ink, var(--univlr-white)))
+      drop-shadow(-0.75px 0 0 var(--team-ink, var(--univlr-white)))
+      drop-shadow(0 0.75px 0 var(--team-ink, var(--univlr-white)))
+      drop-shadow(0 -0.75px 0 var(--team-ink, var(--univlr-white)));
+  }
+
+  .pintura-de-equipe:hover::before,
+  .pintura-de-equipe:focus-visible::before {
+    /* Com o centro em 38%/48% o canto pior fica a 0,62 da largura e 0,52 da
+       altura, e a elipse exata que o alcanca e 73%/99%. 78%/106% e essa mais
+       uma folga pequena. Com 88%/120% (a primeira tentativa) a linha fechava
+       aos 325ms de 520 e o resto da animacao era raio crescendo fora da caixa:
+       tempo gasto sem nada acontecendo na tela. */
+    clip-path: ellipse(78% 106% at 38% 48%);
+  }
+
+  /* Todo o texto passa para a tinta calculada. A hierarquia continua existindo
+     pelo corpo e pelo peso (14/700 no nome, 12/400 no subtitulo), nao por
+     opacidade: baixar a opacidade em cima do banho derrubaria o contraste que a
+     conta de --team-ink acabou de garantir. */
+  .ranking-panel .compact-ranking-row:hover,
+  .ranking-panel .compact-ranking-row:focus-visible,
+  .ranking-panel .compact-ranking-row:hover .row-main strong,
+  .ranking-panel .compact-ranking-row:hover .row-main small,
+  .ranking-panel .compact-ranking-row:hover .row-score,
+  .ranking-panel .compact-ranking-row:hover .rank-position,
+  .ranking-panel .compact-ranking-row:hover .rank-delta,
+  .ranking-panel .compact-ranking-row:hover .rank-delta.up,
+  .ranking-panel .compact-ranking-row:hover .rank-delta.down,
+  .ranking-panel .compact-ranking-row:focus-visible .row-main strong,
+  .ranking-panel .compact-ranking-row:focus-visible .row-main small,
+  .ranking-panel .compact-ranking-row:focus-visible .row-score,
+  .ranking-panel .compact-ranking-row:focus-visible .rank-position,
+  .ranking-panel .compact-ranking-row:focus-visible .rank-delta {
+    color: var(--team-ink, var(--ink));
+    /* A tinta espera a varredura chegar. Sem esse atraso o texto da direita
+       virava antes de a cor passar por baixo dele. Na saida nao ha atraso: a
+       regra de repouso volta na hora. */
+    transition: color 220ms ease 210ms;
+  }
+
+  /* --- a mesma pintura na pagina do ranking completo ---
+     A linha ali e o <button> do acordeao, dentro de um <article> que e o
+     cartao. O anel vai no botao e nao no artigo porque as variaveis de cor
+     estao no botao; a borda do cartao continua neutra por fora dele.
+     O raio de 5px e o do cartao (6px) menos a borda de 1px que ele ja tem -
+     sem isso a pintura estouraria os cantos arredondados. */
+  .ranking-accordion-button:hover,
+  .ranking-accordion-button:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--team-accent-2, var(--teal));
+  }
+
+  /* A linha do ranking tem mais texto que a da home: alem do nome e do
+     subtitulo, sao quatro colunas de nota, o line-up inline, o selo de status
+     e a marca do acordeao. Todos passam para a tinta calculada.
+
+     Os tres fundos tingidos somem enquanto a pintura esta em cima: a caixa
+     vermelha do "#1", o selo verde de status e a caixa da marca "+". Sobre a
+     cor da equipe eles brigariam - o verde some num time verde, e o vermelho
+     da marca voltaria a fazer trabalho de dado. O texto continua la, entao
+     "Validado" e "+" seguem legiveis. */
+  .ranking-accordion-button:hover .rank-cell,
+  .ranking-accordion-button:hover .rank-change-cell,
+  .ranking-accordion-button:hover .ranking-team-cell strong,
+  .ranking-accordion-button:hover .ranking-team-cell small,
+  .ranking-accordion-button:hover .ranking-lineup-inline,
+  .ranking-accordion-button:hover .ranking-score-cell,
+  .ranking-accordion-button:hover .ranking-detail-cell,
+  .ranking-accordion-button:hover .ranking-status-cell,
+  .ranking-accordion-button:hover .chip,
+  .ranking-accordion-button:hover .ranking-toggle-mark,
+  .ranking-accordion-button:focus-visible .rank-cell,
+  .ranking-accordion-button:focus-visible .rank-change-cell,
+  .ranking-accordion-button:focus-visible .ranking-team-cell strong,
+  .ranking-accordion-button:focus-visible .ranking-team-cell small,
+  .ranking-accordion-button:focus-visible .ranking-lineup-inline,
+  .ranking-accordion-button:focus-visible .ranking-score-cell,
+  .ranking-accordion-button:focus-visible .ranking-detail-cell,
+  .ranking-accordion-button:focus-visible .ranking-status-cell,
+  .ranking-accordion-button:focus-visible .chip,
+  .ranking-accordion-button:focus-visible .ranking-toggle-mark {
+    color: var(--team-ink, var(--ink));
+    transition: color 220ms ease 210ms;
+  }
+
+  /* A nota tem `color: var(--ink) !important` desde que a escala perf-* foi
+     impedida de tingi-la (styles.css:9252). !important so cede para outro
+     !important de especificidade maior, entao a excecao e aqui e so aqui - a
+     regra original continua valendo em repouso, que e o caso que ela protege.
+     Sem isso a nota ficava branca sobre trama branca. */
+  .ranking-accordion-button:hover .ranking-score-cell,
+  .ranking-accordion-button:focus-visible .ranking-score-cell {
+    color: var(--team-ink, var(--ink)) !important;
+  }
+
+  .ranking-accordion-button:hover .rank-cell,
+  .ranking-accordion-button:hover .chip,
+  .ranking-accordion-button:hover .ranking-toggle-mark,
+  .ranking-accordion-button:focus-visible .rank-cell,
+  .ranking-accordion-button:focus-visible .chip,
+  .ranking-accordion-button:focus-visible .ranking-toggle-mark {
+    background: transparent;
+    transition: background 220ms ease 210ms, color 220ms ease 210ms;
+  }
+}
+
 /* Em outras listas o nome longo quebra em duas linhas, que ali e o certo. Aqui
    nao: o ranking e uma lista de altura fixa lida de relance, e uma linha que
    quebra deixa a #1 com 70px enquanto as outras nove tem 53px - o degrau
@@ -14257,6 +14805,57 @@ small,
    que sobrar deve ir para o nome, nao para o tier. */
 .events-panel .event-row {
   grid-template-columns: 42px minmax(0, 1fr) auto minmax(96px, auto);
+  /* A camada da capa precisa de contexto proprio para o z-index: -1 parar
+     dentro da linha, do mesmo jeito que a faixa da semana faz. `relative` sem
+     deslocamento nao move nada. */
+  position: relative;
+  isolation: isolate;
+
+  /* Unico botao do efeito. 0,72 nao e gosto, e piso medido: o texto mais fraco
+     da linha e de 12px em rgba(--ink, 0.74), e as nove capas tem pixel branco
+     puro. Com veu de 0,72 esse texto fecha 4,84:1 sobre o pior pixel; com 0,66
+     cai para 4,01:1 e sai do AA. Subir o valor escurece a capa. */
+  --event-capa-veu: 0.72;
+}
+
+/* ==========================================================================
+   Hover da linha de campeonato: a capa do evento aparece por tras
+   Mesma mecanica do banho de ambar da faixa da semana - camada separada com
+   opacidade animada, porque background-image nao transiciona. E vale a mesma
+   regra que ja custou duas rodadas ali: o hover NAO mexe em layout. Aqui so a
+   opacidade da camada muda, entao a caixa da linha continua sendo a celula e o
+   ponteiro nunca fica orfao.
+   A classe `tem-capa` e posta por bindHomeEventCovers (app.js) so depois que a
+   imagem carrega - ver o porque la.
+   ========================================================================== */
+/* No touch nao ha hover: o toque ja navega para o campeonato, e o `:hover`
+   grudado que alguns navegadores deixam para tras acenderia a capa numa linha
+   que o dedo so encostou. Fora daqui a linha continua exatamente como era. */
+@media (hover: hover) and (pointer: fine) {
+  .events-panel .event-row.tem-capa::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(11, 11, 16, calc(var(--event-capa-veu) + 0.12)),
+        rgba(11, 11, 16, var(--event-capa-veu))
+      ),
+      var(--event-capa);
+    background-position: center;
+    background-size: cover;
+    transition: opacity 280ms ease;
+    pointer-events: none;
+  }
+
+  .events-panel .event-row.tem-capa:hover::before,
+  .events-panel .event-row.tem-capa:focus-visible::before {
+    opacity: 1;
+  }
 }
 
 .event-tier.tier-s {
@@ -15062,21 +15661,125 @@ img {
 }
 
 .result-day {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
   /* Sem position: sticky de proposito: .full-list-panel tem overflow: hidden
      (que arredonda o canto das linhas) e isso vira o bloco de contencao do
      sticky, entao o cabecalho nunca grudaria. Cabecalho que promete grudar e
      nao gruda e pior que cabecalho estatico. */
+  margin: 8px 0 0;
   border-bottom: 1px solid var(--line);
   background: var(--surface);
-  padding: 10px 12px 6px;
-  margin-top: 8px;
 }
 
-.result-day:first-child {
+.result-day-group:first-child .result-day {
+  margin-top: 0;
+}
+
+/* O cabecalho do dia virou botao: o <h2> continua sendo o marco do documento e
+   o <button> dentro dele e o que recolhe. Ocupa a linha inteira para a area de
+   clique ser o cabecalho todo, nao so a data. */
+/* Tres trilhas: a data com a seta colada nela a esquerda, os escudos dos
+   campeonatos do dia no meio, a contagem a direita. Antes era flex com
+   space-between e a seta ficava sozinha na ponta oposta da data que ela
+   comanda - o alvo de clique era o cabecalho inteiro, mas o gesto nao lia.
+
+   As trilhas das pontas sao iguais (1fr) e nao `auto`: com `auto` a largura de
+   cada ponta era a do proprio conteudo, entao o meio andava conforme o mes e o
+   numero de digitos. Medido em 62 dias: a data ia de 128 a 135px (largura do
+   mes abreviado) e a contagem de 41 a 56px (um ou dois digitos), e o centro dos
+   escudos derivava 8px de uma linha para outra.
+
+   O piso `min-content` e o que salva o celular: la a soma nao cabe em tres
+   trilhas com as pontas iguais, entao elas voltam a ter o tamanho do conteudo e
+   o alinhamento cede - onde nao ha espaco, ceder e melhor que cortar a data. */
+.result-day-toggle {
+  display: grid;
+  grid-template-columns: minmax(min-content, 1fr) auto minmax(min-content, 1fr);
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 10px 12px 6px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+
+.result-day-toggle:hover .result-day-label,
+.result-day-toggle:focus-visible .result-day-label {
+  color: var(--brand-text);
+}
+
+/* As pontas ancoram nas bordas da propria trilha. Sem isto elas esticavam pela
+   trilha inteira (1fr) e o texto ficava alinhado a esquerda dela - a contagem
+   grudava nos escudos no meio do cabecalho em vez de ir para o canto. */
+.result-day-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  justify-self: start;
+}
+
+/* Os escudos ficam no vao do meio. Sao no maximo tres no dia mais cheio do
+   banco, entao nao ha estouro a tratar. */
+.result-day-events {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.result-day-events .event-logo.tiny {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+}
+
+/* A seta aponta para baixo quando aberto e para a direita quando fechado. So
+   transform: nada aqui pode mexer no layout do cabecalho. */
+.result-day-mark {
+  flex: 0 0 auto;
+  color: var(--muted);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), color 160ms ease;
+}
+
+.result-day-toggle[aria-expanded="false"] .result-day-mark {
+  transform: rotate(-90deg);
+}
+
+.result-day-toggle:hover .result-day-mark {
+  color: var(--brand-text);
+}
+
+/* A dobra anima grid-template-rows de 1fr para 0fr - e a unica forma de ir de
+   "altura do conteudo" ate zero com transicao, sem cravar um max-height que
+   chuta a altura. O overflow: hidden fica no filho, nao aqui: em cima ele
+   viraria bloco de contencao e cortaria o que precisa transbordar. */
+.result-day-rows {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.result-day-rows-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* O botao mora dentro do <h2>, entao ele nao e irmao do painel - quem e irmao
+   e o proprio cabecalho. Dai o :has(), que este arquivo ja usa na faixa da
+   semana. */
+.result-day:has([aria-expanded="false"]) + .result-day-rows {
+  grid-template-rows: 0fr;
+}
+
+/* A margem do proximo dia ja separa os grupos; com o dia fechado ela sozinha
+   deixaria os cabecalhos colados. */
+.result-day-group + .result-day-group {
   margin-top: 0;
 }
 
@@ -15087,12 +15790,52 @@ img {
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  /* Sem isto a data quebrava em duas linhas: como as pontas da grade sao
+     `minmax(min-content, 1fr)` e a data podia quebrar, o min-content dela virava
+     a maior palavra e a trilha encolhia abaixo do texto. Medido no celular: 10
+     dias (os que tem dois ou tres campeonatos) com cabecalho de 51px em vez de
+     36. Com nowrap o min-content e a data inteira, a trilha para de encolher e
+     o alinhamento e que cede - que e a ordem certa das prioridades. */
+  white-space: nowrap;
+}
+
+/* No celular as pontas iguais nao cabem: a data pede 133px, a contagem 55, e
+   com 2 ou 3 escudos a soma passa dos 298px uteis - por isso 10 dias ficavam
+   com os escudos escorregados enquanto os outros 52 alinhavam.
+
+   Em vez de insistir na trilha central, os escudos vao para junto da contagem.
+   Nao ha mais centro para manter, entao nao ha mais o que desalinhar: data na
+   esquerda, escudos e contagem encostados na direita. */
+@media (max-width: 760px) {
+  .result-day-toggle {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 8px;
+  }
+
+  .result-day-events {
+    justify-self: end;
+    gap: 6px;
+  }
+
+  .result-day-events .event-logo.tiny {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* A contagem vai de "1 partida" a "36 partidas" - 48 a 55px. Sem um piso, os
+     escudos encostados nela herdavam essa variacao e ficavam a 61-76px da
+     borda, cada linha num lugar. Com a largura fixa eles viram coluna. */
+  .result-day-count {
+    min-width: 58px;
+  }
 }
 
 .result-day-count {
+  justify-self: end;
   color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .lista-ver-mais {

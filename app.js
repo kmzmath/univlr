@@ -2818,7 +2818,11 @@ function collectWarmImageSources() {
     ...collect((db.metadata.states || []).map((item) => item.flag || item.flagSrc)),
     ...collect(Object.values(TROPHY_GENERIC_ASSETS)),
     ...collect(db.players.map((player) => player.photo)),
-    ...collect(db.maps.map((map) => map.icon)),
+    // A mesma fonte que o render usa, e nao o PNG de origem. Aquecer `map.icon`
+    // aqui baixava os 12 PNGs (7,05 MB) que nenhuma tela mostra desde que a
+    // arte passou a sair do `assets/maps/web`: o cache esquentava justamente os
+    // arquivos que viraram fallback.
+    ...collect(db.maps.map((map) => mapArtAttrs(map)?.src || "")),
     ...collect(db.tournaments.map((event) => event.banner || event.bannerPath)),
   ];
 }

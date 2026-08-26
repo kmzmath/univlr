@@ -248,6 +248,24 @@
   --side-defense: #17808f;
   --warn: #ffb340;
   --info: #8ab4ff;
+
+  /* Tier de campeonato. Precisa de escala propria porque as duas cores que ja
+     significam algo nesta tela estao ocupadas: vermelho e marca e verde e
+     vitoria. Quente no topo, frio descendo - o S e o unico tom quente, entao
+     o degrau mais raro (1 de 18) salta sozinho sem precisar ser maior.
+     Depois de S a escala perde saturacao junto com a temperatura, entao a
+     ordem se le mesmo sem legenda.
+     O teal neon (#2ad4c1) foi tentado no B e sai fora: ciano aceso sobre
+     fundo escuro e a assinatura visual que este site foi refeito para nao
+     ter. O degrau virou violeta dessaturado.
+     Contraste medido sobre o proprio chip: S 11,1:1 - A 9,5:1 - B 6,7:1 -
+     C 5,3:1. O "other" fica fora da rampa de proposito: ele nao e um degrau,
+     e um valor que nao reconhecemos, entao usa o cinza neutro do site. */
+  --tier-s: #ffb340;
+  --tier-a: #8ab4ff;
+  --tier-b: #9b8ec9;
+  --tier-c: #7f8496;
+  --tier-other: #a3a5af;
 }
 
 .sr-only {
@@ -9406,9 +9424,14 @@ select {
   padding: clamp(20px, 2vw, 34px) 0 56px;
 }
 
+/* O ranking tem teto de conteudo: colunas fixas somam 200px e a linha mais
+   larga que sobra ("34 partidas - CEUB OCT") pede ~125px, entao acima de ~370px
+   a coluna so cria vao entre a tag e a nota. Por isso ela e a unica com maximo
+   em px em vez de fr - o que passa disso vai para as partidas, que e a coluna
+   onde nome de universidade brasileira ainda trunca. */
 .home-board.univlr-home {
   display: grid;
-  grid-template-columns: minmax(360px, 0.9fr) minmax(420px, 1.1fr) minmax(300px, 0.75fr);
+  grid-template-columns: minmax(300px, 384px) minmax(420px, 1.35fr) minmax(300px, 0.8fr);
   gap: clamp(18px, 2vw, 32px);
   /* start e nao stretch: cada painel termina onde o conteudo termina, em vez
      de as tres colunas serem esticadas ate a mesma altura. */
@@ -13326,7 +13349,16 @@ small,
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--line);
+  /* O recorte existe para arredondar os cantos das celulas de ponta contra a
+     borda do quadro. Em repouso ele fica; no hover ele sai, senao o cartao que
+     cresce seria cortado justamente nas bordas do quadro - onde ficam quatro
+     das nove celulas. Trocar so enquanto ha hover preserva os cantos nos 99%
+     do tempo em que ninguem esta com o mouse ali. */
   overflow: hidden;
+}
+
+.week-board-body:has(.week-tile:hover, .week-lead:hover, .week-tile:focus-visible, .week-lead:focus-visible) {
+  overflow: visible;
 }
 
 /* --- lider --- */
@@ -13335,22 +13367,24 @@ small,
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   grid-template-areas:
-    "figure copy value"
+    "figure copy    value"
     "figure context context";
   align-items: center;
   gap: 2px 16px;
+  overflow: hidden;
   background: var(--surface-2);
-  padding: 16px;
+  /* impeccable-disable-line cramped-padding -- mesma razao da celula: a foto
+     do lider apoia na base. .week-lead-context repoe o recuo do texto. */
+  padding: 16px 16px 0;
 }
 
-.week-lead:hover {
-  background: var(--univlr-graphite-3);
-}
-
+/* O lider recebe o mesmo recorte das oito celulas, so que maior: a foto ocupa
+   a altura inteira do cartao e apoia na base, sem caixa em volta. */
 .week-lead-figure {
   grid-area: figure;
-  width: 96px;
-  height: 96px;
+  align-self: stretch;
+  width: clamp(104px, 8vw, 148px);
+  height: 100%;
 }
 
 .week-lead-copy {
@@ -13370,7 +13404,7 @@ small,
 
 .week-lead-nick {
   color: var(--ink);
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
   font-weight: 800;
   line-height: 1.1;
   overflow: hidden;
@@ -13381,10 +13415,15 @@ small,
 .week-lead-team {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   color: var(--muted);
-  font-size: var(--text-xs);
+  font-size: var(--text-md);
   font-weight: 700;
+}
+
+.week-lead-team .clean-logo {
+  width: clamp(34px, 2.6vw, 44px);
+  height: clamp(34px, 2.6vw, 44px);
 }
 
 .week-lead-team em {
@@ -13398,11 +13437,15 @@ small,
   gap: 0;
 }
 
+/* O cartao do lider tem 540px de largura contra os 317px de uma celula, mas o
+   numero era do mesmo tamanho nos dois - por isso sobrava tanto vazio aqui. A
+   proporcao agora acompanha a largura: ~1,7x a celula, que e a mesma razao
+   entre os dois cartoes. */
 .week-lead-value strong {
   font-family: var(--font-display);
-  font-size: var(--text-3xl);
+  font-size: clamp(var(--text-4xl), 4vw, 4.5rem);
   font-weight: 800;
-  line-height: 1;
+  line-height: 0.95;
   letter-spacing: 0.01em;
   font-variant-numeric: tabular-nums;
 }
@@ -13415,9 +13458,12 @@ small,
   text-transform: uppercase;
 }
 
+/* O cartao perdeu o padding de baixo para a foto encostar na base, entao quem
+   fecha a coluna de texto devolve o respiro. */
 .week-lead-context {
   grid-area: context;
   align-self: start;
+  padding-bottom: 16px;
   color: var(--muted);
   font-size: var(--text-2xs);
   letter-spacing: 0.012em;
@@ -13435,17 +13481,291 @@ small,
   list-style: none;
 }
 
+/* Quatro zonas: rosto recortado, apelido, escudo e o dado a direita. O escudo
+   saiu de cima do apelido e virou coluna propria em 1fr: e ele que ocupa o vao
+   que sobrava entre o nome e o numero, em vez de o vao ficar vazio. Como a
+   coluna e flexivel, o escudo se centra no espaco que sobrar - quanto mais
+   larga a celula, mais para o meio ele vai.
+   overflow: hidden e o que deixa a foto sangrar na base sem vazar da celula. */
+/* A linha "detail" ocupa o vao que ja estava vazio acima do apelido, entao
+   reservar espaco para ela nao muda a altura da celula - so o que aparece ali
+   muda no hover. Se a linha fosse criada no hover, as oito celulas pulariam. */
 .week-tile {
   display: grid;
-  align-content: center;
-  gap: 3px;
+  grid-template-columns: auto minmax(0, auto) minmax(0, 1fr) auto;
+  grid-template-areas: "figure nick crest stat";
+  align-items: end;
+  align-content: end;
+  gap: 0 clamp(8px, 0.8vw, 14px);
   height: 100%;
+  min-height: 112px;
+  overflow: hidden;
   background: var(--surface);
-  padding: 10px 12px;
+  /* impeccable-disable-line cramped-padding -- a base sem recuo e o efeito
+     pedido: a foto apoia na borda de baixo em vez de flutuar num quadrado. O
+     texto ao lado devolve o recuo por conta propria (padding-bottom: 12px). */
+  padding: 10px 12px 0;
 }
 
-.week-tile:hover {
-  background: var(--surface-2);
+/* ==========================================================================
+   Hover da faixa: o cartao acende em ambar
+   Nao ha guard de prefers-reduced-motion aqui, e e de proposito: o Windows com
+   efeitos desligados faz o Chrome reportar `reduce`, e o resto do site (slide
+   de 220ms, hovers) nunca respeitou essa preferencia. Se um dia respeitar,
+   tem de ser o site inteiro de uma vez, nao so esta faixa.
+   ========================================================================== */
+
+.week-tile,
+.week-lead {
+  position: relative;
+  isolation: isolate;
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 280ms ease;
+}
+
+/* O banho de ambar e uma camada propria porque cor chapada nao transiciona
+   para gradiente - so a opacidade dela anima. */
+.week-tile::before,
+.week-lead::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background:
+    radial-gradient(120% 90% at 50% 100%, color-mix(in srgb, var(--amber) 26%, transparent), transparent 70%),
+    linear-gradient(180deg, transparent, color-mix(in srgb, var(--amber) 10%, transparent));
+  transition: opacity 280ms ease;
+  pointer-events: none;
+}
+
+/* O fio de baixo cresce do centro para os lados: e o detalhe que faz a coisa
+   parecer acesa em vez de so pintada. */
+.week-tile::after,
+.week-lead::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  z-index: -1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+  transform: scaleX(0);
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+/* O hover NAO pode mexer em layout. Essa e a regra, e ela custou caro:
+   primeiro um translateY(-3px) deixava a base 1,6px acima de onde estava em
+   repouso e o ponteiro parado ali entrava e saia do cartao sem parar; depois a
+   expansao em largura (width + left + height: auto) trouxe o mesmo sintoma de
+   volta pela esquerda, e ainda fazia a linha inteira do grid crescer de 112px
+   para 121px quando o detalhe quebrava - hover que reflui a grade onde o
+   proprio ponteiro esta e um gerador de piscar.
+   Agora so o transform muda, e transform nao participa do layout: a caixa do
+   cartao continua exatamente a celula, o ponteiro nunca fica orfao, e nada em
+   volta se move. O crescimento visual vem da escala, que so cresce a partir do
+   centro - todo ponto coberto em repouso continua coberto. */
+.week-tile:hover,
+.week-tile:focus-visible,
+.week-lead:hover,
+.week-lead:focus-visible {
+  z-index: 3;
+  /* Só transform. Nada aqui pode mexer em layout - ver o comentario acima. */
+  transform: scale(1.05);
+  box-shadow:
+    0 22px 44px rgba(0, 0, 0, 0.55),
+    0 0 0 1px color-mix(in srgb, var(--amber) 34%, transparent);
+}
+
+.week-tile:hover::before,
+.week-tile:focus-visible::before,
+.week-lead:hover::before,
+.week-lead:focus-visible::before {
+  opacity: 1;
+}
+
+.week-tile:hover::after,
+.week-tile:focus-visible::after,
+.week-lead:hover::after,
+.week-lead:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* O rosto sai da penumbra junto com o resto. */
+.week-tile:hover .player-figure img,
+.week-lead:hover .player-figure img {
+  transform: scale(1.05);
+}
+
+.week-tile:hover .player-figure.is-silhouette img,
+.week-lead:hover .player-figure.is-silhouette img {
+  opacity: 0.6;
+}
+
+.player-figure img {
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 280ms ease;
+}
+
+.player-figure.is-silhouette img {
+  transform-origin: bottom center;
+}
+
+/* O numero e o rotulo viram ouro. */
+.week-tile-value,
+.week-lead-value strong,
+.week-tile-category,
+.week-lead-category {
+  transition: color 240ms ease, text-shadow 240ms ease;
+}
+
+.week-tile:hover .week-tile-value,
+.week-tile:focus-visible .week-tile-value,
+.week-lead:hover .week-lead-value strong,
+.week-lead:focus-visible .week-lead-value strong {
+  color: var(--amber);
+  text-shadow: 0 0 28px color-mix(in srgb, var(--amber) 45%, transparent);
+}
+
+.week-tile:hover .week-tile-category,
+.week-tile:focus-visible .week-tile-category,
+.week-lead:hover .week-lead-category,
+.week-lead:focus-visible .week-lead-category {
+  color: color-mix(in srgb, var(--amber) 78%, var(--ink));
+}
+
+/* --- os numeros de apoio que so aparecem no hover --- */
+
+/* Fora do fluxo. Em grade, o bloco reservava a altura de duas linhas mesmo
+   invisivel - a faixa inteira subia de 112px para 128px por algo que so
+   aparece no hover. Absoluto, ele nao ocupa altura nenhuma em repouso e nao
+   pode refluir nada ao aparecer.
+   Ocupa a largura inteira do cartao, e nao so a coluna a direita da foto: sao
+   293px em vez de 183px a 1920px, o que faz os tres numeros caberem numa linha
+   so. O topo da foto e a parte menos informativa dela (na silhueta e vazio). */
+.week-detail {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  right: 12px;
+  justify-content: flex-end;
+  display: flex;
+  align-items: baseline;
+  /* Vao apertado de proposito: o cartao so alcanca os 372px cheios acima de
+     ~1700px, e abaixo disso cada pixel de vao sai do numero. */
+  gap: clamp(8px, 0.7vw, 14px);
+  row-gap: 2px;
+  /* wrap sempre, inclusive em repouso: e assim que a altura da celula ja conta
+     com as duas linhas e o hover nao precisa refluir nada para mostra-las.
+     Custa alguns pixels de faixa em telas estreitas; paga com um hover que nao
+     mexe em layout. */
+  flex-wrap: wrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.week-lead-detail {
+  top: 16px;
+  left: 16px;
+  right: 16px;
+}
+
+.week-detail-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  white-space: nowrap;
+  transform: translateY(6px);
+  opacity: 0;
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 260ms ease;
+}
+
+.week-detail-stat small {
+  color: color-mix(in srgb, var(--amber) 62%, var(--muted));
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.week-detail-stat b {
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.week-tile:hover .week-detail,
+.week-tile:focus-visible .week-detail,
+.week-lead:hover .week-detail,
+.week-lead:focus-visible .week-detail {
+  opacity: 1;
+}
+
+/* Escalonado: os tres numeros entram em sequencia, nao em bloco. E o que
+   separa "apareceu" de "foi revelado". */
+.week-tile:hover .week-detail-stat,
+.week-tile:focus-visible .week-detail-stat,
+.week-lead:hover .week-detail-stat,
+.week-lead:focus-visible .week-detail-stat {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.week-detail-stat:nth-child(1) {
+  transition-delay: 40ms;
+}
+
+.week-detail-stat:nth-child(2) {
+  transition-delay: 90ms;
+}
+
+.week-detail-stat:nth-child(3) {
+  transition-delay: 140ms;
+}
+
+.week-tile-figure {
+  grid-area: figure;
+  width: clamp(62px, 5.4vw, 96px);
+  /* a altura vem do proprio bloco: a foto vai do topo do padding ate a base */
+  height: calc(100% - 4px);
+  margin-bottom: 0;
+}
+
+.week-tile-nick {
+  grid-area: nick;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-bottom: 12px;
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+/* justify-self: center e o que faz o escudo ficar no meio do vao em vez de
+   grudado num dos lados. align-self: center porque, diferente do rosto e do
+   texto, um escudo nao tem linha de base para apoiar. */
+.week-tile-crest.clean-logo,
+.week-tile-crest {
+  grid-area: crest;
+  width: clamp(34px, 2.9vw, 52px);
+  height: clamp(34px, 2.9vw, 52px);
+  justify-self: center;
+  align-self: center;
+  margin-bottom: 6px;
+}
+
+.week-tile-stat {
+  grid-area: stat;
+  display: grid;
+  justify-items: end;
+  gap: 2px;
+  text-align: right;
+  padding-bottom: 12px;
 }
 
 .week-tile-category {
@@ -13458,68 +13778,60 @@ small,
 
 .week-tile-value {
   font-family: var(--font-display);
-  font-size: var(--text-xl);
+  font-size: clamp(var(--text-2xl), 2.3vw, var(--text-4xl));
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0.01em;
   font-variant-numeric: tabular-nums;
 }
 
-.week-tile-player {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
-  color: var(--ink);
-  font-size: var(--text-xs);
-  font-weight: 700;
-}
-
-.week-tile-player > span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* --- foto com fallback de monograma --- */
+/* --- foto solta, com fallback de silhueta ---
+   Sem moldura: nem borda, nem fundo, nem raio. O retrato fica recortado,
+   apoiado na base da celula e sangrando na borda de baixo, como figurinha de
+   card - a caixa em volta era o que fazia o bloco parecer template pronto.
+   Por isso a celula que hospeda a foto precisa de overflow: hidden, e a foto
+   come o padding inferior com margin negativa. */
 
 .player-figure {
   position: relative;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--team-accent, var(--brand)) 26%, var(--surface-3));
-  box-shadow: inset 0 0 0 1px var(--line);
+  align-self: end;
+  display: block;
+  overflow: visible;
 }
 
 .player-figure img {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* topo, e nao centro: recortando pela base o rosto e a primeira coisa que
+     sobrevive ao corte, que e o unico pedaco que identifica a pessoa. */
+  object-position: top center;
 }
 
-.player-figure.is-monogram img {
-  display: none;
+/* A silhueta e marcador de lugar, nao retrato: recuada, para que quem tem foto
+   de verdade seja quem puxa o olho na faixa. O PNG tem margem propria, entao
+   o scale encosta os ombros na borda como a foto recortada ao lado faz. */
+.player-figure.is-silhouette img {
+  transform: scale(1.14) translateY(5%);
+  transform-origin: bottom center;
+  opacity: 0.42;
 }
 
-.player-figure-mono {
-  font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  color: var(--ink);
+/* O trilho cai para tres colunas ja em 1180px, e nao em 940px. Abaixo de
+   1180px o quadro da home vira uma coluna e a faixa passa a dividir a largura
+   so entre lider e trilho: em quatro colunas a celula fica com 191px, e as
+   tres zonas precisam de ~150px so de rosto, escudo e numero - sobrariam 18px
+   para o apelido, ou seja, so a reticencia. */
+@media (max-width: 1180px) {
+  .week-rail {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 940px) {
   .week-board-body {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .week-rail {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -13537,12 +13849,155 @@ small,
     gap: 6px 12px;
   }
 
+  .week-lead-figure {
+    width: 96px;
+  }
+
   .week-lead-value {
     justify-items: start;
   }
 
   .week-rail {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Em duas colunas a celula cai para ~172px, e 150px de conteudo nao comportam
+     as tres zonas lado a lado. Elas viram duas: o rosto continua recortado na
+     esquerda e a direita empilha o dado em cima de quem e - a mesma ordem de
+     leitura, so que vertical. Manter duas colunas no trilho e deliberado:
+     passar para uma coluna resolveria o aperto mas somaria ~230px de rolagem
+     numa faixa que ja e a primeira coisa da pagina. */
+  .week-tile {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "figure stat  stat"
+      "figure nick  crest";
+    align-content: end;
+    gap: 0 8px;
+    min-height: 96px;
+    padding: 10px 10px 0;
+  }
+
+  .week-tile-figure {
+    grid-area: figure;
+    width: 56px;
+  }
+
+  .week-tile-stat {
+    grid-area: stat;
+    justify-items: start;
+    text-align: left;
+    padding-bottom: 2px;
+  }
+
+  /* Sem hover no toque, e a grade daqui so tem duas areas: deixar o bloco no
+     fluxo fazia o grid criar uma terceira linha implicita - a celula subia de
+     96px para 117px e o apelido ficava com largura zero. */
+  /* Vale para os dois: a grade do celular nao tem a area "detail" (a da celula
+     tem duas areas, a do lider tem tres), entao o bloco caia numa linha
+     implicita. Na celula isso quebrava o apelido; no lider somava 25px
+     invisiveis no fim do cartao. */
+  .week-tile-detail,
+  .week-lead-detail {
+    display: none;
+  }
+
+  /* No celular a animacao inteira sai e volta o realce simples de antes. Num
+     trilho de duas colunas com 172px, um cartao que cresce para 372px cobriria
+     o vizinho inteiro - e nao ha ponteiro para justificar isso. */
+  .week-tile,
+  .week-lead {
+    transition: background-color 160ms ease;
+  }
+
+  .week-tile:hover,
+  .week-tile:focus-visible,
+  .week-lead:hover,
+  .week-lead:focus-visible {
+    left: auto;
+    width: auto;
+    z-index: auto;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .week-tile:hover::before,
+  .week-tile:focus-visible::before,
+  .week-lead:hover::before,
+  .week-lead:focus-visible::before {
+    opacity: 0;
+  }
+
+  .week-tile:hover::after,
+  .week-tile:focus-visible::after,
+  .week-lead:hover::after,
+  .week-lead:focus-visible::after {
+    transform: scaleX(0);
+  }
+
+  .week-tile:hover {
+    background: var(--surface-2);
+  }
+
+  .week-lead:hover {
+    background: var(--univlr-graphite-3);
+  }
+
+  .week-tile:hover .week-tile-value,
+  .week-tile:focus-visible .week-tile-value,
+  .week-lead:hover .week-lead-value strong,
+  .week-lead:focus-visible .week-lead-value strong {
+    color: var(--ink);
+    text-shadow: none;
+  }
+
+  .week-tile:hover .week-tile-category,
+  .week-tile:focus-visible .week-tile-category,
+  .week-lead:hover .week-lead-category {
+    color: var(--muted);
+  }
+
+  .week-lead:hover .week-lead-category {
+    color: var(--brand-text);
+  }
+
+  .week-tile:hover .player-figure img,
+  .week-lead:hover .player-figure img {
+    transform: none;
+  }
+
+  .week-tile:hover .player-figure.is-silhouette img,
+  .week-lead:hover .player-figure.is-silhouette img {
+    opacity: 0.42;
+    transform: scale(1.14) translateY(5%);
+  }
+
+  .week-tile-nick {
+    grid-area: nick;
+    align-self: center;
+    padding-bottom: 10px;
+  }
+
+  .week-tile-crest.clean-logo,
+  .week-tile-crest {
+    grid-area: crest;
+    width: 26px;
+    height: 26px;
+    justify-self: end;
+    margin-bottom: 10px;
+  }
+
+  /* A reticencia e a resposta certa onde ela corta um nome longo entre muitos
+     que cabem. A 375px a coluna da equipe tem 103px e TODO nome estoura -
+     "Inatel Legacy" inclusive - entao cortar todos esconderia a lista inteira.
+     Aqui o nome quebra, com teto de duas linhas para a altura nao disparar. */
+  .home-board.univlr-home .result-team strong {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.2;
   }
 }
 
@@ -13573,12 +14028,17 @@ small,
    mesma linha, sobravam 105px para o nome do time - e nome de universidade
    brasileira ("PUCGO Sistematica Academy") nao cabe em 105px. A meta desce
    para a segunda linha e os nomes ficam com ~180px cada. */
+/* A data e o campeonato sobem para uma faixa propria no topo, separada por um
+   fio: eles dizem "onde e quando", que se le antes do confronto, e embaixo
+   sobra a linha inteira para escudo, nome e placar crescerem. Antes essa
+   informacao ficava embaixo, disputando altura com o resultado. */
 .home-board.univlr-home .result-row {
-  grid-template-columns: minmax(0, 1fr) 78px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   grid-template-areas:
-    "teamA score teamB"
-    "meta meta meta";
-  row-gap: 6px;
+    "meta meta meta"
+    "teamA score teamB";
+  row-gap: 10px;
+  padding: 8px 12px 12px;
 }
 
 .home-board.univlr-home .result-team.left {
@@ -13593,13 +14053,23 @@ small,
   grid-area: teamB;
 }
 
+/* A data ancora a esquerda e o campeonato a direita, entao a faixa ocupa a
+   largura toda em vez de virar um bloco centralizado com vao dos dois lados -
+   que era a queixa de "nao aproveitar o espaco". position: relative existe
+   NAO leva position: relative. Os mapas sao absolutos e precisam resolver
+   `left: 50%` e a largura contra a linha inteira - a mesma caixa que o
+   holofote usa. Com a faixa posicionada, os dois mediam contra caixas
+   diferentes (835px contra 811px) e cada nome saia ate 5px da sua fatia.
+   Sem `top`, a posicao vertical continua sendo a do fluxo, dentro da faixa. */
 .home-board.univlr-home .result-meta {
   grid-area: meta;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
-  text-align: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
 }
 
 .home-board.univlr-home .result-meta br {
@@ -13612,12 +14082,72 @@ small,
   white-space: nowrap;
 }
 
-/* Quatro dos cinco nomes que ainda truncavam na home erravam por menos de 8px.
-   Logo um pouco menor so na coluna compacta compra a diferenca; a versao
-   grande continua nas listas cheias. */
+/* O logo tinha encolhido para 26px para comprar os ~8px que faltavam aos nomes
+   mais longos. Com a largura devolvida pelo ranking a coluna passou de 284px
+   para ~390px por equipe, entao o aperto acabou e a equipe volta a ser o
+   elemento mais forte da linha - que e o que a lista existe para mostrar.
+   Com a faixa de data fora da linha do confronto, escudo e nome ficam com a
+   altura toda da linha e podem crescer de verdade. O clamp acompanha a largura
+   em vez de virar um quinto breakpoint neste arquivo, que tem quatro de
+   proposito, e o teto e o degrau --text-xl da escala, nao um numero solto. */
 .home-board.univlr-home .result-team .clean-logo {
-  width: 26px;
-  height: 26px;
+  width: clamp(30px, 3vw, 52px);
+  height: clamp(30px, 3vw, 52px);
+}
+
+.home-board.univlr-home .result-team strong {
+  font-size: clamp(var(--text-sm), 1.25vw, var(--text-xl));
+}
+
+.home-board.univlr-home .result-team {
+  gap: clamp(8px, 0.9vw, 14px);
+}
+
+/* O placar ocupa a linha inteira, no mesmo porte do escudo (52px), e perde a
+   caixa: a cor vai no proprio algarismo - vencedor aceso, perdedor recuado.
+   O fundo verde chapado era a ultima moldura que restava na linha.
+   A Condensed e a voz dos numeros grandes deste site e e o que segura tres
+   digitos sem alargar a coluna. */
+.home-board.univlr-home .result-score {
+  grid-template-columns: auto auto auto;
+  gap: clamp(6px, 0.5vw, 12px);
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.home-board.univlr-home .result-score .score-number {
+  min-width: 0;
+  min-height: 0;
+  border-radius: 0;
+  background: none;
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-2xl), 3vw, var(--text-5xl));
+  font-weight: 800;
+  line-height: 1;
+}
+
+.home-board.univlr-home .result-score .score-number.win {
+  background: none;
+  color: var(--win);
+}
+
+.home-board.univlr-home .result-score .score-number.loss {
+  background: none;
+  color: var(--loss-ink);
+}
+
+.home-board.univlr-home .result-score i {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-lg), 1.8vw, var(--text-3xl));
+  line-height: 1;
+  color: var(--muted);
+}
+
+/* O nome do mapa subiu para a faixa de cima, junto com os outros da serie. */
+.home-board.univlr-home .result-score small {
+  display: none;
 }
 
 /* Cartao dentro de cartao: .lineup-stat-row tinha borda, raio, fundo proprio e
@@ -13674,6 +14204,80 @@ small,
   border-color: var(--line);
   grid-template-columns: 38px 30px 42px minmax(0, 1fr) 58px;
   gap: 8px;
+}
+
+/* Em outras listas o nome longo quebra em duas linhas, que ali e o certo. Aqui
+   nao: o ranking e uma lista de altura fixa lida de relance, e uma linha que
+   quebra deixa a #1 com 70px enquanto as outras nove tem 53px - o degrau
+   aparece como se a primeira colocada fosse um bloco diferente. Reticencia
+   custa uma palavra; a quebra custa o ritmo da coluna inteira. */
+.compact-ranking-row .row-main strong,
+.compact-ranking-row .row-main small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+/* Abaixo de 1180px o quadro vira uma coluna so e a linha do ranking passa a
+   ter 99px de nome contra os 137px do quadro de tres colunas. Ali a troca se
+   inverte: nao ha ritmo de coluna para proteger, e cortar "Azure Bears Golden"
+   em "Azure Bears Gol..." esconde justamente o dado da linha. Volta a quebrar. */
+@media (max-width: 1180px) {
+  .compact-ranking-row .row-main strong,
+  .compact-ranking-row .row-main small {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
+}
+
+/* ==========================================================================
+   Tier de campeonato na home
+   Coluna propria entre o nome e as contagens - exatamente o vao que estava
+   vazio. Sem caixa, sem fundo, sem contorno: um caractere neste corpo ja se
+   separa de tudo em volta, e a cor faz o resto. O selo com moldura que veio
+   antes foi reprovado por parecer feito por IA.
+   ========================================================================== */
+
+.event-tier {
+  align-self: center;
+  justify-self: center;
+  min-width: 1.05em;
+  color: var(--tier-color, var(--tier-other));
+  font-size: clamp(var(--text-2xl), 2.4vw, var(--text-4xl));
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+/* A quarta coluna so existe na home; nas outras listas de evento a linha
+   continua com as tres de sempre. `auto` porque a letra tem largura fixa e o
+   que sobrar deve ir para o nome, nao para o tier. */
+.events-panel .event-row {
+  grid-template-columns: 42px minmax(0, 1fr) auto minmax(96px, auto);
+}
+
+.event-tier.tier-s {
+  --tier-color: var(--tier-s);
+}
+
+.event-tier.tier-a {
+  --tier-color: var(--tier-a);
+}
+
+.event-tier.tier-b {
+  --tier-color: var(--tier-b);
+}
+
+.event-tier.tier-c {
+  --tier-color: var(--tier-c);
+}
+
+.event-tier.tier-d,
+.event-tier.tier-other {
+  --tier-color: var(--tier-other);
 }
 
 /* ==========================================================================
@@ -13755,15 +14359,188 @@ small,
   white-space: nowrap;
 }
 
+/* Data a esquerda, campeonato a direita. As duas encolhem ate o proprio texto
+   em vez de dividirem a linha em duas metades: os mapas sao absolutos e ja se
+   centram sozinhos contra a linha, entao pontas de meia-largura so serviriam
+   para as caixas delas passarem por baixo dos nomes dos mapas - o que fazia o
+   detector acusar texto encoberto onde, na medida, sobravam 111px de folga. */
 .home-board.univlr-home .result-meta-when,
 .home-board.univlr-home .result-meta-where {
   display: inline;
 }
 
-.home-board.univlr-home .result-meta-where::before {
-  content: "·";
-  margin: 0 6px;
-  color: var(--muted);
+.home-board.univlr-home .result-meta-when {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.home-board.univlr-home .result-meta-where {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin-left: auto;
+  text-align: right;
+}
+
+/* A sequencia de mapas so aparece na home: nas listas cheias existe a tira
+   .result-maps, com placar por mapa, e repetir os nomes ali seria ruido. */
+.result-meta-maps {
+  display: none;
+}
+
+/* Centrado contra a linha, e nao contra o espaco que sobra entre a data e o
+   campeonato: o escudo do campeonato fica fora das duas pontas flexiveis e
+   puxava o meio 18px para a esquerda, desalinhando o mapa do placar que ele
+   descreve. Absoluto dentro da faixa, que ocupa a largura inteira da linha,
+   cai exatamente sobre o eixo do placar. */
+.home-board.univlr-home .result-meta-maps {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Arte do mapa atras do placar
+   Um holofote no meio da linha, e nao fundo na linha inteira: nas pontas
+   ficam escudo, nome, data e campeonato, que precisam de fundo limpo. A arte
+   entra exatamente onde o mapa ja esta escrito, e some para os lados por
+   mascara em vez de terminar numa borda.
+   Numa md3 o holofote se divide em uma fatia por mapa, separadas por fio -
+   e a mesma largura e a mesma contagem dos nomes acima, entao cada nome cai
+   centrado sobre a propria arte.
+   A opacidade de 18% nao e gosto: a 30% o placar do perdedor caia para 2,87:1
+   sobre o ponto mais claro da arte, abaixo do piso de 3:1 de texto grande.
+   A 18% o pior caso dos treze mapas e 4,23:1.
+
+   A largura tem tres tetos e vale o menor:
+   - 280px + 140px por mapa, para a md3 ganhar mais espaco que a md1;
+   - 66% da linha, para o holofote nunca virar a linha inteira;
+   - largura menos 276px, que e o espaco que a data e o campeonato precisam nas
+     pontas. Sem esse terceiro teto, a 1280px uma md3 chegava a 4px do texto da
+     data - passava por pouco hoje e encostaria no primeiro nome mais longo.
+   ========================================================================== */
+
+.home-board.univlr-home .result-row {
+  position: relative;
+  isolation: isolate;
+}
+
+.result-banner {
+  display: none;
+}
+
+.home-board.univlr-home .result-banner {
+  position: absolute;
+  z-index: -1;
+  inset: 0 auto 0 50%;
+  width: min(calc(280px + var(--maps, 1) * 140px), 66%, calc(100% - 276px));
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0;
+  overflow: hidden;
+  opacity: 0.18;
+  pointer-events: none;
+  /* --lean: quanto o corte anda na horizontal do topo ate a base.
+     --seam: a largura do fio diagonal que separa um mapa do outro.
+     Os dois sao independentes de proposito: quero a inclinacao bem visivel e
+     o fio fino. Um `gap` de flex daria a inclinacao e a espessura juntas. */
+  --lean: 26px;
+  --seam: 2px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 26%, #000 74%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 26%, #000 74%, transparent);
+}
+
+/* Paralelogramo por recorte, e nao por skew: o skew inclinaria tambem a
+   imagem dentro da fatia, e ai o mapa apareceria torto. Aqui so a moldura de
+   corte se inclina - a arte continua em pe.
+   O recorte passa das bordas da fatia (o -12px e o 100%+12px), entao a imagem
+   precisa transbordar o mesmo tanto para os cantos nao ficarem vazios. */
+.home-board.univlr-home .result-banner i {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: visible;
+  clip-path: polygon(
+    calc(var(--lean) / 2 + var(--seam) / 2) 0,
+    calc(100% + var(--lean) / 2 - var(--seam) / 2) 0,
+    calc(100% - var(--lean) / 2 - var(--seam) / 2) 100%,
+    calc(var(--seam) / 2 - var(--lean) / 2) 100%
+  );
+}
+
+.home-board.univlr-home .result-banner img {
+  position: absolute;
+  top: 0;
+  /* largura explicita, e nao left+right com width:auto: <img> e elemento
+     substituido, entao `auto` resolve para o tamanho intrinseco em vez de
+     esticar entre as duas bordas - a arte ficava 77px curta na direita. */
+  left: calc(var(--lean) / -2);
+  width: calc(100% + var(--lean));
+  /* o reset global `img { max-width: 100% }` cortava o transbordo de volta
+     para a largura da fatia, e os cantos do recorte ficavam vazios. */
+  max-width: none;
+  height: 100%;
+  /* 42% e nao 50%: o terco de cima das artes do Valorant e quase sempre ceu,
+     que num recorte baixo e largo vira uma faixa lisa sem informacao. */
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+/* Mesma largura e mesma contagem do holofote: cada nome sobre a sua fatia. */
+.home-board.univlr-home .result-meta-maps {
+  width: min(calc(280px + var(--maps, 1) * 140px), 66%, calc(100% - 276px));
+  gap: 1px;
+}
+
+.home-board.univlr-home .result-meta-map {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+/* Precisa vir depois da regra de cima, e nao junto das outras regras de
+   celular la em cima: as duas tem a mesma especificidade, entao quem estiver
+   por ultimo no arquivo vence, media query ou nao.
+   A 375px a data (110px), o campeonato (180px) e o escudo (28px) ja somam a
+   faixa inteira - um bloco centrado por cima cairia em cima dos dois. Aqui os
+   mapas saem do absoluto e descem para uma linha propria, centrados nela. */
+@media (max-width: 560px) {
+  .home-board.univlr-home .result-meta {
+    flex-wrap: wrap;
+  }
+
+  .home-board.univlr-home .result-meta-maps {
+    position: static;
+    transform: none;
+    order: 3;
+    flex: 1 0 100%;
+    width: auto;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  /* Na linha propria os nomes nao ficam mais sobre as fatias, entao voltam a
+     ser texto corrido: sem esticar cada um para a largura de uma fatia. */
+  .home-board.univlr-home .result-meta-map {
+    flex: 0 1 auto;
+  }
+
+  /* Sem os nomes na mesma linha, nao ha o que reservar nas pontas: o teto de
+     276px sobrava numa linha de 325px e deixava o holofote com 49px, uma tira
+     que parecia defeito. Aqui ele volta a ser proporcional. */
+  .home-board.univlr-home .result-banner {
+    width: 62%;
+  }
 }
 
 /* ==========================================================================

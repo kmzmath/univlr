@@ -10,7 +10,11 @@ const SITE_WORDMARK_SRC = "assets/univlr_logo_longa.png";
 // coluna mais longa; ranking e referencia (tem "Ver completo"); campeonato
 // e contexto. Antes eram 15/15/15, o que dava 45 linhas de peso identico.
 const HOME_RANKING_LIMIT = 10;
-const HOME_RECENT_MATCH_LIMIT = 15;
+// 10 e nao 15: com a linha de partida crescida (escudo de 52px, nome de 20px,
+// placar de 24px) a linha passou de 79px para 115px, e 15 delas davam 1.884px
+// de coluna contra 822px da de campeonatos - mil pixels de vazio ao lado. Dez
+// partidas ao lado das dez primeiras colocadas fecham as colunas juntas.
+const HOME_RECENT_MATCH_LIMIT = 10;
 const HOME_EVENT_LIMIT = 8;
 const PLAYER_FALLBACK_PHOTO = "assets/user-silhouette.png";
 
@@ -46,6 +50,37 @@ const PLAYER_OF_WEEK_CATEGORIES = [
   { key: "dpr", label: "Melhor DPR", title: "Menos mortes por round", statLabel: "DPR", value: (player) => player.dpr, format: (player) => fmt(player.dpr), lowIsBetter: true },
   { key: "apr", label: "Melhor APR", title: "Mais assistências por round", statLabel: "APR", value: (player) => player.apr, format: (player) => fmt(player.apr) },
 ];
+
+// O que cada celula revela no hover. Nao sao os mesmos tres numeros para todas:
+// quem lidera o ACS se explica por ADR e KPR, quem lidera o DPR se explica por
+// KAST e K/D. Sao os numeros que respondem "por que ele esta em primeiro nisso".
+const PLAYER_OF_WEEK_SUPPORT = {
+  rating: ["acs", "kd", "kast"],
+  acs: ["adr", "kpr", "kd"],
+  adr: ["acs", "kpr", "impactRound"],
+  kast: ["impactRound", "dpr", "apr"],
+  impactRound: ["kast", "kd", "acs"],
+  kd: ["kpr", "dpr", "acs"],
+  kpr: ["acs", "kd", "adr"],
+  dpr: ["kast", "kd", "impactRound"],
+  apr: ["kast", "acs", "kpr"],
+};
+
+// aria-hidden porque isto e uma camada visual de hover: o leitor de tela ja
+// recebe o nome do jogador e a estatistica principal pelo link, e os mesmos
+// numeros estao inteiros na pagina do jogador, a um clique.
+function weekSupportStats(category, player, extra = "") {
+  const stats = (PLAYER_OF_WEEK_SUPPORT[category?.key] || [])
+    .map((key) => PLAYER_OF_WEEK_CATEGORIES.find((item) => item.key === key))
+    .filter(Boolean);
+  if (!stats.length) return "";
+  return `<span class="week-detail ${escapeHtml(extra)}" aria-hidden="true">${stats
+    .map(
+      (item) =>
+        `<span class="week-detail-stat"><small>${escapeHtml(item.statLabel)}</small><b>${escapeHtml(item.format(player))}</b></span>`,
+    )
+    .join("")}</span>`;
+}
 
 const MAP_API_SLUGS = {
   "/Game/Maps/Ascent/Ascent": "ascent",
@@ -5144,7 +5179,7 @@ function renderHomeCompact() {
       </section>
       <section class="hub-panel matches-panel">
         ${panelTitle("Últimas partidas")}
-        <div class="result-list">${recentMatches.map(matchResultRow).join("")}</div>
+        <div class="result-list">${recentMatches.map((series) => matchResultRow(series, { art: true })).join("")}</div>
         ${panelFooterLink("matches", "Ver todas as partidas")}
       </section>
       <section class="hub-panel events-panel">
@@ -5216,7 +5251,7 @@ function listaDeResultados(filtered, limite) {
           <h2 class="result-day-label">${escapeHtml(grupo.rotulo)}</h2>
           <span class="result-day-count">${grupo.itens.length} ${grupo.itens.length === 1 ? "partida" : "partidas"}</span>
         </div>
-        ${grupo.itens.map(matchResultRow).join("")}
+        ${grupo.itens.map((item) => matchResultRow(item, { when: "hour" })).join("")}
       `,
     )
     .join("");
@@ -5446,11 +5481,11 @@ function filterPill(filter, value, label, active) {
 }
 
 function mapFilterButton(map) {
-  const src = assetPath(map.icon || "");
+  const art = mapArtAttrs(map);
   const active = state.matchMaps.includes(map.id);
   return `
     <button type="button" class="filter-banner map-filter-button ${active ? "active" : ""}" data-match-filter="map" data-value="${escapeHtml(map.id)}" aria-pressed="${active ? "true" : "false"}">
-      ${src ? `<img src="${escapeHtml(src)}" alt="" loading="lazy" onerror="this.remove()" />` : ""}
+      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : ""}
       <span class="filter-check" aria-hidden="true"></span>
       <span class="filter-banner-label">${escapeHtml(map.name)}</span>
     </button>
@@ -6872,7 +6907,7 @@ function matchHeroBanners(matches) {
       ${matches
         .map((item) => {
           const asset = matchMapAsset(item);
-          return `<span class="match-hero-banner">${asset.src ? `<img src="${escapeHtml(asset.src)}" alt="" loading="lazy" onerror="this.remove()" />` : ""}</span>`;
+          return `<span class="match-hero-banner">${asset.src ? `<img src="${escapeHtml(asset.src)}" data-fallback="${escapeHtml(asset.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : ""}</span>`;
         })
         .join("")}
     </div>
@@ -6885,7 +6920,7 @@ function matchMapTabBackground(matches) {
       ${matches
         .map((item) => {
           const asset = matchMapAsset(item);
-          return `<span>${asset.src ? `<img src="${escapeHtml(asset.src)}" alt="" loading="lazy" onerror="this.remove()" />` : ""}</span>`;
+          return `<span>${asset.src ? `<img src="${escapeHtml(asset.src)}" data-fallback="${escapeHtml(asset.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : ""}</span>`;
         })
         .join("")}
     </span>
@@ -6898,9 +6933,11 @@ function matchMapAsset(match) {
     mapByName(match.mapName) ||
     state.db?.maps.find((item) => normalizeNameKey(item.name) === normalizeNameKey(match.mapName)) ||
     {};
+  const art = mapArtAttrs(map, match.mapIcon);
   return {
     name: map.name || match.mapName || "Mapa",
-    src: assetPath(match.mapIcon || map.icon || ""),
+    src: art ? art.src : "",
+    fallback: art ? art.fallback : "",
   };
 }
 
@@ -8221,10 +8258,10 @@ function tournamentPodiumLabel(range) {
 }
 
 function tournamentMapPoolBanner(map) {
-  const src = assetPath(map.icon || "");
+  const art = mapArtAttrs(map);
   return `
-    <a class="tournament-map-banner ${src ? "has-image" : ""}" href="#/maps/${escapeHtml(map.id)}">
-      ${src ? `<img src="${escapeHtml(src)}" alt="${escapeHtml(map.name)}" loading="lazy" onerror="this.closest('.tournament-map-banner').classList.remove('has-image'); this.remove()" />` : ""}
+    <a class="tournament-map-banner ${art ? "has-image" : ""}" href="#/maps/${escapeHtml(map.id)}">
+      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="${escapeHtml(map.name)}" loading="lazy" onerror="mapArtError(this)" />` : ""}
       <span><strong>${escapeHtml(map.name || map.poolName)}</strong><small>${escapeHtml(`${map.played} jogos - ${map.rounds} rounds`)}</small></span>
     </a>
   `;
@@ -9981,10 +10018,10 @@ function tournamentMapAgentMapCell(row, summary = false) {
     `;
   }
   const map = mapById(row.id) || {};
-  const src = assetPath(row.icon || map.icon || "");
+  const art = mapArtAttrs(map.id ? map : { id: row.id, icon: row.icon }, row.icon);
   return `
-    <a class="tournament-map-agent-banner ${src ? "has-banner" : ""}" href="#/maps/${escapeHtml(row.id)}">
-      ${src ? `<img src="${escapeHtml(src)}" alt="${escapeHtml(row.name)}" loading="lazy" onerror="this.closest('.tournament-map-agent-banner').classList.remove('has-banner'); this.remove()" />` : ""}
+    <a class="tournament-map-agent-banner ${art ? "has-banner" : ""}" href="#/maps/${escapeHtml(row.id)}">
+      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="${escapeHtml(row.name)}" loading="lazy" onerror="mapArtError(this)" />` : ""}
       <span>
         <strong>${escapeHtml(row.name)}</strong>
         <small>${escapeHtml(`${row.matches || 0} mapa${Number(row.matches || 0) === 1 ? "" : "s"}`)}</small>
@@ -11120,10 +11157,10 @@ function tournamentMapPoolPanel(event) {
 }
 
 function tournamentMapCard(map) {
-  const src = assetPath(map.icon || "");
+  const art = mapArtAttrs(map);
   return `
     <a class="tournament-map-card" href="#/maps/${map.id}">
-      ${src ? `<img src="${escapeHtml(src)}" alt="${escapeHtml(map.name)}" loading="lazy" onerror="this.remove()" />` : ""}
+      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="${escapeHtml(map.name)}" loading="lazy" onerror="mapArtError(this)" />` : ""}
       <span>${escapeHtml(map.name)}</span>
       <small>Map pool</small>
     </a>
@@ -12682,7 +12719,7 @@ function playerMapEmptyRow(key, map) {
     id: key,
     name: map.name || "Mapa",
     icon: map.icon || "",
-    banner: assetPath(map.icon || ""),
+    banner: mapArtAttrs(map)?.src || "",
     mapsPlayed: 0,
     rounds: 0,
     score: 0,
@@ -13501,26 +13538,25 @@ function playerInitialOptions() {
 }
 
 function playerFigure(player, team, extra = "") {
-  // Monograma nas cores da equipe no lugar da silhueta cinza generica.
-  // Ele fica sempre no DOM, atras da foto: se a imagem falhar, e so revelar.
-  const initials = String(player?.nick || "?")
-    .replace(/[^\p{L}\p{N}]/gu, "")
-    .slice(0, 2)
-    .toUpperCase();
+  // Toda celula da faixa mostra um rosto no mesmo lugar: quem nao tem foto
+  // recebe a silhueta, entao a linha dos olhos nao pula de um card para o
+  // outro e o retangulo nunca aparece vazio.
   const accent = team ? teamAccentStyle(team) : "";
   const photo = player?.photo ? assetPath(player.photo) : "";
-  const mono = `<span class="player-figure-mono" aria-hidden="true">${escapeHtml(initials)}</span>`;
   if (!photo) {
-    return `<span class="player-figure is-monogram ${escapeHtml(extra)}" ${accent}>${mono}</span>`;
+    return `<span class="player-figure is-silhouette ${escapeHtml(extra)}" ${accent}><img src="${escapeHtml(assetPath(PLAYER_FALLBACK_PHOTO))}" alt="" loading="lazy" onerror="this.onerror=null; this.remove()" /></span>`;
   }
-  return `<span class="player-figure ${escapeHtml(extra)}" ${accent}>${mono}<img src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="playerFigureError(this)" /></span>`;
+  return `<span class="player-figure ${escapeHtml(extra)}" ${accent}><img src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="playerFigureError(this)" /></span>`;
 }
 
 function playerFigureError(image) {
   const figure = image?.closest(".player-figure");
   if (!figure) return;
-  figure.classList.add("is-monogram");
-  image.remove();
+  // Trocar o src em vez de remover a imagem: a silhueta ocupa o mesmo espaco
+  // da foto que falhou, entao a altura da celula nao muda depois do carregamento.
+  figure.classList.add("is-silhouette");
+  image.onerror = null;
+  image.src = assetPath(PLAYER_FALLBACK_PHOTO);
 }
 
 function weekHighlights() {
@@ -13561,12 +13597,13 @@ function weekLeadCard({ category, player }) {
       <span class="week-lead-copy">
         <small class="week-lead-category">${escapeHtml(category.label)}</small>
         <strong class="week-lead-nick" title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong>
-        <span class="week-lead-team">${team ? teamLogo(team.id, "tiny") : ""}<em>${escapeHtml(tag)}</em></span>
+        <span class="week-lead-team">${team ? teamLogo(team.id) : ""}<em>${escapeHtml(tag)}</em></span>
       </span>
       <span class="week-lead-value">
         <strong>${escapeHtml(category.format(player))}</strong>
         <small>${escapeHtml(category.statLabel)}</small>
       </span>
+      ${weekSupportStats(category, player, "week-lead-detail")}
       <span class="week-lead-context">${escapeHtml(`${player.matches} mapas · ${player.rounds} rounds`)}</span>
     </a>
   `;
@@ -13577,9 +13614,14 @@ function weekTile({ category, player }) {
   return `
     <li>
       <a class="week-tile" href="${playerHref(player)}">
-        <small class="week-tile-category">${escapeHtml(category.statLabel)}</small>
-        <strong class="week-tile-value">${escapeHtml(category.format(player))}</strong>
-        <span class="week-tile-player">${team ? teamLogo(team.id, "tiny") : ""}<span title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</span></span>
+        ${playerFigure(player, team, "week-tile-figure")}
+        ${weekSupportStats(category, player, "week-tile-detail")}
+        <span class="week-tile-nick" title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</span>
+        ${team ? teamLogo(team.id, "week-tile-crest") : `<span class="week-tile-crest"></span>`}
+        <span class="week-tile-stat">
+          <small class="week-tile-category">${escapeHtml(category.statLabel)}</small>
+          <strong class="week-tile-value">${escapeHtml(category.format(player))}</strong>
+        </span>
       </a>
     </li>
   `;
@@ -13718,7 +13760,7 @@ function compactRankingRow(team) {
       <span class="rank-position">${teamShortRankLabel(team)}</span>
       ${rankingPositionChangeBadge({ team, ranking, snapshot }, "rank-delta")}
       ${teamLogo(team.id)}
-      <span class="row-main"><strong>${escapeHtml(team.name)}</strong><small>${fmt(score, 1)} nota - ${team.matches || team.wins + team.losses} partidas - ${team.sourceTag || team.tag}</small></span>
+      <span class="row-main"><strong>${escapeHtml(team.name)}</strong><small>${team.matches || team.wins + team.losses} partidas - ${team.sourceTag || team.tag}</small></span>
       <span class="row-score">${fmt(score, 1)}</span>
     </a>
   `;
@@ -13749,19 +13791,110 @@ function matchSeriesMetaLabel(item) {
   return `MVP: ${series.mvp ? series.mvp.nick : "-"}`;
 }
 
-function matchResultRow(item) {
+// Opcoes num objeto de proposito: `.map(matchResultRow)` passa o indice no
+// segundo argumento, e um numero nao tem `.when` nem `.art`. Assim as cinco
+// listas que chamam pelo `.map` cru recebem exatamente o padrao (data, sem
+// arte de mapa) sem precisar saber que o indice chega ali.
+// A data e o padrao porque so uma das sete listas agrupa por dia; nas outras
+// a hora sozinha ("16:17") nao respondia "quando foi isso". Quem agrupa pede
+// `{ when: "hour" }`, porque la o dia ja e o cabecalho do grupo.
+// A arte do mapa so e emitida por quem a exibe: o CSS a esconde fora da home,
+// e gerar essa marcacao nas outras listas custava 253 nos de DOM em /partidas.
+function matchResultRow(item, options) {
+  const opts = options && typeof options === "object" ? options : {};
   const series = normalizeMatchItem(item);
   const score = matchListScore(series);
   const event = state.db.tournaments.find((row) => row.id === series.eventId);
+  const when = opts.when === "hour" ? formatDate(series.startedAt, "hour") : formatDate(series.startedAt);
   return `
     <a class="result-row" href="${matchSeriesHref(series)}">
+      ${opts.art ? matchMapBanner(series) : ""}
       <span class="result-team left">${teamLogo(series.teamA.id)}<strong title="${escapeHtml(series.teamA.name)}">${escapeHtml(series.teamA.name)}</strong></span>
       <span class="result-score"><b class="${scoreNumberClass(score.a, score.b)}">${score.a}</b><i>:</i><b class="${scoreNumberClass(score.b, score.a)}">${score.b}</b><small>${escapeHtml(score.label)}</small></span>
       <span class="result-team right"><strong title="${escapeHtml(series.teamB.name)}">${escapeHtml(series.teamB.name)}</strong>${teamLogo(series.teamB.id)}</span>
       ${matchMapStrip(series)}
-      <span class="result-meta"><span class="result-meta-when">${escapeHtml(formatDate(series.startedAt, "hour"))}</span><span class="result-meta-where">${escapeHtml(event?.name || "Evento")}</span>${event ? eventLogo(event, "tiny") : ""}</span>
+      <span class="result-meta"><span class="result-meta-when">${escapeHtml(when)}</span>${opts.art ? matchMapSequence(series) : ""}<span class="result-meta-where">${escapeHtml(event?.name || "Evento")}</span>${event ? eventLogo(event, "tiny") : ""}</span>
     </a>
   `;
+}
+
+// Os mapas na ordem em que foram jogados, no meio da faixa de cima. Numa md3 ou
+// md5 a sequencia e parte do resultado - antes so o primeiro mapa aparecia, sob
+// o placar. So a home mostra isso: nas listas cheias os mapas ja tem a propria
+// tira com placar por mapa (.result-maps), e repetir os nomes seria ruido.
+function matchMapSequence(item) {
+  const series = normalizeMatchItem(item);
+  const names = (series.mapNames || []).filter(Boolean);
+  if (!names.length) return "";
+  // --maps alimenta a largura do holofote e a das fatias: os nomes e as artes
+  // usam a mesma conta, entao cada nome cai centrado sobre o proprio mapa.
+  return `<span class="result-meta-maps" style="--maps:${names.length}">${names
+    .map((name) => `<span class="result-meta-map">${escapeHtml(name)}</span>`)
+    .join("")}</span>`;
+}
+
+// Arte do mapa em versao web: 640x360 WebP (~20 KB) em vez do PNG de origem
+// 1600x900 (~500 KB, e 2 MB no caso do summit). Nenhum lugar do site desenha
+// essa arte acima de 640px de largura - nem o holofote da home nem o tile de
+// 40px das listas cheias - entao o PNG grande nunca chegou a ser usado como
+// PNG grande: so como download grande.
+// O original fica no data-fallback e entra se o WebP faltar, para um mapa novo
+// que ainda nao passou pela conversao nao aparecer sem arte nenhuma.
+function mapArtAttrs(map, preferred) {
+  const original = assetPath(preferred || map?.icon || "");
+  const web = map?.id ? assetPath(`assets/maps/web/${map.id}.webp`) : "";
+  if (!web && !original) return null;
+  const src = web || original;
+  const fallback = web && original && original !== web ? original : "";
+  return { src, fallback };
+}
+
+function mapArtError(image) {
+  if (!image) return;
+  const fallback = image.dataset?.fallback;
+  // Marca no elemento em vez de comparar `image.src` com o fallback: o getter
+  // devolve URL absoluta e assetPath guarda caminho relativo, entao a
+  // comparacao era sempre verdadeira - o handler reatribuia o mesmo src para
+  // sempre e o ramo de limpeza abaixo nunca era alcancado.
+  if (fallback && !image.dataset.artFallbackUsed) {
+    image.dataset.artFallbackUsed = "1";
+    image.src = fallback;
+    return;
+  }
+  image.onerror = null;
+  image.closest(".result-map-tile")?.classList.remove("has-banner");
+  image.closest(".tournament-map-banner")?.classList.remove("has-image");
+  image.closest(".tournament-map-agent-banner")?.classList.remove("has-banner");
+  image.closest(".search-match-map-image")?.classList.add("missing-image");
+  // A fatia vazia fica: e ela que segura a largura da coluna. Removendo o <i>,
+  // as fatias restantes se redistribuiriam e os nomes acima sairiam do lugar.
+  image.remove();
+}
+
+function mapBannerSrc(name) {
+  return mapArtAttrs(mapByName(name));
+}
+
+// Uma fatia por mapa, na ordem jogada. Numa md3 o holofote vira tres paineis
+// lado a lado separados por fio - a serie inteira aparece de uma vez, em vez de
+// escolhermos um mapa "representativo" e esconder os outros.
+function matchMapBanner(item) {
+  const series = normalizeMatchItem(item);
+  const names = (series.mapNames || []).filter(Boolean);
+  // Uma fatia por NOME, e nao por arte encontrada. Filtrar as que nao resolvem
+  // deixava, numa md3 com um mapa novo fora da base, tres nomes sobre duas
+  // fatias: `--maps` dizia 3, as duas fatias flex dividiam a largura em 50%
+  // cada e os nomes deixavam de cair sobre a propria arte. A fatia sem arte
+  // entra vazia e segura a coluna.
+  const slices = names.map((name) => mapBannerSrc(name));
+  if (!slices.some(Boolean)) return "";
+  return `<span class="result-banner" aria-hidden="true" style="--maps:${names.length}">${slices
+    .map((art) =>
+      art
+        ? `<i><img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" /></i>`
+        : "<i></i>",
+    )
+    .join("")}</span>`;
 }
 
 function matchMapStrip(item) {
@@ -13778,16 +13911,16 @@ function matchMapStrip(item) {
 
 function matchMapTile(match, series, index) {
   const map = mapById(match.mapId) || mapByName(match.mapName) || {};
-  const src = assetPath(match.mapIcon || map.icon || "");
+  const art = mapArtAttrs(map, match.mapIcon);
   const scoreA = scoreForTeamInMatch(match, series.teamA.id);
   const scoreB = scoreForTeamInMatch(match, series.teamB.id);
   const name = map.name || match.mapName || `Mapa ${index + 1}`;
   const mapNumber = match.mapNumber || index + 1;
   const winnerClass = match.winnerId === series.teamA.id ? "left-win" : "right-win";
-  const bannerClass = src ? "has-banner" : "";
+  const bannerClass = art ? "has-banner" : "";
   return `
     <span class="result-map-tile ${winnerClass} ${bannerClass}" data-map="${escapeHtml(name)}" title="${escapeHtml(`${name} ${scoreA}-${scoreB}`)}">
-      ${src ? `<img src="${escapeHtml(src)}" alt="${escapeHtml(name)}" loading="lazy" onerror="this.closest('.result-map-tile').classList.remove('has-banner'); this.remove()" />` : ""}
+      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="${escapeHtml(name)}" loading="lazy" onerror="mapArtError(this)" />` : ""}
       <span class="result-map-index">M${mapNumber}</span>
       <span class="result-map-score">${scoreA}-${scoreB}</span>
     </span>
@@ -13799,9 +13932,27 @@ function eventListRow(event) {
     <a class="event-row" href="#/events/${event.id}">
       ${eventLogo(event, "small")}
       <span class="row-main"><strong>${escapeHtml(event.name)}</strong><small>${escapeHtml(eventTimeRange(event))}</small><span class="event-status ${eventStatusClass(event.status)}">${escapeHtml(event.status || "Evento")}</span></span>
+      ${eventTierBadge(event)}
       <span class="event-numbers">${event.matches} partidas<br>${event.teams.length} equipes</span>
     </a>
   `;
+}
+
+// O tier e a unica hierarquia entre campeonatos que o site publica, e ate aqui
+// so aparecia dentro da pagina do evento. Cada nivel ganha cor propria - nunca
+// o vermelho, que neste site e marca e nao dado.
+function eventTierBadge(event) {
+  const tier = String(event?.tier || "")
+    .trim()
+    .replace(/^tier\s*/i, "")
+    .toUpperCase();
+  if (!tier) return "";
+  const key = /^[SABCD]$/.test(tier) ? tier.toLowerCase() : "other";
+  // Letra grande e solta no vao que sobrava entre o nome e as contagens. Sem
+  // caixa: o selo com contorno foi reprovado por parecer feito por IA, e um
+  // dado de um caractere nao precisa de moldura para ser lido - o tamanho e a
+  // cor ja o separam de tudo em volta. O nome inteiro fica no rotulo acessivel.
+  return `<span class="event-tier tier-${key}" title="Tier ${escapeHtml(tier)}" aria-label="Tier ${escapeHtml(tier)}" role="img">${escapeHtml(tier)}</span>`;
 }
 
 function eventDirectoryRow(event) {
@@ -14310,7 +14461,7 @@ function searchMatchMapImage(match, index) {
   const label = asset.name || match?.mapName || `Mapa ${index + 1}`;
   return `
     <span class="search-match-map-image ${asset.src ? "" : "missing-image"}" title="${escapeHtml(label)}">
-      ${asset.src ? `<img src="${escapeHtml(asset.src)}" alt="${escapeHtml(label)}" loading="lazy" onerror="this.closest('.search-match-map-image').classList.add('missing-image'); this.remove()" />` : ""}
+      ${asset.src ? `<img src="${escapeHtml(asset.src)}" data-fallback="${escapeHtml(asset.fallback)}" alt="${escapeHtml(label)}" loading="lazy" onerror="mapArtError(this)" />` : ""}
       <span>${escapeHtml(label.slice(0, 3).toUpperCase())}</span>
     </span>
   `;
@@ -14364,11 +14515,11 @@ function mapSearchTournamentLogos(map) {
 }
 
 function mapSearchBanner(map) {
-  const src = assetPath(map?.icon || "");
+  const art = mapArtAttrs(map);
   const label = map?.name || "Mapa";
   return `
-    <span class="search-result-visual search-map-banner ${src ? "" : "missing-image"}" aria-label="${escapeHtml(label)}">
-      ${src ? `<img src="${escapeHtml(src)}" alt="${escapeHtml(`Mapa ${label}`)}" loading="lazy" onerror="this.closest('.search-map-banner').classList.add('missing-image'); this.remove()" />` : ""}
+    <span class="search-result-visual search-map-banner ${art ? "" : "missing-image"}" aria-label="${escapeHtml(label)}">
+      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="${escapeHtml(`Mapa ${label}`)}" loading="lazy" onerror="mapArtError(this)" />` : ""}
       <span>${escapeHtml(label.slice(0, 3).toUpperCase())}</span>
     </span>
   `;
@@ -14816,7 +14967,11 @@ function playerPhotoError(image) {
 function mapLogo(id, extra = "") {
   const map = mapById(id);
   const label = (map?.name || id).slice(0, 3).toUpperCase();
-  return imageLogo(map?.icon || "", label, map?.colors || mapColors(id), `map-logo ${extra}`.trim(), `Mapa ${map?.name || id}`);
+  // O maior lugar onde este logo aparece tem 82px; o PNG de origem tem 1600px
+  // de largura. Se o WebP faltar, imageLogo ja cai no monograma de tres letras
+  // que fica atras da imagem, entao nao precisa de cadeia de fallback aqui.
+  const art = mapArtAttrs(map);
+  return imageLogo(art?.src || "", label, map?.colors || mapColors(id), `map-logo ${extra}`.trim(), `Mapa ${map?.name || id}`);
 }
 
 function teamById(id) {

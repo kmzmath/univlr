@@ -2382,7 +2382,7 @@ const TOURNAMENT_OVERRIDES = {
   },
   "unicup-rj": {
     organizer: "FERJEE",
-    organizerLogo: "assets/organizers-logos/logo_ferjee.png",
+    organizerLogo: "assets/organizers-logos/logo_ferjee.webp",
     banner: "assets/tournament-banners/acadarena_banner_generic.jpeg",
     prizePool: "R$2.000",
     tier: "A",
@@ -2872,7 +2872,10 @@ function collectWarmImageSources() {
     // arte passou a sair do `assets/maps/web`: o cache esquentava justamente os
     // arquivos que viraram fallback.
     ...collect(db.maps.map((map) => mapArtAttrs(map)?.src || "")),
-    ...collect(db.tournaments.map((event) => event.banner || event.bannerPath)),
+    // Banners de campeonato ficam de fora: são 1,06 MB em 9 arquivos (121 KB de
+    // média, o mais pesado da casa) e só aparecem depois que alguém abre a
+    // página de um campeonato. Aquecer isso é cobrar de toda visita o preço de
+    // uma tela que a maioria não abre; quando abre, o banner carrega ali.
   ];
 }
 

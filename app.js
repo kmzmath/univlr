@@ -12273,37 +12273,6 @@ function teamPlayerStatsTable(players) {
   `;
 }
 
-function renderPlayers(id) {
-  if (id) return renderPlayerDetail(id);
-  const sorted = playerRankingRows(state.db.players);
-  Shell(`
-    <header class="page-header">
-      <div class="page-title">
-        <span class="eyebrow">Jogadores cadastrados</span>
-        <h1>Perfis de jogadores e histórico.</h1>
-        <p>Ranking oficial ordenado por rAAting 3.0 usa somente jogadores com no mínimo ${RaaRatingCore.SAMPLE_MIN_ROUNDS} rounds.</p>
-      </div>
-      <div class="toolbar">
-        <select id="player-sort" class="filter-control">
-          ${[
-            ["rating", "Ordenar por rAAting 3.0"],
-            ["acs", "Ordenar por ACS"],
-            ["adr", "Ordenar por ADR"],
-            ["swing", "Ordenar por Swing/R"],
-            ["kills", "Ordenar por kills"],
-            ["kd", "Ordenar por K/D"],
-          ].map(([value, label]) => `<option value="${value}" ${state.playerSort === value ? "selected" : ""}>${label}</option>`).join("")}
-        </select>
-      </div>
-    </header>
-    ${playerTable(sorted)}
-  `);
-  document.getElementById("player-sort")?.addEventListener("change", (event) => {
-    state.playerSort = event.target.value;
-    renderPlayers();
-  });
-}
-
 function renderPlayerDetail(id) {
   const player = playerById(id);
   if (!player) return renderNotFound("Jogador");

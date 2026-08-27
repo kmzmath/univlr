@@ -3,9 +3,7 @@
     "teamLogos": "assets/team-logos",
     "playerPhotos": "assets/player-photos",
     "tournamentIcons": "assets/tournament-icons",
-    "agentIcons": "assets/agent-icons",
-    "flags": "assets/flags",
-    "socialIcons": "assets/social-icons"
+    "agentIcons": "assets/agent-icons"
   },
   "defaults": {
     "state": "",

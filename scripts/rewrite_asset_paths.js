@@ -88,6 +88,17 @@ const TROCAS = [
 const mapa = new Map(TROCAS);
 const mb = (n) => `${(n / 1048576).toFixed(2)} MB`;
 
+// As tres passagens PREPARAM e verificam; nenhuma grava. A gravacao acontece
+// no fim, so se as tres passarem.
+//
+// Antes disto cada passagem gravava antes da seguinte rodar, e falhar no meio
+// deixava aplicacao parcial: medido em 26/08/2026, injetei um asset inexistente
+// no home.json e o script abortou corretamente - mas database.json e
+// metadata.json JA tinham sido escritos. Ali foi inocuo porque as duas fizeram
+// 0 trocas; com trocas pendentes, o repositorio ficaria em estado misto e o
+// unico jeito de saber quais arquivos foram aplicados seria ler o log.
+const pendentes = [];
+
 function main() {
   const antes = fs.readFileSync(FILE, "utf8");
   const db = codec.decode(JSON.parse(antes));
@@ -134,7 +145,7 @@ function main() {
     return false;
   }
 
-  fs.writeFileSync(FILE, depois);
+  pendentes.push({ arquivo: FILE, conteudo: depois });
   console.log("database.json");
   console.log(`  strings trocadas: ${trocados}`);
   console.log(`  cru : ${mb(antes.length)} -> ${mb(depois.length)}`);
@@ -188,7 +199,7 @@ function metadataPass() {
     return false;
   }
 
-  fs.writeFileSync(META, depois);
+  pendentes.push({ arquivo: META, conteudo: depois });
   console.log("metadata.json");
   console.log(`  strings trocadas: ${trocados}`);
   console.log(`  cru : ${mb(antes.length)} -> ${mb(depois.length)}`);
@@ -259,7 +270,7 @@ function homePass() {
     return false;
   }
 
-  fs.writeFileSync(HOME, depois);
+  pendentes.push({ arquivo: HOME, conteudo: depois });
   console.log("home.json");
   console.log(`  strings trocadas: ${trocados}`);
   console.log(`  cru : ${antes.length} B -> ${depois.length} B`);
@@ -267,6 +278,15 @@ function homePass() {
   return true;
 }
 
-if (main() === false) process.exitCode = 1;
-else if (metadataPass() === false) process.exitCode = 1;
-else if (homePass() === false) process.exitCode = 1;
+// Tudo ou nada: prepara e verifica as tres, e so entao grava.
+const passou = [main, metadataPass, homePass].every((passagem) => passagem() !== false);
+
+if (!passou) {
+  console.error("");
+  console.error(`NADA FOI GRAVADO — ${pendentes.length} arquivo(s) preparado(s) descartado(s). O repositorio nao mudou.`);
+  process.exitCode = 1;
+} else {
+  for (const { arquivo, conteudo } of pendentes) fs.writeFileSync(arquivo, conteudo);
+  console.log("");
+  console.log(`gravados: ${pendentes.map((p) => path.basename(p.arquivo)).join(", ") || "nenhum"}`);
+}

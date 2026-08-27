@@ -27,6 +27,33 @@ const codec = require(path.join(ROOT, "db-codec.js"));
 const HEX = /^#[0-9a-f]{6}$/;
 const mb = (n) => `${(n / 1048576).toFixed(2)} MB`;
 
+// Equipe que nao tem linha na planilha fica com o par gerado por colorPair()
+// (hash do id). Ate 26/08/2026 esse par era assado em hsl(), e hexToRgb() no
+// app.js so aceita #rrggbb: teamWashFor() abortava na primeira linha e servia
+// tinta clara sobre a cor crua, sem o passeio de 4,5:1 - a Sixa Eaters, unica
+// nesse caso, saia em 2,93:1 - e teamPatternFor() caia no "tecido".
+//
+// Aqui e conversao de NOTACAO, nao regeracao: a cor emitida e a mesma, so
+// passa a ser legivel pelas guardas. Regerar com colorPair() duplicaria o
+// gerador neste script e abriria espaco para deriva.
+function hslParaHex(valor) {
+  const m = /^hsl\(\s*([\d.]+)\s+([\d.]+)%\s+([\d.]+)%\s*\)$/i.exec(String(valor).trim());
+  if (!m) return null;
+  const h = Number(m[1]);
+  const s = Number(m[2]) / 100;
+  const l = Number(m[3]) / 100;
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+  const min = l - c / 2;
+  const [r, g, b] =
+    h < 60 ? [c, x, 0] :
+    h < 120 ? [x, c, 0] :
+    h < 180 ? [0, c, x] :
+    h < 240 ? [0, x, c] :
+    h < 300 ? [x, 0, c] : [c, 0, x];
+  return `#${[r, g, b].map((canal) => Math.round((canal + min) * 255).toString(16).padStart(2, "0")).join("")}`;
+}
+
 function mapaDeCores() {
   const md = JSON.parse(fs.readFileSync(META, "utf8"));
   const mapa = new Map();
@@ -45,11 +72,22 @@ function mapaDeCores() {
 function pinta(equipes, mapa) {
   let pintadas = 0;
   let logos = 0;
+  let normalizadas = 0;
   const semCor = [];
   for (const equipe of equipes) {
     const campos = mapa.get(String(equipe.id || equipe.slug || ""));
     if (!campos) {
       semCor.push(equipe.id);
+      // Sem linha na planilha a cor continua sendo a gerada - mas em hex, para
+      // as guardas de contraste e de trama conseguirem ler. Rodar de novo nao
+      // muda nada: hslParaHex devolve null para quem ja e hex.
+      if (Array.isArray(equipe.colors)) {
+        equipe.colors = equipe.colors.map((cor) => {
+          const hex = hslParaHex(cor);
+          if (hex) normalizadas += 1;
+          return hex || cor;
+        });
+      }
       continue;
     }
     equipe.colors = campos.colors.slice();
@@ -66,7 +104,7 @@ function pinta(equipes, mapa) {
       }
     }
   }
-  return { pintadas, semCor, logos };
+  return { pintadas, semCor, logos, normalizadas };
 }
 
 function passaDatabase(mapa) {
@@ -74,7 +112,7 @@ function passaDatabase(mapa) {
   const db = codec.decode(JSON.parse(antes));
   const controle = { partidas: db.matches.length, times: db.teams.length, notaLider: db.ranking.teams[0]?.score };
 
-  const { pintadas, semCor, logos } = pinta(db.teams, mapa);
+  const { pintadas, semCor, logos, normalizadas } = pinta(db.teams, mapa);
 
   const depois = JSON.stringify(codec.encode(db));
   const lido = codec.decode(JSON.parse(depois));
@@ -84,6 +122,9 @@ function passaDatabase(mapa) {
     ["nota do líder", lido.ranking.teams[0]?.score === controle.notaLider],
     ["identidade team.ranking", lido.teams[0]?.ranking === lido.ranking.byTeamId?.[lido.teams[0]?.id]],
     ["todo par pintado e #rrggbb", lido.teams.every((t) => !mapa.has(String(t.id)) || (t.colors.length === 2 && t.colors.every((c) => HEX.test(c))))],
+    // Universal, nao so as da planilha: cor que nao e #rrggbb passa batido por
+    // hexToRgb() e derruba a garantia de 4,5:1 sem avisar.
+    ["TODA equipe tem cor #rrggbb", lido.teams.every((t) => !Array.isArray(t.colors) || t.colors.every((c) => HEX.test(String(c))))],
     ["logo de cada equipe bate com o metadata", lido.teams.every((t) => { const c = mapa.get(String(t.id)); return !c || !c.logo || (t.profile?.logo || t.logo) === c.logo; })],
   ];
   const falhas = checks.filter(([, ok]) => !ok);
@@ -95,7 +136,7 @@ function passaDatabase(mapa) {
 
   fs.writeFileSync(DB, depois);
   console.log("database.json");
-  console.log(`  equipes pintadas: ${pintadas}/${db.teams.length} | logos sincronizados: ${logos}`);
+  console.log(`  equipes pintadas: ${pintadas}/${db.teams.length} | logos sincronizados: ${logos} | cores hsl->hex: ${normalizadas}`);
   if (semCor.length) console.log(`  sem linha na planilha: ${semCor.join(", ")}`);
   console.log(`  cru : ${mb(antes.length)} -> ${mb(depois.length)}`);
   console.log(`  gzip: ${mb(zlib.gzipSync(Buffer.from(antes)).length)} -> ${mb(zlib.gzipSync(Buffer.from(depois)).length)}`);
@@ -112,7 +153,7 @@ function passaHome(mapa) {
   const home = JSON.parse(antes);
   const controle = { equipes: (home.teams || []).length, series: (home.series || []).length, lideres: (home.leaders || []).length };
 
-  const { pintadas, semCor, logos } = pinta(home.teams || [], mapa);
+  const { pintadas, semCor, logos, normalizadas } = pinta(home.teams || [], mapa);
 
   // home.json e gerado minificado por scripts/build_home.js - manter assim.
   const depois = JSON.stringify(home);
@@ -122,6 +163,7 @@ function passaHome(mapa) {
     ["series", (lido.series || []).length === controle.series],
     ["lideres", (lido.leaders || []).length === controle.lideres],
     ["todo par pintado e #rrggbb", (lido.teams || []).every((t) => !mapa.has(String(t.id)) || (t.colors.length === 2 && t.colors.every((c) => HEX.test(c))))],
+    ["TODA equipe tem cor #rrggbb", (lido.teams || []).every((t) => !Array.isArray(t.colors) || t.colors.every((c) => HEX.test(String(c))))],
   ];
   const falhas = checks.filter(([, ok]) => !ok);
   if (falhas.length) {
@@ -132,7 +174,7 @@ function passaHome(mapa) {
 
   fs.writeFileSync(HOME, depois);
   console.log("home.json");
-  console.log(`  equipes pintadas: ${pintadas}/${controle.equipes} | logos sincronizados: ${logos}`);
+  console.log(`  equipes pintadas: ${pintadas}/${controle.equipes} | logos sincronizados: ${logos} | cores hsl->hex: ${normalizadas}`);
   if (semCor.length) console.log(`  sem linha na planilha: ${semCor.join(", ")}`);
   console.log(`  cru : ${antes.length} B -> ${depois.length} B`);
   for (const [nome] of checks) console.log(`    ok ${nome}`);

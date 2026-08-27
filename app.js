@@ -3401,10 +3401,6 @@ function compareTeamsByCanonicalRank(a, b) {
   return (aRank || 9999) - (bRank || 9999) || b.rankingScore - a.rankingScore || a.name.localeCompare(b.name);
 }
 
-function compareTeamsByOverallRank(a, b) {
-  return (teamOverallRank(a) || 9999) - (teamOverallRank(b) || 9999) || b.rankingScore - a.rankingScore || a.name.localeCompare(b.name);
-}
-
 function teamCanonicalRankLabel(team) {
   const rank = teamValidRank(team);
   if (rank) return `#${rank}`;
@@ -4215,10 +4211,6 @@ function deltaKillPp(metadata, allies, enemies) {
 
 function deltaDeathPp(metadata, allies, enemies) {
   return (stateWinRate(metadata, allies - 1, enemies) - stateWinRate(metadata, allies, enemies)) * 100;
-}
-
-function calculateRating({ kpr = 0, dpr = 0, apr = 0, adr = 0, kastFrac = 0, impactRound = 0 }) {
-  return RaaRatingCore.calculateRaating1({ kpr, dpr, apr, adr, kastFrac, impactRound });
 }
 
 function applyRaatingFields(row) {
@@ -5073,87 +5065,17 @@ function normalizeCanonicalRoute() {
 }
 
 function canonicalHashForRoute(currentRoute) {
+  // A lista de equipes E o ranking. Sem esta linha, #/teams sem id caia num 404
+  // com o titulo "Equipes": STATIC_DOCUMENT_TITLES conhecia a secao e o render
+  // nao tinha ramo de lista. Entra aqui, e nao no mapa de paginas, porque
+  // normalizeCanonicalRoute() roda antes de route() em render() - a URL vira
+  // #/ranking e titulo e corpo passam a concordar de uma vez.
+  if (currentRoute.section === "teams" && !currentRoute.id) return "#/ranking";
   if (currentRoute.section !== "players" || !currentRoute.id) return "";
   const player = playerById(currentRoute.id);
   if (!player?.routeSlug) return "";
   const canonicalHash = playerHref(player, currentRoute.tab);
   return canonicalHash === currentRouteKey() ? "" : canonicalHash;
-}
-
-function renderHome() {
-  const db = state.db;
-  const event = sortedEvents("recent")[0];
-  const topPlayers = db.players.filter(isOfficialRatingSample).sort((a, b) => Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0) || b.rounds - a.rounds).slice(0, 6);
-  const topTeams = db.teams.slice(0, 6);
-  const recentMatches = allMatchSeries().slice(0, 5);
-  Shell(`
-    <section class="hero-band">
-      <div class="hero-copy">
-        <span class="eyebrow">Dados reais da API do Valorant</span>
-        <h1>Centro competitivo calculado dos arquivos de partidas.</h1>
-        <p>Base histórica consolidada com partidas concluídas, rankings, equipes, jogadores, mapas e estatísticas.</p>
-        <div class="quick-stats">
-          ${metric(db.uniqueSeriesCount, "partidas")}
-          ${metric(db.teams.length, "equipes na base")}
-          ${metric(db.players.length, "jogadores na base")}
-          ${metric(db.duplicateFiles.length, "arquivos duplicados ignorados")}
-        </div>
-      </div>
-      <div class="feature-visual" aria-label="Fluxo de dados reais">
-        <div class="feature-grid"></div>
-        <div class="feature-nodes">
-          <span class="connector one"></span>
-          <span class="connector two"></span>
-          <span class="connector three"></span>
-          <span class="connector four"></span>
-          <span class="node primary">Dados</span>
-          <span class="node a">Times</span>
-          <span class="node b">Jogadores</span>
-          <span class="node c">Mapas</span>
-          <span class="node d">Rankings</span>
-        </div>
-      </div>
-    </section>
-    <div class="layout-grid">
-      <div class="stack">
-        <section class="section-band">
-          ${sectionHead("Últimas partidas importadas", "Partidas concluídas ordenadas pela data real da API.", "matches", "Ver partidas")}
-          <div class="match-list">${recentMatches.map(matchCard).join("")}</div>
-        </section>
-        <section class="section-band">
-          ${sectionHead("Ranking calculado", "Nota composta por desempenho, conquistas, forma recente e rAAting 3.0 dos jogadores.", "rankings", "Ver ranking")}
-          <div class="card-grid">${topTeams.map(teamCard).join("")}</div>
-        </section>
-        <section class="section-band">
-          ${sectionHead("Jogadores em destaque", `rAAting 3.0, mínimo ${RaaRatingCore.SAMPLE_MIN_ROUNDS} rounds.`, "players", "Ver jogadores")}
-          ${playerTable(topPlayers)}
-        </section>
-      </div>
-      <aside class="side-rail">
-        <section class="data-panel dark">
-          <div class="section-head"><h2>${escapeHtml(event.name)}</h2><a class="subtle-link" href="#/tournaments/${event.id}">Abrir</a></div>
-          <div class="stats-grid">
-            ${stat(event.matches, "Partidas únicas")}
-            ${stat(event.teams.length, "Equipes")}
-            ${stat(event.players.length, "Jogadores")}
-            ${stat(event.maps.length, "Mapas")}
-          </div>
-        </section>
-        <section class="data-panel">
-          <div class="section-head"><h2>Mapas mais jogados</h2><a class="subtle-link" href="#/maps">Ver mapas</a></div>
-          <div class="simple-list">${db.maps.slice(0, 5).map(mapRow).join("")}</div>
-        </section>
-        <section class="data-panel">
-          <div class="section-head"><h2>Fonte</h2></div>
-          <div class="simple-list">
-            <div class="simple-row"><span class="rank-number">${db.sourceFileCount}</span><span><strong>Partidas na base</strong><br><span class="tiny">Histórico competitivo consolidado</span></span><span></span></div>
-            <div class="simple-row"><span class="rank-number">${SITE_NAME}</span><span><strong>Cadastro canônico</strong><br><span class="tiny">Equipes, jogadores, logos e perfis validados</span></span><span></span></div>
-            <div class="simple-row"><span class="rank-number">${db.failedFiles.length}</span><span><strong>Falhas de leitura</strong><br><span class="tiny">Devem ficar em zero</span></span><span></span></div>
-          </div>
-        </section>
-      </aside>
-    </div>
-  `);
 }
 
 function renderHomeCompact() {
@@ -5877,80 +5799,6 @@ function renderStatsPage() {
   `);
 }
 
-function normalizeStatsTab(tab) {
-  if (tab === "maps") return "maps";
-  if (tab === "weapons" || tab === "armas") return "weapons";
-  return "players";
-}
-
-function statsTabLink(tab, label, activeTab) {
-  return `<a class="team-tab ${activeTab === tab ? "active" : ""}" href="#/stats/${tab}">${escapeHtml(label)}</a>`;
-}
-
-function renderStatsTab(tab) {
-  const renderers = {
-    players: renderPlayerStatsTab,
-    maps: renderMapStatsTab,
-    weapons: renderWeaponStatsTab,
-  };
-  return (renderers[tab] || renderers.players)();
-}
-
-function renderPlayerStatsTab() {
-  const players = state.db.players.filter(isOfficialRatingSample).sort((a, b) => Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0) || b.rounds - a.rounds).slice(0, 50);
-  return `
-    <div class="stats-grid compact-stats-grid">
-      ${stat(players.length, "Players válidos")}
-      ${stat(fmt(avg(players.map((player) => officialRatingValue(player)))), "rAAting 3.0 médio")}
-      ${stat(fmt(avg(players.map((player) => player.acs)), 0), "ACS medio")}
-      ${stat(fmt(avg(players.map((player) => player.adr)), 0), "ADR medio")}
-    </div>
-    ${playerTable(players)}
-  `;
-}
-
-function renderMapStatsTab() {
-  const maps = state.db.maps.slice().sort((a, b) => b.matches - a.matches || a.name.localeCompare(b.name));
-  return `
-    <div class="stats-grid compact-stats-grid">
-      ${stat(maps.length, "Mapas")}
-      ${stat(state.db.matches.length, "Jogos de mapa")}
-      ${stat(fmt(avg(maps.map((map) => map.rounds / Math.max(map.matches, 1))), 0), "Rounds por mapa")}
-      ${stat(maps[0]?.name || "-", "Mais jogado")}
-    </div>
-    <div class="table-wrap stats-table">
-      <table>
-        <thead><tr><th>Mapa</th><th class="numeric">Partidas</th><th class="numeric">Rounds</th><th class="numeric">Equipes</th><th>Agente mais usado</th></tr></thead>
-        <tbody>${maps.map((map) => `<tr><td>${mapLogo(map.id)} ${entityLink("maps", map.id, map.name)}</td><td class="numeric">${map.matches}</td><td class="numeric">${map.rounds}</td><td class="numeric">${map.teamStats.length}</td><td>${escapeHtml(map.agentStats[0]?.name || "-")}</td></tr>`).join("")}</tbody>
-      </table>
-    </div>
-  `;
-}
-
-function renderWeaponStatsTab() {
-  const weapons = state.db.weapons || [];
-  if (!weapons.length) return `<div class="empty-state">Nenhuma estatística de arma encontrada nas partidas registradas.</div>`;
-  return `
-    <div class="stats-grid compact-stats-grid">
-      ${stat(weapons.length, "Armas")}
-      ${stat(weapons.reduce((sum, weapon) => sum + weapon.kills, 0), "Kills por arma")}
-      ${stat(weapons[0]?.name || "-", "Mais letal")}
-      ${stat(pct(weapons[0]?.killShare || 0), "Share do topo")}
-    </div>
-    <div class="table-wrap stats-table">
-      <table>
-        <thead><tr><th>Arma</th><th class="numeric">Kills</th><th class="numeric">Share</th><th class="numeric">Partidas</th><th class="numeric">Mapas</th><th>Top player</th><th class="numeric">Alt fire</th></tr></thead>
-        <tbody>${weapons.map(weaponStatsRow).join("")}</tbody>
-      </table>
-    </div>
-  `;
-}
-
-function weaponStatsRow(weapon) {
-  const topPlayer = weapon.topPlayer ? playerById(weapon.topPlayer.id) : null;
-  return `<tr><td><strong>${escapeHtml(weapon.name)}</strong><br><span class="tiny">${escapeHtml(weapon.id)}</span></td><td class="numeric">${weapon.kills}</td><td class="numeric">${pct(weapon.killShare)}</td><td class="numeric">${weapon.matches}</td><td class="numeric">${weapon.maps}</td><td>${topPlayer ? entityLink("players", topPlayer.id, topPlayer.nick) : "-"}</td><td class="numeric">${weapon.secondaryKills}</td></tr>`;
-}
-
 function avg(values) {
   const filtered = values.filter((value) => Number.isFinite(value));
   return filtered.length ? filtered.reduce((sum, value) => sum + value, 0) / filtered.length : 0;
@@ -6624,11 +6472,6 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null) 
   `;
 }
 
-function rankingMetric(label, value, digits = 1) {
-  const resolved = Number.isFinite(Number(value)) ? Number(value) : 50;
-  return `<span class="ranking-metric"><strong>${fmt(resolved, digits)}</strong><small>${escapeHtml(label)}</small></span>`;
-}
-
 function rankingWeightedBar(label, value, weight, tooltip) {
   const score = rankingSafeScore(value);
   const contribution = (score * weight) / 100;
@@ -7059,10 +6902,6 @@ function setRankingDetailsOpen(item, open) {
 
 function safeDomId(value) {
   return String(value || "").replace(/[^a-z0-9_-]+/gi, "-");
-}
-
-function renderMatches(id) {
-  return renderMatchesCompact(id);
 }
 
 const pendingMatchDetailRequests = new Map();
@@ -8156,51 +7995,6 @@ function patchLabel(version) {
   return match?.[1] || version || "-";
 }
 
-function renderRankings() {
-  const teams = state.db.teams;
-  Shell(`
-    <header class="page-header">
-      <div class="page-title">
-        <span class="eyebrow">Ranking calculado</span>
-        <h1>Ranking por desempenho coletivo.</h1>
-        <p>Nota final normalizada: 70% desempenho, 15% conquistas, 10% forma recente e 5% rAAting 3.0 dos jogadores.</p>
-      </div>
-    </header>
-    <div class="layout-grid">
-      <div class="stack">
-        <section class="section-band">
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>#</th><th>Equipe</th><th class="numeric">Nota</th><th class="numeric">V-D</th><th class="numeric">Win rate</th><th class="numeric">Rounds</th><th class="numeric">Saldo</th></tr></thead>
-              <tbody>${teams.map((team) => `<tr><td>${teamCanonicalRankLabel(team)}</td><td>${teamLogo(team.id)} ${entityLink("teams", team.id, team.name)}</td><td class="numeric">${fmt(team.rankingScore ?? team.points, 1)}</td><td class="numeric">${team.wins}-${team.losses}</td><td class="numeric">${pct(team.winRate)}</td><td class="numeric">${team.roundsWon}-${team.roundsLost}</td><td class="numeric">${signed(team.roundDiff)}</td></tr>`).join("")}</tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-      <aside class="side-rail">
-        <section class="data-panel dark">
-          <div class="section-head"><h2>Top 5</h2></div>
-          <div class="ranking-list">${teams.slice(0, 5).map(rankingRow).join("")}</div>
-        </section>
-      </aside>
-    </div>
-  `);
-}
-
-function renderTournaments(id) {
-  if (id) return renderTournamentDetail(id);
-  Shell(`
-    <header class="page-header">
-      <div class="page-title">
-        <span class="eyebrow">Campeonatos cobertos</span>
-        <h1>Calendário competitivo e histórico dos torneios.</h1>
-        <p>Cada campeonato reúne partidas registradas e estatísticas consolidadas.</p>
-      </div>
-    </header>
-    <div class="card-grid three">${sortedEvents("end").map(tournamentCard).join("")}</div>
-  `);
-}
-
 function renderTournamentDetail(id) {
   const event = visibleTournaments().find((item) => item.id === id);
   if (!event) return renderNotFound("Campeonato");
@@ -8627,28 +8421,6 @@ function tournamentMapPoolBanner(map) {
       <span><strong>${escapeHtml(map.name || map.poolName)}</strong><small>${escapeHtml(`${map.played} jogos - ${map.rounds} rounds`)}</small></span>
     </a>
   `;
-}
-
-function tournamentPlacementTeam(event, standings, index) {
-  const teamId = event.placements?.[index]?.id || standings[index]?.id;
-  return teamId ? tournamentTeamById(event, teamId) : null;
-}
-
-function tournamentGrandFinalMatch(event) {
-  const finalRegion = event.bracket?.regions?.find((region) => String(region.className || "").includes("grand-final")) || event.bracket?.regions?.find((region) => normalize(region.name || "").includes("final"));
-  return finalRegion?.columns?.flatMap((column) => column.matches || [])?.at(-1) || null;
-}
-
-function tournamentFinalSummary(event, championId) {
-  const finalMatch = tournamentGrandFinalMatch(event);
-  if (!finalMatch || !championId) return "";
-  const championIsA = finalMatch.a === championId;
-  const opponentId = championIsA ? finalMatch.b : finalMatch.a;
-  const championScore = championIsA ? finalMatch.scoreA : finalMatch.scoreB;
-  const opponentScore = championIsA ? finalMatch.scoreB : finalMatch.scoreA;
-  const opponent = tournamentTeamById(event, opponentId);
-  if (championScore == null || opponentScore == null || !opponent) return "";
-  return `${championScore}-${opponentScore} na grande final contra ${opponent.name}`;
 }
 
 function tournamentDurationLabel(event) {
@@ -9827,36 +9599,6 @@ function tournamentBracketColumns(matches) {
     ];
   }
   return [{ title: sorted.length > 1 ? "Partidas finais" : "Grande final", matches: sorted }];
-}
-
-function tournamentBracketColumn(column) {
-  return `
-    <div class="tournament-bracket-col">
-      <h3>${escapeHtml(column.title)}</h3>
-      ${column.matches.map(tournamentBracketMatch).join("")}
-    </div>
-  `;
-}
-
-function tournamentBracketMatch(series) {
-  const score = matchListScore(series);
-  return `
-    <a class="tournament-bracket-match" href="${matchSeriesHref(series)}">
-      <span class="tournament-bracket-meta">${escapeHtml(formatDate(series.startedAt, "time"))} - ${escapeHtml(score.label)}</span>
-      ${tournamentBracketTeam(series.teamA, score.a, series.winnerId === series.teamA.id)}
-      ${tournamentBracketTeam(series.teamB, score.b, series.winnerId === series.teamB.id)}
-    </a>
-  `;
-}
-
-function tournamentBracketTeam(team, score, won) {
-  return `
-    <span class="tournament-bracket-team ${won ? "winner" : ""}">
-      ${teamLogo(team.id, "tiny")}
-      <strong>${escapeHtml(team.name)}</strong>
-      <b>${escapeHtml(String(score))}</b>
-    </span>
-  `;
 }
 
 function tournamentPlacementsSection(event, standings) {
@@ -11440,95 +11182,6 @@ function tournamentCompositionAgentStack(agents = []) {
   return `<span class="tournament-composition-stack">${agents.map((agent) => tournamentAgentLogo(agent, "tournament-composition-agent")).join("")}</span>`;
 }
 
-function tournamentPlayersSection(players) {
-  return `
-    <section class="tournament-section">
-      <div class="tournament-section-head">
-        <h2>Melhores jogadores</h2>
-        <span>Top ${players.length}</span>
-      </div>
-      ${playerTable(players)}
-    </section>
-  `;
-}
-
-function tournamentSummaryPanel(event, matches) {
-  return `
-    <section class="data-panel dark tournament-side-panel">
-      <div class="section-head"><h2>Resumo</h2></div>
-      <div class="stats-grid">
-        ${stat(event.matches, "Partidas")}
-        ${stat(event.teamCount || event.teams.length, "Equipes")}
-        ${stat(event.players.length, "Jogadores")}
-        ${stat(event.maps.length, "Mapas")}
-      </div>
-      <div class="tournament-mini-meta">
-        <span><strong>${escapeHtml(tournamentFormatLabel(event, matches))}</strong><small>Formato</small></span>
-        <span><strong>${escapeHtml(event.tier || event.status || "Evento")}</strong><small>${event.tier ? "Tier" : "Status"}</small></span>
-      </div>
-    </section>
-  `;
-}
-
-function tournamentFormatPanel(event, matches) {
-  const details = Array.isArray(event.format?.details) && event.format.details.length ? event.format.details : [dominantSeriesFormat(matches)];
-  return `
-    <section class="data-panel tournament-side-panel">
-      <div class="section-head"><h2>Formato</h2></div>
-      <dl class="tournament-info-list">
-        <div><dt>Estrutura</dt><dd>${escapeHtml(tournamentFormatLabel(event, matches))}</dd></div>
-        <div><dt>Jogos</dt><dd>${escapeHtml(details.join(" - "))}</dd></div>
-        <div><dt>Classificação</dt><dd>${escapeHtml(event.format?.standings || "Vitórias de série, mapas e saldo")}</dd></div>
-      </dl>
-    </section>
-  `;
-}
-
-function tournamentDataPanel(event) {
-  return `
-    <section class="data-panel tournament-side-panel">
-      <div class="section-head"><h2>Event data</h2></div>
-      <dl class="tournament-info-list">
-        <div><dt>Inicio</dt><dd>${escapeHtml(formatDate(event.start))}</dd></div>
-        <div><dt>Fim</dt><dd>${escapeHtml(formatDate(event.end))}</dd></div>
-        <div><dt>Prize Pool</dt><dd>${escapeHtml(event.prizePool || "-")}</dd></div>
-        <div><dt>Tier</dt><dd>${escapeHtml(event.tier || "A definir")}</dd></div>
-        <div><dt>Tipo</dt><dd>${escapeHtml(event.type || "A definir")}</dd></div>
-        <div><dt>Teams</dt><dd>${escapeHtml(String(event.teamCount || event.teams.length))}</dd></div>
-        <div><dt>Organização</dt><dd>${escapeHtml(event.organizer || event.source || "A definir")}</dd></div>
-        <div><dt>Fonte</dt><dd>${escapeHtml(event.source || "Manifest")}</dd></div>
-        <div><dt>Arquivos</dt><dd>${escapeHtml(String(event.sourceFiles || 0))}</dd></div>
-      </dl>
-    </section>
-  `;
-}
-
-function tournamentMapPoolPanel(event) {
-  const maps = (event.mapPool || event.maps).map((name) => {
-    const map = mapByName(name);
-    return map ? { ...map, poolName: name } : { id: slugify(name), name, matches: 0, icon: "", poolName: name };
-  });
-  return `
-    <section class="data-panel tournament-side-panel">
-      <div class="section-head"><h2>Map pool</h2></div>
-      <div class="tournament-map-list">
-        ${maps.length ? maps.map(tournamentMapCard).join("") : `<div class="empty-state">Nenhum mapa detectado.</div>`}
-      </div>
-    </section>
-  `;
-}
-
-function tournamentMapCard(map) {
-  const art = mapArtAttrs(map);
-  return `
-    <a class="tournament-map-card" href="#/maps/${map.id}">
-      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="${escapeHtml(map.name)}" loading="lazy" onerror="mapArtError(this)" />` : ""}
-      <span>${escapeHtml(map.name)}</span>
-      <small>Map pool</small>
-    </a>
-  `;
-}
-
 function tournamentStandingsRows(event, matches) {
   if (event.placements?.length) return tournamentOfficialPlacements(event);
   const rows = eventStandings(matches);
@@ -11537,16 +11190,6 @@ function tournamentStandingsRows(event, matches) {
     if (!seen.has(teamId)) rows.push({ id: teamId, seriesWins: 0, seriesLosses: 0, mapWins: 0, mapLosses: 0, roundDiff: 0 });
   }
   return rows;
-}
-
-function tournamentPlayerRows(event) {
-  return state.db.players
-    .filter((player) => player.eventStats.some((row) => row.eventId === event.id))
-    .sort((a, b) => {
-      const aStats = a.eventStats.find((row) => row.eventId === event.id) || {};
-      const bStats = b.eventStats.find((row) => row.eventId === event.id) || {};
-      return Number(bStats.rating || 0) - Number(aStats.rating || 0) || Number(bStats.matches || 0) - Number(aStats.matches || 0) || a.nick.localeCompare(b.nick);
-    });
 }
 
 function tournamentFormatLabel(event, matches) {
@@ -11563,11 +11206,6 @@ function dominantSeriesFormat(matches) {
     return map;
   }, new Map());
   return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] || "A definir";
-}
-
-function renderTeams(id) {
-  if (id) return renderTeamDetail(id);
-  return renderNotFound("Recurso");
 }
 
 function renderTeamDetail(id) {
@@ -11694,30 +11332,6 @@ function teamSummaryTrophyPanel(trophies) {
   `;
 }
 
-function teamSummaryStatCards(team, matches, currentLineup, observedPlayers) {
-  const lineupPlayers = currentLineup.map((entry) => playerById(entry.playerId)).filter(Boolean);
-  const players = [...new Map([...lineupPlayers, ...observedPlayers].map((player) => [player.id, player])).values()].filter((player) => Number(player.matches || 0) > 0);
-  const rating = weightedAverage(players, officialRatingValue, (player) => Number(player.rounds || 0));
-  const acs = weightedAverage(players, (player) => player.acs, (player) => Number(player.rounds || 0));
-  const adr = weightedAverage(players, (player) => player.adr, (player) => Number(player.rounds || 0));
-  const kast = weightedAverage(players, (player) => player.kast, (player) => Number(player.rounds || 0));
-  const swing = weightedAverage(players, playerSwingPerRound, (player) => Number(player.rounds || 0));
-  const kdTotal = players.reduce((sum, player) => sum + Number(player.kills || 0) - Number(player.deaths || 0), 0);
-  const fkFdTotal = players.reduce((sum, player) => sum + Number(player.firstKills || 0) - Number(player.firstDeaths || 0), 0);
-  const rounds = Number(team.roundsWon || 0) + Number(team.roundsLost || 0);
-  return [
-    [players.length ? fmt(rating) : "-", "rAAting 3.0 médio", "rAAting média dos jogadores, ponderada por rounds."],
-    [players.length ? fmt(acs, 0) : "-", "ACS médio"],
-    [players.length ? fmt(adr, 0) : "-", "ADR médio"],
-    [players.length ? pct(kast) : "-", "KAST médio"],
-    [players.length ? `${signedDecimal(swing)} pp` : "-", "Swing/R médio"],
-    [signed(kdTotal), "K-D total"],
-    [signed(fkFdTotal), "FK-FD total"],
-    [team.matches || matches.length, "Mapas"],
-    [rounds, "Rounds"],
-  ].map(([value, label, title]) => stat(value, label, title)).join("");
-}
-
 function teamTabLink(team, tab, label, activeTab) {
   return `<a class="team-tab ${activeTab === tab ? "active" : ""}" href="#/teams/${team.id}/${tab}">${escapeHtml(label)}</a>`;
 }
@@ -11732,27 +11346,6 @@ function teamRankingTab(team) {
     <section class="data-panel team-ranking-explainer">
       ${rankingExplanationPanel(team)}
     </section>
-  `;
-}
-
-function rankingBreakdownBars(team) {
-  const blocks = team.ranking?.blocks || {};
-  const components = team.ranking?.components || {};
-  return `
-    ${bars([
-      ["Desempenho", blocks.competitive || 0],
-      ["Conquistas", blocks.achievements || 0],
-      ["Forma recente", blocks.recentForm || 0],
-      ["rAAting 3.0 jogadores", blocks.rosterStrength || 0],
-    ])}
-    <div class="section-head"><h2>Desempenho</h2></div>
-    ${bars([
-      ["Modelos estatísticos", components.statisticalModels || 0],
-      ["Força dos adversários", components.strengthOfSchedule || 0],
-      ["Dominância", components.dominance || 0],
-      ["Consistência", components.consistency || 0],
-      ["Relevância", components.relevance || 0],
-    ])}
   `;
 }
 
@@ -11835,76 +11428,6 @@ function chartDateTicks(rows) {
 function chartDateLabel(value) {
   const date = new Date(value);
   return date.toLocaleDateString("pt-BR", { month: "short", year: "2-digit" }).replace(".", "");
-}
-
-function teamCompetitiveSummary(team, history) {
-  const blocks = team.ranking?.blocks || {};
-  const recent = team.ranking?.recent || {};
-  const roster = team.ranking?.roster || {};
-  const currentRank = teamCanonicalRankLabel(team);
-  const best = bestRank(history);
-  const average = averageRank(history);
-  const trend = rankingTrendLabel(history);
-  return `
-    <div class="team-competitive-kpis">
-      ${stat(currentRank, "Ranking atual")}
-      ${stat(best, "Melhor posição")}
-      ${stat(average ? `#${fmt(average, 1)}` : "-", "Média no período")}
-      ${stat(fmt(team.rankingScore ?? team.points, 1), "Nota")}
-    </div>
-    <div class="team-insight-list">
-      ${teamInsightRow("Status", teamRankingStatusLabel(team), teamRankingStatusDetail(team))}
-      ${teamInsightRow("Tendência", trend.label, trend.detail)}
-      ${teamInsightRow("Campanha geral", `${team.wins}-${team.losses}`, `${pct(team.winRate)} de aproveitamento`)}
-      ${teamInsightRow("Forma recente", `${recent.matches ?? 0} partidas`, `Desempenho ajustado ${fmt(recent.adjustedPerformance ?? 0, 1)}`)}
-      ${teamInsightRow("Elenco", `${fmt(roster.coreStability ?? 0, 0)}% estabilidade`, `Profundidade ${fmt(roster.depth ?? 0, 1)}`)}
-    </div>
-    <div class="team-summary-bars">
-      ${bars([
-        ["Desempenho", blocks.competitive || 0],
-        ["Conquistas", blocks.achievements || 0],
-        ["Forma recente", blocks.recentForm || 0],
-        ["rAAting 3.0 jogadores", blocks.rosterStrength || 0],
-      ])}
-    </div>
-  `;
-}
-
-function teamRankingStatusLabel(team) {
-  if (rankingIsInactive(team.ranking)) return "Inativo";
-  return team.ranking?.provisional ? "Em validação" : "Validado";
-}
-
-function teamRankingStatusDetail(team) {
-  if (rankingIsInactive(team.ranking)) {
-    return `Elenco incompleto: ${teamActiveRoster(team).length} de ${rankingMinimumRosterSize(state.db?.rankingWeights)} jogadores`;
-  }
-  return `${team.ranking?.matches ?? team.matches} partidas consideradas`;
-}
-
-function teamInsightRow(label, value, detail) {
-  return `
-    <div class="team-insight-row">
-      <span>${escapeHtml(label)}</span>
-      <strong>${escapeHtml(String(value))}</strong>
-      <small>${escapeHtml(String(detail || ""))}</small>
-    </div>
-  `;
-}
-
-function averageRank(history) {
-  const ranks = history.map((row) => Number(row.rank)).filter((rank) => Number.isFinite(rank) && rank > 0);
-  return ranks.length ? ranks.reduce((sum, rank) => sum + rank, 0) / ranks.length : 0;
-}
-
-function rankingTrendLabel(history) {
-  if (history.length < 2) return { label: "Sem comparação", detail: "Aguardando mais semanas válidas" };
-  const current = Number(history[0].rank);
-  const previous = Number(history[1].rank);
-  const diff = previous - current;
-  if (diff > 0) return { label: `Subiu ${diff}`, detail: `${rankingHistoryRankLabel(previous)} para ${rankingHistoryRankLabel(current)}` };
-  if (diff < 0) return { label: `Caiu ${Math.abs(diff)}`, detail: `${rankingHistoryRankLabel(previous)} para ${rankingHistoryRankLabel(current)}` };
-  return { label: "Estável", detail: `Mantém ${rankingHistoryRankLabel(current)}` };
 }
 
 function dateValue(value) {
@@ -12326,11 +11849,6 @@ function socialIcon(key) {
   return icons[key] || icons.website;
 }
 
-function trophyHall(team) {
-  const trophies = teamTrophyAchievements(team);
-  return trophyHallFromRows(trophies);
-}
-
 function trophyHallFromRows(trophies) {
   if (!trophies.length) {
     return "";
@@ -12519,26 +12037,9 @@ function derivedTeamRankingHistory(teamId) {
   return history.reverse();
 }
 
-function rankingHistoryTable(history) {
-  return `
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Data</th><th class="numeric">Ranking</th><th class="numeric">Pontos</th><th>Contexto</th></tr></thead>
-        <tbody>${history.map((row) => `<tr><td>${escapeHtml(formatDate(row.date))}</td><td class="numeric">${rankingHistoryRankLabel(row.rank)}</td><td class="numeric">${row.points === "" ? "-" : fmt(row.points)}</td><td>${escapeHtml(row.note || "")}</td></tr>`).join("")}</tbody>
-      </table>
-    </div>
-  `;
-}
-
 function rankingHistoryRankLabel(rank) {
   const value = Number(rank);
   return Number.isFinite(value) && value > 0 ? `#${value}` : "Provisório";
-}
-
-function bestRank(history) {
-  const ranks = history.map((row) => Number(row.rank)).filter((rank) => Number.isFinite(rank) && rank > 0);
-  if (!ranks.length) return "-";
-  return `#${Math.min(...ranks)}`;
 }
 
 function teamHistoricalPlayers(team) {
@@ -13786,20 +13287,6 @@ function playerRankingRows(players) {
     if (state.playerSort === "rating") return Number(b.rounds || 0) - Number(a.rounds || 0) || a.nick.localeCompare(b.nick, "pt-BR");
     return a.nick.localeCompare(b.nick, "pt-BR");
   });
-}
-
-function renderMaps(id) {
-  if (id) return renderMapDetail(id);
-  Shell(`
-    <header class="page-header">
-      <div class="page-title">
-        <span class="eyebrow">Mapas</span>
-        <h1>Mapas da base competitiva.</h1>
-        <p>Nome, imagem e estatísticas dos mapas registrados.</p>
-      </div>
-    </header>
-    <div class="card-grid three">${state.db.maps.map(mapCard).join("")}</div>
-  `);
 }
 
 function renderMapDetail(id) {
@@ -15180,11 +14667,6 @@ function renderGenericSearchResult(item) {
   );
 }
 
-function searchResultChips(values) {
-  const chips = values.map((value) => String(value || "").trim()).filter(Boolean).slice(0, 4);
-  return chips.length ? `<span class="search-result-chips">${chips.map((value) => `<span class="search-result-chip">${escapeHtml(value)}</span>`).join("")}</span>` : "";
-}
-
 function teamSearchTagLabel(team) {
   return team?.sourceTag || team?.tag || team?.shortTag || team?.id || "Sem tag";
 }
@@ -15263,16 +14745,6 @@ function teamCard(team) {
   `;
 }
 
-function playerCard(player) {
-  const team = teamById(player.teamId);
-  return `
-    <a class="entity-card" href="${playerHref(player)}">
-      <div class="entity-row">${playerLogo(player.id)}<span class="entity-main"><strong>${escapeHtml(player.nick)}</strong><span>${escapeHtml(player.handle)}${team ? ` - ${escapeHtml(team.sourceTag || team.id)}` : ""}</span></span></div>
-      <div class="chip-row"><span class="chip red">${playerRating(player)} rAAting 3.0</span><span class="chip">${fmt(player.acs, 0)} ACS</span><span class="chip">${player.matches} partidas</span>${sampleStatusChip(player)}</div>
-    </a>
-  `;
-}
-
 function lineupEntryCard(entry, team) {
   const player = entry.playerId ? playerById(entry.playerId) : null;
   const name = player?.nick || entry.name || "Jogador";
@@ -15295,15 +14767,6 @@ function lineupEntryCard(entry, team) {
     </div>
   `;
   return player ? `<a class="roster-player-card" href="${playerHref(player)}">${body}</a>` : `<div class="roster-player-card">${body}</div>`;
-}
-
-function tournamentCard(event) {
-  return `
-    <a class="entity-card" href="#/tournaments/${event.id}">
-      <div class="entity-row">${eventLogo(event)}<span class="entity-main"><strong>${escapeHtml(event.name)}</strong><span>${escapeHtml(eventTimeRange(event))}</span></span></div>
-      <div class="chip-row"><span class="chip event-chip ${eventStatusClass(event.status)}">${escapeHtml(event.status)}</span><span class="chip">${event.matches} partidas</span><span class="chip">${event.teams.length} equipes</span></div>
-    </a>
-  `;
 }
 
 function tournamentRow(event) {
@@ -15354,15 +14817,6 @@ function scoreNumberClass(value, opponent) {
   return "score-number";
 }
 
-function rankingRow(team) {
-  return `<a class="ranking-row" href="#/teams/${team.id}"><span class="rank-number">${teamShortRankLabel(team)}</span><span><strong>${escapeHtml(team.name)}</strong><br><span class="tiny">${team.wins}-${team.losses} - ${pct(team.winRate)}</span></span><span class="trend ${team.roundDiff >= 0 ? "up" : "down"}">${fmt(team.rankingScore ?? team.points, 1)}</span></a>`;
-}
-
-function h2hRow(row) {
-  const opponent = teamById(row.id);
-  return `<a class="simple-row" href="#/teams/${row.id}">${teamLogo(row.id)}<span><strong>${escapeHtml(opponent.name)}</strong><br><span class="tiny">${row.wins}-${row.losses} em partidas</span></span><span class="chip">${pct(row.winRate)}</span></a>`;
-}
-
 function playerTable(players) {
   return `
     <div class="table-wrap">
@@ -15388,51 +14842,6 @@ function agentBadge(agent) {
     ? `<span class="agent-icon"><span>${escapeHtml(fallback)}</span><img src="${escapeHtml(assetPath(icon))}" alt="${escapeHtml(name)}" loading="lazy" onerror="this.remove()" /></span>`
     : `<span class="agent-icon"><span>${escapeHtml(fallback)}</span></span>`;
   return `<span class="agent-badge">${image}<span><strong>${escapeHtml(name)}</strong>${role ? `<small>${escapeHtml(role)}</small>` : ""}</span></span>`;
-}
-
-function matchPlayerTable(players) {
-  return `
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Jogador</th><th>Equipe</th><th>Agente</th><th class="numeric">rAAting 3.0</th><th class="numeric">ACS</th><th class="numeric">ADR</th><th class="numeric">K-A-D</th><th class="numeric">FK</th><th class="numeric">HS%</th></tr></thead>
-        <tbody>${players.map((player) => {
-          const matchTeam = currentMatchTeam(player);
-          return `<tr><td>${entityLink("players", player.id, player.nick)}<br><span class="tiny">${escapeHtml(player.handle)}</span></td><td>${matchTeam ? entityLink("teams", matchTeam.id, matchTeam.tag) : "-"}</td><td>${agentBadge(player)}</td><td class="numeric rating-cell ${playerRatingTone(player)}">${playerRating(player)}</td><td class="numeric">${fmt(player.acs, 0)}</td><td class="numeric">${fmt(player.adr, 0)}</td><td class="numeric">${player.kills}-${player.assists}-${player.deaths}</td><td class="numeric">${player.firstKills}</td><td class="numeric">${fmt(player.hs, 0)}</td></tr>`;
-        }).join("")}</tbody>
-      </table>
-    </div>
-  `;
-}
-
-function currentMatchTeam(player) {
-  const { id } = route();
-  const match = state.db.matches.find((item) => item.id === id);
-  if (!match) return null;
-  return player.teamColor === match.teamA.color ? match.teamA : match.teamB;
-}
-
-function lineupPanel(match, team) {
-  const players = match.players.filter((player) => player.teamColor === team.color).sort((a, b) => Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0));
-  return `
-    <div class="data-panel">
-      <div class="section-head"><h3>${escapeHtml(team.name)}</h3><span class="chip">${team.score} rounds</span></div>
-      <div class="simple-list">${players.map((player) => `<a class="simple-row" href="${playerHref(player)}">${playerLogo(player.id)}<span><strong>${escapeHtml(player.nick)}</strong><br><span class="tiny">${agentBadge(player)} ${player.kills}-${player.assists}-${player.deaths}</span></span><span class="chip">${playerRating(player)}</span></a>`).join("")}</div>
-    </div>
-  `;
-}
-
-function roundTable(match) {
-  return `
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>#</th><th>Vencedor</th><th>Lado vencedor</th><th>Resultado</th><th>Spike</th></tr></thead>
-        <tbody>${match.roundResults.map((round) => {
-          const winnerId = round.winningTeam === match.teamA.color ? match.teamA.id : match.teamB.id;
-          return `<tr><td>${round.roundNum + 1}</td><td>${entityLink("teams", winnerId, teamById(winnerId).tag)}</td><td>${escapeHtml(round.winningTeamRole || "-")}</td><td>${escapeHtml(round.roundResult || "-")}</td><td>${escapeHtml(round.plantSite || "-")}</td></tr>`;
-        }).join("")}</tbody>
-      </table>
-    </div>
-  `;
 }
 
 function aggregateTeamStatsForMatches(matches, teamId) {
@@ -15821,12 +15230,34 @@ function mapColors(name) {
   return colorPair(`map-${name}`);
 }
 
+// A paleta gerada sai em hex, nao em hsl(). Ate 26/08/2026 saia em hsl e o
+// preco era silencioso: hexToRgb() so aceita #rrggbb, entao teamWashFor()
+// abortava na primeira linha e devolvia tinta clara sobre a cor crua, sem o
+// passeio que garante 4,5:1 - a Sixa Eaters, unica das 98 equipes que nao esta
+// em dados_excel/teams_infos.xlsx, ficava em 2,93:1. teamPatternFor() falhava
+// junto, no mesmo hexToRgb, e caia no "tecido" para toda equipe gerada.
+// Mesmas cores, notacao que as guardas conseguem ler.
 function colorPair(seed) {
   let hash = 0;
   for (let index = 0; index < seed.length; index += 1) hash = seed.charCodeAt(index) + ((hash << 5) - hash);
   const hue = Math.abs(hash) % 360;
   const hue2 = (hue + 145) % 360;
-  return [`hsl(${hue} 64% 38%)`, `hsl(${hue2} 58% 22%)`];
+  return [rgbToHex(hslToRgb(hue, 64, 38)), rgbToHex(hslToRgb(hue2, 58, 22))];
+}
+
+function hslToRgb(h, s, l) {
+  const sat = s / 100;
+  const lum = l / 100;
+  const c = (1 - Math.abs(2 * lum - 1)) * sat;
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+  const m = lum - c / 2;
+  const [r, g, b] =
+    h < 60 ? [c, x, 0] :
+    h < 120 ? [x, c, 0] :
+    h < 180 ? [0, c, x] :
+    h < 240 ? [0, x, c] :
+    h < 300 ? [x, 0, c] : [c, 0, x];
+  return [r, g, b].map((canal) => Math.round((canal + m) * 255));
 }
 
 function slugify(value) {

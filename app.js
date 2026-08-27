@@ -5073,6 +5073,12 @@ function normalizeCanonicalRoute() {
 }
 
 function canonicalHashForRoute(currentRoute) {
+  // A lista de equipes E o ranking. Sem esta linha, #/teams sem id caia num 404
+  // com o titulo "Equipes": STATIC_DOCUMENT_TITLES conhecia a secao e o render
+  // nao tinha ramo de lista. Entra aqui, e nao no mapa de paginas, porque
+  // normalizeCanonicalRoute() roda antes de route() em render() - a URL vira
+  // #/ranking e titulo e corpo passam a concordar de uma vez.
+  if (currentRoute.section === "teams" && !currentRoute.id) return "#/ranking";
   if (currentRoute.section !== "players" || !currentRoute.id) return "";
   const player = playerById(currentRoute.id);
   if (!player?.routeSlug) return "";

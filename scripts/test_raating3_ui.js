@@ -27,11 +27,15 @@ includes('players.filter(isOfficialRatingSample)', "official player rankings fil
 includes('Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0)', "official rankings sort by rAAting 3.0 descending");
 includes('Number(b.rounds || 0) - Number(a.rounds || 0)', "official player ranking tie-breaks by rounds");
 
-includes('signedDecimal(swing)', "Swing/R is rendered with positive sign support");
+// Cobrava `signedDecimal(swing)`, que so existia dentro de
+// teamCompetitiveSummary() - funcao nunca chamada, removida em 26/08/2026. A
+// assertiva passava pelo motivo errado. formatMaybeSwing() e o caminho vivo:
+// devolve `${signedDecimal(value)} pp` e aparece em 5 lugares renderizados,
+// ao lado do proprio signed(fkFdDiff) da linha seguinte.
+includes('formatMaybeSwing(player)', "Swing/R is rendered with positive sign support");
 includes('signed(fkFdDiff)', "FK-FD is rendered with positive sign support");
 
 includes('function playerRatingCompositionPanel', "player page exposes rAAting 3.0 composition");
 includes('formatMaybeMetric(player, "kill_rating")', "player composition handles missing subratings safely");
-includes('function matchAdvancedStatsTable', "match page exposes advanced rAAting 3.0 audit table");
 
 console.log("rAAting 3.0 UI contract tests passed");

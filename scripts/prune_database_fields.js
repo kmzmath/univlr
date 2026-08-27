@@ -28,6 +28,14 @@ const DEAD_PLAYER_FIELDS = [
   "survival_rating", "kast_rating", "mk_per_r",
 ];
 
+// teamProfiles.assetFolders e um objeto passa-adiante: app.js:3030 copia
+// `source.assetFolders || {}` e nenhuma das seis chaves e lida em lugar nenhum.
+// Destas duas, alem de mortas, os diretorios NAO EXISTEM no disco - eram dado
+// enganoso, apontando para assets/flags e assets/social-icons. As outras
+// quatro apontam para diretorio real e ficam: sao inertes, mas nao mentem.
+// A mesma remocao vale em team-profiles.json, que e a fonte deste objeto.
+const DEAD_ASSET_FOLDERS = ["flags", "socialIcons"];
+
 const mb = (bytes) => `${(bytes / 1048576).toFixed(2)} MB`;
 
 function main() {
@@ -59,6 +67,17 @@ function main() {
   for (const match of db.matches) for (const player of match.players || []) podar(player);
   for (const player of db.players || []) podar(player);
 
+  let pastasRemovidas = 0;
+  const pastas = db.teamProfiles?.assetFolders;
+  if (pastas) {
+    for (const chave of DEAD_ASSET_FOLDERS) {
+      if (chave in pastas) {
+        delete pastas[chave];
+        pastasRemovidas += 1;
+      }
+    }
+  }
+
   const depois = JSON.stringify(codec.encode(db));
 
   // Round-trip: o que o navegador vai decodificar tem de bater com o controle.
@@ -74,6 +93,10 @@ function main() {
     ["ACS preservado", lido.matches[0]?.players[0]?.acs === controle.acsExemplo],
     ["identidade team.ranking", lido.teams[0]?.ranking === lido.ranking.byTeamId?.[lido.teams[0]?.id]],
     ["campos mortos sumiram", DEAD_PLAYER_FIELDS.every((f) => !(f in (lido.matches[0]?.players[0] || {})))],
+    ["pastas de asset mortas sumiram", DEAD_ASSET_FOLDERS.every((k) => !(k in (lido.teamProfiles?.assetFolders || {})))],
+    // Guarda para o futuro: pasta que sobra tem de existir no disco, senao
+    // volta a ser dado que aponta para lugar nenhum.
+    ["toda pasta de asset restante existe", Object.values(lido.teamProfiles?.assetFolders || {}).every((p) => fs.existsSync(path.join(ROOT, String(p))))],
   ];
   const falhas = checks.filter(([, ok]) => !ok);
   if (falhas.length) {
@@ -84,7 +107,7 @@ function main() {
   }
 
   fs.writeFileSync(FILE, depois);
-  console.log(`campos removidos: ${removidos}`);
+  console.log(`campos removidos: ${removidos} | pastas de asset mortas removidas: ${pastasRemovidas}`);
   console.log(`cru : ${mb(antes.length)} -> ${mb(depois.length)}`);
   console.log(
     `gzip: ${mb(zlib.gzipSync(Buffer.from(antes)).length)} -> ${mb(zlib.gzipSync(Buffer.from(depois)).length)}`,

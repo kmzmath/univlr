@@ -15821,12 +15821,34 @@ function mapColors(name) {
   return colorPair(`map-${name}`);
 }
 
+// A paleta gerada sai em hex, nao em hsl(). Ate 26/08/2026 saia em hsl e o
+// preco era silencioso: hexToRgb() so aceita #rrggbb, entao teamWashFor()
+// abortava na primeira linha e devolvia tinta clara sobre a cor crua, sem o
+// passeio que garante 4,5:1 - a Sixa Eaters, unica das 98 equipes que nao esta
+// em dados_excel/teams_infos.xlsx, ficava em 2,93:1. teamPatternFor() falhava
+// junto, no mesmo hexToRgb, e caia no "tecido" para toda equipe gerada.
+// Mesmas cores, notacao que as guardas conseguem ler.
 function colorPair(seed) {
   let hash = 0;
   for (let index = 0; index < seed.length; index += 1) hash = seed.charCodeAt(index) + ((hash << 5) - hash);
   const hue = Math.abs(hash) % 360;
   const hue2 = (hue + 145) % 360;
-  return [`hsl(${hue} 64% 38%)`, `hsl(${hue2} 58% 22%)`];
+  return [rgbToHex(hslToRgb(hue, 64, 38)), rgbToHex(hslToRgb(hue2, 58, 22))];
+}
+
+function hslToRgb(h, s, l) {
+  const sat = s / 100;
+  const lum = l / 100;
+  const c = (1 - Math.abs(2 * lum - 1)) * sat;
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+  const m = lum - c / 2;
+  const [r, g, b] =
+    h < 60 ? [c, x, 0] :
+    h < 120 ? [x, c, 0] :
+    h < 180 ? [0, c, x] :
+    h < 240 ? [0, x, c] :
+    h < 300 ? [x, 0, c] : [c, 0, x];
+  return [r, g, b].map((canal) => Math.round((canal + m) * 255));
 }
 
 function slugify(value) {

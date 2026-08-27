@@ -14386,23 +14386,39 @@ small,
 }
 
 /* ==========================================================================
-   Cabecalho da pagina de ranking
-   Eram tres coisas dizendo a mesma: um selo "RANKING", um titulo "Ranking
-   Universitario de Valorant" e uma barra em volta dos dois. Sobrou a palavra,
-   grande e centralizada, na cor de texto da marca - que aqui e identidade e
-   nao dado.
+   CABECALHO DE PAGINA - uma regra so
+   Vale para /partidas, /eventos, /players, /metricas, /mapas e /ranking.
 
-   A barra sai por inteiro: fundo, raio e o gradiente que .page-header herdava
-   da lista de paineis. Era moldura em volta de um titulo. O `p` continua no
-   HTML (ja estava escondido por .page-title p) porque carrega a formula da
-   nota - some da tela, nao do documento.
+   A barra sai por inteiro: fundo, gradiente, raio e sombra que .page-header
+   herdava da lista de paineis (o bloco compartilhado la em cima com
+   .letter-filter, .table-wrap, .entity-card e companhia). Era moldura em volta
+   de um titulo, e com `padding: 0` o texto ainda encostava na borda do bloco.
 
-   Escopo em .ranking-hero de proposito: .page-header e o mesmo de /partidas,
-   /eventos, /players e /stats, e nenhum deles pediu isso.
+   O nome da pagina vira a manchete: Barlow Condensed, caixa alta, na cor de
+   texto da marca - que aqui e identidade e nao dado. O ranking ja tinha esse
+   tratamento desde 26/08/2026, mas centralizado: era a unica pagina cujo
+   titulo nao dividia o eixo esquerdo com a tabela logo abaixo dele. Agora as
+   seis alinham igual.
+
+   A sobrancelha saiu do HTML das quatro que tinham (Mapas, Partidas,
+   Campeonatos, Players): o menu ja marca em vermelho a secao em que voce esta,
+   e o nome em corpo grande repetia a informacao.
+
+   O `p` de cada cabecalho continua no HTML (ja estava escondido por
+   .page-title p) porque carrega texto de contexto - some da tela, nao do
+   documento.
    ========================================================================== */
-.page-header.ranking-hero {
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: center;
+/* NAO declare grid-template-columns aqui. Este bloco mora no fim do arquivo,
+   depois da media query de 940px que empilha o cabecalho no celular - fixar as
+   duas colunas aqui desfazia o empilhamento e o painel de filtro de equipe do
+   /players saia 27px para fora da tela de 375px, sem ancestral rolavel. Medido:
+   com a folha anterior a direita do painel batia em 360 de 375; com as colunas
+   fixadas, em 402. O layout ja estava resolvido - este bloco so tira a barra e
+   trata a tipografia. */
+.page-header,
+.page-header.slim-header {
+  align-items: end;
+  gap: 24px;
   background: none;
   border: 0;
   border-radius: 0;
@@ -14410,20 +14426,36 @@ small,
   padding: 0;
 }
 
-.ranking-hero .page-title {
-  justify-items: center;
-  text-align: center;
+.page-header .page-title {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  text-align: left;
 }
 
-.ranking-hero h1 {
+.page-header .page-title h1 {
+  margin: 0;
   max-width: none;
-  color: var(--brand-text);
-  font-size: clamp(var(--text-4xl), 6vw, var(--text-6xl));
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-3xl), 5.2vw, var(--text-6xl));
+  line-height: 0.88;
   /* Caixa alta em corpo grande pede a letra mais junta: no tamanho do selo
      (11px) o espacamento neutro estava certo, em 80px ele abre buraco. */
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  line-height: 0.92;
+  color: var(--brand-text);
+}
+
+/* So /players mostra contagem, e ela e o total JA FILTRADO: buscar ou filtrar
+   por letra mexe no numero, porque cabecalho que nao acompanha o filtro mente.
+   Fica em tinta, nao em vermelho - e dado, e vermelho aqui e marca. */
+.page-header .page-count {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-xl), 3.1vw, var(--text-4xl));
+  line-height: 0.88;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
 }
 
 .ranking-accordion-button .rank-cell,

@@ -5145,7 +5145,6 @@ function renderMapsCompact(id) {
   Shell(`
     <header class="page-header">
       <div class="page-title">
-        <span class="eyebrow">Mapas</span>
         <h1>Map pool</h1>
       </div>
     </header>
@@ -5192,7 +5191,6 @@ function renderMatchesCompact(id) {
   Shell(`
     <header class="page-header slim-header">
       <div class="page-title">
-        <span class="eyebrow">Partidas</span>
         <h1>Resultados</h1>
       </div>
     </header>
@@ -5606,7 +5604,6 @@ function renderEventsPage(id) {
   Shell(`
     <header class="page-header slim-header">
       <div class="page-title">
-        <span class="eyebrow">Campeonatos</span>
         <h1>Eventos</h1>
         <p>Chaves, resultados, participantes e contexto competitivo dos eventos cobertos.</p>
       </div>
@@ -5640,8 +5637,8 @@ function renderPlayersCompact(id) {
   Shell(`
     <header class="page-header slim-header">
       <div class="page-title">
-        <span class="eyebrow">Players</span>
         <h1>Jogadores</h1>
+        <span class="page-count">${players.length}</span>
         <p>Perfis dos jogadores cadastrados na base competitiva.</p>
       </div>
       <div class="toolbar filters-toolbar player-filters">
@@ -5815,7 +5812,7 @@ function renderRankingPage(teamId = route().id || "") {
   const aba = rankingRouteTab();
   const semanaMatches = rankingWeekMatches(snapshot);
   Shell(`
-    <header class="page-header slim-header ranking-hero">
+    <header class="page-header slim-header">
       <div class="page-title">
         <h1>Ranking</h1>
         <p>Nota final: 70% desempenho, 15% conquistas, 10% forma recente e 5% rAAting 3.0 dos jogadores. Equipes com menos de ${minimumMatches} partidas ficam marcadas como provisórias e equipes com elenco incompleto (menos de ${minimumRosterSize} jogadores) ficam inativas.</p>

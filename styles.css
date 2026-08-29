@@ -16351,3 +16351,58 @@ img {
     justify-self: start;
   }
 }
+
+/* ==========================================================================
+   SCOREBOARD DA PARTIDA EM TELA ESTREITA
+
+   As tabelas sao table-layout: fixed com min-width: 0, entao encolhiam ate
+   caber no container em vez de manter coluna legivel. Medido a 360px: a tabela
+   precisa de 795px naturalmente (15 colunas no modo Padrao - "Jogador" pede 85,
+   "rAAting 3.0" 86, "Swing/R" 72) e estava sendo espremida em 285, ou 36% do
+   necessario. O resultado nao era texto cortado, era texto SOBREPOSTO: o
+   cabecalho lia "JOGADORAGENTES AAGE 30 A +/-KASDADBSwingHKFD FK-".
+
+   O CSS ja tinha a intencao certa registrada mais acima ("o que e largo por
+   natureza rola na propria caixa, nunca na pagina") e ja estilizava a barra de
+   rolagem deste container - faltava a tabela ter um piso de largura para haver
+   o que rolar.
+
+   O scroller e a .vlr-board, uma so para as duas tabelas: o agregado da equipe
+   e as linhas de jogador partilham o mesmo colgroup, entao rolar em caixas
+   separadas desalinharia a coluna de cima da de baixo.
+   ========================================================================== */
+@media (max-width: 940px) {
+  .vlr-board {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-dark) transparent;
+  }
+
+    /* As caixas internas param de rolar por conta propria para nao competir com o
+     scroller de cima nem dessincronizar as duas tabelas. O padding tem de ser
+     igual nas duas: .match-scoreboard-wrap tinha 6px e o agregado nao, e isso
+     deslocava a linha de cima 6px a esquerda da de baixo - as colunas tinham a
+     MESMA largura e mesmo assim nao batiam. */
+  .match-scoreboard-summary-wrap,
+  .table-wrap.match-scoreboard-wrap {
+    overflow-x: visible;
+    padding: 6px;
+  }
+
+  /* Piso em PIXEL, nao em max-content. As colunas do colgroup sao definidas em
+     porcentagem (.score-col-player 12%, .score-col-rating 7%, .score-col-swing
+     6%), e porcentagem resolvida contra largura intrinseca e ciclo: as duas
+     primeiras tentativas - grade max-content e trilho com width: max-content -
+     mandaram as tabelas para 800.000px de largura.
+     Com um piso concreto as porcentagens resolvem contra um numero conhecido, e
+     as duas tabelas, que partilham o mesmo colgroup, saem com colunas nas
+     mesmas posicoes sem precisar de trilho nenhum. */
+  .vlr-board .match-scoreboard.scoreboard-standard {
+    min-width: 880px;
+  }
+
+  .vlr-board .match-scoreboard.scoreboard-advanced {
+    min-width: 1120px;
+  }
+}

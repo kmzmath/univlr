@@ -2689,8 +2689,6 @@ const navItems = [
   ["matches", "Partidas"],
   ["events", "Eventos"],
   ["players", "Players"],
-  // A rota continua /stats; o rotulo diz o que a pagina de fato entrega hoje.
-  ["stats", "Métricas"],
   ["ranking", "Ranking"],
 ];
 
@@ -2709,11 +2707,9 @@ const STATIC_DOCUMENT_TITLES = {
   events: "Eventos",
   tournaments: "Eventos",
   players: "Players",
-  stats: "Métricas",
   ranking: "Ranking",
   rankings: "Ranking",
   teams: "Equipes",
-  maps: "Mapas",
 };
 
 const state = {
@@ -5066,7 +5062,6 @@ function render() {
     events: renderEventsPage,
     tournaments: renderEventsPage,
     players: renderPlayersCompact,
-    stats: renderStatsPage,
     ranking: renderRankingPage,
     rankings: renderRankingPage,
     teams: renderTeamsCompact,
@@ -5092,6 +5087,11 @@ function canonicalHashForRoute(currentRoute) {
   // normalizeCanonicalRoute() roda antes de route() em render() - a URL vira
   // #/ranking e titulo e corpo passam a concordar de uma vez.
   if (currentRoute.section === "teams" && !currentRoute.id) return "#/ranking";
+  // /stats e o indice /maps sairam em 29/08/2026. Redireciono em vez de dar
+  // 404 porque /stats esteve na navegacao e pode estar em link salvo. So o
+  // indice cai aqui: #/maps/<id> tem id e segue para a pagina do mapa.
+  if (currentRoute.section === "stats") return "#/home";
+  if (currentRoute.section === "maps" && !currentRoute.id) return "#/home";
   if (currentRoute.section !== "players" || !currentRoute.id) return "";
   const player = playerById(currentRoute.id);
   if (!player?.routeSlug) return "";
@@ -5099,78 +5099,17 @@ function canonicalHashForRoute(currentRoute) {
   return canonicalHash === currentRouteKey() ? "" : canonicalHash;
 }
 
-function renderHomeCompact() {
-  const db = state.db;
-  const events = sortedEvents("recent").slice(0, 5);
-  const topPlayers = db.players.filter(isOfficialRatingSample).sort((a, b) => Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0) || b.rounds - a.rounds).slice(0, 8);
-  const topTeams = db.teams.slice(0, 6);
-  const recentMatches = allMatchSeries().slice(0, 6);
-  Shell(`
-    <header class="home-header">
-      <div>
-        <span class="eyebrow">${SITE_NAME}</span>
-        <h1>Centro competitivo universitário.</h1>
-      </div>
-      <div class="home-kpis">
-        ${metric(db.uniqueSeriesCount, "partidas")}
-        ${metric(db.teams.length, "equipes")}
-        ${metric(db.players.length, "jogadores")}
-        ${metric(db.maps.length, "mapas")}
-      </div>
-    </header>
-    <div class="layout-grid">
-      <div class="stack">
-        <section class="section-band">
-          ${sectionHead("Últimos resultados", "", "matches", "Ver partidas")}
-          <div class="match-list">${recentMatches.map(matchCard).join("")}</div>
-        </section>
-        <section class="section-band">
-          ${sectionHead("Ranking", "", "rankings", "Ver ranking")}
-          <div class="card-grid">${topTeams.map(teamCard).join("")}</div>
-        </section>
-        <section class="section-band">
-          ${sectionHead("Destaques individuais", "", "players", "Ver jogadores")}
-          ${playerTable(topPlayers)}
-        </section>
-      </div>
-      <aside class="side-rail">
-        <section class="data-panel dark">
-          <div class="section-head"><h2>Base competitiva</h2><a class="subtle-link" href="#/tournaments">Campeonatos</a></div>
-          <div class="stats-grid">
-            ${stat(db.uniqueSeriesCount, "Partidas")}
-            ${stat(visibleTournaments().length, "Campeonatos")}
-            ${stat(db.teams.length, "Equipes")}
-            ${stat(db.players.length, "Jogadores")}
-          </div>
-        </section>
-        <section class="data-panel">
-          <div class="section-head"><h2>Campeonatos</h2><a class="subtle-link" href="#/tournaments">Ver todos</a></div>
-          <div class="simple-list">${events.map(tournamentRow).join("")}</div>
-        </section>
-        <section class="data-panel">
-          <div class="section-head"><h2>Mapas</h2><a class="subtle-link" href="#/maps">Ver mapas</a></div>
-          <div class="simple-list">${db.maps.slice(0, 5).map(mapRow).join("")}</div>
-        </section>
-      </aside>
-    </div>
-  `);
-}
-
 function renderTeamsCompact(id) {
   if (id) return renderTeamDetail(id);
   return renderNotFound("Recurso");
 }
 
+// O indice /maps saiu em 29/08/2026 junto com /stats. A pagina de UM mapa
+// continua viva: ela e ligada pelo placar da partida, pela aba de mapas do
+// campeonato e pela pagina do jogador.
 function renderMapsCompact(id) {
   if (id) return renderMapDetail(id);
-  Shell(`
-    <header class="page-header">
-      <div class="page-title">
-        <h1>Map pool</h1>
-      </div>
-    </header>
-    <div class="card-grid three">${state.db.maps.map(mapCard).join("")}</div>
-  `);
+  return renderNotFound("Recurso");
 }
 
 function renderHomeCompact() {
@@ -5746,71 +5685,6 @@ const METRIC_GLOSSARY_BY_TERM = new Map(METRIC_GLOSSARY.map((item) => [item.term
 
 function metricHint(label) {
   return METRIC_GLOSSARY_BY_TERM.get(label)?.short || "";
-}
-
-function renderStatsPage() {
-  const minRounds = RaaRatingCore?.SAMPLE_MIN_ROUNDS ?? 50;
-  const escala = [
-    ["0,72", "um intervalo abaixo da mediana"],
-    ["1,00", "mediana do cenário"],
-    ["1,28", "um intervalo acima"],
-    ["1,56", "dois intervalos acima"],
-  ];
-  const pesos = [
-    ["33%", "Round Swing"],
-    ["25%", "Abates"],
-    ["15%", "Dano"],
-    ["15%", "Sobrevivência"],
-    ["8%", "KAST"],
-    ["4%", "Multi-kills"],
-  ];
-  Shell(`
-    <header class="page-header slim-header">
-      <div class="page-title">
-        <h1>Métricas</h1>
-      </div>
-    </header>
-
-    <section class="metric-explainer" aria-labelledby="metric-rating-title">
-      <h2 id="metric-rating-title">Como ler o rAAting 3.0</h2>
-      <p class="metric-lede">
-        É a nota geral de um jogador no cenário universitário. <strong>1.00 é o desempenho mediano</strong>:
-        metade dos jogadores fica acima, metade abaixo. Cada 0,28 acima ou abaixo equivale a um
-        intervalo interquartil de distância dessa mediana. A escala é travada entre 0,30 e 1,80.
-      </p>
-      <ul class="metric-scale">
-        ${escala.map(([valor, texto]) => `<li><strong>${escapeHtml(valor)}</strong><span>${escapeHtml(texto)}</span></li>`).join("")}
-      </ul>
-
-      <h3>Do que ela é feita</h3>
-      <ul class="metric-weights">
-        ${pesos.map(([peso, nome]) => `<li><strong>${escapeHtml(peso)}</strong><span>${escapeHtml(nome)}</span></li>`).join("")}
-      </ul>
-      <p class="metric-note">
-        Para entrar no ranking oficial de jogadores é preciso ter jogado ao menos
-        ${minRounds} rounds. Quem está abaixo disso aparece marcado como baixa amostra.
-      </p>
-    </section>
-
-    <section class="metric-glossary" aria-labelledby="metric-glossary-title">
-      <h2 id="metric-glossary-title">Glossário</h2>
-      <dl>
-        ${METRIC_GLOSSARY.filter((item) => item.key !== "rating")
-          .map((item) => `<dt>${escapeHtml(item.term)}</dt><dd>${escapeHtml(item.long)}</dd>`)
-          .join("")}
-      </dl>
-    </section>
-
-    <section class="metric-where" aria-labelledby="metric-where-title">
-      <h2 id="metric-where-title">Onde ver os números</h2>
-      <p>A página de estatísticas agregadas ainda está em construção. Enquanto isso, os mesmos dados estão em:</p>
-      <ul class="metric-links">
-        <li><a href="#/ranking">Ranking</a><span>nota das equipes e histórico por semana</span></li>
-        <li><a href="#/players">Players</a><span>rAAting e médias de cada jogador</span></li>
-        <li><a href="#/matches">Partidas</a><span>placar completo de cada mapa, com todas as colunas</span></li>
-      </ul>
-    </section>
-  `);
 }
 
 function avg(values) {
@@ -8037,45 +7911,6 @@ function renderTournamentDetail(id) {
     bindTournamentStatsControls(event.id);
   }
   playPanelSlide(tabTransition);
-  /* Legacy compact tournament layout disabled after hub refresh.
-  Shell(`
-    <article class="tournament-hub">
-      ${tournamentHero(event, matches, standings)}
-      ${tournamentNav(event)}
-      ${tournamentGroupedEvents(event, matches)}
-      <div class="tournament-layout">
-        <div class="tournament-main">
-        <section class="section-band">
-          ${sectionHead("Partidas do evento", "Séries consolidadas por partida e mapa.", null, null)}
-          <div class="match-list">${matches.map(matchCard).join("")}</div>
-        </section>
-        <section class="section-band">
-          ${sectionHead("Equipes participantes", "Detectadas pelos nomes dos arquivos importados.", null, null)}
-          <div class="card-grid">${event.teams.map((teamId) => teamCard(teamById(teamId))).join("")}</div>
-        </section>
-        <section class="section-band">
-          ${sectionHead("Melhores jogadores", "Ranking individual dentro dos arquivos do evento.", null, null)}
-          ${playerTable(eventPlayers)}
-        </section>
-      </div>
-      <aside class="side-rail">
-        <section class="data-panel dark">
-          <div class="section-head"><h2>Resumo</h2></div>
-          <div class="stats-grid">
-            ${stat(event.matches, "Partidas")}
-            ${stat(event.teams.length, "Equipes")}
-            ${stat(event.players.length, "Jogadores")}
-            ${stat(event.maps.length, "Mapas")}
-          </div>
-        </section>
-        <section class="data-panel">
-          <div class="section-head"><h2>Mapas usados</h2></div>
-          <div class="simple-list">${event.maps.map((name) => mapRow(mapByName(name))).join("")}</div>
-        </section>
-      </aside>
-    </div>
-  `);
-  */
 }
 
 const TOURNAMENT_TAB_KEYS = ["overview", "jogos", "estatisticas", "mapas", "agentes", "composicoes"];
@@ -8462,18 +8297,6 @@ function tournamentTeamById(event, teamId) {
     ranking: { provisional: true },
     missing: true,
   };
-}
-
-function tournamentNav(event) {
-  return `
-    <nav class="tournament-tabs" aria-label="Secoes do campeonato">
-      <span class="active">Overview</span>
-      <a href="#/matches">Matches</a>
-      <a href="#/matches">Results</a>
-      <a href="#/stats">Stats</a>
-      <a href="#/events/${event.id}">Teams</a>
-    </nav>
-  `;
 }
 
 function tournamentGroupedEvents(event, matches) {
@@ -15108,20 +14931,6 @@ function tournamentRow(event) {
   return `<a class="simple-row" href="#/tournaments/${event.id}">${eventLogo(event)}<span><strong>${escapeHtml(event.name)}</strong><br><span class="tiny">${escapeHtml(eventTimeRange(event))} - ${event.matches} partidas - ${event.teams.length} equipes</span></span><span class="chip event-chip ${eventStatusClass(event.status)}">${escapeHtml(event.status)}</span></a>`;
 }
 
-function mapCard(map) {
-  return `
-    <a class="entity-card" href="#/maps/${map.id}">
-      <div class="entity-row">${mapLogo(map.id)}<span class="entity-main"><strong>${escapeHtml(map.name)}</strong><span>${map.matches} partidas - ${map.rounds} rounds</span></span></div>
-      <div class="chip-row"><span class="chip red">${map.matches} partidas</span><span class="chip">${map.teamStats.length} equipes</span><span class="chip">${map.agentStats[0]?.name || "Agente"}</span></div>
-    </a>
-  `;
-}
-
-function mapRow(map) {
-  if (!map) return "";
-  return `<a class="simple-row" href="#/maps/${map.id}">${mapLogo(map.id)}<span><strong>${escapeHtml(map.name)}</strong><br><span class="tiny">${map.matches} partidas - ${map.rounds} rounds</span></span><span class="chip">${map.agentStats[0]?.name || "-"}</span></a>`;
-}
-
 // Campeonato e sempre exibido por dia (sem horario); o horario continua valendo
 // so para partidas, que acontecem em um horario especifico.
 function eventTimeRange(event) {
@@ -15670,7 +15479,7 @@ const NOT_FOUND_ENTITIES = {
   Campeonato: { frase: "Campeonato não encontrado", volta: "#/events", voltaLabel: "Ver todos os campeonatos" },
   Equipe: { frase: "Equipe não encontrada", volta: "#/ranking", voltaLabel: "Ver o ranking de equipes" },
   Jogador: { frase: "Jogador não encontrado", volta: "#/players", voltaLabel: "Ver todos os jogadores" },
-  Mapa: { frase: "Mapa não encontrado", volta: "#/maps", voltaLabel: "Ver todos os mapas" },
+  Mapa: { frase: "Mapa não encontrado", volta: "#/home", voltaLabel: "Voltar para a inicial" },
   Recurso: { frase: "Página não encontrada", volta: "#/home", voltaLabel: "Voltar para a inicial" },
 };
 

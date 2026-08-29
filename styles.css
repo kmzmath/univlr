@@ -16406,3 +16406,133 @@ img {
     min-width: 1120px;
   }
 }
+
+/* ==========================================================================
+   ALVOS DE TOQUE EM TELA DE DEDO
+
+   Medido a 360px antes: 139 de 191 controles em /players e 137 de 201 em
+   /partidas abaixo de 44x44. O numero assustava mais que o problema - a maioria
+   sao linhas de largura CHEIA (a opcao de equipe tem 313px de largura) que
+   reprovavam so na altura, por 2 a 6px. Subir o piso resolve essas sem mexer em
+   layout.
+
+   Os genuinamente pequenos eram poucos e estao aqui tambem: o filtro de letras
+   (29 botoes de 21x24), os cabecalhos de ordenacao do ranking (24px de altura)
+   e o checkbox "Detalhes da nota", de 18x18 - neste ultimo quem cresce e o
+   <label> que ja envolve o input, entao a area tocavel passa a ser a frase
+   inteira em vez da caixinha. Engordar a caixa seria pior: ela ja e o elemento
+   mais claro daquela barra.
+
+   Corte em 760px e nao 940px: e a faixa onde a interacao e por dedo.
+   ========================================================================== */
+@media (max-width: 760px) {
+  .letter-filter button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .team-filter-button,
+  .filter-event-button,
+  .ranking-action-button,
+  .result-day-toggle,
+  .filter-reset-button,
+  .filter-pill,
+  .filter-control,
+  .filter-dropdown > summary,
+  .ranking-sort-header,
+  .event-filter-row,
+  .event-filter-toggle,
+  .nav-link {
+    min-height: 44px;
+  }
+
+  /* O input fica onde esta; o alvo passa a ser o rotulo inteiro. */
+  .ranking-details-toggle {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* Controles nativos dentro da pagina: o seletor de data do ranking (28px), os
+     campos de data do filtro de partidas (34px) e o cabecalho "#", que passava
+     na altura mas tinha 30px de largura. */
+  .filter-date-field .filter-control,
+  .ranking-page-toolbar select,
+  .ranking-toolbar-context select {
+    min-height: 44px;
+  }
+
+  .ranking-sort-header {
+    min-width: 44px;
+  }
+
+  /* Terceira passada, medida a 360px: sobravam tres classes, todas reprovando
+     so na altura. As duas primeiras erram por 2px - o piso do projeto era 42px,
+     escolhido antes de existir alvo de dedo. A terceira e o par segmentado
+     "Apenas validos / Todos", de 34px: o polegar da barra e posicionado por
+     inset (top/bottom 4px), entao ele acompanha a altura nova sozinho. */
+  .ranking-tab-switch,
+  .panel-footer-link {
+    min-height: 44px;
+  }
+
+  .ranking-scope-switch button,
+  .match-scoreboard-mode-switch button {
+    min-height: 44px;
+  }
+
+  /* Quarta passada: a pagina de PARTIDA, que eu nao tinha medido nas anteriores
+     porque so olhei as listas. 39 controles abaixo de 44 a 360px, quase todos
+     dentro do placar.
+
+     O <th> tem 42px e o botao de ordenar dentro dele so 25px - o resto e padding
+     vertical da celula. Zerar esse padding no celular entrega os 44px ao botao e
+     a linha de cabecalho inteira cresce 2px. A largura fica como esta: as colunas
+     do placar sao PORCENTAGEM (5% = 44px, 4,5% = 40px sobre os 880px de piso) e
+     encostar nelas com min-width e o caminho conhecido para o dimensionamento
+     circular que ja estourou esta tabela para 800.000px duas vezes. K, D, A, MKs,
+     FK e FD seguem com 32-36px de largura; a tabela rola de qualquer jeito.
+
+     O nome do jogador tem 24px dentro de uma celula de 53px: cresce de graca. */
+  .match-scoreboard th {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .score-sort-button {
+    min-height: 44px;
+  }
+
+  td .subtle-link {
+    min-height: 44px;
+    /* "Anzy" mede 19px de texto numa celula de 246px: a largura tambem sai de
+       graca, e so o link nao acompanhar a celula. */
+    min-width: 44px;
+  }
+
+  .match-event-link,
+  .lineup-selected-actions a {
+    min-height: 44px;
+  }
+
+  /* Quinta passada: as paginas de EQUIPE e de JOGADOR, que tambem ficaram de
+     fora das listas. As abas tem 38-40px e o botao de rede social 38x38.
+
+     As tres variantes da aba precisam estar no mesmo bloco: .team-page
+     .team-tab crava 38px com 0-2-0 e .player-page .player-tabs .team-tab crava
+     40px com 0-3-0. Um .team-tab solto, de 0-1-0, perde para os dois - o mesmo
+     jeito que o [data-status-visible] engoliu o vao do ranking. Achei o segundo
+     so depois de medir: o primeiro grep tinha sido cortado por um head.
+
+     O botao de rede social usa height fixo, entao min-height nao o alcanca. */
+  .team-tab,
+  .team-page .team-tab,
+  .player-page .player-tabs .team-tab {
+    min-height: 44px;
+  }
+
+  .social-button {
+    width: 44px;
+    height: 44px;
+  }
+}

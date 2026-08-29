@@ -7878,6 +7878,38 @@
             },
             {
               "slot": 2,
+              "playerId": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw",
+              "name": "Laves",
+              "handle": "jannik sinner#ATP",
+              "firstSeenAt": "2026-05-28",
+              "lastSeenAt": "2026-07-08",
+              "matches": 18,
+              "rounds": 353,
+              "profileMatches": 18,
+              "profileConfidence": 72,
+              "currentTeam": "uninassau_griffins",
+              "teamHistory": [
+                "uninassau_griffins"
+              ]
+            },
+            {
+              "slot": 3,
+              "playerId": "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A",
+              "name": "Mendes",
+              "handle": "Joy 1955#rey",
+              "firstSeenAt": "2026-05-28",
+              "lastSeenAt": "2026-07-08",
+              "matches": 18,
+              "rounds": 353,
+              "profileMatches": 18,
+              "profileConfidence": 72,
+              "currentTeam": "uninassau_griffins",
+              "teamHistory": [
+                "uninassau_griffins"
+              ]
+            },
+            {
+              "slot": 4,
               "playerId": "9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ",
               "name": "Peso",
               "handle": "PESO PILANTRINHA#RATAO",
@@ -7893,48 +7925,16 @@
               ]
             },
             {
-              "slot": 3,
-              "playerId": "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA",
-              "name": "Jannik",
-              "handle": "jannik sinner#ATP",
-              "firstSeenAt": "2026-06-03",
-              "lastSeenAt": "2026-07-08",
-              "matches": 12,
-              "rounds": 223,
-              "profileMatches": 12,
-              "profileConfidence": 48,
-              "currentTeam": "uninassau_griffins",
-              "teamHistory": [
-                "uninassau_griffins"
-              ]
-            },
-            {
-              "slot": 4,
-              "playerId": "n4gmlK3PBjD58Em3HdmK3czcYqqtRiehQ5m4fRpjVklg38w7oGz8qmEijZ5holGKPoPSgJoF9hSNJg",
-              "name": "Joy",
-              "handle": "Joy 1955#rey",
-              "firstSeenAt": "2026-06-03",
-              "lastSeenAt": "2026-07-08",
-              "matches": 12,
-              "rounds": 223,
-              "profileMatches": 12,
-              "profileConfidence": 48,
-              "currentTeam": "uninassau_griffins",
-              "teamHistory": [
-                "uninassau_griffins"
-              ]
-            },
-            {
               "slot": 5,
               "playerId": "2pfWv-PCjOl_ukzJdZyQNxW9uK94CEiJmWxycc9MxLTuUURixVs642SIJkhr732N50C7WjrtLdOreg",
               "name": "JayJ",
               "handle": "NEGO DOCE#JayJ",
-              "firstSeenAt": "2026-06-03",
+              "firstSeenAt": "2026-05-28",
               "lastSeenAt": "2026-06-20",
-              "matches": 11,
-              "rounds": 205,
-              "profileMatches": 11,
-              "profileConfidence": 44,
+              "matches": 13,
+              "rounds": 249,
+              "profileMatches": 13,
+              "profileConfidence": 52,
               "currentTeam": "uninassau_griffins",
               "teamHistory": [
                 "uninassau_griffins"
@@ -7942,38 +7942,6 @@
             },
             {
               "slot": 6,
-              "playerId": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw",
-              "name": "Laves",
-              "handle": "surebeteiro#laves",
-              "firstSeenAt": "2026-05-28",
-              "lastSeenAt": "2026-06-05",
-              "matches": 6,
-              "rounds": 130,
-              "profileMatches": 6,
-              "profileConfidence": 24,
-              "currentTeam": "uninassau_griffins",
-              "teamHistory": [
-                "uninassau_griffins"
-              ]
-            },
-            {
-              "slot": 7,
-              "playerId": "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A",
-              "name": "Mendes",
-              "handle": "mndeuS#mila",
-              "firstSeenAt": "2026-05-28",
-              "lastSeenAt": "2026-06-05",
-              "matches": 6,
-              "rounds": 130,
-              "profileMatches": 6,
-              "profileConfidence": 24,
-              "currentTeam": "uninassau_griffins",
-              "teamHistory": [
-                "uninassau_griffins"
-              ]
-            },
-            {
-              "slot": 8,
               "playerId": "i3aicKYbd7ACS0VMHleipcbPYOc2o3iCMx359INgLc2zdwcRHrmVPQKw3PtUUwXb8rWmp8SRiiCdFg",
               "name": "Suflah",
               "handle": "suflah#Nanda",

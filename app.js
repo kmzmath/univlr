@@ -2993,6 +2993,18 @@ function prepareMetadata(rawMetadata = {}) {
   const stateWinrates = rawMetadata.stateWinrates || [];
   const teamsById = new Map(teams.map((team) => [team.id, team]));
   const playersByPuuid = new Map(players.filter((player) => player.puuid).map((player) => [player.puuid, player]));
+  // Uma pessoa pode disputar campeonatos diferentes de contas Riot diferentes
+  // (metadata.accounts, alimentado pelas colunas "puuid N" de players.xlsx).
+  // Apontar toda conta alternativa para a mesma pessoa é o que faz
+  // normalizeMatchPlayer devolver um `id` só para aparições de contas
+  // diferentes; o resto do pipeline agrega por esse id e se une sozinho.
+  // A conta principal tem prioridade: uma alternativa nunca sobrescreve um
+  // jogador que já se registrou com aquele puuid como principal.
+  for (const player of players) {
+    for (const account of player.accounts || []) {
+      if (account && !playersByPuuid.has(account)) playersByPuuid.set(account, player);
+    }
+  }
   const playersByName = new Map();
   const agentsBySlug = new Map(agents.map((agent) => [agent.slug, agent]));
   const mapsBySlug = new Map(maps.map((map) => [map.slug, map]));
@@ -3452,9 +3464,18 @@ function parseMatchFile(file, metadata) {
   const colorForB = colorForA === "Red" ? "Blue" : "Red";
 
   const matchRoundStats = aggregateMatchPlayerRoundStats(raw.players || [], raw.roundResults || [], metadata);
+  const accountOverrides = sharedAccountOverrides(new Set((raw.players || []).map((player) => player.puuid).filter(Boolean)));
   const players = raw.players
     .filter((player) => !player.isObserver)
-    .map((player) => normalizeMatchPlayer(player, matchRoundStats.get(player.puuid) || emptyPlayerRoundStats(), metadata));
+    .map((player) =>
+      normalizeMatchPlayer(
+        player,
+        matchRoundStats.get(player.puuid) || emptyPlayerRoundStats(),
+        metadata,
+        accountOverrides.has(player.puuid) ? metadata.playersByPuuid.get(accountOverrides.get(player.puuid)) : null,
+      ),
+    );
+  assertOnePersonPerMatch(players, raw.matchInfo?.matchId, file.path);
 
   const teamA = buildMatchTeam(meta.teamAId, colorForA, colorForA === "Red" ? red.roundsWon : blue.roundsWon, metadata);
   const teamB = buildMatchTeam(meta.teamBId, colorForB, colorForB === "Red" ? red.roundsWon : blue.roundsWon, metadata);
@@ -3717,8 +3738,63 @@ function teamIdMatchesAlias(registeredId, targetId) {
   return registeredId === targetId || registeredId.startsWith(`${targetId}_`) || targetId.startsWith(`${registeredId}_`);
 }
 
-function normalizeMatchPlayer(player, roundAgg, metadata) {
-  const registered = resolveRegisteredPlayer(player, metadata);
+// Contas alternativas do mesmo dono viram uma pessoa só (metadata.accounts).
+// Mas quando as DUAS contas de um dono aparecem na MESMA partida, é porque
+// alguém jogou de conta emprestada - unificar pelo dono registrado colocaria a
+// mesma pessoa duas vezes no time e somaria as duas linhas de estatística.
+// Cada regra abaixo cobre um par que só coexiste nesse cenário e diz de quem
+// era cada conta naquela partida. Par que ninguém descreveu derruba o build em
+// assertOnePersonPerMatch, em vez de virar número errado publicado.
+const SHARED_ACCOUNT_RULES = [
+  {
+    // Uninassau Griffins. No dia a dia o Mendes joga da mndeuS e o Laves joga
+    // da surebeteiro (AOC) ou da Joy 1955 (JUBS). Quando mndeuS e Joy 1955
+    // entram juntas na mesma partida, elas trocaram: quem estava na mndeuS era
+    // o Laves, e quem estava na Joy era o Mendes.
+    label: "uninassau_griffins: mndeuS + Joy 1955",
+    // conta usada na partida -> puuid principal de quem estava nela
+    accounts: {
+      // mndeuS#mila -> Laves
+      "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A":
+        "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw",
+      // Joy 1955#rey -> Mendes
+      "n4gmlK3PBjD58Em3HdmK3czcYqqtRiehQ5m4fRpjVklg38w7oGz8qmEijZ5holGKPoPSgJoF9hSNJg":
+        "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A",
+    },
+  },
+];
+
+// Uma regra só vale quando TODAS as contas que ela descreve estão na partida:
+// é a coexistência que denuncia o empréstimo. Com uma conta só, a unificação
+// normal por metadata.accounts já acerta.
+function sharedAccountOverrides(matchPuuids) {
+  const overrides = new Map();
+  for (const rule of SHARED_ACCOUNT_RULES) {
+    const accounts = Object.keys(rule.accounts);
+    if (!accounts.every((account) => matchPuuids.has(account))) continue;
+    for (const account of accounts) overrides.set(account, rule.accounts[account]);
+  }
+  return overrides;
+}
+
+function assertOnePersonPerMatch(players, matchId, sourcePath) {
+  const seenById = new Map();
+  for (const player of players) {
+    const previous = seenById.get(player.id);
+    if (previous) {
+      throw new Error(
+        `${sourcePath || matchId || "partida"}: as contas ${previous.handle} e ${player.handle} resolvem para a ` +
+          `mesma pessoa (${player.nick}). Se foi conta emprestada, descreva o par em SHARED_ACCOUNT_RULES dizendo ` +
+          `quem estava em cada conta; se são pessoas diferentes, separe as contas nas colunas "puuid N" de ` +
+          `dados_excel/players.xlsx.`,
+      );
+    }
+    seenById.set(player.id, player);
+  }
+}
+
+function normalizeMatchPlayer(player, roundAgg, metadata, personOverride = null) {
+  const registered = personOverride || resolveRegisteredPlayer(player, metadata);
   const agentMeta = resolveAgentMeta(player.characterId, metadata);
   const rounds = player.stats?.roundsPlayed || roundAgg.rounds || 0;
   const kills = player.stats?.kills || 0;

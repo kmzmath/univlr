@@ -15861,3 +15861,428 @@ img {
   background: var(--surface-2);
   text-decoration: underline;
 }
+
+
+/* ==========================================================================
+   TABELA DE CAMPEONATOS (/eventos)
+
+   A lista virou tabela: cabecalho clicavel ordena, e a barra acima filtra
+   pelos mesmos eixos. Cabecalho e linha compartilham a MESMA grade - e o
+   alinhamento entre os dois que faz a coisa ser tabela e nao linha de fatos
+   rotulados. Por isso o rotulo saiu de dentro da celula: ele vive no cabecalho.
+
+   Antes disto cada linha carregava cinco pares valor+rotulo em trilhas de
+   159px para dizer "8", "S", "-"; o rotulo repetia 16 vezes o que o cabecalho
+   diz uma. Medido: linha de 150px -> 101px na primeira passada, e a tabela
+   mantem essa altura.
+
+   O que cada coluna aguenta foi medido nos 18 campeonatos antes de virar
+   coluna: Tier (A=9, B=5, S=1, C=1, sem=2), Times (4 a 40), Formato
+   (Eliminacao dupla 10, simples 3, Grupos+Playoffs 2, Suico 1), Tipo (8
+   valores crus, agrupados em Online 13 / Hibrido 2 / Presencial 1), Prizepool
+   (so 5 dos 18 tem premio).
+
+   A coluna de equipes nao ordena: teamCount e teams.length sao o mesmo numero
+   nos 18, entao um cabecalho clicavel ali ordenaria por "Times" com outro nome.
+   ========================================================================== */
+.event-table-head,
+.full-list-panel .event-row.event-row-rich {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 52px 108px 64px 142px 156px 268px;
+  align-items: center;
+  gap: 16px;
+}
+
+.event-table-head {
+  position: sticky;
+  top: var(--topbar-height, 0px);
+  z-index: 2;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(245, 241, 242, 0.12);
+  background: var(--surface-3);
+}
+
+.event-sort-header,
+.event-head-static {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgba(245, 241, 242, 0.54);
+  font-family: var(--font-text);
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.event-sort-header {
+  cursor: pointer;
+  transition: color 140ms ease;
+}
+
+.event-sort-header:hover,
+.event-sort-header:focus-visible,
+.event-sort-header.active {
+  color: var(--ink);
+}
+
+.event-sort-header i {
+  font-style: normal;
+  color: var(--brand-text);
+}
+
+.event-sort-header.numeric,
+.event-head-static {
+  justify-content: flex-end;
+}
+
+.event-sort-header.is-tier {
+  justify-content: center;
+}
+
+.event-cell {
+  min-width: 0;
+  color: var(--ink);
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.event-cell > span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-cell.numeric {
+  text-align: right;
+}
+
+/* Travessao de "sem premiacao": a celula precisa existir para a coluna nao
+   desalinhar, mas nao deve competir com quem tem valor. */
+.event-cell.premio {
+  color: rgba(245, 241, 242, 0.5);
+}
+
+.event-row-rich .event-row-title strong {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.event-row-participants {
+  justify-self: end;
+}
+
+/* --- barra de filtros: gavetas horizontais -------------------------------
+   Mesmo mecanismo do dropdown de equipe do /players (.player-team-dropdown):
+   o <details> fica position: relative com overflow visivel e o corpo abre POR
+   CIMA da tabela, em vez de empurrar a lista para baixo. Sem sobrescrever o
+   overflow: hidden da regra base de .filter-dropdown, o popover seria cortado.
+
+   Horizontal e nao vertical como em /partidas porque aqui a tabela tem sete
+   colunas e precisa da largura inteira; uma coluna de filtros comeria 300px,
+   que la ja custa caro.
+   ------------------------------------------------------------------------ */
+.event-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.event-filter-drop {
+  position: relative;
+  overflow: visible;
+  min-width: 172px;
+}
+
+.event-filter-drop > summary {
+  min-height: 40px;
+  border-bottom: 0;
+}
+
+.event-filter-drop[open] > summary,
+.event-filter-drop > summary:hover {
+  border-color: rgba(245, 241, 242, 0.3);
+}
+
+/* Gaveta com filtro ativo marca o resumo na cor da marca: fechada, ela precisa
+   dizer sozinha que esta mexendo na lista. */
+.event-filter-drop.tem-selecao > summary strong {
+  color: var(--brand-text);
+}
+
+.event-filter-drop > .filter-dropdown-body {
+  position: absolute;
+  z-index: 35;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 100%;
+  max-height: min(340px, 56vh);
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid rgba(83, 104, 135, 0.28);
+  border-radius: var(--radius-md);
+  background: #101827;
+  box-shadow: 0 18px 40px rgba(3, 8, 15, 0.55);
+}
+
+/* Especificidade acima de .filter-dropdown[open] > .filter-dropdown-body (0-3-0),
+   que traz min-width: 0 da camada antiga e cancelava a largura util do popover:
+   sem isto o corpo encolhia para 110px e as barras viravam fios de 8px. */
+.event-filter-drop.filter-dropdown[open] > .filter-dropdown-body {
+  min-width: 244px;
+  padding: 6px;
+}
+
+.event-filter-rows {
+  display: grid;
+  gap: 2px;
+}
+
+/* Linha de largura cheia, nao pastilha. A barra atras dela e a fatia que a
+   opcao ocupa - escalada pelo MAIOR valor do grupo, nao pelo total, senao
+   "Presencial 1" ao lado de "Online 13" viraria um fio invisivel. E o que faz a
+   linha ocupar a largura inteira DIZENDO algo, em vez de so ser caixa maior.
+
+   A barra e dado, entao nao usa vermelho nem verde: fica num banho de tinta.
+   O vermelho aparece so no estado ativo, que e controle e nao dado. */
+.event-filter-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 34px;
+  padding: 0 10px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(245, 241, 242, 0.82);
+  font-family: var(--font-text);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  /* Entrada escalonada, na linguagem de movimento do site: 280ms nesta curva,
+     com atraso por indice. O container ja cresce por bindFilterDropdownMotion;
+     isto compoe por cima. */
+  animation: eventFilterRowIn 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+  /* Hover so mexe em cor: a linha fica em fila apertada e mudar tamanho aqui
+     faria ela fugir do ponteiro. */
+  transition: color 140ms ease, background-color 140ms ease;
+}
+
+.event-filter-row::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 0;
+  width: var(--fatia, 0%);
+  border-radius: 6px;
+  background: rgba(245, 241, 242, 0.09);
+  transform-origin: left center;
+  animation: eventFilterBarIn 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 45ms + 90ms);
+}
+
+.event-filter-row-nome,
+.event-filter-row-conta {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-filter-row-conta {
+  color: rgba(245, 241, 242, 0.46);
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.event-filter-row:hover {
+  color: var(--ink);
+  background: rgba(245, 241, 242, 0.05);
+}
+
+.event-filter-row.active {
+  background: var(--brand);
+  color: var(--on-brand);
+}
+
+.event-filter-row.active::before {
+  background: rgba(4, 3, 6, 0.16);
+}
+
+.event-filter-row.active .event-filter-row-conta {
+  color: rgba(4, 3, 6, 0.66);
+}
+
+@keyframes eventFilterRowIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes eventFilterBarIn {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Campeonato e Data dividem a primeira trilha: a data mora dentro da celula do
+   campeonato, entao os dois cabecalhos ficam sobre a mesma coluna. */
+.event-head-dupla {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+/* "Com premiacao" nao e gaveta: nao tem sub-opcao para revelar, e abrir um
+   popover com um unico botao dentro seria clique a mais para nada. Alterna
+   direto, com a mesma altura e a mesma moldura das gavetas ao lado para a fila
+   continuar lendo como uma fila so. */
+.event-filter-toggle {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid rgba(83, 104, 135, 0.22);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color 140ms ease, color 140ms ease, background-color 140ms ease;
+}
+
+.event-filter-toggle strong {
+  color: #8fa2b8;
+  font-size: var(--text-2xs);
+}
+
+.event-filter-toggle:hover {
+  border-color: rgba(245, 241, 242, 0.3);
+}
+
+.event-filter-toggle.active {
+  border-color: transparent;
+  background: var(--brand);
+  color: var(--on-brand);
+}
+
+.event-filter-toggle.active strong {
+  color: rgba(4, 3, 6, 0.7);
+}
+
+.event-filter-reset {
+  min-height: 40px;
+}
+
+/* No celular o popover para de ancorar no proprio botao e passa a ancorar na
+   BARRA, ocupando a largura dela. Medido: ancorado no botao, a gaveta do meio
+   (Tipo, que comeca em x=195) ficava com a borda direita em 439 numa tela de
+   390 - 49px fora, com as linhas junto. Tirar o position: relative do <details>
+   faz o absolute resolver contra .event-filter-bar, que ja e relative. */
+@media (max-width: 760px) {
+  .event-filter-bar {
+    position: relative;
+  }
+
+  .event-filter-drop {
+    position: static;
+    min-width: 0;
+  }
+
+  .event-filter-drop.filter-dropdown[open] > .filter-dropdown-body {
+    top: calc(100% + 6px);
+    right: 0;
+    left: 0;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 1180px) {
+  .event-table-head,
+  .full-list-panel .event-row.event-row-rich {
+    grid-template-columns: minmax(0, 1fr) 46px 96px 60px 128px 140px;
+  }
+
+  .event-table-head .event-head-static,
+  .event-row-participants {
+    display: none;
+  }
+}
+
+/* No celular a tabela desempilha em cartao: o cabecalho some e o rotulo volta
+   para dentro da celula pelo data-rotulo. Sem isso o "26" ficaria sozinho sem
+   dizer de que ele e o numero. */
+@media (max-width: 760px) {
+  .event-table-head {
+    display: none;
+  }
+
+  .full-list-panel .event-row.event-row-rich {
+    grid-template-columns: minmax(0, 1fr) 44px;
+    align-items: start;
+    gap: 10px 12px;
+  }
+
+  .event-row-rich .event-row-identity {
+    grid-column: 1;
+  }
+
+  .event-row-rich .event-cell {
+    display: flex;
+    grid-column: 1 / -1;
+    align-items: baseline;
+    gap: 8px;
+    font-size: var(--text-sm);
+  }
+
+  .event-row-rich .event-cell::before {
+    content: attr(data-rotulo);
+    flex: 0 0 auto;
+    min-width: 74px;
+    color: rgba(245, 241, 242, 0.44);
+    font-size: var(--text-2xs);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .event-row-rich .event-cell.numeric {
+    text-align: left;
+  }
+
+  .event-row-rich .event-row-participants {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}

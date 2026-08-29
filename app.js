@@ -2754,12 +2754,20 @@ const state = {
   playerTeamQuery: "",
   playerTeam: "all",
   playerInitial: "all",
-  eventSort: "end",
   matchScoreboardSort: {},
   matchLineupCompare: {},
   rankingScope: "valid",
   rankingShowDetails: false,
   rankingSort: { key: "", direction: "default" },
+  // Ordenacao da tabela de /eventos por clique no cabecalho, incluindo a coluna
+  // Data. O seletor "ordenar por inicio/termino" saiu: eram duas perguntas
+  // competindo pelo mesmo eixo, e o cabecalho ja da as duas direcoes.
+  eventTableSort: { key: "", direction: "default" },
+  eventFilters: { tier: [], tipo: [], formato: [], premio: false },
+  // Cada clique em opcao re-renderiza a pagina; sem guardar quais gavetas
+  // estavam abertas, a gaveta fecharia sozinha a cada escolha e obrigaria a
+  // reabrir para marcar a segunda opcao. Mesmo mecanismo do resultFilterOpen.
+  eventFilterOpen: {},
   rankingVersionId: "",
   rankingRefreshTimer: 0,
   tournamentStatsSort: {
@@ -5613,28 +5621,24 @@ function teamFilterButton(team) {
 
 function renderEventsPage(id) {
   if (id) return renderTournamentDetail(id);
-  const events = sortedEvents(state.eventSort);
+  if (!state.skipFilterHydration) applyEventFiltersFromQuery(routeQuery());
+  const events = eventsFiltrados();
+  const total = visibleTournaments().length;
   Shell(`
     <header class="page-header slim-header">
       <div class="page-title">
         <h1>Eventos</h1>
         <p>Chaves, resultados, participantes e contexto competitivo dos eventos cobertos.</p>
       </div>
-      <div class="toolbar">
-        <select id="event-sort" class="filter-control">
-          <option value="end" ${state.eventSort === "end" ? "selected" : ""}>Ordenar por término</option>
-          <option value="start" ${state.eventSort === "start" ? "selected" : ""}>Ordenar por início</option>
-        </select>
-      </div>
     </header>
+    ${eventFilterBar()}
     <section class="hub-panel full-list-panel">
-      <div class="event-list large">${events.map(eventDirectoryRow).join("")}</div>
+      ${eventFiltrosAtivos() ? contagemDaLista(events.length, total, "campeonatos") : ""}
+      ${eventTableHead()}
+      <div class="event-list large">${events.length ? events.map(eventDirectoryRow).join("") : `<p class="empty-state">Nenhum campeonato com esses filtros. Tire um filtro para ver mais.</p>`}</div>
     </section>
   `);
-  document.getElementById("event-sort")?.addEventListener("change", (event) => {
-    state.eventSort = event.target.value;
-    renderEventsPage();
-  });
+  bindEventTable();
 }
 
 function renderPlayersCompact(id) {
@@ -14051,7 +14055,10 @@ function eventTierBadge(event) {
 function eventDirectoryRow(event) {
   const matches = matchSeriesForEvent(event.id);
   const teamTotal = Number(event.teamCount || 0) || event.teams.length;
-  const featuredTeams = eventFeaturedTeamIds(event, matches, 8)
+  // Seis escudos, nao oito. Com oito o mosaico media 322px numa trilha de 232 e
+  // os dois primeiros vazavam 90px para a ESQUERDA, por cima da coluna Formato
+  // - transbordo que scrollWidth nao ve, porque ele so mede para a direita.
+  const featuredTeams = eventFeaturedTeamIds(event, matches, 6)
     .map((teamId) => tournamentTeamById(event, teamId))
     .filter(Boolean);
   return `
@@ -14064,19 +14071,362 @@ function eventDirectoryRow(event) {
           <span class="event-status ${eventStatusClass(event.status)}">${escapeHtml(event.status || "Evento")}</span>
         </span>
       </span>
-      <span class="event-row-facts" aria-label="Dados do torneio">
-        ${eventFact(event.prizePool || event.prize || "A definir", "Prizepool")}
-        ${eventFact(teamTotal, "Times")}
-        ${eventFact(event.tier || "A definir", "Tier")}
-        ${eventFact(event.type || "A definir", "Tipo")}
-        ${eventFact(tournamentFormatLabel(event, matches), "Formato", "format")}
-      </span>
-      <span class="event-row-participants">
+      ${eventTierCell(event)}
+      ${eventCell(eventPremioTexto(event), "Prizepool", "premio")}
+      ${eventCell(teamTotal, "Times", "numeric")}
+      ${eventCell(event.type || "-", "Tipo")}
+      ${eventCell(tournamentFormatLabel(event, matches), "Formato")}
+      <span class="event-row-participants" data-rotulo="Equipes">
         ${eventParticipantStack(featuredTeams, teamTotal)}
-        <small>Equipes Participantes</small>
+        <small class="sr-only">Equipes participantes</small>
       </span>
     </a>
   `;
+}
+
+// Celula da tabela. O rotulo nao e impresso no desktop - ele vive no cabecalho,
+// que e o que torna a coisa uma tabela e nao uma linha de fatos rotulados. Fica
+// no data-rotulo porque no celular a linha desempilha em cartao e ai o rotulo
+// precisa voltar, via ::before no CSS.
+function eventCell(valor, rotulo, extra = "") {
+  const texto = String(valor === undefined || valor === null || valor === "" ? "-" : valor);
+  return `
+    <span class="event-cell ${escapeHtml(extra)}" data-rotulo="${escapeHtml(rotulo)}" title="${escapeHtml(texto)}">
+      <span>${escapeHtml(texto)}</span>
+    </span>
+  `;
+}
+
+// "-" e o que a planilha grava quando nao ha premiacao (11 dos 18, mais 2
+// nulos). Na tabela isso vira travessao tipografico apagado em vez de sumir,
+// porque numa coluna alinhada a celula vazia tem de existir para a linha nao
+// desalinhar - diferente da linha em fluxo, onde ela era so peso morto.
+function eventPremioTexto(event) {
+  const bruto = String(event?.prizePool || event?.prize || "").trim();
+  if (!bruto || bruto === "-" || /^a definir$/i.test(bruto)) return "-";
+  return bruto;
+}
+
+function eventTableHead() {
+  return `
+    <div class="event-table-head" role="row">
+      <span class="event-head-dupla">
+        ${eventSortHeader("nome", "Campeonato")}
+        ${eventSortHeader("data", "Data")}
+      </span>
+      ${eventSortHeader("tier", "Tier", "is-tier")}
+      ${eventSortHeader("premio", "Prizepool")}
+      ${eventSortHeader("times", "Times", "numeric")}
+      ${eventSortHeader("tipo", "Tipo")}
+      ${eventSortHeader("formato", "Formato")}
+      <span class="event-head-static">Equipes</span>
+    </div>
+  `;
+}
+
+// A coluna de equipes nao tem cabecalho clicavel de proposito: teamCount e
+// teams.length sao o mesmo numero nos 18 campeonatos, entao ordenar por ela
+// seria ordenar por "Times" com outro nome. Ela mostra QUEM joga, que e o que
+// "Times" nao mostra.
+// Fechada, a gaveta diz o que esta valendo - mesmo contrato dos resumos de
+// /partidas. Sem isso, filtro escondido vira filtro esquecido: a pessoa nao
+// lembra por que a lista encolheu.
+function eventFilterResumo(selecionados, vazio) {
+  if (!selecionados.length) return vazio;
+  if (selecionados.length <= 2) return selecionados.join(", ");
+  return `${selecionados.length} selecionados`;
+}
+
+function eventFilterGrupo(chave, rotulo, valores, ler, resumoVazio) {
+  const f = state.eventFilters || {};
+  const sel = f[chave] || [];
+  const eventos = visibleTournaments();
+  const contagens = valores.map((v) => ({ ...v, n: eventos.filter((e) => (ler(e) || "sem") === v.id).length })).filter((v) => v.n);
+  // A barra de cada linha e a fatia que aquela opcao ocupa do total. Isso e o
+  // que faz a linha usar a largura inteira dizendo algo: sem ela, esticar o
+  // botao ate a borda seria so caixa maior. Escala pelo MAIOR valor, nao pelo
+  // total, senao "Presencial 1" viraria um fio invisivel ao lado de "Online 13".
+  const maior = Math.max(...contagens.map((v) => v.n), 1);
+  const opcoes = contagens
+    .map((v, i) => {
+      const ativo = sel.includes(v.id);
+      const fatia = Math.round((v.n / maior) * 100);
+      return `<button type="button" class="event-filter-row${ativo ? " active" : ""}" data-event-filter="${escapeHtml(chave)}" data-valor="${escapeHtml(v.id)}" aria-pressed="${ativo ? "true" : "false"}" style="--i:${i};--fatia:${fatia}%">
+        <span class="event-filter-row-nome">${escapeHtml(v.label)}</span>
+        <span class="event-filter-row-conta">${v.n}</span>
+      </button>`;
+    })
+    .join("");
+  if (!opcoes) return "";
+  return `
+    <details class="filter-dropdown event-filter-drop${sel.length ? " tem-selecao" : ""}" data-event-group="${escapeHtml(chave)}"${state.eventFilterOpen?.[chave] ? " open" : ""}>
+      <summary>${filterIcon()}<span>${escapeHtml(rotulo)}</span><strong>${escapeHtml(eventFilterResumo(sel, resumoVazio))}</strong></summary>
+      <div class="filter-dropdown-body">
+        <div class="event-filter-rows">${opcoes}</div>
+      </div>
+    </details>
+  `;
+}
+
+function eventFilterBar() {
+  const f = state.eventFilters || {};
+  const eventos = visibleTournaments();
+  const tiers = ["S", "A", "B", "C", "D"].map((t) => ({ id: t, label: t })).concat([{ id: "sem", label: "Sem tier" }]);
+  const tipos = ["Online", "Híbrido", "Presencial"].map((t) => ({ id: t, label: t })).concat([{ id: "sem", label: "Sem tipo" }]);
+  const formatos = [...new Set(eventos.map(eventFormatoLabel).filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b, "pt-BR"))
+    .map((t) => ({ id: t, label: t }));
+  const comPremio = eventos.filter(eventTemPremio).length;
+  const ativos = eventFiltrosAtivos();
+
+  return `
+    <section class="event-filter-bar" aria-label="Filtros de campeonato">
+      ${eventFilterGrupo("tier", "Tier", tiers, eventTierChave, "Todos")}
+      ${eventFilterGrupo("tipo", "Tipo", tipos, eventTipoGrupo, "Todos")}
+      ${eventFilterGrupo("formato", "Formato", formatos, eventFormatoLabel, "Todos")}
+      <button type="button" class="event-filter-toggle${f.premio ? " active" : ""}" data-event-filter="premio" data-valor="1" aria-pressed="${f.premio ? "true" : "false"}">
+        ${filterIcon()}<span>Com premiação</span><strong>${comPremio}</strong>
+      </button>
+      ${ativos ? `<button type="button" class="filter-reset-button event-filter-reset" data-event-filter-reset>${resetIcon()}<span>Limpar ${ativos} filtro${ativos > 1 ? "s" : ""}</span></button>` : ""}
+    </section>
+  `;
+}
+
+// Funcao nomeada de proposito: bindEventTable roda a cada render, e registrar
+// o MESMO referencia no document e no-op para o navegador. Uma arrow inline
+// acumularia um listener por render.
+function fecharGavetasDeEvento(evento) {
+  const dentro = evento.target?.closest?.("[data-event-group]");
+  document.querySelectorAll("[data-event-group]").forEach((gaveta) => {
+    if (gaveta !== dentro && gaveta.open) gaveta.open = false;
+  });
+}
+
+function bindEventTable() {
+  document.querySelectorAll("[data-event-group]").forEach((gaveta) => {
+    gaveta.addEventListener("toggle", () => {
+      const chave = gaveta.dataset.eventGroup;
+      if (!chave) return;
+      state.eventFilterOpen = state.eventFilterOpen || {};
+      // So uma gaveta aberta por vez: elas ficam lado a lado e os popovers se
+      // sobrepoem, entao duas abertas escondem uma a outra.
+      if (gaveta.open) {
+        Object.keys(state.eventFilterOpen).forEach((k) => {
+          if (k !== chave) state.eventFilterOpen[k] = false;
+        });
+        document.querySelectorAll("[data-event-group]").forEach((outra) => {
+          if (outra !== gaveta) outra.open = false;
+        });
+      }
+      state.eventFilterOpen[chave] = gaveta.open;
+    });
+  });
+  // Clique fora fecha. Sem isso a gaveta so fecha clicando de novo no proprio
+  // resumo, que nao e o que se espera de um popover.
+  document.addEventListener("click", fecharGavetasDeEvento);
+  document.querySelectorAll("[data-event-sort]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      cycleEventSort(botao.dataset.eventSort || "");
+      pushFilterState("events", eventFiltersToQuery(), `[data-event-sort="${botao.dataset.eventSort}"]`);
+    });
+  });
+  document.querySelectorAll("[data-event-filter]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      const chave = botao.dataset.eventFilter;
+      const valor = botao.dataset.valor;
+      const f = state.eventFilters || {};
+      if (chave === "premio") f.premio = !f.premio;
+      else {
+        const atual = f[chave] || [];
+        f[chave] = atual.includes(valor) ? atual.filter((v) => v !== valor) : atual.concat(valor);
+      }
+      state.eventFilters = f;
+      pushFilterState("events", eventFiltersToQuery(), `[data-event-filter="${chave}"][data-valor="${valor}"]`);
+    });
+  });
+  document.querySelector("[data-event-filter-reset]")?.addEventListener("click", () => {
+    state.eventFilters = { tier: [], tipo: [], formato: [], premio: false };
+    pushFilterState("events", eventFiltersToQuery());
+  });
+}
+
+// --- Eixos de ordenacao e filtro da tabela de /eventos -----------------------
+// Cada eixo abaixo foi medido nos 18 campeonatos antes de virar coluna; os
+// comentarios guardam a distribuicao, porque ela e o que decide se a coluna
+// discrimina ou so ocupa largura.
+
+// Tier: A=9, B=5, S=1, C=1, sem=2. Ordinal, entao ordenar por ordem alfabetica
+// poria B antes de S. Sem tier vai para o fim nas duas direcoes.
+const EVENT_TIER_ORDEM = { S: 5, A: 4, B: 3, C: 2, D: 1 };
+
+function eventTierChave(event) {
+  const t = String(event?.tier || "").trim().replace(/^tier\s*/i, "").toUpperCase();
+  return /^[SABCD]$/.test(t) ? t : "";
+}
+
+function eventTierValor(event) {
+  return EVENT_TIER_ORDEM[eventTierChave(event)] || 0;
+}
+
+// Tipo: o campo bruto tem 8 valores distintos para 18 campeonatos - quatro
+// deles com um unico membro ("Online - Torneio Local", "Online + Final
+// presencial"...). Filtrar por 8 opcoes onde metade separa uma linha nao ajuda
+// ninguem, entao o filtro agrupa por onde se joga: Online 13, Hibrido 2,
+// Presencial 1. A coluna continua mostrando o texto original.
+function eventTipoGrupo(event) {
+  const t = String(event?.type || "").trim();
+  if (!t) return "";
+  const online = /online/i.test(t);
+  const presencial = /presencial/i.test(t);
+  if (online && presencial) return "Híbrido";
+  if (presencial) return "Presencial";
+  return "Online";
+}
+
+// Formato nao e string: e um objeto { summary, details, standings }. Ler
+// event.format direto devolve "[object Object]".
+function eventFormatoLabel(event) {
+  return String(event?.format?.summary || "").trim();
+}
+
+// Prizepool: 11 dos 18 gravam "-", 2 gravam nulo, 3 tem "R$1.000", 1 tem
+// "R$2.000" e 1 tem "5x Monitores AGON CS24A/P", que e premio de verdade mas
+// nao e dinheiro. Ordenar por valor puro jogaria o premio em produto junto dos
+// 13 zeros, entao ele entra acima deles e abaixo de qualquer quantia.
+function eventPremioValor(event) {
+  const bruto = String(event?.prizePool || event?.prize || "").trim();
+  if (!bruto || bruto === "-" || /^a definir$/i.test(bruto)) return 0;
+  const numero = bruto.replace(/[^\d,.]/g, "").replace(/\./g, "").replace(",", ".");
+  const valor = Number.parseFloat(numero);
+  return Number.isFinite(valor) && valor > 0 ? valor : 0.5;
+}
+
+function eventTemPremio(event) {
+  return eventPremioValor(event) > 0;
+}
+
+function eventTimesTotal(event) {
+  return Number(event?.teamCount || 0) || (event?.teams || []).length;
+}
+
+const EVENT_ORDENAVEL = {
+  nome: (e) => String(e.name || ""),
+  // Data ordena pelo TERMINO. O seletor "ordenar por inicio" saiu: eram duas
+  // perguntas competindo pelo mesmo eixo, e o cabecalho ja da as duas direcoes.
+  data: (e) => Number(e.end || e.start || 0),
+  tier: eventTierValor,
+  premio: eventPremioValor,
+  times: eventTimesTotal,
+  tipo: (e) => eventTipoGrupo(e),
+  formato: eventFormatoLabel,
+};
+
+// Mesmo ciclo do /ranking: padrao -> desc -> asc -> padrao.
+function cycleEventSort(key) {
+  if (!key) return;
+  const atual = state.eventTableSort || { key: "", direction: "default" };
+  if (atual.key !== key || atual.direction === "default") state.eventTableSort = { key, direction: "desc" };
+  else if (atual.direction === "desc") state.eventTableSort = { key, direction: "asc" };
+  else state.eventTableSort = { key: "", direction: "default" };
+}
+
+function eventSortHeader(key, label, extra = "") {
+  const sort = state.eventTableSort || {};
+  const ativo = sort.key === key && sort.direction !== "default";
+  const direcao = ativo ? sort.direction : "default";
+  const titulo = direcao === "desc" ? "Ordenado decrescente" : direcao === "asc" ? "Ordenado crescente" : "Ordenação padrão";
+  return `
+    <button class="event-sort-header ${extra} ${ativo ? "active" : ""}" type="button" data-event-sort="${escapeHtml(key)}" data-sort-direction="${direcao}" aria-label="${escapeHtml(`${label}: ${titulo}`)}" title="${escapeHtml(titulo)}">
+      <span>${escapeHtml(label)}</span>
+      <i aria-hidden="true">${direcao === "desc" ? "↓" : direcao === "asc" ? "↑" : ""}</i>
+    </button>
+  `;
+}
+
+function eventFiltrosAtivos() {
+  const f = state.eventFilters || {};
+  return (f.tier || []).length + (f.tipo || []).length + (f.formato || []).length + (f.premio ? 1 : 0);
+}
+
+function eventsFiltrados() {
+  const f = state.eventFilters || {};
+  let lista = sortedEvents("end").filter((e) => {
+    if ((f.tier || []).length && !f.tier.includes(eventTierChave(e) || "sem")) return false;
+    if ((f.tipo || []).length && !f.tipo.includes(eventTipoGrupo(e) || "sem")) return false;
+    if ((f.formato || []).length && !f.formato.includes(eventFormatoLabel(e) || "sem")) return false;
+    if (f.premio && !eventTemPremio(e)) return false;
+    return true;
+  });
+  const sort = state.eventTableSort || {};
+  if (sort.key && sort.direction !== "default" && EVENT_ORDENAVEL[sort.key]) {
+    const ler = EVENT_ORDENAVEL[sort.key];
+    const sinal = sort.direction === "asc" ? 1 : -1;
+    lista = lista.slice().sort((a, b) => {
+      const va = ler(a);
+      const vb = ler(b);
+      let d;
+      if (typeof va === "number" && typeof vb === "number") d = va - vb;
+      else d = String(va).localeCompare(String(vb), "pt-BR", { sensitivity: "base" });
+      // Empate mantem a ordem por data, que e a ordem natural da pagina.
+      return d ? d * sinal : 0;
+    });
+  }
+  return lista;
+}
+
+function eventFiltersToQuery() {
+  const p = new URLSearchParams();
+  const f = state.eventFilters || {};
+  if ((f.tier || []).length) p.set("tier", f.tier.join(LISTA_SEP));
+  if ((f.tipo || []).length) p.set("tipo", f.tipo.join(LISTA_SEP));
+  if ((f.formato || []).length) p.set("formato", f.formato.join(LISTA_SEP));
+  if (f.premio) p.set("premio", "1");
+  const sort = state.eventTableSort || {};
+  if (sort.key && sort.direction !== "default") p.set("ord", sort.key + ":" + sort.direction);
+  return p;
+}
+
+function applyEventFiltersFromQuery(params) {
+  const ler = (chave) => {
+    const v = params.get(chave);
+    return v ? v.split(LISTA_SEP).filter(Boolean) : [];
+  };
+  state.eventFilters = {
+    tier: ler("tier"),
+    tipo: ler("tipo"),
+    formato: ler("formato"),
+    premio: params.get("premio") === "1",
+  };
+  const ord = String(params.get("ord") || "");
+  const [chave, direcao] = ord.split(":");
+  state.eventTableSort = EVENT_ORDENAVEL[chave] && (direcao === "asc" || direcao === "desc")
+    ? { key: chave, direction: direcao }
+    : { key: "", direction: "default" };
+}
+
+// O tier sai de dentro de .event-row-facts e vira trilha propria da linha. Duas
+// razoes: como fato rotulado ele saia em tinta de 14px, identico ao "8" de
+// Times - a unica pagina que lista tier era a unica que nao usava a escala de
+// cor que ja existe em :root. E, na fila dos fatos, ele vinha depois de "N
+// Times", cuja largura varia entre 8, 26 e 40: a letra caia num x diferente por
+// linha. Em trilha propria ela fica na mesma coluna nas 18.
+//
+// Os dois campeonatos sem tier (Pre-JUBS e LPE) devolvem a celula vazia em vez
+// de string vazia: sem o elemento, o proximo item herdaria a trilha e a linha
+// inteira sairia deslocada.
+function eventTierCell(event) {
+  const selo = eventTierBadge(event);
+  return selo || `<span class="event-tier" aria-hidden="true"></span>`;
+}
+
+// "-" e o que a planilha grava quando nao ha premiacao, e isso vale para 11 dos
+// 18 campeonatos (mais 2 com o campo nulo). Um fato rotulado cujo valor e um
+// travessao gasta uma trilha inteira para dizer nada, entao o Prizepool so
+// aparece quando ha premio de verdade.
+function eventPrizeFact(event) {
+  const bruto = String(event?.prizePool || event?.prize || "").trim();
+  if (!bruto || bruto === "-" || /^a definir$/i.test(bruto)) return "";
+  return eventFact(bruto, "Prizepool");
 }
 
 function eventFact(value, label, extra = "") {

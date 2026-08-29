@@ -11427,7 +11427,7 @@ function teamRankingChart(history) {
             ${rows.map((row) => `<circle cx="${fmt(x(row.date), 2)}" cy="${fmt(y(row.rank), 2)}" r="4"></circle>`).join("")}
           </g>
         </svg>
-        <div class="ranking-chart-hotspots">${pointHotspots}</div>
+        <div class="ranking-chart-hotspots" style="--n:${rows.length}">${pointHotspots}</div>
       </div>
     </div>
   `;

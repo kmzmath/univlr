@@ -16536,3 +16536,83 @@ img {
     height: 44px;
   }
 }
+
+/* ==========================================================================
+   TOOLTIP DO GRAFICO DE RANKING NO CELULAR
+
+   Medido a 360px, 19 pontos: 10 das 19 tooltips saiam da janela - ate 61px
+   pela esquerda e 72px pela direita - e o body { overflow-x: clip } cortava
+   sem deixar rastro. E os pontos ficam a 13,8px um do outro enquanto o alvo
+   tem 28px de largura: cada alvo cobria metade dos dois vizinhos, entao o
+   dedo nunca escolhia qual ponto queria.
+
+   O que NAO era o problema: o toque alcanca a tooltip. O :focus revela, e
+   tocar um <span tabindex="0"> da foco. Medido num ambiente com hover:none,
+   pointer:coarse e 5 pontos de toque: sem a transicao, o foco leva a
+   opacidade de 0 a 1. A primeira medida disse 0 porque painel oculto congela
+   transicao e getComputedStyle devolve o valor animado parado no comeco.
+
+   Dois consertos:
+
+   1. O alvo vira FAIXA - largura 100/N do palco, altura cheia. As N faixas
+      ladrilham o grafico sem sobrepor, entao um toque em qualquer altura pega
+      o ponto daquela coluna. Deterministico onde antes era sorteio.
+
+   2. A tooltip deixa de ser centrada no ponto e desliza junto com ele:
+      translate(-x%) no lugar de translate(-50%). No primeiro ponto a borda
+      esquerda encosta no ponto, no ultimo e a direita, e no meio da o mesmo
+      -50% de antes. Fica dentro do palco para qualquer largura menor que a
+      dele, sem uma linha de JS de posicionamento. Ancorada no rodape do
+      palco, a posicao e a mesma em toda coluna: le-se sem procurar.
+   ========================================================================== */
+@media (max-width: 760px) {
+  .ranking-chart-hotspot {
+    width: calc(100% / var(--n, 19));
+    height: 100%;
+    top: 50%;
+    border-radius: 0;
+  }
+
+  /* A bolha de 28px viraria um comprimido esticado na faixa. No lugar dela,
+     um fio vertical marca a coluna ativa. */
+  .ranking-chart-hotspot::before {
+    inset: 0 auto 0 50%;
+    width: 1px;
+    border-radius: 0;
+    background: rgba(245, 241, 242, 0.45);
+    opacity: 0;
+    transform: translateX(-50%);
+    transition: opacity 180ms ease;
+  }
+
+  .ranking-chart-hotspot:hover::before,
+  .ranking-chart-hotspot:focus::before {
+    opacity: 1;
+  }
+
+  /* O anel de foco padrao desenhava uma caixa de 14x300 em volta da faixa e
+     dominava o grafico inteiro. O indicador passa a ser o proprio fio da
+     coluna, que e a forma daquilo que esta selecionado - mais grosso e opaco
+     no foco de teclado, para continuar inequivoco. */
+  .ranking-chart-hotspot:focus,
+  .ranking-chart-hotspot:focus-visible {
+    outline: none;
+  }
+
+  .ranking-chart-hotspot:focus-visible::before {
+    width: 2px;
+    background: var(--ink);
+  }
+
+  .ranking-chart-tooltip {
+    top: auto;
+    bottom: 6px;
+    max-width: min(250px, 72vw);
+    transform: translate(calc(var(--x) * -1%), 6px);
+  }
+
+  .ranking-chart-hotspot:hover .ranking-chart-tooltip,
+  .ranking-chart-hotspot:focus .ranking-chart-tooltip {
+    transform: translate(calc(var(--x) * -1%), 0);
+  }
+}

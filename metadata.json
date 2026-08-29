@@ -4055,26 +4055,14 @@
         },
         {
           "slot": 4,
-          "name": "Jannik"
-        },
-        {
-          "slot": 5,
-          "name": "M4DMAX"
-        },
-        {
-          "slot": 6,
-          "name": "Joy"
-        },
-        {
-          "slot": 7,
-          "name": "Suflah"
-        },
-        {
-          "slot": 8,
           "name": "JayJ"
         },
         {
-          "slot": 9,
+          "slot": 5,
+          "name": "Suflah"
+        },
+        {
+          "slot": 6,
           "name": "Laves"
         }
       ]
@@ -5479,13 +5467,18 @@
       "id": "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A",
       "name": "Mendes",
       "puuid": "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A",
+      "accounts": [
+        "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A",
+        "n4gmlK3PBjD58Em3HdmK3czcYqqtRiehQ5m4fRpjVklg38w7oGz8qmEijZ5holGKPoPSgJoF9hSNJg"
+      ],
       "currentTeam": "uninassau_griffins",
       "teamHistory": [
         "uninassau_griffins"
       ],
       "nickHistory": [
         "mndeuS#mila",
-        "Dogg#auau"
+        "Dogg#auau",
+        "Joy 1955#rey"
       ],
       "photo": "assets/player-photos/uninassau_griffins/mendes.png"
     },
@@ -5501,45 +5494,6 @@
         "jotave#081"
       ],
       "photo": "assets/player-photos/uninassau_griffins/jv.png"
-    },
-    {
-      "id": "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA",
-      "name": "Jannik",
-      "puuid": "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA",
-      "currentTeam": "uninassau_griffins",
-      "teamHistory": [
-        "uninassau_griffins"
-      ],
-      "nickHistory": [
-        "jannik sinner#ATP"
-      ],
-      "photo": ""
-    },
-    {
-      "id": "cqvTMeVT6Mj3_RCb5rmFRn8AVe0EGNsDq1pdsg1oIjm_nTCYO0KEQi61QM9yduO7FhlLUaByHU27sw",
-      "name": "M4DMAX",
-      "puuid": "cqvTMeVT6Mj3_RCb5rmFRn8AVe0EGNsDq1pdsg1oIjm_nTCYO0KEQi61QM9yduO7FhlLUaByHU27sw",
-      "currentTeam": "uninassau_griffins",
-      "teamHistory": [
-        "uninassau_griffins"
-      ],
-      "nickHistory": [
-        "M4DM4X#lou"
-      ],
-      "photo": ""
-    },
-    {
-      "id": "n4gmlK3PBjD58Em3HdmK3czcYqqtRiehQ5m4fRpjVklg38w7oGz8qmEijZ5holGKPoPSgJoF9hSNJg",
-      "name": "Joy",
-      "puuid": "n4gmlK3PBjD58Em3HdmK3czcYqqtRiehQ5m4fRpjVklg38w7oGz8qmEijZ5holGKPoPSgJoF9hSNJg",
-      "currentTeam": "uninassau_griffins",
-      "teamHistory": [
-        "uninassau_griffins"
-      ],
-      "nickHistory": [
-        "Joy 1955#rey"
-      ],
-      "photo": ""
     },
     {
       "id": "i3aicKYbd7ACS0VMHleipcbPYOc2o3iCMx359INgLc2zdwcRHrmVPQKw3PtUUwXb8rWmp8SRiiCdFg",
@@ -5558,12 +5512,17 @@
       "id": "2pfWv-PCjOl_ukzJdZyQNxW9uK94CEiJmWxycc9MxLTuUURixVs642SIJkhr732N50C7WjrtLdOreg",
       "name": "JayJ",
       "puuid": "2pfWv-PCjOl_ukzJdZyQNxW9uK94CEiJmWxycc9MxLTuUURixVs642SIJkhr732N50C7WjrtLdOreg",
+      "accounts": [
+        "2pfWv-PCjOl_ukzJdZyQNxW9uK94CEiJmWxycc9MxLTuUURixVs642SIJkhr732N50C7WjrtLdOreg",
+        "cqvTMeVT6Mj3_RCb5rmFRn8AVe0EGNsDq1pdsg1oIjm_nTCYO0KEQi61QM9yduO7FhlLUaByHU27sw"
+      ],
       "currentTeam": "uninassau_griffins",
       "teamHistory": [
         "uninassau_griffins"
       ],
       "nickHistory": [
-        "NEGO DOCE#JayJ"
+        "NEGO DOCE#JayJ",
+        "M4DM4X#lou"
       ],
       "photo": ""
     },
@@ -5571,12 +5530,17 @@
       "id": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw",
       "name": "Laves",
       "puuid": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw",
+      "accounts": [
+        "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw",
+        "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA"
+      ],
       "currentTeam": "uninassau_griffins",
       "teamHistory": [
         "uninassau_griffins"
       ],
       "nickHistory": [
-        "surebeteiro#laves"
+        "surebeteiro#laves",
+        "jannik sinner#ATP"
       ],
       "photo": "assets/player-photos/uninassau_griffins/laves.png"
     },

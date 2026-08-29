@@ -650,6 +650,19 @@ def read_players():
         team_history = [row[key] for key in sorted(row) if key.lower().startswith("team ") and row[key]]
         nick_history = [row[key] for key in sorted(row) if key.lower().startswith("nick ") and row[key]]
         puuid = row.get("puuid", "")
+        # A mesma pessoa pode disputar campeonatos diferentes de contas Riot
+        # diferentes. "puuid" e a conta principal - e ela que vira o id do
+        # jogador, entao mexer nela renomeia o jogador no banco inteiro. As
+        # colunas "puuid 2", "puuid 3"... sao as contas alternativas, e todas
+        # entram em "accounts" para o app costurar as aparicoes numa
+        # identidade so. So emitimos o campo quando ha alternativa: repetir
+        # ["<puuid>"] em 600 jogadores inflaria o metadata.json a toa.
+        alt_accounts = [
+            row[key]
+            for key in sorted(row)
+            if key.lower().startswith("puuid") and key.lower() != "puuid" and row[key]
+        ]
+        accounts = [account for account in [puuid, *alt_accounts] if account]
         current_team = slug_key(row.get("current_team", ""))
         team_history = [slug_key(team_id) for team_id in team_history]
         photo = resolve_player_photo(photos, name, current_team, team_history)
@@ -658,6 +671,7 @@ def read_players():
                 "id": puuid or name,
                 "name": name,
                 "puuid": puuid,
+                **({"accounts": accounts} if len(accounts) > 1 else {}),
                 "currentTeam": current_team,
                 "teamHistory": team_history,
                 "nickHistory": nick_history,

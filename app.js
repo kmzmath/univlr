@@ -30,6 +30,19 @@ const TROPHY_GENERIC_ASSETS = {
   runnerUp: `${TROPHY_ASSET_ROOT}/vice-generico.png`,
   third: `${TROPHY_ASSET_ROOT}/terceiro-generico.png`,
 };
+// Arte de trofeu POR CAMPEONATO que existe de fato no disco.
+// GERADO por scripts/build_trophy_manifest.js - nao edite a mao.
+//
+// Por que existe: trophyImageCandidates monta ate seis nomes por podio e
+// tentava cada um via onerror ate cair no generico. Medido em 28/08/2026: 225
+// candidatos entre os 18 campeonatos e os tres podios, 225 falhando - 100%,
+// porque nenhuma arte por campeonato existe. Na pratica eram 36 requisicoes
+// falhas numa unica pagina de equipe, e 72 erros de console ao andar por duas.
+//
+// Com o manifesto vazio o codigo vai direto ao generico sem pedir nada. Quando
+// alguem largar `jubs-campeao.png` na pasta e rodar o script, o nome entra aqui
+// e o candidato volta a ser tentado - uma vez so, e com sucesso.
+const TROPHY_ART_FILES = new Set([]);
 const DAY_MS = 24 * 60 * 60 * 1000;
 const WEEK_MS = 7 * DAY_MS;
 const IMAGE_WARM_STORAGE_KEY = "univlr-image-warm-v1";
@@ -11933,9 +11946,15 @@ function trophyVisual(trophy) {
 function trophyImageCandidates(event, trophyKey) {
   const suffix = trophyKey === "champion" ? "campeao" : trophyKey === "runnerUp" ? "vice" : "terceiro";
   const eventKeys = [...new Set([event?.id, slugify(event?.name || ""), normalizeNameKey(event?.name || "")].filter(Boolean))];
+  const possiveis = [
+    ...eventKeys.flatMap((key) => [`${key}-${suffix}.png`, `${key}_${suffix}.png`]),
+    ...eventKeys.map((key) => `${key}.png`),
+  ];
+  // So entra na fila o arquivo que o manifesto diz existir. Sem este filtro,
+  // cada podio disparava de tres a seis requisicoes que davam 404 antes de o
+  // onerror chegar no generico.
   return [
-    ...eventKeys.flatMap((key) => [`${TROPHY_ASSET_ROOT}/${key}-${suffix}.png`, `${TROPHY_ASSET_ROOT}/${key}_${suffix}.png`]),
-    ...eventKeys.map((key) => `${TROPHY_ASSET_ROOT}/${key}.png`),
+    ...possiveis.filter((nome) => TROPHY_ART_FILES.has(nome)).map((nome) => `${TROPHY_ASSET_ROOT}/${nome}`),
     TROPHY_GENERIC_ASSETS[trophyKey] || TROPHY_GENERIC_ASSETS.third,
   ];
 }

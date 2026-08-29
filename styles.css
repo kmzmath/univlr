@@ -16286,3 +16286,68 @@ img {
     justify-self: start;
   }
 }
+
+/* ==========================================================================
+   RANKING NO CELULAR
+
+   A grade da linha vinha de @media (max-width: 940px) - escrita para tablet e
+   aplicada sem revisao ate 320px. La ela e `42px 38px minmax(0,1fr) 82px 0px
+   28px` com column-gap de 16px: 190px de trilha fixa mais 80px de gaps somam
+   270px, e numa linha de ~339px sobravam 69px para a equipe. O logo comia 44
+   desses, e o nome ficava com 11px.
+
+   Medido antes: os 44 nomes e as 44 siglas em caixa de 11px, precisando de 67 a
+   142px. "CEUB Octopus" saia como "C.". Nao era corte com reticencia, era a
+   coluna sumindo - 89 elementos esmagados por pagina, identico em 360 e 390,
+   porque o problema nao dependia da largura da tela.
+
+   Aqui as trilhas fixas caem para 134px, o gap para 8px e o logo para 30px.
+   Sobram ~112px para o nome numa tela de 360, o suficiente para "CEUB Octopus"
+   inteiro e para os longos cortarem com reticencia, que e a regra do projeto.
+   ========================================================================== */
+@media (max-width: 560px) {
+  .ranking-accordion-head,
+  .ranking-accordion-button {
+    grid-template-columns: 30px 20px minmax(0, 1fr) 46px 0px 20px;
+    column-gap: 6px;
+    padding: 8px 8px;
+  }
+
+  /* Sem "Status" ligado a trilha e 0px, mas o rotulo continuava no DOM ocupando
+     uma caixa de largura zero - o unico esmagado que sobrou depois do conserto
+     da grade. */
+  .ranking-accordion:not([data-status-visible="true"]) .ranking-accordion-head .ranking-status-cell,
+  .ranking-accordion:not([data-status-visible="true"]) .ranking-accordion-button .ranking-status-cell {
+    display: none;
+  }
+
+  .ranking-team-cell {
+    gap: 8px;
+  }
+
+  .ranking-team-cell .clean-logo,
+  .ranking-team-cell .team-logo {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* Com "Status" ligado sao seis colunas disputando a mesma linha e o nome
+     voltaria a ser esmagado. O chip desce para uma segunda linha, ocupando a
+     largura toda, em vez de roubar a coluna que carrega a identidade. */
+  .ranking-accordion[data-status-visible="true"] .ranking-accordion-head,
+  .ranking-accordion[data-status-visible="true"] .ranking-accordion-button {
+    grid-template-columns: 30px 20px minmax(0, 1fr) 46px 20px;
+    /* O column-gap precisa ser repetido aqui: a regra base deste breakpoint tem
+       especificidade 0-1-0 e perde para o seletor com [data-status-visible],
+       que reintroduzia os 16px e comia 40px da coluna do nome. */
+    column-gap: 6px;
+    row-gap: 6px;
+  }
+
+  .ranking-accordion[data-status-visible="true"] .ranking-accordion-button .ranking-status-cell,
+  .ranking-accordion[data-status-visible="true"] .ranking-accordion-head .ranking-status-cell {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+  }
+}

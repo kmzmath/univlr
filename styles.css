@@ -1004,24 +1004,6 @@ img.state-flag + .state-flag.placeholder {
   display: none;
 }
 
-.team-quick-panel {
-  display: grid;
-  gap: 12px;
-  align-content: center;
-}
-
-.team-rank-box span {
-  color: rgba(255, 255, 255, 0.66);
-  font-size: var(--text-sm);
-  font-weight: 700;
-}
-
-.team-rank-box strong {
-  margin-top: 4px;
-  font-size: var(--text-4xl);
-  line-height: 1;
-}
-
 .team-socials {
   display: flex;
   flex-wrap: wrap;
@@ -2640,19 +2622,6 @@ tr:hover td {
   text-shadow: 0 8px 24px rgba(0, 0, 0, 0.36);
 }
 
-.team-rank-box {
-  min-height: 96px;
-  display: grid;
-  align-content: center;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 16px;
-  border-color: rgba(255, 255, 255, 0.14);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
-    linear-gradient(90deg, color-mix(in srgb, var(--team-accent, var(--brand)) 20%, transparent), transparent);
-}
-
 .team-trophy-panel,
 .team-mini-stats,
 .team-ranking-main,
@@ -2686,65 +2655,111 @@ tr:hover td {
   position: relative;
 }
 
+/* Os numeros de apoio do grafico usam a mesma barra valor-em-cima /
+   rotulo-embaixo do heroi, sem pilula em volta. */
 .ranking-chart-kpis {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px 26px;
+  margin: 0;
 }
 
-.ranking-chart-kpis span {
-  border: 1px solid #2b3d50;
-  border-radius: var(--radius-pill);
-  background: #111c27;
-  color: var(--muted);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  padding: 8px 8px;
+.ranking-chart-kpis div {
+  display: grid;
+  gap: 1px;
 }
 
-.ranking-chart-kpis strong {
+.ranking-chart-kpis dd {
+  margin: 0;
   color: var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.ranking-chart-kpis dt {
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Altura FIXA e nao proporcional: o pedido era que o grafico de qualquer
+   equipe ocupasse o mesmo eixo Y, e altura proporcional a largura devolvia
+   caixas de 279px em vez de 188px. Com a caixa travada, o SVG e esticado e a
+   espessura da linha vem de `vector-effect`. */
+/* Sem padding aqui. O padding de 34px punha o SVG numa caixa 34px mais
+   estreita e deslocada em relacao a camada das bolinhas (`inset: 0`, que mede
+   a caixa de padding), e a mesma porcentagem caia em dois lugares diferentes:
+   32px de desvio medido. A calha do rotulo do eixo agora e o `pad.left` do
+   proprio viewBox (38 de 760 = 5%), entao SVG e bolinhas dividem a mesma
+   caixa e o alinhamento e exato por construcao. */
+.ranking-chart-stage {
+  position: relative;
+  height: 188px;
 }
 
 .ranking-line-chart {
   width: 100%;
-  min-height: 260px;
+  height: 100%;
   display: block;
 }
 
 .ranking-chart-grid line {
-  stroke: rgba(143, 160, 177, 0.18);
+  stroke: rgba(143, 160, 177, 0.16);
+  stroke-dasharray: 3 5;
   stroke-width: 1;
+  vector-effect: non-scaling-stroke;
 }
 
-.ranking-chart-grid text {
-  fill: #738699;
-  font-size: var(--text-2xs);
-  font-weight: 700;
-  text-anchor: middle;
-}
-
-.ranking-chart-grid text:first-of-type {
-  text-anchor: end;
-}
-
-.ranking-chart-area {
-  fill: color-mix(in srgb, var(--team-accent-2, var(--teal)) 18%, transparent);
-}
-
+/* Sem massa embaixo da linha: a area preenchida sugeria "quantidade
+   acumulada", e posicao de ranking nao acumula nada. Ficou so a linha. */
 .ranking-chart-line {
   fill: none;
-  stroke: var(--team-accent-2, #35d0b8);
-  stroke-width: 4;
+  stroke: var(--team-line, var(--ink));
+  stroke-width: 2.5;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.28));
+  vector-effect: non-scaling-stroke;
 }
 
-.ranking-chart-points circle {
-  fill: var(--ink);
-  stroke: var(--team-accent-2, #35d0b8);
-  stroke-width: 3;
+.ranking-chart-axis,
+.ranking-chart-dates {
+  position: absolute;
+  inset: 0;
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  pointer-events: none;
+}
+
+.ranking-chart-axis span {
+  position: absolute;
+  left: 0;
+  top: calc(var(--t) * 1%);
+  transform: translateY(-50%);
+}
+
+.ranking-chart-dates span {
+  position: absolute;
+  left: calc(var(--t) * 1%);
+  bottom: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.ranking-chart-dates span:first-child {
+  transform: none;
+}
+
+.ranking-chart-dates span:last-child {
+  left: auto;
+  right: 0;
+  transform: none;
 }
 
 .ranking-chart-hotspots {
@@ -2772,6 +2787,28 @@ tr:hover td {
   inset: 7px;
   border-radius: inherit;
   background: rgba(255, 255, 255, 0.01);
+}
+
+/* Toda semana ganha bolinha: sao os pontos de medicao do ranking e some-los
+   escondia quantas semanas a serie tem. A semana em que a posicao MUDOU ganha
+   bolinha maior - o tamanho passa a ser o dado, em vez de presenca e ausencia.
+   O anel na cor do painel separa a bolinha da linha por baixo dela. */
+.ranking-chart-hotspot::before {
+  inset: 11px;
+  background: var(--team-line, var(--ink));
+  box-shadow: 0 0 0 2px var(--team-panel-strong, #0b0b10);
+}
+
+.ranking-chart-hotspot.marked::before {
+  inset: 8px;
+  box-shadow: 0 0 0 2.5px var(--team-panel-strong, #0b0b10);
+}
+
+.ranking-chart-hotspot:hover::before,
+.ranking-chart-hotspot:focus-visible::before {
+  inset: 6px;
+  background: var(--ink);
+  box-shadow: 0 0 0 3px var(--team-panel-strong, #0b0b10);
 }
 
 .ranking-chart-tooltip {
@@ -2879,12 +2916,15 @@ tr:hover td {
   transform: translateY(-2px);
 }
 
+/* Foto solta, sangrando na base do bloco: sem fundo proprio e sem contorno.
+   O retangulo que existia aqui era a mesma caixa que a capa tinha atras dos
+   jogadores, so que menor. */
 .roster-photo-wrap {
   min-height: 174px;
   display: grid;
   place-items: end center;
   overflow: hidden;
-  background: var(--surface);
+  background: transparent;
 }
 
 .logo.player-avatar.roster-photo,
@@ -2895,11 +2935,14 @@ tr:hover td {
   background: transparent;
 }
 
+/* Sem sombra atras do recorte: ela deixava uma mancha escura no card e lia
+   como fundo, do mesmo jeito que o halo da capa lia. O PNG ja e transparente
+   fora do jogador. */
 .logo.player-avatar.roster-photo img {
   object-fit: contain;
   object-position: bottom center;
   background: transparent;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.34));
+  filter: none;
 }
 
 .roster-card-body {
@@ -2941,8 +2984,19 @@ tr:hover td {
   align-items: center;
 }
 
+.lineup-timeline-chart {
+  --timeline-name: 180px;
+  --timeline-meta: 170px;
+}
+
+.lineup-timeline-rows {
+  --timeline-name: 180px;
+  --timeline-meta: 170px;
+}
+
 .lineup-timeline-axis {
-  min-height: 32px;
+  min-height: 44px;
+  align-items: start;
   color: #738699;
   font-size: var(--text-xs);
   font-weight: 800;
@@ -2950,21 +3004,85 @@ tr:hover td {
 
 .lineup-axis-track {
   position: relative;
-  min-height: 24px;
+  min-height: 44px;
   border-bottom: 1px solid #2b3d50;
 }
 
-.lineup-axis-track span {
+.lineup-axis-track > span {
   position: absolute;
-  bottom: 5px;
+  top: 0;
   transform: translateX(-50%);
   white-space: nowrap;
 }
 
+.lineup-axis-track > span:first-of-type {
+  transform: none;
+}
+
+/* O escudo de cada campeonato pousa no eixo, na data de inicio, e uma marca
+   vertical desce por todas as linhas. E o que transforma "quem estava aqui em
+   junho" em "quem jogou o JUBS". */
+.lineup-timeline-event {
+  position: absolute;
+  bottom: -11px;
+  z-index: 2;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--team-panel-strong, #0b0b10);
+  transform: translateX(-50%);
+}
+
+.lineup-timeline-event .event-logo,
+.lineup-timeline-event .lineup-timeline-event-logo {
+  width: 20px;
+  height: 20px;
+  min-width: 0;
+  min-height: 0;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.lineup-timeline-event .lineup-timeline-event-logo img {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  object-fit: contain;
+}
+
+.lineup-timeline-event:hover {
+  outline: 2px solid var(--team-line, var(--brand-text));
+  outline-offset: 1px;
+}
+
 .lineup-timeline-rows {
+  position: relative;
   display: grid;
   gap: 8px;
   min-width: 720px;
+  padding-top: 6px;
+}
+
+/* A marca vertical vive na area do grafico, que comeca depois da coluna de
+   192px do nome e termina antes da coluna de 170px da data. calc com as duas
+   larguras mantem a marca alinhada ao escudo do eixo. */
+/* A marca vive na coluna do meio da grade (180px de nome + 12px de gap a
+   esquerda, 170px de data + 12px de gap a direita), entao a porcentagem do
+   eixo vira posicao com essas duas larguras descontadas - senao a marca cai
+   fora do escudo que a gerou. */
+.lineup-timeline-marker {
+  position: absolute;
+  left: calc(var(--timeline-name, 180px) + 12px + (100% - var(--timeline-name, 180px) - var(--timeline-meta, 170px) - 24px) * var(--t, 0));
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(143, 160, 177, 0.16);
+  pointer-events: none;
 }
 
 .lineup-timeline-row {
@@ -3000,30 +3118,53 @@ tr:hover td {
   flex: 0 0 auto;
 }
 
+/* A trilha virou fio. Antes era uma pilula cheia com trama listrada, e o olho
+   lia a trilha inteira como se fosse a passagem do jogador - a barra curta em
+   cima dela parecia um pedaco de outra coisa. Agora so a passagem tem corpo. */
 .lineup-timeline-track {
   position: relative;
-  height: 14px;
-  overflow: hidden;
-  border-radius: var(--radius-pill);
-  background:
-    repeating-linear-gradient(90deg, transparent 0 34px, rgba(255, 255, 255, 0.06) 34px 35px),
-    #111c27;
+  height: 22px;
+  display: flex;
+  align-items: center;
+}
+
+.lineup-timeline-track::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(143, 160, 177, 0.16);
 }
 
 .lineup-timeline-bar {
   position: absolute;
-  top: 3px;
   left: calc(var(--start) * 1%);
   width: calc(var(--width) * 1%);
-  height: 8px;
+  height: 12px;
   border-radius: var(--radius-pill);
-  background: #496b8d;
-  box-shadow: 0 0 14px rgba(73, 107, 141, 0.22);
+  background: #3d5470;
 }
 
 .lineup-timeline-meta {
+  display: grid;
+  gap: 1px;
   color: var(--muted);
   font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.lineup-timeline-meta strong {
+  color: var(--ink);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.lineup-timeline-meta small {
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
   font-weight: 700;
 }
 
@@ -3034,15 +3175,15 @@ tr:hover td {
 
 .former-member-card {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) minmax(190px, 0.7fr) auto;
-  gap: 12px;
+  grid-template-columns: auto minmax(0, 1fr) minmax(190px, 0.7fr) auto auto;
+  gap: 14px;
   align-items: center;
   min-height: 58px;
   border: 1px solid var(--line-dark);
   border-radius: var(--radius-lg);
   background: var(--surface);
   color: #eaf2f8;
-  padding: 8px;
+  padding: 8px 12px;
 }
 
 .former-member-card:hover {
@@ -3051,8 +3192,67 @@ tr:hover td {
 }
 
 .logo.player-avatar.former-photo {
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
+}
+
+/* Os campeonatos que a pessoa jogou com a camisa. E o que separa "passou por
+   aqui" de "jogou o JUBS por aqui" - a informacao que faltava para a lista
+   deixar de ser um indice de nomes. */
+.former-member-events {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.former-member-events small {
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.former-member-events .logo,
+.former-member-event {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.former-member-event img {
+  padding: 0;
+  object-fit: contain;
+}
+
+/* Sem pilula vermelha: vermelho e marca, nunca dado. A nota entra na escala
+   perf-* que o resto do site ja usa para rAAting. */
+.former-member-rating {
+  display: grid;
+  justify-items: end;
+  gap: 1px;
+  min-width: 78px;
+  text-align: right;
+}
+
+.former-member-rating strong {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.former-member-rating small {
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .former-member-main,
@@ -3111,13 +3311,9 @@ tr:hover td {
 }
 
 .team-placement-badge {
-  min-width: 86px;
+  min-width: 0;
   display: grid;
-  justify-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
-  padding: 8px;
+  gap: 2px;
 }
 
 .team-placement-badge strong {
@@ -3129,7 +3325,6 @@ tr:hover td {
   color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 800;
-  text-transform: uppercase;
 }
 
 .team-tournament-stats {
@@ -10068,6 +10263,7 @@ select {
 
 .numeric.perf-strong,
 .rating-cell.perf-strong,
+.former-member-rating.perf-strong strong,
 .vlr-board-metric.perf-strong strong {
   color: #5cff93 !important;
   font-weight: 800;
@@ -10075,6 +10271,7 @@ select {
 
 .numeric.perf-good,
 .rating-cell.perf-good,
+.former-member-rating.perf-good strong,
 .vlr-board-metric.perf-good strong {
   color: #31e981 !important;
   font-weight: 800;
@@ -10082,6 +10279,7 @@ select {
 
 .numeric.perf-positive,
 .rating-cell.perf-positive,
+.former-member-rating.perf-positive strong,
 .vlr-board-metric.perf-positive strong {
   color: #9af0b8 !important;
   font-weight: 800;
@@ -10089,6 +10287,7 @@ select {
 
 .numeric.perf-neutral,
 .rating-cell.perf-neutral,
+.former-member-rating.perf-neutral strong,
 .vlr-board-metric.perf-neutral strong {
   color: rgba(245, 241, 242, 0.72) !important;
   font-weight: 700;
@@ -10096,6 +10295,7 @@ select {
 
 .numeric.perf-negative,
 .rating-cell.perf-negative,
+.former-member-rating.perf-negative strong,
 .vlr-board-metric.perf-negative strong {
   color: #ff9faa !important;
   font-weight: 800;
@@ -10103,6 +10303,7 @@ select {
 
 .numeric.perf-bad,
 .rating-cell.perf-bad,
+.former-member-rating.perf-bad strong,
 .vlr-board-metric.perf-bad strong {
   color: #ff6678 !important;
   font-weight: 800;
@@ -10110,6 +10311,7 @@ select {
 
 .numeric.perf-danger,
 .rating-cell.perf-danger,
+.former-member-rating.perf-danger strong,
 .vlr-board-metric.perf-danger strong {
   color: #ff2b45 !important;
   font-weight: 800;
@@ -12605,40 +12807,36 @@ img.search-state-flag + .search-state-flag.placeholder {
   gap: 12px;
 }
 
+/* A capa da equipe e um CAMPO, nao uma caixa com textura por cima. O fundo
+   chapado sai da cor1 da planilha (--team-field-bg) e a cor entra em duas
+   camadas de luz que derivam devagar em ritmos diferentes, semeados no id da
+   equipe: as 97 equipes usam o mesmo sistema e nenhuma tem o mesmo movimento.
+   A malha de 46px que ficava aqui saiu - era o unico elemento da capa que nao
+   vinha de dado nenhum. */
+/* A parede de jogadores ocupa o banner INTEIRO e a identidade fica por cima
+   dela, sobre um veu. A conta que forcou isso: cinco recortes quadrados lado a
+   lado so cabem em altura cheia se cada um tiver ~0,58 da altura em largura
+   (e a fracao opaca medida nos PNGs). Com a parede em 676px de coluna e o
+   heroi em 430px, a sobreposicao entre os corpos passava de 43%. Na largura
+   inteira (1208px) cada fatia fica com 242px para um corpo de 220px: os
+   jogadores enchem a altura e nao se encostam. */
 .team-page .team-hero {
   position: relative;
-  grid-template-columns: minmax(390px, 0.88fr) minmax(440px, 1.05fr) minmax(170px, 210px);
-  gap: 20px;
-  align-items: stretch;
-  min-height: 306px;
+  display: block;
+  min-height: 330px;
   overflow: hidden;
   border: 1px solid rgba(245, 241, 242, 0.1);
   border-radius: var(--radius-lg);
-  background:
-    linear-gradient(180deg, transparent 72%, rgba(4, 3, 6, 0.42) 100%),
-    radial-gradient(ellipse at 16% 42%, color-mix(in srgb, var(--team-accent, var(--brand)) 78%, var(--surface-3)) 0%, color-mix(in srgb, var(--team-accent, var(--brand)) 42%, var(--surface-3)) 40%, transparent 72%),
-    radial-gradient(ellipse at 68% 22%, color-mix(in srgb, var(--team-accent-2, var(--teal)) 46%, transparent) 0%, transparent 60%),
-    radial-gradient(ellipse at 94% 92%, color-mix(in srgb, var(--team-accent, var(--brand)) 32%, transparent) 0%, transparent 54%),
-    linear-gradient(90deg, color-mix(in srgb, var(--team-accent, var(--brand)) 52%, var(--surface-3)) 0%, color-mix(in srgb, var(--team-accent, var(--brand)) 34%, var(--surface-3)) 34%, color-mix(in srgb, var(--team-accent-2, var(--teal)) 32%, var(--surface-3)) 70%, color-mix(in srgb, var(--team-accent-2, var(--teal)) 22%, var(--surface-3)) 100%);
+  background: var(--team-field-bg, #11131a);
   color: var(--univlr-white, #f5f1f2);
   box-shadow:
     inset 0 1px 0 rgba(245, 241, 242, 0.08),
     0 22px 70px rgba(0, 0, 0, 0.28);
-  padding: 20px;
+  padding: 0 24px;
 }
 
 .team-page .team-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  opacity: 0.12;
-  background-image:
-    linear-gradient(rgba(245, 241, 242, 0.34) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 241, 242, 0.34) 1px, transparent 1px);
-  background-size: 46px 46px;
-  mask-image: linear-gradient(90deg, #000, rgba(0, 0, 0, 0.35) 58%, transparent 96%);
-  pointer-events: none;
+  content: none;
 }
 
 .team-page .team-hero > * {
@@ -12646,19 +12844,202 @@ img.search-state-flag + .search-state-flag.placeholder {
   z-index: 1;
 }
 
+.team-page .team-hero-cover {
+  z-index: 1;
+}
+
 .team-page .team-hero-main {
+  z-index: 2;
+}
+
+.team-page .team-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.team-page .team-field i {
+  position: absolute;
+  display: block;
+  will-change: transform;
+}
+
+/* Foco principal: a cor1 em luz alta. Nasce a esquerda, atras do escudo. */
+.team-page .team-field-focus {
+  left: calc(var(--fx1, 10) * 1%);
+  top: calc(var(--fy1, -12) * 1%);
+  width: 74%;
+  height: 168%;
+  background: radial-gradient(closest-side, var(--team-field-focus, #2b2f3d), transparent 76%);
+  animation: teamFieldDriftA var(--fa, 46s) ease-in-out var(--fdelay, 0s) infinite alternate;
+}
+
+/* Segunda familia: cor2 quando ela agrega, sombra da cor1 quando nao agrega. */
+.team-page .team-field-second {
+  left: calc(var(--fx2, 52) * 1%);
+  top: calc(var(--fy2, -6) * 1%);
+  width: 78%;
+  height: 164%;
+  opacity: 0.9;
+  background: radial-gradient(closest-side, var(--team-field-second, #1c2030), transparent 74%);
+  animation: teamFieldDriftB var(--fb, 63s) ease-in-out var(--fdelay, 0s) infinite alternate;
+}
+
+/* O raspao de claridade: uma faixa larga e fraca atravessando o campo. E o que
+   faz a capa parecer superficie pegando luz em vez de tres bolhas coloridas. */
+.team-page .team-field-sheen {
+  inset: -30% -60%;
+  opacity: 0.5;
+  background: linear-gradient(
+    var(--fgiro, 118deg),
+    transparent 34%,
+    rgba(245, 241, 242, 0.075) 50%,
+    transparent 66%
+  );
+  animation: teamFieldSheen var(--fc, 79s) linear infinite;
+}
+
+/* Assenta os jogadores: a base escurece e a borda superior recebe um fio de
+   luz. Fixo de proposito - e a unica parte do campo que nao se move, entao a
+   leitura do texto nunca depende de onde a deriva parou. */
+.team-page .team-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(245, 241, 242, 0.05) 0, transparent 22%),
+    linear-gradient(180deg, transparent 54%, rgba(4, 3, 6, 0.52) 100%);
+}
+
+@keyframes teamFieldDriftA {
+  from {
+    transform: translate3d(-7%, -5%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(9%, 6%, 0) scale(1.16);
+  }
+}
+
+@keyframes teamFieldDriftB {
+  from {
+    transform: translate3d(8%, 7%, 0) scale(1.12);
+  }
+  to {
+    transform: translate3d(-10%, -4%, 0) scale(0.94);
+  }
+}
+
+@keyframes teamFieldSheen {
+  from {
+    transform: translate3d(-38%, 0, 0);
+  }
+  to {
+    transform: translate3d(38%, 0, 0);
+  }
+}
+
+/* A identidade tem a propria faixa a esquerda e a parede comeca depois dela:
+   nenhum texto cai em cima de jogador nenhum. A largura desta faixa e o unico
+   parametro que decide o tamanho dos jogadores - o resto da largura vira as
+   cinco fatias, e a altura das fotos e a altura do banner. */
+.team-page .team-hero-main {
+  position: relative;
+  width: 420px;
+  max-width: 100%;
+  min-height: 330px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
   min-width: 0;
+  padding: 22px 0 30px;
 }
 
 .team-page .team-identity {
-  gap: 24px;
+  gap: 22px;
+  align-items: flex-start;
+}
+
+/* O recorde entra no vazio embaixo do nome. Numeral condensado grande, rotulo
+   pequeno: e a escala do resto do site, so aplicada onde antes havia padding. */
+.team-page .team-hero-record {
+  display: flex;
+  gap: 10px 18px;
+  align-items: flex-end;
+  margin: 0;
+}
+
+.team-page .team-hero-record div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.team-page .team-hero-record dt {
+  color: rgba(245, 241, 242, 0.64);
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.team-page .team-hero-record dd {
+  margin: 0;
+  color: var(--univlr-white, #f5f1f2);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  line-height: 0.9;
+}
+
+.team-page .team-hero-record .lead dd {
+  font-size: var(--text-5xl);
+  letter-spacing: -0.02em;
+}
+
+.team-page .team-hero-record .lead dt {
+  color: rgba(245, 241, 242, 0.78);
+}
+
+/* A variacao da semana anda colada no numero, em corpo pequeno. Solta no
+   rotulo ela virava uma frase de 24 caracteres embaixo de um numero de 56px. */
+.team-page .team-hero-record .lead em {
+  margin-left: 6px;
+  font-family: var(--font-text);
+  font-size: var(--text-sm);
+  font-style: normal;
+  font-weight: 800;
+  vertical-align: 0.9em;
+}
+
+.team-page .team-hero-record .lead em.up {
+  color: var(--win);
+}
+
+.team-page .team-hero-record .lead em.down {
+  color: var(--danger);
+}
+
+.team-page .team-hero-record .lead em.flat {
+  color: rgba(245, 241, 242, 0.5);
+}
+
+/* Um fio separando o ranking do resto da barra: e a unica hierarquia que a
+   linha precisa, e nao e moldura - nao envolve nada. */
+.team-page .team-hero-record .lead {
+  margin-right: 0;
+  border-right: 0;
+  padding-right: 0;
 }
 
 .team-page .team-logo-frame {
-  width: 150px;
-  height: 150px;
+  width: 190px;
+  height: 190px;
+  flex: 0 0 auto;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -12686,27 +13067,49 @@ img.search-state-flag + .search-state-flag.placeholder {
   filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.42));
 }
 
+/* O ar entre o nome, o estado, a faculdade e as redes. Sao quatro linhas de
+   pesos diferentes empilhadas: com 12px elas liam como um bloco so. */
 .team-page .team-title-block {
-  gap: 8px;
+  gap: 18px;
 }
 
+/* A tag da equipe em Barlow 900. O arquivo do peso 900 ja estava em
+   assets/fonts/ e nunca tinha sido usado - o site inteiro para em 800 - entao
+   ela ganha uma textura que nao existe em nenhum outro lugar da pagina sem
+   baixar um byte a mais. Contra o nome, que e Barlow Condensed, o contraste e
+   de largura e nao so de tamanho.
+   A cor saiu do vermelho da marca para a cor da equipe: a tag e o codigo
+   daquela equipe, e vermelho aqui e identidade do site, nunca dado. */
 .team-page .team-title-block .eyebrow {
-  color: var(--univlr-red, #f6132a);
-  font-size: var(--text-xs);
-  font-weight: 800;
+  align-self: flex-start;
+  text-shadow: 0 2px 12px rgba(4, 3, 6, 0.9);
+  color: var(--team-line, var(--brand-text));
+  font-family: var(--font-text);
+  font-size: var(--text-xl);
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  line-height: 1;
   text-transform: uppercase;
 }
 
+/* Ate duas linhas. Nomes de equipe universitaria sao longos ("Uninassau
+   Griffins", "Fametro Berserkers") e cortar na primeira linha comeria metade
+   da identidade; da terceira em diante o nome empurraria a barra de recorde
+   para fora da capa. */
 .team-page .team-title-block h1 {
+  display: -webkit-box;
+  overflow: hidden;
   margin: 0;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   color: var(--univlr-white, #f5f1f2);
   font-size: var(--text-5xl);
-  line-height: 0.95;
+  line-height: 0.94;
   text-shadow: 0 18px 34px rgba(0, 0, 0, 0.4);
 }
 
 .team-page .team-meta-row {
-  gap: 12px 16px;
+  gap: 16px 20px;
   align-items: center;
 }
 
@@ -12715,77 +13118,98 @@ img.search-state-flag + .search-state-flag.placeholder {
   min-height: 0;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: rgba(245, 241, 242, 0.86);
+  color: rgba(245, 241, 242, 0.92);
   padding: 0;
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
   font-weight: 700;
+  text-shadow: 0 2px 12px rgba(4, 3, 6, 0.9);
 }
 
 .team-page .state-flag {
-  width: 22px;
-  height: 15px;
+  width: 34px;
+  height: 23px;
   border-radius: var(--radius-sm);
 }
 
+/* A parede de jogadores fica SOLTA no campo: sem caixa, sem brilho proprio,
+   sem retangulo por tras. O que existia aqui era um ::before com
+   `inset: 10px -34px 0` - um retangulo de luz com aresta visivel a esquerda e
+   a direita, que era exatamente o "fundo do espaco dos jogadores" que nao
+   conversava com a capa. O assentamento agora e do campo inteiro
+   (.team-field::after), entao a base escurece uma vez so, para tudo. */
+/* A parede sangra ate a borda direita e comeca onde a faixa da identidade
+   termina. Medido a 1280px: 784px para cinco fatias de 157px, com o corpo do
+   jogador (0,58 da altura de 326px = 189px) sobrepondo o vizinho em 17%. E a
+   sobreposicao de foto de equipe - ombro atras de ombro - e nao empilhamento:
+   os cinco aparecem inteiros e nenhum fica atras de texto. */
 .team-page .team-hero-cover {
-  position: relative;
-  align-self: center;
+  --figura-jogador: min(80%, 296px);
+  position: absolute;
+  inset: 0 0 0 440px;
   min-width: 0;
-  min-height: 258px;
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  /* Teto de 245px por fatia, com o grupo centrado na propria faixa. Sem o teto
+     as colunas eram 1fr puro e a 1920px os cinco ficavam esparramados. O
+     minimo continua 0, entao abaixo de ~1500px as fatias encolhem junto com a
+     capa e nada estoura.
+     A faixa da identidade encolheu de 440 para 420px para dar esses 20px a
+     parede: a palavra mais larga entre os 97 nomes e "Naotemclutch" (202px na
+     tipografia do h1), e a caixa do titulo continua com 208px. */
+  grid-auto-columns: minmax(0, 245px);
   justify-content: center;
   gap: 0;
-  align-items: end;
+  align-items: stretch;
   overflow: hidden;
   background: transparent;
-  mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 13%, #000 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 13%, #000 96%, transparent 100%);
 }
 
-.team-page .team-hero-cover::before {
-  content: "";
-  position: absolute;
-  inset: 10px -34px 0;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--team-accent, var(--brand)) 36%, transparent), transparent 58%),
-    radial-gradient(ellipse at 50% 98%, rgba(245, 241, 242, 0.12), transparent 42%);
-  pointer-events: none;
-}
-
+/* Profundidade de foto de equipe: o do meio na frente, os das pontas atras.
+   Sem isso a sobreposicao ficava em ordem de DOM (o ultimo sempre por cima) e
+   lia como erro de empilhamento em vez de composicao. */
 .team-page .team-hero-cover-player {
   position: relative;
   z-index: 1;
-  flex: 0 1 118px;
   min-width: 0;
-  min-height: 258px;
   display: grid;
   align-items: end;
   justify-items: center;
-  overflow: hidden;
   color: var(--univlr-white, #f5f1f2);
   text-decoration: none;
 }
 
-.team-page .team-hero-cover-player::after {
-  content: "";
-  position: absolute;
-  inset: auto 12% 2px;
-  height: 12px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at 50% 50%, rgba(4, 3, 6, 0.5), transparent 72%);
-  filter: blur(3px);
-  pointer-events: none;
+.team-page .team-hero-cover-player:nth-child(2),
+.team-page .team-hero-cover-player:nth-last-child(2) {
+  z-index: 2;
 }
 
+.team-page .team-hero-cover-player:nth-child(3):nth-last-child(3) {
+  z-index: 3;
+}
+
+.team-page a.team-hero-cover-player:hover {
+  z-index: 4;
+}
+
+/* A foto passa a ser dimensionada pela ALTURA e transborda a coluna na
+   horizontal. Com `object-fit: contain` numa caixa 194x304, o PNG quadrado
+   renderizava a 194x194 e os outros 110px de altura eram desperdicio - era por
+   isso que o jogador nunca preenchia o banner.
+   Transbordar e seguro porque o recorte tem margem transparente: medido nos
+   cinco PNGs do CEUB, o jogador ocupa 57,9% da largura do arquivo (65,3% no
+   mais largo), entao ~21% de cada lado e vazio e as caixas se sobrepoem sem os
+   corpos encostarem. */
 .team-page .team-hero-cover-photo,
 .team-page .logo.player-avatar.team-hero-cover-photo {
   align-self: end;
-  width: 130%;
-  height: 246px;
+  width: 100%;
+  height: 100%;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -12794,25 +13218,65 @@ img.search-state-flag + .search-state-flag.placeholder {
 
 .team-page .team-hero-cover-photo img,
 .team-page .logo.player-avatar.team-hero-cover-photo img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  left: 50%;
+  /* `top: auto` e obrigatorio: `.image-logo img` define `inset: 0`, e com top,
+     bottom e uma altura explicita ao mesmo tempo a caixa fica sobre-restrita -
+     o navegador descarta o `bottom` e ancora no topo. Enquanto a foto tinha
+     `height: 100%` isso nao aparecia porque as duas ancoras coincidiam. */
+  top: auto;
+  bottom: 0;
+  width: auto;
+  /* 70% e um teto de nitidez, nao de gosto: os 83 recortes sao PNG 320x320 e
+     nao ha original maior no repositorio. A 100% da capa o jogador era
+     desenhado a 390px - 1,22x acima do nativo, e num monitor a 1,25 de DPR
+     isso pedia 488px de um arquivo de 320. Em 80% ele volta para dentro do
+     tamanho do arquivo.
+     O teto de 320px e a garantia dura: a altura da capa varia por equipe (358
+     a 459px, conforme o nome e a faculdade quebram linha), e sem ele a UCB
+     Dogs ja batia exatamente no limite do nativo. */
+  height: var(--figura-jogador);
+  max-width: none;
+  aspect-ratio: 1;
   object-fit: contain;
   object-position: bottom center;
   padding: 0;
   background: transparent;
-  filter:
-    brightness(1.06) contrast(1.05) saturate(1.05)
-    drop-shadow(0 16px 24px rgba(0, 0, 0, 0.45))
-    drop-shadow(0 0 24px color-mix(in srgb, var(--team-accent, var(--brand)) 28%, transparent));
-  transform: scale(1.1);
+  /* Nenhum halo. O `drop-shadow` colorido pintava um brilho da cor da equipe
+     em volta do recorte e o escuro deixava uma mancha atras dele - os dois
+     liam como fundo, e o PNG ja e 100% transparente fora do jogador. Sobrou
+     so o ajuste de tom, que age no pixel da foto e nao ao redor dela. */
+  filter: brightness(1.04) contrast(1.04) saturate(1.04);
+  transform: translateX(-50%);
   transform-origin: bottom center;
-  mask-image: linear-gradient(180deg, #000 82%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
-  -webkit-mask-image: linear-gradient(180deg, #000 82%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 88%, rgba(0, 0, 0, 0.5) 97%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 88%, rgba(0, 0, 0, 0.5) 97%, transparent 100%);
   transition: transform 0.25s ease;
 }
 
 .team-page a.team-hero-cover-player:hover img {
-  transform: scale(1.15);
+  transform: translateX(-50%) scale(1.05);
+}
+
+/* Silhueta recua. Ela e placeholder, nao retrato: com o mesmo realce das fotos
+   reais, cinco silhuetas viravam o assunto da capa.
+   E ela encolhe. Medido nos arquivos: o desenho ocupa 79,1% da largura do PNG,
+   contra 66,8% de media nas 83 fotos reais - escalada pela mesma altura, a
+   silhueta saia 1,18x mais larga que um jogador e roubava a fatia do vizinho.
+   0,845 = 66,8 / 79,1 iguala as duas larguras.
+   O `bottom` negativo desce o desenho ate a linha de base: a silhueta tem
+   10,3% de vazio embaixo do ombro (as fotos tem 0%), entao sem isso ela
+   flutuava 30px acima do chao dos outros quatro. */
+.team-page .team-hero-cover-photo.no-photo img,
+.team-page .logo.player-avatar.team-hero-cover-photo.no-photo img {
+  height: calc(var(--figura-jogador) * 0.845);
+  bottom: calc(var(--figura-jogador) * -0.087);
+  opacity: 0.34;
+  filter: none;
+}
+
+.team-page a.team-hero-cover-player:hover .no-photo img {
+  opacity: 0.5;
 }
 
 .team-page .team-hero-cover-player > span:last-child {
@@ -12833,59 +13297,15 @@ img.search-state-flag + .search-state-flag.placeholder {
   white-space: nowrap;
 }
 
-.team-page .team-quick-panel {
-  align-content: stretch;
-  gap: 12px;
-}
-
-.team-page .team-rank-box {
-  position: relative;
-  min-height: 210px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  overflow: hidden;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  padding: 8px 0 0;
-}
-
-.team-page .team-rank-box span {
-  order: 2;
-  z-index: 1;
-  color: rgba(245, 241, 242, 0.68);
-  font-size: var(--text-xs);
-  font-weight: 800;
-}
-
-.team-page .team-rank-box strong {
-  order: 1;
-  /* 0.16 dava 1,4:1 - o numero do rank era praticamente invisivel. 0.38 e o
-     minimo para passar 3:1 em texto grande sem deixar de ser recuado. */
-  color: rgba(245, 241, 242, 0.38);
-  font-size: var(--text-7xl);
-  font-weight: 800;
-  line-height: 0.76;
-  transform: translateX(-8px);
-}
-
-.team-page .team-rank-box small {
-  order: 3;
-  z-index: 1;
-  color: var(--univlr-white, #f5f1f2);
-  font-size: var(--text-lg);
-  font-weight: 800;
-}
-
 .team-page .team-socials {
-  justify-content: flex-start;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
 }
 
 .team-page .social-button {
-  border-color: rgba(245, 241, 242, 0.12);
-  background: rgba(245, 241, 242, 0.06);
+  border-color: rgba(245, 241, 242, 0.14);
+  background: rgba(4, 3, 6, 0.34);
 }
 
 .team-page .team-trophy-panel {
@@ -12910,6 +13330,221 @@ img.search-state-flag + .search-state-flag.placeholder {
   min-height: 72px;
   border-color: rgba(245, 241, 242, 0.1);
   background: var(--team-panel-strong);
+}
+
+/* Rotulo de coluna nao quebra. Com a coluna de agentes, "Rounds" e "KAST"
+   passaram a cair em duas linhas e o cabecalho dobrou de altura (52px) sem
+   ganhar informacao nenhuma. Se faltar largura, a tabela rola - ela ja esta
+   dentro de um .table-wrap com overflow-x: auto. */
+.team-page .team-player-stats-table th,
+.team-page .team-player-stats-table td.numeric {
+  white-space: nowrap;
+}
+
+/* Banner de mapa em tamanho de cartaz. A arte e o fundo; o nome, o saldo e o
+   aproveitamento moram no breu da base, onde o branco fecha contraste com
+   folga independentemente da foto. O medidor e um fio na aresta de baixo, na
+   cor da equipe: o aproveitamento vira o comprimento do fio em vez de mais uma
+   barra vermelha - vermelho e marca, nunca dado. */
+.team-page .map-perf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.team-page .map-perf-tile {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--team-panel-strong, #0b0b10);
+  color: var(--univlr-white, #f5f1f2);
+  text-decoration: none;
+}
+
+.team-page .map-perf-tile img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.05) contrast(1.04);
+  transform: scale(1.04);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.team-page a.map-perf-tile:hover img,
+.team-page a.map-perf-tile:focus-visible img {
+  transform: scale(1.1);
+}
+
+.team-page .map-perf-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(4, 3, 6, 0.12) 0%,
+    rgba(4, 3, 6, 0.52) 44%,
+    rgba(4, 3, 6, 0.92) 100%
+  );
+  pointer-events: none;
+}
+
+/* Sem arte, o degrade sozinho deixaria o bloco chapado: a cor da equipe entra
+   como fundo para o mapa novo, ainda fora da base de artes, nao virar um
+   retangulo preto. */
+.team-page .map-perf-tile:not(.has-art) {
+  background:
+    radial-gradient(ellipse at 50% 120%, var(--team-field-focus, #2b2f3d), transparent 70%),
+    var(--team-field-bg, #11131a);
+}
+
+.team-page .map-perf-copy {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+  padding: 10px 12px 12px;
+}
+
+.team-page .map-perf-copy strong {
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.team-page .map-perf-copy small {
+  color: rgba(245, 241, 242, 0.74);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.team-page .map-perf-rate {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.team-page .map-perf-meter {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 3;
+  width: calc(var(--wr, 0) * 1%);
+  height: 3px;
+  background: var(--team-line, var(--brand-text));
+}
+
+@media (max-width: 760px) {
+  .team-page .map-perf-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .team-page .map-perf-copy strong,
+  .team-page .map-perf-rate {
+    font-size: var(--text-xl);
+  }
+}
+
+/* A prateleira. Sem borda por celula e sem fundo por item: o trofeu, o nome
+   do campeonato e a data ficam soltos, e a separacao e o espaco. */
+.team-page .trophy-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 34px;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding-top: 4px;
+  scrollbar-width: thin;
+}
+
+.team-page .trophy-shelf-item {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  min-width: 128px;
+  max-width: 190px;
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.18s ease;
+}
+
+.team-page .trophy-shelf-item:hover,
+.team-page .trophy-shelf-item:focus-visible {
+  transform: translateY(-3px);
+}
+
+.team-page .trophy-shelf-item .trophy-visual {
+  width: 108px;
+  height: 104px;
+}
+
+.team-page .trophy-shelf-item .trophy-image {
+  width: 104px;
+  height: 100px;
+}
+
+.team-page .trophy-shelf-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* A colocacao vem primeiro e em maiuscula pequena: e o que a arte ja diz, e
+   confirma-la em texto e o que faltava. */
+.team-page .trophy-shelf-copy em {
+  color: rgba(245, 241, 242, 0.62);
+  font-size: var(--text-2xs);
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.team-page .trophy-shelf-item.place-1 .trophy-shelf-copy em {
+  color: var(--tier-s, #f2b21c);
+}
+
+.team-page .trophy-shelf-copy strong {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: var(--univlr-white, #f5f1f2);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.team-page .trophy-shelf-item:hover .trophy-shelf-copy strong {
+  color: var(--team-line, var(--brand-text));
+}
+
+.team-page .trophy-shelf-copy small {
+  color: var(--team-muted);
+  font-size: var(--text-2xs);
+  font-weight: 700;
 }
 
 .team-page .team-tabs {
@@ -12965,30 +13600,20 @@ img.search-state-flag + .search-state-flag.placeholder {
 }
 
 .team-page .ranking-chart-card {
-  min-height: 440px;
+  gap: 16px;
   border-color: rgba(245, 241, 242, 0.1);
-  background:
-    radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--team-accent-2, var(--teal)) 22%, transparent), transparent 36%),
-    radial-gradient(circle at 78% 16%, color-mix(in srgb, var(--team-accent, var(--brand)) 16%, transparent), transparent 34%),
-    var(--team-panel-strong);
+  background: var(--team-panel-strong);
+  padding: 16px;
 }
 
-.team-page .ranking-line-chart {
-  min-height: 380px;
+.team-page .ranking-chart-kpis dd {
+  color: var(--univlr-white, #f5f1f2);
 }
 
-.team-page .ranking-chart-line {
-  stroke: var(--univlr-red, #f6132a);
-  stroke-width: 5;
-}
-
-.team-page .ranking-chart-area {
-  fill: color-mix(in srgb, var(--univlr-red, #f6132a) 18%, transparent);
-}
-
-.team-page .ranking-chart-points circle {
-  fill: var(--univlr-white, #f5f1f2);
-  stroke: var(--univlr-red, #f6132a);
+.team-page .ranking-chart-kpis dt,
+.team-page .ranking-chart-axis,
+.team-page .ranking-chart-dates {
+  color: var(--team-muted);
 }
 
 .team-page .section-head h2,
@@ -13019,11 +13644,12 @@ img.search-state-flag + .search-state-flag.placeholder {
   background: #11131a;
 }
 
+/* Sem o halo na cor da equipe atras da foto. Ele tinha entrado para substituir
+   a caixa solida que existia aqui, mas continuava sendo fundo - so mais macio.
+   O card fica chapado e o jogador solto em cima dele. */
 .team-page .roster-photo-wrap {
   min-height: 184px;
-  background:
-    radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--team-accent, var(--brand)) 18%, transparent), transparent 50%),
-    #0b0b10;
+  background: transparent;
 }
 
 .team-page .roster-card-body {
@@ -13076,6 +13702,22 @@ img.search-state-flag + .search-state-flag.placeholder {
   background: var(--team-panel-strong);
 }
 
+.team-page .former-member-card:hover {
+  border-color: color-mix(in srgb, var(--team-line, var(--brand-text)) 45%, transparent);
+  background: var(--team-panel);
+}
+
+/* Quem esta na line usa a cor da equipe; quem saiu fica no ardosia neutro. O
+   vermelho da marca saiu daqui: "esta no elenco" e estado, e estado nao pode
+   morar na cor que identifica o site. */
+.team-page .lineup-timeline-bar.current {
+  background: var(--team-line, var(--brand-text));
+}
+
+.team-page .lineup-timeline-name small {
+  color: var(--team-line, var(--brand-text));
+}
+
 .team-page .team-tournament-list {
   display: grid;
   border-top: 1px solid rgba(245, 241, 242, 0.1);
@@ -13083,16 +13725,134 @@ img.search-state-flag + .search-state-flag.placeholder {
 
 .team-page .team-tournament-card {
   display: grid;
-  grid-template-columns: minmax(260px, 1.35fr) minmax(120px, 0.45fr) minmax(280px, 1fr) minmax(112px, 0.4fr);
-  gap: 16px;
+  grid-template-columns: minmax(280px, 1.5fr) minmax(150px, 0.55fr) minmax(260px, 0.95fr);
+  gap: 20px;
   align-items: center;
-  min-height: 78px;
+  min-height: 86px;
   border: 0;
   border-bottom: 1px solid rgba(245, 241, 242, 0.1);
   border-radius: 0;
   background: transparent;
   color: var(--univlr-white, #f5f1f2);
-  padding: 12px 0;
+  padding: 14px 0;
+}
+
+/* A ficha tecnica: tier, formato, tipo, organizador e premiacao, separados por
+   ponto medio. Sao campos que ja existiam no artefato e nunca chegavam nesta
+   aba - era por isso que ela parecia "generica". */
+.team-stats-agents {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.team-stats-agents.empty {
+  color: var(--muted);
+}
+
+.team-stats-agent {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: rgba(245, 241, 242, 0.07);
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  font-weight: 800;
+}
+
+.team-stats-agent img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Confrontos: escudo, nome, saldo em mapas e aproveitamento. Sem barra e sem
+   caixa - a linha ja e a unidade. */
+.team-opponent-list {
+  display: grid;
+}
+
+.team-opponent-row {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 34px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.team-opponent-row + .team-opponent-row {
+  border-top: 1px solid rgba(245, 241, 242, 0.07);
+}
+
+.team-opponent-row:hover .team-opponent-name {
+  color: var(--team-line, var(--brand-text));
+}
+
+.team-opponent-logo,
+.team-opponent-row .team-logo {
+  width: 24px;
+  height: 24px;
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+  background: transparent;
+}
+
+.team-opponent-name {
+  overflow: hidden;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team-opponent-record {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+
+.team-opponent-record.up {
+  color: var(--win);
+}
+
+.team-opponent-record.down {
+  color: var(--loss-ink, var(--muted));
+}
+
+.team-opponent-meta {
+  min-width: 40px;
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  text-align: right;
+}
+
+.team-page .team-tournament-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  margin-top: 3px;
+  color: var(--team-muted);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+}
+
+.team-page .team-tournament-facts i {
+  font-style: normal;
+}
+
+.team-page .team-tournament-facts i + i::before {
+  content: "·";
+  margin-right: 10px;
+  opacity: 0.55;
 }
 
 .team-page .team-tournament-card:hover {
@@ -13137,26 +13897,50 @@ img.search-state-flag + .search-state-flag.placeholder {
 
 .team-page .team-tournament-event small,
 .team-page .team-placement-badge small,
-.team-page .team-tournament-stats small,
-.team-page .team-tournament-status small {
+.team-page .team-tournament-stats small {
   color: var(--team-muted);
   font-size: var(--text-2xs);
   font-weight: 700;
 }
 
+/* Sem moldura em volta da colocacao: o numero fica grande e solto, e a cor
+   faz o trabalho. A caixa com contorno e fundo tingido que estava aqui era
+   exatamente o tipo de elemento que o projeto ja tinha decidido nao usar. */
 .team-page .team-placement-badge {
   min-width: 0;
+  display: grid;
+  gap: 2px;
+  justify-items: start;
   border: 0;
   border-radius: 0;
   background: transparent;
-  justify-items: start;
   padding: 0;
 }
 
 .team-page .team-placement-badge strong {
   color: var(--univlr-white, #f5f1f2);
-  font-size: var(--text-lg);
-  line-height: 1.12;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.team-page .team-placement-badge.p1 strong {
+  color: var(--tier-s, #f2b21c);
+}
+
+.team-page .team-placement-badge.p2 strong,
+.team-page .team-placement-badge.p3 strong {
+  color: #d6dde6;
+}
+
+.team-page .team-placement-badge.qualified strong {
+  color: var(--win);
+}
+
+.team-page .team-placement-badge.scheduled strong,
+.team-page .team-placement-badge.unknown strong {
+  color: rgba(245, 241, 242, 0.72);
 }
 
 .team-page .team-tournament-stats {
@@ -13171,53 +13955,72 @@ img.search-state-flag + .search-state-flag.placeholder {
   padding: 0;
 }
 
-.team-page .team-tournament-stats strong,
-.team-page .team-tournament-status strong {
+.team-page .team-tournament-stats strong {
   color: var(--univlr-white, #f5f1f2);
   font-size: var(--text-lg);
 }
 
-.team-page .team-tournament-status {
-  display: grid;
-  justify-items: end;
-  gap: 4px;
-  min-width: 0;
-  text-align: right;
-}
+
 
 @media (max-width: 1180px) {
-  .team-page .team-hero {
-    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+  /* Abaixo de 1180px a faixa da identidade encolhe junto, senao ela come a
+     largura das cinco fatias e a sobreposicao dispara. */
+  .team-page .team-hero-main {
+    width: 366px;
   }
 
-  .team-page .team-quick-panel {
-    grid-column: 1 / -1;
-    grid-template-columns: minmax(0, 1fr) auto;
+  .team-page .team-hero-cover {
+    inset: 0 0 0 386px;
   }
 
-  .team-page .team-rank-box {
-    min-height: 112px;
+  .team-page .team-logo-frame {
+    width: 150px;
+    height: 150px;
   }
 
-  .team-page .team-rank-box strong {
-    font-size: var(--text-6xl);
+  .team-page .team-title-block h1 {
+    font-size: var(--text-4xl);
+  }
+
+  .team-page .team-hero-record .lead dd {
+    font-size: var(--text-4xl);
   }
 
   .team-page .team-tournament-card {
-    grid-template-columns: minmax(260px, 1fr) minmax(120px, 0.45fr);
+    grid-template-columns: minmax(240px, 1fr) minmax(140px, 0.5fr);
   }
 
-  .team-page .team-tournament-stats,
-  .team-page .team-tournament-status {
-    grid-column: span 1;
+  .team-page .team-tournament-stats {
+    grid-column: 1 / -1;
   }
 }
 
 @media (max-width: 760px) {
+  /* No celular a parede volta para o fluxo, embaixo da identidade: nao ha
+     largura para os dois lado a lado, e sobrepor texto e foto num telefone
+     nao tem escapatoria de contraste. */
   .team-page .team-hero {
+    display: grid;
     grid-template-columns: 1fr;
+    gap: 14px;
     min-height: 0;
-    padding: 12px;
+    padding: 12px 12px 0;
+  }
+
+  .team-page .team-hero-main {
+    width: auto;
+    min-height: 0;
+    padding: 0;
+  }
+
+  /* 230px de faixa dao 161px de foto (70%). Num telefone a 2x de DPR isso pede
+     322px de um arquivo de 320: o limite exato do nativo. */
+  .team-page .team-hero-cover {
+    position: relative;
+    inset: auto;
+    height: 230px;
+    mask-image: none;
+    -webkit-mask-image: none;
   }
 
   .team-page .team-identity {
@@ -13234,40 +14037,26 @@ img.search-state-flag + .search-state-flag.placeholder {
     font-size: var(--text-3xl);
   }
 
-  .team-page .team-hero-cover {
-    min-height: 158px;
-    display: grid;
-    overflow: hidden;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 8px;
-  }
-
-  .team-page .team-hero-cover-player,
-  .team-page .team-hero-cover-photo,
-  .team-page .logo.player-avatar.team-hero-cover-photo {
-    min-height: 158px;
-    height: 158px;
-  }
-
   .team-page .team-hero-cover-player > span:last-child {
     font-size: var(--text-2xs);
-    padding: 0 4px 8px;
+    padding: 0 4px 6px;
   }
 
-  .team-page .team-quick-panel {
-    grid-template-columns: 1fr;
+  .team-page .team-hero-record {
+    gap: 10px 18px;
   }
 
-  .team-page .team-rank-box strong {
-    font-size: var(--text-6xl);
+  .team-page .team-hero-record .lead {
+    margin-right: 0;
+    padding-right: 18px;
   }
 
-  .team-page .ranking-chart-card {
-    min-height: 340px;
+  .team-page .team-hero-record .lead dd {
+    font-size: var(--text-3xl);
   }
 
-  .team-page .ranking-line-chart {
-    min-height: 300px;
+  .team-page .ranking-chart-stage {
+    height: 150px;
   }
 
   .team-page .team-tournament-card {
@@ -13277,11 +14066,6 @@ img.search-state-flag + .search-state-flag.placeholder {
 
   .team-page .team-tournament-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .team-page .team-tournament-status {
-    justify-items: start;
-    text-align: left;
   }
 }
 
@@ -13389,7 +14173,6 @@ img.search-state-flag + .search-state-flag.placeholder {
 .match-score-core,
 .match-hero-score,
 .preview-score,
-.team-rank-box strong,
 .ranking-score-ring strong,
 .ranking-mini-card strong,
 .ranking-fallback-card strong,
@@ -13421,7 +14204,6 @@ td.numeric,
 .match-score-core,
 .match-hero-score,
 .preview-score,
-.team-rank-box strong,
 .ranking-score-ring strong,
 .ranking-mini-card strong,
 .ranking-fallback-card strong,

@@ -6617,18 +6617,32 @@ function tournamentTeamEliminatedRow(event, teamId) {
   return rows.find((row) => (row.id || row.teamId) === teamId) || null;
 }
 
+// "Classificado" NAO e colocacao faltando. Numa fase eliminatoria encerrada
+// (JUBS Fase inicial, UNIVAVA Classificatorias) esse e o resultado: a equipe
+// avancou. Ate 30/08/2026 ele caia no mesmo balde de "em andamento" e a aba de
+// campeonatos dizia "Colocação não informada" para uma campanha 7-0 - o dado
+// estava na planilha o tempo todo, o rotulo e que o descartava.
+function placementIsQualified(value) {
+  return ["classificado", "classificada"].includes(normalize(value));
+}
+
 function placementResultFromRow(row, event, fallback = "") {
   const raw = placementRawValue(row) || fallback;
+  const nota = row?.note || row?.reason || "";
+  if (placementIsQualified(raw)) {
+    return { placement: 0, placementLabel: "Classificado", placementStatus: "qualified", placementNote: nota };
+  }
   if (placementIsOngoing(raw)) {
     return eventIsDone(event)
-      ? { placement: 0, placementLabel: "Colocação não informada", placementStatus: "unknown" }
-      : { placement: 0, placementLabel: "Em andamento", placementStatus: "ongoing" };
+      ? { placement: 0, placementLabel: "Colocação não informada", placementStatus: "unknown", placementNote: nota }
+      : { placement: 0, placementLabel: "Em andamento", placementStatus: "ongoing", placementNote: nota };
   }
   const range = placementRangeFromValue(raw);
   return {
     placement: range.start || Number(row?.placement || 0) || 0,
     placementLabel: rankingPlacementLabel(raw),
     placementStatus: range.start ? "defined" : "unknown",
+    placementNote: nota,
   };
 }
 
@@ -6640,8 +6654,14 @@ function teamEventPlacementResult(teamId, event, achievement = null) {
   if (official) return placementResultFromRow(official, event);
   const eliminated = tournamentTeamEliminatedRow(event, teamId);
   if (eliminated) return placementResultFromRow(eliminated, event, "Eliminado");
-  if (!eventIsDone(event)) return { placement: 0, placementLabel: "Em andamento", placementStatus: "ongoing" };
-  return { placement: 0, placementLabel: "Colocação não informada", placementStatus: "unknown" };
+  // Campeonato agendado nao esta "em andamento": ate 30/08/2026 a Etapa
+  // Presencial do JUBS, marcada para comecar no dia seguinte, aparecia com
+  // resultado "Em andamento" ao lado do selo "Agendado".
+  if (eventStatusClass(event?.status) === "scheduled") {
+    return { placement: 0, placementLabel: "A começar", placementStatus: "scheduled", placementNote: "" };
+  }
+  if (!eventIsDone(event)) return { placement: 0, placementLabel: "Em andamento", placementStatus: "ongoing", placementNote: "" };
+  return { placement: 0, placementLabel: "Colocação não informada", placementStatus: "unknown", placementNote: "" };
 }
 
 function rankingSafeScore(value) {
@@ -11124,7 +11144,7 @@ function dominantSeriesFormat(matches) {
 function renderTeamDetail(id) {
   const team = teamById(id);
   if (!team) return renderNotFound("Equipe");
-  const activeTab = TEAM_TAB_KEYS.includes(route().tab) ? route().tab : "ranking";
+  const activeTab = TEAM_TAB_KEYS.includes(route().tab) ? route().tab : "resumo";
   const matches = matchSeriesForTeam(id);
   const currentLineup = team.currentLineup || [];
   const observedPlayers = state.db.players
@@ -11142,6 +11162,7 @@ function renderTeamDetail(id) {
   Shell(`
     <section class="team-page" ${teamAccentStyle(team)}>
       <div class="team-hero">
+        ${teamHeroField()}
         <div class="team-hero-main">
           <div class="team-identity">
             ${teamProfileLogo(team)}
@@ -11150,20 +11171,18 @@ function renderTeamDetail(id) {
               <h1>${escapeHtml(team.name)}</h1>
               <div class="team-meta-row">
                 ${teamStateBadge(team)}
-                <span class="team-meta-text">${escapeHtml(team.profile?.orgTag || team.tag || team.sourceTag || team.id)}</span>
                 <span class="team-meta-text">${escapeHtml(teamInstitutionLabel(team))}</span>
+                <span class="team-socials">${socialButtons(team)}</span>
               </div>
             </div>
           </div>
+          ${teamRankHero(team)}
         </div>
         ${teamHeroCover(team, currentLineup, observedPlayers)}
-        <div class="team-quick-panel">
-          ${teamRankHero(team)}
-          <div class="team-socials">${socialButtons(team)}</div>
-        </div>
       </div>
       ${teamSummaryTrophyPanel(trophies)}
       <nav class="team-tabs" aria-label="Abas da equipe">
+        ${teamTabLink(team, "resumo", "Resumo", activeTab)}
         ${teamTabLink(team, "ranking", "Ranking", activeTab)}
         ${teamTabLink(team, "roster", "Elenco", activeTab)}
         ${teamTabLink(team, "matches", "Partidas", activeTab)}
@@ -11175,31 +11194,105 @@ function renderTeamDetail(id) {
       </section>
     </section>
   `);
+  ajustaTituloDaEquipe();
+  if (activeTab === "matches" || activeTab === "resumo") bindResultDayToggles();
   playPanelSlide(tabSlide);
 }
 
-const TEAM_TAB_KEYS = ["ranking", "roster", "matches", "tournaments", "stats"];
+const TEAM_TAB_KEYS = ["resumo", "ranking", "roster", "matches", "tournaments", "stats"];
 
 function renderTeamTab(activeTab, team, context) {
   const renderers = {
+    resumo: () => teamResumoTab(team, context),
     ranking: () => teamRankingTab(team),
     roster: () => teamRosterTab(team, context.currentLineup, context.historicalPlayers, context.observedPlayers),
     matches: () => teamMatchesTab(context.matches, team),
     tournaments: () => teamTournamentsTab(context.tournaments, team),
     stats: () => teamStatsTab(team, context.currentLineup, context.observedPlayers),
   };
-  return (renderers[activeTab] || renderers.ranking)();
+  return (renderers[activeTab] || renderers.resumo)();
 }
 
-function teamRankHero(team) {
-  const rank = teamCanonicalRankLabel(team);
+// A aba de entrada. Cada bloco e um recorte da aba que o aprofunda, e cada um
+// leva para la pelo link do proprio cabecalho - o Resumo responde "como esta a
+// equipe hoje" sem tentar ser as cinco abas de uma vez.
+const TEAM_RESUMO_PARTIDAS = 5;
+
+function teamResumoTab(team, context) {
+  const historico = teamRankingCanonicalHistory(team);
+  const ultimas = context.matches.slice(0, TEAM_RESUMO_PARTIDAS);
+  const lineup = context.currentLineup.length ? context.currentLineup : [];
   return `
-    <div class="team-rank-box">
-      <span>Ranking atual</span>
-      <strong>${escapeHtml(rank)}</strong>
-      <small>Nota ${escapeHtml(fmt(team.rankingScore ?? team.points, 1))}</small>
+    <div class="stack team-resumo-stack">
+      <section class="data-panel team-ranking-main">
+        ${sectionHead("Histórico do ranking", "Posição semanal na escala de #1 ao fim do ranking.", `teams/${team.id}/ranking`, "Ver o cálculo da nota")}
+        ${historico.length ? teamRankingChart(historico) : `<div class="empty-state">Sem histórico válido suficiente para calcular ranking.</div>`}
+      </section>
+      <section class="section-band">
+        ${sectionHead("Elenco atual", "Jogadores ativos no perfil público da equipe.", `teams/${team.id}/roster`, "Ver histórico e ex-membros")}
+        <div class="roster-grid roster-feature-grid">${lineup.length ? lineup.map((entry) => lineupEntryCard(entry, team)).join("") : `<div class="empty-state">Equipe sem elenco atual cadastrado.</div>`}</div>
+      </section>
+      <section class="team-results-section">
+        ${sectionHead(
+          ultimas.length === 1 ? "Última partida" : `Últimas ${ultimas.length} partidas`,
+          "Séries mais recentes, da mais nova para a mais antiga.",
+          `teams/${team.id}/matches`,
+          `Ver as ${context.matches.length}`,
+        )}
+        <div class="result-list team-result-list full-list-panel">${ultimas.length ? listaDeResultados(ultimas, TEAM_RESUMO_PARTIDAS) : `<div class="empty-state">Nenhuma partida registrada para esta equipe.</div>`}</div>
+      </section>
     </div>
   `;
+}
+
+// O campo do heroi: fundo chapado da cor1 + dois focos de luz que derivam em
+// ritmos diferentes + um raspao de claridade atravessando. Nao ha malha, nem
+// bolinha, nem xadrez - a mesma doutrina das 14 tramas da tabela de ranking.
+// As tres camadas so animam `transform`, entao a deriva sobe para o compositor
+// e nao repinta a capa a cada quadro.
+function teamHeroField() {
+  return `
+    <div class="team-field" aria-hidden="true">
+      <i class="team-field-focus"></i>
+      <i class="team-field-second"></i>
+      <i class="team-field-sheen"></i>
+    </div>
+  `;
+}
+
+// So o ranking fica na capa. Nota, mapas, aproveitamento, saldo e series
+// saiam junto do rank numa barra de seis numeros, e seis numeros do mesmo
+// tamanho viram uma lista de dados jogada por cima da identidade. Todos os
+// cinco continuam a um clique: nota e composicao na aba Ranking, mapas e
+// aproveitamento no Resumo e nas Partidas.
+function teamRankHero(team) {
+  const movimento = teamRankWeeklyMove(team);
+  return `
+    <dl class="team-hero-record">
+      <div class="lead">
+        <dd>${escapeHtml(teamCanonicalRankLabel(team))}${movimento ? `<em class="${movimento.tom}">${escapeHtml(movimento.curto)}</em>` : ""}</dd>
+        <dt>Ranking</dt>
+      </div>
+    </dl>
+  `;
+}
+
+// Variacao contra a terca anterior. Semana sem jogo tambem mexe a posicao (o
+// decaimento e o comportamento normal do ranking), entao "manteve" e uma
+// resposta legitima e nao um dado faltando.
+function teamRankWeeklyMove(team) {
+  const historico = teamRankingCanonicalHistory(team);
+  if (historico.length < 2) return null;
+  const atual = Number(historico[0].rank);
+  const anterior = Number(historico[1].rank);
+  if (!Number.isFinite(atual) || !Number.isFinite(anterior)) return null;
+  const passos = anterior - atual;
+  if (!passos) return { tom: "flat", texto: "manteve na semana", curto: "=" };
+  return {
+    tom: passos > 0 ? "up" : "down",
+    texto: `${passos > 0 ? "+" : ""}${passos} na semana`,
+    curto: `${passos > 0 ? "+" : ""}${passos}`,
+  };
 }
 
 function teamHeroCover(team, currentLineup, observedPlayers = []) {
@@ -11234,15 +11327,41 @@ function teamHeroCoverPlayer({ entry, player }) {
   return player ? `<a class="team-hero-cover-player" href="${playerHref(player)}">${body}</a>` : `<span class="team-hero-cover-player">${body}</span>`;
 }
 
+// O hall era uma tira de celulas de 76px onde o nome do campeonato, a
+// colocacao e a data so existiam no `title`: para saber o que a equipe ganhou
+// era preciso passar o mouse em cada icone. A arte do trofeu e feita por evento
+// e e a melhor coisa que este bloco tem, entao ela cresce - e o que ela
+// representa passa a estar escrito embaixo. Sem caixa em volta de cada um: o
+// trofeu fica solto na prateleira, com o proprio peso.
 function teamSummaryTrophyPanel(trophies) {
-  const hall = trophyHallFromRows(trophies);
-  if (!hall) return "";
+  if (!trophies.length) return "";
   return `
     <section class="team-trophy-panel team-trophy-full">
-      <div class="section-head"><h2>Hall de troféus</h2></div>
-      ${hall}
+      ${sectionHead("Hall de troféus", null, null, null)}
+      <div class="trophy-shelf">
+        ${trophies.map(trophyShelfItem).join("")}
+      </div>
     </section>
   `;
+}
+
+function trophyShelfItem(trophy) {
+  return `
+    <a class="trophy-shelf-item ${escapeHtml(trophy.podiumClass)}" href="#/tournaments/${escapeHtml(trophy.event.id)}">
+      ${trophyVisual(trophy)}
+      <span class="trophy-shelf-copy">
+        <em>${escapeHtml(trophy.placementLabel || "")}</em>
+        <strong>${escapeHtml(trophy.event.name || "Campeonato")}</strong>
+        <small>${escapeHtml(trophyMonthLabel(trophy.date))}</small>
+      </span>
+    </a>
+  `;
+}
+
+function trophyMonthLabel(value) {
+  const quando = dateValue(value);
+  if (!quando) return "";
+  return new Date(quando).toLocaleDateString("pt-BR", { month: "short", year: "numeric" }).replace(".", "");
 }
 
 function teamTabLink(team, tab, label, activeTab) {
@@ -11268,6 +11387,33 @@ function teamRankingCanonicalHistory(team) {
     .sort((a, b) => dateValue(b.date) - dateValue(a.date));
 }
 
+// Quantas equipes existem no ranking canonico hoje. E o denominador do eixo Y
+// do grafico de TODAS as equipes: sem ele, cada perfil desenhava a propria
+// escala (a #1 ia de 1 a 5, a #30 ia de 1 a 34) e duas curvas lado a lado nao
+// diziam a mesma coisa. Piso de 10 para o comeco de temporada nao achatar
+// tudo numa linha.
+function rankingCanonicalSize() {
+  const validas = (state.db?.teams || []).filter((team) => {
+    const posicao = Number(team.ranking?.validRank ?? team.validRank);
+    return Number.isFinite(posicao) && posicao > 0;
+  }).length;
+  return Math.max(10, validas);
+}
+
+// Escala logaritmica, como a de VLR e HLTV: a diferenca entre #1 e #2 e uma
+// noticia e a diferenca entre #38 e #39 nao e. Linear, as 44 posicoes recebiam
+// a mesma altura e o topo - onde toda a disputa acontece - ficava espremido em
+// 4% da caixa.
+function rankingChartTicks(tamanho) {
+  const candidatos = [1, 2, 3, 5, 8, 12, 20, 30, 44, 60, 90, 130];
+  const dentro = candidatos.filter((valor) => valor < tamanho);
+  const escolhidos = [1];
+  const passo = Math.max(1, Math.ceil((dentro.length - 1) / 3));
+  for (let i = passo; i < dentro.length; i += passo) escolhidos.push(dentro[i]);
+  escolhidos.push(tamanho);
+  return [...new Set(escolhidos)];
+}
+
 function teamRankingChart(history) {
   const rows = history
     .slice()
@@ -11275,29 +11421,38 @@ function teamRankingChart(history) {
     .filter((row) => Number.isFinite(Number(row.rank)) && Number(row.rank) > 0);
   if (!rows.length) return "";
   const width = 760;
-  const height = 286;
-  const pad = { top: 22, right: 22, bottom: 42, left: 46 };
+  const height = 188;
+  const pad = { top: 16, right: 14, bottom: 30, left: 38 };
   const plotWidth = width - pad.left - pad.right;
   const plotHeight = height - pad.top - pad.bottom;
   const minDate = dateValue(rows[0].date);
   const maxDate = dateValue(rows[rows.length - 1].date);
   const span = Math.max(1, maxDate - minDate);
-  const maxRank = Math.max(5, ...rows.map((row) => Number(row.rank)));
+  const tamanho = Math.max(rankingCanonicalSize(), ...rows.map((row) => Number(row.rank)));
+  const escala = Math.log(tamanho);
   const x = (date) => pad.left + ((dateValue(date) - minDate) / span) * plotWidth;
-  const y = (rank) => pad.top + ((Number(rank) - 1) / Math.max(1, maxRank - 1)) * plotHeight;
+  const y = (rank) => pad.top + (escala ? Math.log(clamp(Number(rank), 1, tamanho)) / escala : 0) * plotHeight;
   const points = rows.map((row) => `${fmt(x(row.date), 2)},${fmt(y(row.rank), 2)}`).join(" ");
-  const areaPath = `M ${points.split(" ")[0]} L ${points.replaceAll(" ", " L ")} L ${fmt(x(rows[rows.length - 1].date), 2)},${pad.top + plotHeight} L ${fmt(x(rows[0].date), 2)},${pad.top + plotHeight} Z`;
-  const yTicks = [...new Set([1, Math.ceil(maxRank / 2), maxRank])];
+  const yTicks = rankingChartTicks(tamanho);
   const xTicks = chartDateTicks(rows);
   const latest = rows[rows.length - 1];
   const best = Math.min(...rows.map((row) => Number(row.rank)));
+  // Bolinha so onde a posicao MUDOU (mais a primeira e a ultima semana). Uma
+  // por semana virava colar de contas: 19 pontos identicos numa reta, e nenhum
+  // deles apontava nada. Assim cada bolinha e um movimento.
+  const marcada = (row, index) => index === 0 || index === rows.length - 1 || Number(row.rank) !== Number(rows[index - 1].rank);
+  // A caixa do grafico tem altura FIXA em px, entao o SVG e esticado
+  // (preserveAspectRatio="none"). Por isso so a linha e as reguas moram dentro
+  // dele - com `vector-effect` a espessura sobrevive ao esticamento. Bolinha,
+  // rotulo de eixo e area de hover ficam em HTML posicionado por porcentagem:
+  // circulo esticado viraria elipse e texto esticado viraria texto deformado.
   const pointHotspots = rows
-    .map((row) => {
+    .map((row, index) => {
       const left = (x(row.date) / width) * 100;
       const top = (y(row.rank) / height) * 100;
       const detail = [`Nota ${row.points === "" ? "-" : fmt(row.points, 1)}`, row.note || ""].filter(Boolean).join(" - ");
       return `
-        <span class="ranking-chart-hotspot" style="--x:${fmt(left, 2)};--y:${fmt(top, 2)}" tabindex="0" aria-label="${escapeHtml(`${formatDate(row.date)} ${rankingHistoryRankLabel(row.rank)}`)}">
+        <span class="ranking-chart-hotspot ${marcada(row, index) ? "marked" : ""}" style="--x:${fmt(left, 2)};--y:${fmt(top, 2)}" tabindex="0" aria-label="${escapeHtml(`${formatDate(row.date)} ${rankingHistoryRankLabel(row.rank)}`)}">
           <span class="ranking-chart-tooltip">
             <strong>${escapeHtml(rankingHistoryRankLabel(row.rank))}</strong>
             <span>${escapeHtml(formatDate(row.date))}</span>
@@ -11309,23 +11464,25 @@ function teamRankingChart(history) {
     .join("");
   return `
     <div class="ranking-chart-card">
-      <div class="ranking-chart-kpis">
-        <span><strong>${rankingHistoryRankLabel(latest.rank)}</strong> atual</span>
-        <span><strong>#${best}</strong> melhor</span>
-        <span><strong>${rows.length}</strong> semanas válidas</span>
-      </div>
+      <dl class="ranking-chart-kpis">
+        <div><dd>${rankingHistoryRankLabel(latest.rank)}</dd><dt>Posição atual</dt></div>
+        <div><dd>#${best}</dd><dt>Melhor</dt></div>
+        <div><dd>${rows.length}</dd><dt>${rows.length === 1 ? "Semana válida" : "Semanas válidas"}</dt></div>
+        <div><dd>${tamanho}</dd><dt>Equipes no ranking</dt></div>
+      </dl>
       <div class="ranking-chart-stage">
-        <svg class="ranking-line-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Histórico de ranking canônico">
+        <svg class="ranking-line-chart" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" role="img" aria-label="${escapeHtml(`Histórico de ranking canônico, escala de #1 a #${tamanho}`)}">
           <g class="ranking-chart-grid">
-            ${yTicks.map((tick) => `<line x1="${pad.left}" x2="${width - pad.right}" y1="${fmt(y(tick), 2)}" y2="${fmt(y(tick), 2)}"></line><text x="${pad.left - 10}" y="${fmt(y(tick) + 4, 2)}">#${tick}</text>`).join("")}
-            ${xTicks.map((row) => `<line x1="${fmt(x(row.date), 2)}" x2="${fmt(x(row.date), 2)}" y1="${pad.top}" y2="${pad.top + plotHeight}"></line><text x="${fmt(x(row.date), 2)}" y="${height - 12}">${escapeHtml(chartDateLabel(row.date))}</text>`).join("")}
+            ${yTicks.map((tick) => `<line x1="0" x2="${width}" y1="${fmt(y(tick), 2)}" y2="${fmt(y(tick), 2)}"></line>`).join("")}
           </g>
-          <path class="ranking-chart-area" d="${areaPath}"></path>
           <polyline class="ranking-chart-line" points="${points}"></polyline>
-          <g class="ranking-chart-points">
-            ${rows.map((row) => `<circle cx="${fmt(x(row.date), 2)}" cy="${fmt(y(row.rank), 2)}" r="4"></circle>`).join("")}
-          </g>
         </svg>
+        <div class="ranking-chart-axis" aria-hidden="true">
+          ${yTicks.map((tick) => `<span style="--t:${fmt((y(tick) / height) * 100, 2)}">#${tick}</span>`).join("")}
+        </div>
+        <div class="ranking-chart-dates" aria-hidden="true">
+          ${xTicks.map((row) => `<span style="--t:${fmt((x(row.date) / width) * 100, 2)}">${escapeHtml(chartDateLabel(row.date))}</span>`).join("")}
+        </div>
         <div class="ranking-chart-hotspots" style="--n:${rows.length}">${pointHotspots}</div>
       </div>
     </div>
@@ -11349,6 +11506,12 @@ function dateValue(value) {
 }
 
 function teamRosterTab(team, currentLineup, historicalPlayers) {
+  // Saida mais recente primeiro. Alfabetica colocava quem saiu ha um ano em
+  // cima de quem saiu semana passada, e a pergunta que a lista responde e
+  // "quem acabou de sair".
+  const passagens = historicalPlayers
+    .map((player) => ({ player, tenure: playerTeamTenure(team, player) }))
+    .sort((a, b) => (b.tenure.end || 0) - (a.tenure.end || 0) || a.player.nick.localeCompare(b.player.nick, "pt-BR"));
   return `
     <div class="stack team-roster-stack">
       <section class="section-band">
@@ -11356,18 +11519,25 @@ function teamRosterTab(team, currentLineup, historicalPlayers) {
         <div class="roster-grid roster-feature-grid">${currentLineup.length ? currentLineup.map((entry) => lineupEntryCard(entry, team)).join("") : `<div class="empty-state">Equipe sem elenco atual cadastrado.</div>`}</div>
       </section>
       <section class="section-band">
-        ${sectionHead("Histórico do elenco", "Linha do tempo das formações registradas em partidas oficiais.", null, null)}
+        ${sectionHead("Histórico do elenco", "Cada faixa é uma passagem; cada marca no eixo é um campeonato que a equipe disputou.", null, null)}
         ${lineupTimelineChart(team)}
       </section>
       <section class="section-band">
-        ${sectionHead("Ex-membros", "Jogadores com passagem registrada pela equipe.", null, null)}
-        <div class="former-member-list">${historicalPlayers.length ? historicalPlayers.map((player) => formerMemberCard(team, player)).join("") : `<div class="empty-state">Nenhum ex-membro cadastrado para esta equipe.</div>`}</div>
+        ${sectionHead("Ex-membros", "Da saída mais recente para a mais antiga, com o que cada um jogou pela equipe.", null, null)}
+        <div class="former-member-list">${passagens.length ? passagens.map(({ player }) => formerMemberCard(team, player)).join("") : `<div class="empty-state">Nenhum ex-membro cadastrado para esta equipe.</div>`}</div>
       </section>
     </div>
   `;
 }
 
+// Mesma lista de #/matches: agrupada por dia, com a tira de mapas (arte e
+// placar por mapa) e o campeonato na ponta. Antes esta aba montava a linha na
+// mao com `matchResultRow(item)` sem opcao nenhuma, entao ela perdia a hora, o
+// cabecalho de dia e os escudos de evento do dia - a mesma partida ficava mais
+// pobre aqui do que na lista geral.
 function teamMatchesTab(matches, team) {
+  const limite = limiteDaLista(routeQuery(), TEAM_MATCH_PAGINA);
+  const visiveis = Math.min(limite, matches.length);
   return `
     <div class="team-results-section">
       <div class="team-results-summary">
@@ -11376,46 +11546,136 @@ function teamMatchesTab(matches, team) {
         ${stat(pct(team.winRate), "Win rate")}
         ${stat(signed(team.roundDiff), "Saldo de rounds")}
       </div>
-      <div class="result-list team-result-list">${matches.length ? matches.map(matchResultRow).join("") : `<div class="empty-state">Nenhuma partida registrada para esta equipe.</div>`}</div>
+      ${matches.length ? contagemDaLista(visiveis, matches.length, "partidas") : ""}
+      <div class="result-list team-result-list full-list-panel">${matches.length ? listaDeResultados(matches, limite) : `<div class="empty-state">Nenhuma partida registrada para esta equipe.</div>`}</div>
+      ${verMaisBotao(`teams/${team.id}/matches`, visiveis, matches.length, new URLSearchParams())}
     </div>
   `;
 }
 
+const TEAM_MATCH_PAGINA = 25;
+
+// Tres estados, tres blocos, cada um na ordem que faz sentido para ele: o que
+// esta rolando primeiro, depois o que vem por ai do mais proximo ao mais
+// distante, e por ultimo o historico do mais recente ao mais antigo. Uma lista
+// unica misturava um campeonato que comeca amanha com um de abril.
+const TEAM_TOURNAMENT_GROUPS = [
+  { key: "live", title: "Em andamento", desc: "Campeonatos com a campanha aberta agora." },
+  { key: "scheduled", title: "Próximos", desc: "Confirmados no calendário, ainda sem partida." },
+  { key: "done", title: "Finalizados", desc: "Campanhas encerradas, da mais recente para a mais antiga." },
+];
+
 function teamTournamentsTab(tournaments, team) {
-  return `
-    <section class="team-tournaments-panel">
-      <div class="section-head"><h2>Campeonatos</h2><p>Campanhas registradas para a equipe.</p></div>
-      <div class="team-tournament-list">${tournaments.length ? tournaments.map((event) => teamTournamentCard(event, team)).join("") : `<div class="empty-state">Nenhum campeonato registrado para esta equipe.</div>`}</div>
-    </section>
-  `;
+  if (!tournaments.length) {
+    return `
+      <section class="team-tournaments-panel">
+        ${sectionHead("Campeonatos", "Campanhas registradas para a equipe.", null, null)}
+        <div class="empty-state">Nenhum campeonato registrado para esta equipe.</div>
+      </section>
+    `;
+  }
+  const grupos = { live: [], scheduled: [], done: [] };
+  for (const event of tournaments) {
+    const estado = eventStatusClass(event.status);
+    (grupos[estado] || grupos.live).push(event);
+  }
+  grupos.live.sort((a, b) => dateValue(a.start) - dateValue(b.start));
+  grupos.scheduled.sort((a, b) => dateValue(a.start) - dateValue(b.start));
+  grupos.done.sort((a, b) => dateValue(b.end || b.start) - dateValue(a.end || a.start));
+  return TEAM_TOURNAMENT_GROUPS.filter((grupo) => grupos[grupo.key].length)
+    .map(
+      (grupo) => `
+        <section class="team-tournaments-panel" data-tournament-group="${grupo.key}">
+          ${sectionHead(`${grupo.title} (${grupos[grupo.key].length})`, grupo.desc, null, null)}
+          <div class="team-tournament-list">${grupos[grupo.key].map((event) => teamTournamentCard(event, team)).join("")}</div>
+        </section>
+      `,
+    )
+    .join("");
+}
+
+// Ficha tecnica do campeonato: so entra o que existe. O tier, o formato, o
+// organizador e a premiacao ja estavam no artefato e nao apareciam em lugar
+// nenhum desta aba; um "-" na premiacao continua sendo ausencia e nao vira
+// linha vazia.
+function teamTournamentFacts(event) {
+  const premio = String(event.prizePool || "").trim();
+  return [
+    event.tier ? `Tier ${escapeHtml(String(event.tier).replace(/^tier\s*/i, ""))}` : "",
+    event.format?.summary ? escapeHtml(event.format.summary) : "",
+    event.type ? escapeHtml(event.type) : "",
+    event.organizer ? escapeHtml(event.organizer) : "",
+    premio && premio !== "-" ? escapeHtml(premio) : "",
+  ].filter(Boolean);
+}
+
+function teamTournamentPlacementBlock(event, campaign) {
+  const estado = eventStatusClass(event.status);
+  if (estado === "scheduled") {
+    return { valor: "A começar", rotulo: teamTournamentCountdown(event), tom: "scheduled" };
+  }
+  if (campaign.placementStatus === "qualified") {
+    return { valor: "Classificado", rotulo: campaign.placementNote || "Avançou de fase", tom: "qualified" };
+  }
+  if (campaign.placementStatus === "defined") {
+    // Ouro so para 1o cravado. "1o-4o lugar" tem placement 1 e ganhava a mesma
+    // cor de titulo que uma final vencida - a faixa e um resultado bom, nao um
+    // titulo, e a cor nao pode dizer que foi.
+    const faixa = /\d+º\s*-\s*\d+º/.test(campaign.placementLabel || "");
+    return {
+      valor: campaign.placementLabel,
+      rotulo: `de ${campaign.size || event.teams.length} equipes`,
+      tom: !faixa && campaign.placement && campaign.placement <= 3 ? `podium p${campaign.placement}` : "defined",
+    };
+  }
+  if (estado === "done") {
+    // Sem linha de colocacao na fonte. Em vez de "Colocação não informada", a
+    // campanha em series - que e dado medido e nao um vazio disfarcado.
+    return { valor: `${campaign.seriesWins}-${campaign.seriesLosses}`, rotulo: "Campanha em séries", tom: "unknown" };
+  }
+  return { valor: "Em disputa", rotulo: campaign.placementNote || `${campaign.seriesWins}-${campaign.seriesLosses} até aqui`, tom: "ongoing" };
+}
+
+function teamTournamentCountdown(event) {
+  const inicio = dateValue(event.start);
+  if (!inicio) return "Data a definir";
+  const dias = Math.ceil((inicio - Date.now()) / DAY_MS);
+  if (dias <= 0) return "Começa hoje";
+  if (dias === 1) return "Começa amanhã";
+  return `Em ${dias} dias`;
 }
 
 function teamTournamentCard(event, team) {
   const campaign = teamEventCampaign(team.id, event);
-  const placement = campaign.placementLabel || "Colocação indisponível";
-  const placementContext = campaign.placementStatus === "ongoing" ? "Resultado" : eventStatusClass(event.status) === "done" ? "Colocação final" : "Colocação atual";
+  const colocacao = teamTournamentPlacementBlock(event, campaign);
+  const fichas = teamTournamentFacts(event);
+  const agendado = eventStatusClass(event.status) === "scheduled";
   return `
     <a class="team-tournament-card" href="#/tournaments/${event.id}">
       <span class="team-tournament-event">
         ${eventLogo(event, "team-tournament-logo")}
-        <span>
+        <span class="team-tournament-title">
           <strong>${escapeHtml(event.name)}</strong>
           <small>${escapeHtml(eventTimeRange(event))}</small>
+          ${fichas.length ? `<span class="team-tournament-facts">${fichas.map((ficha) => `<i>${ficha}</i>`).join("")}</span>` : ""}
         </span>
       </span>
-      <span class="team-placement-badge">
-        <strong>${escapeHtml(placement)}</strong>
-        <small>${escapeHtml(placementContext)}</small>
+      <span class="team-placement-badge ${colocacao.tom}">
+        <strong>${escapeHtml(colocacao.valor)}</strong>
+        <small>${escapeHtml(colocacao.rotulo)}</small>
       </span>
       <span class="team-tournament-stats">
-        <span><strong>${campaign.seriesWins}-${campaign.seriesLosses}</strong><small>Séries</small></span>
-        <span><strong>${campaign.mapWins}-${campaign.mapLosses}</strong><small>Mapas</small></span>
-        <span><strong>${signed(campaign.roundDiff)}</strong><small>Saldo</small></span>
-        <span><strong>${campaign.size || event.teams.length}</strong><small>Equipes</small></span>
-      </span>
-      <span class="team-tournament-status">
-        <strong>${escapeHtml(event.status)}</strong>
-        <small>${escapeHtml(`${event.matches} partidas`)}</small>
+        ${agendado
+          ? `
+            <span><strong>${event.teams.length}</strong><small>Equipes</small></span>
+            <span><strong>${escapeHtml(event.format?.summary || "A definir")}</strong><small>Formato</small></span>
+          `
+          : `
+            <span><strong>${campaign.seriesWins}-${campaign.seriesLosses}</strong><small>Séries</small></span>
+            <span><strong>${campaign.mapWins}-${campaign.mapLosses}</strong><small>Mapas</small></span>
+            <span><strong>${signed(campaign.roundDiff)}</strong><small>Saldo</small></span>
+            <span><strong>${campaign.size || event.teams.length}</strong><small>Equipes</small></span>
+          `}
       </span>
     </a>
   `;
@@ -11445,6 +11705,7 @@ function teamEventCampaign(teamId, event) {
     placement: placementResult.placement,
     placementLabel: placementResult.placementLabel,
     placementStatus: placementResult.placementStatus,
+    placementNote: placementResult.placementNote || "",
     size: achievement?.size || standings.length || event.teams.length,
   };
 }
@@ -11488,30 +11749,216 @@ function seriesScoreForTeam(series, teamId) {
   };
 }
 
-function teamStatsTab(team, currentLineup, observedPlayers) {
-  const lineupPlayers = currentLineup.map((entry) => playerById(entry.playerId)).filter(Boolean);
-  const stintPlayers = state.db.players.filter((player) => (player.teamStats || []).some((row) => row.teamId === team.id && row.matches > 0));
-  const tablePlayers = [...new Map([...lineupPlayers, ...stintPlayers, ...observedPlayers].map((player) => [player.id, player])).values()]
-    .map((player) => ({ ...player, ...playerStatsForTeam(player, team.id) }))
+// O pool de agentes que o jogador usou COM ESTA equipe, contado mapa a mapa.
+// `player.agentStats` existe mas e global: um jogador que passou por duas
+// equipes traria aqui os agentes da outra.
+function teamPlayerAgentPool(team, player, limite = 3) {
+  const contagem = new Map();
+  let total = 0;
+  for (const series of matchSeriesForPlayer(player.id)) {
+    for (const match of series.maps || []) {
+      const linha = (match.players || []).find((row) => row.id === player.id && row.teamId === team.id);
+      if (!linha?.agent) continue;
+      total += 1;
+      const chave = linha.agentSlug || linha.agent;
+      const atual = contagem.get(chave) || { agent: linha.agent, agentSlug: linha.agentSlug, agentIcon: linha.agentIcon, agentClass: linha.agentClass, picks: 0 };
+      atual.picks += 1;
+      contagem.set(chave, atual);
+    }
+  }
+  return [...contagem.values()]
+    .sort((a, b) => b.picks - a.picks || a.agent.localeCompare(b.agent, "pt-BR"))
+    .slice(0, limite)
+    .map((linha) => ({ ...linha, rate: total ? (linha.picks / total) * 100 : 0 }));
+}
+
+// So quem esta na line. Um perfil de equipe responde "como este time joga
+// hoje", e a tabela vinha com 10 jogadores para uma line de 5 - metade dela
+// era gente que saiu, com amostra pequena, ordenada junto de quem joga.
+// Quem saiu continua na aba Elenco, com periodo e nota.
+function teamStatsPlayers(team, currentLineup, observedPlayers) {
+  const daLine = currentLineup.map((entry) => (entry.playerId ? playerById(entry.playerId) : null)).filter(Boolean);
+  // Equipe sem elenco curado cai no observado: sem isso a aba ficaria vazia
+  // justamente para as equipes que so existem via partida.
+  const base = daLine.length ? daLine : observedPlayers.slice(0, 5);
+  return base
+    .map((player) => ({ ...player, ...playerStatsForTeam(player, team.id), agentPool: teamPlayerAgentPool(team, player) }))
     .sort((a, b) => Number(b.matches > 0) - Number(a.matches > 0) || Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0) || Number(b.rounds || 0) - Number(a.rounds || 0));
+}
+
+function teamOpponentPanel(team) {
+  const linhas = (team.opponentStats || [])
+    .filter((row) => Number(row.matches || 0) > 0)
+    .sort((a, b) => b.matches - a.matches || b.winRate - a.winRate)
+    .slice(0, 8);
+  if (!linhas.length) return `<div class="empty-state">Sem adversário recorrente registrado.</div>`;
   return `
-    <div class="team-tab-grid">
-      <section class="data-panel">
-        <div class="section-head"><h2>Stats dos jogadores</h2><p>Média e volume considerando apenas os mapas jogados pela equipe.</p></div>
-        ${teamPlayerStatsTable(tablePlayers)}
-      </section>
-      <aside class="stack">
-        <section class="data-panel">
-          <div class="section-head"><h2>Desempenho por mapa</h2></div>
-          ${bars(team.mapStats.map((item) => [item.name, item.winRate, `${item.wins}-${item.matches - item.wins}`])) || `<div class="empty-state">Sem mapas registrados.</div>`}
-        </section>
-        <section class="data-panel">
-          <div class="section-head"><h2>Lados</h2></div>
-          ${bars([["Ataque", team.attackWinRate], ["Defesa", team.defenseWinRate], ["Pistol", team.pistolWinRate]])}
-        </section>
-      </aside>
+    <div class="team-opponent-list">
+      ${linhas
+        .map((row) => {
+          const rival = teamById(row.id);
+          const nome = rival?.name || row.id;
+          return `
+            <a class="team-opponent-row" href="#/teams/${escapeHtml(row.id)}">
+              ${teamLogo(row.id, "team-opponent-logo")}
+              <span class="team-opponent-name">${escapeHtml(nome)}</span>
+              <span class="team-opponent-record ${row.wins > row.losses ? "up" : row.wins < row.losses ? "down" : ""}">${row.wins}-${row.losses}</span>
+              <span class="team-opponent-meta">${escapeHtml(pct(row.winRate))}</span>
+            </a>
+          `;
+        })
+        .join("")}
     </div>
   `;
+}
+
+function teamStatsTab(team, currentLineup, observedPlayers) {
+  const tablePlayers = teamStatsPlayers(team, currentLineup, observedPlayers);
+  const curada = currentLineup.some((entry) => entry.playerId);
+  return `
+    <div class="stack team-stats-stack">
+      <div class="team-tab-grid">
+        <section class="data-panel">
+          <div class="section-head"><h2>Stats da line</h2><p>${escapeHtml(curada ? "Os cinco do elenco atual, medidos só nos mapas que jogaram por esta equipe." : "Os cinco com mais mapas pela equipe - não há elenco curado cadastrado.")}</p></div>
+          ${teamPlayerStatsTable(tablePlayers)}
+        </section>
+        <aside class="stack">
+          <section class="data-panel">
+            <div class="section-head"><h2>Lados</h2></div>
+            ${bars([["Ataque", team.attackWinRate], ["Defesa", team.defenseWinRate], ["Pistol", team.pistolWinRate]])}
+          </section>
+          <section class="data-panel">
+            <div class="section-head"><h2>Confrontos</h2><p>Adversários mais enfrentados, em mapas.</p></div>
+            ${teamOpponentPanel(team)}
+          </section>
+        </aside>
+      </div>
+      <section class="data-panel team-map-band">
+        ${sectionHead("Desempenho por mapa", "Mapas jogados pela equipe, do mais rodado para o menos.", null, null)}
+        ${teamMapPerformance(team)}
+      </section>
+    </div>
+  `;
+}
+
+// O mapa deixa de ser um rotulo ao lado de uma barra e passa a ser a propria
+// arte. Isso saiu da faixa estreita da lateral para uma faixa de largura
+// inteira: banner grande dentro de uma coluna de 215px seria banner pequeno.
+// A arte e a mesma WebP 640x360 (~20 KB) que as linhas de partida ja usam,
+// entao ela chega do cache na maioria das visitas.
+function teamMapPerformance(team) {
+  const linhas = (team.mapStats || []).filter((row) => Number(row.matches || 0) > 0);
+  if (!linhas.length) return `<div class="empty-state">Sem mapas registrados.</div>`;
+  return `<div class="map-perf-grid">${linhas.map(teamMapPerformanceTile).join("")}</div>`;
+}
+
+function teamMapPerformanceTile(row) {
+  const mapa = mapByName(row.name) || {};
+  const art = mapArtAttrs(mapa);
+  const derrotas = Number(row.matches || 0) - Number(row.wins || 0);
+  const destino = mapa.id ? `#/maps/${encodeURIComponent(mapa.id)}` : "";
+  const corpo = `
+    ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : ""}
+    <span class="map-perf-copy">
+      <strong>${escapeHtml(row.name)}</strong>
+      <small>${escapeHtml(`${row.wins}-${derrotas}`)}</small>
+    </span>
+    <span class="map-perf-rate">${escapeHtml(pct(row.winRate))}</span>
+    <span class="map-perf-meter" aria-hidden="true"></span>
+  `;
+  const classe = `map-perf-tile ${art ? "has-art" : ""}`;
+  const estilo = `style="--wr:${fmt(clamp(Number(row.winRate) || 0, 0, 100), 2)}"`;
+  return destino
+    ? `<a class="${classe}" ${estilo} href="${destino}" aria-label="${escapeHtml(`${row.name}: ${row.wins}-${derrotas}, ${pct(row.winRate)} de vitórias`)}">${corpo}</a>`
+    : `<div class="${classe}" ${estilo}>${corpo}</div>`;
+}
+
+// O corpo do nome desce ate o nome INTEIRO caber na caixa do titulo. Sao dois
+// limites diferentes, e so o primeiro estava sendo verificado ate 30/08/2026:
+//
+//   largura - uma palavra mais larga que a coluna vaza. Medido nas 97 equipes,
+//   a maior e "Naotemclutch" (354px a 56px) contra uma coluna de 208px.
+//
+//   altura  - o titulo tem `-webkit-line-clamp: 2`, entao um nome que precisa
+//   de tres linhas perde a terceira com reticencia. "Green Owls Noctua" cabia
+//   na largura (208 de 208) e pedia 164px de altura numa caixa de 105: virava
+//   "Green Owls...". Nenhuma palavra estourava, e por isso o ajuste anterior
+//   nao via nada errado.
+//
+// A largura sai do canvas (numero exato, sem reflow); a altura sai do DOM, num
+// laco que desce 1px por vez - e o proprio navegador quebrando as linhas, e
+// nao uma simulacao de quebra que poderia discordar dele. Na pratica o laco
+// roda poucas voltas, porque a conta da largura ja chega perto.
+const TITULO_EQUIPE_MINIMO = 22;
+
+// O corpo do nome desce ate o nome INTEIRO caber no espaco reservado ao titulo.
+// O que fica travado e a ALTURA, nao o numero de linhas: o orcamento e o de
+// duas linhas no corpo cheio (~105px), e quantas linhas cabem ali depende do
+// corpo. Tres linhas a 35px ocupam a mesma altura que duas a 56px.
+//
+// Ate 30/08/2026 o limite era "no maximo 2 linhas" fixo, e isso cortava nomes
+// de tres palavras. Dois casos medidos:
+//   "Green Owls Noctua"          - cabia na largura e pedia 3 linhas: o
+//                                  `-webkit-line-clamp: 2` comia "Noctua".
+//   "PUCGO Sistematica Academy"  - pede 3 linhas mesmo no menor corpo, entao
+//                                  nenhum tamanho satisfazia a regra antiga.
+//
+// A busca e binaria porque a condicao e monotonica (corpo menor nunca produz
+// mais altura), o que da ~6 medicoes em vez de dezenas de descidas de 1px.
+function ajustaTituloDaEquipe() {
+  const titulo = document.querySelector(".team-page .team-title-block h1");
+  if (!titulo) return;
+  // Zera antes de medir: sem isso, a chamada que roda depois do `fonts.ready`
+  // leria como base o corpo que a primeira ja reduziu, e o titulo so poderia
+  // encolher de novo - nunca voltar aos 56px quando a fonte certa chega.
+  titulo.style.fontSize = "";
+  titulo.style.webkitLineClamp = "";
+  const nome = titulo.textContent.trim();
+  if (!titulo.clientWidth || !nome) return;
+  const base = Number.parseFloat(getComputedStyle(titulo).fontSize) || 56;
+  const orcamento = 2 * (Number.parseFloat(getComputedStyle(titulo).lineHeight) || base);
+
+  const medir = (corpo) => {
+    titulo.style.fontSize = `${corpo}px`;
+    const alturaDeLinha = Number.parseFloat(getComputedStyle(titulo).lineHeight) || corpo;
+    const permitidas = Math.max(2, Math.floor(orcamento / alturaDeLinha));
+    titulo.style.webkitLineClamp = "unset";
+    const linhas = Math.floor(titulo.scrollHeight / alturaDeLinha);
+    const vazaNaLargura = titulo.scrollWidth > titulo.clientWidth + 1;
+    titulo.style.webkitLineClamp = "";
+    return { cabe: !vazaNaLargura && linhas <= permitidas, permitidas };
+  };
+
+  let melhor = medir(base);
+  if (!melhor.cabe) {
+    let baixo = TITULO_EQUIPE_MINIMO;
+    let alto = base - 1;
+    let escolhido = TITULO_EQUIPE_MINIMO;
+    melhor = medir(TITULO_EQUIPE_MINIMO);
+    while (baixo <= alto) {
+      const meio = Math.floor((baixo + alto) / 2);
+      const teste = medir(meio);
+      if (teste.cabe) {
+        escolhido = meio;
+        melhor = teste;
+        baixo = meio + 1;
+      } else {
+        alto = meio - 1;
+      }
+    }
+    titulo.style.fontSize = `${escolhido}px`;
+  } else {
+    titulo.style.fontSize = "";
+  }
+  // O clamp acompanha o corpo escolhido: sem isso, um nome de tres linhas em
+  // corpo menor continuaria sendo cortado pelo limite de duas do CSS.
+  titulo.style.webkitLineClamp = String(melhor.permitidas);
+}
+
+// A primeira medicao pode cair na fonte de fallback se o Barlow Condensed
+// ainda nao chegou; as metricas mudam e o titulo ficaria no corpo errado.
+if (typeof document !== "undefined" && document.fonts?.ready) {
+  document.fonts.ready.then(() => ajustaTituloDaEquipe());
 }
 
 function teamProfileLogo(team) {
@@ -11710,7 +12157,157 @@ function teamAccentStyle(team) {
   const accent2 = safeCssColor(secondary, "#2ad4c1");
   const { fundo, fundo2, tinta } = teamWashFor(accent, accent2);
   const trama = teamPatternFor(fundo, fundo2, accent, accent2);
-  return `data-trama="${trama}" style="--team-accent:${accent};--team-accent-2:${accent2};--team-wash:${fundo};--team-wash-2:${fundo2};--team-ink:${tinta};"`;
+  const campo = teamFieldPalette(accent, accent2);
+  const deriva = teamFieldMotion(team.id);
+  const linha = teamChartInk(accent, accent2);
+  return `data-trama="${trama}" style="--team-accent:${accent};--team-accent-2:${accent2};--team-wash:${fundo};--team-wash-2:${fundo2};--team-ink:${tinta};--team-field-bg:${campo.fundo};--team-field-focus:${campo.foco};--team-field-second:${campo.segunda};--team-line:${linha};${teamFieldMotionVars(deriva)}"`;
+}
+
+// O campo do heroi e gerado das DUAS cores da planilha, e ele se move. Tres
+// regras seguram isso de pe nas 97 equipes:
+//
+// 1. O campo e sempre escuro, porque o texto do heroi e branco. Cada tom entra
+//    com a LUMINANCIA travada em vez da cor crua: 0,085 no fundo, 0,26 no foco
+//    e 0,20 na segunda familia. No pior matiz (amarelo puro) o foco ainda da
+//    6,6:1 para o branco - cor crua nao daria: #cca900 sozinho da 2,6:1.
+// 2. A cor2 so vira segunda familia quando ela AGREGA. Medido na planilha: 18
+//    equipes tem cor2 quase preta (#020103, #040101 - preto de contorno de
+//    logo, nao cor) e 1 tem cor2 igual a cor1. Nesses casos a cor2 viraria um
+//    borrao invisivel, entao o lugar dela e ocupado por um giro de matiz da
+//    propria cor1: o campo continua com duas familias se movendo.
+// 3. Saturacao nao tem piso. Equipe de identidade cinza fica com campo grafite
+//    de proposito - inventar matiz para ela seria pintar dado que a planilha
+//    nao tem.
+const TEAM_FIELD_LUZ_FUNDO = 0.085;
+const TEAM_FIELD_LUZ_FOCO = 0.26;
+const TEAM_FIELD_LUZ_SEGUNDA = 0.2;
+const TEAM_FIELD_SAT_MAX = 0.86;
+// Cromaticidade e nao saturacao HSL: para #fefeff a saturacao HSL passa de
+// 0,9 e diria "branco muito saturado", o que faria o campo do Azure Bears
+// ganhar um azul-violeta que a planilha nunca pediu.
+const TEAM_FIELD_CROMA_MINIMA = 0.12;
+const TEAM_FIELD_LUZ_MINIMA_COR2 = 0.06;
+const TEAM_FIELD_MATIZ_MINIMO = 18;
+// 26 graus e nao 46: girando 46 a partir do vermelho da AAEU Cerberus o campo
+// ganhava um oliva que a equipe nao tem em lugar nenhum. Em 26, com a saturacao
+// caindo para 62%, o segundo tom le como SOMBRA da cor1 - ainda separa o
+// movimento sem inventar uma segunda marca.
+const TEAM_FIELD_GIRO = 26;
+const TEAM_FIELD_GIRO_SAT = 0.62;
+
+function chromaOf(rgb) {
+  return (Math.max(...rgb) - Math.min(...rgb)) / 255;
+}
+
+function rgbToHsl(rgb) {
+  const [r, g, b] = rgb.map((c) => c / 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  if (max === min) return [0, 0, l];
+  const d = max - min;
+  return [hueOf(rgb), l > 0.5 ? d / (2 - max - min) : d / (max + min), l];
+}
+
+// hslToRgb() ja existe neste arquivo e recebe s/l em PORCENTO. rgbToHsl acima
+// devolve em 0..1 porque e assim que os alvos de luminancia sao escritos, entao
+// a conversao mora aqui, num lugar so.
+function hslFracToRgb(h, s, l) {
+  return hslToRgb(((h % 360) + 360) % 360, clamp(s, 0, 1) * 100, clamp(l, 0, 1) * 100);
+}
+
+function teamFieldPalette(accent, accent2) {
+  const cor1 = hexToRgb(accent) || [246, 19, 42];
+  const cor2 = hexToRgb(accent2);
+  const [h1, s1] = rgbToHsl(cor1);
+  const tom = (h, s, l) => rgbToHex(hslFracToRgb(h, Math.min(Math.max(s, 0), TEAM_FIELD_SAT_MAX), l));
+  let h2 = h1 + TEAM_FIELD_GIRO;
+  let s2 = s1 * TEAM_FIELD_GIRO_SAT;
+  if (cor2) {
+    const [hc2, sc2, lc2] = rgbToHsl(cor2);
+    const bruto = Math.abs(h1 - hc2);
+    // Matiz de cor acromatica nao quer dizer nada: hueOf(#000000) devolve 0, e
+    // com isso o vermelho #fc1143 da IME Wolves Red (matiz 349, distancia 11)
+    // era recusado por "estar perto" de um preto que nao tem matiz nenhum.
+    const matiz = chromaOf(cor1) < TEAM_FIELD_CROMA_MINIMA ? 360 : Math.min(bruto, 360 - bruto);
+    if (chromaOf(cor2) >= TEAM_FIELD_CROMA_MINIMA && lc2 >= TEAM_FIELD_LUZ_MINIMA_COR2 && matiz >= TEAM_FIELD_MATIZ_MINIMO) {
+      h2 = hc2;
+      s2 = sc2;
+    } else if (chromaOf(cor2) < TEAM_FIELD_CROMA_MINIMA && lc2 > 0.6) {
+      // Cor2 branca ou cinza-claro (Azure Bears, UFU Saints): a segunda familia
+      // vira um cinza da propria familia da cor1. Girar o matiz aqui pintaria
+      // uma cor que a equipe nao tem.
+      h2 = h1;
+      s2 = Math.min(s1 * 0.22, 0.18);
+    }
+  }
+  return {
+    fundo: tom(h1, s1 * 0.9, TEAM_FIELD_LUZ_FUNDO),
+    foco: teamFieldToneGuard(h1, s1, TEAM_FIELD_LUZ_FOCO),
+    segunda: teamFieldToneGuard(h2, s2, TEAM_FIELD_LUZ_SEGUNDA),
+  };
+}
+
+// Luminancia fixa nao basta: em matiz oliva (#7b7209, homem_passaro) o alvo de
+// 0,26 dava 4,41:1 contra a tinta clara #f5f1f2 e reprovava por pouco. O tom
+// desce de 1% em 1% ate fechar 4,5:1, entao o piso e medido e nao estimado.
+function teamFieldToneGuard(h, s, luz) {
+  const sat = Math.min(Math.max(s, 0), TEAM_FIELD_SAT_MAX);
+  for (let passo = 0; passo <= 24; passo += 1) {
+    const tom = hslFracToRgb(h, sat, Math.max(0.04, luz - passo / 100));
+    if (contrastRatio(tom, hexToRgb(TEAM_INK_CLARO)) >= TEAM_INK_CONTRASTE_MINIMO) return rgbToHex(tom);
+  }
+  return rgbToHex(hslFracToRgb(h, sat, 0.04));
+}
+
+// A deriva do campo e semeada no id da equipe: duracoes, fase e angulo saem de
+// um hash, entao as 97 equipes tem o mesmo sistema e nenhuma tem o mesmo
+// movimento. As tres duracoes sao primas entre si de proposito - o ciclo
+// composto passa de duas horas e a pessoa nunca ve o loop fechar.
+function teamFieldMotion(id) {
+  let h = 2166136261;
+  for (const ch of String(id || "")) {
+    h ^= ch.charCodeAt(0);
+    h = Math.imul(h, 16777619);
+  }
+  const n = (deslocamento, mod) => (h >>> deslocamento) % mod;
+  return {
+    a: 41 + n(0, 13),
+    b: 59 + n(4, 17),
+    c: 73 + n(8, 19),
+    atraso: -n(12, 40),
+    giro: 90 + n(16, 120),
+    x1: 4 + n(20, 22),
+    y1: -18 + n(22, 26),
+    x2: 44 + n(24, 28),
+    y2: -10 + n(26, 30),
+  };
+}
+
+function teamFieldMotionVars(deriva) {
+  return `--fa:${deriva.a}s;--fb:${deriva.b}s;--fc:${deriva.c}s;--fdelay:${deriva.atraso}s;--fgiro:${deriva.giro}deg;--fx1:${deriva.x1};--fy1:${deriva.y1};--fx2:${deriva.x2};--fy2:${deriva.y2};`;
+}
+
+// Tinta da linha do grafico de ranking. O painel do grafico e #0b0b10; a cor da
+// equipe sobe ou desce ate fechar 4,5:1 contra ele. Sem esse passeio, as 18
+// equipes de cor1 escura desenhariam uma linha invisivel, e o vermelho da marca
+// - que era o que estava ali - contraria a regra de que vermelho e identidade,
+// nunca dado.
+const TEAM_CHART_PAINEL = [11, 11, 16];
+const TEAM_CHART_CONTRASTE_MINIMO = 4.5;
+
+function teamChartInk(accent, accent2) {
+  const candidatos = [hexToRgb(accent), hexToRgb(accent2)].filter(Boolean);
+  if (!candidatos.length) return "#f5f1f2";
+  const base = candidatos.find((cor) => chromaOf(cor) >= TEAM_FIELD_CROMA_MINIMA) || candidatos[0];
+  const [h, s] = rgbToHsl(base);
+  // Sobe a luminosidade em degraus e para no primeiro que fecha 4,5:1. Comeca
+  // em 0,42 porque abaixo disso nenhuma cor saturada passa contra #0b0b10.
+  for (let l = 42; l <= 92; l += 2) {
+    const tom = hslFracToRgb(h, Math.min(s, 0.82), l / 100);
+    if (contrastRatio(tom, TEAM_CHART_PAINEL) >= TEAM_CHART_CONTRASTE_MINIMO) return rgbToHex(tom);
+  }
+  return "#f5f1f2";
 }
 
 function safeCssColor(value, fallback) {
@@ -12015,6 +12612,18 @@ function lineupTimelineRows(team) {
     .sort((a, b) => Number(b.current) - Number(a.current) || a.start - b.start || a.name.localeCompare(b.name));
 }
 
+// Os campeonatos que a equipe jogou dentro da janela da linha do tempo. Sao
+// eles que dao sentido a linha: sem marco, o grafico responde "quem estava
+// aqui em junho"; com marco, ele responde "quem jogou o JUBS" - que e a
+// pergunta que alguem abre a aba de elenco para responder.
+function lineupTimelineEvents(team, min, max) {
+  return visibleTournaments()
+    .filter((event) => event.teams.includes(team.id))
+    .map((event) => ({ event, at: dateValue(event.start) }))
+    .filter((row) => row.at >= min && row.at <= max)
+    .sort((a, b) => a.at - b.at);
+}
+
 function lineupTimelineChart(team) {
   const rows = lineupTimelineRows(team);
   if (!rows.length) return `<div class="empty-state">Sem histórico de elenco suficiente para montar a linha do tempo.</div>`;
@@ -12022,22 +12631,37 @@ function lineupTimelineChart(team) {
   const max = Math.max(...rows.map((row) => row.end));
   const span = Math.max(DAY_MS, max - min);
   const ticks = timelineTicks(min, max);
+  const eventos = lineupTimelineEvents(team, min, max);
   return `
     <div class="lineup-timeline-chart">
       <div class="lineup-timeline-axis">
         <span></span>
         <div class="lineup-axis-track">
           ${ticks.map((tick) => `<span style="left:${timelinePct(tick, min, max)}%">${escapeHtml(chartDateLabel(tick))}</span>`).join("")}
+          ${eventos
+            .map(
+              (row) => `
+                <a class="lineup-timeline-event" href="#/tournaments/${row.event.id}" style="left:${fmt(timelinePct(row.at, min, max), 2)}%" title="${escapeHtml(`${row.event.name} - início ${formatDate(row.event.start)}`)}">
+                  ${eventLogo(row.event, "lineup-timeline-event-logo")}
+                </a>
+              `,
+            )
+            .join("")}
         </div>
         <span></span>
       </div>
       <div class="lineup-timeline-rows">
+        ${eventos
+          .map((row) => `<span class="lineup-timeline-marker" style="--t:${fmt(timelinePct(row.at, min, max) / 100, 4)}" aria-hidden="true"></span>`)
+          .join("")}
         ${rows
           .map((row) => {
             const start = timelinePct(row.start, min, max);
             const width = clamp(((row.end - row.start) / span) * 100, 2, 100 - start);
             const href = row.playerId ? `href="${playerHref(row.playerId)}"` : "";
             const tag = row.playerId ? "a" : "span";
+            const periodo = formatDateRange(row.start, row.end, { current: row.current });
+            const volume = row.matches ? `${row.matches} ${row.matches === 1 ? "mapa" : "mapas"}` : "";
             return `
               <div class="lineup-timeline-row">
                 <${tag} class="lineup-timeline-name" ${href}>
@@ -12045,9 +12669,9 @@ function lineupTimelineChart(team) {
                   <span><strong>${escapeHtml(row.name)}</strong>${row.current ? `<small>Atual</small>` : ""}</span>
                 </${tag}>
                 <div class="lineup-timeline-track">
-                  <span class="lineup-timeline-bar ${row.current ? "current" : ""}" style="--start:${fmt(start, 2)};--width:${fmt(width, 2)}" title="${escapeHtml(`${row.name}: ${formatDateRange(row.start, row.end, { current: row.current })}`)}"></span>
+                  <span class="lineup-timeline-bar ${row.current ? "current" : ""}" style="--start:${fmt(start, 2)};--width:${fmt(width, 2)}" title="${escapeHtml(`${row.name}: ${periodo}`)}"></span>
                 </div>
-                <span class="lineup-timeline-meta">${escapeHtml(formatDateRange(row.start, row.end, { current: row.current }))}</span>
+                <span class="lineup-timeline-meta"><strong>${escapeHtml(periodo)}</strong>${volume ? `<small>${escapeHtml(volume)}</small>` : ""}</span>
               </div>
             `;
           })
@@ -12066,8 +12690,34 @@ function timelinePct(value, min, max) {
   return clamp(((value - min) / Math.max(DAY_MS, max - min)) * 100, 0, 100);
 }
 
+// O que o jogador de fato jogou COM esta equipe, lido mapa a mapa pelo
+// `teamId` de cada linha do placar. E a fonte de verdade para quem nao esta no
+// lineupHistory: Dante e jotave apareciam como "Periodo nao informado" mesmo
+// tendo 2 e 1 mapas registrados pelo CEUB Octopus.
+function playerObservedStintForTeam(team, player) {
+  const datas = [];
+  const eventos = new Set();
+  let mapas = 0;
+  for (const series of matchSeriesForPlayer(player.id)) {
+    for (const match of series.maps || []) {
+      if (!(match.players || []).some((row) => row.id === player.id && row.teamId === team.id)) continue;
+      mapas += 1;
+      const quando = dateValue(match.startedAt || series.startedAt);
+      if (quando) datas.push(quando);
+      if (series.eventId) eventos.add(series.eventId);
+    }
+  }
+  if (!datas.length) return null;
+  return { start: Math.min(...datas), end: Math.max(...datas), mapas, eventos: [...eventos] };
+}
+
 function formerMemberCard(team, player) {
   const tenure = playerTeamTenure(team, player);
+  const stats = playerStatsForTeam(player, team.id);
+  const eventos = tenure.eventos
+    .map((id) => state.db.tournaments.find((row) => row.id === id))
+    .filter(Boolean)
+    .sort((a, b) => dateValue(a.start) - dateValue(b.start));
   return `
     <a class="former-member-card" href="${playerHref(player)}">
       ${playerLogo(player.id, "former-photo")}
@@ -12079,7 +12729,15 @@ function formerMemberCard(team, player) {
         <strong>${escapeHtml(tenure.range)}</strong>
         <small>${escapeHtml(tenure.detail)}</small>
       </span>
-      <span class="chip red">${playerRating(playerStatsForTeam(player, team.id))} rAAting 3.0</span>
+      <span class="former-member-events">
+        ${eventos.length
+          ? eventos.map((event) => eventLogo(event, "former-member-event")).join("")
+          : `<small>Sem campeonato registrado</small>`}
+      </span>
+      <span class="former-member-rating ${playerRatingTone(stats)}">
+        <strong>${playerRating(stats)}</strong>
+        <small>rAAting 3.0</small>
+      </span>
     </a>
   `;
 }
@@ -12088,10 +12746,25 @@ function playerTeamTenure(team, player) {
   const rows = lineupTimelineRows(team);
   const key = normalizeNameKey(player.nick || player.handle);
   const row = rows.find((item) => item.playerId === player.id || normalizeNameKey(item.name) === key || normalizeNameKey(item.handle) === key);
-  if (!row) return { range: "Passagem registrada", detail: "Período não informado" };
-  const duration = formatTenureDuration(row.start, row.end);
-  const matches = row.matches ? `${row.matches} partidas` : "participação registrada";
-  return { range: formatDateRange(row.start, row.end, { current: row.current }), detail: `${duration} - ${matches}` };
+  const observado = playerObservedStintForTeam(team, player);
+  // O registro de elenco manda quando existe (ele conhece o dia da troca);
+  // o observado entra quando nao ha registro nenhum. So sobra "sem periodo"
+  // para quem nao tem nem um nem outro - e nesse caso o texto diz por que.
+  const inicio = row ? row.start : observado?.start;
+  const fim = row ? row.end : observado?.end;
+  const atual = Boolean(row?.current);
+  const mapas = Number(row?.matches || 0) || Number(observado?.mapas || 0);
+  const eventos = observado?.eventos || [];
+  if (!inicio && !fim) {
+    return { range: "Passagem sem partida registrada", detail: "Consta no elenco, sem mapa oficial", eventos };
+  }
+  const volume = mapas ? `${mapas} ${mapas === 1 ? "mapa" : "mapas"}` : "participação registrada";
+  return {
+    range: formatDateRange(inicio, fim, { current: atual }),
+    detail: `${formatTenureDuration(inicio, fim)} - ${volume}`,
+    eventos,
+    end: fim,
+  };
 }
 
 function formatDateRange(start, end, options = {}) {
@@ -12155,12 +12828,32 @@ function formatTenureDuration(start, end) {
   return rest ? `${years}a ${rest}m` : `${years} ${years === 1 ? "ano" : "anos"}`;
 }
 
+// Os agentes mais escolhidos, com a taxa de escolha no title. Sao tres icones
+// e nao uma coluna de texto: e o dado que diz o que a pessoa joga, e ele nao
+// cabe em numero.
+function teamStatsAgentCell(pool) {
+  if (!pool?.length) return `<span class="team-stats-agents empty">-</span>`;
+  return `
+    <span class="team-stats-agents">
+      ${pool
+        .map(
+          (linha) => `
+            <span class="team-stats-agent" title="${escapeHtml(`${linha.agent} - ${fmt(linha.rate, 0)}% dos mapas`)}">
+              ${linha.agentIcon ? `<img src="${escapeHtml(assetPath(linha.agentIcon))}" alt="${escapeHtml(linha.agent)}" loading="lazy" />` : escapeHtml(linha.agent.slice(0, 2))}
+            </span>
+          `,
+        )
+        .join("")}
+    </span>
+  `;
+}
+
 function teamPlayerStatsTable(players) {
   if (!players.length) return `<div class="empty-state">Nenhum jogador disponível para a tabela de stats.</div>`;
   return `
     <div class="table-wrap team-player-stats-wrap">
       <table class="team-player-stats-table">
-        <thead><tr><th>Jogador</th><th class="numeric">rAAting 3.0</th><th class="numeric">Rounds</th><th class="numeric">Mapas</th><th class="numeric">ACS</th><th class="numeric">K/D</th><th class="numeric">ADR</th><th class="numeric">KAST</th><th class="numeric">Swing/R</th><th class="numeric">FK-FD</th></tr></thead>
+        <thead><tr><th>Jogador</th><th>Agentes</th><th class="numeric">rAAting 3.0</th><th class="numeric">Rounds</th><th class="numeric">Mapas</th><th class="numeric">ACS</th><th class="numeric">K/D</th><th class="numeric">ADR</th><th class="numeric">KAST</th><th class="numeric">Swing/R</th><th class="numeric">FK-FD</th></tr></thead>
         <tbody>${players
           .map(
             (player) => {
@@ -12173,6 +12866,7 @@ function teamPlayerStatsTable(players) {
                     <span><strong>${escapeHtml(player.nick)}</strong><small>${escapeHtml(player.handle)}</small>${sampleStatusChip(player)}</span>
                   </a>
                 </td>
+                <td>${teamStatsAgentCell(player.agentPool)}</td>
                 <td class="numeric rating-cell ${playerRatingTone(player)}">${playerRating(player)}</td>
                 <td class="numeric">${player.rounds}</td>
                 <td class="numeric">${player.matches}</td>
@@ -13847,6 +14541,7 @@ function mapArtError(image) {
   }
   image.onerror = null;
   image.closest(".result-map-tile")?.classList.remove("has-banner");
+  image.closest(".map-perf-tile")?.classList.remove("has-art");
   image.closest(".tournament-map-banner")?.classList.remove("has-image");
   image.closest(".tournament-map-agent-banner")?.classList.remove("has-banner");
   image.closest(".search-match-map-image")?.classList.add("missing-image");
@@ -15200,7 +15895,11 @@ function teamLogo(id, extra = "") {
 function playerLogo(id, extra = "") {
   const player = playerById(id);
   const src = playerPhotoSrc(player);
-  const classes = `logo image-logo player-avatar round ${extra}`.trim();
+  // Marca quem esta na silhueta. So 9,6% dos jogadores tem foto, entao a
+  // silhueta e a regra e nao a excecao - e onde ela aparece grande (a parede
+  // da capa) ela precisa recuar para nao virar o assunto da imagem.
+  const semFoto = player?.photo ? "" : " no-photo";
+  const classes = `logo image-logo player-avatar round ${extra}${semFoto}`.trim();
   return `<span class="${escapeHtml(classes)}"><img src="${escapeHtml(src)}" alt="${escapeHtml(`Foto ${player?.nick || "Jogador"}`)}" loading="lazy" onerror="playerPhotoError(this)" /></span>`;
 }
 

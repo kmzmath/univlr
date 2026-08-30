@@ -141,9 +141,17 @@ vínculo declarado colado no nome.
 
 ## Onde se pode comentar
 
-`threads.subject_kind` aceita `match`, `event`, `player`, `team` e `article`.
-As quatro primeiras têm tela; `article` é o encaixe do ciclo 2 (notícias) e
-ainda não tem nada.
+`threads.subject_kind` aceita `match`, `event`, `player`, `team` e `article` -
+as cinco têm tela. `article` é a notícia, e o `subject_id` é o slug do arquivo
+em `noticias/` (ver `noticias/README.md`).
+
+Consequência de o conteúdo da notícia viver no repositório e o comentário no
+banco: apagar o `.docx` **não** apaga a thread. Ela fica órfã e invisível. Se a
+remoção for definitiva:
+
+```sql
+delete from public.threads where subject_kind = 'article' and subject_id = '<slug>';
+```
 
 ## Moderar por SQL
 

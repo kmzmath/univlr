@@ -17912,3 +17912,271 @@ img {
 }
 
 .perfil-fav-logo.logo-empty { display: none; }
+
+/* ==========================================================================
+   NOTICIAS
+   ==========================================================================
+   O UNIVLR e um site de dado: tabela, numero, tabular-nums. Materia e o
+   oposito - texto corrido para ler devagar. Por isso aqui a fonte de leitura
+   ganha corpo maior e a coluna tem largura maxima em ch: passar de ~70
+   caracteres por linha faz o olho perder onde a proxima linha comeca. */
+
+/* --------------------------------------------------------- capa reutilizavel */
+
+.news-capa {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  flex-shrink: 0;
+}
+
+.news-capa img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Sem imagem a caixa nao some: ela vira uma superficie neutra, senao o cartao
+   colapsa e a grade fica com alturas diferentes de linha para linha. */
+.news-capa.vazia {
+  background: linear-gradient(150deg, var(--surface-2), var(--surface-3));
+  border: 1px solid var(--line);
+}
+
+.news-capa.grande { aspect-ratio: 16 / 9; }
+.news-capa.media { width: 200px; aspect-ratio: 16 / 10; }
+.news-capa.pequena { width: 72px; aspect-ratio: 1; border-radius: var(--radius-sm); }
+
+/* ------------------------------------------------------------ faixa da home */
+
+.news-faixa { margin-bottom: var(--space-6); }
+
+.news-faixa-grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.news-destaque {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface);
+  transition: border-color 160ms ease;
+}
+
+.news-destaque:hover { border-color: var(--line-dark); }
+.news-destaque .news-capa { border-radius: 0; }
+
+.news-destaque-texto { padding: var(--space-5); }
+
+.news-destaque-texto time,
+.news-secundaria time {
+  display: block;
+  font: 600 var(--text-2xs) / 1 var(--font-text);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-3);
+}
+
+.news-destaque-texto h3 {
+  font: 800 var(--text-2xl) / 1.15 var(--font-display);
+  margin-bottom: var(--space-3);
+}
+
+.news-destaque:hover h3 { color: var(--brand-text); }
+
+.news-destaque-texto p {
+  font: 400 var(--text-md) / 1.5 var(--font-text);
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+.news-secundarias { display: flex; flex-direction: column; gap: var(--space-3); }
+
+.news-secundaria {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 160ms ease;
+}
+
+.news-secundaria:hover { border-color: var(--line-dark); }
+
+.news-secundaria strong {
+  display: block;
+  font: 700 var(--text-sm) / 1.35 var(--font-text);
+}
+
+.news-secundaria:hover strong { color: var(--brand-text); }
+.news-secundaria time { margin-bottom: var(--space-2); }
+
+/* ------------------------------------------------------------------ listagem */
+
+.news-lista { display: flex; flex-direction: column; gap: var(--space-4); }
+
+.news-item {
+  display: flex;
+  gap: var(--space-5);
+  align-items: center;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 160ms ease;
+}
+
+.news-item:hover { border-color: var(--line-dark); }
+.news-item-texto { min-width: 0; }
+
+.news-item-texto time {
+  display: block;
+  font: 600 var(--text-2xs) / 1 var(--font-text);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-2);
+}
+
+.news-item-texto h2 {
+  font: 800 var(--text-xl) / 1.2 var(--font-display);
+  margin-bottom: var(--space-2);
+}
+
+.news-item:hover h2 { color: var(--brand-text); }
+
+.news-item-texto p {
+  font: 400 var(--text-sm) / 1.5 var(--font-text);
+  color: var(--muted);
+  max-width: 70ch;
+}
+
+.news-vazio { text-align: center; }
+.news-vazio strong { display: block; margin-bottom: var(--space-2); font-size: var(--text-lg); }
+.news-vazio p { color: var(--muted); }
+
+/* ------------------------------------------------------------------ materia */
+
+.news-artigo {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.news-artigo-capa { margin-bottom: var(--space-7); }
+
+.news-artigo-imagem {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
+  display: block;
+}
+
+.news-artigo-titulo h1 {
+  font: 800 var(--text-4xl) / 1.08 var(--font-display);
+  margin: var(--space-3) 0;
+}
+
+.news-artigo-titulo time {
+  font: 600 var(--text-xs) / 1 var(--font-text);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* O corpo vem do Word: h2, h3, p, ul, ol, strong, em, a, img, blockquote.
+   Estilo por elemento porque nao ha classe nenhuma no HTML gerado. */
+
+.news-corpo {
+  font: 400 var(--text-lg) / 1.7 var(--font-text);
+  color: var(--ink);
+}
+
+.news-corpo > * + * { margin-top: var(--space-5); }
+
+.news-corpo h2 {
+  font: 800 var(--text-2xl) / 1.2 var(--font-display);
+  margin-top: var(--space-7);
+}
+
+.news-corpo h3 {
+  font: 800 var(--text-xl) / 1.25 var(--font-display);
+  margin-top: var(--space-6);
+}
+
+.news-corpo p { max-width: 68ch; }
+
+.news-corpo a {
+  color: var(--brand-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.news-corpo strong { font-weight: 700; }
+.news-corpo em { font-style: italic; }
+
+.news-corpo ul,
+.news-corpo ol {
+  padding-left: var(--space-6);
+  max-width: 66ch;
+}
+
+.news-corpo ul { list-style: disc; }
+.news-corpo ol { list-style: decimal; }
+.news-corpo li + li { margin-top: var(--space-2); }
+.news-corpo li::marker { color: var(--muted); }
+
+.news-corpo img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  display: block;
+}
+
+.news-corpo blockquote {
+  padding-left: var(--space-5);
+  border-left: 2px solid var(--brand);
+  color: var(--muted);
+  font-style: italic;
+}
+
+.news-corpo table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-md);
+}
+
+.news-corpo th,
+.news-corpo td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.news-artigo .cmt-secao { margin-top: var(--space-8); }
+
+@media (max-width: 940px) {
+  .news-faixa-grade { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  .news-item { flex-direction: column; align-items: stretch; gap: var(--space-4); }
+  .news-capa.media { width: 100%; }
+  .news-artigo-titulo h1 { font-size: var(--text-2xl); }
+  .news-corpo { font-size: var(--text-md); }
+  .news-destaque-texto h3 { font-size: var(--text-xl); }
+}

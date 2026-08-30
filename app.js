@@ -2686,6 +2686,7 @@ const TOURNAMENT_OVERRIDES = {
 
 const navItems = [
   ["home", "Inicial"],
+  ["news", "Notícias"],
   ["matches", "Partidas"],
   ["events", "Eventos"],
   ["players", "Players"],
@@ -2711,6 +2712,7 @@ const STATIC_DOCUMENT_TITLES = {
   rankings: "Ranking",
   teams: "Equipes",
   u: "Perfil",
+  news: "Notícias",
 };
 
 const state = {
@@ -2810,6 +2812,9 @@ function routeIsHome() {
 async function init() {
   renderLoading();
   try {
+    // news.json tem alguns KB e a faixa da home depende dele. Nao bloqueia:
+    // se falhar, News.lista() devolve vazio e a faixa some.
+    await window.News?.carregar();
     // Primeiro render pelo resumo: ~8 KB gzip contra 5,3 MB do banco inteiro,
     // sem JSON.parse de 96 mil nós no caminho. Só vale para a home - qualquer
     // outra rota espera o banco completo, que já vem logo atrás.
@@ -5151,6 +5156,7 @@ function render() {
     teams: renderTeamsCompact,
     maps: renderMapsCompact,
     u: (username) => window.Profile.renderProfilePage(username),
+    news: (slug) => window.News.renderNews(slug),
   };
   (pages[section] || renderHomeCompact)(id);
   syncTopbarHeight();
@@ -5204,6 +5210,7 @@ function renderHomeCompact() {
   Shell(`
     <h1 class="sr-only">${SITE_NAME}</h1>
     ${weekHighlights()}
+    ${window.News ? window.News.faixaHome() : ""}
     <div class="home-board univlr-home">
       <section class="hub-panel ranking-panel">
         ${panelTitle("Ranking")}
@@ -15998,6 +16005,7 @@ function documentTitleForRoute(currentRoute) {
   if (section === "players" && id) return playerDocumentTitle(id);
   if (section === "teams" && id) return teamDocumentTitle(id);
   if (section === "maps" && id) return mapDocumentTitle(id);
+  if (section === "news" && id) return window.News?.porSlug(id)?.titulo || STATIC_DOCUMENT_TITLES.news;
 
   return STATIC_DOCUMENT_TITLES[section] || STATIC_DOCUMENT_TITLES.home;
 }

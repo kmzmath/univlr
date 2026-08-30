@@ -47,13 +47,17 @@
     return t.subject_kind === "match" ? "uma partida" : "um campeonato";
   }
 
-  function favoritoHtml(f) {
-    if (f.kind === "team") {
-      const t = typeof window.teamById === "function" ? window.teamById(f.ref_id) : null;
-      return `<a class="perfil-fav" href="#/teams/${esc(f.ref_id)}">${esc(t ? t.name : f.ref_id)}</a>`;
+  // Um de cada, no maximo. Devolve "" quando nao ha - quem chama decide se
+  // esconde a secao inteira.
+  function favoritoHtml(kind, refId) {
+    if (!refId) return "";
+    if (kind === "team") {
+      const t = typeof window.teamById === "function" ? window.teamById(refId) : null;
+      const logo = t && typeof window.teamLogo === "function" ? window.teamLogo(t.id, "perfil-fav-logo") : "";
+      return `<a class="perfil-fav" href="#/teams/${esc(refId)}">${logo}${esc(t ? t.name : refId)}</a>`;
     }
-    const p = typeof window.playerById === "function" ? window.playerById(f.ref_id) : null;
-    return `<a class="perfil-fav" href="#/players/${esc(f.ref_id)}">${esc(p ? p.nick || p.handle : f.ref_id)}</a>`;
+    const j = typeof window.playerById === "function" ? window.playerById(refId) : null;
+    return `<a class="perfil-fav" href="#/players/${esc(j ? j.routeSlug || j.id : refId)}">♥ ${esc(j ? j.nick || j.handle : refId)}</a>`;
   }
 
   function casca(username) {
@@ -79,8 +83,8 @@
     const eu = window.Community.usuario();
     const souEu = eu && eu.id === p.id;
     const desde = new Date(p.created_at).toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
-    const times = dados.favoritos.filter((f) => f.kind === "team");
-    const jogadores = dados.favoritos.filter((f) => f.kind === "player");
+    const time = favoritoHtml("team", p.fav_team);
+    const jogador = favoritoHtml("player", p.fav_player);
 
     return `
       <header class="perfil-capa">
@@ -95,20 +99,10 @@
         </div>
         <dl class="perfil-numeros">
           <div><dt>Comentários</dt><dd>${dados.total}</dd></div>
-          <div><dt>Times favoritos</dt><dd>${times.length}</dd></div>
-          <div><dt>Jogadores favoritos</dt><dd>${jogadores.length}</dd></div>
+          <div><dt>Time</dt><dd class="perfil-numero-fav">${time || "<span>-</span>"}</dd></div>
+          <div><dt>Jogador</dt><dd class="perfil-numero-fav">${jogador || "<span>-</span>"}</dd></div>
         </dl>
       </header>
-
-      ${
-        times.length || jogadores.length
-          ? `<section class="match-panel">
-               <div class="section-head"><div><h2>Favoritos</h2></div></div>
-               ${times.length ? `<div class="perfil-favs"><h3>Times</h3><div>${times.map(favoritoHtml).join("")}</div></div>` : ""}
-               ${jogadores.length ? `<div class="perfil-favs"><h3>Jogadores</h3><div>${jogadores.map(favoritoHtml).join("")}</div></div>` : ""}
-             </section>`
-          : ""
-      }
 
       <section class="match-panel">
         <div class="section-head">
@@ -152,15 +146,14 @@
           raiz.innerHTML = naoEncontrado(nome);
           return;
         }
-        const [total, comentarios, favoritos] = await Promise.all([
+        const [total, comentarios] = await Promise.all([
           window.Community.contarComentarios(p.id),
           window.Community.comentariosDoPerfil(p.id),
-          window.Community.listarFavoritos(p.id),
         ]);
         // A rota pode ter mudado durante o await - sem esta guarda, o perfil
         // pintaria por cima da pagina para onde a pessoa ja navegou.
         if (!document.querySelector(`[data-perfil="${CSS.escape(nome)}"]`)) return;
-        raiz.innerHTML = conteudo(p, { total, comentarios, favoritos });
+        raiz.innerHTML = conteudo(p, { total, comentarios });
       } catch (erro) {
         raiz.innerHTML = `<div class="empty-state">Não deu para carregar o perfil: ${esc(
           window.Community.mensagemDeErro(erro)

@@ -118,9 +118,27 @@ begin
   insert into _p (caso, esperado, obtido) values ('ver o proprio voto', '1', n::text);
 
   -- Favoritar.
-  insert into public.favorites (user_id, kind, ref_id) values (bruno, 'team', 'uninassau-griffins');
-  select count(*) into n from public.favorites where user_id = bruno;
-  insert into _p (caso, esperado, obtido) values ('favoritar equipe', '1', n::text);
+  -- Favorito e UM de cada tipo, guardado em coluna de profiles. Escolher outro
+  -- troca o atual, e o grant por coluna e quem permite escrever so nele.
+  update public.profiles set fav_team = 'uninassau_griffins' where id = bruno;
+  select fav_team into t from public.profiles where id = bruno;
+  insert into _p (caso, esperado, obtido) values ('virar fa de uma equipe', 'uninassau_griffins', coalesce(t, 'NULO'));
+
+  update public.profiles set fav_team = 'ceub_octopus' where id = bruno;
+  select fav_team into t from public.profiles where id = bruno;
+  insert into _p (caso, esperado, obtido) values ('trocar de equipe substitui', 'ceub_octopus', coalesce(t, 'NULO'));
+
+  update public.profiles set fav_player = 'algum_jogador' where id = bruno;
+  select fav_team into t from public.profiles where id = bruno;
+  insert into _p (caso, esperado, obtido) values ('jogador nao mexe na equipe', 'ceub_octopus', coalesce(t, 'NULO'));
+
+  -- E continua sem alcancar as colunas de papel: o grant e por COLUNA.
+  begin
+    update public.profiles set fav_team = 'x', role = 'admin' where id = bruno;
+    insert into _p (caso, esperado, obtido) values ('favorito junto com role', 'bloqueado', 'PASSOU');
+  exception when others then
+    insert into _p (caso, esperado, obtido) values ('favorito junto com role', 'bloqueado', 'bloqueado');
+  end;
 
   -- Marcar notificacao como lida.
   perform set_config('request.jwt.claims', json_build_object('sub', alice)::text, true);

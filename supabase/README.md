@@ -21,8 +21,9 @@ existe e precisa passar antes de qualquer tela.
 | `migrations/0001_community.sql` | Tabelas, índices, triggers |
 | `migrations/0002_policies.sql` | RLS e grants por coluna |
 | `migrations/0003_functions.sql` | RPCs de escrita (o caminho único) |
+| `migrations/0004_favorito_unico_e_perfis.sql` | Favorito único e comentário em perfil |
 | `tests/rls_test.sql` | 16 ataques que precisam falhar |
-| `tests/positive_test.sql` | 16 operacoes legitimas que precisam passar |
+| `tests/positive_test.sql` | 19 operações legítimas que precisam passar |
 
 ## Setup (o que precisa ser feito no painel)
 
@@ -118,6 +119,32 @@ update auth.users
 
 Combine a senha provisória por fora e peça para a pessoa trocar depois.
 
+## Favorito é UM de cada, como na HLTV
+
+Cada pessoa tem no máximo **um time** e **um jogador** favoritos. Escolher outro
+troca o atual; clicar no que já é favorito desmarca.
+
+Por isso não existe tabela `favorites`: são duas colunas em `profiles`
+(`fav_team`, `fav_player`), adicionadas em `0004`. Com "no máximo um", a
+unicidade fica estrutural em vez de virar regra que alguém precisa fiscalizar -
+e o favorito passa a chegar **no mesmo embed do autor do comentário**, sem
+segunda consulta por lista.
+
+Os dois aparecem ao lado do nome em cada comentário, no formato da HLTV:
+
+```
+♥ jogador | [escudo do time] usuario
+```
+
+O escudo ocupa o lugar da bandeira de país que a HLTV usa - mesmo papel, o
+vínculo declarado colado no nome.
+
+## Onde se pode comentar
+
+`threads.subject_kind` aceita `match`, `event`, `player`, `team` e `article`.
+As quatro primeiras têm tela; `article` é o encaixe do ciclo 2 (notícias) e
+ainda não tem nada.
+
 ## Moderar por SQL
 
 Fila de denúncias abertas, da mais recente para a mais antiga:
@@ -194,7 +221,7 @@ o fragmento **na carga do script**, de forma síncrona: o `init()` é async e o
 | `auth.js` | Espaço da conta no cabeçalho + janelas |
 | `comments.js` | Árvore de comentários |
 | `profile.js` | Perfil público em `#/u/<username>` |
-| `favorites.js` | Botão de favoritar em equipe e jogador |
+| `favorites.js` | Botão "ser fã" em equipe e jogador |
 
 Carregam **antes** do `app.js`, como os outros `*-core`. Nenhum deles toca
 `state` na carga: `state` é `const` no `app.js` e ler antes de ele executar

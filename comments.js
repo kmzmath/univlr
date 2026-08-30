@@ -46,6 +46,41 @@
     return `<span class="cmt-avatar ${tamanho === "grande" ? "grande" : ""}" style="--avatar-cor:${cor}" aria-hidden="true">${esc(nome[0].toUpperCase())}</span>`;
   }
 
+  // ------------------------------------------------------------- fa de quem
+  //
+  // Formato da HLTV: "♥ jogador | [bandeira] usuario". Aqui o time favorito
+  // ocupa o lugar da bandeira, porque e o mesmo papel - o vinculo que a pessoa
+  // declara, colado no nome dela.
+  //
+  // Os dois ids vem no embed do autor (profiles.fav_team / fav_player), entao
+  // isto nao custa consulta nenhuma. O nome bonito vem do JSON buildado; se o
+  // banco ainda nao chegou, ou o id sumiu num rebuild, o selo simplesmente nao
+  // aparece - melhor faltar do que mostrar um id cru ao lado do nome.
+  function selosDeFa(autor) {
+    if (!autor) return "";
+    let saida = "";
+
+    if (autor.fav_player) {
+      const j = typeof window.playerById === "function" ? window.playerById(autor.fav_player) : null;
+      if (j) {
+        saida += `<a class="cmt-fa-jogador" href="#/players/${esc(j.routeSlug || j.id)}"
+                     title="Jogador favorito">♥ ${esc(j.nick || j.handle)}</a>
+                  <span class="cmt-fa-sep" aria-hidden="true">|</span>`;
+      }
+    }
+
+    if (autor.fav_team) {
+      const t = typeof window.teamById === "function" ? window.teamById(autor.fav_team) : null;
+      if (t && typeof window.teamLogo === "function") {
+        saida += `<a class="cmt-fa-time" href="#/teams/${esc(t.id)}" title="Time favorito: ${esc(t.name)}">
+                    ${window.teamLogo(t.id, "cmt-fa-logo")}
+                  </a>`;
+      }
+    }
+
+    return saida;
+  }
+
   // ------------------------------------------------------------------ corpo
   // Escapa PRIMEIRO, marca mencao depois. Na ordem inversa, um `<script>` no
   // texto entraria no HTML antes de virar entidade.
@@ -114,6 +149,7 @@
           ${avatar(autor)}
           <div class="cmt-conteudo">
             <header class="cmt-cabeca">
+              ${apagado ? "" : selosDeFa(c.profiles)}
               ${apagado ? `<span class="cmt-autor">-</span>` : `<a class="cmt-autor" href="#/u/${esc(autor)}">${esc(autor)}</a>`}
               ${c.profiles && c.profiles.role === "admin" ? `<span class="cmt-selo">admin</span>` : ""}
               <time datetime="${esc(c.created_at)}">${quando(c.created_at)}</time>

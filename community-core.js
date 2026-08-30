@@ -22,7 +22,7 @@
   // as duas pontas e por isso parecem tabelas de juncao. Sem nomear a
   // constraint, a consulta morre com "more than one relationship was found".
   const COMENTARIO_COM_AUTOR =
-    "id, body, score, created_at, edited_at, deleted_at, parent_id, author_id, profiles!comments_author_id_fkey(username, role)";
+    "id, body, score, created_at, edited_at, deleted_at, parent_id, author_id, profiles!comments_author_id_fkey(username, role, fav_team, fav_player)";
 
   // ---------------------------------------------------- resgate do fragmento
   //
@@ -54,18 +54,16 @@
   let client = null;
   let sessao = null;
   let perfil = null;
-  // Favoritos do usuario logado, como "kind:ref_id". Fica em memoria para o
-  // botao de favoritar nascer no estado certo: as paginas de equipe e de
-  // jogador sao montadas de uma vez em string, sem await no meio, entao
-  // perguntar ao servidor na hora de desenhar faria o coracao piscar de vazio
-  // para cheio a cada render.
-  let meusFavoritos = new Set();
+  // Um time e um jogador, no maximo - como na HLTV. Vem junto do perfil, e
+  // fica em memoria para o botao nascer no estado certo: as paginas de equipe
+  // e de jogador sao montadas de uma vez em string, sem await no meio, entao
+  // perguntar ao servidor na hora de desenhar faria o coracao piscar.
   // Ligado pelo evento PASSWORD_RECOVERY; o auth.js le para abrir a janela de
   // nova senha. Fica aqui, e nao numa variavel do auth.js, porque o evento
   // chega antes de o auth.js terminar de iniciar.
   let recuperando = false;
   const ouvintes = new Set();
-  const chaveFav = (kind, refId) => `${kind}:${refId}`;
+  const COLUNA_FAV = { team: "fav_team", player: "fav_player" };
 
   function api() {
     if (client) return client;
@@ -109,17 +107,14 @@
   async function carregaPerfil() {
     if (!sessao) {
       perfil = null;
-      meusFavoritos = new Set();
       return null;
     }
     const { data } = await api()
       .from("profiles")
-      .select("id, username, bio, role, created_at, banned_until")
+      .select("id, username, bio, role, created_at, banned_until, fav_team, fav_player")
       .eq("id", sessao.user.id)
       .maybeSingle();
     perfil = data || null;
-    const favoritos = perfil ? await listarFavoritos(perfil.id) : [];
-    meusFavoritos = new Set(favoritos.map((f) => chaveFav(f.kind, f.ref_id)));
     return perfil;
   }
 
@@ -244,7 +239,7 @@
   async function perfilPublico(username) {
     const { data, error } = await api()
       .from("profiles")
-      .select("id, username, bio, role, created_at")
+      .select("id, username, bio, role, created_at, fav_team, fav_player")
       .eq("username", username)
       .maybeSingle();
     if (error) throw error;
@@ -355,35 +350,33 @@
   }
 
   // --------------------------------------------------------------- favoritos
+  //
+  // Um time e um jogador, no maximo. Escolher outro TROCA o atual, e clicar no
+  // que ja e favorito desmarca. Nao ha "lista de favoritos" para gerenciar -
+  // por isso isso e um UPDATE de coluna, e nao insert/delete de linha.
 
-  async function listarFavoritos(userId) {
-    const { data, error } = await api().from("favorites").select("kind, ref_id").eq("user_id", userId);
-    if (error) throw error;
-    return data || [];
-  }
-
-  async function favoritar(kind, refId, ligando) {
-    if (!sessao) throw new Error("nao autenticado");
-    if (ligando) {
-      const { error } = await api()
-        .from("favorites")
-        .insert({ user_id: sessao.user.id, kind, ref_id: String(refId) });
-      if (error) throw error;
-      meusFavoritos.add(chaveFav(kind, refId));
-    } else {
-      const { error } = await api()
-        .from("favorites")
-        .delete()
-        .eq("user_id", sessao.user.id)
-        .eq("kind", kind)
-        .eq("ref_id", String(refId));
-      if (error) throw error;
-      meusFavoritos.delete(chaveFav(kind, refId));
-    }
+  function favoritoAtual(kind) {
+    if (!perfil) return null;
+    return perfil[COLUNA_FAV[kind]] || null;
   }
 
   function ehFavorito(kind, refId) {
-    return meusFavoritos.has(chaveFav(kind, refId));
+    return favoritoAtual(kind) === String(refId);
+  }
+
+  // Devolve o valor que ficou, para quem chamou saber se marcou ou desmarcou.
+  async function definirFavorito(kind, refId) {
+    if (!sessao) throw new Error("nao autenticado");
+    const coluna = COLUNA_FAV[kind];
+    if (!coluna) throw new Error("tipo de favorito invalido: " + kind);
+    const alvo = ehFavorito(kind, refId) ? null : String(refId);
+    const { error } = await api()
+      .from("profiles")
+      .update({ [coluna]: alvo })
+      .eq("id", sessao.user.id);
+    if (error) throw error;
+    if (perfil) perfil[coluna] = alvo;
+    return alvo;
   }
 
   // ------------------------------------------------------------ notificacoes
@@ -499,8 +492,8 @@
     denunciar,
     comentariosDoPerfil,
     contarComentarios,
-    listarFavoritos,
-    favoritar,
+    favoritoAtual,
+    definirFavorito,
     ehFavorito,
     listarNotificacoes,
     contarNaoLidas,

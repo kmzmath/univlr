@@ -11206,8 +11206,10 @@ function renderTeamDetail(id) {
       <section class="team-tab-panel">
         ${renderTeamTab(activeTab, team, { matches, currentLineup, observedPlayers, historicalPlayers, tournaments })}
       </section>
+      ${window.Comments ? window.Comments.shell("team", team.id) : ""}
     </section>
   `);
+  window.Comments?.montar("team", team.id);
   ajustaTituloDaEquipe();
   if (activeTab === "matches" || activeTab === "resumo") bindResultDayToggles();
   playPanelSlide(tabSlide);
@@ -12948,8 +12950,10 @@ function renderPlayerDetail(id) {
       <section class="team-tab-panel player-tab-panel">
         ${renderPlayerTab(activeTab, player, { matches, teamRows, tournamentRows, trophies })}
       </section>
+      ${window.Comments ? window.Comments.shell("player", playerRouteId(player.id)) : ""}
     </section>
   `);
+  window.Comments?.montar("player", playerRouteId(player.id));
   if (activeTab === "agentes") bindPlayerAgentStatsControls(player.id);
   if (activeTab === "mapas") bindPlayerMapStatsControls(player.id);
   playPanelSlide(tabSlide);

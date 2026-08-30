@@ -2812,9 +2812,14 @@ function routeIsHome() {
 async function init() {
   renderLoading();
   try {
-    // news.json tem alguns KB e a faixa da home depende dele. Nao bloqueia:
-    // se falhar, News.lista() devolve vazio e a faixa some.
-    await window.News?.carregar();
+    // A home desenha noticias e discussoes recentes de forma SINCRONA, entao os
+    // dois precisam estar em memoria antes do primeiro render - buscar depois
+    // faria os blocos entrarem do nada e empurrarem a pagina para baixo. Sao
+    // consultas pequenas e nenhuma delas derruba o site se falhar.
+    await Promise.all([
+      window.News?.carregar(),
+      window.Community?.carregarResumo().catch(() => null),
+    ]);
     // Primeiro render pelo resumo: ~8 KB gzip contra 5,3 MB do banco inteiro,
     // sem JSON.parse de 96 mil nós no caminho. Só vale para a home - qualquer
     // outra rota espera o banco completo, que já vem logo atrás.
@@ -5211,6 +5216,7 @@ function renderHomeCompact() {
     <h1 class="sr-only">${SITE_NAME}</h1>
     ${weekHighlights()}
     ${window.News ? window.News.faixaHome() : ""}
+    ${window.Comments ? window.Comments.discussoesHome() : ""}
     <div class="home-board univlr-home">
       <section class="hub-panel ranking-panel">
         ${panelTitle("Ranking")}
@@ -7020,12 +7026,15 @@ function renderMatchDetail(id) {
         </aside>
       </div>
       </div>
-      ${window.Comments ? window.Comments.shell("match", match.id) : ""}
+      ${window.Comments ? window.Comments.shell("match", match.seriesKey) : ""}
     </section>
   `);
   bindScoreboardSort();
   bindLineupCompare();
-  window.Comments?.montar("match", match.id);
+  // Pela SERIE, nao pelo mapa: cada mapa tem id proprio na rota, entao usar
+  // match.id espalharia a conversa de uma serie de tres mapas por tres threads
+  // diferentes, e trocar de aba faria os comentarios sumirem.
+  window.Comments?.montar("match", match.seriesKey);
   playPanelSlide(mapSlide);
 }
 
@@ -14517,7 +14526,7 @@ function matchResultRow(item, options) {
       <span class="result-score"><b class="${scoreNumberClass(score.a, score.b)}">${score.a}</b><i>:</i><b class="${scoreNumberClass(score.b, score.a)}">${score.b}</b><small>${escapeHtml(score.label)}</small></span>
       <span class="result-team right"><strong title="${escapeHtml(series.teamB.name)}">${escapeHtml(series.teamB.name)}</strong>${teamLogo(series.teamB.id)}</span>
       ${matchMapStrip(series)}
-      <span class="result-meta"><span class="result-meta-when">${escapeHtml(when)}</span>${opts.art ? matchMapSequence(series) : ""}<span class="result-meta-where">${escapeHtml(event?.name || "Evento")}</span>${event ? eventLogo(event, "tiny") : ""}</span>
+      <span class="result-meta"><span class="result-meta-when">${escapeHtml(when)}</span>${window.Comments ? window.Comments.selo("match", series.seriesKey) : ""}${opts.art ? matchMapSequence(series) : ""}<span class="result-meta-where">${escapeHtml(event?.name || "Evento")}</span>${event ? eventLogo(event, "tiny") : ""}</span>
     </a>
   `;
 }
@@ -14648,7 +14657,7 @@ function eventListRow(event) {
   return `
     <a class="event-row" href="#/events/${event.id}"${capa ? ` data-cover="${escapeHtml(assetPath(capa))}"` : ""}>
       ${eventLogo(event, "small")}
-      <span class="row-main"><strong>${escapeHtml(event.name)}</strong><small>${escapeHtml(eventTimeRange(event))}</small><span class="event-status ${eventStatusClass(event.status)}">${escapeHtml(event.status || "Evento")}</span></span>
+      <span class="row-main"><strong>${escapeHtml(event.name)}</strong><small>${escapeHtml(eventTimeRange(event))}</small><span class="event-status ${eventStatusClass(event.status)}">${escapeHtml(event.status || "Evento")}</span>${window.Comments ? window.Comments.selo("event", event.id) : ""}</span>
       ${eventTierBadge(event)}
       <span class="event-numbers">${event.matches} partidas<br>${event.teams.length} equipes</span>
     </a>
@@ -14688,7 +14697,7 @@ function eventDirectoryRow(event) {
         <span class="row-main event-row-title">
           <strong>${escapeHtml(event.name)}</strong>
           <small>${escapeHtml(eventTimeRange(event))}</small>
-          <span class="event-status ${eventStatusClass(event.status)}">${escapeHtml(event.status || "Evento")}</span>
+          <span class="event-status ${eventStatusClass(event.status)}">${escapeHtml(event.status || "Evento")}</span>${window.Comments ? window.Comments.selo("event", event.id) : ""}
         </span>
       </span>
       ${eventTierCell(event)}

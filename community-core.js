@@ -64,6 +64,8 @@
   let recuperando = false;
   const ouvintes = new Set();
   const COLUNA_FAV = { team: "fav_team", player: "fav_player" };
+  // Chave de par tipo+id, usada pelo cache de contagem de comentarios.
+  const chave = (kind, refId) => `${kind}:${refId}`;
 
   function api() {
     if (client) return client;
@@ -289,6 +291,7 @@
       p_parent_id: parentId || null,
     });
     if (error) throw error;
+    invalidarContagens();
     return data;
   }
 
@@ -300,6 +303,7 @@
   async function apagarComentario(id) {
     const { error } = await api().rpc("delete_comment", { p_comment_id: id });
     if (error) throw error;
+    invalidarContagens();
   }
 
   async function votar(id, votando) {
@@ -377,6 +381,69 @@
     if (error) throw error;
     if (perfil) perfil[coluna] = alvo;
     return alvo;
+  }
+
+  // --------------------------------------------------------------- contagens
+  //
+  // Uma consulta so, na carga, para TODAS as listas do site. As listas sao
+  // montadas sincronamente a partir do JSON buildado, entao perguntar a
+  // contagem por linha custaria uma requisicao por item.
+
+  let contagens = null; // Map "kind:id" -> { comentarios, ultimo_em }
+
+  async function carregarContagens() {
+    try {
+      const { data, error } = await api()
+        .from("thread_counts")
+        .select("subject_kind, subject_id, comentarios, ultimo_em");
+      if (error) throw error;
+      contagens = new Map((data || []).map((r) => [chave(r.subject_kind, r.subject_id), r]));
+    } catch (erro) {
+      // Sem contagem o site inteiro segue funcionando - o selo so nao aparece.
+      contagens = new Map();
+    }
+    return contagens;
+  }
+
+  function contagem(kind, refId) {
+    if (!contagens) return 0;
+    const linha = contagens.get(chave(kind, String(refId)));
+    return linha ? linha.comentarios : 0;
+  }
+
+  // Chamado depois de publicar ou apagar: o numero da lista fica velho, e
+  // recarregar a pagina inteira so para atualizar um selo seria exagero.
+  function invalidarContagens() {
+    contagens = null;
+  }
+
+  // Guardadas na carga para a home poder desenhar SINCRONAMENTE. Buscar depois
+  // do primeiro paint faria o bloco entrar do nada e empurrar o resto da
+  // pagina para baixo, no momento em que a pessoa ja comecou a ler.
+  let discussoesCache = [];
+
+  const discussoes = () => discussoesCache;
+
+  // As duas consultas que a home precisa, juntas. Sao pequenas e independentes
+  // de sessao, entao rodam antes de qualquer login.
+  async function carregarResumo() {
+    const [, recentes] = await Promise.all([
+      carregarContagens(),
+      discussoesRecentes(6).catch(() => []),
+    ]);
+    discussoesCache = recentes;
+    return { contagens, discussoes: discussoesCache };
+  }
+
+  async function discussoesRecentes(limite = 6) {
+    const { data, error } = await api()
+      .from("comments")
+      .select("id, body, created_at, threads(subject_kind, subject_id), profiles!comments_author_id_fkey(username, fav_team, fav_player)")
+      .is("deleted_at", null)
+      .order("created_at", { ascending: false })
+      .limit(limite);
+    if (error) throw error;
+    return data || [];
   }
 
   // ------------------------------------------------------------ notificacoes
@@ -495,6 +562,12 @@
     favoritoAtual,
     definirFavorito,
     ehFavorito,
+    carregarContagens,
+    carregarResumo,
+    discussoes,
+    contagem,
+    invalidarContagens,
+    discussoesRecentes,
     listarNotificacoes,
     contarNaoLidas,
     marcarLidas,

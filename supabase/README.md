@@ -22,6 +22,7 @@ existe e precisa passar antes de qualquer tela.
 | `migrations/0002_policies.sql` | RLS e grants por coluna |
 | `migrations/0003_functions.sql` | RPCs de escrita (o caminho único) |
 | `migrations/0004_favorito_unico_e_perfis.sql` | Favorito único e comentário em perfil |
+| `migrations/0005_contagens.sql` | View `thread_counts`, para o selo nas listas |
 | `tests/rls_test.sql` | 16 ataques que precisam falhar |
 | `tests/positive_test.sql` | 19 operações legítimas que precisam passar |
 
@@ -138,6 +139,16 @@ Os dois aparecem ao lado do nome em cada comentário, no formato da HLTV:
 
 O escudo ocupa o lugar da bandeira de país que a HLTV usa - mesmo papel, o
 vínculo declarado colado no nome.
+
+## Comentário de partida é por SÉRIE
+
+`subject_id` de uma thread `match` é o **`seriesKey`**, não o id da partida.
+
+Uma série de três mapas tem três ids, e as abas de mapa trocam o id da rota -
+com `match.id` a conversa se espalharia por três threads e sumiria ao trocar de
+aba. Corrigido em 30/08/2026, antes de existir qualquer comentário, então não
+houve migração de dados. Se um dia isso mudar de novo, os dados existentes
+precisam ser remapeados.
 
 ## Onde se pode comentar
 

@@ -336,6 +336,93 @@
     });
   }
 
+  // ----------------------------------------------------- selo nas listagens
+  //
+  // Aparece SO onde ha conversa. Uma lista de 40 partidas com "0 comentários"
+  // em 40 linhas nao informa nada e ainda pesa a leitura; o selo so existindo
+  // onde alguem falou transforma a lista num mapa de onde esta o assunto.
+
+  const BALAO = `<svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M8 2C4.7 2 2 4.2 2 7c0 1.5.8 2.9 2 3.8V14l2.9-1.7c.4.1.7.1 1.1.1 3.3 0 6-2.2 6-5S11.3 2 8 2Z"/></svg>`;
+
+  function selo(kind, id) {
+    const n = window.Community?.contagem(kind, id) || 0;
+    if (!n) return "";
+    return `<span class="cmt-selo-contagem" title="${n} ${n === 1 ? "comentário" : "comentários"}">
+              ${BALAO}<span>${n}</span>
+            </span>`;
+  }
+
+  // -------------------------------------------------------- bloco da home
+
+  function assuntoDaThread(t) {
+    if (!t) return null;
+    const kind = t.subject_kind;
+    const id = t.subject_id;
+    try {
+      if (typeof state === "undefined" || !state.db) return null;
+      if (kind === "match") {
+        // O assunto e a SERIE, nao o mapa: `id` aqui e o seriesKey. Procurar em
+        // `matches` por id nunca acharia, e a discussao sumiria da home.
+        const s = state.db.matchSeries.find((x) => x.seriesKey === id);
+        if (!s) return null;
+        const rota = `#/matches/${s.primaryMatchId}${s.mapCount > 1 ? "/all" : ""}`;
+        return { href: rota, nome: `${s.teamA.name} x ${s.teamB.name}` };
+      }
+      if (kind === "event") {
+        const e = state.db.tournaments.find((x) => x.id === id);
+        return e ? { href: `#/tournaments/${id}`, nome: e.name } : null;
+      }
+      if (kind === "team") {
+        const t2 = state.db.teams.find((x) => x.id === id);
+        return t2 ? { href: `#/teams/${id}`, nome: t2.name } : null;
+      }
+      if (kind === "player") {
+        const p = typeof window.playerById === "function" ? window.playerById(id) : null;
+        return p ? { href: `#/players/${id}`, nome: p.nick || p.handle } : null;
+      }
+      if (kind === "article") {
+        const a = window.News?.porSlug(id);
+        return a ? { href: `#/news/${id}`, nome: a.titulo } : null;
+      }
+    } catch (erro) {
+      return null;
+    }
+    return null;
+  }
+
+  function discussoesHome() {
+    const itens = (window.Community?.discussoes() || [])
+      .map((c) => ({ c, assunto: assuntoDaThread(c.threads) }))
+      // Comentario cujo assunto sumiu do JSON nao vira linha morta: ele sai.
+      .filter((x) => x.assunto)
+      .slice(0, 4);
+
+    if (!itens.length) return "";
+
+    return `
+      <section class="discussoes">
+        <div class="section-head"><div><h2>Discussões recentes</h2></div></div>
+        <div class="discussoes-lista">
+          ${itens.map(({ c, assunto }) => {
+            const autor = c.profiles ? c.profiles.username : "alguém";
+            const trecho = c.body.length > 120 ? c.body.slice(0, 117).replace(/\s+\S*$/, "") + "..." : c.body;
+            return `
+              <a class="discussao" href="${esc(assunto.href)}">
+                ${avatar(autor)}
+                <div class="discussao-texto">
+                  <header>
+                    <strong>${esc(autor)}</strong>
+                    <span class="discussao-em">em ${esc(assunto.nome)}</span>
+                    <time>${quando(c.created_at)}</time>
+                  </header>
+                  <p>${esc(trecho)}</p>
+                </div>
+              </a>`;
+          }).join("")}
+        </div>
+      </section>`;
+  }
+
   // ------------------------------------------------------------------ saida
 
   // Casca sincrona, para o HTML da partida sair inteiro no primeiro paint.
@@ -358,5 +445,5 @@
     }
   }
 
-  window.Comments = { shell, montar, avatar, quando, corpo };
+  window.Comments = { shell, montar, avatar, quando, corpo, selo, discussoesHome };
 })();

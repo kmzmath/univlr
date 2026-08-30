@@ -18180,3 +18180,100 @@ img {
   .news-corpo { font-size: var(--text-md); }
   .news-destaque-texto h3 { font-size: var(--text-xl); }
 }
+
+/* ================================================== ONDE ESTA A CONVERSA
+   Dois sinais para a mesma coisa: o selo, que marca NA LISTA onde ha assunto,
+   e o bloco da home, que mostra o assunto em si.
+
+   O selo so existe onde ha conversa. Uma lista de 40 partidas com "0" em 40
+   linhas nao informa nada e ainda pesa a leitura - so aparecendo onde alguem
+   falou, a lista vira um mapa de onde esta o movimento. */
+
+.cmt-selo-contagem {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: rgba(42, 212, 193, 0.12);
+  color: var(--teal);
+  font: 700 var(--text-2xs) / 1.6 var(--font-text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* Teal, como o +1 e o favorito: a regra do sistema e que teal marca o que a
+   comunidade produz, e o vermelho fica sendo so a marca do UNIVLR. */
+
+.cmt-selo-contagem svg { flex-shrink: 0; opacity: 0.85; }
+
+.result-meta .cmt-selo-contagem { margin-left: var(--space-2); }
+.event-row .cmt-selo-contagem { margin-left: var(--space-2); }
+
+/* ----------------------------------------------------- discussoes na home */
+
+.discussoes { margin-bottom: var(--space-6); }
+
+.discussoes-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-3);
+}
+
+.discussao {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 160ms ease;
+  min-width: 0;
+}
+
+.discussao:hover { border-color: var(--line-dark); }
+
+.discussao-texto { min-width: 0; flex: 1; }
+
+.discussao-texto header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-2xs);
+  color: var(--muted);
+}
+
+.discussao-texto strong {
+  font: 700 var(--text-sm) / 1 var(--font-text);
+  color: var(--ink);
+}
+
+/* O assunto e o que faz a linha valer: e ele que diz para onde o clique leva.
+   Por isso ganha a cor de texto normal, e nao o cinza do resto do cabecalho. */
+.discussao-em {
+  color: var(--ink);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.discussao:hover .discussao-em { color: var(--brand-text); }
+
+.discussao-texto time { color: var(--muted); white-space: nowrap; }
+
+.discussao-texto p {
+  font: 400 var(--text-sm) / 1.45 var(--font-text);
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 560px) {
+  .discussoes-lista { grid-template-columns: 1fr; }
+}

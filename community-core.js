@@ -54,10 +54,6 @@
   let client = null;
   let sessao = null;
   let perfil = null;
-  // Um time e um jogador, no maximo - como na HLTV. Vem junto do perfil, e
-  // fica em memoria para o botao nascer no estado certo: as paginas de equipe
-  // e de jogador sao montadas de uma vez em string, sem await no meio, entao
-  // perguntar ao servidor na hora de desenhar faria o coracao piscar.
   // Ligado pelo evento PASSWORD_RECOVERY; o auth.js le para abrir a janela de
   // nova senha. Fica aqui, e nao numa variavel do auth.js, porque o evento
   // chega antes de o auth.js terminar de iniciar.
@@ -417,36 +413,25 @@
     contagens = null;
   }
 
-  // Guardadas na carga para a home poder desenhar SINCRONAMENTE. Buscar depois
-  // do primeiro paint faria o bloco entrar do nada e empurrar o resto da
-  // pagina para baixo, no momento em que a pessoa ja comecou a ler.
-  let discussoesCache = [];
+  // A home desenha a atividade recente por THREAD, nao por comentario: dez
+  // comentarios numa partida viram uma linha "essa partida tem 10", e nao dez
+  // linhas iguais. E a `thread_counts` ja traz `ultimo_em`, entao isso sai da
+  // mesma consulta da contagem - a home carrega uma requisicao a menos.
+  function atividadeRecente(limite = 8) {
+    if (!contagens) return [];
+    return [...contagens.values()]
+      .filter((r) => r.comentarios > 0)
+      .sort((a, b) => (a.ultimo_em < b.ultimo_em ? 1 : a.ultimo_em > b.ultimo_em ? -1 : 0))
+      .slice(0, limite);
+  }
 
-  const discussoes = () => discussoesCache;
-
-  // As duas consultas que a home precisa, juntas. Sao pequenas e independentes
-  // de sessao, entao rodam antes de qualquer login.
+  // O que a home precisa saber sobre a comunidade, numa consulta so.
   async function carregarResumo() {
-    const [, recentes] = await Promise.all([
-      carregarContagens(),
-      discussoesRecentes(6).catch(() => []),
-    ]);
-    discussoesCache = recentes;
-    return { contagens, discussoes: discussoesCache };
+    await carregarContagens();
+    return contagens;
   }
 
-  async function discussoesRecentes(limite = 6) {
-    const { data, error } = await api()
-      .from("comments")
-      .select("id, body, created_at, threads(subject_kind, subject_id), profiles!comments_author_id_fkey(username, fav_team, fav_player)")
-      .is("deleted_at", null)
-      .order("created_at", { ascending: false })
-      .limit(limite);
-    if (error) throw error;
-    return data || [];
-  }
-
-  // ------------------------------------------------------------ notificacoes
+  // ------------------------------------------------------------ notificacoes  // ------------------------------------------------------------ notificacoes
 
   async function listarNotificacoes(limite = 30) {
     if (!sessao) return [];
@@ -564,10 +549,9 @@
     ehFavorito,
     carregarContagens,
     carregarResumo,
-    discussoes,
+    atividadeRecente,
     contagem,
     invalidarContagens,
-    discussoesRecentes,
     listarNotificacoes,
     contarNaoLidas,
     marcarLidas,

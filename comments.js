@@ -352,29 +352,33 @@
             </span>`;
   }
 
-  // -------------------------------------------------------- bloco da home
+  // ------------------------------------------------------- atividade recente
+  //
+  // Uma linha por THREAD, nao por comentario - dez comentarios numa partida
+  // viram "essa partida tem 10", e nao dez linhas iguais empurrando o resto
+  // para fora. E o assunto e o que carrega o clique, entao ele e o texto da
+  // linha; quem falou nao entra, porque a lista responde "onde esta a
+  // conversa", nao "quem falou".
 
-  function assuntoDaThread(t) {
-    if (!t) return null;
-    const kind = t.subject_kind;
-    const id = t.subject_id;
+  function assuntoDaThread(kind, id) {
     try {
       if (typeof state === "undefined" || !state.db) return null;
       if (kind === "match") {
-        // O assunto e a SERIE, nao o mapa: `id` aqui e o seriesKey. Procurar em
-        // `matches` por id nunca acharia, e a discussao sumiria da home.
+        // O assunto e a SERIE: `id` aqui e o seriesKey, nao um id de partida.
         const s = state.db.matchSeries.find((x) => x.seriesKey === id);
         if (!s) return null;
-        const rota = `#/matches/${s.primaryMatchId}${s.mapCount > 1 ? "/all" : ""}`;
-        return { href: rota, nome: `${s.teamA.name} x ${s.teamB.name}` };
+        return {
+          href: `#/matches/${s.primaryMatchId}${s.mapCount > 1 ? "/all" : ""}`,
+          nome: `${s.teamA.name} x ${s.teamB.name}`,
+        };
       }
       if (kind === "event") {
         const e = state.db.tournaments.find((x) => x.id === id);
         return e ? { href: `#/tournaments/${id}`, nome: e.name } : null;
       }
       if (kind === "team") {
-        const t2 = state.db.teams.find((x) => x.id === id);
-        return t2 ? { href: `#/teams/${id}`, nome: t2.name } : null;
+        const t = state.db.teams.find((x) => x.id === id);
+        return t ? { href: `#/teams/${id}`, nome: t.name } : null;
       }
       if (kind === "player") {
         const p = typeof window.playerById === "function" ? window.playerById(id) : null;
@@ -390,36 +394,44 @@
     return null;
   }
 
-  function discussoesHome() {
-    const itens = (window.Community?.discussoes() || [])
-      .map((c) => ({ c, assunto: assuntoDaThread(c.threads) }))
-      // Comentario cujo assunto sumiu do JSON nao vira linha morta: ele sai.
-      .filter((x) => x.assunto)
-      .slice(0, 4);
+  const ROTULO_TIPO = { match: "partida", event: "campeonato", team: "equipe", player: "jogador", article: "notícia" };
 
-    if (!itens.length) return "";
+  function linhasDeAtividade(limite) {
+    return (window.Community?.atividadeRecente(limite) || [])
+      .map((r) => ({ r, assunto: assuntoDaThread(r.subject_kind, r.subject_id) }))
+      // Thread cujo assunto sumiu do JSON nao vira linha morta: ela sai.
+      .filter((x) => x.assunto);
+  }
 
+  function umaLinha({ r, assunto }) {
     return `
-      <section class="discussoes">
-        <div class="section-head"><div><h2>Discussões recentes</h2></div></div>
-        <div class="discussoes-lista">
-          ${itens.map(({ c, assunto }) => {
-            const autor = c.profiles ? c.profiles.username : "alguém";
-            const trecho = c.body.length > 120 ? c.body.slice(0, 117).replace(/\s+\S*$/, "") + "..." : c.body;
-            return `
-              <a class="discussao" href="${esc(assunto.href)}">
-                ${avatar(autor)}
-                <div class="discussao-texto">
-                  <header>
-                    <strong>${esc(autor)}</strong>
-                    <span class="discussao-em">em ${esc(assunto.nome)}</span>
-                    <time>${quando(c.created_at)}</time>
-                  </header>
-                  <p>${esc(trecho)}</p>
-                </div>
-              </a>`;
-          }).join("")}
-        </div>
+      <a class="atv-linha" href="${esc(assunto.href)}">
+        <span class="atv-tipo">${esc(ROTULO_TIPO[r.subject_kind] || "")}</span>
+        <span class="atv-nome">${esc(assunto.nome)}</span>
+        <span class="atv-conta">${r.comentarios}</span>
+      </a>`;
+  }
+
+  // Coluna estreita, ao lado das noticias.
+  function atividadeHome(limite = 6) {
+    const itens = linhasDeAtividade(limite);
+    if (!itens.length) return "";
+    return `
+      <section class="atividade">
+        <div class="section-head"><div><h2>Atividade recente</h2></div></div>
+        <div class="atv-lista">${itens.map(umaLinha).join("")}</div>
+      </section>`;
+  }
+
+  // Sem noticia nenhuma a coluna estreita nao existe, e a atividade sozinha
+  // numa metade deixaria a outra vazia. Aqui ela se espalha em colunas.
+  function atividadeLarga(limite = 9) {
+    const itens = linhasDeAtividade(limite);
+    if (!itens.length) return "";
+    return `
+      <section class="atividade atividade-larga">
+        <div class="section-head"><div><h2>Atividade recente</h2></div></div>
+        <div class="atv-lista">${itens.map(umaLinha).join("")}</div>
       </section>`;
   }
 
@@ -445,5 +457,5 @@
     }
   }
 
-  window.Comments = { shell, montar, avatar, quando, corpo, selo, discussoesHome };
+  window.Comments = { shell, montar, avatar, quando, corpo, selo, atividadeHome, atividadeLarga };
 })();

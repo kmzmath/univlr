@@ -55,45 +55,64 @@
     return `<span class="news-capa ${classe}"><img src="${esc(artigo.capa)}" alt="" loading="lazy" decoding="async" /></span>`;
   }
 
-  // ------------------------------------------------------------ faixa da home
+  // ------------------------------------------------------------ bloco da home
   //
-  // Sincrona de proposito: a home e montada de uma vez em string. Se ainda nao
-  // carregou, ou nao ha materia, devolve "" e a faixa simplesmente nao existe -
-  // placeholder na home seria espaco morto na pagina mais importante do site.
+  // Metade da largura para a materia principal (capa com o titulo por cima),
+  // metade para os titulos menores mais a atividade recente da comunidade.
+  //
+  // Sincrono de proposito: a home e montada de uma vez em string. Se nao ha
+  // materia NEM atividade, devolve "" e o bloco nao existe - placeholder na
+  // home seria espaco morto na pagina mais importante do site.
 
-  function faixaHome() {
-    const itens = lista();
-    if (!itens.length) return "";
-    const [destaque, ...resto] = itens.slice(0, 4);
+  function heroi(a) {
+    // O titulo entra SOBRE a capa, sob um veu, e nao embaixo dela: assim a
+    // metade esquerda le como um bloco so em vez de duas pecas empilhadas.
+    // Sem capa nao ha veu - o titulo assenta na propria superficie do cartao.
+    const temCapa = Boolean(a.capa);
     return `
-      <section class="news-faixa">
-        <div class="section-head">
+      <a class="news-heroi ${temCapa ? "com-capa" : "sem-capa"}" href="#/news/${esc(a.slug)}">
+        ${temCapa ? `<img class="news-heroi-capa" src="${esc(a.capa)}" alt="" loading="eager" decoding="async" />` : ""}
+        <div class="news-heroi-texto">
+          <time datetime="${esc(a.data)}">${dataLonga(a.data)}</time>
+          <h3>${esc(a.titulo)}</h3>
+        </div>
+      </a>`;
+  }
+
+  function tituloMenor(a) {
+    return `
+      <a class="news-titulo" href="#/news/${esc(a.slug)}">
+        <time datetime="${esc(a.data)}">${dataCurta(a.data)}</time>
+        <strong>${esc(a.titulo)}</strong>
+        ${window.Comments ? window.Comments.selo("article", a.slug) : ""}
+      </a>`;
+  }
+
+  function blocoHome() {
+    const itens = lista();
+    const atividade = window.Comments ? window.Comments.atividadeHome(6) : "";
+
+    // Sem materia, a metade esquerda ficaria vazia e a direita sozinha. Entao
+    // a atividade deixa de ser coluna estreita e ocupa a largura toda.
+    if (!itens.length) {
+      return window.Comments ? window.Comments.atividadeLarga(9) : "";
+    }
+
+    const [destaque, ...resto] = itens;
+    const menores = resto.slice(0, 5);
+
+    return `
+      <section class="home-topo">
+        <div class="section-head home-topo-head">
           <div><h2>Notícias</h2></div>
           <a class="subtle-link" href="#/news">Ver todas</a>
         </div>
-        <div class="news-faixa-grade">
-          <a class="news-destaque" href="#/news/${esc(destaque.slug)}">
-            ${capa(destaque, "grande", false)}
-            <div class="news-destaque-texto">
-              <time datetime="${esc(destaque.data)}">${dataLonga(destaque.data)}</time>
-              <h3>${esc(destaque.titulo)}</h3>
-              <p>${esc(destaque.resumo)}</p>
-            </div>
-          </a>
-          ${
-            resto.length
-              ? `<div class="news-secundarias">
-                   ${resto.map((a) => `
-                     <a class="news-secundaria" href="#/news/${esc(a.slug)}">
-                       ${capa(a, "pequena")}
-                       <div>
-                         <time datetime="${esc(a.data)}">${dataCurta(a.data)}</time>
-                         <strong>${esc(a.titulo)}</strong>
-                       </div>
-                     </a>`).join("")}
-                 </div>`
-              : ""
-          }
+        <div class="home-topo-principal">
+          ${heroi(destaque)}
+        </div>
+        <div class="home-topo-lado">
+          ${menores.length ? `<div class="news-titulos">${menores.map(tituloMenor).join("")}</div>` : ""}
+          ${atividade}
         </div>
       </section>`;
   }
@@ -171,5 +190,5 @@
   // caminho por onde um visitante ponha conteudo aqui - o que o publico escreve
   // vive em comments, e la tudo passa por esc().
 
-  window.News = { carregar, lista, porSlug, faixaHome, renderNews, dataLonga };
+  window.News = { carregar, lista, porSlug, blocoHome, renderNews, dataLonga };
 })();

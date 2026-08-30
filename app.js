@@ -10,12 +10,19 @@ const SITE_WORDMARK_SRC = "assets/univlr_logo_longa.png";
 // Pesos diferentes de proposito: partidas e o que muda todo dia e leva a
 // coluna mais longa; ranking e referencia (tem "Ver completo"); campeonato
 // e contexto. Antes eram 15/15/15, o que dava 45 linhas de peso identico.
-const HOME_RANKING_LIMIT = 10;
+// Os tres limites da home sao calibrados JUNTOS, para os paineis terminarem
+// mais ou menos na mesma altura - o board tem align-items:start, entao quem
+// equilibra a composicao e a quantidade de itens, nao o CSS. As alturas de
+// linha medidas em 30/08/2026, ja incluindo espacamento: ranking 62px,
+// partida 111px, campeonato 112px, mais ~82px de cabecalho e rodape por
+// painel. Da 957 / 971 / 980 - 23px de diferenca entre a coluna mais alta e a
+// mais baixa. Mexeu num limite, remede os tres.
+const HOME_RANKING_LIMIT = 14;
 // 10 e nao 15: com a linha de partida crescida (escudo de 52px, nome de 20px,
 // placar de 24px) a linha passou de 79px para 115px, e 15 delas davam 1.884px
 // de coluna contra 822px da de campeonatos - mil pixels de vazio ao lado. Dez
 // partidas ao lado das dez primeiras colocadas fecham as colunas juntas.
-const HOME_RECENT_MATCH_LIMIT = 10;
+const HOME_RECENT_MATCH_LIMIT = 8;
 const HOME_EVENT_LIMIT = 8;
 const PLAYER_FALLBACK_PHOTO = "assets/user-silhouette.png";
 
@@ -5215,8 +5222,7 @@ function renderHomeCompact() {
   Shell(`
     <h1 class="sr-only">${SITE_NAME}</h1>
     ${weekHighlights()}
-    ${window.News ? window.News.faixaHome() : ""}
-    ${window.Comments ? window.Comments.discussoesHome() : ""}
+    ${window.News ? window.News.blocoHome() : ""}
     <div class="home-board univlr-home">
       <section class="hub-panel ranking-panel">
         ${panelTitle("Ranking")}

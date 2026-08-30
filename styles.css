@@ -9828,10 +9828,19 @@ select {
    onde nome de universidade brasileira ainda trunca. */
 .home-board.univlr-home {
   display: grid;
-  grid-template-columns: minmax(300px, 384px) minmax(420px, 1.35fr) minmax(300px, 0.8fr);
+  /* Campeonatos ganhou largura de Ranking e de Partidas por uma razao medida:
+     a 306px o nome do evento quebrava em TRES linhas e a linha ia a 170px,
+     contra 53px do ranking. Era a coluna mais estreita e a mais alta ao mesmo
+     tempo. Com ~400px o nome cabe em duas e a linha cai para ~112px.
+     O piso de 380px no Ranking tambem e medido: abaixo disso a trilha do nome
+     (o minmax(0,1fr) da linha) cai de 121px para 93px e cinco das quatorze
+     equipes passam a truncar. */
+  grid-template-columns: minmax(300px, 380px) minmax(400px, 1.2fr) minmax(320px, 1fr);
   gap: clamp(18px, 2vw, 32px);
   /* start e nao stretch: cada painel termina onde o conteudo termina, em vez
-     de as tres colunas serem esticadas ate a mesma altura. */
+     de as tres colunas serem esticadas ate a mesma altura. O equilibrio vem de
+     calibrar QUANTOS itens cada painel mostra (ver os HOME_*_LIMIT no app.js),
+     e nao de esticar as colunas - esticar so criaria vazio dentro do painel. */
   align-items: start;
 }
 
@@ -13996,7 +14005,6 @@ img.search-state-flag + .search-state-flag.placeholder {
 }
 
 
-
 @media (max-width: 1180px) {
   /* Abaixo de 1180px a faixa da identidade encolhe junto, senao ela come a
      largura das cinco fatias e a sobreposicao dispara. */
@@ -17945,83 +17953,8 @@ img {
   border: 1px solid var(--line);
 }
 
-.news-capa.grande { aspect-ratio: 16 / 9; }
 .news-capa.media { width: 200px; aspect-ratio: 16 / 10; }
-.news-capa.pequena { width: 72px; aspect-ratio: 1; border-radius: var(--radius-sm); }
 
-/* ------------------------------------------------------------ faixa da home */
-
-.news-faixa { margin-bottom: var(--space-6); }
-
-.news-faixa-grade {
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-  gap: var(--space-5);
-  align-items: start;
-}
-
-.news-destaque {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--surface);
-  transition: border-color 160ms ease;
-}
-
-.news-destaque:hover { border-color: var(--line-dark); }
-.news-destaque .news-capa { border-radius: 0; }
-
-.news-destaque-texto { padding: var(--space-5); }
-
-.news-destaque-texto time,
-.news-secundaria time {
-  display: block;
-  font: 600 var(--text-2xs) / 1 var(--font-text);
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: var(--space-3);
-}
-
-.news-destaque-texto h3 {
-  font: 800 var(--text-2xl) / 1.15 var(--font-display);
-  margin-bottom: var(--space-3);
-}
-
-.news-destaque:hover h3 { color: var(--brand-text); }
-
-.news-destaque-texto p {
-  font: 400 var(--text-md) / 1.5 var(--font-text);
-  color: var(--muted);
-  max-width: 62ch;
-}
-
-.news-secundarias { display: flex; flex-direction: column; gap: var(--space-3); }
-
-.news-secundaria {
-  display: flex;
-  gap: var(--space-4);
-  align-items: center;
-  padding: var(--space-3);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 160ms ease;
-}
-
-.news-secundaria:hover { border-color: var(--line-dark); }
-
-.news-secundaria strong {
-  display: block;
-  font: 700 var(--text-sm) / 1.35 var(--font-text);
-}
-
-.news-secundaria:hover strong { color: var(--brand-text); }
-.news-secundaria time { margin-bottom: var(--space-2); }
 
 /* ------------------------------------------------------------------ listagem */
 
@@ -18170,7 +18103,6 @@ img {
 .news-artigo .cmt-secao { margin-top: var(--space-8); }
 
 @media (max-width: 940px) {
-  .news-faixa-grade { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 560px) {
@@ -18178,7 +18110,6 @@ img {
   .news-capa.media { width: 100%; }
   .news-artigo-titulo h1 { font-size: var(--text-2xl); }
   .news-corpo { font-size: var(--text-md); }
-  .news-destaque-texto h3 { font-size: var(--text-xl); }
 }
 
 /* ================================================== ONDE ESTA A CONVERSA
@@ -18211,69 +18142,217 @@ img {
 .result-meta .cmt-selo-contagem { margin-left: var(--space-2); }
 .event-row .cmt-selo-contagem { margin-left: var(--space-2); }
 
-/* ----------------------------------------------------- discussoes na home */
-
-.discussoes { margin-bottom: var(--space-6); }
-
-.discussoes-lista {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-3);
-}
-
-.discussao {
-  display: flex;
-  gap: var(--space-4);
-  align-items: flex-start;
-  padding: var(--space-4);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 160ms ease;
-  min-width: 0;
-}
-
-.discussao:hover { border-color: var(--line-dark); }
-
-.discussao-texto { min-width: 0; flex: 1; }
-
-.discussao-texto header {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
-  flex-wrap: wrap;
-  margin-bottom: var(--space-2);
-  font-size: var(--text-2xs);
-  color: var(--muted);
-}
-
-.discussao-texto strong {
-  font: 700 var(--text-sm) / 1 var(--font-text);
-  color: var(--ink);
-}
 
 /* O assunto e o que faz a linha valer: e ele que diz para onde o clique leva.
    Por isso ganha a cor de texto normal, e nao o cinza do resto do cabecalho. */
-.discussao-em {
+
+
+@media (max-width: 560px) {
+}
+
+/* ==========================================================================
+   TOPO DA HOME - noticia principal, titulos menores, atividade recente
+   ==========================================================================
+   Metade da largura para a materia principal, metade para o resto. As duas
+   colunas sao 1fr exatos: a assimetria aqui viria do PESO do conteudo (uma
+   imagem grande contra texto miudo), nao da medida - dar 1,6fr para o heroi
+   somaria as duas coisas e a direita viraria uma tira. */
+
+.home-topo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+  margin-bottom: var(--space-6);
+}
+
+/* O cabecalho cobre as duas colunas: dentro da esquerda, ele empurraria o
+   heroi para baixo e as duas colunas deixariam de comecar na mesma altura. */
+.home-topo-head { grid-column: 1 / -1; }
+
+.home-topo-lado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+/* --------------------------------------------------------------- o heroi */
+
+.news-heroi {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 160ms ease;
+}
+
+.news-heroi:hover { border-color: var(--line-dark); }
+
+.news-heroi-capa {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+/* Com capa o texto deita SOBRE ela, sob um veu que sobe do rodape. Sem capa
+   nao ha veu nem posicionamento absoluto: o cartao vira um bloco de texto na
+   superficie normal, com altura minima para nao ficar raquitico ao lado da
+   coluna da direita. */
+.news-heroi.com-capa .news-heroi-texto {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--space-7) var(--space-6) var(--space-5);
+  background: linear-gradient(to top, rgba(4, 3, 6, 0.94) 34%, rgba(4, 3, 6, 0.72) 62%, transparent);
+}
+
+.news-heroi.sem-capa {
+  background: linear-gradient(155deg, var(--surface-2), var(--surface-3));
+  display: flex;
+  align-items: flex-end;
+  min-height: 260px;
+}
+
+.news-heroi.sem-capa .news-heroi-texto { padding: var(--space-6); }
+
+.news-heroi-texto time {
+  display: block;
+  font: 600 var(--text-2xs) / 1 var(--font-text);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: var(--space-3);
+}
+
+/* A barra vermelha e o marcador de secao que o site ja usa em todo titulo de
+   painel. Trazer o MESMO motivo para o heroi liga o bloco novo ao vocabulario
+   existente, em vez de importar um estilo de overlay generico. */
+.news-heroi-texto h3 {
+  position: relative;
+  padding-left: var(--space-5);
+  font: 800 var(--text-3xl) / 1.1 var(--font-display);
+  color: var(--univlr-white);
+  text-wrap: balance;
+}
+
+.news-heroi-texto h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.14em;
+  bottom: 0.14em;
+  width: 5px;
+  background: var(--red);
+}
+
+.news-heroi:hover .news-heroi-texto h3 { color: var(--brand-text); }
+
+/* ------------------------------------------------------- titulos menores */
+
+.news-titulos {
+  display: flex;
+  flex-direction: column;
+}
+
+.news-titulo {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+}
+
+.news-titulo:last-child { border-bottom: 0; }
+
+.news-titulo time {
+  font: 600 var(--text-2xs) / 1.4 var(--font-text);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.news-titulo strong {
+  font: 700 var(--text-md) / 1.35 var(--font-text);
+  min-width: 0;
+}
+
+.news-titulo:hover strong { color: var(--brand-text); }
+
+/* ------------------------------------------------------ atividade recente
+   Formato do Recent Activity da HLTV: linha curta, o assunto carregando o
+   clique e a contagem alinhada a direita. Nada de avatar nem de trecho do
+   comentario - a lista responde "onde esta a conversa", nao "quem falou". */
+
+.atv-lista {
+  display: flex;
+  flex-direction: column;
+}
+
+.atv-linha {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+}
+
+.atv-linha:last-child { border-bottom: 0; }
+
+.atv-tipo {
+  font: 600 var(--text-2xs) / 1.4 var(--font-text);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.atv-nome {
+  font: 600 var(--text-sm) / 1.35 var(--font-text);
   color: var(--ink);
-  font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 100%;
 }
 
-.discussao:hover .discussao-em { color: var(--brand-text); }
+.atv-linha:hover .atv-nome { color: var(--brand-text); }
 
-.discussao-texto time { color: var(--muted); white-space: nowrap; }
+/* Teal, como o +1 e o favorito: a regra do sistema e que teal marca o que a
+   comunidade produz, e o vermelho fica sendo so a marca. */
+.atv-conta {
+  font: 700 var(--text-xs) / 1.4 var(--font-text);
+  color: var(--teal);
+  font-variant-numeric: tabular-nums;
+}
 
-.discussao-texto p {
-  font: 400 var(--text-sm) / 1.45 var(--font-text);
-  color: var(--muted);
-  overflow-wrap: anywhere;
+/* Sem materia nenhuma a atividade ocupa a largura toda, e as linhas se
+   espalham em colunas para nao virarem tiras de 1200px com tres palavras. */
+.atividade-larga { margin-bottom: var(--space-6); }
+
+.atividade-larga .atv-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  column-gap: var(--space-6);
+}
+
+@media (max-width: 940px) {
+  .home-topo { grid-template-columns: 1fr; gap: var(--space-6); }
+  .news-heroi-texto h3 { font-size: var(--text-2xl); }
 }
 
 @media (max-width: 560px) {
-  .discussoes-lista { grid-template-columns: 1fr; }
+  .news-heroi-texto h3 { font-size: var(--text-xl); }
+  .news-heroi.com-capa .news-heroi-texto { padding: var(--space-6) var(--space-5) var(--space-4); }
+  .atv-linha { grid-template-columns: minmax(0, 1fr) auto; }
+  .atv-tipo { display: none; }
 }

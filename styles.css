@@ -2927,10 +2927,16 @@ tr:hover td {
   background: transparent;
 }
 
+/* A foto ocupa a moldura inteira e e dimensionada pela ALTURA, transbordando na
+   horizontal - o mesmo que a parede da capa faz. Com a caixa fixa de 138x160 e
+   `object-fit: contain`, o PNG quadrado renderizava a 138x138 (limitado pela
+   largura) e os outros 22px de altura eram desperdicio: o jogador ficava com
+   92px de corpo visivel num card de 287px, 32% da largura. Transbordar e
+   seguro porque o recorte tem 33% de margem transparente e o wrap corta. */
 .logo.player-avatar.roster-photo,
 .roster-photo {
-  width: 138px;
-  height: 160px;
+  width: 100%;
+  height: 100%;
   border-radius: 0;
   background: transparent;
 }
@@ -2938,11 +2944,33 @@ tr:hover td {
 /* Sem sombra atras do recorte: ela deixava uma mancha escura no card e lia
    como fundo, do mesmo jeito que o halo da capa lia. O PNG ja e transparente
    fora do jogador. */
+/* `top: auto` e obrigatorio: `.image-logo img` define `inset: 0`, e com top,
+   bottom e altura ao mesmo tempo a caixa fica sobre-restrita - o navegador
+   descarta o `bottom` e ancora no topo. */
 .logo.player-avatar.roster-photo img {
+  position: absolute;
+  left: 50%;
+  top: auto;
+  bottom: 0;
+  width: auto;
+  height: 100%;
+  max-width: none;
+  aspect-ratio: 1;
   object-fit: contain;
   object-position: bottom center;
   background: transparent;
   filter: none;
+  transform: translateX(-50%);
+}
+
+/* A silhueta encolhe para nao ficar mais larga que uma foto real: o desenho
+   ocupa 79,1% da largura do arquivo contra 66,8% das fotos, entao pela mesma
+   altura ela sairia 1,18x mais larga. 0,845 = 66,8 / 79,1.
+   O `bottom` negativo compensa os 10,3% de vazio que a silhueta tem embaixo do
+   ombro (as fotos tem 0%), senao ela flutuaria acima da base do card. */
+.logo.player-avatar.roster-photo.no-photo img {
+  height: 84.5%;
+  bottom: -8.7%;
 }
 
 .roster-card-body {
@@ -13647,8 +13675,12 @@ img.search-state-flag + .search-state-flag.placeholder {
 /* Sem o halo na cor da equipe atras da foto. Ele tinha entrado para substituir
    a caixa solida que existia aqui, mas continuava sendo fundo - so mais macio.
    O card fica chapado e o jogador solto em cima dele. */
+/* 230px de moldura para o jogador ser o assunto do card e nao um detalhe nele.
+   Com 184px o corpo visivel dava 123px num card de 271px (45%); a 230 ele vai
+   a 154px (57%). A conta e direta: o recorte e quadrado e o jogador ocupa
+   66,8% da largura do arquivo, entao corpo = altura da moldura x 0,668. */
 .team-page .roster-photo-wrap {
-  min-height: 184px;
+  min-height: 230px;
   background: transparent;
 }
 

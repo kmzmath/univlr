@@ -7,13 +7,22 @@
     <link rel="icon" type="image/png" href="assets/logo_univlr.png" />
     <link rel="preload" as="image" href="assets/univlr_logo_longa.png" />
     <link rel="preload" as="image" href="assets/logo_univlr.png" />
-    <link rel="stylesheet" href="styles.css?v=253" />
+    <link rel="stylesheet" href="styles.css?v=256" />
   </head>
   <body>
     <div id="app"></div>
     <script src="db-codec.js?v=1"></script>
     <script src="raating-core.js?v=88"></script>
     <script src="ranking-core.js?v=87"></script>
-    <script src="app.js?v=216"></script>
+    <!-- Comunidade. Antes do app.js porque ele chama Comments e Profile no
+         render. Nenhum destes toca `state` na carga: `state` e const no app.js
+         e ler antes dele executar cairia na zona morta temporal. -->
+    <script src="supabase-js.js?v=2112004"></script>
+    <script src="community-core.js?v=6"></script>
+    <script src="comments.js?v=1"></script>
+    <script src="profile.js?v=2"></script>
+    <script src="favorites.js?v=1"></script>
+    <script src="auth.js?v=4"></script>
+    <script src="app.js?v=218"></script>
   </body>
 </html>

@@ -9781,8 +9781,11 @@ select {
   display: grid;
   align-items: center;
   min-height: 58px;
-  grid-template-columns: auto minmax(0, 1fr) minmax(300px, 460px);
+  /* A quarta coluna e o espaco da conta. Sem ela declarada, o slot viraria uma
+     quarta LINHA implicita e empurraria a barra para baixo. */
+  grid-template-columns: auto minmax(0, 1fr) minmax(300px, 460px) auto;
   gap: clamp(18px, 2vw, 34px);
+  position: relative;
 }
 
 .nav {
@@ -17245,4 +17248,590 @@ img {
   .ranking-chart-hotspot:focus .ranking-chart-tooltip {
     transform: translate(calc(var(--x) * -1%), 0);
   }
+}
+
+/* ==========================================================================
+   COMUNIDADE - conta, comentarios e perfil publico
+   ==========================================================================
+   Doutrina de cor do projeto: o vermelho e a marca do UNIVLR e nunca marca um
+   dado. Por isso o +1 aceso usa o teal, nao o vermelho - contagem de voto e
+   dado. O vermelho aqui aparece so no botao "Entrar", que e chamada de acao
+   da marca, e em acao destrutiva (--danger, que e tom proprio, separado). */
+
+/* ------------------------------------------------------------- cabecalho */
+
+.conta-slot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.conta-entrar {
+  background: var(--brand);
+  color: var(--on-brand);
+  border: 0;
+  border-radius: var(--radius-pill);
+  font: 700 var(--text-sm) / 1 var(--font-text);
+  padding: 0 var(--space-5);
+  min-height: 36px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter 140ms ease;
+}
+
+.conta-entrar:hover { filter: brightness(1.12); }
+
+.conta-sino,
+.conta-avatar-botao {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 140ms ease, background 140ms ease;
+}
+
+.conta-sino:hover,
+.conta-avatar-botao:hover {
+  color: var(--ink);
+  background: rgba(245, 241, 242, 0.08);
+}
+
+.conta-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  border-radius: var(--radius-pill);
+  background: var(--brand);
+  color: var(--on-brand);
+  font: 800 var(--text-2xs) / 15px var(--font-text);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------ modal */
+
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: var(--space-5);
+  background: rgba(4, 3, 6, 0.72);
+  backdrop-filter: blur(3px);
+  animation: auth-entra 160ms ease;
+}
+
+@keyframes auth-entra { from { opacity: 0; } }
+
+.auth-janela {
+  position: relative;
+  width: min(400px, 100%);
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: var(--space-7);
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.auth-fechar {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--muted);
+  font-size: var(--text-xl);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.auth-fechar:hover { color: var(--ink); background: rgba(245, 241, 242, 0.08); }
+
+.auth-corpo h2 {
+  font: 800 var(--text-2xl) / 1.1 var(--font-display);
+  margin-bottom: var(--space-5);
+}
+
+.auth-campo {
+  display: block;
+  margin-bottom: var(--space-4);
+}
+
+.auth-campo > span {
+  display: block;
+  margin-bottom: var(--space-2);
+  font: 600 var(--text-xs) / 1 var(--font-text);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.auth-campo input,
+.auth-campo textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-3);
+  color: var(--ink);
+  font: 400 var(--text-md) / 1.4 var(--font-text);
+  resize: vertical;
+}
+
+.auth-campo input:focus,
+.auth-campo textarea:focus,
+.cmt-form textarea:focus {
+  outline: 2px solid var(--brand-text);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.auth-principal {
+  width: 100%;
+  min-height: 42px;
+  margin-top: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--brand);
+  color: var(--on-brand);
+  font: 800 var(--text-md) / 1 var(--font-text);
+  cursor: pointer;
+  transition: filter 140ms ease;
+}
+
+.auth-principal:hover:not(:disabled) { filter: brightness(1.12); }
+.auth-principal:disabled { opacity: 0.5; cursor: progress; }
+
+.auth-dica {
+  font: 400 var(--text-xs) / 1.5 var(--font-text);
+  color: var(--muted);
+  margin-top: calc(var(--space-2) * -1);
+  margin-bottom: var(--space-4);
+}
+
+.auth-dica.ok { color: var(--green); }
+.auth-dica.ruim { color: var(--danger); }
+
+.auth-erro {
+  margin-bottom: var(--space-3);
+  padding: var(--space-3);
+  border-left: 2px solid var(--danger);
+  background: rgba(255, 102, 120, 0.1);
+  color: var(--danger);
+  font: 600 var(--text-sm) / 1.4 var(--font-text);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.auth-legal {
+  margin-top: var(--space-4);
+  font: 400 var(--text-2xs) / 1.5 var(--font-text);
+  color: var(--muted);
+}
+
+.auth-rodape {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.auth-rodape.coluna { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+
+.auth-perfil {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.auth-perfil strong { display: block; font: 800 var(--text-lg) / 1.2 var(--font-text); }
+.auth-perfil .auth-dica { margin: 0; }
+
+.auth-avisos { list-style: none; }
+
+.auth-avisos li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--text-sm);
+}
+
+.auth-avisos li.nova a { color: var(--ink); font-weight: 700; }
+.auth-avisos li a { color: var(--muted); }
+.auth-avisos time { color: var(--muted); font-size: var(--text-xs); white-space: nowrap; }
+
+/* ------------------------------------------------------------ comentarios */
+
+.cmt-secao { margin-top: var(--space-6); }
+
+.cmt-avatar {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  background: var(--avatar-cor, var(--violet));
+  color: var(--univlr-black);
+  font: 800 var(--text-sm) / 1 var(--font-text);
+  user-select: none;
+}
+
+.cmt-avatar.grande { width: 56px; height: 56px; font-size: var(--text-2xl); }
+
+.cmt-lista { display: flex; flex-direction: column; gap: var(--space-5); }
+
+.cmt-linha { display: flex; gap: var(--space-4); align-items: flex-start; }
+.cmt-conteudo { flex: 1; min-width: 0; }
+
+.cmt-cabeca {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.cmt-autor {
+  color: var(--ink);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+
+.cmt-autor:hover { color: var(--brand-text); }
+
+.cmt-selo {
+  padding: 1px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--brand);
+  color: var(--on-brand);
+  font: 800 var(--text-2xs) / 1.5 var(--font-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cmt-editado::before { content: "\00b7 "; }
+.cmt-para { font-style: italic; }
+
+.cmt-corpo {
+  font: 400 var(--text-md) / 1.55 var(--font-text);
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.cmt-mencao { color: var(--brand-text); text-decoration: none; font-weight: 600; }
+.cmt-mencao:hover { text-decoration: underline; }
+
+.cmt-removido { font-style: italic; color: var(--muted); font-size: var(--text-sm); }
+.cmt.apagado .cmt-avatar { background: var(--loss-surface); color: var(--muted); }
+
+.cmt-acoes {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.cmt-voto {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 28px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--muted);
+  font: 700 var(--text-xs) / 1 var(--font-text);
+  cursor: pointer;
+  transition: color 140ms ease, border-color 140ms ease, background 140ms ease;
+}
+
+.cmt-voto:hover { color: var(--ink); border-color: var(--line-dark); }
+
+/* Teal e nao vermelho: o +1 e um DADO, e o vermelho do UNIVLR e identidade. */
+.cmt-voto.ativo {
+  color: var(--teal);
+  border-color: rgba(42, 212, 193, 0.45);
+  background: rgba(42, 212, 193, 0.12);
+}
+
+.cmt-score { font-variant-numeric: tabular-nums; }
+
+.cmt-link {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: 600 var(--text-xs) / 1 var(--font-text);
+  padding: var(--space-2) var(--space-3);
+  min-height: 28px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+
+.cmt-link:hover { color: var(--ink); background: rgba(245, 241, 242, 0.06); }
+.cmt-link.discreto { opacity: 0.65; }
+.cmt-link.perigo { color: var(--danger); }
+
+.cmt-filhos {
+  margin-top: var(--space-5);
+  margin-left: 15px;
+  padding-left: var(--space-5);
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Do quarto nivel em diante o recuo para: numa tela de 360px, mais que isso
+   deixa a coluna de texto com menos de 20 caracteres por linha. O vinculo
+   passa a ser a linha "para @fulano" no cabecalho. */
+.cmt-filhos.sem-recuo { margin-left: 0; padding-left: 0; border-left: 0; }
+
+.cmt-form { margin-top: var(--space-3); }
+
+.cmt-form textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-3);
+  color: var(--ink);
+  font: 400 var(--text-md) / 1.5 var(--font-text);
+  resize: vertical;
+}
+
+.cmt-form-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.cmt-form-botoes { display: flex; align-items: center; gap: var(--space-2); }
+
+.cmt-contador {
+  font: 400 var(--text-2xs) / 1 var(--font-text);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.cmt-enviar {
+  min-height: 32px;
+  padding: 0 var(--space-5);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--brand);
+  color: var(--on-brand);
+  font: 700 var(--text-sm) / 1 var(--font-text);
+  cursor: pointer;
+  transition: filter 140ms ease;
+}
+
+.cmt-enviar:hover:not(:disabled) { filter: brightness(1.12); }
+.cmt-enviar:disabled { opacity: 0.5; cursor: progress; }
+
+.cmt-erro {
+  margin-top: var(--space-2);
+  color: var(--danger);
+  font: 600 var(--text-xs) / 1.4 var(--font-text);
+}
+
+.cmt-convite {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding: var(--space-5);
+  border: 1px dashed var(--line-dark);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-5);
+}
+
+.cmt-convite p { color: var(--muted); font-size: var(--text-sm); }
+
+/* ------------------------------------------------------------ perfil */
+
+.perfil-pagina { display: flex; flex-direction: column; gap: var(--space-6); }
+
+.perfil-capa {
+  padding: var(--space-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, var(--surface-2), var(--surface-3));
+}
+
+.perfil-identidade {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.perfil-identidade h1 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font: 800 var(--text-3xl) / 1.05 var(--font-display);
+}
+
+.perfil-desde { color: var(--muted); font-size: var(--text-sm); }
+.perfil-bio { margin-top: var(--space-3); font-size: var(--text-md); line-height: 1.55; max-width: 60ch; }
+.perfil-editar { margin-left: auto; }
+
+.perfil-numeros {
+  display: flex;
+  gap: var(--space-7);
+  flex-wrap: wrap;
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+.perfil-numeros dt {
+  font: 600 var(--text-2xs) / 1 var(--font-text);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-2);
+}
+
+.perfil-numeros dd {
+  font: 800 var(--text-2xl) / 1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.perfil-favs { margin-top: var(--space-4); }
+
+.perfil-favs h3 {
+  font: 600 var(--text-2xs) / 1 var(--font-text);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-3);
+}
+
+.perfil-favs > div { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+.perfil-fav {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  color: var(--ink);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transition: border-color 140ms ease;
+}
+
+.perfil-fav:hover { border-color: var(--line-dark); }
+
+.perfil-atividade { display: flex; flex-direction: column; }
+
+.perfil-item { padding: var(--space-4) 0; border-bottom: 1px solid var(--line); }
+.perfil-item:last-child { border-bottom: 0; }
+
+.perfil-item header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+
+.perfil-item header a { color: var(--ink); font-weight: 700; text-decoration: none; }
+.perfil-item header a:hover { color: var(--brand-text); }
+.perfil-score { color: var(--teal); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 560px) {
+  .conta-entrar { padding: 0 var(--space-4); font-size: var(--text-xs); }
+  .auth-janela { padding: var(--space-6) var(--space-5); }
+  .perfil-identidade h1 { font-size: var(--text-2xl); }
+  .perfil-numeros { gap: var(--space-6); }
+  .cmt-filhos { margin-left: 8px; padding-left: var(--space-4); }
+  .cmt-convite { flex-direction: column; align-items: stretch; text-align: center; }
+}
+
+/* Abaixo de 940px a topbar vira coluna unica (marca / nav / busca empilhadas).
+   Somar uma quarta linha so para o botao de conta gastaria altura num cabecalho
+   que ja e grande e fica grudado no topo. A conta sai do fluxo e ocupa o vazio
+   a direita da marca, que ali esta centralizada. */
+@media (max-width: 940px) {
+  .conta-slot {
+    position: absolute;
+    top: 8px;
+    right: 0;
+    z-index: 2;
+  }
+}
+
+/* -------------------------------------------------------- favoritar
+   Teal quando aceso, como o +1. Vira regra legivel do sistema: teal marca o
+   que e SEU (seu voto, seu favorito), e o vermelho continua sendo so a marca.
+   Um coracao vermelho aqui brigaria com o vermelho do UNIVLR e, nas paginas de
+   equipe, com a cor de destaque do proprio time. */
+
+.fav-botao {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 28px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--muted);
+  font: 700 var(--text-xs) / 1 var(--font-text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 140ms ease, border-color 140ms ease, background 140ms ease;
+}
+
+.fav-botao:hover {
+  color: var(--ink);
+  border-color: var(--line-dark);
+}
+
+.fav-botao.ativo {
+  color: var(--teal);
+  border-color: rgba(42, 212, 193, 0.45);
+  background: rgba(42, 212, 193, 0.12);
+}
+
+.fav-botao svg { flex-shrink: 0; }
+
+.player-hero-title-row .fav-botao { align-self: center; }
+
+@media (max-width: 560px) {
+  .fav-botao span { display: none; }
+  .fav-botao { padding: 0 var(--space-3); min-width: 32px; justify-content: center; }
 }

@@ -2710,6 +2710,7 @@ const STATIC_DOCUMENT_TITLES = {
   ranking: "Ranking",
   rankings: "Ranking",
   teams: "Equipes",
+  u: "Perfil",
 };
 
 const state = {
@@ -2849,6 +2850,12 @@ async function init() {
     state.ready = true;
     window.addEventListener("hashchange", render);
     bindFilterDropdownMotion();
+    // Sessao entra depois do banco: o cabecalho ja existe para receber o
+    // espaco da conta, e uma falha de rede aqui nao pode derrubar o site
+    // inteiro - sem conta o UNIVLR continua sendo o que sempre foi.
+    window.Auth?.iniciar()
+      .then(() => window.Auth.pintaSlot())
+      .catch((erro) => console.warn("comunidade indisponivel:", erro));
     window.addEventListener("resize", () => {
       syncNavIndicator(false);
       syncTopbarHeight();
@@ -5067,6 +5074,7 @@ function Shell(content, options = {}) {
             <div id="search-results" class="search-results ${state.searchOpen ? "open" : ""}" role="listbox" aria-label="Resultados da busca"></div>
             <span id="search-status" class="sr-only" role="status" aria-live="polite"></span>
           </div>
+          ${window.Auth ? window.Auth.slotHtml() : ""}
         </div>
       </header>
       <main class="main">${content}</main>
@@ -5142,6 +5150,7 @@ function render() {
     rankings: renderRankingPage,
     teams: renderTeamsCompact,
     maps: renderMapsCompact,
+    u: (username) => window.Profile.renderProfilePage(username),
   };
   (pages[section] || renderHomeCompact)(id);
   syncTopbarHeight();
@@ -7004,10 +7013,12 @@ function renderMatchDetail(id) {
         </aside>
       </div>
       </div>
+      ${window.Comments ? window.Comments.shell("match", match.id) : ""}
     </section>
   `);
   bindScoreboardSort();
   bindLineupCompare();
+  window.Comments?.montar("match", match.id);
   playPanelSlide(mapSlide);
 }
 
@@ -7998,8 +8009,10 @@ function renderTournamentDetail(id) {
       <div class="tournament-tab-panel">
         ${tournamentTabContent(event, matches, standings, activeTab)}
       </div>
+      ${window.Comments ? window.Comments.shell("event", event.id) : ""}
     </article>
   `);
+  window.Comments?.montar("event", event.id);
   if (activeTab === "overview") {
     bindTournamentBracketPreview(event, matches);
     bindTournamentTeamPreview(event, matches, standings);
@@ -11173,6 +11186,7 @@ function renderTeamDetail(id) {
                 ${teamStateBadge(team)}
                 <span class="team-meta-text">${escapeHtml(teamInstitutionLabel(team))}</span>
                 <span class="team-socials">${socialButtons(team)}</span>
+                ${window.Favorites ? window.Favorites.botao("team", team.id) : ""}
               </div>
             </div>
           </div>
@@ -12912,6 +12926,7 @@ function renderPlayerDetail(id) {
           <div class="player-hero-title-row">
             <h1>${escapeHtml(player.nick)}</h1>
             ${playerHeroRoleBadge(player)}
+            ${window.Favorites ? window.Favorites.botao("player", playerRouteId(player.id)) : ""}
           </div>
           <p>${escapeHtml(player.handle || player.nick)}</p>
           ${playerNickHistoryChips(player, "hero")}

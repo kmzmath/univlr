@@ -242,12 +242,13 @@
       if (!itens.length)
         return `<h2>Notificações</h2><p class="auth-dica">Nada por aqui ainda.</p>
                 <div class="auth-rodape"><button type="button" class="cmt-link" data-ir="conta">Voltar</button></div>`;
+      const naoLidas = itens.filter((n) => !n.read_at).length;
       return `<h2>Notificações</h2>
         <ul class="auth-avisos">
           ${itens
             .map(
               (n) => `<li class="${n.read_at ? "" : "nova"}">
-                        <a href="#cmt-${esc(n.comment_id)}" data-fechar="1">
+                        <a href="#cmt-${esc(n.comment_id)}" data-lida="${esc(n.id)}" data-fechar="1">
                           ${n.kind === "mention" ? "Mencionaram você" : "Responderam você"}
                         </a>
                         <time>${window.Comments.quando(n.created_at)}</time>
@@ -255,7 +256,10 @@
             )
             .join("")}
         </ul>
-        <div class="auth-rodape"><button type="button" class="cmt-link" data-ir="conta">Voltar</button></div>`;
+        <div class="auth-rodape">
+          <button type="button" class="cmt-link" data-ir="conta">Voltar</button>
+          ${naoLidas ? `<button type="button" class="cmt-link" data-todas-lidas="1">Marcar todas como lidas</button>` : ""}
+        </div>`;
     },
   };
 
@@ -270,6 +274,25 @@
     corpo.addEventListener("click", async (ev) => {
       const ir = ev.target.closest("[data-ir]");
       if (ir) return abrirVista(ir.dataset.ir);
+
+      // Abrir o aviso marca SO ele. Antes, abrir o painel marcava tudo - um
+      // aviso que a pessoa nem viu sumia do contador junto com os que ela leu.
+      const aviso = ev.target.closest("[data-lida]");
+      if (aviso) {
+        window.Community.marcarLida(aviso.dataset.lida)
+          .then(() => atualizaAvisos())
+          .then(() => pintaSlot())
+          .catch(() => {});
+        return;
+      }
+
+      if (ev.target.closest("[data-todas-lidas]")) {
+        await window.Community.marcarLidas();
+        await atualizaAvisos();
+        pintaSlot();
+        abrirVista("avisos");
+        return;
+      }
 
       if (ev.target.closest("[data-sair]")) {
         await window.Community.sair();
@@ -370,9 +393,6 @@
     if (vista === "avisos") {
       const itens = await window.Community.listarNotificacoes();
       pinta("avisos", { itens });
-      await window.Community.marcarLidas();
-      naoLidas = 0;
-      pintaSlot();
       return;
     }
     pinta(vista);

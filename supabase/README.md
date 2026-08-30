@@ -261,8 +261,10 @@ cairia na zona morta temporal.
   "Moderar por SQL", abaixo.
 
 **Aceito como está:**
-- Notificação some da lista assim que a janela abre (marca tudo como lida).
-  Não há "marcar uma só".
+- Selo de contagem de comentários não aparece nas tabelas de jogadores e de
+  ranking. São tabelas densas de número e o selo competiria com o dado;
+  comentário em perfil é raro comparado a partida, e a atividade recente da
+  home já os expõe.
 
 **Decisões conscientes, registradas para não virarem surpresa:**
 - Sem upload de foto: o avatar é a inicial sobre cor derivada do username.

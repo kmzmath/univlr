@@ -134,7 +134,7 @@
                      ${capa(a, "media")}
                      <div class="news-item-texto">
                        <time datetime="${esc(a.data)}">${dataLonga(a.data)}</time>
-                       <h2>${esc(a.titulo)}</h2>
+                       <h2>${esc(a.titulo)}${window.Comments ? window.Comments.selo("article", a.slug) : ""}</h2>
                        <p>${esc(a.resumo)}</p>
                      </div>
                    </a>`).join("")}

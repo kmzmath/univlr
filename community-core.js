@@ -287,7 +287,10 @@
       p_parent_id: parentId || null,
     });
     if (error) throw error;
-    invalidarContagens();
+    // Com await, e nao solto: sem esperar, quem le a contagem logo depois de
+    // publicar pega o valor de antes. Custa uma consulta pequena no caminho de
+    // publicar, que ja e uma acao com espera.
+    await invalidarContagens();
     return data;
   }
 
@@ -299,7 +302,7 @@
   async function apagarComentario(id) {
     const { error } = await api().rpc("delete_comment", { p_comment_id: id });
     if (error) throw error;
-    invalidarContagens();
+    await invalidarContagens();
   }
 
   async function votar(id, votando) {
@@ -395,8 +398,11 @@
       if (error) throw error;
       contagens = new Map((data || []).map((r) => [chave(r.subject_kind, r.subject_id), r]));
     } catch (erro) {
-      // Sem contagem o site inteiro segue funcionando - o selo so nao aparece.
-      contagens = new Map();
+      // Falha de rede nao pode APAGAR o que ja estava certo: sem cache, todo
+      // selo do site vira zero. Na primeira carga vira mapa vazio (nao ha o
+      // que preservar) e o selo so nao aparece; numa recarga, o valor antigo
+      // fica de pe ate a proxima tentativa dar certo.
+      if (!contagens) contagens = new Map();
     }
     return contagens;
   }
@@ -407,10 +413,12 @@
     return linha ? linha.comentarios : 0;
   }
 
-  // Chamado depois de publicar ou apagar: o numero da lista fica velho, e
-  // recarregar a pagina inteira so para atualizar um selo seria exagero.
+  // Chamado depois de publicar ou apagar. NAO zera o cache: zerar fazia todo
+  // selo do site e o bloco de atividade da home sumirem ate o proximo F5,
+  // porque contagem() e atividadeRecente() devolvem vazio sem cache. Recarrega
+  // em segundo plano e troca quando o valor novo chega.
   function invalidarContagens() {
-    contagens = null;
+    return carregarContagens();
   }
 
   // A home desenha a atividade recente por THREAD, nao por comentario: dez
@@ -425,9 +433,33 @@
       .slice(0, limite);
   }
 
-  // O que a home precisa saber sobre a comunidade, numa consulta so.
+  // Perfis para a busca global. A busca do site e SINCRONA (varre listas ja em
+  // memoria), entao os usuarios precisam estar carregados antes de alguem
+  // digitar. O teto de 500 e proposital: acima disso a busca deixa de caber
+  // numa lista em memoria e vira consulta por termo.
+  let usuarios = [];
+
+  const usuariosParaBusca = () => usuarios;
+
+  async function carregarUsuarios() {
+    try {
+      const { data, error } = await api()
+        .from("profiles")
+        .select("username, role, created_at")
+        .order("created_at", { ascending: true })
+        .limit(500);
+      if (error) throw error;
+      usuarios = data || [];
+    } catch (erro) {
+      if (!usuarios.length) usuarios = [];
+    }
+    return usuarios;
+  }
+
+  // O que a home precisa saber sobre a comunidade. Duas consultas pequenas e
+  // independentes de sessao, entao rodam antes de qualquer login.
   async function carregarResumo() {
-    await carregarContagens();
+    await Promise.all([carregarContagens(), carregarUsuarios()]);
     return contagens;
   }
 
@@ -453,6 +485,17 @@
       .eq("user_id", sessao.user.id)
       .is("read_at", null);
     return count || 0;
+  }
+
+  // Uma so. Abrir o painel marcava TUDO como lido, entao um aviso que a pessoa
+  // nao chegou a abrir sumia do contador junto com os que ela leu.
+  async function marcarLida(id) {
+    if (!sessao) return;
+    await api()
+      .from("notifications")
+      .update({ read_at: new Date().toISOString() })
+      .eq("id", id)
+      .eq("user_id", sessao.user.id);
   }
 
   async function marcarLidas() {
@@ -554,7 +597,9 @@
     invalidarContagens,
     listarNotificacoes,
     contarNaoLidas,
+    marcarLida,
     marcarLidas,
+    usuariosParaBusca,
     mensagemDeErro,
     recarregarPerfil: carregaPerfil,
   };

@@ -18356,3 +18356,22 @@ img {
   .atv-linha { grid-template-columns: minmax(0, 1fr) auto; }
   .atv-tipo { display: none; }
 }
+
+/* ---------------------------------------------- arestas da comunidade */
+
+/* O selo de contagem ao lado do titulo na listagem de noticias: alinhado pela
+   base do texto e nao pelo topo, senao ele flutua acima da linha do titulo. */
+.news-item-texto h2 .cmt-selo-contagem {
+  margin-left: var(--space-3);
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
+
+/* Usuario no resultado da busca: o avatar gerado entra no lugar do escudo, na
+   mesma caixa que os outros tipos usam. */
+.search-result-user .search-result-visual .cmt-avatar {
+  width: 100%;
+  height: 100%;
+  font-size: var(--text-lg);
+}

@@ -15291,6 +15291,7 @@ function searchEntities() {
       mark: map.name.slice(0, 3).toUpperCase(),
     })),
     ...db.players.map(searchPlayerResult),
+    ...(window.Community?.usuariosParaBusca() || []).map(searchUserResult),
     ...allMatchSeries().map((series) => {
       const score = matchListScore(series);
       const event = state.db?.tournaments.find((row) => row.id === series.eventId);
@@ -15307,6 +15308,19 @@ function searchEntities() {
       };
     }),
   ];
+}
+
+// Usuario da comunidade. Sem isso, a unica forma de chegar a um perfil era
+// achar um comentario da pessoa - uma mencao @fulano nao tinha caminho de volta.
+function searchUserResult(u) {
+  return {
+    type: "user",
+    path: `u/${u.username}`,
+    label: u.username,
+    meta: u.role === "admin" ? "Administrador" : "Usuário",
+    entity: u,
+    searchText: `${u.username} usuario perfil`,
+  };
 }
 
 function searchTeamResult(team) {
@@ -15415,6 +15429,7 @@ function renderSearchResult(item, index = 0) {
     tournament: renderTournamentSearchResult,
     match: renderMatchSearchResult,
     map: renderMapSearchResult,
+    user: renderUserSearchResult,
   };
   return (renderers[item.type] || renderGenericSearchResult)(item);
 }
@@ -15617,6 +15632,20 @@ function renderMapSearchResult(item) {
           <span>${escapeHtml(mapSearchPatchLabel(map))}</span>
           ${mapSearchTournamentLogos(map)}
         </span>
+      </span>
+    `,
+  );
+}
+
+function renderUserSearchResult(item) {
+  return renderSearchButton(
+    item,
+    `
+      <span class="search-result-visual">${window.Comments ? window.Comments.avatar(item.label) : ""}</span>
+      <span class="search-result-content">
+        <span class="search-result-kicker">${escapeHtml(item.meta)}</span>
+        <strong class="search-result-title">${escapeHtml(item.label)}</strong>
+        <span class="search-result-meta">Perfil no UNIVLR</span>
       </span>
     `,
   );

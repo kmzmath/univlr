@@ -18375,3 +18375,15 @@ img {
   height: 100%;
   font-size: var(--text-lg);
 }
+
+/* Uma materia so e nenhuma conversa: a linha vira de uma coluna. A capa muda
+   de 16:10 para 21:9 - numa largura de 1300px, 16:10 daria 812px de imagem, o
+   que empurraria todo o resto da home para fora da primeira tela. */
+.home-topo.sozinho { grid-template-columns: minmax(0, 1fr); }
+
+.home-topo.sozinho .news-heroi-capa {
+  aspect-ratio: 21 / 9;
+  max-height: 420px;
+}
+
+.home-topo.sozinho .news-heroi.sem-capa { min-height: 200px; }

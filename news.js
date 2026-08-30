@@ -100,9 +100,13 @@
 
     const [destaque, ...resto] = itens;
     const menores = resto.slice(0, 5);
+    // Com uma materia so e nenhuma conversa, a coluna da direita nao teria
+    // nada - e meia largura de vazio ao lado do heroi e pior que um heroi
+    // largo. Nesse caso a linha vira de uma coluna so.
+    const sozinho = !menores.length && !atividade;
 
     return `
-      <section class="home-topo">
+      <section class="home-topo ${sozinho ? "sozinho" : ""}">
         <div class="section-head home-topo-head">
           <div><h2>Notícias</h2></div>
           <a class="subtle-link" href="#/news">Ver todas</a>
@@ -110,10 +114,14 @@
         <div class="home-topo-principal">
           ${heroi(destaque)}
         </div>
-        <div class="home-topo-lado">
-          ${menores.length ? `<div class="news-titulos">${menores.map(tituloMenor).join("")}</div>` : ""}
-          ${atividade}
-        </div>
+        ${
+          sozinho
+            ? ""
+            : `<div class="home-topo-lado">
+                 ${menores.length ? `<div class="news-titulos">${menores.map(tituloMenor).join("")}</div>` : ""}
+                 ${atividade}
+               </div>`
+        }
       </section>`;
   }
 

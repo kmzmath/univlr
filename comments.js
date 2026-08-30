@@ -115,7 +115,7 @@
           <div class="cmt-conteudo">
             <header class="cmt-cabeca">
               ${apagado ? `<span class="cmt-autor">-</span>` : `<a class="cmt-autor" href="#/u/${esc(autor)}">${esc(autor)}</a>`}
-              ${c.profiles && c.profiles.role === "admin" ? `<span class="cmt-selo">equipe</span>` : ""}
+              ${c.profiles && c.profiles.role === "admin" ? `<span class="cmt-selo">admin</span>` : ""}
               <time datetime="${esc(c.created_at)}">${quando(c.created_at)}</time>
               ${c.edited_at && !apagado ? `<span class="cmt-editado">editado</span>` : ""}
               ${nivel > RECUO_MAX && paiNome ? `<span class="cmt-para">para @${esc(paiNome)}</span>` : ""}

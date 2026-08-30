@@ -87,7 +87,7 @@
         <div class="perfil-identidade">
           ${window.Comments.avatar(p.username, "grande")}
           <div>
-            <h1>${esc(p.username)}${p.role === "admin" ? `<span class="cmt-selo">equipe</span>` : ""}</h1>
+            <h1>${esc(p.username)}${p.role === "admin" ? `<span class="cmt-selo">admin</span>` : ""}</h1>
             <p class="perfil-desde">no UNIVLR desde ${esc(desde)}</p>
             ${p.bio ? `<p class="perfil-bio">${esc(p.bio)}</p>` : ""}
           </div>

@@ -255,7 +255,7 @@
       .maybeSingle();
     // Sem thread significa que ninguem comentou ainda - e um estado normal,
     // nao um erro. A thread nasce no primeiro post_comment().
-    if (!thread) return { comentarios: [], meusVotos: new Set() };
+    if (!thread) return { comentarios: [], meusVotos: new Map() };
 
     const { data, error } = await api()
       .from("comments")
@@ -265,16 +265,17 @@
     if (error) throw error;
 
     const comentarios = data || [];
-    let meusVotos = new Set();
+    let meusVotos = new Map();
     if (sessao && comentarios.length) {
       // A policy de leitura de voto e `user_id = auth.uid()`, entao isto so
       // volta com o que o proprio usuario votou - que e o que a tela precisa
       // para pintar o botao. O total publico vem de comments.score.
       const { data: votos } = await api()
         .from("comment_votes")
-        .select("comment_id")
+        .select("comment_id, value")
         .in("comment_id", comentarios.map((c) => c.id));
-      meusVotos = new Set((votos || []).map((v) => v.comment_id));
+      // Map e nao Set: agora interessa o SINAL do voto, nao so se votou.
+      meusVotos = new Map((votos || []).map((v) => [v.comment_id, v.value]));
     }
     return { comentarios, meusVotos };
   }
@@ -305,21 +306,47 @@
     await invalidarContagens();
   }
 
-  async function votar(id, votando) {
+  // `sinal` e +1, -1 ou 0 (tirar o voto). Devolve o sinal que ficou, para a
+  // tela nao precisar adivinhar.
+  async function votar(id, sinal) {
     if (!sessao) throw new Error("nao autenticado");
-    if (votando) {
-      const { error } = await api()
-        .from("comment_votes")
-        .insert({ comment_id: id, user_id: sessao.user.id });
-      if (error) throw error;
-    } else {
+    const uid = sessao.user.id;
+
+    if (sinal === 0) {
       const { error } = await api()
         .from("comment_votes")
         .delete()
         .eq("comment_id", id)
-        .eq("user_id", sessao.user.id);
+        .eq("user_id", uid);
       if (error) throw error;
+      return 0;
     }
+
+    // Trocar de voto e UPDATE, e nao apagar e inserir: apagar abriria uma
+    // janela sem voto nenhum, e o gatilho ja sabe somar a diferenca.
+    const { data: existente } = await api()
+      .from("comment_votes")
+      .select("value")
+      .eq("comment_id", id)
+      .eq("user_id", uid)
+      .maybeSingle();
+
+    if (existente) {
+      if (existente.value === sinal) return sinal;
+      const { error } = await api()
+        .from("comment_votes")
+        .update({ value: sinal })
+        .eq("comment_id", id)
+        .eq("user_id", uid);
+      if (error) throw error;
+      return sinal;
+    }
+
+    const { error } = await api()
+      .from("comment_votes")
+      .insert({ comment_id: id, user_id: uid, value: sinal });
+    if (error) throw error;
+    return sinal;
   }
 
   async function denunciar(id, motivo) {

@@ -10,45 +10,15 @@
 
   const esc = (v) => window.Community.esc(v);
 
-  function assuntoHref(t) {
+  // A resolucao de assunto vive no comments.js e cobre os cinco tipos. A versao
+  // que existia aqui so conhecia partida e evento, entao comentario em perfil
+  // de jogador caia no fallback e aparecia como "um campeonato". Duas
+  // implementacoes da mesma coisa, e a segunda incompleta - agora e uma so.
+  function assunto(t) {
     if (!t) return null;
-    if (t.subject_kind === "match") return `#/matches/${encodeURIComponent(t.subject_id)}`;
-    if (t.subject_kind === "event") return `#/tournaments/${encodeURIComponent(t.subject_id)}`;
-    return null;
+    return window.Comments?.assuntoDaThread(t.subject_kind, t.subject_id) || null;
   }
 
-  // O nome bonito do assunto vive no JSON buildado, nao no Supabase - a thread
-  // so guarda o id. Quando o banco ainda nao chegou, ou o id sumiu num rebuild,
-  // cai no rotulo generico em vez de mostrar um id cru para o usuario.
-  function assuntoNome(t) {
-    if (!t) return "conteúdo removido";
-    try {
-      // `state` sem `window.`: no app.js ele e `const`, e declaracao lexica de
-      // topo nao vira propriedade do window - `window.state` seria undefined.
-      // Ler o binding direto funciona aqui porque isto roda em evento, muito
-      // depois de o app.js ter executado (no load cairia na zona morta).
-      if (typeof state === "undefined" || !state.db) return rotuloGenerico(t);
-      if (t.subject_kind === "match") {
-        // Mesma busca que renderMatchDetail faz: nao existe matchById().
-        const m = state.db.matches.find((x) => x.id === t.subject_id);
-        if (m) return `${m.teamA.name} x ${m.teamB.name}`;
-      }
-      if (t.subject_kind === "event") {
-        const e = state.db.tournaments.find((x) => x.id === t.subject_id);
-        if (e) return e.name;
-      }
-    } catch (erro) {
-      /* banco ainda carregando, ou id que sumiu num rebuild */
-    }
-    return rotuloGenerico(t);
-  }
-
-  function rotuloGenerico(t) {
-    return t.subject_kind === "match" ? "uma partida" : "um campeonato";
-  }
-
-  // Um de cada, no maximo. Devolve "" quando nao ha - quem chama decide se
-  // esconde a secao inteira.
   function favoritoHtml(kind, refId) {
     if (!refId) return "";
     if (kind === "team") {
@@ -113,8 +83,13 @@
             ? `<div class="perfil-atividade">
                  ${dados.comentarios
                    .map((c) => {
-                     const href = assuntoHref(c.threads);
-                     const nome = assuntoNome(c.threads);
+                     const a = assunto(c.threads);
+                     // `?c=` leva ao comentario em si: o roteador do site le a
+                     // query depois do hash, e a secao de comentarios rola ate
+                     // ele e o destaca ao montar. Ancora normal (#cmt-id) nao
+                     // serve - o hash ja e a rota.
+                     const href = a ? `${a.href}${a.href.includes("?") ? "&" : "?"}c=${encodeURIComponent(c.id)}` : null;
+                     const nome = a ? a.nome : "conteúdo removido";
                      return `<article class="perfil-item">
                                <header>
                                  ${href ? `<a href="${esc(href)}">${esc(nome)}</a>` : `<span>${esc(nome)}</span>`}

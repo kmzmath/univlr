@@ -18758,3 +18758,111 @@ img {
   .cmt-ajuda tr { padding: var(--space-2) 0; border-bottom: 1px solid var(--line); }
   .cmt-ajuda td { padding: 0; }
 }
+
+/* ================================================ AJUSTES DO COMENTARIO */
+
+/* ------------------------------------------------------------- voto
+   Duas setas com o placar no meio. O "+1" antigo colado no total lia como um
+   numero so - "+1 0" virava "10". Agora o simbolo do voto e a seta, e o unico
+   numero na linha e o placar. */
+
+.cmt-voto {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+}
+
+.cmt-voto-seta {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 140ms ease, background 140ms ease;
+}
+
+.cmt-voto-seta:hover { color: var(--ink); background: rgba(245, 241, 242, 0.08); }
+
+/* Teal para cima, o mesmo tom que marca o que a comunidade produz. Para baixo
+   usa o tom de alerta, que ja e um token proprio e separado da marca. */
+.cmt-voto-seta.ativo { color: var(--teal); background: rgba(42, 212, 193, 0.14); }
+.cmt-voto-seta.baixo.ativo { color: var(--danger); background: rgba(255, 102, 120, 0.14); }
+
+.cmt-score {
+  min-width: 20px;
+  text-align: center;
+  font: 700 var(--text-xs) / 1 var(--font-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.cmt-score.positivo { color: var(--teal); }
+.cmt-score.negativo { color: var(--danger); }
+
+/* -------------------------------------------------- comentario removido */
+
+.cmt-avatar.removido {
+  background: var(--loss-surface);
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+
+.cmt-avatar.removido svg { width: 62%; height: 62%; }
+
+/* ------------------------------------------- respiro entre form e lista
+   O contador de caracteres ficava colado na primeira linha da conversa e lia
+   como parte dela - "2000" parecia o inicio de um comentario. O formulario
+   passa a ser um bloco fechado, com regua embaixo. */
+
+.cmt-form-rodape {
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.cmt-lista { margin-top: var(--space-6); }
+
+/* O contador encosta no canto da caixa de texto, nao no meio do vao. */
+.cmt-contador {
+  opacity: 0.65;
+  letter-spacing: 0.04em;
+}
+
+/* Formulario de resposta e de edicao vivem DENTRO de um comentario: ali a
+   regua e o respiro extra sobram, porque o proprio recuo ja separa. */
+.cmt-resposta-slot .cmt-form-rodape,
+.cmt .cmt-form .cmt-form-rodape {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+/* ------------------------------------------------ comentario destacado
+   Quem chega pelo historico de atividade cai direto no comentario. O realce
+   dura o suficiente para o olho achar e sai sozinho - marcar para sempre
+   sujaria a conversa para quem so passou por ali. */
+
+.cmt.destacado {
+  animation: cmt-realce 2.6s ease;
+  border-radius: var(--radius-md);
+}
+
+@keyframes cmt-realce {
+  0%, 55% { background: rgba(42, 212, 193, 0.12); box-shadow: 0 0 0 8px rgba(42, 212, 193, 0.12); }
+  100% { background: transparent; box-shadow: 0 0 0 8px transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cmt.destacado { animation: none; background: rgba(42, 212, 193, 0.12); }
+}
+
+/* O numero sozinho lia como texto solto na conversa. A palavra "restantes" o
+   ancora, e o <b> segura o unico pedaco que muda. */
+.cmt-contador b { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink-soft, var(--ink)); }
+.cmt-contador.pouco b { color: var(--danger); }

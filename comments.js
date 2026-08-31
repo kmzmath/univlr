@@ -38,6 +38,15 @@
 
   const TONS = ["#6658b8", "#2ad4c1", "#ffb340", "#8ab4ff", "#31e981", "#ff6678", "#d17cc4", "#7cb3d1"];
 
+  // Silhueta neutra. Comentario apagado nao pode continuar mostrando a inicial
+  // e a cor de quem escreveu - a pessoa foi removida da conversa, e o avatar
+  // colorido a mantinha reconhecivel ali.
+  function avatarRemovido(tamanho) {
+    return `<span class="cmt-avatar removido ${tamanho === "grande" ? "grande" : ""}" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="16" height="16"><path fill="currentColor" d="M8 8.4a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 1.2c-2.6 0-5 1.3-5 2.9v1.1h10v-1.1c0-1.6-2.4-2.9-5-2.9Z"/></svg>
+            </span>`;
+  }
+
   function avatar(username, tamanho) {
     const nome = String(username || "?");
     let soma = 0;
@@ -212,19 +221,28 @@
     const meu = eu && c.author_id === eu.id;
     const apagado = Boolean(c.deleted_at);
     const autor = c.profiles ? c.profiles.username : "desconhecido";
-    const votei = atual.meusVotos.has(c.id);
     const podeEditar = meu && !apagado && Date.now() - new Date(c.created_at).getTime() < 15 * 60 * 1000;
     const podeApagar = !apagado && (meu || C.ehAdmin());
     const editando = atual.editando === c.id;
 
+    const meuVoto = atual.meusVotos.get(c.id) || 0;
     const acoes = apagado
       ? ""
       : `
         <div class="cmt-acoes">
-          <button type="button" class="cmt-voto ${votei ? "ativo" : ""}" data-votar="${esc(c.id)}"
-                  aria-pressed="${votei}" aria-label="Dar +1 neste comentário">
-            <span aria-hidden="true">+1</span><span class="cmt-score">${c.score}</span>
-          </button>
+          <span class="cmt-voto" role="group" aria-label="Votar neste comentário">
+            <button type="button" class="cmt-voto-seta ${meuVoto === 1 ? "ativo" : ""}"
+                    data-votar="${esc(c.id)}" data-sinal="1"
+                    aria-pressed="${meuVoto === 1}" aria-label="Votar a favor">
+              <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M6 2.2 11 9H1z"/></svg>
+            </button>
+            <span class="cmt-score ${c.score > 0 ? "positivo" : c.score < 0 ? "negativo" : ""}">${c.score > 0 ? "+" : ""}${c.score}</span>
+            <button type="button" class="cmt-voto-seta baixo ${meuVoto === -1 ? "ativo" : ""}"
+                    data-votar="${esc(c.id)}" data-sinal="-1"
+                    aria-pressed="${meuVoto === -1}" aria-label="Votar contra">
+              <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M6 9.8 1 3h10z"/></svg>
+            </button>
+          </span>
           ${C.logado() ? `<button type="button" class="cmt-link" data-responder="${esc(c.id)}">Responder</button>` : ""}
           ${podeEditar ? `<button type="button" class="cmt-link" data-editar="${esc(c.id)}">Editar</button>` : ""}
           ${podeApagar ? `<button type="button" class="cmt-link" data-apagar="${esc(c.id)}">Apagar</button>` : ""}
@@ -246,12 +264,12 @@
     return `
       <article class="cmt ${apagado ? "apagado" : ""}" data-cmt="${esc(c.id)}" id="cmt-${esc(c.id)}">
         <div class="cmt-linha">
-          ${avatar(autor)}
+          ${apagado ? avatarRemovido() : avatar(autor)}
           <div class="cmt-conteudo">
             <header class="cmt-cabeca">
               ${apagado ? "" : selosDeFa(c.profiles)}
               ${apagado ? `<span class="cmt-autor">-</span>` : `<a class="cmt-autor" href="#/u/${esc(autor)}">${esc(autor)}</a>`}
-              ${c.profiles && c.profiles.role === "admin" ? `<span class="cmt-selo">admin</span>` : ""}
+              ${!apagado && c.profiles && c.profiles.role === "admin" ? `<span class="cmt-selo">admin</span>` : ""}
               <time datetime="${esc(c.created_at)}">${quando(c.created_at)}</time>
               ${c.edited_at && !apagado ? `<span class="cmt-editado">editado</span>` : ""}
               ${nivel > RECUO_MAX && paiNome ? `<span class="cmt-para">para @${esc(paiNome)}</span>` : ""}
@@ -361,7 +379,7 @@
                   placeholder="${modo === "responder" ? "Escreva uma resposta" : "Escreva um comentário"}"
                   aria-label="${rotulo}">${esc(valor)}</textarea>
         <div class="cmt-form-rodape">
-          <span class="cmt-contador" aria-live="polite">${MAX - String(valor).length}</span>
+          <span class="cmt-contador"><b aria-live="polite">${MAX - String(valor).length}</b> restantes</span>
           <div class="cmt-form-botoes">
             ${modo !== "novo" ? `<button type="button" class="cmt-link" data-cancelar="1">Cancelar</button>` : ""}
             <button type="submit" class="cmt-enviar">${rotulo}</button>
@@ -426,8 +444,15 @@
     raiz.addEventListener("input", (ev) => {
       const ta = ev.target.closest("textarea[name=corpo]");
       if (!ta) return;
+      // So o numero e trocado, nao a frase inteira: o `aria-live` esta no <b>,
+      // entao o leitor de tela anuncia "1840", e nao "1840 restantes" a cada
+      // tecla digitada.
       const contador = ta.closest(".cmt-form")?.querySelector(".cmt-contador");
-      if (contador) contador.textContent = String(MAX - ta.value.length);
+      if (contador) {
+        const sobra = MAX - ta.value.length;
+        contador.querySelector("b").textContent = String(sobra);
+        contador.classList.toggle("pouco", sobra <= 100);
+      }
     });
 
     raiz.addEventListener("submit", async (ev) => {
@@ -514,17 +539,22 @@
       if (votar) {
         if (!window.Community.logado()) return window.Auth.abrir("entrar");
         const id = votar.dataset.votar;
-        const tinha = atual.meusVotos.has(id);
+        const clicado = Number(votar.dataset.sinal);
+        const atualDoVoto = atual.meusVotos.get(id) || 0;
+        // Clicar de novo na mesma seta TIRA o voto; clicar na outra troca.
+        const novoSinal = atualDoVoto === clicado ? 0 : clicado;
+
         // Otimista: o botao responde no clique e a lista so e refeita se o
-        // servidor recusar. Esperar a ida e volta para pintar um +1 faz o
-        // botao parecer quebrado numa conexao ruim.
+        // servidor recusar. Esperar a ida e volta faz o voto parecer quebrado
+        // numa conexao ruim.
         const alvoCmt = atual.comentarios.find((c) => c.id === id);
-        if (alvoCmt) alvoCmt.score += tinha ? -1 : 1;
-        if (tinha) atual.meusVotos.delete(id);
-        else atual.meusVotos.add(id);
+        if (alvoCmt) alvoCmt.score += novoSinal - atualDoVoto;
+        if (novoSinal === 0) atual.meusVotos.delete(id);
+        else atual.meusVotos.set(id, novoSinal);
         desenha();
+
         try {
-          await window.Community.votar(id, !tinha);
+          await window.Community.votar(id, novoSinal);
         } catch (erro) {
           console.warn("voto recusado:", window.Community.mensagemDeErro(erro));
           await recarrega();
@@ -673,11 +703,54 @@
     liga(raiz);
     try {
       await recarrega();
+      destacaComentarioDaUrl();
     } catch (erro) {
       raiz.innerHTML = `<div class="section-head"><div><h2>Comentários</h2>
         <p>Não deu para carregar: ${esc(window.Community.mensagemDeErro(erro))}</p></div></div>`;
     }
   }
 
-  window.Comments = { shell, montar, avatar, quando, corpo, selo, atividadeHome, atividadeLarga };
+  // Quem chega por um link de atividade traz `?c=<id>` na rota. Sem isto a
+  // pessoa cairia no topo da pagina e teria de procurar o comentario na mao.
+  function destacaComentarioDaUrl() {
+    const id = typeof routeQuery === "function" ? routeQuery().get("c") : null;
+    if (!id) return;
+    const alvo = document.getElementById(`cmt-${id}`);
+    if (!alvo) return;
+    alvo.classList.add("destacado");
+
+    // Salto seco, e nao `smooth`. O site inteiro tem `scroll-behavior: smooth`
+    // no CSS, entao o scroll que o roteador da ao trocar de pagina tambem e
+    // animado - as duas animacoes disputam o mesmo eixo e a nossa morre no meio
+    // do caminho (medido: parava em 150px de 1152). Salto nao tem meio do
+    // caminho para ser interrompido.
+    const posiciona = () => alvo.scrollIntoView({ block: "center", behavior: "instant" });
+    posiciona();
+
+    // A pagina ainda esta crescendo quando chegamos: escudo de equipe, tabela de
+    // mapas, imagem de capa. Cada uma empurra o comentario para baixo depois do
+    // salto. Reposiciona enquanto a altura muda - e para na hora em que a
+    // pessoa toma o controle, porque puxar o scroll de quem ja esta rolando e
+    // pior do que deixar o alvo fora de lugar.
+    let alturaAnterior = document.body.scrollHeight;
+    let tentativas = 0;
+    const assenta = setInterval(() => {
+      if (++tentativas > 8) return clearInterval(assenta);
+      const altura = document.body.scrollHeight;
+      if (altura !== alturaAnterior) {
+        alturaAnterior = altura;
+        posiciona();
+      }
+    }, 120);
+    const solta = () => clearInterval(assenta);
+    window.addEventListener("wheel", solta, { once: true, passive: true });
+    window.addEventListener("touchstart", solta, { once: true, passive: true });
+    window.addEventListener("keydown", solta, { once: true });
+
+    // O destaque sai sozinho: ele serve para achar o comentario, nao para
+    // marca-lo para sempre.
+    setTimeout(() => alvo.classList.remove("destacado"), 2600);
+  }
+
+  window.Comments = { shell, montar, avatar, quando, corpo, selo, atividadeHome, atividadeLarga, assuntoDaThread };
 })();

@@ -18181,7 +18181,11 @@ img {
 
 .home-topo {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  /* Colunas desiguais de proposito. Com duas metades iguais e a mesma
+     proporcao de capa, as duas materias teriam a MESMA altura - e a segunda
+     precisa ser menor. A diferenca de largura e o que a torna menor sem mudar
+     o formato da capa, e e ela que abre a sobra onde a atividade entra. */
+  grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
   gap: var(--space-5);
   align-items: start;
   margin-bottom: var(--space-6);
@@ -18240,13 +18244,18 @@ img {
 
 .news-heroi.sem-capa .news-heroi-texto { padding: var(--space-6); }
 
-.news-heroi-texto time {
-  display: block;
+.news-heroi-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.news-heroi-meta time {
   font: 600 var(--text-2xs) / 1 var(--font-text);
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  margin-bottom: var(--space-3);
 }
 
 /* A barra vermelha e o marcador de secao que o site ja usa em todo titulo de
@@ -18272,41 +18281,24 @@ img {
 
 .news-heroi:hover .news-heroi-texto h3 { color: var(--brand-text); }
 
-/* ------------------------------------------------------- titulos menores */
+/* ------------------------------------------------- a segunda materia
+   Mesmo cartao, mesma capa, mesmo veu - so menor. Repetir a forma e o que faz
+   as duas lerem como "a mesma coisa em dois tamanhos", que e a hierarquia que
+   a linha precisa comunicar. Uma segunda materia sem capa, ou com outro
+   tratamento, viraria uma peca de outra especie. */
 
-.news-titulos {
-  display: flex;
-  flex-direction: column;
+.news-heroi.menor.com-capa .news-heroi-texto {
+  padding: var(--space-6) var(--space-5) var(--space-4);
 }
 
-.news-titulo {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: var(--space-4);
-  padding: var(--space-4) 0;
-  border-bottom: 1px solid var(--line);
-  text-decoration: none;
-  color: inherit;
+.news-heroi.menor .news-heroi-texto h3 {
+  padding-left: var(--space-4);
+  font-size: var(--text-xl);
 }
 
-.news-titulo:last-child { border-bottom: 0; }
+.news-heroi.menor .news-heroi-texto h3::before { width: 4px; }
 
-.news-titulo time {
-  font: 600 var(--text-2xs) / 1.4 var(--font-text);
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-
-.news-titulo strong {
-  font: 700 var(--text-md) / 1.35 var(--font-text);
-  min-width: 0;
-}
-
-.news-titulo:hover strong { color: var(--brand-text); }
+.news-heroi.menor.sem-capa { min-height: 170px; }
 
 /* ------------------------------------------------------ atividade recente
    Formato do Recent Activity da HLTV: linha curta, o assunto carregando o
@@ -18374,6 +18366,11 @@ img {
 @media (max-width: 560px) {
   .news-heroi-texto h3 { font-size: var(--text-xl); }
   .news-heroi.com-capa .news-heroi-texto { padding: var(--space-6) var(--space-5) var(--space-4); }
+  /* Empilhadas e da mesma largura, as duas materias ficariam identicas e a
+     hierarquia sumiria - so a ordem diria qual e a principal. A capa mais
+     baixa e o titulo menor seguram a diferenca no unico eixo que sobra. */
+  .news-heroi.menor .news-heroi-capa { aspect-ratio: 16 / 9; }
+  .news-heroi.menor .news-heroi-texto h3 { font-size: var(--text-lg); }
   .atv-linha { grid-template-columns: minmax(0, 1fr) auto; }
   .atv-tipo { display: none; }
 }

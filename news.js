@@ -57,40 +57,39 @@
 
   // ------------------------------------------------------------ bloco da home
   //
-  // Metade da largura para a materia principal (capa com o titulo por cima),
-  // metade para os titulos menores mais a atividade recente da comunidade.
+  // Duas materias, as duas com capa: a mais recente grande a esquerda, a
+  // seguinte menor a direita. A atividade recente entra embaixo da menor e
+  // ocupa exatamente a sobra de altura entre as duas - ela e o detalhe da
+  // linha, nao uma terceira peca disputando espaco.
   //
   // Sincrono de proposito: a home e montada de uma vez em string. Se nao ha
   // materia NEM atividade, devolve "" e o bloco nao existe - placeholder na
   // home seria espaco morto na pagina mais importante do site.
 
-  function heroi(a) {
-    // O titulo entra SOBRE a capa, sob um veu, e nao embaixo dela: assim a
-    // metade esquerda le como um bloco so em vez de duas pecas empilhadas.
-    // Sem capa nao ha veu - o titulo assenta na propria superficie do cartao.
+  function heroi(a, menor) {
+    // O titulo entra SOBRE a capa, sob um veu, e nao embaixo dela: assim cada
+    // cartao le como um bloco so em vez de duas pecas empilhadas. Sem capa nao
+    // ha veu - o titulo assenta na propria superficie do cartao.
     const temCapa = Boolean(a.capa);
     return `
-      <a class="news-heroi ${temCapa ? "com-capa" : "sem-capa"}" href="#/news/${esc(a.slug)}">
+      <a class="news-heroi ${menor ? "menor" : ""} ${temCapa ? "com-capa" : "sem-capa"}" href="#/news/${esc(a.slug)}">
+        ${/* As duas capas carregam adiantadas: sao as duas maiores imagens do
+              topo da home, e `lazy` na segunda so trocava a espera por um
+              retangulo vazio no lugar mais visivel do site. */ ""}
         ${temCapa ? `<img class="news-heroi-capa" src="${esc(a.capa)}" alt="" loading="eager" decoding="async" />` : ""}
         <div class="news-heroi-texto">
-          <time datetime="${esc(a.data)}">${dataLonga(a.data)}</time>
+          <div class="news-heroi-meta">
+            <time datetime="${esc(a.data)}">${menor ? dataCurta(a.data) : dataLonga(a.data)}</time>
+            ${window.Comments ? window.Comments.selo("article", a.slug) : ""}
+          </div>
           <h3>${esc(a.titulo)}</h3>
         </div>
       </a>`;
   }
 
-  function tituloMenor(a) {
-    return `
-      <a class="news-titulo" href="#/news/${esc(a.slug)}">
-        <time datetime="${esc(a.data)}">${dataCurta(a.data)}</time>
-        <strong>${esc(a.titulo)}</strong>
-        ${window.Comments ? window.Comments.selo("article", a.slug) : ""}
-      </a>`;
-  }
-
   function blocoHome() {
     const itens = lista();
-    const atividade = window.Comments ? window.Comments.atividadeHome(6) : "";
+    const atividade = window.Comments ? window.Comments.atividadeHome(5) : "";
 
     // Sem materia, a metade esquerda ficaria vazia e a direita sozinha. Entao
     // a atividade deixa de ser coluna estreita e ocupa a largura toda.
@@ -98,12 +97,11 @@
       return window.Comments ? window.Comments.atividadeLarga(9) : "";
     }
 
-    const [destaque, ...resto] = itens;
-    const menores = resto.slice(0, 5);
+    const [destaque, segunda] = itens;
     // Com uma materia so e nenhuma conversa, a coluna da direita nao teria
     // nada - e meia largura de vazio ao lado do heroi e pior que um heroi
     // largo. Nesse caso a linha vira de uma coluna so.
-    const sozinho = !menores.length && !atividade;
+    const sozinho = !segunda && !atividade;
 
     return `
       <section class="home-topo ${sozinho ? "sozinho" : ""}">
@@ -118,7 +116,7 @@
           sozinho
             ? ""
             : `<div class="home-topo-lado">
-                 ${menores.length ? `<div class="news-titulos">${menores.map(tituloMenor).join("")}</div>` : ""}
+                 ${segunda ? heroi(segunda, true) : ""}
                  ${atividade}
                </div>`
         }

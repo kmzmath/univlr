@@ -82,13 +82,113 @@
   }
 
   // ------------------------------------------------------------------ corpo
-  // Escapa PRIMEIRO, marca mencao depois. Na ordem inversa, um `<script>` no
-  // texto entraria no HTML antes de virar entidade.
+  //
+  // BBCode, e nao markdown: o `*` e o `_` do markdown aparecem sozinhos em
+  // texto normal o tempo todo ("nota 1.5*", "pdf_final"), e virariam formatacao
+  // sem ninguem pedir. O colchete nao aparece por acidente.
+  //
+  // A ORDEM aqui e a seguranca do recurso:
+  //   1. esc() primeiro, entao nada do que a pessoa escreveu pode virar tag;
+  //   2. [code] sai de cena antes de tudo, senao BBCode dentro de um exemplo
+  //      de codigo seria interpretado em vez de mostrado;
+  //   3. so entao as tags viram HTML, uma lista fechada e conhecida.
+  // Nenhum atributo vem do texto do usuario, exceto o href de [url], que passa
+  // por validacao de esquema logo abaixo.
+
+  // So http, https e link interno do proprio site. Sem isto,
+  // [url=javascript:...] viraria um link executavel.
+  function hrefSeguro(bruto) {
+    const limpo = String(bruto || "").trim().replace(/&quot;/g, "").replace(/&#039;/g, "");
+    if (/^https?:\/\/[^\s<>"]+$/i.test(limpo)) return limpo;
+    if (/^#\/[^\s<>"]*$/.test(limpo)) return limpo;
+    return null;
+  }
+
+  const PARES = {
+    b: ["strong", ""],
+    i: ["em", ""],
+    u: ["span", "cmt-u"],
+    s: ["s", ""],
+    strike: ["s", ""],
+    // Cabecalho de comentario NAO vira <h1> de verdade: a pagina ja tem um, e
+    // dois <h1> quebram a estrutura do documento para leitor de tela. Vira
+    // h3/h4/h5 com classe, que e hierarquia correta DENTRO do comentario.
+    h1: ["h3", "cmt-h cmt-h1"],
+    h2: ["h4", "cmt-h cmt-h2"],
+    h3: ["h5", "cmt-h cmt-h3"],
+    quote: ["blockquote", "cmt-quote"],
+  };
+
+  // Regex LITERAL, e nao montada por string: a primeira versao montava o
+  // padrao dentro de um template literal, onde `\[` vira `[` e `\s` vira `s`.
+  // O resultado era `[strike](...)[/strike]` lido como CLASSE DE CARACTERES -
+  // em "forte", o `r` casava a classe e o `t` casava o fechamento, e a palavra
+  // virava "fo<s></s>e". O retrovisor `\1` tambem garante que o fechamento e
+  // da mesma tag que abriu.
+  const RE_PARES = /\[(b|i|u|s|strike|h1|h2|h3|quote)\]([\s\S]*?)\[\/\1\]/gi;
+
+  // Recursivo para o que esta dentro tambem ser interpretado ([b]a [i]b[/i][/b]).
+  // O teto de profundidade evita que um texto com cem tags aninhadas prenda a
+  // aba enquanto desenha um comentario.
+  function aplicaPares(txt, nivel = 0) {
+    if (nivel > 6) return txt;
+    return txt.replace(RE_PARES, (todo, tag, dentro) => {
+      const [elem, classe] = PARES[tag.toLowerCase()];
+      const abre = classe ? `<${elem} class="${classe}">` : `<${elem}>`;
+      return `${abre}${aplicaPares(dentro, nivel + 1)}</${elem}>`;
+    });
+  }
 
   function corpo(texto) {
-    return esc(texto)
-      .replace(/@([A-Za-z0-9_]{3,20})/g, '<a class="cmt-mencao" href="#/u/$1">@$1</a>')
-      .replace(/\n/g, "<br>");
+    let out = esc(texto);
+
+    // [code] guardado antes de qualquer outra tag ser interpretada.
+    const blocos = [];
+    out = out.replace(/\[code\]([\s\S]*?)\[\/code\]/gi, (todo, dentro) => {
+      blocos.push(dentro);
+      return `\u0000CODE${blocos.length - 1}\u0000`;
+    });
+
+    out = aplicaPares(out);
+
+    // [spoiler] fica escondido ate o clique. O botao e o proprio bloco.
+    out = out.replace(
+      /\[spoiler\]([\s\S]*?)\[\/spoiler\]/gi,
+      '<span class="cmt-spoiler" role="button" tabindex="0" data-spoiler title="Clique para revelar">$1</span>'
+    );
+
+    // [url=destino]texto[/url] e [url]destino[/url]
+    out = out.replace(/\[url=([^\]]+)\]([\s\S]*?)\[\/url\]/gi, (todo, destino, dentro) => {
+      const href = hrefSeguro(destino);
+      // Destino recusado nao vira link nem some: fica o texto que a pessoa
+      // escreveu, para ela ver que algo ali nao foi aceito.
+      if (!href) return dentro;
+      const externo = href.startsWith("#") ? "" : ' target="_blank" rel="noopener nofollow ugc"';
+      return `<a class="cmt-url" href="${href}"${externo}>${dentro}</a>`;
+    });
+    out = out.replace(/\[url\]([\s\S]*?)\[\/url\]/gi, (todo, dentro) => {
+      const href = hrefSeguro(dentro);
+      if (!href) return dentro;
+      const externo = href.startsWith("#") ? "" : ' target="_blank" rel="noopener nofollow ugc"';
+      return `<a class="cmt-url" href="${href}"${externo}>${href}</a>`;
+    });
+
+    out = out.replace(/\[hr\]/gi, '<hr class="cmt-hr">');
+
+    // Mencao a usuario, que ja existia.
+    out = out.replace(/@([A-Za-z0-9_]{3,20})/g, '<a class="cmt-mencao" href="#/u/$1">@$1</a>');
+
+    out = out.replace(/\n/g, "<br>");
+
+    // <br> colado em bloco vira linha vazia na tela: o proprio bloco ja quebra.
+    out = out
+      .replace(/<br>\s*(<(?:hr|blockquote|h3|h4|h5)\b)/gi, "$1")
+      .replace(/(<\/(?:blockquote|h3|h4|h5)>|<hr class="cmt-hr">)\s*<br>/gi, "$1");
+
+    // Devolve o [code] guardado, agora sim como texto literal.
+    out = out.replace(/\u0000CODE(\d+)\u0000/g, (todo, i) => `<code class="cmt-code">${blocos[Number(i)]}</code>`);
+
+    return out;
   }
 
   // ------------------------------------------------------------------ arvore
@@ -167,10 +267,96 @@
       </article>`;
   }
 
+  // ------------------------------------------------------ barra de formatacao
+
+  // `envolve` = o par de tags. `sozinho` = tag sem fechamento.
+  const BOTOES = [
+    { tag: "b", rotulo: "N", titulo: "Negrito", classe: "negrito" },
+    { tag: "i", rotulo: "I", titulo: "Itálico", classe: "italico" },
+    { tag: "u", rotulo: "S", titulo: "Sublinhado", classe: "sublinhado" },
+    { tag: "s", rotulo: "T", titulo: "Riscado", classe: "riscado" },
+    { tag: "h2", rotulo: "H", titulo: "Título" },
+    { tag: "quote", rotulo: "\u201C\u201D", titulo: "Citação" },
+    { tag: "code", rotulo: "&lt;/&gt;", titulo: "Código" },
+    { tag: "spoiler", rotulo: "\u2609", titulo: "Spoiler" },
+    { tag: "url", rotulo: "\u26AD", titulo: "Link" },
+    { tag: "hr", rotulo: "\u2014", titulo: "Linha", sozinho: true },
+  ];
+
+  function barraFormatacao() {
+    return `
+      <div class="cmt-barra" role="toolbar" aria-label="Formatação">
+        ${BOTOES.map((b) => `
+          <button type="button" class="cmt-barra-botao ${b.classe || ""}"
+                  data-tag="${esc(b.tag)}" ${b.sozinho ? 'data-sozinho="1"' : ""}
+                  title="${esc(b.titulo)}" aria-label="${esc(b.titulo)}">${b.rotulo}</button>`).join("")}
+        <button type="button" class="cmt-barra-botao ajuda" data-ajuda="1"
+                title="Como formatar" aria-label="Como formatar" aria-expanded="false">?</button>
+      </div>`;
+  }
+
+  const AJUDA = [
+    ["[b]texto[/b]", "negrito"],
+    ["[i]texto[/i]", "itálico"],
+    ["[u]texto[/u]", "sublinhado"],
+    ["[s]texto[/s]", "riscado"],
+    ["[h1]…[/h1] a [h3]…[/h3]", "títulos, do maior ao menor"],
+    ["[quote]texto[/quote]", "citação"],
+    ["[code]texto[/code]", "código, sem formatar nada por dentro"],
+    ["[spoiler]texto[/spoiler]", "escondido até alguém clicar"],
+    ["[url=endereço]texto[/url]", "link"],
+    ["[url]endereço[/url]", "link mostrando o próprio endereço"],
+    ["[hr]", "linha separando"],
+    ["@usuario", "menciona alguém, e a pessoa é avisada"],
+  ];
+
+  function painelAjuda() {
+    return `
+      <div class="cmt-ajuda" hidden>
+        <table>
+          <tbody>
+            ${AJUDA.map(([codigo, oque]) => `<tr><td><code>${esc(codigo)}</code></td><td>${esc(oque)}</td></tr>`).join("")}
+          </tbody>
+        </table>
+        <p>Só valem essas. Qualquer outra coisa entre colchetes fica como você escreveu.</p>
+      </div>`;
+  }
+
+  // Envolve a selecao, ou insere o par e deixa o cursor no meio quando nao ha
+  // nada selecionado - que e o que qualquer editor faz e o que a mao espera.
+  function aplicaTag(area, tag, sozinho) {
+    const ini = area.selectionStart;
+    const fim = area.selectionEnd;
+    const texto = area.value;
+    const dentro = texto.slice(ini, fim);
+
+    if (sozinho) {
+      const marca = `[${tag}]`;
+      area.value = texto.slice(0, ini) + marca + texto.slice(fim);
+      area.selectionStart = area.selectionEnd = ini + marca.length;
+    } else if (tag === "url") {
+      // O link pede um destino; sem selecao, o cursor vai para o lugar dele.
+      const modelo = dentro ? `[url=]${dentro}[/url]` : `[url=][/url]`;
+      area.value = texto.slice(0, ini) + modelo + texto.slice(fim);
+      const posDestino = ini + "[url=".length;
+      area.selectionStart = area.selectionEnd = posDestino;
+    } else {
+      const abre = `[${tag}]`;
+      const fecha = `[/${tag}]`;
+      area.value = texto.slice(0, ini) + abre + dentro + fecha + texto.slice(fim);
+      area.selectionStart = ini + abre.length;
+      area.selectionEnd = ini + abre.length + dentro.length;
+    }
+    area.focus();
+    area.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+
   function formulario(modo, id, valor) {
     const rotulo = modo === "editar" ? "Salvar" : modo === "responder" ? "Responder" : "Comentar";
     return `
       <form class="cmt-form" data-form="${esc(modo)}" data-alvo="${esc(id || "")}">
+        ${barraFormatacao()}
+        ${painelAjuda()}
         <textarea name="corpo" rows="${modo === "novo" ? 3 : 2}" maxlength="${MAX}"
                   placeholder="${modo === "responder" ? "Escreva uma resposta" : "Escreva um comentário"}"
                   aria-label="${rotulo}">${esc(valor)}</textarea>
@@ -228,6 +414,15 @@
   }
 
   function liga(raiz) {
+    // Spoiler tem role=button, entao precisa responder a Enter e Espaco.
+    raiz.addEventListener("keydown", (ev) => {
+      const spoiler = ev.target.closest?.("[data-spoiler]");
+      if (!spoiler || (ev.key !== "Enter" && ev.key !== " ")) return;
+      ev.preventDefault();
+      spoiler.classList.toggle("aberto");
+      spoiler.removeAttribute("title");
+    });
+
     raiz.addEventListener("input", (ev) => {
       const ta = ev.target.closest("textarea[name=corpo]");
       if (!ta) return;
@@ -260,6 +455,33 @@
 
     raiz.addEventListener("click", async (ev) => {
       const alvo = ev.target;
+
+      // --- formatacao
+      const btnTag = alvo.closest("[data-tag]");
+      if (btnTag) {
+        const area = btnTag.closest(".cmt-form")?.querySelector("textarea[name=corpo]");
+        if (area) aplicaTag(area, btnTag.dataset.tag, btnTag.hasAttribute("data-sozinho"));
+        return;
+      }
+
+      const btnAjuda = alvo.closest("[data-ajuda]");
+      if (btnAjuda) {
+        const painel = btnAjuda.closest(".cmt-form")?.querySelector(".cmt-ajuda");
+        if (painel) {
+          painel.hidden = !painel.hidden;
+          btnAjuda.setAttribute("aria-expanded", String(!painel.hidden));
+          btnAjuda.classList.toggle("ativo", !painel.hidden);
+        }
+        return;
+      }
+
+      // --- spoiler: o bloco inteiro e o botao
+      const spoiler = alvo.closest("[data-spoiler]");
+      if (spoiler) {
+        spoiler.classList.toggle("aberto");
+        spoiler.removeAttribute("title");
+        return;
+      }
 
       if (alvo.closest("[data-abrir-login]")) return window.Auth.abrir("entrar");
 

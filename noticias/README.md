@@ -63,6 +63,10 @@ vira parágrafo comum. O que funciona:
 
 ## Mencionar uma equipe, jogador ou partida
 
+**Isto é procedimento padrão em todo texto oficial do UNIVLR.** Nome de equipe,
+de jogador ou de partida que aparece no texto vai linkado - sem exceção. Um nome
+solto é um beco sem saída para quem está lendo e quer saber quem é aquele time.
+
 Marque a menção como **link normal do Word** (Ctrl+K) apontando para o endereço
 da página no próprio site. O jeito mais fácil é abrir a página, copiar a URL da
 barra de endereços e colar.

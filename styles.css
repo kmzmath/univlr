@@ -18600,3 +18600,172 @@ img {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* ============================================== FORMATACAO NO COMENTARIO
+   Barra de botoes, painel de ajuda e o que as tags viram na tela. */
+
+.cmt-barra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.cmt-barra-botao {
+  min-width: 30px;
+  height: 28px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--muted);
+  font: 700 var(--text-xs) / 1 var(--font-text);
+  cursor: pointer;
+  transition: color 140ms ease, border-color 140ms ease, background 140ms ease;
+}
+
+.cmt-barra-botao:hover {
+  color: var(--ink);
+  border-color: var(--line-dark);
+  background: rgba(245, 241, 242, 0.06);
+}
+
+/* O botao mostra o que ele faz: o "N" e negrito de verdade, o "I" e italico.
+   Um icone abstrato exigiria aprender; a propria letra ja explica. */
+.cmt-barra-botao.negrito { font-weight: 900; }
+.cmt-barra-botao.italico { font-style: italic; font-family: var(--font-display); }
+.cmt-barra-botao.sublinhado { text-decoration: underline; text-underline-offset: 2px; }
+.cmt-barra-botao.riscado { text-decoration: line-through; }
+
+.cmt-barra-botao.ajuda { margin-left: auto; border-radius: var(--radius-pill); }
+.cmt-barra-botao.ajuda.ativo { color: var(--teal); border-color: rgba(42, 212, 193, 0.45); }
+
+/* ------------------------------------------------------------- ajuda */
+
+.cmt-ajuda {
+  margin-bottom: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-3);
+}
+
+.cmt-ajuda table { width: 100%; border-collapse: collapse; }
+
+.cmt-ajuda td {
+  padding: var(--space-2) 0;
+  font: 400 var(--text-xs) / 1.5 var(--font-text);
+  color: var(--muted);
+  vertical-align: baseline;
+}
+
+.cmt-ajuda td:first-child { width: 45%; padding-right: var(--space-4); }
+
+.cmt-ajuda code {
+  font: 600 var(--text-xs) / 1.5 ui-monospace, "Cascadia Code", Consolas, monospace;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.cmt-ajuda p {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font: 400 var(--text-2xs) / 1.5 var(--font-text);
+  color: var(--muted);
+}
+
+/* ------------------------------------------- o que as tags viram na tela */
+
+.cmt-corpo .cmt-u { text-decoration: underline; text-underline-offset: 2px; }
+
+/* Cabecalho DENTRO de um comentario: escala propria, bem menor que a da
+   pagina. Um [h1] com o tamanho do titulo da materia deixaria qualquer um
+   gritar mais alto que o artigo so escrevendo tres caracteres. */
+.cmt-corpo .cmt-h {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.25;
+  margin: var(--space-4) 0 var(--space-2);
+  color: var(--ink);
+}
+
+.cmt-corpo .cmt-h:first-child { margin-top: 0; }
+.cmt-corpo .cmt-h1 { font-size: var(--text-xl); }
+.cmt-corpo .cmt-h2 { font-size: var(--text-lg); }
+.cmt-corpo .cmt-h3 { font-size: var(--text-md); text-transform: uppercase; letter-spacing: 0.04em; }
+
+.cmt-corpo .cmt-quote {
+  margin: var(--space-3) 0;
+  padding: var(--space-2) var(--space-4);
+  border-left: 2px solid var(--line-dark);
+  color: var(--muted);
+  font-style: italic;
+}
+
+.cmt-corpo .cmt-code {
+  display: inline-block;
+  max-width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-3);
+  font: 400 var(--text-sm) / 1.5 ui-monospace, "Cascadia Code", Consolas, monospace;
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  vertical-align: middle;
+}
+
+.cmt-corpo .cmt-hr {
+  margin: var(--space-4) 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.cmt-corpo .cmt-url {
+  color: var(--brand-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------- spoiler
+   Fechado, o texto fica com a mesma cor do fundo: some sem mudar o tamanho da
+   linha, entao revelar nao empurra o resto do comentario. */
+
+.cmt-corpo .cmt-spoiler {
+  background: var(--surface-2);
+  color: transparent;
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-2);
+  cursor: pointer;
+  transition: color 160ms ease, background 160ms ease;
+  /* Sem isto, arrastar o mouse por cima seleciona e "revela" o texto oculto. */
+  user-select: none;
+}
+
+.cmt-corpo .cmt-spoiler:hover { background: var(--surface-3); }
+
+.cmt-corpo .cmt-spoiler:focus-visible {
+  outline: 2px solid var(--brand-text);
+  outline-offset: 1px;
+}
+
+.cmt-corpo .cmt-spoiler.aberto {
+  background: transparent;
+  color: inherit;
+  cursor: auto;
+  padding: 0;
+  user-select: auto;
+}
+
+/* Link e mencao dentro de um spoiler fechado nao podem vazar a cor. */
+.cmt-corpo .cmt-spoiler:not(.aberto) a { color: transparent; }
+
+@media (max-width: 560px) {
+  .cmt-ajuda td:first-child { width: auto; }
+  .cmt-ajuda table, .cmt-ajuda tbody, .cmt-ajuda tr, .cmt-ajuda td { display: block; }
+  .cmt-ajuda tr { padding: var(--space-2) 0; border-bottom: 1px solid var(--line); }
+  .cmt-ajuda td { padding: 0; }
+}

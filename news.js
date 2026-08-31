@@ -515,6 +515,11 @@
     const rotulos = ["Playoffs", "Grande Final", "Título"];
     const valores = args.map((v) => Number(String(v).replace("%", "").replace(",", ".").trim()));
     if (valores.some((v) => !Number.isFinite(v))) return null;
+    // O texto mostrado e o que foi escrito, nao o numero reformatado: passar
+    // "0,3" por um formatador de duas casas devolve "0,30", que inventa uma
+    // casa de precisao que a simulacao nao tem. O numero convertido serve so
+    // para o comprimento da barra.
+    const escritos = args.map((v) => String(v).replace("%", "").trim());
 
     return `
       <div class="news-previsao">
@@ -523,7 +528,7 @@
           <div class="news-previsao-linha">
             <span class="news-previsao-rotulo">${esc(rotulos[i] || "")}</span>
             <span class="news-previsao-trilho"><span class="news-barra" style="--pct:${Math.max(0, Math.min(100, v)).toFixed(2)}%"></span></span>
-            <strong class="news-previsao-valor">${num(v, v < 1 ? 2 : 1)}%</strong>
+            <strong class="news-previsao-valor">${esc(escritos[i])}%</strong>
           </div>`).join("")}
       </div>`;
   }

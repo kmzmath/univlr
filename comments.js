@@ -67,27 +67,38 @@
   // aparece - melhor faltar do que mostrar um id cru ao lado do nome.
   function selosDeFa(autor) {
     if (!autor) return "";
-    let saida = "";
+    const partes = [];
+
+    // Equipe antes de jogador, e com o nome ao lado do escudo. So o escudo
+    // obrigava a reconhecer a equipe pelo desenho - e escudo pequeno de time
+    // universitario e justamente o que menos se reconhece de relance.
+    if (autor.fav_team) {
+      const t = typeof window.teamById === "function" ? window.teamById(autor.fav_team) : null;
+      if (t && typeof window.teamLogo === "function") {
+        partes.push(`<a class="cmt-fa cmt-fa-time" href="#/teams/${esc(t.id)}" title="Equipe favorita">
+                       <span class="cmt-fa-coracao" aria-hidden="true">♥</span>
+                       ${window.teamLogo(t.id, "cmt-fa-logo")}
+                       <span>${esc(t.name)}</span>
+                     </a>`);
+      }
+    }
 
     if (autor.fav_player) {
       const j = typeof window.playerById === "function" ? window.playerById(autor.fav_player) : null;
       if (j) {
-        saida += `<a class="cmt-fa-jogador" href="#/players/${esc(j.routeSlug || j.id)}"
-                     title="Jogador favorito">♥ ${esc(j.nick || j.handle)}</a>
-                  <span class="cmt-fa-sep" aria-hidden="true">|</span>`;
+        partes.push(`<a class="cmt-fa cmt-fa-jogador" href="#/players/${esc(j.routeSlug || j.id)}"
+                        title="Jogador favorito">
+                       <span class="cmt-fa-coracao" aria-hidden="true">♥</span>
+                       <span>${esc(j.nick || j.handle)}</span>
+                     </a>`);
       }
     }
 
-    if (autor.fav_team) {
-      const t = typeof window.teamById === "function" ? window.teamById(autor.fav_team) : null;
-      if (t && typeof window.teamLogo === "function") {
-        saida += `<a class="cmt-fa-time" href="#/teams/${esc(t.id)}" title="Time favorito: ${esc(t.name)}">
-                    ${window.teamLogo(t.id, "cmt-fa-logo")}
-                  </a>`;
-      }
-    }
-
-    return saida;
+    if (!partes.length) return "";
+    // A barra separa, entao ela abre a lista tambem: sem a primeira, o selo de
+    // fa encostaria no selo de admin como se fosse continuacao dele.
+    const barra = `<span class="cmt-fa-sep" aria-hidden="true">|</span>`;
+    return barra + partes.join(barra);
   }
 
   // ------------------------------------------------------------------ corpo
@@ -267,9 +278,9 @@
           ${apagado ? avatarRemovido() : avatar(autor)}
           <div class="cmt-conteudo">
             <header class="cmt-cabeca">
-              ${apagado ? "" : selosDeFa(c.profiles)}
               ${apagado ? `<span class="cmt-autor">-</span>` : `<a class="cmt-autor" href="#/u/${esc(autor)}">${esc(autor)}</a>`}
               ${!apagado && c.profiles && c.profiles.role === "admin" ? `<span class="cmt-selo">admin</span>` : ""}
+              ${apagado ? "" : selosDeFa(c.profiles)}
               <time datetime="${esc(c.created_at)}">${quando(c.created_at)}</time>
               ${c.edited_at && !apagado ? `<span class="cmt-editado">editado</span>` : ""}
               ${nivel > RECUO_MAX && paiNome ? `<span class="cmt-para">para @${esc(paiNome)}</span>` : ""}

@@ -27,12 +27,14 @@
 
 const fs = require("fs");
 const path = require("path");
+const { spawnSync } = require("child_process");
 const mammoth = require("./vendor/mammoth.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const ENTRADA = path.join(ROOT, "noticias");
 const SAIDA = path.join(ROOT, "news.json");
 const ASSETS = path.join(ROOT, "assets", "noticias");
+const PREVIEWS = path.join(ROOT, "news");
 const EXT_IMAGEM = [".webp", ".jpg", ".jpeg", ".png", ".gif"];
 
 // Word grava PNG/JPEG sem content-type as vezes (e o gerador de teste tambem),
@@ -166,6 +168,116 @@ async function converte(arquivo) {
   };
 }
 
+// ------------------------------------------------ paginas de preview de link
+//
+// O site roteia por hash, e tudo depois do `#` NUNCA chega ao servidor. Quando
+// alguem cola `univlr.onrender.com/#/news/x` no WhatsApp, o robo de preview
+// pede a raiz e recebe o index.html - ele nao tem como saber de que materia se
+// trata. E ele nao roda JavaScript, entao nada que o news.js monte depois
+// existe para ele.
+//
+// A saida e uma pagina de verdade por materia, num caminho sem `#`:
+//
+//   news/<slug>/index.html   ->   https://univlr.onrender.com/news/<slug>
+//
+// Ela carrega as tags og: prontas no arquivo e devolve a pessoa para a rota do
+// site. O robo le as tags; o humano nem ve esta pagina.
+//
+// O redirecionamento e por JavaScript, e nao por <meta refresh>: robo nao roda
+// script, entao ele fica na pagina e le as tags com calma, enquanto o navegador
+// de gente salta na hora. `location.replace` para nao empilhar no historico -
+// senao o botao Voltar traria a pessoa de volta para ca, e daqui ela seria
+// mandada para frente de novo.
+
+const SITE = "https://univlr.onrender.com";
+
+function escAtributo(texto) {
+  return String(texto)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+// A imagem do card e o JPEG de 1200x630 gerado por build_share_images.py; sem
+// ele, a propria capa. Ver o cabecalho daquele arquivo para o porque do JPEG.
+function imagemDeCompartilhamento(artigo) {
+  if (!artigo.capa) return `${SITE}/assets/share/univlr.jpg`;
+  const share = artigo.capa.replace(/\/capa\.[a-z0-9]+$/i, "/capa-share.jpg");
+  const existe = share !== artigo.capa && fs.existsSync(path.join(ROOT, share));
+  return `${SITE}/${existe ? share : artigo.capa}`;
+}
+
+function paginaDePreview(artigo) {
+  const rota = `${SITE}/#/news/${artigo.slug}`;
+  const titulo = `${artigo.titulo} - UNIVLR`;
+  const a = escAtributo;
+  return `<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>${a(titulo)}</title>
+    <link rel="canonical" href="${a(rota)}" />
+    <meta name="description" content="${a(artigo.resumo)}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="UNIVLR" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:url" content="${a(`${SITE}/news/${artigo.slug}`)}" />
+    <meta property="og:title" content="${a(artigo.titulo)}" />
+    <meta property="og:description" content="${a(artigo.resumo)}" />
+    <meta property="og:image" content="${a(imagemDeCompartilhamento(artigo))}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="article:published_time" content="${a(artigo.data)}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>location.replace(${JSON.stringify(`/#/news/${artigo.slug}`)});</script>
+  </head>
+  <body>
+    <p><a href="${a(rota)}">${a(artigo.titulo)}</a></p>
+  </body>
+</html>
+`;
+}
+
+function gravaPaginasDePreview(artigos) {
+  fs.mkdirSync(PREVIEWS, { recursive: true });
+
+  // Materia apagada deixa a pasta para tras, e o link antigo continuaria
+  // servindo um card de algo que nao existe mais.
+  const vivos = new Set(artigos.map((a) => a.slug));
+  for (const nome of fs.readdirSync(PREVIEWS)) {
+    const alvo = path.join(PREVIEWS, nome);
+    if (fs.statSync(alvo).isDirectory() && !vivos.has(nome)) {
+      fs.rmSync(alvo, { recursive: true, force: true });
+      console.log(`  removido news/${nome}/ (materia nao existe mais)`);
+    }
+  }
+
+  for (const artigo of artigos) {
+    const pasta = path.join(PREVIEWS, artigo.slug);
+    fs.mkdirSync(pasta, { recursive: true });
+    fs.writeFileSync(path.join(pasta, "index.html"), paginaDePreview(artigo));
+  }
+  console.log(`${artigos.length} pagina(s) de preview -> news/<slug>/index.html`);
+}
+
+// As imagens de preview sao feitas em Python, que ja e o que este projeto usa
+// para tratar imagem. Se o Python ou o Pillow nao estiverem ali, o build de
+// noticias segue: o card cai para a capa em WebP, que so alguns aplicativos
+// deixam de renderizar.
+function geraImagensDeCompartilhamento() {
+  const script = path.join(__dirname, "build_share_images.py");
+  for (const python of ["python", "python3"]) {
+    const r = spawnSync(python, [script], { encoding: "utf8" });
+    if (r.status === 0) {
+      process.stdout.write(r.stdout);
+      return;
+    }
+    if (r.error && r.error.code !== "ENOENT") break;
+  }
+  console.log("aviso: nao consegui rodar build_share_images.py - o card de link vai usar a capa em WebP");
+}
+
 async function main() {
   if (!fs.existsSync(ENTRADA)) {
     console.log("noticias/ nao existe - nada a fazer");
@@ -204,6 +316,9 @@ async function main() {
     JSON.stringify({ format: "univlr-news@1", geradoEm: new Date().toISOString(), artigos }, null, 2)
   );
   console.log(`\n${artigos.length} materia(s) -> news.json`);
+
+  geraImagensDeCompartilhamento();
+  gravaPaginasDePreview(artigos);
 }
 
 main();

@@ -4,6 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UNIVLR</title>
+    <!-- O cartao que aparece ao colar um link do site no WhatsApp, Discord ou
+         Twitter. Este e o cartao GENERICO, e ele vale para qualquer endereco
+         com `#`: tudo depois do `#` nunca chega ao servidor, entao o robo pede
+         a raiz e recebe este arquivo, seja qual for a rota. Materia tem cartao
+         proprio, em `/news/<slug>/`, gerado pelo scripts/build_news.js.
+         A URL da imagem precisa ser absoluta - o robo nao resolve caminho
+         relativo a partir da pagina. -->
+    <meta name="description" content="Estatísticas do cenário universitário brasileiro de VALORANT: partidas, campeonatos, jogadores, rankings e o rAAting de cada um." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="UNIVLR" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:url" content="https://univlr.onrender.com/" />
+    <meta property="og:title" content="UNIVLR" />
+    <meta property="og:description" content="Estatísticas do cenário universitário brasileiro de VALORANT: partidas, campeonatos, jogadores, rankings e o rAAting de cada um." />
+    <meta property="og:image" content="https://univlr.onrender.com/assets/share/univlr.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <link rel="icon" type="image/png" href="assets/logo_univlr.png" />
     <link rel="preload" as="image" href="assets/univlr_logo_longa.png" />
     <link rel="preload" as="image" href="assets/logo_univlr.png" />

@@ -140,16 +140,49 @@ de **62%** da altura. Fora disso, some na home.
 node scripts/build_news.js
 ```
 
-Isso gera `news.json` e extrai as imagens do `.docx` para
-`assets/noticias/<slug>/`. Depois:
+Isso gera:
+
+- `news.json`, que é o que o site lê;
+- as imagens do `.docx`, em `assets/noticias/<slug>/`;
+- a imagem de preview de link, em `assets/noticias/<slug>/capa-share.jpg`;
+- a página de preview de link, em `news/<slug>/index.html`.
+
+Depois:
 
 ```bash
-git add noticias assets/noticias news.json
+git add noticias assets/noticias assets/share news news.json
 git commit -m "noticia: griffins vence a classificatoria 3"
 git push
 ```
 
 O Render redeploya sozinho em um ou dois minutos.
+
+## O link que você cola no WhatsApp
+
+Para o card com capa aparecer, o link tem que ser o **sem `#`**:
+
+```
+https://univlr.onrender.com/news/griffins-vence-a-classificatoria-3
+```
+
+O endereço com `#` continua funcionando e é o mesmo lugar - mas ele nunca vai
+mostrar card, e isso não tem conserto. Tudo depois do `#` fica no navegador e
+não chega ao servidor: o robô do WhatsApp pede a raiz do site e recebe o
+`index.html`, seja qual for a matéria. E ele não roda JavaScript, então nada que
+o site monte depois existe para ele.
+
+Por isso o build escreve uma página de verdade por matéria, em `news/<slug>/`.
+Ela carrega o título, o resumo e a capa nas tags `og:` e devolve a pessoa para o
+site na hora - quem é gente nem vê essa página.
+
+A imagem do card é um **JPEG** de 1200x630 gerado à parte, e não a capa em WebP:
+os robôs do WhatsApp e do Facebook não renderizam WebP de forma confiável, e
+`og:image` que eles não decodificam vira card sem imagem. Quem gera é
+`scripts/build_share_images.py`, chamado pelo build. Sem Python ou sem Pillow na
+máquina o build avisa e segue - o card sai com a capa em WebP.
+
+Um endereço sem matéria (a home, um jogador, uma partida) mostra o card genérico
+do site, que está em `index.html`.
 
 ## Detalhes que economizam dor de cabeça
 

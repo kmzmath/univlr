@@ -24,7 +24,15 @@ const server = http.createServer((req, res) => {
   let pathname = decodeURIComponent(url.pathname);
   if (pathname === "/") pathname = "/index.html";
 
-  const filePath = path.normalize(path.join(root, pathname));
+  let filePath = path.normalize(path.join(root, pathname));
+
+  // Diretorio serve o index.html de dentro dele, como faz o Render. E o que
+  // faz `/news/<slug>` abrir a pagina de preview daquela materia; sem isto, so
+  // aqui, o caminho daria 404 e a diferenca so apareceria depois do deploy.
+  if (!path.extname(filePath)) {
+    const comIndice = path.join(filePath, "index.html");
+    if (fs.existsSync(comIndice)) filePath = comIndice;
+  }
   if (!filePath.startsWith(root)) {
     res.writeHead(403, { "content-type": "text/plain; charset=utf-8" });
     res.end("Forbidden");

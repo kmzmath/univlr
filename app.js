@@ -766,141 +766,124 @@ const TOURNAMENT_OVERRIDES = {
       title: "Grupos + Playoffs",
       regions: [
         {
-          name: "Chave superior",
-          className: "upper-bracket",
-          columns: [
-            {
-              title: "Semifinais superior",
-              matches: [
-                { code: "Partida 11", bestOf: "MD3", aLabel: "1º Grupo A", bLabel: "2º Grupo B" },
-                { code: "Partida 12", bestOf: "MD3", aLabel: "1º Grupo B", bLabel: "2º Grupo A" },
-              ],
-            },
-            {
-              title: "Final superior",
-              matches: [
-                { code: "Partida 14", bestOf: "MD3", aLabel: "TBD", bLabel: "TBD" },
-              ],
-            },
-          ],
-        },
-        {
-          name: "Chave inferior",
-          className: "lower-bracket",
-          columns: [
-            {
-              title: "Rodada 1 inferior",
-              matches: [
-                { code: "Partida 13", bestOf: "MD3", aLabel: "TBD", bLabel: "TBD" },
-              ],
-            },
-            {
-              title: "Final inferior",
-              matches: [
-                { code: "Partida 15", bestOf: "MD3", aLabel: "TBD", bLabel: "TBD" },
-              ],
-            },
-          ],
-        },
-        {
-          name: "Grande final",
-          className: "grand-final",
-          columns: [
-            {
-              title: "Grande final",
-              matches: [
-                { code: "Partida 17", bestOf: "MD3", aLabel: "TBD", bLabel: "TBD" },
-              ],
-            },
-          ],
-        },
-        {
-          name: "Disputa de 3º lugar",
-          className: "third-place",
-          columns: [
-            {
-              title: "Disputa de 3º lugar",
-              matches: [
-                { code: "Partida 16", bestOf: "MD3", aLabel: "TBD", bLabel: "TBD" },
-              ],
-            },
-          ],
-        },
-        {
           name: "Grupo A",
+          stage: "groups",
           className: "group-stage gsl-group",
+          layout: "linked",
           columns: [
             {
-              title: "Opening (MD1)",
+              title: "Opening",
               matches: [
-                { code: "Partida 1", bestOf: "MD1", status: "Agendada", slot: 0, a: "ceub_octopus", b: "fametro_berserkers" },
-                { code: "Partida 2", bestOf: "MD1", status: "Agendada", slot: 1, a: "macklogic_red", b: "ufmt_turuna" },
+                { code: "Partida 1", bestOf: "MD1", status: "Agendada", band: 0, a: "ceub_octopus", b: "fametro_berserkers" },
+                { code: "Partida 2", bestOf: "MD1", status: "Agendada", band: 1, a: "macklogic_red", b: "ufmt_turuna" },
               ],
             },
             {
-              title: "Winner's (MD1)",
+              title: "Winner's / Elimination",
               matches: [
-                { code: "Partida 5", bestOf: "MD1", slot: 0, aLabel: "TBD", bLabel: "TBD" },
+                { code: "Partida 5", label: "Winner's", bestOf: "MD1", band: 0, from: ["Partida 1", "Partida 2"], aLabel: "Vencedor Partida 1", bLabel: "Vencedor Partida 2" },
+                { code: "Partida 7", label: "Elimination", bestOf: "MD3", band: 1, from: ["Partida 1", "Partida 2"], aLabel: "Perdedor Partida 1", bLabel: "Perdedor Partida 2" },
               ],
             },
             {
-              title: "Elimination (MD3)",
+              title: "Decider",
               matches: [
-                { code: "Partida 7", bestOf: "MD3", slot: 1, aLabel: "TBD", bLabel: "TBD" },
-              ],
-            },
-            {
-              title: "Decider (MD3)",
-              matches: [
-                { code: "Partida 9", bestOf: "MD3", slot: 1, aLabel: "TBD", bLabel: "TBD" },
+                { code: "Partida 9", label: "Decider", bestOf: "MD3", band: 1, from: ["Partida 5", "Partida 7"], aLabel: "Perdedor Partida 5", bLabel: "Vencedor Partida 7" },
               ],
             },
           ],
           terminalColumn: {
-            title: "Classificado",
+            title: "Classificados",
             cards: [
-              { label: "TBD", slot: 0 },
-              { label: "TBD", slot: 1 },
+              { label: "TBD", note: "1\u00ba do grupo", band: 0, from: ["Partida 5"] },
+              { label: "TBD", note: "2\u00ba do grupo", band: 1, from: ["Partida 9"] },
             ],
           },
         },
         {
           name: "Grupo B",
+          stage: "groups",
           className: "group-stage gsl-group",
+          layout: "linked",
           columns: [
             {
-              title: "Opening (MD1)",
+              title: "Opening",
               matches: [
-                { code: "Partida 3", bestOf: "MD1", status: "Agendada", slot: 0, a: "uninassau_griffins", b: "a2e_uff" },
-                { code: "Partida 4", bestOf: "MD1", status: "Agendada", slot: 1, a: "azure_bears_golden", b: "ufu_saints" },
+                { code: "Partida 3", bestOf: "MD1", status: "Agendada", band: 0, a: "uninassau_griffins", b: "a2e_uff" },
+                { code: "Partida 4", bestOf: "MD1", status: "Agendada", band: 1, a: "azure_bears_golden", b: "ufu_saints" },
               ],
             },
             {
-              title: "Winner's (MD1)",
+              title: "Winner's / Elimination",
               matches: [
-                { code: "Partida 6", bestOf: "MD1", slot: 0, aLabel: "TBD", bLabel: "TBD" },
+                { code: "Partida 6", label: "Winner's", bestOf: "MD1", band: 0, from: ["Partida 3", "Partida 4"], aLabel: "Vencedor Partida 3", bLabel: "Vencedor Partida 4" },
+                { code: "Partida 8", label: "Elimination", bestOf: "MD3", band: 1, from: ["Partida 3", "Partida 4"], aLabel: "Perdedor Partida 3", bLabel: "Perdedor Partida 4" },
               ],
             },
             {
-              title: "Elimination (MD3)",
+              title: "Decider",
               matches: [
-                { code: "Partida 8", bestOf: "MD3", slot: 1, aLabel: "TBD", bLabel: "TBD" },
-              ],
-            },
-            {
-              title: "Decider (MD3)",
-              matches: [
-                { code: "Partida 10", bestOf: "MD3", slot: 1, aLabel: "TBD", bLabel: "TBD" },
+                { code: "Partida 10", label: "Decider", bestOf: "MD3", band: 1, from: ["Partida 6", "Partida 8"], aLabel: "Perdedor Partida 6", bLabel: "Vencedor Partida 8" },
               ],
             },
           ],
           terminalColumn: {
-            title: "Classificado",
+            title: "Classificados",
             cards: [
-              { label: "TBD", slot: 0 },
-              { label: "TBD", slot: 1 },
+              { label: "TBD", note: "1\u00ba do grupo", band: 0, from: ["Partida 6"] },
+              { label: "TBD", note: "2\u00ba do grupo", band: 1, from: ["Partida 10"] },
             ],
           },
+        },
+        {
+          name: "Chave principal",
+          stage: "playoffs",
+          className: "playoff-bracket",
+          layout: "linked",
+          columns: [
+            {
+              title: "Rodada 1",
+              matches: [
+                { code: "Partida 11", label: "Semifinal superior", bestOf: "MD3", band: 0, aLabel: "1\u00ba Grupo A", bLabel: "2\u00ba Grupo B" },
+                { code: "Partida 12", label: "Semifinal superior", bestOf: "MD3", band: 1, aLabel: "1\u00ba Grupo B", bLabel: "2\u00ba Grupo A" },
+              ],
+            },
+            {
+              title: "Rodada 2",
+              matches: [
+                { code: "Partida 14", label: "Final superior", bestOf: "MD3", band: 0.5, from: ["Partida 11", "Partida 12"], aLabel: "Vencedor Partida 11", bLabel: "Vencedor Partida 12" },
+                { code: "Partida 13", label: "Rodada 1 inferior", bestOf: "MD3", band: 2, from: ["Partida 11", "Partida 12"], aLabel: "Perdedor Partida 11", bLabel: "Perdedor Partida 12" },
+              ],
+            },
+            {
+              title: "Rodada 3",
+              matches: [
+                { code: "Partida 15", label: "Final inferior", bestOf: "MD3", band: 2, from: ["Partida 14", "Partida 13"], aLabel: "Perdedor Partida 14", bLabel: "Vencedor Partida 13" },
+              ],
+            },
+            {
+              title: "Grande final",
+              matches: [
+                { code: "Partida 17", label: "Grande final", bestOf: "MD3", band: 1.25, from: ["Partida 14", "Partida 15"], aLabel: "Vencedor Partida 14", bLabel: "Vencedor Partida 15" },
+              ],
+            },
+          ],
+          terminalColumn: false,
+        },
+        {
+          name: "Disputa de 3\u00ba lugar",
+          stage: "playoffs",
+          className: "third-place",
+          layout: "linked",
+          columns: [
+            {
+              title: "Disputa de 3\u00ba lugar",
+              matches: [
+                { code: "Partida 16", bestOf: "MD3", aLabel: "TBD", bLabel: "TBD" },
+              ],
+            },
+          ],
+          terminalColumn: false,
         },
       ],
     },
@@ -5157,6 +5140,12 @@ function render() {
   const routeKey = currentRouteKey();
   const routeChanged = routeKey !== state.routeKey;
   state.routeKey = routeKey;
+  // Uma pagina no painel de audiencia e uma chave de rota, e a chave ja
+  // inclui a aba: #/teams/x/roster e #/teams/x/stats contam separado, sem
+  // evento proprio. Trocar so o filtro nao chega aqui como rota nova - a
+  // query fica fora da chave de proposito, e o filtro sobe como evento
+  // pelo pushFilterState().
+  if (routeChanged) trackPageview();
   const pages = {
     home: renderHomeCompact,
     matches: renderMatchesCompact,
@@ -5521,6 +5510,9 @@ function applyPlayerFiltersFromQuery(p) {
 // desfaz um filtro por vez em vez de sair da pagina.
 function pushFilterState(section, params, focoSeletor) {
   state.filterFocus = focoSeletor || null;
+  // Os treze pontos que mexem em filtro passam todos por aqui, entao o
+  // evento mora neste ponto unico em vez de em cada botao.
+  trackFiltro(section, params);
   const q = params.toString();
   const alvo = "#/" + section + (q ? "?" + q : "");
   if (window.location.hash === alvo) {
@@ -8957,28 +8949,66 @@ function tournamentSeriesBracketMatch(series) {
   };
 }
 
+const TOURNAMENT_BRACKET_STAGES = [
+  { id: "groups", title: "Fase de grupos" },
+  { id: "playoffs", title: "Playoffs" },
+];
+
 function tournamentCuratedBracketSection(event) {
   const regions = tournamentBracketDisplayRegions(event.bracket.regions);
-  const groupRegions = regions.filter((region) => String(region.className || "").includes("group-stage"));
-  const layoutClass =
-    regions.length > 0 && groupRegions.length === regions.length
-      ? "groups-layout"
-      : groupRegions.length
-        ? "has-groups"
-        : regions.length === 1
-          ? "single-region"
-          : "";
+  const stages = tournamentBracketStages(regions);
+  // Uma fase so nao ganha titulo proprio: o cabecalho da secao ja diz o que e.
+  const body = stages.length
+    ? stages.map((stage) => `
+        <section class="tournament-bracket-stage">
+          <h3 class="tournament-bracket-stage-title">${escapeHtml(stage.title)}</h3>
+          <div class="tournament-bracket-stage-body">${tournamentCuratedBracketRegions(event, stage.regions)}</div>
+        </section>
+      `).join("")
+    : tournamentCuratedBracketRegions(event, regions);
   return `
     <section class="tournament-section">
       <div class="tournament-section-head">
         <h2>Brackets</h2>
         <span>${escapeHtml(event.bracket.title || "Bracket oficial")}</span>
       </div>
-      <div class="tournament-curated-bracket ${layoutClass}">
-        ${regions.map((region) => tournamentCuratedBracketRegion(event, region)).join("")}
+      <div class="tournament-curated-bracket ${stages.length ? "staged" : tournamentCuratedBracketLayoutClass(regions)}">
+        ${body}
       </div>
     </section>
   `;
+}
+
+function tournamentBracketStages(regions = []) {
+  const buckets = new Map();
+  regions.forEach((region) => {
+    const stage = region.stage || "";
+    if (!buckets.has(stage)) buckets.set(stage, []);
+    buckets.get(stage).push(region);
+  });
+  if (buckets.size < 2 || !TOURNAMENT_BRACKET_STAGES.some((stage) => buckets.has(stage.id))) return [];
+  const known = TOURNAMENT_BRACKET_STAGES
+    .filter((stage) => buckets.has(stage.id))
+    .map((stage) => ({ title: stage.title, regions: buckets.get(stage.id) }));
+  const rest = [...buckets.keys()]
+    .filter((stage) => !TOURNAMENT_BRACKET_STAGES.some((conhecida) => conhecida.id === stage))
+    .map((stage) => ({ title: stage || "Outras chaves", regions: buckets.get(stage) }));
+  return [...known, ...rest];
+}
+
+function tournamentCuratedBracketLayoutClass(regions = []) {
+  const groupRegions = regions.filter((region) => String(region.className || "").includes("group-stage"));
+  if (regions.length > 0 && groupRegions.length === regions.length) return "groups-layout";
+  if (groupRegions.length) return "has-groups";
+  return regions.length === 1 ? "single-region" : "";
+}
+
+function tournamentCuratedBracketRegions(event, regions = []) {
+  return regions
+    .map((region) => (region.layout === "linked"
+      ? tournamentLinkedBracketRegion(event, region)
+      : tournamentCuratedBracketRegion(event, region)))
+    .join("");
 }
 
 function tournamentBracketDisplayRegions(regions = []) {
@@ -9083,8 +9113,8 @@ function tournamentCuratedBracketQualifiedCard(event, card, context = {}) {
   const name = card.label || team?.name || card.id || "Equipe";
   const rowStart = tournamentBracketRowStart(card.slot ?? context.matchIndex, context.maxMatches || 1, card.slot == null ? context.columnMatches || 1 : context.maxMatches || 1);
   return `
-    <article class="tournament-bracket-match curated-match qualified-card terminal" aria-label="${escapeHtml(`Classificado: ${name}`)}" style="--match-row:${rowStart}">
-      <span class="tournament-bracket-meta"><span>Classificado</span></span>
+    <article class="tournament-bracket-match curated-match qualified-card terminal ${card.id ? "" : "pending"}" aria-label="${escapeHtml(`Classificado: ${name}`)}" style="--match-row:${rowStart}">
+      ${tournamentBracketQualifiedMeta(card)}
       <span class="tournament-bracket-team winner tournament-bracket-qualified-team">
         ${card.id ? teamLogo(card.id, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}
         <strong>${escapeHtml(name)}</strong>
@@ -9094,10 +9124,7 @@ function tournamentCuratedBracketQualifiedCard(event, card, context = {}) {
 }
 
 function tournamentCuratedBracketMatch(event, match, context = {}) {
-  const hasResult = tournamentBracketMatchHasResult(match);
-  const winner = hasResult
-    ? match.winner || (Number(match.scoreA) === Number(match.scoreB) ? "" : Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b)
-    : "";
+  const winner = tournamentBracketMatchWinner(match);
   const key = tournamentBracketMatchKey(context.columnIndex, context.matchIndex, match.code);
   const connectorMode = context.connectorMode || "terminal";
   const branch = connectorMode === "merge" ? (context.matchIndex % 2 === 0 ? "top" : "bottom") : "straight";
@@ -9106,11 +9133,30 @@ function tournamentCuratedBracketMatch(event, match, context = {}) {
   const classes = ["tournament-bracket-match", "curated-match", `connector-${connectorMode}`, connectorMode === "terminal" ? "terminal" : "", `branch-${branch}`].filter(Boolean).join(" ");
   return `
     <button type="button" class="${escapeHtml(classes)}" data-tournament-match="${escapeHtml(key)}" style="--match-row:${rowStart}; --connector-span-rows:${connectorSpanRows}">
-      <span class="tournament-bracket-meta"><span>${escapeHtml(tournamentBracketMatchStatusLabel(match))}</span><b>${escapeHtml(match.code || "Partida")}</b>${match.bestOf ? `<em>${escapeHtml(match.bestOf)}</em>` : ""}</span>
+      ${tournamentBracketMatchMeta(match)}
       ${tournamentCuratedBracketTeam(event, match.a, match.aLabel, match.scoreA, winner === match.a)}
       ${tournamentCuratedBracketTeam(event, match.b, match.bLabel, match.scoreB, winner === match.b)}
     </button>
   `;
+}
+
+function tournamentBracketMatchWinner(match) {
+  if (!tournamentBracketMatchHasResult(match)) return "";
+  if (match.winner) return match.winner;
+  if (Number(match.scoreA) === Number(match.scoreB)) return "";
+  return Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b;
+}
+
+// Enquanto a partida nao tem data nem resultado, o rotulo do confronto
+// ("Final superior") informa mais que um "A jogar" repetido em toda a chave.
+function tournamentBracketMatchMeta(match) {
+  const useLabel = Boolean(match.label) && !match.status && !tournamentBracketMatchHasResult(match);
+  const lead = useLabel ? match.label : tournamentBracketMatchStatusLabel(match);
+  return `<span class="tournament-bracket-meta"><span${useLabel ? ` class="bracket-meta-label"` : ""}>${escapeHtml(lead)}</span><b>${escapeHtml(match.code || "Partida")}</b>${match.bestOf ? `<em>${escapeHtml(match.bestOf)}</em>` : ""}</span>`;
+}
+
+function tournamentBracketQualifiedMeta(card) {
+  return `<span class="tournament-bracket-meta"><span>${escapeHtml(card.note || "Classificado")}</span></span>`;
 }
 
 function tournamentBracketMatchHasResult(match) {
@@ -9141,6 +9187,108 @@ function tournamentBracketRowStart(matchIndex, maxMatches, columnMatches) {
   const safeMax = Math.max(maxMatches, 1);
   const safeCount = Math.max(columnMatches, 1);
   return Math.max(1, Math.round(((matchIndex + 0.5) * safeMax * 2) / safeCount - 1) + 1);
+}
+
+// Chave encadeada: cada partida declara em que faixa ("band") mora e de quais
+// partidas ela vem ("from"). A grade alterna colunas de card e colunas de
+// conector, entao a linha que liga dois cards e um item de grade com posicao
+// exata em vez de um pseudo-elemento pendurado no card de origem.
+const LINKED_BRACKET_UNITS_PER_BAND = 4;
+
+function tournamentLinkedBracketRegion(event, region) {
+  const columns = tournamentLinkedBracketColumns(event, region);
+  const places = new Map();
+  columns.forEach((column, columnIndex) => {
+    column.entries.forEach((entry) => places.set(entry.id, { column: columnIndex, band: entry.band }));
+  });
+  const links = columns.flatMap((column, columnIndex) => column.entries.flatMap((entry) => (entry.from || [])
+    .map((sourceId) => places.get(sourceId))
+    .filter((source) => source && source.column < columnIndex)
+    .map((source) => tournamentLinkedBracketLink(source, { column: columnIndex, band: entry.band }))));
+  const template = columns.map(() => "var(--linked-col)").join(" var(--linked-gap) ");
+  return `
+    <section class="tournament-bracket-region linked-region ${escapeHtml(region.className || "")}">
+      <h3>${escapeHtml(region.name || "Chave")}</h3>
+      <div class="tournament-linked-bracket" style="--linked-template:${template}">
+        ${columns.map((column, columnIndex) => (normalize(column.title || "") === normalize(region.name || "")
+          ? ""
+          : `<h4 class="linked-bracket-title" style="grid-column:${columnIndex * 2 + 1}">${escapeHtml(column.title || "")}</h4>`)).join("")}
+        ${links.join("")}
+        ${columns.flatMap((column, columnIndex) => column.entries.map((entry) => entry.render(tournamentLinkedBracketPlacement(columnIndex, entry.band)))).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function tournamentLinkedBracketColumns(event, region) {
+  const columns = (region.columns || []).map((column, columnIndex) => ({
+    title: column.title,
+    entries: (column.matches || []).map((match, matchIndex) => ({
+      id: match.code,
+      band: Number(match.band ?? matchIndex),
+      from: match.from,
+      render: (placement) => tournamentLinkedBracketMatch(event, match, tournamentBracketMatchKey(columnIndex, matchIndex, match.code), placement),
+    })),
+  }));
+  const cards = region.terminalColumn?.cards || [];
+  if (cards.length) {
+    columns.push({
+      title: region.terminalColumn.title || "Classificados",
+      entries: cards.map((card, cardIndex) => ({
+        id: `${region.name}::classificado::${cardIndex}`,
+        band: Number(card.band ?? cardIndex),
+        from: card.from,
+        render: (placement) => tournamentLinkedBracketQualifiedCard(event, card, placement),
+      })),
+    });
+  }
+  return columns;
+}
+
+function tournamentLinkedBracketPlacement(columnIndex, band) {
+  const rowStart = 2 + Math.round(band * LINKED_BRACKET_UNITS_PER_BAND);
+  return `grid-column:${columnIndex * 2 + 1}; grid-row:${rowStart} / span ${LINKED_BRACKET_UNITS_PER_BAND}`;
+}
+
+function tournamentLinkedBracketLink(source, target) {
+  const first = Math.min(source.band, target.band);
+  const last = Math.max(source.band, target.band);
+  const rows = Math.round((last - first) * LINKED_BRACKET_UNITS_PER_BAND) + LINKED_BRACKET_UNITS_PER_BAND;
+  const center = (band) => `${((((band - first) * LINKED_BRACKET_UNITS_PER_BAND + LINKED_BRACKET_UNITS_PER_BAND / 2) / rows) * 100).toFixed(3)}%`;
+  const style = [
+    `grid-column:${source.column * 2 + 2} / ${target.column * 2 + 1}`,
+    `grid-row:${2 + Math.round(first * LINKED_BRACKET_UNITS_PER_BAND)} / span ${rows}`,
+    `--linked-y-from:${center(source.band)}`,
+    `--linked-y-to:${center(target.band)}`,
+  ].join("; ");
+  const straight = source.band === target.band;
+  const elbow = straight ? "" : `<span class="linked-link-drop" style="--linked-y-top:${center(first)}; --linked-y-bottom:${center(last)}"></span>`;
+  return `<span class="linked-link${straight ? " straight" : ""}" aria-hidden="true" style="${style}">${elbow}</span>`;
+}
+
+function tournamentLinkedBracketMatch(event, match, key, placement) {
+  const winner = tournamentBracketMatchWinner(match);
+  return `
+    <button type="button" class="tournament-bracket-match curated-match linked-match" data-tournament-match="${escapeHtml(key)}" style="${placement}">
+      ${tournamentBracketMatchMeta(match)}
+      ${tournamentCuratedBracketTeam(event, match.a, match.aLabel, match.scoreA, winner === match.a)}
+      ${tournamentCuratedBracketTeam(event, match.b, match.bLabel, match.scoreB, winner === match.b)}
+    </button>
+  `;
+}
+
+function tournamentLinkedBracketQualifiedCard(event, card, placement) {
+  const team = tournamentTeamById(event, card.id);
+  const name = card.label || team?.name || card.id || "Equipe";
+  return `
+    <article class="tournament-bracket-match curated-match qualified-card terminal linked-match ${card.id ? "" : "pending"}" aria-label="${escapeHtml(`${card.note || "Classificado"}: ${name}`)}" style="${placement}">
+      ${tournamentBracketQualifiedMeta(card)}
+      <span class="tournament-bracket-team winner tournament-bracket-qualified-team">
+        ${card.id ? teamLogo(card.id, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}
+        <strong>${escapeHtml(name)}</strong>
+      </span>
+    </article>
+  `;
 }
 
 function tournamentCuratedBracketTeam(event, teamId, label, score, won) {
@@ -9499,12 +9647,12 @@ function tournamentMatchPreviewHtml(entry) {
       <div class="preview-kicker">${escapeHtml(region.name || "Bracket")} - ${escapeHtml(column.title || "Rodada")}</div>
       <h3>${escapeHtml(match.code || "Partida")} ${match.bestOf ? `<span>${escapeHtml(match.bestOf)}</span>` : ""}</h3>
       <div class="preview-scoreboard">
-        ${tournamentPreviewTeam(event, teamA, match.scoreA, winnerId === match.a)}
+        ${tournamentPreviewTeam(event, teamA, match.scoreA, winnerId === match.a, hasResult)}
         <span class="preview-score">${escapeHtml(String(match.scoreA ?? "-"))}<small>x</small>${escapeHtml(String(match.scoreB ?? "-"))}</span>
-        ${tournamentPreviewTeam(event, teamB, match.scoreB, winnerId === match.b)}
+        ${tournamentPreviewTeam(event, teamB, match.scoreB, winnerId === match.b, hasResult)}
       </div>
       <div class="preview-summary-grid">
-        <span><small>${hasResult ? "Vencedor" : "Status"}</small><strong>${escapeHtml(hasResult ? tournamentTeamById(event, winnerId)?.name || "Concluida" : "A jogar")}</strong></span>
+        <span><small>${hasResult ? "Vencedor" : "Status"}</small><strong>${escapeHtml(hasResult ? tournamentTeamById(event, winnerId)?.name || "Concluida" : tournamentBracketMatchStatusLabel(match))}</strong></span>
         <span><small>Formato</small><strong>${escapeHtml(match.bestOf || series?.label || "MD1")}</strong></span>
         <span><small>Data</small><strong>${escapeHtml(series ? formatDate(series.startedAt, "time") : eventTimeRange(event))}</strong></span>
       </div>
@@ -9518,13 +9666,13 @@ function tournamentMatchPreviewHtml(entry) {
   `;
 }
 
-function tournamentPreviewTeam(event, team, score, won) {
+function tournamentPreviewTeam(event, team, score, won, decided = true) {
   if (!team) return `<span class="preview-team"><span class="team-logo clean-logo logo-empty"></span><strong>Sem adversário</strong><small>${escapeHtml(String(score ?? "-"))}</small></span>`;
   return `
     <span class="preview-team ${won ? "winner" : ""}">
       ${teamLogo(team.id)}
       <strong>${escapeHtml(team.name)}</strong>
-      <small>${won ? "Vitória" : "Derrota"}</small>
+      <small>${decided ? (won ? "Vitória" : "Derrota") : "A definir"}</small>
     </span>
   `;
 }

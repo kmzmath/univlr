@@ -6313,7 +6313,7 @@ td {
   outline-offset: 2px;
 }
 
-.tournament-bracket-match.curated-match:has(.tournament-bracket-team.winner:last-child) {
+.tournament-bracket-match.curated-match:not(.pending):has(.tournament-bracket-team.winner:last-child) {
   border-left-color: #d69024;
 }
 
@@ -6328,6 +6328,23 @@ a.tournament-bracket-match:hover {
   border-left-color: #41d49b;
   background: linear-gradient(145deg, rgba(29, 94, 76, 0.34), var(--univlr-graphite-3) 72%);
   cursor: default;
+}
+
+/* Vaga ainda em aberto nao usa o verde de classificado: verde e resultado. */
+.tournament-bracket-match.qualified-card.pending {
+  border-color: rgba(134, 157, 190, 0.16);
+  border-left-color: #41566f;
+  background: var(--univlr-graphite-3);
+}
+
+.tournament-bracket-match.qualified-card.pending .tournament-bracket-meta span {
+  color: #86a6c9;
+}
+
+.tournament-bracket-match.qualified-card.pending .tournament-bracket-qualified-team {
+  border-top-color: rgba(134, 157, 190, 0.16);
+  background: rgba(9, 17, 28, 0.22);
+  color: #7890a8;
 }
 
 .tournament-bracket-match.qualified-card .tournament-bracket-meta span {
@@ -6396,7 +6413,9 @@ a.tournament-bracket-match:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  justify-self: start;
+  /* `start` dimensiona pelo conteudo, entao a reticencia nunca entrava e
+     nome longo passava por cima do placar. */
+  justify-self: stretch;
 }
 
 .tournament-bracket-team.bye {
@@ -6412,6 +6431,165 @@ a.tournament-bracket-match:hover {
   color: inherit;
   font-variant-numeric: tabular-nums;
   justify-self: stretch;
+}
+
+/* Fases da chave: grupos primeiro, playoffs depois, cada uma com o proprio
+   titulo. Vive dentro do mesmo .tournament-curated-bracket porque o clique nas
+   partidas e delegado a partir desse no. */
+.tournament-curated-bracket.staged {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: none;
+  gap: 34px;
+}
+
+.tournament-bracket-stage {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.tournament-bracket-stage-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  color: #edf4fb;
+  font-size: var(--text-sm);
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.tournament-bracket-stage-title::after {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(134, 157, 190, 0.3), rgba(134, 157, 190, 0));
+  content: "";
+}
+
+.tournament-bracket-stage-body {
+  display: grid;
+  gap: 26px;
+  min-width: 0;
+}
+
+.tournament-bracket-region.linked-region {
+  gap: 10px;
+  grid-area: auto;
+}
+
+/* A grade alterna coluna de card e coluna de conector, entao a linha entre
+   duas partidas e um item posicionado, nao um pseudo-elemento do card. */
+.tournament-linked-bracket {
+  --linked-col: 228px;
+  --linked-gap: 54px;
+  --linked-unit: 32px;
+  --linked-line: #4f6884;
+  --bracket-card-height: 108px;
+  display: grid;
+  grid-template-columns: var(--linked-template);
+  grid-template-rows: auto;
+  grid-auto-rows: var(--linked-unit);
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 4px 14px;
+  scrollbar-color: #31445d #101927;
+}
+
+.linked-bracket-title {
+  grid-row: 1;
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tournament-linked-bracket .linked-match {
+  align-self: center;
+  z-index: 2;
+}
+
+/* O card de classificado tem uma linha de equipe so: sem isto ele soma 112px
+   num trilho de 108px e vaza para fora da faixa. */
+.tournament-linked-bracket .qualified-card {
+  grid-template-rows: 30px minmax(0, 1fr);
+}
+
+.tournament-linked-bracket .tournament-bracket-qualified-team {
+  height: auto;
+}
+
+.tournament-linked-bracket .linked-match::before,
+.tournament-linked-bracket .linked-match::after {
+  display: none;
+}
+
+.linked-link {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.linked-link::before,
+.linked-link::after {
+  position: absolute;
+  border-top: 2px solid var(--linked-line);
+  content: "";
+}
+
+.linked-link::before {
+  top: var(--linked-y-from);
+  left: 0;
+  width: 50%;
+}
+
+.linked-link::after {
+  top: var(--linked-y-to);
+  right: 0;
+  width: 50%;
+}
+
+.linked-link.straight::before {
+  width: 100%;
+}
+
+.linked-link.straight::after {
+  display: none;
+}
+
+.linked-link-drop {
+  position: absolute;
+  top: var(--linked-y-top);
+  left: 50%;
+  height: calc(var(--linked-y-bottom) - var(--linked-y-top));
+  border-left: 2px solid var(--linked-line);
+}
+
+.tournament-bracket-meta span.bracket-meta-label {
+  color: #86a6c9;
+}
+
+@media (max-width: 1180px) {
+  /* Aperta so o vao: encolher o card corta o nome da equipe, e a chave rola
+     na horizontal de qualquer jeito. */
+  .tournament-linked-bracket {
+    --linked-gap: 44px;
+  }
+}
+
+@media (max-width: 760px) {
+  .tournament-linked-bracket {
+    --linked-col: 220px;
+    --linked-gap: 34px;
+    --linked-unit: 30px;
+  }
+
+  .tournament-bracket-stage-body {
+    gap: 20px;
+  }
 }
 
 .tournament-swiss-section {
@@ -8786,7 +8964,10 @@ a.tournament-bracket-match:hover {
   }
 
   .tournament-facts {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Duas colunas, e nao tres: sao dez estatisticas, e 2x5 fecha cinco
+       linhas cheias. Com tres, a ultima linha ficava com um item e dois
+       buracos. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .tournament-facts span {
@@ -11881,7 +12062,10 @@ select {
   }
 
   .player-page .player-matches-section .team-results-summary {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Duas colunas, e nao tres: sao dez estatisticas, e 2x5 fecha cinco
+       linhas cheias. Com tres, a ultima linha ficava com um item e dois
+       buracos. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -14821,7 +15005,10 @@ small,
    para o apelido, ou seja, so a reticencia. */
 @media (max-width: 1180px) {
   .week-rail {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Duas colunas, e nao tres: sao dez estatisticas, e 2x5 fecha cinco
+       linhas cheias. Com tres, a ultima linha ficava com um item e dois
+       buracos. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

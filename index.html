@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UNIVLR</title>
+
     <!-- O cartao que aparece ao colar um link do site no WhatsApp, Discord ou
          Twitter. Este e o cartao GENERICO, e ele vale para qualquer endereco
          com `#`: tudo depois do `#` nunca chega ao servidor, entao o robo pede
@@ -27,9 +28,23 @@
     <link rel="preload" as="image" href="assets/univlr_logo_longa.png" />
     <link rel="preload" as="image" href="assets/logo_univlr.png" />
     <link rel="stylesheet" href="styles.css?v=283" />
+
+    <!-- Medicao de audiencia. `data-auto-pageview` desligado porque a rota do
+         UNIVLR mora depois do `#` e nunca chega ao servidor: o automatico
+         contaria uma visita por sessao inteira, e nao uma por pagina. Quem
+         conta e o analytics.js, chamado pelo render(). O `data-before-send`
+         aponta para a funcao que barra o envio na maquina local. -->
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="a8fcafd0-f69b-408f-9f23-7aff9c2dc791"
+      data-auto-pageview="false"
+      data-before-send="umamiBeforeSend"
+    ></script>
   </head>
   <body>
     <div id="app"></div>
+    <script src="analytics.js?v=4"></script>
     <script src="db-codec.js?v=1"></script>
     <script src="raating-core.js?v=88"></script>
     <script src="ranking-core.js?v=87"></script>
@@ -43,6 +58,6 @@
     <script src="favorites.js?v=3"></script>
     <script src="news.js?v=15"></script>
     <script src="auth.js?v=5"></script>
-    <script src="app.js?v=227"></script>
+    <script src="app.js?v=229"></script>
   </body>
 </html>

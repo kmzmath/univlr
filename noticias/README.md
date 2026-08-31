@@ -61,6 +61,50 @@ vira parágrafo comum. O que funciona:
 - Tabelas
 - Citação (parágrafo com estilo Citação)
 
+## Mencionar uma equipe, jogador ou partida
+
+Marque a menção como **link normal do Word** (Ctrl+K) apontando para o endereço
+da página no próprio site. O jeito mais fácil é abrir a página, copiar a URL da
+barra de endereços e colar.
+
+```
+CEUB Octopus   ->  https://univlr.onrender.com/#/teams/ceub_octopus
+kssarato       ->  https://univlr.onrender.com/#/players/kssarato
+uma partida    ->  https://univlr.onrender.com/#/matches/304e0da1-...
+```
+
+Na página publicada, o link vira uma menção com o símbolo colado no nome:
+
+- **Equipe** ganha o escudo, em vermelho.
+- **Jogador** ganha o escudo da **equipe dele**, não a foto — só 9,6% dos
+  jogadores têm foto, então a silhueta apareceria na maioria das menções.
+- **Partida e campeonato** ganham o logo do campeonato, em azul.
+
+O escudo é buscado no banco na hora de desenhar, não gravado no `news.json`.
+Se uma equipe trocar de logo, as matérias antigas acompanham.
+
+## Colocar o placar de um jogador numa partida
+
+Escreva um parágrafo sozinho com:
+
+```
+{{placar: <id da partida> | <nick do jogador>}}
+```
+
+Por exemplo:
+
+```
+{{placar: 304e0da1-3603-4a89-9fd4-5e6c593b5415 | kssarato}}
+```
+
+O id da partida está na URL dela. O bloco é montado a partir do banco: rAAting,
+ACS, kills, mortes, assistências, KAST, ADR, Swing/R, multi-kills, FK e FD.
+
+**Digitar a tabela na mão funcionaria hoje e envelheceria amanhã.** Se a
+partida for reprocessada, os números do texto passariam a mentir; assim eles
+seguem o banco para sempre. Se o id ou o nick não existirem, o bloco
+simplesmente não aparece - o token nunca vaza como texto para o leitor.
+
 ## 3. Publicar
 
 ```bash

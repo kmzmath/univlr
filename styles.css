@@ -18402,3 +18402,201 @@ img {
 }
 
 .home-topo.sozinho .news-heroi.sem-capa { min-height: 200px; }
+
+/* ------------------------------------------------ mencoes dentro da materia
+   Um link para equipe, jogador, partida ou campeonato vira uma mencao rica:
+   o simbolo da entidade colado no nome. O simbolo ja marca o link, entao o
+   sublinhado sai e volta so no hover - com logo E sublinhado, cada mencao
+   viraria um bloco pesado no meio do paragrafo. */
+
+.news-corpo .news-ent {
+  /* `inline`, e nao inline-flex: com flex o nome inteiro vira uma caixa que
+     nao quebra, e uma mencao longa no fim da linha empurraria o paragrafo. O
+     simbolo fica colado no primeiro caractere porque nao ha espaco entre os
+     dois no HTML - o navegador so quebra onde ha espaco. */
+  display: inline;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.news-corpo .news-ent:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Em `em`, e nao em pixels: o escudo acompanha o tamanho do texto em volta.
+   Em pixels fixos ele encolhe visualmente num titulo e cresce demais numa
+   legenda. */
+.news-ent-logo {
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  margin-right: 0.3em;
+  vertical-align: -0.24em;
+}
+
+.news-ent-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Sem arte, o simbolo some em vez de deixar caixa vazia no meio da frase. */
+.news-ent-logo.logo-empty { display: none; }
+
+/* Partida em azul, o token de informacao: vermelho e a marca e teal ja marca
+   o que a comunidade produz, entao o azul fica livre para "va ver isso". */
+.news-corpo .news-ent-matches {
+  color: var(--info);
+}
+
+/* Campeonato acompanha a partida - sao a mesma familia de destino. */
+.news-corpo .news-ent-tournaments,
+.news-corpo .news-ent-events {
+  color: var(--info);
+}
+
+/* Equipe e jogador ficam no vermelho de texto do site, que e a cor de link
+   que o resto da materia ja usa. */
+.news-corpo .news-ent-teams,
+.news-corpo .news-ent-players,
+.news-corpo .news-ent-u {
+  color: var(--brand-text);
+}
+
+/* ---------------------------------------------------- placar de uma partida
+   Bloco montado pelo renderizador a partir do banco, e nao digitado no Word:
+   assim a linha nunca envelhece. O desenho segue o scoreboard do site - a
+   nota grande a esquerda e as demais colunas em tabular-nums. */
+
+.news-placar {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface-3);
+}
+
+.news-placar-topo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+  flex-wrap: wrap;
+}
+
+.news-placar-topo .news-ent-logo { width: 22px; height: 22px; }
+
+.news-placar-partida {
+  font: 700 var(--text-sm) / 1.3 var(--font-text);
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.news-placar-partida:hover { color: var(--info); }
+
+.news-placar-evento {
+  font: 600 var(--text-2xs) / 1 var(--font-text);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-left: auto;
+}
+
+.news-placar-corpo {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+.news-placar-nota {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-5);
+  min-width: 168px;
+  border-right: 1px solid var(--line);
+}
+
+.news-placar-jogador {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: 700 var(--text-md) / 1.2 var(--font-text);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.news-placar-jogador:hover { color: var(--brand-text); }
+.news-placar-jogador .news-ent-logo { width: 20px; height: 20px; }
+
+.news-placar-valor {
+  font: 800 var(--text-4xl) / 1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.news-placar-rotulo {
+  font: 600 var(--text-2xs) / 1 var(--font-text);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+/* Cinco colunas fixas, e nao auto-fit: sao dez estatisticas, entao 5x2 fecha
+   duas linhas cheias. Com auto-fit a largura disponivel dava sete na primeira
+   linha e tres na segunda, deixando um vazio do tamanho de quatro celulas. */
+.news-placar-grade {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  min-width: 0;
+}
+
+.news-placar-item {
+  padding: var(--space-4) var(--space-3);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+
+.news-placar-item strong {
+  display: block;
+  font: 800 var(--text-lg) / 1.1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.news-placar-item span {
+  display: block;
+  margin-top: var(--space-1);
+  font: 600 var(--text-2xs) / 1 var(--font-text);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 560px) {
+  .news-placar-nota {
+    min-width: 0;
+    width: 100%;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding: var(--space-4);
+  }
+  /* `flex: 1` sozinho colapsa aqui: com a nota ocupando 100% a grade quebra
+     para a linha de baixo, e com base 0 e sem largura ela fica com ZERO de
+     largura e os itens vazam para fora do cartao. */
+  .news-placar-grade {
+    flex: 1 0 100%;
+    width: 100%;
+    /* Duas colunas, e nao tres: sao dez estatisticas, e 2x5 fecha cinco
+       linhas cheias. Com tres, a ultima linha ficava com um item e dois
+       buracos. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

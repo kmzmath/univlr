@@ -155,6 +155,161 @@
       </section>`);
   }
 
+  // ------------------------------------------------- mencoes a entidades
+  //
+  // No Word voce marca uma mencao como link normal (Ctrl+K), colando o
+  // endereco copiado do proprio site. O mammoth entrega isso como <a href>, e
+  // aqui o link vira uma mencao rica: logo ao lado do nome, e cor propria
+  // quando e partida.
+  //
+  // Feito no RENDER e nao no build de proposito: a logo e o nome vem do JSON
+  // do banco, que muda a cada atualizacao. Se ficasse gravado no news.json,
+  // uma equipe que trocasse de escudo ficaria com o antigo na materia.
+
+  const ROTAS = /^#\/(teams|players|matches|tournaments|events|u)\/([^/?#]+)/;
+
+  // Aceita o endereco completo copiado do navegador, nao so o hash: colar a
+  // URL da barra de enderecos e o gesto natural de quem esta escrevendo.
+  function paraHashInterno(href) {
+    if (!href) return null;
+    if (href.startsWith("#/")) return href;
+    const m = href.match(/^https?:\/\/[^/]+\/(?:index\.html)?(#\/.*)$/);
+    return m ? m[1] : null;
+  }
+
+  function logoDaMencao(tipo, id) {
+    try {
+      if (typeof state === "undefined" || !state.db) return "";
+
+      if (tipo === "teams") {
+        return typeof window.teamLogo === "function" ? window.teamLogo(id, "news-ent-logo") : "";
+      }
+
+      if (tipo === "players") {
+        // A pedido: jogador mostra o escudo da EQUIPE, nao a foto. So 9,6% dos
+        // jogadores tem foto, entao a silhueta apareceria na maioria das
+        // mencoes - e o escudo diz mais sobre quem e a pessoa no texto.
+        const j = typeof window.playerById === "function" ? window.playerById(id) : null;
+        const t = j && typeof window.playerPrimaryTeam === "function" ? window.playerPrimaryTeam(j) : null;
+        return t && typeof window.teamLogo === "function" ? window.teamLogo(t.id, "news-ent-logo") : "";
+      }
+
+      if (tipo === "matches") {
+        const m = state.db.matches.find((x) => x.id === id);
+        const ev = m && state.db.tournaments.find((t) => t.id === m.eventId);
+        return ev && typeof window.eventLogo === "function" ? window.eventLogo(ev, "news-ent-logo") : "";
+      }
+
+      if (tipo === "tournaments" || tipo === "events") {
+        const ev = state.db.tournaments.find((t) => t.id === id);
+        return ev && typeof window.eventLogo === "function" ? window.eventLogo(ev, "news-ent-logo") : "";
+      }
+    } catch (erro) {
+      return "";
+    }
+    return "";
+  }
+
+  function enriqueceMencoes(raiz) {
+    raiz.querySelectorAll("a[href]").forEach((a) => {
+      const hash = paraHashInterno(a.getAttribute("href"));
+      if (!hash) return;
+      a.setAttribute("href", hash);
+
+      const m = hash.match(ROTAS);
+      if (!m) return;
+      const [, tipo, id] = m;
+
+      a.classList.add("news-ent", `news-ent-${tipo}`);
+      // O bloco de placar ja monta os proprios links COM escudo. Sem esta
+      // guarda, o enriquecimento passa depois e cola um segundo escudo neles.
+      if (a.querySelector(".news-ent-logo")) return;
+      const logo = logoDaMencao(tipo, decodeURIComponent(id));
+      // Sem logo o link continua funcionando e so nao ganha o simbolo - melhor
+      // que uma caixa vazia no meio da frase.
+      if (logo) a.insertAdjacentHTML("afterbegin", logo);
+    });
+  }
+
+  // ------------------------------------------------- placar de uma partida
+  //
+  // No Word, um paragrafo sozinho com:
+  //
+  //   {{placar: <id da partida> | <nick do jogador>}}
+  //
+  // vira o bloco de estatisticas montado AQUI, a partir do banco. Digitar a
+  // tabela na mao funcionaria hoje e envelheceria amanha: se a partida for
+  // reprocessada, os numeros do texto ficariam mentindo. Assim eles seguem o
+  // banco para sempre.
+
+  const TOKEN_PLACAR = /^\{\{\s*placar\s*:\s*([^|]+?)\s*\|\s*(.+?)\s*\}\}$/i;
+
+  // Virgula decimal: o resto da materia e escrito em portugues, e "1.00" no
+  // meio de um texto que diz "0,68" le como outra coisa.
+  const num = (v, casas = 0) =>
+    Number.isFinite(Number(v)) ? Number(v).toFixed(casas).replace(".", ",") : "-";
+
+  function montaPlacar(idPartida, nick) {
+    if (typeof state === "undefined" || !state.db) return null;
+    const m = state.db.matches.find((x) => x.id === idPartida || x.id.startsWith(idPartida));
+    if (!m) return null;
+    const jogador = (m.players || []).find(
+      (x) => String(x.nick || "").toLowerCase() === String(nick).toLowerCase()
+    );
+    if (!jogador) return null;
+
+    const ev = state.db.tournaments.find((t) => t.id === m.eventId);
+    const nomeTime = (id) => (state.db.teams.find((t) => t.id === id) || {}).name || id;
+    const placar = `${esc(nomeTime(m.teamA.id))} ${m.teamA.score ?? m.teamA.roundsWon ?? ""} x ${m.teamB.score ?? m.teamB.roundsWon ?? ""} ${esc(nomeTime(m.teamB.id))}`;
+    const jog = typeof window.playerById === "function" ? window.playerById(jogador.nick) : null;
+    const timeDoJogador = jog && typeof window.playerPrimaryTeam === "function" ? window.playerPrimaryTeam(jog) : null;
+    const escudo = timeDoJogador && typeof window.teamLogo === "function" ? window.teamLogo(timeDoJogador.id, "news-ent-logo") : "";
+    const logoEv = ev && typeof window.eventLogo === "function" ? window.eventLogo(ev, "news-ent-logo") : "";
+
+    const swing = Number(jogador.impactRound);
+    const colunas = [
+      ["ACS", num(jogador.acs)],
+      ["Kills", num(jogador.kills)],
+      ["Mortes", num(jogador.deaths)],
+      ["Assist.", num(jogador.assists)],
+      ["KAST", num(jogador.kast) + "%"],
+      ["ADR", num(jogador.adr)],
+      ["Swing/R", (swing >= 0 ? "+" : "") + num(swing, 1)],
+      ["Multi-kills", num(jogador.multi_kill_rounds)],
+      ["FK", num(jogador.opening_kills)],
+      ["FD", num(jogador.opening_deaths)],
+    ];
+
+    return `
+      <div class="news-placar">
+        <div class="news-placar-topo">
+          <a class="news-placar-partida" href="#/matches/${esc(m.id)}">${logoEv}${placar}</a>
+          ${ev ? `<span class="news-placar-evento">${esc(ev.name)}</span>` : ""}
+        </div>
+        <div class="news-placar-corpo">
+          <div class="news-placar-nota">
+            <a class="news-placar-jogador" href="#/players/${esc(jog?.routeSlug || jogador.nick)}">${escudo}${esc(jogador.nick)}</a>
+            <span class="news-placar-valor">${num(jogador.raating_3 ?? jogador.rating, 2)}</span>
+            <span class="news-placar-rotulo">rAAting 3.0</span>
+          </div>
+          <div class="news-placar-grade">
+            ${colunas.map(([r, v]) => `<div class="news-placar-item"><strong>${esc(v)}</strong><span>${esc(r)}</span></div>`).join("")}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function trocaPlacares(raiz) {
+    raiz.querySelectorAll("p").forEach((p) => {
+      const m = (p.textContent || "").trim().match(TOKEN_PLACAR);
+      if (!m) return;
+      const bloco = montaPlacar(m[1], m[2]);
+      // Sem partida ou sem jogador o token some, em vez de ficar na tela como
+      // texto cru para o leitor.
+      p.outerHTML = bloco || "";
+    });
+  }
+
   // ------------------------------------------------------------------ materia
 
   function renderArtigo(slug) {
@@ -183,6 +338,12 @@
         <div class="news-corpo">${a.html}</div>
         ${window.Comments ? window.Comments.shell("article", a.slug) : ""}
       </article>`);
+
+    const corpo = document.querySelector(".news-corpo");
+    if (corpo) {
+      trocaPlacares(corpo);
+      enriqueceMencoes(corpo);
+    }
 
     window.Comments?.montar("article", a.slug);
   }

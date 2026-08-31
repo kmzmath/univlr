@@ -18096,11 +18096,23 @@ img {
   font-size: var(--text-md);
 }
 
+/* `tabular-nums` porque o alinhamento de paragrafo do Word nao sobrevive a
+   conversao: sem ele, uma coluna de "3.768 / 4.749 / 11.899" fica com os
+   digitos de larguras diferentes e a coluna deixa de ler como coluna. Com
+   ele, os numeros se empilham mesmo alinhados a esquerda. */
 .news-corpo th,
 .news-corpo td {
   padding: var(--space-3);
   border-bottom: 1px solid var(--line);
   text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Linha do cabecalho separada por um traco mais forte, senao a tabela de 25
+   linhas le como 26 iguais. */
+.news-corpo thead th,
+.news-corpo tr:first-child th {
+  border-bottom-color: var(--line-dark);
 }
 
 .news-artigo .cmt-secao { margin-top: var(--space-8); }

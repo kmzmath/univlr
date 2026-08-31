@@ -17,7 +17,9 @@
 //   slug    <- o resto do nome do arquivo
 //   titulo  <- o primeiro Titulo 1 do documento
 //   resumo  <- o primeiro paragrafo
-//   capa    <- a primeira imagem do documento
+//   capa    <- um arquivo de imagem com o MESMO nome do .docx, ao lado dele
+//              (ex.: 2026-08-30-titulo.webp); na falta dele, a primeira
+//              imagem de dentro do documento
 //
 // Titulo e capa saem do corpo depois de virarem metadado, senao apareceriam
 // duas vezes na pagina da materia. O resumo FICA - ele e a abertura do texto,
@@ -31,6 +33,7 @@ const ROOT = path.resolve(__dirname, "..");
 const ENTRADA = path.join(ROOT, "noticias");
 const SAIDA = path.join(ROOT, "news.json");
 const ASSETS = path.join(ROOT, "assets", "noticias");
+const EXT_IMAGEM = [".webp", ".jpg", ".jpeg", ".png", ".gif"];
 
 // Word grava PNG/JPEG sem content-type as vezes (e o gerador de teste tambem),
 // entao o tipo sai dos bytes, que nunca mentem.
@@ -76,6 +79,19 @@ function textoDe(html) {
     .trim();
 }
 
+// Capa ao lado do documento, com o mesmo nome. Existe porque a capa e a maior
+// imagem da materia e a que mais pesa: colada dentro do Word ela entraria no
+// tamanho e formato que o Word guardou (o PNG desta materia tinha 1,1 MB
+// contra 50 KB do mesmo quadro em WebP). Como arquivo separado, da para
+// dimensionar e comprimir antes, sem brigar com o Word.
+function capaAoLado(arquivo) {
+  const base = arquivo.slice(0, -path.extname(arquivo).length);
+  for (const ext of EXT_IMAGEM) {
+    if (fs.existsSync(base + ext)) return base + ext;
+  }
+  return null;
+}
+
 async function converte(arquivo) {
   const { data, slug } = partesDoNome(arquivo);
   const destinoImagens = path.join(ASSETS, slug);
@@ -109,14 +125,24 @@ async function converte(arquivo) {
   });
   if (!titulo) titulo = slug.replace(/-/g, " ");
 
-  // Capa: primeira imagem, e sai do corpo (vira o heroi da materia).
+  // Capa. O arquivo ao lado do documento tem prioridade; sem ele, a primeira
+  // imagem de dentro do texto e promovida a capa e SAI do corpo, senao ela
+  // apareceria duas vezes na pagina.
   let capa = "";
-  html = html.replace(/<p>\s*<img[^>]*src="([^"]+)"[^>]*>\s*<\/p>/, (todo, src) => {
-    if (capa) return todo;
-    capa = src;
-    return "";
-  });
-  if (!capa && imagens.length) capa = imagens[0];
+  const aoLado = capaAoLado(arquivo);
+  if (aoLado) {
+    fs.mkdirSync(destinoImagens, { recursive: true });
+    const nome = "capa" + path.extname(aoLado).toLowerCase();
+    fs.copyFileSync(aoLado, path.join(destinoImagens, nome));
+    capa = `assets/noticias/${slug}/${nome}`;
+  } else {
+    html = html.replace(/<p>\s*<img[^>]*src="([^"]+)"[^>]*>\s*<\/p>/, (todo, src) => {
+      if (capa) return todo;
+      capa = src;
+      return "";
+    });
+    if (!capa && imagens.length) capa = imagens[0];
+  }
 
   // Resumo: primeiro paragrafo com texto. Continua no corpo.
   let resumo = "";

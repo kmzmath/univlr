@@ -18010,9 +18010,12 @@ img {
 
 .news-artigo-capa { margin-bottom: var(--space-7); }
 
+/* 21:9, o mesmo do heroi da home: a capa e a MESMA imagem nos dois lugares, e
+   recortes diferentes fariam a materia parecer outra coisa ao abrir. Formato
+   de faixa tambem cabe melhor a capa de noticia, que costuma ser panoramica. */
 .news-artigo-imagem {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 21 / 9;
   object-fit: cover;
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-6);

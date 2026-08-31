@@ -24,7 +24,25 @@ metadado. As regras:
 |---|---|
 | Título | O primeiro parágrafo com estilo **Título 1** |
 | Resumo | O primeiro parágrafo de texto |
-| Capa | A primeira imagem do documento |
+| Capa | Um arquivo de imagem com o **mesmo nome** do `.docx`, ao lado dele |
+
+### A capa fica FORA do Word
+
+Salve a capa como um arquivo separado, com o mesmo nome do documento:
+
+```
+noticias/2026-08-30-boas-vindas-ao-univlr.docx
+noticias/2026-08-30-boas-vindas-ao-univlr.webp   <- a capa
+```
+
+Serve `.webp`, `.jpg`, `.png` ou `.gif`, e o build copia para
+`assets/noticias/<slug>/`. Se não houver arquivo ao lado, a primeira imagem de
+dentro do documento vira a capa.
+
+Ela fica fora do Word porque é a maior imagem da matéria e a que mais pesa: colada
+lá dentro, entra no tamanho e no formato que o Word guardou. A capa desta primeira
+matéria tinha **1,1 MB em PNG** e virou **50 KB em WebP** — o mesmo quadro, 23
+vezes menor. Como arquivo separado, dá para comprimir antes.
 
 Título e capa **saem do corpo** depois de virarem metadado - senão apareceriam
 duas vezes na página. O resumo continua no texto: ele é a abertura da matéria, e

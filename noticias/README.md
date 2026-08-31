@@ -87,27 +87,52 @@ Na página publicada, o link vira uma menção com o símbolo colado no nome:
 O escudo é buscado no banco na hora de desenhar, não gravado no `news.json`.
 Se uma equipe trocar de logo, as matérias antigas acompanham.
 
-## Colocar o placar de um jogador numa partida
+## Blocos de dados dentro do texto
 
-Escreva um parágrafo sozinho com:
+Um parágrafo **sozinho**, sem mais nada na linha, com `{{nome: argumento | argumento}}`
+vira um bloco montado a partir do banco na hora de desenhar a página.
+
+A regra é sempre a mesma: **digitar a tabela na mão funciona hoje e envelhece
+amanhã.** Se a partida for reprocessada ou o ranking rodar de novo, o número
+escrito no Word passa a mentir; assim ele acompanha o banco para sempre. Se o id
+não existir, o bloco simplesmente não aparece - o token nunca vaza como texto
+para o leitor.
+
+| Token | O que vira |
+|---|---|
+| `{{ficha: <equipe> \| <grupo> \| <adversário>}}` | Cartão da equipe: escudo, posição e nota no ranking, grupo e o adversário de estreia |
+| `{{mappool: <equipe>}}` | Tabela de mapas: recorde, saldo de rounds e aproveitamento, com o ícone de cada mapa |
+| `{{elenco: <equipe> \| <campeonato>}}` | Os jogadores que a equipe usou naquele campeonato, com rAAting, mapas e ACS **daquele campeonato** |
+| `{{previsao: <a> \| <b> \| <c>}}` | Três probabilidades com barra - playoffs, grande final, título |
+| `{{formula: <expressão>}}` | Fórmula matemática. Aceita `\frac{a}{b}`, `x^2`, `x^{...}`, `R_A`, `R_{...}` |
+| `{{placar: <partida> \| <nick>}}` | O boletim de um jogador numa partida (rAAting, ACS, kills, KAST, ADR...) |
+
+Exemplos, como aparecem no Word:
 
 ```
-{{placar: <id da partida> | <nick do jogador>}}
-```
-
-Por exemplo:
-
-```
+{{ficha: ceub_octopus | A | fametro_berserkers}}
+{{mappool: ceub_octopus}}
+{{elenco: ceub_octopus | jubs-fase-inicial}}
+{{previsao: 82,7 | 54,6 | 31,0}}
+{{formula: P(A)=\frac{1}{1+e^{-0,0445(R_A-R_B)}}}}
 {{placar: 304e0da1-3603-4a89-9fd4-5e6c593b5415 | kssarato}}
 ```
 
-O id da partida está na URL dela. O bloco é montado a partir do banco: rAAting,
-ACS, kills, mortes, assistências, KAST, ADR, Swing/R, multi-kills, FK e FD.
+O id da equipe e o do campeonato são os mesmos que aparecem na URL das páginas
+delas (`#/teams/ceub_octopus`, `#/tournaments/jubs-fase-inicial`).
 
-**Digitar a tabela na mão funcionaria hoje e envelheceria amanhã.** Se a
-partida for reprocessada, os números do texto passariam a mentir; assim eles
-seguem o banco para sempre. Se o id ou o nick não existirem, o bloco
-simplesmente não aparece - o token nunca vaza como texto para o leitor.
+**Quem entra no `elenco`:** todo mundo que jogou pelo menos 40% dos mapas da
+equipe naquele campeonato. Um corte fixo de cinco esconderia rodízio de verdade;
+mostrar todos traria o reserva de meio mapa como se fosse titular.
+
+## A capa e os dois recortes
+
+A mesma imagem serve dois lugares com proporções diferentes: **21:9** na página
+da matéria e **16:10** no herói da home. O recorte da home descarta 31% da
+largura, e o título entra por cima do terço de baixo.
+
+Então o assunto da capa precisa caber nos **68% centrais** da largura e acima
+de **62%** da altura. Fora disso, some na home.
 
 ## 3. Publicar
 

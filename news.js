@@ -242,8 +242,6 @@
   // reprocessada, os numeros do texto ficariam mentindo. Assim eles seguem o
   // banco para sempre.
 
-  const TOKEN_PLACAR = /^\{\{\s*placar\s*:\s*([^|]+?)\s*\|\s*(.+?)\s*\}\}$/i;
-
   // Virgula decimal: o resto da materia e escrito em portugues, e "1.00" no
   // meio de um texto que diz "0,68" le como outra coisa.
   const num = (v, casas = 0) =>
@@ -299,16 +297,283 @@
       </div>`;
   }
 
-  function trocaPlacares(raiz) {
+  // ------------------------------------------------------------- blocos
+  //
+  // Um paragrafo sozinho com `{{nome: argumento | argumento}}` vira um bloco
+  // montado AQUI, a partir do banco. A regra e a mesma do placar: digitar a
+  // tabela na mao funciona hoje e envelhece amanha - se a partida for
+  // reprocessada ou o ranking rodar de novo, o numero escrito no Word passa a
+  // mentir. Assim o texto envelhece junto com o banco, nunca contra ele.
+  //
+  // Token desconhecido, ou dado que nao existe, some da tela em vez de vazar
+  // como texto cru para o leitor.
+
+  const TOKEN = /^\{\{\s*([a-zA-Z]+)\s*:\s*([\s\S]+?)\s*\}\}$/;
+
+  function trocaBlocos(raiz) {
     raiz.querySelectorAll("p").forEach((p) => {
-      const m = (p.textContent || "").trim().match(TOKEN_PLACAR);
+      const m = (p.textContent || "").trim().match(TOKEN);
       if (!m) return;
-      const bloco = montaPlacar(m[1], m[2]);
-      // Sem partida ou sem jogador o token some, em vez de ficar na tela como
-      // texto cru para o leitor.
+      const monta = BLOCOS[m[1].toLowerCase()];
+      if (!monta) return;
+      const args = m[2].split("|").map((s) => s.trim());
+      let bloco = null;
+      try {
+        bloco = monta(args);
+      } catch (erro) {
+        bloco = null;
+      }
       p.outerHTML = bloco || "";
     });
   }
+
+  // ------------------------------------------------------------ a ficha
+  //
+  // O cartao de identificacao da equipe: posicao, nota, grupo e estreia.
+  // Posicao e nota saem do ranking na hora de desenhar - sao exatamente os dois
+  // numeros que mudam toda semana.
+
+  function montaFicha([idTime, grupo, idAdversario]) {
+    if (typeof state === "undefined" || !state.db) return null;
+    const t = window.teamById ? window.teamById(idTime) : null;
+    if (!t) return null;
+
+    const lista = state.db.ranking?.teams || [];
+    const i = lista.findIndex((x) => x.id === idTime);
+    const pos = i >= 0 ? i + 1 : null;
+    const nota = i >= 0 ? lista[i].score : null;
+
+    const adv = idAdversario && window.teamById ? window.teamById(idAdversario) : null;
+    const escudoAdv = adv && window.teamLogo ? window.teamLogo(adv.id, "news-ent-logo") : "";
+
+    const celulas = [
+      pos ? [`#${pos}`, "Ranking UNIVLR"] : null,
+      Number.isFinite(nota) ? [num(nota, 1), "Nota"] : null,
+      grupo ? [`Grupo ${esc(grupo)}`, "Fase de grupos"] : null,
+    ].filter(Boolean);
+
+    return `
+      <div class="news-ficha">
+        <div class="news-ficha-time">
+          ${window.teamLogo ? window.teamLogo(t.id, "news-ficha-escudo") : ""}
+          <a href="#/teams/${esc(t.id)}"><strong>${esc(t.name)}</strong></a>
+        </div>
+        <div class="news-ficha-grade">
+          ${celulas.map(([v, r]) => `<div class="news-ficha-item"><strong>${v}</strong><span>${esc(r)}</span></div>`).join("")}
+          ${adv ? `<div class="news-ficha-item news-ficha-estreia">
+                     <a class="news-ent news-ent-teams" href="#/teams/${esc(adv.id)}">${escudoAdv}${esc(adv.name)}</a>
+                     <span>Estreia contra</span>
+                   </div>` : ""}
+        </div>
+      </div>`;
+  }
+
+  // --------------------------------------------------------- o map pool
+  //
+  // Recorde por mapa e saldo de rounds, direto das partidas. O saldo nao vem
+  // pronto em `mapStats` (que so guarda vitorias e derrotas), entao ele e
+  // somado aqui - e a soma so existe porque `teamA.score` e `teamB.score` sao
+  // os rounds do mapa.
+
+  function montaMapPool([idTime]) {
+    if (typeof state === "undefined" || !state.db) return null;
+    const t = window.teamById ? window.teamById(idTime) : null;
+    if (!t) return null;
+
+    const porMapa = new Map();
+    for (const m of state.db.matches) {
+      const lado = m.teamA.id === idTime ? "teamA" : m.teamB.id === idTime ? "teamB" : null;
+      if (!lado) continue;
+      const outro = lado === "teamA" ? "teamB" : "teamA";
+      const nomeMapa = m.mapName || "-";
+      if (!porMapa.has(nomeMapa)) porMapa.set(nomeMapa, { nome: nomeMapa, v: 0, d: 0, rv: 0, rd: 0 });
+      const r = porMapa.get(nomeMapa);
+      if (m.winnerId === idTime) r.v += 1;
+      else r.d += 1;
+      r.rv += Number(m[lado].score) || 0;
+      r.rd += Number(m[outro].score) || 0;
+    }
+    if (!porMapa.size) return null;
+
+    const linhas = [...porMapa.values()].sort(
+      (a, b) => b.v + b.d - (a.v + a.d) || b.v - b.d - (a.v - a.d) || a.nome.localeCompare(b.nome)
+    );
+
+    const icone = (nome) => {
+      const mapa = (state.db.maps || []).find(
+        (x) => String(x.name).toLowerCase() === String(nome).toLowerCase()
+      );
+      return mapa && window.mapLogo ? window.mapLogo(mapa.id, "news-mapa-icone") : "";
+    };
+
+    return `
+      <div class="news-tabela-rolagem">
+        <table class="news-mappool">
+          <thead><tr><th>Mapa</th><th>Recorde</th><th>Rounds</th><th>Aproveitamento</th></tr></thead>
+          <tbody>
+            ${linhas.map((r) => {
+              const jogos = r.v + r.d;
+              const pct = jogos ? (r.v / jogos) * 100 : 0;
+              return `<tr>
+                <td class="news-mappool-nome">${icone(r.nome)}<span>${esc(r.nome)}</span></td>
+                <td class="news-mappool-recorde"><strong>${r.v}</strong><span>-</span><em>${r.d}</em></td>
+                <td class="news-mappool-rounds">${r.rv}-${r.rd}</td>
+                <td class="news-mappool-barra">
+                  <span class="news-mappool-trilho"><span class="news-barra" style="--pct:${pct.toFixed(1)}%"></span></span>
+                  <small>${num(pct, 0)}%</small>
+                </td>
+              </tr>`;
+            }).join("")}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  // ----------------------------------------------------------- o elenco
+  //
+  // Quem a equipe usou num campeonato, com a nota daquele campeonato - e nao a
+  // do ano. E a unica leitura honesta antes de uma etapa presencial: a nota
+  // anual de quem entrou no meio da temporada carrega partidas de outro time.
+  //
+  // Quem aparece: todo mundo que jogou pelo menos 40% dos mapas da equipe. Um
+  // corte fixo de cinco esconderia rodizio de verdade (uma equipe que alternou
+  // dois jogadores em pe de igualdade), e mostrar todos traria o reserva que
+  // entrou meio mapa como se fosse titular.
+
+  const PARTICIPACAO_MINIMA = 0.4;
+
+  function montaElenco([idTime, idEvento]) {
+    if (typeof state === "undefined" || !state.db) return null;
+    const t = window.teamById ? window.teamById(idTime) : null;
+    if (!t) return null;
+
+    const porJogador = new Map();
+    let mapasDaEquipe = 0;
+    for (const m of state.db.matches) {
+      if (idEvento && m.eventId !== idEvento) continue;
+      const lado = m.teamA.id === idTime ? "teamA" : m.teamB.id === idTime ? "teamB" : null;
+      if (!lado) continue;
+      mapasDaEquipe += 1;
+      for (const p of m.players || []) {
+        // A cor do lado e o que amarra o jogador a equipe dentro do mapa; o
+        // `currentTeam` do jogador diria o time de HOJE, e nao o daquele dia.
+        if (p.teamColor !== m[lado].color) continue;
+        if (!porJogador.has(p.nick)) porJogador.set(p.nick, { nick: p.nick, mapas: 0, rounds: 0, somaR: 0, somaAcs: 0 });
+        const r = porJogador.get(p.nick);
+        const rounds = Number(p.rounds) || 0;
+        r.mapas += 1;
+        r.rounds += rounds;
+        r.somaR += (Number(p.raating_3 ?? p.rating) || 0) * rounds;
+        r.somaAcs += (Number(p.acs) || 0) * rounds;
+      }
+    }
+    if (!mapasDaEquipe) return null;
+
+    const corte = mapasDaEquipe * PARTICIPACAO_MINIMA;
+    const elenco = [...porJogador.values()]
+      .filter((r) => r.mapas >= corte && r.rounds > 0)
+      // Media ponderada por round, e nao por mapa: um mapa de 26 rounds pesa
+      // mais que um de 16, que e como a nota do jogador e calculada no site.
+      .map((r) => ({ ...r, raating: r.somaR / r.rounds, acs: r.somaAcs / r.rounds }))
+      .sort((a, b) => b.raating - a.raating);
+    if (!elenco.length) return null;
+
+    const ev = idEvento ? (state.db.tournaments || []).find((x) => x.id === idEvento) : null;
+
+    return `
+      <div class="news-elenco">
+        ${ev ? `<div class="news-elenco-topo">${window.eventLogo ? window.eventLogo(ev, "news-ent-logo") : ""}<span>${esc(ev.name)}</span></div>` : ""}
+        <div class="news-elenco-grade">
+          ${elenco.map((r) => {
+            const j = window.playerById ? window.playerById(r.nick) : null;
+            const foto = j && window.playerLogo ? window.playerLogo(j.id, "news-elenco-foto") : "";
+            const href = j ? `#/players/${esc(j.routeSlug || j.id)}` : null;
+            const miolo = `
+              ${foto}
+              <strong class="news-elenco-nick">${esc(r.nick)}</strong>
+              <div class="news-elenco-numeros">
+                <span><strong>${num(r.raating, 2)}</strong><small>rAAting</small></span>
+                <span><strong>${r.mapas}</strong><small>Mapas</small></span>
+                <span><strong>${num(r.acs, 0)}</strong><small>ACS</small></span>
+              </div>`;
+            return href
+              ? `<a class="news-elenco-card" href="${href}">${miolo}</a>`
+              : `<div class="news-elenco-card">${miolo}</div>`;
+          }).join("")}
+        </div>
+      </div>`;
+  }
+
+  // -------------------------------------------------------- a previsao
+  //
+  // As tres probabilidades do supercomputador. Vao com barra porque o assunto
+  // do bloco e a comparacao entre elas, e nao o valor exato de cada uma - e
+  // porque tres numeros soltos em linhas separadas leem como uma lista de
+  // resultados, que e justamente o que uma probabilidade nao e.
+
+  function montaPrevisao(args) {
+    const rotulos = ["Playoffs", "Grande Final", "Título"];
+    const valores = args.map((v) => Number(String(v).replace("%", "").replace(",", ".").trim()));
+    if (valores.some((v) => !Number.isFinite(v))) return null;
+
+    return `
+      <div class="news-previsao">
+        <div class="news-previsao-titulo">Opinião do Supercomputador</div>
+        ${valores.map((v, i) => `
+          <div class="news-previsao-linha">
+            <span class="news-previsao-rotulo">${esc(rotulos[i] || "")}</span>
+            <span class="news-previsao-trilho"><span class="news-barra" style="--pct:${Math.max(0, Math.min(100, v)).toFixed(2)}%"></span></span>
+            <strong class="news-previsao-valor">${num(v, v < 1 ? 2 : 1)}%</strong>
+          </div>`).join("")}
+      </div>`;
+  }
+
+  // -------------------------------------------------------- a formula
+  //
+  // Um LaTeX de bolso, com o que este site precisa e nada alem: fracao,
+  // expoente e indice. Vendorizar KaTeX seriam 300 KB servidos a todo leitor
+  // por causa de duas formulas - e as duas cabem em <sup>, <sub> e uma div.
+  //
+  // O texto passa por esc() ANTES de virar marcacao, entao nada do que estiver
+  // escrito no Word pode fechar uma tag.
+
+  function marcaMatematica(txt) {
+    let s = esc(txt);
+    // Um nivel de aninhamento basta, e e onde este site para: o denominador
+    // da logistica e `1+e^{...}`, entao um `[^{}]*` solto fecharia na chave
+    // errada e a fracao sairia pela metade.
+    const RE_FRAC = /\\frac\{((?:[^{}]|\{[^{}]*\})*)\}\{((?:[^{}]|\{[^{}]*\})*)\}/g;
+    s = s.replace(RE_FRAC, (t, a, b) =>
+      `<span class="news-frac"><span class="news-frac-cima">${marcaMatematica2(a, true)}</span><span class="news-frac-baixo">${marcaMatematica2(b, true)}</span></span>`
+    );
+    return marcaMatematica2(s, true);
+  }
+
+  // Expoente e indice, aplicados tambem dentro da fracao. Separado de
+  // `marcaMatematica` para nao reprocessar a fracao que acabou de ser montada.
+  function marcaMatematica2(s, jaEscapado) {
+    let t = jaEscapado ? s : esc(s);
+    t = t.replace(/\^\{([^{}]*)\}/g, (m, a) => `<sup>${a}</sup>`);
+    t = t.replace(/\^(-?[A-Za-z0-9,.]+)/g, (m, a) => `<sup>${a}</sup>`);
+    t = t.replace(/_\{([^{}]*)\}/g, (m, a) => `<sub>${a}</sub>`);
+    t = t.replace(/_([A-Za-z0-9]+)/g, (m, a) => `<sub>${a}</sub>`);
+    return t;
+  }
+
+  function montaFormula(args) {
+    const expr = args.join("|").trim();
+    if (!expr) return null;
+    return `<div class="news-formula"><span>${marcaMatematica(expr)}</span></div>`;
+  }
+
+  const BLOCOS = {
+    placar: (args) => montaPlacar(args[0], args[1]),
+    ficha: montaFicha,
+    mappool: montaMapPool,
+    elenco: montaElenco,
+    previsao: montaPrevisao,
+    formula: montaFormula,
+  };
 
   // ------------------------------------------------------------------ materia
 
@@ -341,8 +606,14 @@
 
     const corpo = document.querySelector(".news-corpo");
     if (corpo) {
-      trocaPlacares(corpo);
+      // Enriquecer ANTES de montar os blocos, e nao depois. Os blocos trazem os
+      // proprios escudos e a propria cor; passar o enriquecimento por cima
+      // deles colava um segundo escudo em cada link (41 sobrando so no elenco)
+      // e pintava nome de jogador com o vermelho da marca, que aqui e dado.
+      // Os paragrafos de token nao tem link nenhum, entao a ordem nova nao
+      // deixa nada por enriquecer.
       enriqueceMencoes(corpo);
+      trocaBlocos(corpo);
     }
 
     window.Comments?.montar("article", a.slug);

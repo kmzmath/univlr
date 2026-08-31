@@ -397,29 +397,49 @@
       (a, b) => b.v + b.d - (a.v + a.d) || b.v - b.d - (a.v - a.d) || a.nome.localeCompare(b.nome)
     );
 
-    const icone = (nome) => {
+    // A arte do mapa vira o fundo da linha inteira. O `web/<id>.webp` e a versao
+    // de 640px que o resto do site ja usa; o PNG de origem tem 1600px e sao sete
+    // linhas por equipe, oito equipes na materia.
+    const arte = (nome) => {
       const mapa = (state.db.maps || []).find(
         (x) => String(x.name).toLowerCase() === String(nome).toLowerCase()
       );
-      return mapa && window.mapLogo ? window.mapLogo(mapa.id, "news-mapa-icone") : "";
+      if (!mapa) return "";
+      const attrs = typeof window.mapArtAttrs === "function" ? window.mapArtAttrs(mapa) : null;
+      return attrs?.src || "";
     };
 
+    // As celulas ganham `role` explicito porque o CSS troca o `display` de
+    // tabela por grade - sem os papeis, o leitor de tela deixaria de anunciar
+    // isto como tabela e as colunas perderiam o cabecalho.
     return `
       <div class="news-tabela-rolagem">
-        <table class="news-mappool">
-          <thead><tr><th>Mapa</th><th>Recorde</th><th>Rounds</th><th>Aproveitamento</th></tr></thead>
+        <table class="news-mappool" role="table">
+          <thead>
+            <tr role="row">
+              <th role="columnheader">Mapa</th>
+              <th role="columnheader">Recorde</th>
+              <th role="columnheader">Aproveitamento</th>
+              <th role="columnheader">Rounds</th>
+              <th role="columnheader">Win% rounds</th>
+            </tr>
+          </thead>
           <tbody>
             ${linhas.map((r) => {
               const jogos = r.v + r.d;
               const pct = jogos ? (r.v / jogos) * 100 : 0;
-              return `<tr>
-                <td class="news-mappool-nome">${icone(r.nome)}<span>${esc(r.nome)}</span></td>
-                <td class="news-mappool-recorde"><strong>${r.v}</strong><span>-</span><em>${r.d}</em></td>
-                <td class="news-mappool-rounds">${r.rv}-${r.rd}</td>
-                <td class="news-mappool-barra">
+              const rounds = r.rv + r.rd;
+              const pctR = rounds ? (r.rv / rounds) * 100 : 0;
+              const fundo = arte(r.nome);
+              return `<tr role="row"${fundo ? ` style="--arte:url('${esc(fundo)}')"` : ""}>
+                <td class="news-mappool-nome" role="cell">${esc(r.nome)}</td>
+                <td class="news-mappool-recorde" role="cell"><strong>${r.v}</strong><span>-</span><em>${r.d}</em></td>
+                <td class="news-mappool-barra" role="cell">
                   <span class="news-mappool-trilho"><span class="news-barra" style="--pct:${pct.toFixed(1)}%"></span></span>
                   <small>${num(pct, 0)}%</small>
                 </td>
+                <td class="news-mappool-rounds" role="cell">${r.rv}-${r.rd}</td>
+                <td class="news-mappool-pctr" role="cell">${num(pctR, 1)}%</td>
               </tr>`;
             }).join("")}
           </tbody>
@@ -578,6 +598,24 @@
     formula: montaFormula,
   };
 
+  // Numa materia que apresenta equipe por equipe, cada bloco termina num
+  // cartao (a previsao) e o proximo comeca num titulo - sem respiro, o titulo
+  // da equipe seguinte cola no cartao da anterior e as duas leem como uma coisa
+  // so. Quem marca o inicio de uma equipe e a ficha logo abaixo do titulo, e
+  // nao a posicao do titulo no texto: assim isto vale para qualquer materia
+  // escrita nesse formato, sem contar paragrafos.
+  function marcaSecoesDeEquipe(raiz) {
+    const inicios = [...raiz.querySelectorAll("h2")].filter((h) =>
+      h.nextElementSibling?.classList.contains("news-ficha")
+    );
+    inicios.forEach((h, i) => {
+      h.classList.add("news-secao");
+      // A primeira ganha mais: ali o texto sai da introducao e entra na lista
+      // de equipes, que e uma virada maior do que passar de uma equipe a outra.
+      if (i === 0) h.classList.add("primeira");
+    });
+  }
+
   // ------------------------------------------------------------------ materia
 
   function renderArtigo(slug) {
@@ -617,6 +655,7 @@
       // deixa nada por enriquecer.
       enriqueceMencoes(corpo);
       trocaBlocos(corpo);
+      marcaSecoesDeEquipe(corpo);
     }
 
     window.Comments?.montar("article", a.slug);

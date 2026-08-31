@@ -17959,7 +17959,7 @@ img {
   border: 1px solid var(--line);
 }
 
-.news-capa.media { width: 200px; aspect-ratio: 16 / 10; }
+.news-capa.media { width: 200px; aspect-ratio: 2 / 1; }
 
 
 /* ------------------------------------------------------------------ listagem */
@@ -18016,12 +18016,14 @@ img {
 
 .news-artigo-capa { margin-bottom: var(--space-7); }
 
-/* 21:9, o mesmo do heroi da home: a capa e a MESMA imagem nos dois lugares, e
-   recortes diferentes fariam a materia parecer outra coisa ao abrir. Formato
-   de faixa tambem cabe melhor a capa de noticia, que costuma ser panoramica. */
+/* 2:1, exatamente o mesmo do heroi da home. E a MESMA imagem nos dois lugares:
+   com proporcoes diferentes, cada tela recortava um pedaco diferente da
+   largura, e o que vive nas bordas da arte (equipe da ponta, jogador da foto)
+   sumia num lugar e aparecia no outro. Uma proporcao so, nenhum corte lateral.
+   Formato de faixa tambem cabe melhor a capa de noticia, que e panoramica. */
 .news-artigo-imagem {
   width: 100%;
-  aspect-ratio: 21 / 9;
+  aspect-ratio: 2 / 1;
   object-fit: cover;
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-6);
@@ -18054,6 +18056,11 @@ img {
   font: 800 var(--text-2xl) / 1.2 var(--font-display);
   margin-top: var(--space-7);
 }
+
+/* O titulo que abre uma equipe (o news.js marca pelo cartao de ficha logo
+   abaixo dele). Sem isto ele encosta no cartao de previsao da equipe anterior. */
+.news-corpo h2.news-secao { margin-top: var(--space-8); }
+.news-corpo h2.news-secao.primeira { margin-top: 76px; }
 
 .news-corpo h3 {
   font: 800 var(--text-xl) / 1.25 var(--font-display);
@@ -18217,10 +18224,11 @@ img {
 
 .news-heroi:hover { border-color: var(--line-dark); }
 
+/* A mesma proporcao da capa na pagina da materia - ver a nota la em cima. */
 .news-heroi-capa {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 2 / 1;
   object-fit: cover;
 }
 
@@ -18369,7 +18377,7 @@ img {
   /* Empilhadas e da mesma largura, as duas materias ficariam identicas e a
      hierarquia sumiria - so a ordem diria qual e a principal. A capa mais
      baixa e o titulo menor seguram a diferenca no unico eixo que sobra. */
-  .news-heroi.menor .news-heroi-capa { aspect-ratio: 16 / 9; }
+  .news-heroi.menor .news-heroi-capa { aspect-ratio: 21 / 9; }
   .news-heroi.menor .news-heroi-texto h3 { font-size: var(--text-lg); }
   .atv-linha { grid-template-columns: minmax(0, 1fr) auto; }
   .atv-tipo { display: none; }
@@ -18394,13 +18402,13 @@ img {
   font-size: var(--text-lg);
 }
 
-/* Uma materia so e nenhuma conversa: a linha vira de uma coluna. A capa muda
-   de 16:10 para 21:9 - numa largura de 1300px, 16:10 daria 812px de imagem, o
-   que empurraria todo o resto da home para fora da primeira tela. */
+/* Uma materia so e nenhuma conversa: a linha vira de uma coluna. Ai a capa
+   ganha um teto de altura - numa largura de 1300px, 2:1 daria 650px de imagem,
+   e isso empurraria todo o resto da home para fora da primeira tela. O teto
+   corta em cima e embaixo, entao a largura da arte continua inteira. */
 .home-topo.sozinho { grid-template-columns: minmax(0, 1fr); }
 
 .home-topo.sozinho .news-heroi-capa {
-  aspect-ratio: 21 / 9;
   max-height: 420px;
 }
 
@@ -18975,15 +18983,38 @@ img {
   overflow-x: auto;
 }
 
+/* A tabela vira grade. E preciso porque cada linha carrega a arte do mapa como
+   fundo, e um `tr` de tabela nao segura imagem de fundo nem pseudo-elemento de
+   forma confiavel entre navegadores. Os papeis de tabela estao no HTML, entao a
+   semantica sobrevive a troca de display. */
 .news-mappool {
+  display: block;
   width: 100%;
-  border-collapse: collapse;
+  min-width: 540px;
+  border-collapse: separate;
   font: 600 var(--text-sm) / 1.2 var(--font-text);
 }
 
-.news-mappool th {
-  padding: var(--space-3) var(--space-4);
+.news-mappool thead,
+.news-mappool tbody { display: block; }
+
+.news-mappool tr {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) 74px minmax(120px, 1.3fr) 92px 84px;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.news-mappool thead tr {
+  padding: 0 var(--space-4) var(--space-3);
   border-bottom: 1px solid var(--line-dark);
+}
+
+/* O site tem um `th` global com fundo e padding proprios, que aqui viravam sete
+   caixinhas cinzas flutuando acima das faixas. */
+.news-mappool th {
+  padding: 0;
+  background: transparent;
   color: var(--muted);
   font: 700 var(--text-2xs) / 1 var(--font-text);
   text-align: left;
@@ -18992,29 +19023,60 @@ img {
   white-space: nowrap;
 }
 
-.news-mappool td {
-  padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid var(--line);
-  color: var(--ink);
-  vertical-align: middle;
+/* A faixa. A arte entra pelo `--arte` que o news.js escreve na linha, e o veu
+   por cima dela e mais forte a esquerda: e la que fica o nome do mapa, e uma
+   arte de VALORANT tem ceu claro e parede branca em pedacos imprevisiveis. */
+.news-mappool tbody tr {
+  position: relative;
+  isolation: isolate;
+  margin-bottom: 4px;
+  padding: 0 var(--space-4);
+  min-height: 68px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-image: var(--arte);
+  background-size: cover;
+  background-position: center 42%;
 }
 
-.news-mappool tbody tr:last-child td { border-bottom: 0; }
-.news-mappool tbody tr:hover td { background: var(--surface-2); }
+.news-mappool tbody tr::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  /* Escuro nas duas pontas, aberto no meio. O texto vive nas bordas (nome do
+     mapa a esquerda, rounds e percentual a direita) e a arte fica visivel na
+     faixa central, que e onde ela nao disputa com numero nenhum. */
+  background: linear-gradient(
+    90deg,
+    rgba(4, 3, 6, 0.92) 0%,
+    rgba(4, 3, 6, 0.66) 30%,
+    rgba(4, 3, 6, 0.52) 56%,
+    rgba(4, 3, 6, 0.88) 100%
+  );
+}
+
+/* Sem arte a linha nao pode ficar transparente, ou o texto assenta no fundo da
+   pagina e a faixa some. */
+.news-mappool tbody tr:not([style]) { background-color: var(--surface-2); }
+
+.news-mappool tbody tr:last-child { margin-bottom: 0; }
+
+.news-mappool td {
+  color: var(--ink);
+  min-width: 0;
+}
 
 .news-mappool-nome {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
+  font: 800 var(--text-lg) / 1.1 var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
   white-space: nowrap;
-}
-
-.news-mapa-icone {
-  width: 30px;
-  height: 20px;
-  border-radius: var(--radius-sm);
   overflow: hidden;
-  flex: none;
+  text-overflow: ellipsis;
+  /* Sobre foto, uma sombra curta e o que separa a letra do fundo sem precisar
+     escurecer a arte inteira. */
+  text-shadow: 0 1px 6px rgba(4, 3, 6, 0.9);
 }
 
 .news-mappool-recorde {
@@ -19028,25 +19090,40 @@ img {
 .news-mappool-recorde span { color: var(--muted); margin: 0 2px; }
 .news-mappool-recorde em { color: var(--loss-ink); font-style: normal; }
 
-.news-mappool-rounds {
-  color: var(--muted);
+.news-mappool-rounds,
+.news-mappool-pctr {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.news-mappool-rounds { color: rgba(245, 241, 242, 0.86); }
+
+/* Numero sobre foto: a sombra curta faz o mesmo servico do nome do mapa. */
+.news-mappool-rounds,
+.news-mappool-pctr,
+.news-mappool-recorde,
+.news-mappool-barra small { text-shadow: 0 1px 5px rgba(4, 3, 6, 0.95); }
+
+.news-mappool-pctr {
+  font-weight: 700;
+  text-align: right;
 }
 
 .news-mappool-barra {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  width: 40%;
-  min-width: 130px;
+  min-width: 0;
 }
 
 .news-mappool-trilho {
   flex: 1;
   height: 6px;
+  min-width: 40px;
   border-radius: var(--radius-pill);
-  background: rgba(245, 241, 242, 0.08);
+  /* Sobre a arte, o trilho precisa de mais corpo que o de um painel escuro:
+     a 0,08 de branco ele desaparecia em cima de um ceu claro. */
+  background: rgba(4, 3, 6, 0.55);
   overflow: hidden;
 }
 
@@ -19054,7 +19131,7 @@ img {
   color: var(--muted);
   font: 700 var(--text-2xs) / 1 var(--font-text);
   font-variant-numeric: tabular-nums;
-  margin-left: auto;
+  white-space: nowrap;
 }
 
 /* ----------------------------------------------------------- o elenco */

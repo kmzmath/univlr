@@ -212,6 +212,14 @@
         {
           "slot": 5,
           "name": "Bodo Glimt"
+        },
+        {
+          "slot": 6,
+          "name": "Duduka"
+        },
+        {
+          "slot": 7,
+          "name": "Luqueta"
         }
       ]
     },
@@ -262,10 +270,6 @@
         },
         {
           "slot": 7,
-          "name": "Duduka"
-        },
-        {
-          "slot": 8,
           "name": "Nightrise"
         }
       ]
@@ -500,6 +504,14 @@
         {
           "slot": 3,
           "name": "marimoon"
+        },
+        {
+          "slot": 4,
+          "name": "ScherBi"
+        },
+        {
+          "slot": 5,
+          "name": "Melousa"
         }
       ]
     },
@@ -671,30 +683,26 @@
         },
         {
           "slot": 2,
-          "name": "Luqueta"
-        },
-        {
-          "slot": 3,
           "name": "Lopes"
         },
         {
-          "slot": 4,
+          "slot": 3,
           "name": "Metal"
         },
         {
-          "slot": 5,
+          "slot": 4,
           "name": "Medina"
         },
         {
-          "slot": 6,
+          "slot": 5,
           "name": "sobrunin"
         },
         {
-          "slot": 7,
+          "slot": 6,
           "name": "Coutinho"
         },
         {
-          "slot": 8,
+          "slot": 7,
           "name": "Kaos"
         }
       ]
@@ -1608,6 +1616,14 @@
         {
           "slot": 5,
           "name": "MpaToh"
+        },
+        {
+          "slot": 6,
+          "name": "Ayslan loves L"
+        },
+        {
+          "slot": 7,
+          "name": "O CALVINISTA"
         }
       ]
     },
@@ -1788,6 +1804,14 @@
         {
           "slot": 6,
           "name": "Fatox"
+        },
+        {
+          "slot": 7,
+          "name": "Mtr"
+        },
+        {
+          "slot": 8,
+          "name": "psч"
         }
       ]
     },
@@ -1984,6 +2008,10 @@
         {
           "slot": 6,
           "name": "yonaha"
+        },
+        {
+          "slot": 7,
+          "name": "lule"
         }
       ]
     },
@@ -2304,22 +2332,18 @@
         },
         {
           "slot": 2,
-          "name": "Soulless"
-        },
-        {
-          "slot": 3,
           "name": "gyukaa"
         },
         {
-          "slot": 4,
+          "slot": 3,
           "name": "KNZWY"
         },
         {
-          "slot": 5,
+          "slot": 4,
           "name": "Zé Leão"
         },
         {
-          "slot": 6,
+          "slot": 5,
           "name": "Icexit"
         }
       ]
@@ -2364,6 +2388,10 @@
         {
           "slot": 5,
           "name": "Tuk"
+        },
+        {
+          "slot": 6,
+          "name": "Soulless"
         }
       ]
     },
@@ -2709,6 +2737,53 @@
         {
           "slot": 7,
           "name": "Miojinho"
+        },
+        {
+          "slot": 8,
+          "name": "qweqawq"
+        }
+      ]
+    },
+    {
+      "id": "sixa_eaters",
+      "sourceId": "2840",
+      "slug": "sixa_eaters",
+      "tag": "SIXA",
+      "displayName": "sixA Eaters",
+      "org": "Universidade Federal do ABC",
+      "orgTag": "UFABC",
+      "logo": "assets/team-logos/axis_anteaters.png",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#2b772b",
+        "#e1e3e2"
+      ],
+      "socials": {
+        "instagram": "https://www.instagram.com/axis_anteaters/"
+      },
+      "lineup": [
+        {
+          "slot": 1,
+          "name": "Get Is"
+        },
+        {
+          "slot": 2,
+          "name": "Duarte"
+        },
+        {
+          "slot": 3,
+          "name": "dgo"
+        },
+        {
+          "slot": 4,
+          "name": "dnk"
+        },
+        {
+          "slot": 5,
+          "name": "nickzinn"
         }
       ]
     },
@@ -2815,6 +2890,10 @@
         {
           "slot": 5,
           "name": "Purikywa"
+        },
+        {
+          "slot": 6,
+          "name": "th ˆˆ"
         }
       ]
     },
@@ -4064,6 +4143,10 @@
         {
           "slot": 6,
           "name": "Laves"
+        },
+        {
+          "slot": 7,
+          "name": "Odysseys"
         }
       ]
     },
@@ -8046,13 +8129,18 @@
       "id": "w81FdXploaEGmwUHO0E8taxxv8vs8AbRBliy-J3uTUPuQ3ODdHd-uCBuBV2F6g7HpVcdCLANvRWOHw",
       "name": "Maldito",
       "puuid": "w81FdXploaEGmwUHO0E8taxxv8vs8AbRBliy-J3uTUPuQ3ODdHd-uCBuBV2F6g7HpVcdCLANvRWOHw",
+      "accounts": [
+        "w81FdXploaEGmwUHO0E8taxxv8vs8AbRBliy-J3uTUPuQ3ODdHd-uCBuBV2F6g7HpVcdCLANvRWOHw",
+        "yUR-desyQa_z4Mk1qW_h9oH9ioPrpzA3wQGgOTuog5yapfFJj6mHGDQyZV8itgzk34LnSP-SxgL7Vw"
+      ],
       "currentTeam": "pucc_cardinals",
       "teamHistory": [
         "pucc_cardinals"
       ],
       "nickHistory": [
         "maldito#mlgn",
-        "maldi#m0000"
+        "maldi#m0000",
+        "é o maldito#crstl"
       ],
       "photo": ""
     },
@@ -8109,15 +8197,15 @@
       "photo": ""
     },
     {
-      "id": "Crystalline",
+      "id": "WWX2yRWDBI3Q7lDTHwfE45jLWHIP8g0-77lStDdtD09ybXj0MfHP0tCa-OXQlxPRM0vIqZBP0gZL7w",
       "name": "Crystalline",
-      "puuid": "",
+      "puuid": "WWX2yRWDBI3Q7lDTHwfE45jLWHIP8g0-77lStDdtD09ybXj0MfHP0tCa-OXQlxPRM0vIqZBP0gZL7w",
       "currentTeam": "pucc_canaries",
       "teamHistory": [
         "pucc_canaries"
       ],
       "nickHistory": [
-        "Crystalline#br1"
+        "Crystallinee#br1"
       ],
       "photo": ""
     },
@@ -8374,9 +8462,10 @@
       "id": "rLKgjMYUYspWvyr2EGpbHLcVHj1Gq-32WcmBoaIoedTV-VEuISdkCMDRwjLsaH3jsiPz5eoG9PImOg",
       "name": "Soulless",
       "puuid": "rLKgjMYUYspWvyr2EGpbHLcVHj1Gq-32WcmBoaIoedTV-VEuISdkCMDRwjLsaH3jsiPz5eoG9PImOg",
-      "currentTeam": "octacore_javascript",
+      "currentTeam": "octacore_python",
       "teamHistory": [
-        "octacore_javascript"
+        "octacore_javascript",
+        "octacore_python"
       ],
       "nickHistory": [
         "Soulless#Only"
@@ -8485,13 +8574,18 @@
       "id": "JVomiSrMCat75H_pOa_X-LrJwooTow4XsibduhUxTN5KT0z0XtJaWSZKyJEVc9Eyh6uMwM7lV8J6rQ",
       "name": "swpz",
       "puuid": "JVomiSrMCat75H_pOa_X-LrJwooTow4XsibduhUxTN5KT0z0XtJaWSZKyJEVc9Eyh6uMwM7lV8J6rQ",
+      "accounts": [
+        "JVomiSrMCat75H_pOa_X-LrJwooTow4XsibduhUxTN5KT0z0XtJaWSZKyJEVc9Eyh6uMwM7lV8J6rQ",
+        "gePTizB9pG3fbLgHAQcJ-iYz53wam1jOCLMdCIF6gg7KPZYKRQzDgmEluYEWdaILOHRxpyO4gzazeg"
+      ],
       "currentTeam": "minerva_thunders",
       "teamHistory": [
         "dark_ufrj",
         "minerva_thunders"
       ],
       "nickHistory": [
-        "swpz#1215"
+        "swpz#1215",
+        "swpz#1578"
       ],
       "photo": ""
     },
@@ -9673,12 +9767,17 @@
       "id": "P-iCGWXu1IuCrnT9LUTAQyZCsZMrQdJ1ZENxmwvPDu1xHr7WStXhH8LBAIaIWesGg7MC6usr_4pc_g",
       "name": "Letz",
       "puuid": "P-iCGWXu1IuCrnT9LUTAQyZCsZMrQdJ1ZENxmwvPDu1xHr7WStXhH8LBAIaIWesGg7MC6usr_4pc_g",
+      "accounts": [
+        "P-iCGWXu1IuCrnT9LUTAQyZCsZMrQdJ1ZENxmwvPDu1xHr7WStXhH8LBAIaIWesGg7MC6usr_4pc_g",
+        "zLybOe6_hFnZ4vtf_u8Zi_eWyWdo2-4OoBUPmxJIEWxZXPJmZI4nhObqS1Zg0Q46IDNRSMJixgqXoA"
+      ],
       "currentTeam": "homem_passaro",
       "teamHistory": [
         "homem_passaro"
       ],
       "nickHistory": [
-        "letz#piu"
+        "letz#piu",
+        "letz#piuz"
       ],
       "photo": ""
     },
@@ -11057,9 +11156,10 @@
       "id": "iKCYq6N79es9jtrYzAafqop11_aCEUsPMy8rnp2F1Zr2JW1dqBJuEOyd7pOI7jdR78d7T0WFIOCz1Q",
       "name": "Luqueta",
       "puuid": "iKCYq6N79es9jtrYzAafqop11_aCEUsPMy8rnp2F1Zr2JW1dqBJuEOyd7pOI7jdR78d7T0WFIOCz1Q",
-      "currentTeam": "caap_hellhounds",
+      "currentTeam": "axis_anteaters",
       "teamHistory": [
-        "caap_hellhounds"
+        "caap_hellhounds",
+        "axis_anteaters"
       ],
       "nickHistory": [
         "Luqueta#lizi",
@@ -11434,7 +11534,8 @@
       "currentTeam": "azure_bears_silver",
       "teamHistory": [
         "azure_bears",
-        "azure_bears_silver"
+        "azure_bears_silver",
+        "azure_bears_black"
       ],
       "nickHistory": [
         "khianh#gabiw"
@@ -11747,9 +11848,10 @@
       "id": "Wgb1LZNq3IJVap91nkhic0ruF-Jyh_Ew0p0bZpBzJngYZ9eD257iZ7Hsx5wX0RDZq8dEkDOASxCinA",
       "name": "Duduka",
       "puuid": "Wgb1LZNq3IJVap91nkhic0ruF-Jyh_Ew0p0bZpBzJngYZ9eD257iZ7Hsx5wX0RDZq8dEkDOASxCinA",
-      "currentTeam": "axis_aura",
+      "currentTeam": "axis_anteaters",
       "teamHistory": [
-        "axis_aura"
+        "axis_aura",
+        "axis_anteaters"
       ],
       "nickHistory": [
         "Duduka#dudu"
@@ -12023,13 +12125,20 @@
       "id": "XWvXyanLJLbv8WcMrmLvh6ob0abOd4DdIavRLgecm5mCfCQkOz4nQn3X3MMdClMYPEv6kjx1Ri9Wiw",
       "name": "mth",
       "puuid": "XWvXyanLJLbv8WcMrmLvh6ob0abOd4DdIavRLgecm5mCfCQkOz4nQn3X3MMdClMYPEv6kjx1Ri9Wiw",
+      "accounts": [
+        "XWvXyanLJLbv8WcMrmLvh6ob0abOd4DdIavRLgecm5mCfCQkOz4nQn3X3MMdClMYPEv6kjx1Ri9Wiw",
+        "FQ0l_ur3ITSR8JJgi6qwgtoV6VP0GsN6s5QtK-YBJKavxIz7hjYUtQkVIzVFewHckn5Wxy9ekcOytQ",
+        "qYrit6Dyq6MJYbDzKkCRlg4Yx_1G56uzBfj2QccU38paZEbCpjAFly9zb7frTODuLVjN5AaRRI4VTw"
+      ],
       "currentTeam": "a2e_uff",
       "teamHistory": [
         "a2e_uff"
       ],
       "nickHistory": [
         "A2E mth#uff",
-        "mth ツ#high"
+        "mth ツ#high",
+        "mth#AURA",
+        "mth#smoke"
       ],
       "photo": ""
     },
@@ -12064,12 +12173,19 @@
       "id": "X4vjLLGTXsTH9ZXQ1yyxUooiieKE0HN60ETuV8YWvXJXPfYgHlWbwsDMtkr0Qi4hk8sfXn2UfGzF9w",
       "name": "tgzin",
       "puuid": "X4vjLLGTXsTH9ZXQ1yyxUooiieKE0HN60ETuV8YWvXJXPfYgHlWbwsDMtkr0Qi4hk8sfXn2UfGzF9w",
+      "accounts": [
+        "X4vjLLGTXsTH9ZXQ1yyxUooiieKE0HN60ETuV8YWvXJXPfYgHlWbwsDMtkr0Qi4hk8sfXn2UfGzF9w",
+        "nmrU7VTOHWc35p2VHGc8l-vCg43vqYy7t2K_u8Sa1Oeq7Q-HefUTb0P_36C2WJ3vXXeMFgEYuIGV9A",
+        "uR06OzF3VjyXn4y5Ly1o_FV_D5v1J1aiUg4LSTXuCnjxu69ViHqXEj3TrmpaDPl9mCz4Aonwtsllvg"
+      ],
       "currentTeam": "a2e_uff",
       "teamHistory": [
         "a2e_uff"
       ],
       "nickHistory": [
-        "tgzin#elis"
+        "tgzin#elis",
+        "tgzin#zim",
+        "tgzin#éele"
       ],
       "photo": ""
     },
@@ -12077,12 +12193,17 @@
       "id": "FoN8evdKDCd14Xbgx1dwKDyz4CWQ9FMlKXDMgEadRBgV4VrkLVPXQpdyfO7P80SY-pzirdTXy7nTXg",
       "name": "ninker",
       "puuid": "FoN8evdKDCd14Xbgx1dwKDyz4CWQ9FMlKXDMgEadRBgV4VrkLVPXQpdyfO7P80SY-pzirdTXy7nTXg",
+      "accounts": [
+        "FoN8evdKDCd14Xbgx1dwKDyz4CWQ9FMlKXDMgEadRBgV4VrkLVPXQpdyfO7P80SY-pzirdTXy7nTXg",
+        "Vh_ziEWU6-0F7ZWCUtSCjB_H0IEx74AM8-c6_A9KtMVJqOzGvkax_jhugfqS4dLTvDkG2g1xy10nQA"
+      ],
       "currentTeam": "a2e_uff",
       "teamHistory": [
         "a2e_uff"
       ],
       "nickHistory": [
-        "ninker#tbest"
+        "ninker#tbest",
+        "ninker#TV1"
       ],
       "photo": ""
     },
@@ -12250,19 +12371,6 @@
       "nickHistory": [
         "Kyzan#777",
         "Nsasx#777"
-      ],
-      "photo": ""
-    },
-    {
-      "id": "Cyborg",
-      "name": "Cyborg",
-      "puuid": "",
-      "currentTeam": "",
-      "teamHistory": [
-        "pucgo_sistematica"
-      ],
-      "nickHistory": [
-        "Cyborg#SZX"
       ],
       "photo": ""
     },
@@ -12455,9 +12563,9 @@
       "photo": ""
     },
     {
-      "id": "akdouble",
+      "id": "eSFhl60EM5MvR6SBVKD-iF1BnLtiBlmodeo8LTYwjPXTH9JS9VIavYcVJhrL1cZd_R3kGt2vxHrlag",
       "name": "akdouble",
-      "puuid": "",
+      "puuid": "eSFhl60EM5MvR6SBVKD-iF1BnLtiBlmodeo8LTYwjPXTH9JS9VIavYcVJhrL1cZd_R3kGt2vxHrlag",
       "currentTeam": "",
       "teamHistory": [
         "ceub_octopus_vulgaris"
@@ -12932,9 +13040,9 @@
       "photo": ""
     },
     {
-      "id": "KaizenX",
+      "id": "0AJFMxydr1ii432n23LVyII5uyVRf070ui-fxZmcioa4bnizpe6p31o9pr4WAVp0LGSrrHMZIJCppg",
       "name": "KaizenX",
-      "puuid": "",
+      "puuid": "0AJFMxydr1ii432n23LVyII5uyVRf070ui-fxZmcioa4bnizpe6p31o9pr4WAVp0LGSrrHMZIJCppg",
       "currentTeam": "made_in_cefet_rj",
       "teamHistory": [
         "made_in_cefet_rj"
@@ -13019,6 +13127,149 @@
       ],
       "nickHistory": [
         "wishful dreaming#giu"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "VoDXPoDEjmCli9ty4GKmCkI46_AcLZcCq6BPvh2bABtvRkOtVCWCsO1mAbjVxSgbCl4PdTx6V3KozA",
+      "name": "Odysseys",
+      "puuid": "VoDXPoDEjmCli9ty4GKmCkI46_AcLZcCq6BPvh2bABtvRkOtVCWCsO1mAbjVxSgbCl4PdTx6V3KozA",
+      "currentTeam": "uninassau_griffins",
+      "teamHistory": [
+        "uninassau_griffins"
+      ],
+      "nickHistory": [
+        "Odysseys#Apex"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "4w3OWrJKpeBasc0x-2ghFy2y3-ftshuKPyu6iFCc7_peWdOgOe6CPlkrFzcyHwsAh6cpk7mDHP2aag",
+      "name": "Mtr",
+      "puuid": "4w3OWrJKpeBasc0x-2ghFy2y3-ftshuKPyu6iFCc7_peWdOgOe6CPlkrFzcyHwsAh6cpk7mDHP2aag",
+      "currentTeam": "inatel_legacy",
+      "teamHistory": [
+        "inatel_legacy"
+      ],
+      "nickHistory": [
+        "Mtr#fps"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Nq-1nlv9Xqt1slJ3PWqVjay9Qx6dl6QFDqV5USp74r9wlQv1xyvjeUxmzzpgRbLAz7b3fsVcFp0TYw",
+      "name": "psч",
+      "puuid": "Nq-1nlv9Xqt1slJ3PWqVjay9Qx6dl6QFDqV5USp74r9wlQv1xyvjeUxmzzpgRbLAz7b3fsVcFp0TYw",
+      "currentTeam": "inatel_legacy",
+      "teamHistory": [
+        "inatel_legacy"
+      ],
+      "nickHistory": [
+        "psч#Mii"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "nx9L2jMGftILQc21nKPSfe6iIlbSK2NhvpUnFqJ-sMK8RhDC7W6Ia7IWn9X1UIaTCReZplnVMaYFuQ",
+      "name": "near",
+      "puuid": "nx9L2jMGftILQc21nKPSfe6iIlbSK2NhvpUnFqJ-sMK8RhDC7W6Ia7IWn9X1UIaTCReZplnVMaYFuQ",
+      "currentTeam": "",
+      "teamHistory": [
+        "octacore_python"
+      ],
+      "nickHistory": [
+        "near#nath"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "WcWhedxlPYq7M1heesiUn94FLut2oUbpcQJYaDn8aqusNXW4cYhoQNpzwvu2roC0_q-oSl94f3G4sw",
+      "name": "qweqawq",
+      "puuid": "WcWhedxlPYq7M1heesiUn94FLut2oUbpcQJYaDn8aqusNXW4cYhoQNpzwvu2roC0_q-oSl94f3G4sw",
+      "currentTeam": "rahnag",
+      "teamHistory": [
+        "rahnag"
+      ],
+      "nickHistory": [
+        "qweqawq#11111"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Ht5qri1EhrDZVr-1YZC2OZUq4oaURhOjTgI_m6sMP4Te7xD69mF6ZNP5ZuJ4wKcf2IuZ2I95lgDZZw",
+      "name": "th ˆˆ",
+      "puuid": "Ht5qri1EhrDZVr-1YZC2OZUq4oaURhOjTgI_m6sMP4Te7xD69mF6ZNP5ZuJ4wKcf2IuZ2I95lgDZZw",
+      "currentTeam": "totale_umc",
+      "teamHistory": [
+        "totale_umc"
+      ],
+      "nickHistory": [
+        "th ˆˆ#fany"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "1h5S7gghPjmbQhzlVLd1SyiX2MCtsz_sGsVxoOHWVKRQqeqDaD2kZEFXLiWA7dDVNyTPhVl38Am7cA",
+      "name": "Ayslan loves L",
+      "puuid": "1h5S7gghPjmbQhzlVLd1SyiX2MCtsz_sGsVxoOHWVKRQqeqDaD2kZEFXLiWA7dDVNyTPhVl38Am7cA",
+      "currentTeam": "ime_wolves_red",
+      "teamHistory": [
+        "ime_wolves_red"
+      ],
+      "nickHistory": [
+        "Ayslan loves L#china"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "u-igna9BBDBzc1EBeyuHdBNlpfpjnp4VxFJhwSNCzZTR6tFVd8025Gs1elRVkpt8YQrIZz6LwQGCPw",
+      "name": "O CALVINISTA",
+      "puuid": "u-igna9BBDBzc1EBeyuHdBNlpfpjnp4VxFJhwSNCzZTR6tFVd8025Gs1elRVkpt8YQrIZz6LwQGCPw",
+      "currentTeam": "ime_wolves_red",
+      "teamHistory": [
+        "ime_wolves_red"
+      ],
+      "nickHistory": [
+        "O CALVINISTA#Tulip"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "FH__w6wL04kI8vsI12tUmEc7VCsGmOz9vGzy3gn_eUVbmawYHGqaqCIpO_SAkc7ggF7oLzftbvX9Jg",
+      "name": "MMZ Larissinha",
+      "puuid": "FH__w6wL04kI8vsI12tUmEc7VCsGmOz9vGzy3gn_eUVbmawYHGqaqCIpO_SAkc7ggF7oLzftbvX9Jg",
+      "currentTeam": "",
+      "teamHistory": [
+        "pucc_canaries"
+      ],
+      "nickHistory": [
+        "MMZ Larissinha#036"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "EjHwf0lHxwAVhIUqi61Jdxe-s51l1GVXvuw20V1vs2SpeNl5C4qHwuAjka8qwqrMm2R5f5--43UBZA",
+      "name": "nog",
+      "puuid": "EjHwf0lHxwAVhIUqi61Jdxe-s51l1GVXvuw20V1vs2SpeNl5C4qHwuAjka8qwqrMm2R5f5--43UBZA",
+      "currentTeam": "",
+      "teamHistory": [
+        "totale_umc"
+      ],
+      "nickHistory": [
+        "nog#4408"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "6VmRqgEcADA3-FPKNyHudktkAmRCQ24f4-7qULqSetlt4BwhJOMPordrLxy5QW_H7xCbO87n8YDM4w",
+      "name": "Zerando",
+      "puuid": "6VmRqgEcADA3-FPKNyHudktkAmRCQ24f4-7qULqSetlt4BwhJOMPordrLxy5QW_H7xCbO87n8YDM4w",
+      "currentTeam": "",
+      "teamHistory": [
+        "ufrj_minerva"
+      ],
+      "nickHistory": [
+        "Zerando#BAGRE"
       ],
       "photo": ""
     }

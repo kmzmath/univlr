@@ -5,3 +5,7 @@ local-test-links.html
 .claude/
 .impeccable/
 .playwright-mcp/
+
+# backups que o PegaCustomMatch grava ao lado da planilha ao escrever PUUID
+dados_excel/*.backup_*.xlsx
+dados_excel/~$*.xlsx

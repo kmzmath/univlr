@@ -71,7 +71,24 @@
       "endAt": "2026-09-05T23:00:00",
       "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
       "folder": "campeonatos/JUBS/Etapa Presencial",
-      "files": []
+      "files": [
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_001_31-08-26_ceub_octopus_13_x_3_fametro_berserkers_split.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_002_31-08-26_macklogic_red_11_x_13_ufmt_turuna_ascent.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_003_31-08-26_ceub_octopus_13_x_11_ufmt_turuna_breeze.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_004_31-08-26_uninassau_griffins_13_x_1_a2e_uff_sunset.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_005_31-08-26_azure_bears_golden_13_x_11_ufu_saints_lotus.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_006_31-08-26_azure_bears_golden_11_x_13_uninassau_griffins_ascent.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_007a_01-09-26_fametro_berserkers_7_x_13_macklogic_red_split.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_007b_01-09-26_fametro_berserkers_11_x_13_macklogic_red_lotus.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_008a_01-09-26_ufu_saints_13_x_10_a2e_uff_lotus.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_008b_01-09-26_ufu_saints_10_x_13_a2e_uff_haven.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_008c_01-09-26_ufu_saints_13_x_3_a2e_uff_split.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_009a_02-09-26_macklogic_red_13_x_3_ufmt_turuna_ascent.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_009b_02-09-26_macklogic_red_13_x_9_ufmt_turuna_lotus.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_010a_02-09-26_azure_bears_golden_13_x_10_ufu_saints_ascent.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_010b_02-09-26_azure_bears_golden_11_x_13_ufu_saints_split.json",
+        "campeonatos/JUBS/Etapa Presencial/JUBS_P_010c_02-09-26_azure_bears_golden_19_x_17_ufu_saints_lotus.json"
+      ]
     },
     {
       "id": "jubs-fase-inicial",

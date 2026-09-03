@@ -736,7 +736,6 @@ const TOURNAMENT_OVERRIDES = {
     banner: "assets/tournament-banners/banner_jubs.png",
     prizePool: "-",
     tier: "S",
-    status: "Agendado",
     type: "Presencial",
     startAt: "2026-08-30T00:00:00",
     endAt: "2026-09-05T23:00:00",
@@ -747,7 +746,7 @@ const TOURNAMENT_OVERRIDES = {
         "2 grupos de 4 equipes em eliminação dupla (GSL)",
         "Opening e Winner's Match em MD1; Elimination e Decider em MD3",
         "Top 2 de cada grupo avança aos playoffs",
-        "Playoffs em eliminação dupla, todos os jogos MD3",
+        "Playoffs em eliminação simples, todos os jogos MD3",
         "Disputa de terceiro lugar em MD3",
       ],
       standings: "Chaveamento da fase de grupos",
@@ -774,29 +773,29 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Opening",
               matches: [
-                { code: "Partida 1", bestOf: "MD1", status: "Agendada", band: 0, a: "ceub_octopus", b: "fametro_berserkers" },
-                { code: "Partida 2", bestOf: "MD1", status: "Agendada", band: 1, a: "macklogic_red", b: "ufmt_turuna" },
+                { code: "Partida 1", bestOf: "MD1", band: 0, a: "ceub_octopus", scoreA: 1, b: "fametro_berserkers", scoreB: 0, winner: "ceub_octopus" },
+                { code: "Partida 2", bestOf: "MD1", band: 1, a: "macklogic_red", scoreA: 0, b: "ufmt_turuna", scoreB: 1, winner: "ufmt_turuna" },
               ],
             },
             {
               title: "Winner's / Elimination",
               matches: [
-                { code: "Partida 5", label: "Winner's", bestOf: "MD1", band: 0, from: ["Partida 1", "Partida 2"], aLabel: "Vencedor Partida 1", bLabel: "Vencedor Partida 2" },
-                { code: "Partida 7", label: "Elimination", bestOf: "MD3", band: 1, from: ["Partida 1", "Partida 2"], aLabel: "Perdedor Partida 1", bLabel: "Perdedor Partida 2" },
+                { code: "Partida 3", label: "Winner's", bestOf: "MD1", band: 0, from: ["Partida 1", "Partida 2"], a: "ceub_octopus", scoreA: 1, b: "ufmt_turuna", scoreB: 0, winner: "ceub_octopus" },
+                { code: "Partida 7", label: "Elimination", bestOf: "MD3", band: 1, from: ["Partida 1", "Partida 2"], a: "fametro_berserkers", scoreA: 0, b: "macklogic_red", scoreB: 2, winner: "macklogic_red" },
               ],
             },
             {
               title: "Decider",
               matches: [
-                { code: "Partida 9", label: "Decider", bestOf: "MD3", band: 1, from: ["Partida 5", "Partida 7"], aLabel: "Perdedor Partida 5", bLabel: "Vencedor Partida 7" },
+                { code: "Partida 9", label: "Decider", bestOf: "MD3", band: 1, from: ["Partida 3", "Partida 7"], a: "ufmt_turuna", scoreA: 0, b: "macklogic_red", scoreB: 2, winner: "macklogic_red" },
               ],
             },
           ],
           terminalColumn: {
             title: "Classificados",
             cards: [
-              { label: "TBD", note: "1\u00ba do grupo", band: 0, from: ["Partida 5"] },
-              { label: "TBD", note: "2\u00ba do grupo", band: 1, from: ["Partida 9"] },
+              { id: "ceub_octopus", note: "1\u00ba do grupo", band: 0, from: ["Partida 3"] },
+              { id: "macklogic_red", note: "2\u00ba do grupo", band: 1, from: ["Partida 9"] },
             ],
           },
         },
@@ -809,29 +808,29 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Opening",
               matches: [
-                { code: "Partida 3", bestOf: "MD1", status: "Agendada", band: 0, a: "uninassau_griffins", b: "a2e_uff" },
-                { code: "Partida 4", bestOf: "MD1", status: "Agendada", band: 1, a: "azure_bears_golden", b: "ufu_saints" },
+                { code: "Partida 4", bestOf: "MD1", band: 0, a: "uninassau_griffins", scoreA: 1, b: "a2e_uff", scoreB: 0, winner: "uninassau_griffins" },
+                { code: "Partida 5", bestOf: "MD1", band: 1, a: "azure_bears_golden", scoreA: 1, b: "ufu_saints", scoreB: 0, winner: "azure_bears_golden" },
               ],
             },
             {
               title: "Winner's / Elimination",
               matches: [
-                { code: "Partida 6", label: "Winner's", bestOf: "MD1", band: 0, from: ["Partida 3", "Partida 4"], aLabel: "Vencedor Partida 3", bLabel: "Vencedor Partida 4" },
-                { code: "Partida 8", label: "Elimination", bestOf: "MD3", band: 1, from: ["Partida 3", "Partida 4"], aLabel: "Perdedor Partida 3", bLabel: "Perdedor Partida 4" },
+                { code: "Partida 6", label: "Winner's", bestOf: "MD1", band: 0, from: ["Partida 4", "Partida 5"], a: "uninassau_griffins", scoreA: 1, b: "azure_bears_golden", scoreB: 0, winner: "uninassau_griffins" },
+                { code: "Partida 8", label: "Elimination", bestOf: "MD3", band: 1, from: ["Partida 4", "Partida 5"], a: "a2e_uff", scoreA: 1, b: "ufu_saints", scoreB: 2, winner: "ufu_saints" },
               ],
             },
             {
               title: "Decider",
               matches: [
-                { code: "Partida 10", label: "Decider", bestOf: "MD3", band: 1, from: ["Partida 6", "Partida 8"], aLabel: "Perdedor Partida 6", bLabel: "Vencedor Partida 8" },
+                { code: "Partida 10", label: "Decider", bestOf: "MD3", band: 1, from: ["Partida 6", "Partida 8"], a: "azure_bears_golden", scoreA: 2, b: "ufu_saints", scoreB: 1, winner: "azure_bears_golden" },
               ],
             },
           ],
           terminalColumn: {
             title: "Classificados",
             cards: [
-              { label: "TBD", note: "1\u00ba do grupo", band: 0, from: ["Partida 6"] },
-              { label: "TBD", note: "2\u00ba do grupo", band: 1, from: ["Partida 10"] },
+              { id: "uninassau_griffins", note: "1\u00ba do grupo", band: 0, from: ["Partida 6"] },
+              { id: "azure_bears_golden", note: "2\u00ba do grupo", band: 1, from: ["Partida 10"] },
             ],
           },
         },
@@ -842,29 +841,16 @@ const TOURNAMENT_OVERRIDES = {
           layout: "linked",
           columns: [
             {
-              title: "Rodada 1",
+              title: "Semifinais",
               matches: [
-                { code: "Partida 11", label: "Semifinal superior", bestOf: "MD3", band: 0, aLabel: "1\u00ba Grupo A", bLabel: "2\u00ba Grupo B" },
-                { code: "Partida 12", label: "Semifinal superior", bestOf: "MD3", band: 1, aLabel: "1\u00ba Grupo B", bLabel: "2\u00ba Grupo A" },
+                { code: "Partida 11", label: "Semifinal", bestOf: "MD3", band: 0, a: "ceub_octopus", b: "azure_bears_golden" },
+                { code: "Partida 12", label: "Semifinal", bestOf: "MD3", band: 1, a: "uninassau_griffins", b: "macklogic_red" },
               ],
             },
             {
-              title: "Rodada 2",
+              title: "Final",
               matches: [
-                { code: "Partida 14", label: "Final superior", bestOf: "MD3", band: 0.5, from: ["Partida 11", "Partida 12"], aLabel: "Vencedor Partida 11", bLabel: "Vencedor Partida 12" },
-                { code: "Partida 13", label: "Rodada 1 inferior", bestOf: "MD3", band: 2, from: ["Partida 11", "Partida 12"], aLabel: "Perdedor Partida 11", bLabel: "Perdedor Partida 12" },
-              ],
-            },
-            {
-              title: "Rodada 3",
-              matches: [
-                { code: "Partida 15", label: "Final inferior", bestOf: "MD3", band: 2, from: ["Partida 14", "Partida 13"], aLabel: "Perdedor Partida 14", bLabel: "Vencedor Partida 13" },
-              ],
-            },
-            {
-              title: "Grande final",
-              matches: [
-                { code: "Partida 17", label: "Grande final", bestOf: "MD3", band: 1.25, from: ["Partida 14", "Partida 15"], aLabel: "Vencedor Partida 14", bLabel: "Vencedor Partida 15" },
+                { code: "Partida 14", label: "Final", bestOf: "MD3", band: 0.5, from: ["Partida 11", "Partida 12"], aLabel: "Vencedor Partida 11", bLabel: "Vencedor Partida 12" },
               ],
             },
           ],
@@ -879,7 +865,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Disputa de 3\u00ba lugar",
               matches: [
-                { code: "Partida 16", bestOf: "MD3", aLabel: "TBD", bLabel: "TBD" },
+                { code: "Partida 13", bestOf: "MD3", aLabel: "Perdedor Partida 11", bLabel: "Perdedor Partida 12" },
               ],
             },
           ],

@@ -9,3 +9,9 @@ local-test-links.html
 # backups que o PegaCustomMatch grava ao lado da planilha ao escrever PUUID
 dados_excel/*.backup_*.xlsx
 dados_excel/~$*.xlsx
+
+# ferramentas/riot: cache do Python e segredo, que nunca entram no repo publico
+ferramentas/riot/__pycache__/
+**/__pycache__/
+.env
+*.env

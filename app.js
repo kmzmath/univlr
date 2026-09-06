@@ -749,7 +749,7 @@ const TOURNAMENT_OVERRIDES = {
         "Playoffs em eliminação simples, todos os jogos MD3",
         "Disputa de terceiro lugar em MD3",
       ],
-      standings: "Chaveamento da fase de grupos",
+      standings: "Coloca\u00e7\u00e3o oficial do campeonato",
     },
     teams: [
       "ceub_octopus",
@@ -760,6 +760,16 @@ const TOURNAMENT_OVERRIDES = {
       "azure_bears_golden",
       "a2e_uff",
       "ufu_saints",
+    ],
+    placements: [
+      { range: "1", id: "ceub_octopus", note: "Campe\u00e3o" },
+      { range: "2", id: "uninassau_griffins", note: "Vice" },
+      { range: "3", id: "azure_bears_golden", note: "3\u00ba lugar" },
+      { range: "4", id: "macklogic_red", note: "4\u00ba lugar" },
+      { range: "5-6", id: "ufmt_turuna", note: "3\u00ba do Grupo A" },
+      { range: "5-6", id: "ufu_saints", note: "3\u00ba do Grupo B" },
+      { range: "7-8", id: "fametro_berserkers", note: "4\u00ba do Grupo A" },
+      { range: "7-8", id: "a2e_uff", note: "4\u00ba do Grupo B" },
     ],
     bracket: {
       title: "Grupos + Playoffs",
@@ -843,14 +853,14 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Semifinais",
               matches: [
-                { code: "Partida 11", label: "Semifinal", bestOf: "MD3", band: 0, a: "ceub_octopus", b: "azure_bears_golden" },
-                { code: "Partida 12", label: "Semifinal", bestOf: "MD3", band: 1, a: "uninassau_griffins", b: "macklogic_red" },
+                { code: "Partida 11", label: "Semifinal", bestOf: "MD3", band: 0, a: "ceub_octopus", scoreA: 2, b: "azure_bears_golden", scoreB: 0, winner: "ceub_octopus" },
+                { code: "Partida 12", label: "Semifinal", bestOf: "MD3", band: 1, a: "uninassau_griffins", scoreA: 2, b: "macklogic_red", scoreB: 1, winner: "uninassau_griffins" },
               ],
             },
             {
               title: "Final",
               matches: [
-                { code: "Partida 14", label: "Final", bestOf: "MD3", band: 0.5, from: ["Partida 11", "Partida 12"], aLabel: "Vencedor Partida 11", bLabel: "Vencedor Partida 12" },
+                { code: "Partida 14", label: "Final", bestOf: "MD3", band: 0.5, from: ["Partida 11", "Partida 12"], a: "ceub_octopus", scoreA: 2, b: "uninassau_griffins", scoreB: 0, winner: "ceub_octopus" },
               ],
             },
           ],
@@ -865,7 +875,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Disputa de 3\u00ba lugar",
               matches: [
-                { code: "Partida 13", bestOf: "MD3", aLabel: "Perdedor Partida 11", bLabel: "Perdedor Partida 12" },
+                { code: "Partida 13", bestOf: "MD3", a: "azure_bears_golden", scoreA: 2, b: "macklogic_red", scoreB: 1, winner: "azure_bears_golden" },
               ],
             },
           ],

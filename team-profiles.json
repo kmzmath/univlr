@@ -1145,12 +1145,12 @@
       "lineupHistory": [
         {
           "from": "2026-04-04",
-          "to": "2026-09-02",
+          "to": "2026-09-04",
           "firstSeenAt": 1775325877530,
-          "lastSeenAt": 1788368191438,
-          "matches": 53,
+          "lastSeenAt": 1788542021510,
+          "matches": 58,
           "source": "auto-json+players-history",
-          "profileConfidence": 980,
+          "profileConfidence": 1060,
           "players": [
             {
               "slot": 1,
@@ -1158,11 +1158,11 @@
               "name": "André",
               "handle": "andre#aaa12",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-09-02",
-              "matches": 53,
-              "rounds": 1046,
-              "profileMatches": 53,
-              "profileConfidence": 212,
+              "lastSeenAt": "2026-09-04",
+              "matches": 58,
+              "rounds": 1147,
+              "profileMatches": 58,
+              "profileConfidence": 232,
               "currentTeam": "azure_bears_golden",
               "teamHistory": [
                 "azure_bears",
@@ -1175,11 +1175,11 @@
               "name": "greinzera",
               "handle": "greiN#quel",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-09-02",
-              "matches": 53,
-              "rounds": 1046,
-              "profileMatches": 53,
-              "profileConfidence": 212,
+              "lastSeenAt": "2026-09-04",
+              "matches": 58,
+              "rounds": 1147,
+              "profileMatches": 58,
+              "profileConfidence": 232,
               "currentTeam": "azure_bears_golden",
               "teamHistory": [
                 "azure_bears_golden"
@@ -1191,11 +1191,11 @@
               "name": "piM",
               "handle": "piM#まいさ",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-09-02",
-              "matches": 53,
-              "rounds": 1046,
-              "profileMatches": 53,
-              "profileConfidence": 212,
+              "lastSeenAt": "2026-09-04",
+              "matches": 58,
+              "rounds": 1147,
+              "profileMatches": 58,
+              "profileConfidence": 232,
               "currentTeam": "azure_bears_golden",
               "teamHistory": [
                 "azure_bears_golden"
@@ -1207,11 +1207,11 @@
               "name": "taek",
               "handle": "taek#aim",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-09-02",
-              "matches": 53,
-              "rounds": 1046,
-              "profileMatches": 53,
-              "profileConfidence": 212,
+              "lastSeenAt": "2026-09-04",
+              "matches": 58,
+              "rounds": 1147,
+              "profileMatches": 58,
+              "profileConfidence": 232,
               "currentTeam": "azure_bears_golden",
               "teamHistory": [
                 "azure_bears_golden"
@@ -1239,9 +1239,9 @@
               "name": "Stockão",
               "handle": "stockão#BAGRE",
               "firstSeenAt": "2026-06-04",
-              "lastSeenAt": "2026-09-02",
-              "matches": 20,
-              "rounds": 408,
+              "lastSeenAt": "2026-09-04",
+              "matches": 25,
+              "rounds": 509,
               "profileMatches": 0,
               "profileConfidence": 0,
               "currentTeam": "azure_bears_black",
@@ -1725,12 +1725,12 @@
       "lineupHistory": [
         {
           "from": "2026-04-04",
-          "to": "2026-08-31",
+          "to": "2026-09-04",
           "firstSeenAt": 1775325466108,
-          "lastSeenAt": 1788187447156,
-          "matches": 36,
+          "lastSeenAt": 1788550266494,
+          "matches": 40,
           "source": "auto-json+players-history",
-          "profileConfidence": 664,
+          "profileConfidence": 744,
           "players": [
             {
               "slot": 1,
@@ -1738,11 +1738,11 @@
               "name": "kzr",
               "handle": "kzr#bala",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-08-31",
-              "matches": 36,
-              "rounds": 679,
-              "profileMatches": 36,
-              "profileConfidence": 144,
+              "lastSeenAt": "2026-09-04",
+              "matches": 40,
+              "rounds": 762,
+              "profileMatches": 40,
+              "profileConfidence": 160,
               "currentTeam": "ceub_octopus",
               "teamHistory": [
                 "ceub_octopus"
@@ -1754,11 +1754,11 @@
               "name": "reyblock",
               "handle": "reyblock#rbck",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-08-31",
-              "matches": 36,
-              "rounds": 679,
-              "profileMatches": 36,
-              "profileConfidence": 144,
+              "lastSeenAt": "2026-09-04",
+              "matches": 40,
+              "rounds": 762,
+              "profileMatches": 40,
+              "profileConfidence": 160,
               "currentTeam": "ceub_octopus",
               "teamHistory": [
                 "ceub_octopus"
@@ -1770,11 +1770,11 @@
               "name": "seki",
               "handle": "seki#hanei",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-08-31",
-              "matches": 34,
-              "rounds": 641,
-              "profileMatches": 34,
-              "profileConfidence": 136,
+              "lastSeenAt": "2026-09-04",
+              "matches": 38,
+              "rounds": 724,
+              "profileMatches": 38,
+              "profileConfidence": 152,
               "currentTeam": "ceub_octopus",
               "teamHistory": [
                 "ceub_octopus"
@@ -1786,11 +1786,11 @@
               "name": "chadu",
               "handle": "chadu#2007",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-08-31",
-              "matches": 25,
-              "rounds": 449,
-              "profileMatches": 25,
-              "profileConfidence": 100,
+              "lastSeenAt": "2026-09-04",
+              "matches": 29,
+              "rounds": 532,
+              "profileMatches": 29,
+              "profileConfidence": 116,
               "currentTeam": "ceub_octopus",
               "teamHistory": [
                 "ceub_octopus"
@@ -1802,11 +1802,11 @@
               "name": "gbzz",
               "handle": "big0d#CEI",
               "firstSeenAt": "2026-04-09",
-              "lastSeenAt": "2026-08-31",
-              "matches": 21,
-              "rounds": 372,
-              "profileMatches": 21,
-              "profileConfidence": 84,
+              "lastSeenAt": "2026-09-04",
+              "matches": 25,
+              "rounds": 455,
+              "profileMatches": 25,
+              "profileConfidence": 100,
               "currentTeam": "ceub_octopus",
               "teamHistory": [
                 "ceub_octopus"
@@ -3907,12 +3907,12 @@
       "lineupHistory": [
         {
           "from": "2026-01-10",
-          "to": "2026-09-02",
+          "to": "2026-09-04",
           "firstSeenAt": 1768083349963,
-          "lastSeenAt": 1788354388514,
-          "matches": 41,
+          "lastSeenAt": 1788542021510,
+          "matches": 47,
           "source": "auto-json+players-history",
-          "profileConfidence": 816,
+          "profileConfidence": 936,
           "players": [
             {
               "slot": 1,
@@ -3920,11 +3920,11 @@
               "name": "Katojin",
               "handle": "Kato#lau",
               "firstSeenAt": "2026-01-10",
-              "lastSeenAt": "2026-09-02",
-              "matches": 41,
-              "rounds": 853,
-              "profileMatches": 41,
-              "profileConfidence": 164,
+              "lastSeenAt": "2026-09-04",
+              "matches": 47,
+              "rounds": 977,
+              "profileMatches": 47,
+              "profileConfidence": 188,
               "currentTeam": "macklogic_red",
               "teamHistory": [
                 "macklogic_red"
@@ -3936,11 +3936,11 @@
               "name": "Sick",
               "handle": "sick#bntz",
               "firstSeenAt": "2026-01-10",
-              "lastSeenAt": "2026-09-02",
-              "matches": 41,
-              "rounds": 853,
-              "profileMatches": 41,
-              "profileConfidence": 164,
+              "lastSeenAt": "2026-09-04",
+              "matches": 47,
+              "rounds": 977,
+              "profileMatches": 47,
+              "profileConfidence": 188,
               "currentTeam": "macklogic_red",
               "teamHistory": [
                 "macklogic_red"
@@ -3952,11 +3952,11 @@
               "name": "Chocolate",
               "handle": "Choco#BAAM",
               "firstSeenAt": "2026-05-31",
-              "lastSeenAt": "2026-09-02",
-              "matches": 38,
-              "rounds": 778,
-              "profileMatches": 38,
-              "profileConfidence": 152,
+              "lastSeenAt": "2026-09-04",
+              "matches": 44,
+              "rounds": 902,
+              "profileMatches": 44,
+              "profileConfidence": 176,
               "currentTeam": "macklogic_red",
               "teamHistory": [
                 "macklogic_red"
@@ -3968,11 +3968,11 @@
               "name": "Gubert",
               "handle": "mercur1#one",
               "firstSeenAt": "2026-01-10",
-              "lastSeenAt": "2026-09-02",
-              "matches": 37,
-              "rounds": 765,
-              "profileMatches": 37,
-              "profileConfidence": 148,
+              "lastSeenAt": "2026-09-04",
+              "matches": 43,
+              "rounds": 889,
+              "profileMatches": 43,
+              "profileConfidence": 172,
               "currentTeam": "macklogic_red",
               "teamHistory": [
                 "macklogic_red"
@@ -3984,11 +3984,11 @@
               "name": "lule",
               "handle": "lule#dfnt",
               "firstSeenAt": "2026-01-10",
-              "lastSeenAt": "2026-09-02",
-              "matches": 30,
-              "rounds": 603,
-              "profileMatches": 30,
-              "profileConfidence": 120,
+              "lastSeenAt": "2026-09-04",
+              "matches": 36,
+              "rounds": 727,
+              "profileMatches": 36,
+              "profileConfidence": 144,
               "currentTeam": "macklogic_red",
               "teamHistory": [
                 "macklogic_red"
@@ -7893,12 +7893,12 @@
       "lineupHistory": [
         {
           "from": "2026-05-28",
-          "to": "2026-08-31",
+          "to": "2026-09-04",
           "firstSeenAt": 1780005616923,
-          "lastSeenAt": 1788205364465,
-          "matches": 20,
+          "lastSeenAt": 1788550266494,
+          "matches": 25,
           "source": "auto-json+players-history",
-          "profileConfidence": 392,
+          "profileConfidence": 472,
           "players": [
             {
               "slot": 1,
@@ -7906,11 +7906,11 @@
               "name": "JV",
               "handle": "jotave#081",
               "firstSeenAt": "2026-05-28",
-              "lastSeenAt": "2026-08-31",
-              "matches": 20,
-              "rounds": 391,
-              "profileMatches": 20,
-              "profileConfidence": 80,
+              "lastSeenAt": "2026-09-04",
+              "matches": 25,
+              "rounds": 497,
+              "profileMatches": 25,
+              "profileConfidence": 100,
               "currentTeam": "uninassau_griffins",
               "teamHistory": [
                 "uninassau_griffins"
@@ -7922,9 +7922,25 @@
               "name": "Peso",
               "handle": "PESO PILANTRINHA#RATAO",
               "firstSeenAt": "2026-05-28",
-              "lastSeenAt": "2026-08-31",
+              "lastSeenAt": "2026-09-04",
+              "matches": 25,
+              "rounds": 497,
+              "profileMatches": 25,
+              "profileConfidence": 100,
+              "currentTeam": "uninassau_griffins",
+              "teamHistory": [
+                "uninassau_griffins"
+              ]
+            },
+            {
+              "slot": 3,
+              "playerId": "2pfWv-PCjOl_ukzJdZyQNxW9uK94CEiJmWxycc9MxLTuUURixVs642SIJkhr732N50C7WjrtLdOreg",
+              "name": "JayJ",
+              "handle": "NEGO DOCE#JayJ",
+              "firstSeenAt": "2026-05-28",
+              "lastSeenAt": "2026-09-04",
               "matches": 20,
-              "rounds": 391,
+              "rounds": 393,
               "profileMatches": 20,
               "profileConfidence": 80,
               "currentTeam": "uninassau_griffins",
@@ -7933,7 +7949,7 @@
               ]
             },
             {
-              "slot": 3,
+              "slot": 4,
               "playerId": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw",
               "name": "Laves",
               "handle": "jannik sinner#ATP",
@@ -7949,7 +7965,7 @@
               ]
             },
             {
-              "slot": 4,
+              "slot": 5,
               "playerId": "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A",
               "name": "Mendes",
               "handle": "Joy 1955#rey",
@@ -7965,23 +7981,35 @@
               ]
             },
             {
-              "slot": 5,
-              "playerId": "2pfWv-PCjOl_ukzJdZyQNxW9uK94CEiJmWxycc9MxLTuUURixVs642SIJkhr732N50C7WjrtLdOreg",
-              "name": "JayJ",
-              "handle": "NEGO DOCE#JayJ",
-              "firstSeenAt": "2026-05-28",
-              "lastSeenAt": "2026-08-31",
-              "matches": 15,
-              "rounds": 287,
-              "profileMatches": 15,
-              "profileConfidence": 60,
+              "slot": 6,
+              "playerId": "VoDXPoDEjmCli9ty4GKmCkI46_AcLZcCq6BPvh2bABtvRkOtVCWCsO1mAbjVxSgbCl4PdTx6V3KozA",
+              "name": "Odysseys",
+              "handle": "Odysseys#Apex",
+              "firstSeenAt": "2026-08-31",
+              "lastSeenAt": "2026-09-04",
+              "matches": 7,
+              "rounds": 144,
+              "profileMatches": 7,
+              "profileConfidence": 28,
               "currentTeam": "uninassau_griffins",
               "teamHistory": [
                 "uninassau_griffins"
               ]
             },
             {
-              "slot": 6,
+              "slot": 7,
+              "playerId": "n4gmlK3PBjD58Em3HdmK3czcYqqtRiehQ5m4fRpjVklg38w7oGz8qmEijZ5holGKPoPSgJoF9hSNJg",
+              "name": "m3ndeS",
+              "handle": "m3ndeS#joy",
+              "firstSeenAt": "2026-08-31",
+              "lastSeenAt": "2026-09-04",
+              "matches": 7,
+              "rounds": 144,
+              "profileMatches": 0,
+              "profileConfidence": 0
+            },
+            {
+              "slot": 8,
               "playerId": "i3aicKYbd7ACS0VMHleipcbPYOc2o3iCMx359INgLc2zdwcRHrmVPQKw3PtUUwXb8rWmp8SRiiCdFg",
               "name": "Suflah",
               "handle": "suflah#Nanda",
@@ -7995,34 +8023,6 @@
               "teamHistory": [
                 "uninassau_griffins"
               ]
-            },
-            {
-              "slot": 7,
-              "playerId": "VoDXPoDEjmCli9ty4GKmCkI46_AcLZcCq6BPvh2bABtvRkOtVCWCsO1mAbjVxSgbCl4PdTx6V3KozA",
-              "name": "Odysseys",
-              "handle": "Odysseys#Apex",
-              "firstSeenAt": "2026-08-31",
-              "lastSeenAt": "2026-08-31",
-              "matches": 2,
-              "rounds": 38,
-              "profileMatches": 2,
-              "profileConfidence": 8,
-              "currentTeam": "uninassau_griffins",
-              "teamHistory": [
-                "uninassau_griffins"
-              ]
-            },
-            {
-              "slot": 8,
-              "playerId": "n4gmlK3PBjD58Em3HdmK3czcYqqtRiehQ5m4fRpjVklg38w7oGz8qmEijZ5holGKPoPSgJoF9hSNJg",
-              "name": "m3ndeS",
-              "handle": "m3ndeS#joy",
-              "firstSeenAt": "2026-08-31",
-              "lastSeenAt": "2026-08-31",
-              "matches": 2,
-              "rounds": 38,
-              "profileMatches": 0,
-              "profileConfidence": 0
             }
           ]
         }

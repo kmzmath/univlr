@@ -1258,7 +1258,7 @@ def write_resolved_puuids_to_xlsx(
             continue
 
         if not existing:
-            cell.value = puuid
+            cell.value = config_hub.texto_seguro(puuid)
             updated_puuid_rows += 1
 
     if WRITE_CURRENT_RIOT_IDS_TO_XLSX and player_key_to_current_riotid:
@@ -1311,7 +1311,7 @@ def write_resolved_puuids_to_xlsx(
                 created_nick_columns.append(header_name)
                 target_cell = ws.cell(row=row, column=col)
 
-            target_cell.value = riot_id
+            target_cell.value = config_hub.texto_seguro(riot_id)
             riotid_to_locations[norm].append({
                 "row": row,
                 "column": target_cell.column,

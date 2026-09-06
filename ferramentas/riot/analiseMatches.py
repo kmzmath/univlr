@@ -1277,7 +1277,7 @@ def write_all_matches_sheet(ws, records: List[RowRecord]) -> None:
     ws.title = "all_matches"
     _write_headers(ws, 1)
     for rec in records:
-        ws.append(rec.cells)
+        ws.append([config_hub.texto_seguro(c) for c in rec.cells])
 
     ws.freeze_panes = "A2"
     ws.auto_filter.ref = f"A1:{get_column_letter(len(HEADERS))}{len(records) + 1}"

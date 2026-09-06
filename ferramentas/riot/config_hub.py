@@ -68,6 +68,26 @@ def riot_api_key() -> str:
     return ""
 
 
+# Excel e LibreOffice avaliam como formula a celula que comeca com = + - @,
+# e o openpyxl chega a gravar a string como formula de verdade (data_type "f").
+# O nick da Riot e escolhido por terceiro e entra aqui inteiro: quem se chamar
+# "=..." escreve formula na nossa planilha e no relatorio que a gente abre.
+PREFIXOS_DE_FORMULA = ("=", "+", "-", "@", "\t", "\r")
+
+
+def texto_seguro(valor):
+    """
+    Neutraliza injecao de formula sem estragar o dado.
+
+    Devolve o valor intacto se nao for texto perigoso. Numero passa direto -
+    so texto que comeca com um dos prefixos ganha a aspa simples, que e o
+    marcador de literal do proprio Excel.
+    """
+    if not isinstance(valor, str) or not valor:
+        return valor
+    return "'" + valor if valor.startswith(PREFIXOS_DE_FORMULA) else valor
+
+
 PLAYERS_XLSX = planilha("players.xlsx")
 TEAMS_XLSX = planilha("teams.xlsx")
 ROUND_STATE_WINRATES_XLSX = planilha("round_state_winrates.xlsx")

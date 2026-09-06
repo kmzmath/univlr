@@ -1179,6 +1179,14 @@ def esta_no_roster(rec: PlayerRecord, equipe: str, team_data: TeamData) -> bool:
 
 
 
+def linhas_seguras(linhas: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    O CSV carrega nick da Riot e nome de arquivo, os dois escolhidos por
+    terceiro. Aberto no Excel, celula que comeca com = vira formula.
+    """
+    return [{k: config_hub.texto_seguro(v) for k, v in linha.items()} for linha in linhas]
+
+
 def iter_json_files(
     matches_dir: Path,
     recursive: bool = True,
@@ -1627,7 +1635,7 @@ def audit_matches(
             ],
         )
         writer.writeheader()
-        writer.writerows(summary_rows)
+        writer.writerows(linhas_seguras(summary_rows))
 
     with detalhes_csv.open("w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(
@@ -1654,7 +1662,7 @@ def audit_matches(
             ],
         )
         writer.writeheader()
-        writer.writerows(detail_rows)
+        writer.writerows(linhas_seguras(detail_rows))
 
     resumo_json.write_text(
         json.dumps(summary_rows, ensure_ascii=False, indent=2),

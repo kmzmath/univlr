@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import difflib
 import json
 import re
 import sys
@@ -1187,6 +1188,54 @@ def linhas_seguras(linhas: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return [{k: config_hub.texto_seguro(v) for k, v in linha.items()} for linha in linhas]
 
 
+def possivel_mesma_pessoa(
+    riot_id: str,
+    equipes: Set[str],
+    pdata: PlayerData,
+) -> str:
+    """
+    Conta sem cadastro cujo nick parece com o de alguem ja cadastrado NA MESMA
+    EQUIPE - ou seja, provavelmente conta nova de quem ja esta na planilha.
+
+    Foi a armadilha que quase criou duas pessoas onde havia uma, duas vezes:
+    a `Crystalline` estava cadastrada com um "e" a menos que a conta real
+    (`Crystallinee#br1`), e o `é o maldito` era conta alternativa do `Maldito`.
+    Comparar nick exato nao pega nenhum dos dois. O sinal que pega e nome
+    parecido DENTRO da mesma equipe - o espaco de busca vira um elenco, entao
+    um limiar generoso ainda erra pouco.
+    """
+    base = norm_key(str(riot_id).split("#")[0])
+    if not base or not equipes:
+        return ""
+
+    equipes_norm = {norm_key(e) for e in equipes if e and e != "unknown_team"}
+    if not equipes_norm:
+        return ""
+
+    melhor, nota = "", 0.0
+    for rec in pdata.records:
+        if not (rec.equipes_conhecidas() & equipes_norm):
+            continue
+        candidatos = [rec.jogador] + [r.split("#")[0] for r in rec.riot_ids]
+        for candidato in candidatos:
+            atual = difflib.SequenceMatcher(None, base, norm_key(candidato)).ratio()
+            if atual > nota:
+                melhor, nota = rec.jogador, atual
+    return f"{melhor} ({nota:.2f})" if nota >= 0.75 else ""
+
+
+def quem_votou(match: Dict[str, Any], side: str, equipe: str, pdata: PlayerData) -> List[str]:
+    """Jogadores daquele lado cujo current_team e a equipe divergente."""
+    nomes = []
+    for player in active_players(match):
+        if str(player.get("teamId")) != side:
+            continue
+        rec = find_player_record(player, pdata)
+        if rec and rec.current_team and norm_key(rec.current_team) == norm_key(equipe):
+            nomes.append(rec.jogador)
+    return sorted(nomes)
+
+
 def iter_json_files(
     matches_dir: Path,
     recursive: bool = True,
@@ -1293,6 +1342,11 @@ def audit_matches(
     # não viram achado. Sem isso não dá para responder "a equipe seguiu jogando
     # sem ele?", que é a pergunta que separa quem saiu de quem só está com o
     # cadastro incompleto.
+    # Conflito entre o nome do arquivo e o voto dos jogadores. O nome vence,
+    # por ser dado curado - mas a discordancia e sinal de que ou o nome esta
+    # errado, ou o current_team de alguem esta velho. Ate agora isso so existia
+    # no debug e ninguem olhava.
+    conflitos_de_equipe: List[Dict[str, Any]] = []
     partidas_por_equipe: Dict[str, Dict[str, str]] = defaultdict(dict)
     historico_da_conta: Dict[str, Dict[str, Tuple[str, str]]] = defaultdict(dict)
 
@@ -1400,6 +1454,18 @@ def audit_matches(
         for _lado, _equipe in side_to_team.items():
             if _equipe:
                 partidas_por_equipe[_equipe][match_id] = match_date
+
+        for conflito in conflicts:
+            divergentes = quem_votou(match, conflito["side"], conflito["teamByPlayers"], pdata)
+            conflitos_de_equipe.append({
+                "arquivo": fp.name,
+                "data": match_date[:10],
+                "lado": conflito["side"],
+                "equipe_pelo_nome": conflito["teamByFilename"],
+                "equipe_pelo_voto": conflito["teamByPlayers"],
+                "jogadores_que_divergem": "; ".join(divergentes),
+                "quantos": len(divergentes),
+            })
 
         debug_rows.append({
             "fileName": fp.name,
@@ -1589,6 +1655,10 @@ def audit_matches(
             "registered_current_team": item.registered_current_team or "",
             "historico_de_equipes": "; ".join(item.registered_team_history),
             "completes": "; ".join(item.registered_completes),
+            "possivel_mesma_pessoa": (
+                possivel_mesma_pessoa(item.display_riot_id, set(item.teams_to_matches), pdata)
+                if "nunca_cadastrado" in item.issue_types else ""
+            ),
             **metricas_de_atividade(chave, item),
             "riot_ids_vistos": "; ".join(riot_ids_sorted),
             "arquivos_qtd": len(files_sorted),
@@ -1604,6 +1674,7 @@ def audit_matches(
     resumo_csv = output_dir / "nicks_fora_do_cadastro_resumo.csv"
     detalhes_csv = output_dir / "nicks_fora_do_cadastro_detalhado.csv"
     resumo_json = output_dir / "nicks_fora_do_cadastro_resumo.json"
+    conflitos_csv = output_dir / "conflitos_de_equipe.csv"
     debug_json = output_dir / "team_detection_debug.json"
 
     with resumo_csv.open("w", newline="", encoding="utf-8-sig") as f:
@@ -1620,6 +1691,7 @@ def audit_matches(
                 "registered_current_team",
                 "historico_de_equipes",
                 "completes",
+                "possivel_mesma_pessoa",
                 "primeira_partida",
                 "ultima_partida",
                 "equipe_de_referencia",
@@ -1664,6 +1736,17 @@ def audit_matches(
         writer.writeheader()
         writer.writerows(linhas_seguras(detail_rows))
 
+    with conflitos_csv.open("w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=["arquivo", "data", "lado", "equipe_pelo_nome",
+                        "equipe_pelo_voto", "jogadores_que_divergem", "quantos"],
+        )
+        writer.writeheader()
+        writer.writerows(linhas_seguras(sorted(
+            conflitos_de_equipe, key=lambda c: (-c["quantos"], c["arquivo"])
+        )))
+
     resumo_json.write_text(
         json.dumps(summary_rows, ensure_ascii=False, indent=2),
         encoding="utf-8",
@@ -1698,6 +1781,8 @@ def audit_matches(
         "summary_csv": str(resumo_csv),
         "details_csv": str(detalhes_csv),
         "summary_json": str(resumo_json),
+        "conflitos_csv": str(conflitos_csv),
+        "conflitos_de_equipe": conflitos_de_equipe,
         "debug_json": str(debug_json),
         "top_rows": summary_rows[:40],
     }
@@ -1727,8 +1812,20 @@ def print_console_summary(result: Dict[str, Any]) -> None:
     print(" -", result["summary_csv"])
     print(" -", result["details_csv"])
     print(" -", result["summary_json"])
+    print(" -", result["conflitos_csv"])
     print(" -", result["debug_json"])
     print()
+
+    conflitos = result.get("conflitos_de_equipe") or []
+    if conflitos:
+        from collections import Counter as _Counter
+        pares = _Counter((c["equipe_pelo_nome"], c["equipe_pelo_voto"]) for c in conflitos)
+        print(f"Conflitos entre o nome do arquivo e o voto: {len(conflitos)} lado(s)")
+        print("  O nome do arquivo vence. A discordancia diz que ou ele esta errado,")
+        print("  ou o current_team de alguem esta velho.")
+        for (pelo_nome, pelo_voto), n in pares.most_common():
+            print(f"    {n:3}x  arquivo diz {pelo_nome:24} e o voto diz {pelo_voto}")
+        print()
 
     contagem = result.get("contagem_por_issue") or {}
     if contagem:

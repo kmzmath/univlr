@@ -6,14 +6,17 @@ Tres coisas moram em lugares diferentes de proposito:
 
   REPO_DIR      o repositorio do site. Guarda o CODIGO (estes scripts) e a
                 FONTE (dados_excel). E publico, entao nada de segredo aqui.
-  TRABALHO_DIR  a pasta de trabalho, fora do repo: Finalizados, out_tournament,
-                matchlists, as saidas de analise e o .env com a chave. Sao
-                centenas de MB de arquivo bruto que nao precisam de historico.
+  TRABALHO_DIR  a pasta de trabalho: Finalizados, out_tournament, matchlists,
+                as saidas de analise e o .env com a chave. Fica DENTRO do repo,
+                em trabalho/, para haver um lugar so - e no .gitignore, porque
+                sao centenas de MB de arquivo bruto que nao precisam de
+                historico e que duplicariam o campeonatos/.
   RIOT_API_KEY  variavel de ambiente, ou o .env da pasta de trabalho.
 
-O REPO_DIR e deduzido do proprio arquivo (ferramentas/riot -> raiz), entao
-funciona em qualquer maquina sem editar caminho. A pasta de trabalho tem um
-padrao e aceita a variavel UNIVLR_TRABALHO por cima.
+Nao ha caminho absoluto em lugar nenhum: o REPO_DIR e deduzido do proprio
+arquivo (ferramentas/riot -> raiz) e a pasta de trabalho pendura nele. Entao
+clonar o repo em qualquer maquina ja deixa tudo no lugar. A variavel
+UNIVLR_TRABALHO sobrescreve, para quem quiser o acervo em outro disco.
 
 NAO ha fallback para copia local das planilhas, de proposito: uma copia velha
 que funciona em silencio foi o que fez a A2E UFF sair como "unknown" no nome de
@@ -27,7 +30,7 @@ REPO_DIR = Path(__file__).resolve().parents[2]
 DADOS_EXCEL = REPO_DIR / "dados_excel"
 
 TRABALHO_DIR = Path(
-    os.environ.get("UNIVLR_TRABALHO") or r"C:/Users/Administrator/Desktop/Pend1/API VAL"
+    os.environ.get("UNIVLR_TRABALHO") or (REPO_DIR / "trabalho")
 ).resolve()
 
 

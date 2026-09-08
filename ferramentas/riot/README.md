@@ -1,7 +1,7 @@
 # ferramentas/riot
 
-Scripts que falam com a API da Riot e auditam o cadastro. Eles vivem aqui, mas
-o acervo bruto de partidas **não** - a divisão é de propósito.
+Scripts que falam com a API da Riot e auditam o cadastro. Tudo mora dentro do
+repositório, mas nem tudo é versionado - a divisão é de propósito.
 
 ## Onde mora o quê
 
@@ -9,13 +9,15 @@ o acervo bruto de partidas **não** - a divisão é de propósito.
 |---|---|---|
 | Código (estes scripts) | `ferramentas/riot/` | precisa de histórico |
 | Fonte (`players.xlsx`, `teams.xlsx`, ...) | `dados_excel/` | é o cadastro que o site consome |
-| Acervo bruto (`Finalizados/`, `out_tournament/`) | fora do repo | ~440 MB, e o `campeonatos/` já é a exportação publicável dele |
-| Saídas de análise | fora do repo | relatório se regera |
-| Chave da Riot | `.env` fora do repo | **este repositório é público** |
+| Acervo bruto (`Finalizados/`, `out_tournament/`) | `trabalho/`, no `.gitignore` | ~450 MB, e o `campeonatos/` já é a exportação publicável dele |
+| Saídas de análise | `trabalho/` | relatório se regera |
+| Chave da Riot | `trabalho/.env` | **este repositório é público** |
 
-`config_hub.py` amarra as três pontas. O repo ele deduz do próprio caminho, então
-funciona em qualquer máquina. A pasta de trabalho tem um padrão e aceita a
-variável `UNIVLR_TRABALHO` por cima.
+`config_hub.py` amarra as três pontas, e **não há caminho absoluto em lugar
+nenhum**: o repo é deduzido do próprio caminho do arquivo e a pasta de trabalho
+pendura nele. Clonar em outra máquina já deixa tudo no lugar - só falta o
+`trabalho/`, que se cria sozinho ao rodar, e o `.env`. Quem quiser o acervo em
+outro disco usa a variável `UNIVLR_TRABALHO`.
 
 **Não há fallback para cópia local das planilhas, de propósito.** Uma cópia velha
 funcionando em silêncio foi o que fez a A2E UFF sair como `unknown` no nome de
@@ -24,8 +26,7 @@ planilha, os scripts param com o caminho na mensagem.
 
 ## Antes de rodar
 
-A chave da Riot vem da variável de ambiente `RIOT_API_KEY` ou de um `.env` na
-pasta de trabalho:
+A chave da Riot vem da variável de ambiente `RIOT_API_KEY` ou de `trabalho/.env`:
 
 ```
 RIOT_API_KEY=RGAPI-...

@@ -15,3 +15,7 @@ ferramentas/riot/__pycache__/
 **/__pycache__/
 .env
 *.env
+
+# Pasta de trabalho das ferramentas da Riot: acervo bruto, saidas e o .env.
+# Fica dentro do repo para haver um lugar so, mas NUNCA e versionada.
+/trabalho/

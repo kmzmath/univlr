@@ -18756,6 +18756,101 @@ img {
   font-variant-numeric: tabular-nums;
 }
 
+/* ------------------------------------------- tres materias no topo (.trio)
+
+   Com duas secundarias empilhadas a coluna da direita e so delas. A razao das
+   colunas nao e gosto, e conta: para dois cartoes 2:1 empilhados terminarem na
+   MESMA altura do heroi 2:1, `a/2 = b + vao`. Com o vao de 16px do site isso
+   da 2,07 : 1, e a 1440px o erro e de menos de 1px.
+
+   O vao e fixo e as colunas sao proporcionais, entao a igualdade so seria
+   exata numa largura. Por isso a linha estica: a altura sai do heroi, os dois
+   cartoes dividem o que sobra, e a diferenca (fracao de grau na proporcao da
+   capa) e absorvida pelo `object-fit` em vez de virar degrau entre as colunas. */
+
+/* Tudo isto vale so no layout de duas colunas. Escopado por `min-width` de
+   proposito: empilhado, o heroi deixa de mandar na altura, e uma regra .trio
+   mais especifica vazando para o celular atropelaria a capa 21:9 que os
+   secundarios usam la embaixo. */
+@media (min-width: 941px) {
+  .home-topo.trio {
+    grid-template-columns: minmax(0, 2.07fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .home-topo.trio .home-topo-lado { height: 100%; }
+
+  .home-topo.trio .home-topo-lado .news-heroi.menor {
+    flex: 1 1 0;
+    min-height: 0;
+  }
+
+  /* Sem `aspect-ratio`: a altura vem do heroi ao lado, nao da propria capa. */
+  .home-topo.trio .news-heroi.menor .news-heroi-capa {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+}
+
+/* --------------------------------------------------- atividade em faixa
+
+   Fora da coluna nobre, a atividade vira uma linha so: rotulo na frente e os
+   assuntos em fila, sem a moldura de secao. Mesmo conteudo das outras formas,
+   com um terco da altura. Rola no proprio eixo quando nao cabe - a pagina
+   nunca rola de lado por causa dela. */
+
+.atividade-faixa {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-width: 0;
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+.atv-rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  font: 700 var(--text-2xs) / 1 var(--font-text);
+  color: var(--univlr-white);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.atv-rotulo::before {
+  content: "";
+  width: 4px;
+  height: 13px;
+  background: var(--red);
+}
+
+.atividade-faixa .atv-lista {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-5);
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.atividade-faixa .atv-lista::-webkit-scrollbar { display: none; }
+
+.atividade-faixa .atv-linha {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: 0;
+  border-bottom: 0;
+  white-space: nowrap;
+  flex: none;
+}
+
+.atividade-faixa .atv-nome { white-space: nowrap; }
+
 /* Sem materia nenhuma a atividade ocupa a largura toda, e as linhas se
    espalham em colunas para nao virarem tiras de 1200px com tres palavras. */
 .atividade-larga { margin-bottom: var(--space-6); }

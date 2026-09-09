@@ -97,14 +97,22 @@
       return window.Comments ? window.Comments.atividadeLarga(9) : "";
     }
 
-    const [destaque, segunda] = itens;
+    const [destaque, ...resto] = itens;
+    const secundarias = resto.slice(0, 2);
+
+    // Com DUAS secundarias a coluna da direita fica inteira para elas e a
+    // atividade desce para uma faixa fina. Dois cartoes 2:1 empilhados nao
+    // cabem na coluna junto da atividade: eles somam mais que a altura do
+    // heroi, e o que sobraria para a conversa seria uma tira de 3,8:1.
+    const trio = secundarias.length === 2;
     // Com uma materia so e nenhuma conversa, a coluna da direita nao teria
     // nada - e meia largura de vazio ao lado do heroi e pior que um heroi
     // largo. Nesse caso a linha vira de uma coluna so.
-    const sozinho = !segunda && !atividade;
+    const sozinho = !secundarias.length && !atividade;
+    const faixa = trio && window.Comments ? window.Comments.atividadeFaixa(5) : "";
 
     return `
-      <section class="home-topo ${sozinho ? "sozinho" : ""}">
+      <section class="${["home-topo", sozinho && "sozinho", trio && "trio"].filter(Boolean).join(" ")}">
         <div class="section-head home-topo-head">
           <div><h2>Notícias</h2></div>
           <a class="subtle-link" href="#/news">Ver todas</a>
@@ -116,10 +124,11 @@
           sozinho
             ? ""
             : `<div class="home-topo-lado">
-                 ${segunda ? heroi(segunda, true) : ""}
-                 ${atividade}
+                 ${secundarias.map((item) => heroi(item, true)).join("")}
+                 ${trio ? "" : atividade}
                </div>`
         }
+        ${faixa}
       </section>`;
   }
 

@@ -686,6 +686,20 @@
       </section>`;
   }
 
+  // Faixa fina, embaixo das noticias. Com tres materias no topo a coluna da
+  // direita e toda das duas secundarias, e a atividade sai de la: aqui ela vira
+  // uma linha so, com o rotulo na frente em vez de um titulo de secao em cima.
+  // E o mesmo conteudo das outras duas formas, com um terco da altura.
+  function atividadeFaixa(limite = 5) {
+    const itens = linhasDeAtividade(limite);
+    if (!itens.length) return "";
+    return `
+      <section class="atividade atividade-faixa">
+        <h2 class="atv-rotulo">Atividade recente</h2>
+        <div class="atv-lista">${itens.map(umaLinha).join("")}</div>
+      </section>`;
+  }
+
   // Sem noticia nenhuma a coluna estreita nao existe, e a atividade sozinha
   // numa metade deixaria a outra vazia. Aqui ela se espalha em colunas.
   function atividadeLarga(limite = 9) {
@@ -763,5 +777,5 @@
     setTimeout(() => alvo.classList.remove("destacado"), 2600);
   }
 
-  window.Comments = { shell, montar, avatar, quando, corpo, selo, atividadeHome, atividadeLarga, assuntoDaThread };
+  window.Comments = { shell, montar, avatar, quando, corpo, selo, atividadeHome, atividadeFaixa, atividadeLarga, assuntoDaThread };
 })();

@@ -15,6 +15,20 @@
 // mantem a conveniencia e cobra um passo: depois de adicionar arte, rode este
 // script. E o mesmo contrato dos outros scripts que mantem artefato commitado.
 //
+// COMO NOMEAR O ARQUIVO. O nome tem que comecar pelo ID DO EVENTO, o mesmo que
+// aparece na URL do campeonato (`unicup-rj`, e nao `unicup`), senao o candidato
+// nunca e montado e a arte fica no disco sem nunca aparecer. E o sufixo decide
+// quem recebe:
+//
+//   <id>-campeao.png   so o campeao      <- o caso normal: trofeu e do vencedor
+//   <id>-vice.png      so o vice
+//   <id>-terceiro.png  so o terceiro
+//   <id>.png           TODO o podio      <- so quando a peca foi dada aos tres
+//
+// Em 09/09/2026 as duas artes que existem (RivvalsGG e UniCup RJ) sao de
+// campeao. Com `<id>.png` o vice aparecia com o mesmo trofeu do campeao, e no
+// caso da UniCup com um trofeu escrito "1o LUGAR".
+//
 // Rodar duas vezes nao muda um byte.
 
 const fs = require("fs");

@@ -4967,6 +4967,11 @@ body {
 .filter-pill {
   min-height: 32px;
   font-size: var(--text-sm);
+  display: grid;
+  grid-template-columns: 15px auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .filter-pill:hover,
@@ -5042,6 +5047,7 @@ body {
   right: 8px;
 }
 
+.filter-pill.active .filter-check,
 .filter-banner.active .filter-check,
 .filter-event-button.active .filter-check,
 .team-filter-button.active .filter-check {
@@ -5049,6 +5055,7 @@ body {
   background: rgba(41, 214, 137, 0.22);
 }
 
+.filter-pill.active .filter-check::after,
 .filter-banner.active .filter-check::after,
 .filter-event-button.active .filter-check::after,
 .team-filter-button.active .filter-check::after {
@@ -5061,6 +5068,49 @@ body {
   border-width: 0 2px 2px 0;
   content: "";
   transform: rotate(45deg);
+}
+
+/* Ordem da lista de campeonatos. Deliberadamente NAO usa o verde de selecao
+   dos outros botoes da barra: verde ali quer dizer "este entra no resultado", e
+   ordenar nao tira nem poe nenhuma partida. Aqui o estado ligado e so um
+   preenchimento neutro, a linguagem de um seletor de vista. */
+.filter-sort-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 8px 0;
+}
+
+.filter-sort-label {
+  margin-right: auto;
+  color: rgba(245, 241, 242, 0.56);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.filter-sort-button {
+  min-height: 24px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: rgba(245, 241, 242, 0.66);
+  font: inherit;
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.filter-sort-button:hover {
+  color: var(--ink);
+}
+
+.filter-sort-button.active {
+  border-color: rgba(245, 241, 242, 0.16);
+  background: rgba(245, 241, 242, 0.1);
+  color: var(--ink);
 }
 
 .filter-event-button,
@@ -9912,13 +9962,6 @@ select {
     grid-column: 1 / -1;
   }
 
-  .full-list-panel .result-row {
-    grid-template-columns: minmax(140px, 1fr) 74px minmax(140px, 1fr) 116px;
-  }
-
-  .full-list-panel .result-maps {
-    display: none;
-  }
 }
 
 @media (max-width: 760px) {
@@ -9950,11 +9993,19 @@ select {
 }
 
 /* Final effective revert: original layout, UNIVLR colors only */
+/* O teto de 1600px nao e numero redondo escolhido a gosto: e o que a linha de
+   /partidas pede quando cada peca tem o tamanho do proprio conteudo - 320 de
+   barra de filtro + 16 de vao + 16 de recuo da linha + 754 de equipe, placar,
+   equipe e data + ~496 para tres telas de mapa de 160px. Passando disso, a
+   pagina nao ganha informacao: ela so estica os vaos. Medido a 1920px antes do
+   teto: a coluna da equipe tinha 300px para um nome de 82px, ou seja 178px de
+   vazio de cada lado do placar, e um md2 vinha com duas telas de 287px.
+   Abaixo de 1600px nada muda - a regra so tira o excesso das telas grandes. */
 .topbar-inner,
 .main,
 .footer-inner {
   width: calc(100% - (var(--page-gutter) * 2));
-  max-width: none;
+  max-width: 1600px;
 }
 
 .topbar-inner {
@@ -10060,10 +10111,42 @@ select {
   display: grid;
 }
 
+/* A coluna de equipe era minmax(180px, 300px) e depois minmax(120px, 210px). Os
+   210px vinham de caber o pior nome do banco inteiro sem cortar ("PUCGO
+   Sistematica Academy", 168px), e pagar por um outlier custava caro nos outros
+   97: a mediana tem 84px, entao a coluna abria 84px de vao entre o nome e o
+   placar - e nas duas pontas por um valor diferente, o que deixava a linha
+   torta quando um nome curto enfrentava um longo.
+   Com a rolagem cuidando do que nao cabe (.nome-rolante no <strong>), a coluna
+   passa a ser dimensionada pelo caso comum: 124px de nome cobrem o percentil 95
+   (122px) e deixam 6 das 98 equipes rolando. Com escudo (32px) e vao (8px) da
+   164px de coluna.
+   A coluna da data subiu de 142px fixos para ate 200px porque e ali que mora o
+   nome do campeonato: "JUBS Goias 2026 - Etapa Presencial" pede 175px, e em
+   142px ele transbordava por baixo do mapa. O que sobrar dos cortes vai para os
+   mapas, que sao a unica coluna elastica da linha. */
 .full-list-panel .result-row {
   min-height: 66px;
-  grid-template-columns: minmax(180px, 300px) 86px minmax(180px, 300px) minmax(260px, 1fr) 142px;
+  grid-template-columns: minmax(110px, 164px) 86px minmax(110px, 164px) minmax(200px, 1fr) minmax(140px, 200px);
   gap: 12px;
+}
+
+/* A caixa do nome ocupa a coluna inteira em vez de encolher ate o texto: e ela
+   que padroniza a area de cada equipe, independente do tamanho do nome. E o
+   texto encosta no PLACAR, nao no escudo - a distancia que precisa ser igual
+   nas duas pontas e a que separa o nome do numero, porque e ali que a linha e
+   lida. O vao que sobra vai para o lado do escudo, que fica na mesma vertical
+   em todas as linhas e continua servindo de trilho para a vista. */
+.full-list-panel .result-team strong {
+  flex: 1 1 auto;
+}
+
+.full-list-panel .result-team.left strong {
+  text-align: right;
+}
+
+.full-list-panel .result-team.right strong {
+  text-align: left;
 }
 
 .full-list-panel .result-maps,
@@ -14661,19 +14744,25 @@ small,
   list-style: none;
 }
 
-/* Quatro zonas: rosto recortado, apelido, escudo e o dado a direita. O escudo
-   saiu de cima do apelido e virou coluna propria em 1fr: e ele que ocupa o vao
-   que sobrava entre o nome e o numero, em vez de o vao ficar vazio. Como a
-   coluna e flexivel, o escudo se centra no espaco que sobrar - quanto mais
-   larga a celula, mais para o meio ele vai.
+/* Tres zonas: rosto recortado, identidade (escudo sobre apelido) e o dado a
+   direita. O escudo ja teve coluna propria entre o apelido e o numero, e a
+   conta nao fechava: a 1920px as quatro zonas pediam 218px de conteudo numa
+   celula com 213px uteis, entao a coluna do escudo colapsava para 12px e o
+   escudo de 52px vazava dela - passando por cima do numero (medido: -12px de
+   folga entre escudo e placar). Empilhado sobre o apelido ele ocupa a mesma
+   coluna que o nome, some um vao da linha e nada mais atravessa o numero.
+   Empilhar tambem casa com a leitura: escudo e apelido sao a mesma informacao
+   ("quem"), e agora sao um bloco so.
    overflow: hidden e o que deixa a foto sangrar na base sem vazar da celula. */
 /* A linha "detail" ocupa o vao que ja estava vazio acima do apelido, entao
    reservar espaco para ela nao muda a altura da celula - so o que aparece ali
    muda no hover. Se a linha fosse criada no hover, as oito celulas pulariam. */
 .week-tile {
   display: grid;
-  grid-template-columns: auto minmax(0, auto) minmax(0, 1fr) auto;
-  grid-template-areas: "figure nick crest stat";
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "figure crest stat"
+    "figure nick  stat";
   align-items: end;
   align-content: end;
   gap: 0 clamp(8px, 0.8vw, 14px);
@@ -14906,14 +14995,25 @@ small,
   transition-delay: 140ms;
 }
 
+/* O rosto cede 12px de largura (era clamp(62px, 5.4vw, 96px)) para a coluna de
+   identidade. Nao e ajuste de gosto: cada pixel que sai daqui entra no apelido,
+   e e o que faz "Queijo Coallho" (81px) caber inteiro no lugar de virar
+   "Queijo...". Continua sendo a maior peca da celula. */
 .week-tile-figure {
   grid-area: figure;
-  width: clamp(62px, 5.4vw, 96px);
+  width: clamp(58px, 4.6vw, 84px);
   /* a altura vem do proprio bloco: a foto vai do topo do padding ate a base */
   height: calc(100% - 4px);
   margin-bottom: 0;
 }
 
+/* line-height em px, e nao em fator: a fonte deste apelido e ajustada pelo JS
+   (.nome-encolhe) para caber na coluna, e com entrelinha proporcional a altura
+   da caixa mudaria junto - o ResizeObserver que dispara a medida veria o
+   proprio trabalho como mudanca de tamanho e se realimentaria. Com a linha
+   fixa, encolher a fonte nao mexe em nenhuma geometria.
+   A reticencia fica como ultimo recurso, para o apelido que nem no piso de 10px
+   couber (5 dos 643 do banco). */
 .week-tile-nick {
   grid-area: nick;
   min-width: 0;
@@ -14923,20 +15023,23 @@ small,
   padding-bottom: 12px;
   color: var(--ink);
   font-size: var(--text-sm);
+  line-height: 19px;
   font-weight: 700;
+  text-align: center;
 }
 
-/* justify-self: center e o que faz o escudo ficar no meio do vao em vez de
-   grudado num dos lados. align-self: center porque, diferente do rosto e do
-   texto, um escudo nao tem linha de base para apoiar. */
+/* Centrado sobre o apelido, na mesma coluna: os dois sao "quem e", e agora
+   leem como um bloco. align-self: end encosta o escudo na base da propria
+   linha, a 4px do nome - antes ele boiava no meio de um vao que nao era dele. */
 .week-tile-crest.clean-logo,
 .week-tile-crest {
   grid-area: crest;
   width: clamp(34px, 2.9vw, 52px);
   height: clamp(34px, 2.9vw, 52px);
+  max-width: 100%;
   justify-self: center;
-  align-self: center;
-  margin-bottom: 6px;
+  align-self: end;
+  margin-bottom: 4px;
 }
 
 .week-tile-stat {
@@ -15071,6 +15174,13 @@ small,
     justify-items: start;
     text-align: left;
     padding-bottom: 2px;
+  }
+
+  /* No celular a grade e outra: o escudo fica AO LADO do apelido, na mesma
+     linha, e nao acima dele - nao ha numero na altura deles para atravessar.
+     Entao o apelido volta a ser alinhado a esquerda, como o resto da coluna. */
+  .week-tile-nick {
+    text-align: left;
   }
 
   /* Sem hover no toque, e a grade daqui so tem duas areas: deixar o bloco no
@@ -15971,9 +16081,18 @@ small,
 /* Data e campeonato eram um span so separado por <br>. Agora sao dois, para
    poderem ficar lado a lado com separador na home e empilhados nas listas
    cheias, sem grudar ("16:17UNIVAVÁ"). */
+/* max-width: 100% e o que prende o nome dentro da propria coluna. Sem ele, um
+   item de grade com texto que nao quebra fica do tamanho do texto e transborda
+   a trilha: nas listas cheias a caixa media 175px numa coluna de 142px e os
+   33px que sobravam iam para a esquerda, por baixo do ultimo mapa - e como o
+   .result-map-tile tem `isolation: isolate`, o mapa e pintado por cima e comia
+   o comeco do nome ("...S Goias 2026"). Preso na coluna, o que nao couber vai e
+   volta pela mesma rolagem da home (.nome-rolante). */
 .result-meta-when,
 .result-meta-where {
   display: block;
+  min-width: 0;
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -15994,11 +16113,67 @@ small,
   min-width: 0;
 }
 
+/* O teto e o que a ponta direita realmente tem: 138px de --ponta-da-faixa,
+   menos os 12px de padding da linha, os 24px do escudo do campeonato, os 10px
+   de gap entre os dois e 8px de respiro ate o ultimo nome de mapa. Da 84px.
+   Sem esse teto o nome nao encolhia: como a faixa de mapas e absoluta, ela sai
+   do fluxo do flex e o nome nunca era espremido por ela - so passava por baixo.
+   Medido a 1280px: "JUBS Goias 2026 - Etapa Presencial" ocupava 174,6px e
+   invadia 82,6px do ultimo nome de mapa, que e o que se ve como texto
+   sobreposto na home. O que nao couber vai e volta (.tem-rolagem, abaixo). */
 .home-board.univlr-home .result-meta-where {
   flex: 0 1 auto;
   min-width: 0;
+  max-width: calc(var(--ponta-da-faixa) - 12px - 24px - 10px - 8px);
   margin-left: auto;
   text-align: right;
+}
+
+/* O texto ganha uma caixa propria dentro da .result-meta-where porque a
+   animacao precisa de duas: a de fora e a janela que corta, a de dentro e o que
+   anda. Em bloco, e nao inline-block: inline-block viraria conteudo de linha e
+   levantaria a caixa de linha pela entrelinha inteira, mexendo na altura das
+   outras seis listas de partida, que nao pediram nada. Em bloco, medido nas
+   duas versoes, a linha de /partidas fica nos mesmos 77,69px.
+   Enquanto o nome cabe, quem corta com reticencia e esta caixa - o pai nao tem
+   mais texto direto para aplicar text-overflow. */
+.nome-rolante {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* max-content e o que solta o texto para ultrapassar a janela. Um bloco de
+   max-content encosta na borda ESQUERDA do pai, entao em repouso o que se ve e
+   o comeco do nome, que e por onde se le - o text-align: right do pai so
+   alinharia texto dentro de uma caixa que ja tem o tamanho exato do texto.
+   A reticencia sai junto: com o texto andando ela ficaria pairando sobre a
+   ultima letra visivel, e quem anuncia que ha mais nome passa a ser o
+   movimento.
+   Deslocamento e duracao vem do JS (ajustarTextosVariaveis), porque so o navegador
+   sabe quantos pixels sobraram de fora; o CSS fica com o ritmo - para, vai,
+   para, volta. O intervalo parado em cada ponta e o que torna o nome legivel:
+   vaivem continuo nao se le. */
+.tem-rolagem > .nome-rolante {
+  width: max-content;
+  overflow: visible;
+  text-overflow: clip;
+  animation: nome-rolante var(--rolagem-tempo, 7s) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes nome-rolante {
+  0%,
+  24% {
+    transform: translateX(0);
+  }
+  50%,
+  74% {
+    transform: translateX(var(--rolagem-fim, 0px));
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 /* A sequencia de mapas so aparece na home: nas listas cheias existe a tira
@@ -16042,14 +16217,22 @@ small,
    A largura tem tres tetos e vale o menor:
    - 280px + 140px por mapa, para a md3 ganhar mais espaco que a md1;
    - 66% da linha, para o holofote nunca virar a linha inteira;
-   - largura menos 276px, que e o espaco que a data e o campeonato precisam nas
-     pontas. Sem esse terceiro teto, a 1280px uma md3 chegava a 4px do texto da
-     data - passava por pouco hoje e encostaria no primeiro nome mais longo.
+   - largura menos duas --ponta-da-faixa (138px cada), que e o espaco que a
+     data e o campeonato precisam nas pontas. Sem esse terceiro teto, a 1280px
+     uma md3 chegava a 4px do texto da data - passava por pouco hoje e
+     encostaria no primeiro nome mais longo.
    ========================================================================== */
 
+/* --ponta-da-faixa: quanto o holofote devolve para CADA ponta da linha. A
+   faixa e centrada no eixo do placar, entao as duas pontas sao iguais por
+   construcao - a folga que sobra a esquerda da data nao tem como ir para o
+   campeonato do lado direito. O numero vira variavel porque agora ele governa
+   duas coisas que precisam concordar: a largura maxima do holofote e a do nome
+   do campeonato. Mudou aqui, os dois se ajustam juntos. */
 .home-board.univlr-home .result-row {
   position: relative;
   isolation: isolate;
+  --ponta-da-faixa: 138px;
 }
 
 .result-banner {
@@ -16060,7 +16243,7 @@ small,
   position: absolute;
   z-index: -1;
   inset: 0 auto 0 50%;
-  width: min(calc(280px + var(--maps, 1) * 140px), 66%, calc(100% - 276px));
+  width: min(calc(280px + var(--maps, 1) * 140px), 66%, calc(100% - var(--ponta-da-faixa) * 2));
   transform: translateX(-50%);
   display: flex;
   gap: 0;
@@ -16115,7 +16298,7 @@ small,
 
 /* Mesma largura e mesma contagem do holofote: cada nome sobre a sua fatia. */
 .home-board.univlr-home .result-meta-maps {
-  width: min(calc(280px + var(--maps, 1) * 140px), 66%, calc(100% - 276px));
+  width: min(calc(280px + var(--maps, 1) * 140px), 66%, calc(100% - var(--ponta-da-faixa) * 2));
   gap: 1px;
 }
 
@@ -16156,10 +16339,18 @@ small,
   }
 
   /* Sem os nomes na mesma linha, nao ha o que reservar nas pontas: o teto de
-     276px sobrava numa linha de 325px e deixava o holofote com 49px, uma tira
-     que parecia defeito. Aqui ele volta a ser proporcional. */
+     duas --ponta-da-faixa sobrava numa linha de 325px e deixava o holofote com
+     49px, uma tira que parecia defeito. Aqui ele volta a ser proporcional. */
   .home-board.univlr-home .result-banner {
     width: 62%;
+  }
+
+  /* Pelo mesmo motivo o nome do campeonato perde o teto: com os mapas em linha
+     propria, a ponta direita e tudo o que sobra depois da data e do escudo -
+     a 375px sao 195px, e o nome mais longo de hoje cabe em 174,6px. Sem esta
+     linha, um nome que cabe folgado no celular rolaria a toa. */
+  .home-board.univlr-home .result-meta-where {
+    max-width: none;
   }
 }
 
@@ -17265,6 +17456,7 @@ img {
   .result-day-toggle,
   .filter-reset-button,
   .filter-pill,
+  .filter-sort-button,
   .filter-control,
   .filter-dropdown > summary,
   .ranking-sort-header,
@@ -19499,4 +19691,182 @@ a.news-elenco-card:hover { background: var(--surface-2); }
 
 .news-frac-baixo {
   padding: 0.1em 0.35em 0;
+}
+
+/* ==========================================================================
+   A linha de resultado entre 760 e 940px
+   As cinco colunas nao cabem nessa faixa: os minimos somavam 824px numa linha
+   de 748px a 800px de janela, e os 76px que sobravam ficavam invisiveis porque
+   o body corta o estouro horizontal (overflow-x: clip) em vez de rolar. A conta
+   ja nao fechava antes desta rodada - o minimo antigo era 896px, pior ainda.
+   Aqui a linha guarda so o confronto (equipe, placar, equipe) e os mapas descem
+   para uma faixa propria, lado a lado. A data ja descia sozinha desde o bloco
+   de 940px la em cima (.result-meta com grid-column: 1 / -1).
+   ========================================================================== */
+@media (max-width: 940px) {
+  .full-list-panel .result-row {
+    grid-template-columns: minmax(110px, 1fr) 86px minmax(110px, 1fr);
+  }
+
+  .full-list-panel .result-maps {
+    grid-column: 1 / -1;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-template-columns: none;
+  }
+
+  /* Com a linha inteira so para o confronto, as duas equipes encostam no placar
+     em vez de nas bordas: a 900px a coluna tem 368px para um nome de 82px, e o
+     vao ia todo parar entre o nome e o placar - a mesma queixa que o teto de
+     1600px resolve na tela grande. Centrado, o vao vai para as pontas e o
+     confronto volta a ser uma unidade. */
+  .full-list-panel .result-team.left {
+    justify-content: flex-end;
+  }
+
+  .full-list-panel .result-team.right {
+    justify-content: flex-start;
+  }
+
+  /* Aqui a caixa do nome volta a encolher ate o texto: com a linha inteira so
+     para o confronto, quem encosta no placar e o par escudo+nome junto (pelo
+     justify-content acima), e nao o nome sozinho. Se o nome ocupasse a coluna
+     toda, o escudo iria parar na borda da tela a 300px do proprio nome. */
+  .full-list-panel .result-team.left strong,
+  .full-list-panel .result-team.right strong {
+    flex: 0 1 auto;
+    text-align: inherit;
+  }
+
+  /* A data era uma coluna so: hora, campeonato e escudo em tres linhas
+     empilhadas, 70px de rodape por partida e o escudo sozinho na ultima. Numa
+     faixa que vai de 347px (celular) a 830px os tres cabem lado a lado com
+     folga (33 + 175 + 24), entao viram uma linha: hora na esquerda, campeonato
+     e escudo na direita. Nome maior que a folga cai na rolagem de sempre. */
+  .full-list-panel .result-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .full-list-panel .result-meta-when {
+    margin-right: auto;
+  }
+}
+
+/* ==========================================================================
+   A linha de resultado no celular
+   Ate 760px a linha virava uma coluna so: equipe, placar, equipe, mapas e data,
+   cinco blocos de largura inteira empilhados. O escudo ficava com 32px, do
+   tamanho de um texto, e as duas equipes liam como dois itens de lista em vez
+   de um confronto - a informacao central da linha, quem jogou contra quem,
+   precisava ser remontada pela pessoa.
+   Aqui a faixa de cima volta a ser um confronto: escudo, placar, escudo lado a
+   lado ocupando a largura da tela, e o nome de cada equipe como legenda do
+   proprio escudo. Mapas e data seguem embaixo, em largura inteira.
+   Precisa vir depois dos blocos de 760px la de cima: a especificidade e a
+   mesma, entao quem estiver por ultimo no arquivo vence, media query ou nao.
+   ========================================================================== */
+@media (max-width: 760px) {
+  .full-list-panel .result-row {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: start;
+    gap: 10px;
+    padding: 12px 8px;
+  }
+
+  .full-list-panel .result-team {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    text-align: center;
+  }
+
+  /* O lado direito tem o nome ANTES do escudo na marcacao - e o que faz o nome
+     encostar no placar no desktop. Invertendo o sentido da coluna, os dois
+     lados ficam com o escudo em cima sem duplicar marcacao nem mexer no
+     matchResultRow, que serve as sete listas. */
+  .full-list-panel .result-team.right {
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+  }
+
+  /* 56px porque no celular o escudo e o que identifica a equipe de relance: o
+     nome passa a ser legenda dele, e nao o contrario. */
+  .full-list-panel .result-team .clean-logo {
+    width: 56px;
+    height: 56px;
+  }
+
+  /* Nome em duas linhas em vez de reticencia: a caixa agora tem meia tela
+     (~150px a 375px) e "PUCGO Sistematica Academy", que pede 168px, nao cabe
+     numa linha em nenhum celular. Truncar ali apagaria o que a legenda existe
+     para dizer. */
+  /* A caixa interna entra junto: `.nome-rolante` traz `white-space: nowrap` de
+     fabrica (e o que permite o vaivem no desktop), e sem desfazer isso aqui o
+     nome vira uma linha unica de 168px numa coluna de 128px - medido, escapava
+     21px por cima do placar. No celular a saida para nome grande e a quebra em
+     duas linhas, nao o movimento: a caixa tem meia tela e sobra altura. */
+  .full-list-panel .result-team strong,
+  .full-list-panel .result-team strong > .nome-rolante {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* align-self porque a linha alinha pelo topo: o bloco do placar tem ~48px
+     contra ~90px do bloco da equipe, e encostado no topo ele flutuaria acima
+     dos dois escudos em vez de ficar entre eles. */
+  .full-list-panel .result-score {
+    justify-self: center;
+    align-self: center;
+    width: auto;
+  }
+
+  .full-list-panel .result-maps,
+  .full-list-panel .result-meta {
+    grid-column: 1 / -1;
+  }
+
+  /* Empilhados de novo: tres telas lado a lado numa faixa de 347px dariam
+     110px cada, estreito demais para o placar e o nome do mapa caberem juntos.
+     Em pilha cada mapa fica com a largura inteira, que e onde a arte funciona. */
+  .full-list-panel .result-maps {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: 1fr;
+  }
+
+  /* O .left precisa desfazer o flex-end do bloco de 940px. Nao basta a regra
+     .full-list-panel .result-team acima: ela tem uma classe a menos e perde
+     para .result-team.left mesmo vindo depois. Em coluna, flex-end empurraria
+     escudo e nome para a base da caixa. */
+  .full-list-panel .result-team.left {
+    justify-content: flex-start;
+  }
+}
+
+/* ==========================================================================
+   Nome de equipe no celular, no painel da home
+   A caixa do nome cai para 113px na faixa de "Ultimas partidas" a 393px, e
+   quase toda equipe passa disso: doze nomes rolando ao mesmo tempo numa tela
+   de celular - com os oito campeonatos ja rolando logo acima - viram ruido, e
+   em repouso o nome fica cortado no meio da letra, porque a rolagem desliga a
+   reticencia. Aqui a saida e a mesma do /partidas no celular: quebra em duas
+   linhas e mostra o nome inteiro, sem movimento nenhum.
+   Precisa vir depois de .nome-rolante e de .tem-rolagem la em cima: com o texto
+   quebrando, a medida do JS nao encontra transbordo e a classe nem chega a ser
+   ligada.
+   ========================================================================== */
+@media (max-width: 560px) {
+  .home-board.univlr-home .result-team strong,
+  .home-board.univlr-home .result-team strong > .nome-rolante {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 }

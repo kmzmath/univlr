@@ -23,6 +23,23 @@
   // (pedido, link, janela de nova senha) continua escrito e testado.
   const RESET_POR_EMAIL = false;
 
+  // ------------------------------------------------------------- o convite
+  //
+  // Quem chega deslogado ve uma vez por visita o que a conta abre. E uma VISTA
+  // do mesmo modal, e nao um pop-up separado: "Criar conta" troca o conteudo da
+  // janela que ja esta aberta, em vez de empilhar uma segunda camada sobre a
+  // primeira.
+  //
+  // A espera cresce a cada dispensa. Insistir sempre com os mesmos 10 minutos e
+  // o que transforma convite em amolacao: quem dispensou quatro vezes ja
+  // respondeu, e a quinta pergunta so gasta a paciencia.
+  const CONVITE_CHAVE = "univlr-convite-conta";
+  const CONVITE_ESPERAS = [10 * 60e3, 60 * 60e3, 6 * 3600e3, 24 * 3600e3, 7 * 24 * 3600e3];
+  // Tempo de tela antes de aparecer. Sem ele o convite chega junto com o
+  // primeiro paint e le como muro, nao como convite - a pessoa dispensa sem ler
+  // porque ainda nao viu o que esta sendo oferecido.
+  const CONVITE_ATRASO = 7000;
+
   let overlay = null;
   let ultimoFoco = null;
   let naoLidas = 0;
@@ -133,7 +150,27 @@
        <input name="${esc(nome)}" type="${esc(tipo)}" ${extra || ""} />
      </label>`;
 
+  // Os proprios simbolos do site, e nao icones de banco de imagem: sao os
+  // mesmos desenhos que a pessoa vai encontrar no comentario e no perfil, entao
+  // a lista mostra os controles que ela ganha em vez de descreve-los.
+  const ICONE_BOLHA = `<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M2 3h12v8H6.6L3 13.6V11H2Z"/></svg>`;
+  const ICONE_CORACAO = `<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 14.2 2.9 9.3a3.3 3.3 0 0 1 0-4.7 3.3 3.3 0 0 1 4.7 0L8 5l.4-.4a3.3 3.3 0 0 1 4.7 0 3.3 3.3 0 0 1 0 4.7Z"/></svg>`;
+  const ICONE_VOTOS = `<svg viewBox="0 0 12 12" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M6 0.6 10 5H2z"/><path fill="currentColor" d="M6 11.4 2 7h8z"/></svg>`;
+
   const VISTAS = {
+    convite: () => `
+      <h2>O UNIVLR fica melhor com conta</h2>
+      <ul class="auth-convite">
+        <li>${ICONE_BOLHA}<span>Comentar em partidas, campeonatos, jogadores e notícias</span></li>
+        <li>${ICONE_CORACAO}<span>Ser fã de uma equipe e de um jogador</span></li>
+        <li>${ICONE_VOTOS}<span>Votar nos comentários</span></li>
+      </ul>
+      <button type="button" class="auth-principal" data-ir="cadastrar">Criar conta</button>
+      <div class="auth-rodape">
+        <button type="button" class="cmt-link" data-ir="entrar">Já tenho conta</button>
+        <button type="button" class="cmt-link" data-fechar="1">Agora não</button>
+      </div>`,
+
     entrar: () => `
       <h2>Entrar</h2>
       <form data-vista="entrar">
@@ -398,6 +435,69 @@
     pinta(vista);
   }
 
+  // ---------------------------------------------------------- convite: quando
+
+  // Tudo em try/catch: em aba anonima e com cookies bloqueados o proprio ACESSO
+  // ao localStorage lanca, e um convite nao pode derrubar o site.
+  function leConvite() {
+    try {
+      return JSON.parse(localStorage.getItem(CONVITE_CHAVE)) || {};
+    } catch (_e) {
+      return {};
+    }
+  }
+
+  function gravaConvite(dados) {
+    try {
+      localStorage.setItem(CONVITE_CHAVE, JSON.stringify(dados));
+    } catch (_e) {
+      /* sem armazenamento o convite volta na proxima visita; melhor que quebrar */
+    }
+  }
+
+  function esqueceConvite() {
+    try {
+      localStorage.removeItem(CONVITE_CHAVE);
+    } catch (_e) {
+      /* nada a fazer */
+    }
+  }
+
+  function convitePendente() {
+    if (window.Community.logado()) return false;
+    const { visto = 0, dispensas = 0 } = leConvite();
+    if (!visto) return true;
+    const espera = CONVITE_ESPERAS[Math.min(dispensas, CONVITE_ESPERAS.length - 1)];
+    return Date.now() - visto >= espera;
+  }
+
+  function mostraConvite() {
+    // Rechecado na hora de aparecer, e nao so ao agendar: em sete segundos a
+    // pessoa pode ter entrado pelo cabecalho, ou aberto a janela por conta
+    // propria - abrir por cima disso seria roubar o que ela ja estava fazendo.
+    if (overlay || !convitePendente()) return;
+    const ativo = document.activeElement;
+    if (ativo && ativo.matches("input, textarea, [contenteditable]")) return;
+
+    const { dispensas = 0 } = leConvite();
+    gravaConvite({ visto: Date.now(), dispensas: dispensas + 1 });
+    abrir("convite");
+  }
+
+  function agendaConvite() {
+    if (!convitePendente()) return;
+    setTimeout(() => {
+      // Aba aberta em segundo plano: esperar o primeiro olhar em vez de gastar
+      // o convite numa tela que ninguem esta vendo.
+      if (document.visibilityState === "visible") return mostraConvite();
+      document.addEventListener("visibilitychange", function aoVoltar() {
+        if (document.visibilityState !== "visible") return;
+        document.removeEventListener("visibilitychange", aoVoltar);
+        mostraConvite();
+      });
+    }, CONVITE_ATRASO);
+  }
+
   // ------------------------------------------------------------------ inicio
 
   function ligaCabecalho() {
@@ -416,6 +516,10 @@
     window.Community.aoMudar(async (_sessao, _perfil, evento) => {
       await atualizaAvisos();
       pintaSlot();
+      // Entrou: o convite perde a razao de existir, e a contagem de dispensas
+      // some junto - se um dia sair, recomeca do zero em vez de voltar ja
+      // esgotado por dispensas de antes de ter conta.
+      if (window.Community.logado()) esqueceConvite();
       // A pagina inteira precisa refazer: comentarios mudam de "entre para
       // comentar" para o formulario, e o perfil ganha os botoes de dono.
       if (typeof window.render === "function") window.render();
@@ -438,6 +542,10 @@
         // Pelo tradutor, nao cru: erroAuth chega em ingles, vindo do GoTrue.
         if (corpo) erro(corpo, window.Community.mensagemDeErro({ message: erroAuth }));
       }, 0);
+    } else {
+      // So no caminho limpo. Convidar por cima de uma janela que abriu para
+      // redefinir senha ou mostrar erro seria atropelar o que importa mais.
+      agendaConvite();
     }
   }
 

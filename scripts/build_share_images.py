@@ -77,8 +77,18 @@ def cartao_da_capa(origem, destino):
         esq, topo = (capa.width - L) // 2, (capa.height - A) // 2
         cartao = capa.crop((esq, topo, esq + L, topo + A))
     else:
+        # O que preenche a sobra e a PROPRIA capa, ampliada e desfocada, e nao o
+        # fundo da marca: aquele e o chao do cartao generico do site, e uma arte
+        # pequena no meio dele fazia o card da materia ler como o generico -
+        # justamente o que ele existe para nao ser. Assim a cor do card e a cor
+        # da capa, e a arte continua inteira por cima.
+        cartao = capa.resize((round(capa.width * preencher), round(capa.height * preencher)), Image.LANCZOS)
+        esq, topo = (cartao.width - L) // 2, (cartao.height - A) // 2
+        cartao = cartao.crop((esq, topo, esq + L, topo + A))
+        cartao = cartao.filter(ImageFilter.GaussianBlur(28))
+        cartao = Image.blend(cartao, Image.new("RGB", (L, A), FUNDO), 0.45)
+
         arte = capa.resize((round(capa.width * caber), round(capa.height * caber)), Image.LANCZOS)
-        cartao = fundo_da_marca()
         cartao.paste(arte, ((L - arte.width) // 2, (A - arte.height) // 2))
 
     cartao.save(destino, "JPEG", quality=86, optimize=True)

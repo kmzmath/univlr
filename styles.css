@@ -17818,6 +17818,33 @@ img {
   margin-bottom: var(--space-4);
 }
 
+/* A lista do convite. O simbolo fica em teal porque as tres coisas que a conta
+   abre - comentar, ser fa, votar - sao o que a COMUNIDADE produz, e no sistema
+   daqui teal e dessa camada; o vermelho e marca e nada mais. Ver a nota do +1
+   nos comentarios. */
+.auth-convite {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: var(--space-5) 0 var(--space-6);
+  padding: 0;
+  list-style: none;
+}
+
+.auth-convite li {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-4);
+  font: 400 var(--text-sm) / 1.45 var(--font-text);
+  color: var(--ink);
+}
+
+.auth-convite svg {
+  color: var(--teal);
+  margin-top: 2px;
+}
+
 .auth-dica.ok { color: var(--green); }
 .auth-dica.ruim { color: var(--danger); }
 

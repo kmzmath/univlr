@@ -80,7 +80,7 @@ DUPLICATE_MATCHES_DIR_NAME = "duplicates_removed"
 # Formato: "YYYY-MM-DD"
 # None = sem limite
 FILTER_START_DATE = "2026-05-01"   # inclusivo
-FILTER_END_DATE = "2026-09-06"     # inclusivo
+FILTER_END_DATE = "2026-09-09"     # inclusivo
 
 # Aceita apenas partidas custom no modo padrão de Spike/Bomb.
 # Rejeita Premier/Ranked/Matchmaking e modos custom alternativos como Retake/FortCollins.

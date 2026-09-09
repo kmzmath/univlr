@@ -618,6 +618,22 @@
 
   // ------------------------------------------------------------------ materia
 
+  // Uma tabela de 8 colunas com nome de equipe dentro nao desce de 533px, e a
+  // coluna de texto da materia tem 516px num note estreito e 343px num telefone.
+  // Sem envelope, ela era cortada na borda direita e nada dizia ao leitor que
+  // faltava conteudo - as ultimas colunas simplesmente nao existiam. O envelope
+  // rola no eixo X so quando a tabela nao cabe, entao as de 3 e 4 colunas das
+  // materias antigas continuam exatamente como eram.
+  function rolaTabelasLargas(raiz) {
+    for (const tabela of raiz.querySelectorAll("table")) {
+      if (tabela.parentElement?.classList.contains("news-tabela")) continue;
+      const envelope = document.createElement("div");
+      envelope.className = "news-tabela";
+      tabela.replaceWith(envelope);
+      envelope.appendChild(tabela);
+    }
+  }
+
   function renderArtigo(slug) {
     const a = porSlug(slug);
     if (!a) {
@@ -656,6 +672,8 @@
       enriqueceMencoes(corpo);
       trocaBlocos(corpo);
       marcaSecoesDeEquipe(corpo);
+      // Por ultimo: os blocos tambem montam tabela, e elas merecem o envelope.
+      rolaTabelasLargas(corpo);
     }
 
     window.Comments?.montar("article", a.slug);

@@ -33,12 +33,15 @@ const PLAYER_FALLBACK_PHOTO = "assets/user-silhouette.png";
 // ROLAGEM_CICLO amarra o JS aos @keyframes: a animacao gasta 26% do ciclo em
 // cada travessia e 24% parada em cada ponta, entao o ciclo inteiro e 1/0,26 =
 // 3,85 vezes o tempo de uma travessia. Mexeu nos keyframes, mexa aqui.
-// 4px, e nao um numero maior: a reticencia custa ~7px de texto, entao um nome
-// que passa 5px da caixa perde MAIS letra cortado do que rolando. "Unicamp
-// Tritons Black" (129px numa caixa de 124px) virava "Unicamp Tritons Bl…".
-// Nesses casos o percurso e curto e a animacao quase nao se nota - o que se
-// nota e o nome inteiro aparecendo.
-const ROLAGEM_MINIMO = 4;
+// 1px: qualquer nome que nao caiba inteiro rola. Nao ha reticencia em lugar
+// nenhum desta caixa (.nome-rolante usa text-overflow: clip), entao um limiar
+// maior nao "poupava" animacao - ele ENTREGAVA o nome para um corte pior.
+// Medido em 09/09/2026: "Copa LUCE Inters" passava 1,17px de uma caixa de 84px
+// e, por nao alcancar o limiar de 4px, virava "Copa LUCE Int..." - a reticencia
+// custa ~13px de texto, dez vezes o que faltava. Um percurso de 1px nao se ve;
+// treze pixels de nome faltando, sim.
+const ROLAGEM_MINIMO = 1;
+const ROLAGEM_CAIXA_MINIMA = 16;
 const ROLAGEM_VELOCIDADE = 46;
 const ROLAGEM_CICLO = 3.85;
 const ROLAGEM_TEMPO_MIN = 4.5;
@@ -46,11 +49,16 @@ const ROLAGEM_TEMPO_MAX = 14;
 // Piso da fonte de um `.nome-encolhe`. O sistema tipografico tem chao de 11px
 // em texto funcional; aqui o degrau abaixo e aceito porque o apelido na faixa
 // da semana e legenda de um numero, nao texto de leitura, e o piso so entra
-// para 5 dos 643 apelidos do banco (os que passam de 95px a 13px). Abaixo
-// disso o nome volta a cortar com reticencia.
+// para 5 dos 643 apelidos do banco (os que passam de 95px a 13px). O que ainda
+// nao couber no piso nao corta: cai na rolagem, como todo o resto do site.
 const NOME_FONTE_MINIMA = 10;
 let rolagemObserver = null;
 let rolagemAdiada = 0;
+// Quem ja esta sob o observador. Sem isto, remedirTextosVariaveis chamaria
+// observe() de novo nos mesmos elementos e a notificacao inicial de cada um
+// realimentaria o proprio callback - o laco que o comentario de
+// observarTextosVariaveis descreve.
+let rolagemObservados = new WeakSet();
 
 // Os formatos que o filtro "Melhor de" oferece. Fixos e nao derivados do banco
 // porque a lista precisa ser estavel: medido em 08/09/2026, as 445 series sao
@@ -77,6 +85,10 @@ const TROPHY_GENERIC_ASSETS = {
   champion: `${TROPHY_ASSET_ROOT}/campeao-generico.png`,
   runnerUp: `${TROPHY_ASSET_ROOT}/vice-generico.png`,
   third: `${TROPHY_ASSET_ROOT}/terceiro-generico.png`,
+  // O MVP e premio individual e a arte e a mesma em todo campeonato, entao ela
+  // mora aqui e nao no manifesto por evento. Um campeonato que ganhe arte
+  // propria de MVP entra como `<id>-mvp.png` e vence, pela mesma fila.
+  mvp: `${TROPHY_ASSET_ROOT}/mvp.png`,
 };
 // Arte de trofeu POR CAMPEONATO que existe de fato no disco.
 // GERADO por scripts/build_trophy_manifest.js - nao edite a mao.
@@ -90,7 +102,9 @@ const TROPHY_GENERIC_ASSETS = {
 // Com o manifesto vazio o codigo vai direto ao generico sem pedir nada. Quando
 // alguem largar `jubs-campeao.png` na pasta e rodar o script, o nome entra aqui
 // e o candidato volta a ser tentado - uma vez so, e com sucesso.
-const TROPHY_ART_FILES = new Set([]);
+const TROPHY_ART_FILES = new Set([
+  "rivvalsgg.png",
+]);
 const DAY_MS = 24 * 60 * 60 * 1000;
 const WEEK_MS = 7 * DAY_MS;
 const IMAGE_WARM_STORAGE_KEY = "univlr-image-warm-v1";
@@ -459,16 +473,124 @@ const TOURNAMENT_OVERRIDES = {
     startAt: "2026-09-06T13:00:00",
     endAt: "2026-11-07T23:00:00",
     teamCount: 8,
+    format: {
+      summary: "Pontos corridos + playoffs",
+      details: [
+        "Etapa 1: turno unico, as 8 equipes se enfrentam uma vez (7 rodadas, 28 partidas)",
+        "Etapa 2: eliminacao simples com as 4 primeiras da Etapa 1",
+        "Etapa 1 em MD3",
+      ],
+      standings: "Classificacao da Etapa 1",
+    },
     teams: [
       "ufrj_minerva",
+      "wolf_gaming",
+      "unirio_krakens",
+      "a2e_uff",
       "minerva_thunders",
       "minerva_artemis",
-      "wolf_gaming",
-      "a2e_uff",
       "a2e_uff_shadows",
-      "unirio_krakens",
       "sheriff_iff",
     ],
+    swiss: {
+      roundRobin: true,
+      seriesCount: 28,
+      standingsLabel: "Etapa 1 - as 4 primeiras vao aos playoffs",
+      rounds: [
+        {
+          title: "Rodada 1",
+          status: "Concluida - 08/09",
+          bestOf: "MD3",
+          matches: [
+            { code: "Partida 1", a: "minerva_artemis", scoreA: 0, b: "unirio_krakens", scoreB: 2, winner: "unirio_krakens", status: "Concluida - sem arquivo" },
+            { code: "Partida 2", a: "a2e_uff", scoreA: 2, b: "minerva_thunders", scoreB: 1, winner: "a2e_uff" },
+            { code: "Partida 3", a: "sheriff_iff", scoreA: 0, b: "ufrj_minerva", scoreB: 2, winner: "ufrj_minerva" },
+            { code: "Partida 4", a: "a2e_uff_shadows", scoreA: 0, b: "wolf_gaming", scoreB: 2, winner: "wolf_gaming" },
+          ],
+        },
+        {
+          title: "Rodada 2",
+          status: "Agendada - 13/09",
+          bestOf: "MD3",
+          matches: [
+            { code: "Partida 5", a: "a2e_uff", b: "unirio_krakens", status: "Agendada" },
+            { code: "Partida 6", a: "sheriff_iff", b: "minerva_artemis", status: "Agendada" },
+            { code: "Partida 7", a: "a2e_uff_shadows", b: "minerva_thunders", status: "Agendada" },
+            { code: "Partida 8", a: "wolf_gaming", b: "ufrj_minerva", status: "Agendada" },
+          ],
+        },
+        {
+          title: "Rodada 3",
+          status: "Agendada - 20/09",
+          bestOf: "MD3",
+          matches: [
+            { code: "Partida 9", a: "sheriff_iff", b: "unirio_krakens", status: "Agendada" },
+            { code: "Partida 10", a: "a2e_uff_shadows", b: "a2e_uff", status: "Agendada" },
+            { code: "Partida 11", a: "wolf_gaming", b: "minerva_artemis", status: "Agendada" },
+            { code: "Partida 12", a: "ufrj_minerva", b: "minerva_thunders", status: "Agendada" },
+          ],
+        },
+        {
+          title: "Rodada 4",
+          status: "Agendada - 27/09",
+          bestOf: "MD3",
+          matches: [
+            { code: "Partida 13", a: "a2e_uff_shadows", b: "unirio_krakens", status: "Agendada" },
+            { code: "Partida 14", a: "wolf_gaming", b: "sheriff_iff", status: "Agendada" },
+            { code: "Partida 15", a: "ufrj_minerva", b: "a2e_uff", status: "Agendada" },
+            { code: "Partida 16", a: "minerva_thunders", b: "minerva_artemis", status: "Agendada" },
+          ],
+        },
+        {
+          title: "Rodada 5",
+          status: "Agendada - 04/10",
+          bestOf: "MD3",
+          matches: [
+            { code: "Partida 17", a: "wolf_gaming", b: "unirio_krakens", status: "Agendada" },
+            { code: "Partida 18", a: "ufrj_minerva", b: "a2e_uff_shadows", status: "Agendada" },
+            { code: "Partida 19", a: "minerva_thunders", b: "sheriff_iff", status: "Agendada" },
+            { code: "Partida 20", a: "minerva_artemis", b: "a2e_uff", status: "Agendada" },
+          ],
+        },
+        {
+          title: "Rodada 6",
+          status: "Agendada - 17/10",
+          bestOf: "MD3",
+          matches: [
+            { code: "Partida 21", a: "ufrj_minerva", b: "unirio_krakens", status: "Agendada" },
+            { code: "Partida 22", a: "minerva_thunders", b: "wolf_gaming", status: "Agendada" },
+            { code: "Partida 23", a: "minerva_artemis", b: "a2e_uff_shadows", status: "Agendada" },
+            { code: "Partida 24", a: "a2e_uff", b: "sheriff_iff", status: "Agendada" },
+          ],
+        },
+        {
+          title: "Rodada 7",
+          status: "Agendada - 18/10",
+          bestOf: "MD3",
+          matches: [
+            { code: "Partida 25", a: "minerva_thunders", b: "unirio_krakens", status: "Agendada" },
+            { code: "Partida 26", a: "minerva_artemis", b: "ufrj_minerva", status: "Agendada" },
+            { code: "Partida 27", a: "a2e_uff", b: "wolf_gaming", status: "Agendada" },
+            { code: "Partida 28", a: "sheriff_iff", b: "a2e_uff_shadows", status: "Agendada" },
+          ],
+        },
+      ],
+      standings: [
+        { id: "ufrj_minerva", wins: 1, losses: 0 },
+        { id: "wolf_gaming", wins: 1, losses: 0 },
+        { id: "unirio_krakens", wins: 1, losses: 0 },
+        { id: "a2e_uff", wins: 1, losses: 0 },
+        { id: "minerva_thunders", wins: 0, losses: 1 },
+        { id: "minerva_artemis", wins: 0, losses: 1 },
+        { id: "a2e_uff_shadows", wins: 0, losses: 1 },
+        { id: "sheriff_iff", wins: 0, losses: 1 },
+      ],
+    },
+    // A Etapa 2 (eliminacao simples com as 4 primeiras) NAO entra como
+    // `bracket` aqui: `tournamentBracketSection` faz curto-circuito na
+    // primeira linha - havendo `swiss.rounds`, ele nunca chega a desenhar a
+    // chave curada, entao o dado ficaria morto no app.js E no database.json.
+    // Enquanto os playoffs nao comecam, a Etapa 2 vive no `format.details`.
   },
   lpe: {
     hidden: true,
@@ -800,6 +922,10 @@ const TOURNAMENT_OVERRIDES = {
     prizePool: "-",
     tier: "S",
     type: "Presencial",
+    // Premio individual do campeonato, um por evento. Vai por PUUID e nao por
+    // nick: nick muda (tres mudaram so em 09/09/2026) e o vinculo se perderia
+    // em silencio, que e o pior jeito de um premio sumir.
+    mvp: "utlNcp1v2kLIG9L8w4ahS188beOZUaf-rrpIU2ipwKACAysaPKayQmx8OxVpcGArKqVFtEl9ioGr-Q",
     startAt: "2026-08-30T00:00:00",
     endAt: "2026-09-05T23:00:00",
     teamCount: 8,
@@ -4844,11 +4970,29 @@ function ensurePlayer(map, player, teamId) {
 }
 
 function applyTeamMetadata(teams, players, metadata, teamProfiles) {
+  // O elenco da equipe vem da planilha por NOME ("Filiceta"), e o historico de
+  // nick guarda o handle inteiro ("filiceta#2107"). Um normaliza para
+  // `filiceta` e o outro para `filiceta2107`, entao um jogador que troca de nick
+  // perdia o vinculo e o card virava "Perfil em atualizacao" - o site passava a
+  // tratar a mesma pessoa como dois perfis. Indexar tambem o nick SEM a tag
+  // faz a troca se resolver sozinha ate a planilha ser atualizada.
+  //
+  // Duas passadas de proposito: nick e handle atuais primeiro, historico depois.
+  // Assim o nick antigo de um jogador nunca rouba o nome atual de outro.
   const playersByName = new Map();
+  const indexa = (chave, player) => {
+    const key = normalizeNameKey(chave);
+    if (key && !playersByName.has(key)) playersByName.set(key, player);
+  };
   for (const player of players) {
-    const keys = [player.nick, player.handle, ...(player.nickHistory || [])].map(normalizeNameKey).filter(Boolean);
-    for (const key of keys) {
-      if (!playersByName.has(key)) playersByName.set(key, player);
+    indexa(player.nick, player);
+    indexa(player.handle, player);
+    indexa(String(player.handle || "").split("#")[0], player);
+  }
+  for (const player of players) {
+    for (const antigo of player.nickHistory || []) {
+      indexa(antigo, player);
+      indexa(String(antigo).split("#")[0], player);
     }
   }
 
@@ -5409,6 +5553,9 @@ function bindResultDayToggles() {
       painel.toggleAttribute("inert", fechando);
       if (fechando) state.diasFechados.add(chave);
       else state.diasFechados.delete(chave);
+      // A varredura de texto cortado poda subarvores `inert`, entao o que
+      // estava fechado nunca foi medido. Abriu, mede agora.
+      if (!fechando) ajustarTextosVariaveis(painel);
     });
   });
 }
@@ -6995,6 +7142,7 @@ function setRankingAccordionItem(item, open) {
   // sanfonas fechadas eram 1609 controles focaveis dentro de caixas de altura
   // zero. inert remove as duas coisas de uma vez.
   if (painel) painel.inert = !open;
+  if (open && painel) ajustarTextosVariaveis(painel);
   if (!open) setRankingDetailsOpen(item, false);
 }
 
@@ -7004,6 +7152,7 @@ function setRankingDetailsOpen(item, open) {
   const detalhe = item.querySelector(".ranking-detail-dropdown");
   detalhe?.setAttribute("aria-hidden", String(!open));
   if (detalhe) detalhe.inert = !open;
+  if (open && detalhe) ajustarTextosVariaveis(detalhe);
 }
 
 function safeDomId(value) {
@@ -8692,10 +8841,10 @@ function tournamentSwissFlowGroup(event, round, roundIndex, group) {
   const tone = tournamentSwissFlowScoreTone(group.label);
   return `
     <section class="swiss-flow-group tone-${escapeHtml(tone)}">
-      <header class="swiss-flow-group-head">
+      ${group.label ? `<header class="swiss-flow-group-head">
         <strong>${escapeHtml(group.label)}</strong>
         <small>${escapeHtml(String(group.matches.length))}</small>
-      </header>
+      </header>` : ""}
       <div class="swiss-flow-matches">
         ${group.matches.map(({ match, matchIndex }) => tournamentSwissFlowMatch(event, match, round, roundIndex, matchIndex)).join("")}
       </div>
@@ -8754,10 +8903,10 @@ function tournamentSwissRecordsFromLabel(label) {
 function tournamentSwissScoreGroup(event, round, roundIndex, group) {
   return `
     <section class="swiss-score-group">
-      <header class="swiss-score-group-head">
+      ${group.label ? `<header class="swiss-score-group-head">
         <strong>${escapeHtml(group.label)}</strong>
         <small>${escapeHtml(`${group.matches.length} ${group.matches.length === 1 ? "partida" : "partidas"}`)}</small>
-      </header>
+      </header>` : ""}
       <div class="swiss-match-grid">
         ${group.matches.map(({ match, matchIndex }) => tournamentSwissMatchCard(event, match, round, roundIndex, matchIndex)).join("")}
       </div>
@@ -8767,6 +8916,18 @@ function tournamentSwissScoreGroup(event, round, roundIndex, group) {
 
 function tournamentSwissRoundGroups(event, roundIndex) {
   const round = event.swiss?.rounds?.[roundIndex] || {};
+  // Pontos corridos nao pareia por campanha: a tabela de jogos sai inteira no
+  // sorteio e vale ate a ultima rodada. Agrupar por campanha ali inventa uma
+  // leitura suica que nao existe - na Copa LUCE a Rodada 3 saia com os grupos
+  // "1-0 / 0-1" e "0-1 / 1-0", que sao o MESMO confronto lido nas duas ordens,
+  // e ainda tirava as partidas da ordem numerada (11 e 12 antes de 9 e 10).
+  // Opt-in, como o swiss.stateTables, para nao mexer nos campeonatos suicos.
+  if (event.swiss?.roundRobin) {
+    return [{
+      label: "",
+      matches: (round.matches || []).map((match, matchIndex) => ({ match, matchIndex })),
+    }];
+  }
   const records = tournamentSwissRecordsBeforeRound(event, roundIndex);
   const grouped = new Map();
   (round.matches || []).forEach((match, matchIndex) => {
@@ -12724,7 +12885,7 @@ function trophyVisual(trophy) {
   const src = candidates[0] || assetPath(TROPHY_GENERIC_ASSETS[trophy.trophyKey] || TROPHY_GENERIC_ASSETS.third);
   const fallbacks = candidates.slice(1).join("|");
   return `
-    <span class="trophy-visual ${trophyImageIsGeneric(src) ? "generic-trophy" : ""}" aria-hidden="true">
+    <span class="trophy-visual ${trophyImageIsGeneric(src) ? "generic-trophy" : ""} ${trophy.trophyKey === "mvp" ? "mvp-trophy" : ""}" aria-hidden="true">
       <img class="trophy-image" src="${escapeHtml(src)}" alt="" loading="lazy" data-trophy-fallbacks="${escapeHtml(fallbacks)}" onload="trophyImageLoaded(this)" onerror="trophyImageFallback(this)" />
       ${eventLogo(trophy.event, "trophy-event-logo")}
     </span>
@@ -12732,11 +12893,15 @@ function trophyVisual(trophy) {
 }
 
 function trophyImageCandidates(event, trophyKey) {
-  const suffix = trophyKey === "champion" ? "campeao" : trophyKey === "runnerUp" ? "vice" : "terceiro";
+  const suffix =
+    trophyKey === "champion" ? "campeao" : trophyKey === "runnerUp" ? "vice" : trophyKey === "mvp" ? "mvp" : "terceiro";
   const eventKeys = [...new Set([event?.id, slugify(event?.name || ""), normalizeNameKey(event?.name || "")].filter(Boolean))];
   const possiveis = [
     ...eventKeys.flatMap((key) => [`${key}-${suffix}.png`, `${key}_${suffix}.png`]),
-    ...eventKeys.map((key) => `${key}.png`),
+    // `<id>.png` e a arte do trofeu DAQUELE campeonato, e vale so para podio.
+    // Num MVP ela venceria o mvp.png e o premio individual apareceria com a
+    // taca do evento - foi o que aconteceu com a arte da RivvalsGG.
+    ...(trophyKey === "mvp" ? [] : eventKeys.map((key) => `${key}.png`)),
   ];
   // So entra na fila o arquivo que o manifesto diz existir. Sem este filtro,
   // cada podio disparava de tres a seis requisicoes que davam 404 antes de o
@@ -14104,10 +14269,50 @@ function playerResultsTableRow(row) {
   `;
 }
 
+// Premio individual do campeonato. Ao contrario do podio, que sai da colocacao
+// da EQUIPE, este e nominal: o campeonato aponta um PUUID em `mvp` e so aquele
+// jogador recebe. `placement: 0` poe o premio na frente do podio do mesmo dia -
+// quem foi campeao e MVP ve primeiro o que e dele sozinho.
+// Um jogador pode ter mais de uma conta (`accounts`), entao o premio casa por
+// qualquer PUUID dele - e tambem por nick normalizado, para quem preferir
+// escrever o nick no override.
+function playerMvpKeys(player) {
+  return new Set([
+    ...[player?.id, player?.puuid, ...(player?.accounts || []).map((conta) => conta?.puuid || conta)].filter(
+      (valor) => typeof valor === "string" && valor
+    ),
+    ...playerLookupKeys(player),
+  ]);
+}
+
+function playerMvpAwards(player, tournamentRows = playerTournamentRows(player)) {
+  const chaves = playerMvpKeys(player);
+  const rows = [];
+  for (const event of visibleTournaments()) {
+    if (!eventIsDone(event)) continue;
+    const premiado = String(event.mvp || "").trim();
+    if (!premiado) continue;
+    if (!chaves.has(premiado) && !chaves.has(normalizeNameKey(premiado))) continue;
+    const doJogador = tournamentRows.find((row) => row.event?.id === event.id);
+    rows.push({
+      event,
+      placement: 0,
+      placementLabel: "MVP",
+      trophyKey: "mvp",
+      podiumClass: "place-mvp",
+      date: Number(event.end || event.start || 0),
+      teamId: doJogador?.teamId || "",
+      team: doJogador?.team || null,
+    });
+  }
+  return rows;
+}
+
 function playerTrophyAchievements(player, tournamentRows = playerTournamentRows(player)) {
-  return tournamentRows
-    .flatMap((row) => playerTeamTrophies(row.teamId, [row]).map((trophy) => ({ ...trophy, teamId: row.teamId, team: row.team, playerMaps: row.maps, playerSeries: row.series })))
-    .sort((a, b) => b.date - a.date || a.placement - b.placement || String(a.event.name || "").localeCompare(String(b.event.name || ""), "pt-BR"));
+  return [
+    ...tournamentRows.flatMap((row) => playerTeamTrophies(row.teamId, [row]).map((trophy) => ({ ...trophy, teamId: row.teamId, team: row.team, playerMaps: row.maps, playerSeries: row.series }))),
+    ...playerMvpAwards(player, tournamentRows),
+  ].sort((a, b) => b.date - a.date || a.placement - b.placement || String(a.event.name || "").localeCompare(String(b.event.name || ""), "pt-BR"));
 }
 
 function playerTeamTrophies(teamId, tournamentRows) {
@@ -14582,7 +14787,7 @@ function weekTile({ category, player }) {
       <a class="week-tile" href="${playerHref(player)}">
         ${playerFigure(player, team, "week-tile-figure")}
         ${weekSupportStats(category, player, "week-tile-detail")}
-        <span class="week-tile-nick nome-encolhe" title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</span>
+        <span class="week-tile-nick nome-encolhe" title="${escapeHtml(player.nick)}"><span class="nome-rolante">${escapeHtml(player.nick)}</span></span>
         ${team ? teamLogo(team.id, "week-tile-crest") : `<span class="week-tile-crest"></span>`}
         <span class="week-tile-stat">
           <small class="week-tile-category">${escapeHtml(category.statLabel)}</small>
@@ -14722,11 +14927,25 @@ function bindHomeEventCovers() {
   const revelar = (row) => {
     const capa = row?.dataset?.cover;
     if (!capa) return;
+    const reserva = row.dataset.coverCheia || "";
     delete row.dataset.cover;
-    const img = new Image();
-    img.onload = () => {
-      row.style.setProperty("--event-capa", `url("${capa}")`);
+    delete row.dataset.coverCheia;
+    const aplicar = (url) => {
+      row.style.setProperty("--event-capa", `url("${url}")`);
       row.classList.add("tem-capa");
+    };
+    const img = new Image();
+    img.onload = () => aplicar(capa);
+    // Sem este ramo a falha era muda: o derivado de linha faltando significava
+    // simplesmente nenhuma capa, sem erro em lugar nenhum. Agora cai na capa
+    // cheia e avisa qual arquivo falta - o aviso e o que faz o passo esquecido
+    // aparecer, ja que o resultado visivel passa a estar correto.
+    img.onerror = () => {
+      if (!reserva || reserva === capa) return;
+      console.warn(`[capas] falta ${capa} - usando a capa cheia. Rode: python scripts/build_event_row_banners.py`);
+      const cheia = new Image();
+      cheia.onload = () => aplicar(reserva);
+      cheia.src = reserva;
     };
     img.src = capa;
   };
@@ -14752,7 +14971,7 @@ function compactRankingRow(team) {
       <span class="rank-position">${teamShortRankLabel(team)}</span>
       ${rankingPositionChangeBadge({ team, ranking, snapshot }, "rank-delta")}
       ${teamLogo(team.id)}
-      <span class="row-main"><strong>${escapeHtml(team.name)}</strong><small>${team.matches || team.wins + team.losses} partidas - ${team.sourceTag || team.tag}</small></span>
+      <span class="row-main"><strong><span class="nome-rolante">${escapeHtml(team.name)}</span></strong><small><span class="nome-rolante">${team.matches || team.wins + team.losses} partidas - ${team.sourceTag || team.tag}</span></small></span>
       <span class="row-score">${fmt(score, 1)}</span>
     </a>
   `;
@@ -14832,17 +15051,24 @@ function matchResultRow(item, options) {
 // melhor do que ficar em movimento ao lado dele.
 function ajustarTextosVariaveis(raiz) {
   const escopo = raiz && raiz.querySelectorAll ? raiz : document;
-  const rolantes = [...escopo.querySelectorAll(".nome-rolante")];
-  const encolhem = [...escopo.querySelectorAll(".nome-encolhe")];
-  if (!rolantes.length && !encolhem.length) return;
-  observarTextosVariaveis([...rolantes, ...encolhem]);
   // As fontes sao locais (assets/fonts) e chegam depois do primeiro layout.
   // Medir antes disso e medir a largura do texto na fonte do sistema, que e
-  // outra - o nome caberia ou nao caberia por engano. Na segunda render a
+  // outra - o texto caberia ou nao caberia por engano. Na segunda render a
   // promessa ja esta resolvida e o then roda como microtarefa, antes de pintar.
   Promise.resolve(document.fonts?.ready).then(() => {
+    if (!escopo.isConnected && escopo !== document) return;
+    // A ordem e o que faz as tres saidas conviverem:
+    // 1. encolher, porque o texto que couber com a fonte menor nem vira
+    //    candidato a rolagem (so o `.nome-encolhe` da faixa da semana);
+    // 2. embrulhar o que o CSS esta cortando agora, para virar candidato;
+    // 3. medir e rolar tudo que sobrou de fora.
+    escopo.querySelectorAll(".nome-encolhe").forEach(medirNomeQueEncolhe);
+    embrulharTextosCortados(escopo);
+    const rolantes = [...escopo.querySelectorAll(".nome-rolante")];
+    const encolhem = [...escopo.querySelectorAll(".nome-encolhe")];
+    if (!rolantes.length && !encolhem.length) return;
+    observarTextosVariaveis([...rolantes, ...encolhem], true);
     rolantes.forEach(medirNomeRolante);
-    encolhem.forEach(medirNomeQueEncolhe);
   });
 }
 
@@ -14855,8 +15081,12 @@ function medirNomeQueEncolhe(nome) {
   nome.style.removeProperty("font-size");
   const caixa = nome.clientWidth;
   if (!caixa) return;
+  // Mede o texto, e nao a caixa interna. O `.nome-rolante` que vive aqui dentro
+  // e um bloco: em repouso ele preenche o pai, entao um Range sobre o conteudo
+  // do PAI devolveria a largura da caixa e o nome nunca encolheria. Um Range
+  // sobre o conteudo dele devolve a linha de texto de verdade.
   const alcance = document.createRange();
-  alcance.selectNodeContents(nome);
+  alcance.selectNodeContents(nome.querySelector(".nome-rolante") || nome);
   const texto = alcance.getBoundingClientRect().width;
   if (!texto || texto <= caixa) return;
   const base = Number.parseFloat(getComputedStyle(nome).fontSize) || 13;
@@ -14878,8 +15108,8 @@ function medirNomeRolante(nome) {
   // .nome-rolante e um bloco que preenche o pai, entao offsetWidth devolveria a
   // largura da janela e o transbordo daria sempre zero. E scrollWidth ignora o
   // transform, que getBoundingClientRect traria junto.
-  // Numa lista com o dia recolhido os dois dao 0 e a diferenca cai abaixo do
-  // minimo - linha escondida nao anima.
+  // Numa lista com o dia recolhido os dois dao 0 e a diferenca fica em zero -
+  // linha escondida nao anima.
   const transbordo = Math.round(nome.scrollWidth - caixa.clientWidth);
   if (transbordo < ROLAGEM_MINIMO) return;
   const bruto = (transbordo / ROLAGEM_VELOCIDADE) * ROLAGEM_CICLO;
@@ -14899,7 +15129,77 @@ function medirNomeRolante(nome) {
 // liga so entra quando a caixa ja esta presa no max-width, e o max-content que
 // ela da ao texto e o mesmo que ele ja contribuia - a caixa observada nao muda
 // de tamanho, entao o trabalho dele tambem nao volta como evento.
-function observarTextosVariaveis(nomes) {
+// A regra "nunca corte, nunca reticencia" nao pode depender de alguem lembrar
+// de embrulhar cada texto na mao: sao dezenas de pontos hoje e todo texto novo
+// seria uma chance de esquecer. Entao quem procura e o codigo - varre a pagina
+// atras de texto que o CSS ESTA cortando neste momento e devolve o corte em
+// movimento. O que ja vem embrulhado da marcacao (nome de campeonato, de
+// equipe, de mapa) passa direto: ja tem `.nome-rolante` dentro.
+//
+// O teste tem cinco condicoes, e cada uma existe para descartar um falso
+// positivo medido:
+//  - so folha com texto: elemento com filho elemento nao e caixa de texto;
+//  - clientWidth > 0: elemento `inline` tem clientWidth zero, entao TODO span
+//    de texto passaria no teste de transbordo. Isso tambem descarta o que esta
+//    escondido (dia recolhido da lista de partidas, gaveta fechada);
+//  - nowrap/pre: texto que quebra linha nao esta sendo cortado na horizontal;
+//  - overflow-x hidden/clip: `auto`/`scroll` e rolagem de verdade, e a pessoa
+//    ja pode alcancar o resto;
+//  - nem flex nem grid: ali o texto solto e um item anonimo, e transforma-lo em
+//    item de verdade mudaria o alinhamento da caixa.
+// Podados pela raiz. Sao os elementos onde um <span> dentro nao e decoracao, e
+// sim outra coisa: em TEXTAREA/OPTION o texto E o valor do controle, e em SVG a
+// marcacao e de outro namespace. BUTTON ficou de FORA desta lista de proposito -
+// podar botao apagava da varredura justamente os nomes de equipe e campeonato
+// das gavetas de filtro, que sao botoes.
+const ROLAGEM_FORA = new Set(["TEXTAREA", "SELECT", "OPTION", "SVG", "PATH"]);
+
+function embrulharTextosCortados(escopo) {
+  const raiz = escopo && escopo.nodeType ? escopo : document;
+  // TreeWalker, e nao querySelectorAll("*"), por causa do REJECT: ele poda a
+  // subarvore inteira. Medido no /ranking, que e a pagina mais pesada da casa:
+  // 10.956 elementos, 4.427 folhas de texto - e 3.838 delas dentro dos 44
+  // paineis fechados da sanfona, marcados com `inert`. Ler geometria ali dentro
+  // obriga o navegador a diagramar conteudo que ele estava pulando: a varredura
+  // custava 178ms. Podando, sobram 589 folhas e o custo cai para poucos ms.
+  // Painel fechado tambem nao tem o que consertar - ninguem esta vendo.
+  const passeio = document.createTreeWalker(raiz, NodeFilter.SHOW_ELEMENT, {
+    acceptNode(el) {
+      if (el.hasAttribute("inert") || el.hasAttribute("hidden")) return NodeFilter.FILTER_REJECT;
+      if (ROLAGEM_FORA.has(el.tagName)) return NodeFilter.FILTER_REJECT;
+      // SKIP desce nos filhos; so quem e folha COM texto vira candidato.
+      return !el.firstElementChild && el.firstChild ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+    },
+  });
+  // Tres passadas separadas de proposito: le geometria, le estilo, escreve.
+  // Intercalar escrita com leitura obrigaria um recalculo por elemento.
+  const candidatos = [];
+  for (let el = passeio.nextNode(); el; el = passeio.nextNode()) {
+    const largura = el.clientWidth;
+    // ROLAGEM_CAIXA_MINIMA descarta caixa que nao e caixa de leitura. O caso
+    // real: o <h1 class="sr-only">UNIVLR</h1> de cada pagina, escondido pela
+    // tecnica classica de 1x1px com overflow hidden - para a medida ele parece
+    // texto cortado, e passava a animar em toda rota, invisivel e a toa.
+    // Abaixo de 16px nao ha nome que se leia, entao nao ha o que revelar.
+    if (largura < ROLAGEM_CAIXA_MINIMA) continue;
+    if (el.scrollWidth > largura + 0.5) candidatos.push(el);
+  }
+  if (!candidatos.length) return;
+  const embrulhar = candidatos.filter((el) => {
+    const cs = getComputedStyle(el);
+    if (!/^(nowrap|pre)$/.test(cs.whiteSpace)) return false;
+    if (!/^(hidden|clip)$/.test(cs.overflowX)) return false;
+    return !/flex|grid/.test(cs.display) && cs.display !== "inline";
+  });
+  embrulhar.forEach((el) => {
+    const caixa = document.createElement("span");
+    caixa.className = "nome-rolante";
+    while (el.firstChild) caixa.appendChild(el.firstChild);
+    el.appendChild(caixa);
+  });
+}
+
+function observarTextosVariaveis(nomes, reconectar) {
   if (typeof ResizeObserver !== "function") return;
   if (!rolagemObserver) {
     rolagemObserver = new ResizeObserver(() => {
@@ -14907,18 +15207,35 @@ function observarTextosVariaveis(nomes) {
       rolagemAdiada = setTimeout(remedirTextosVariaveis, 120);
     });
   }
-  rolagemObserver.disconnect();
+  // Na troca de pagina o observador larga tudo: ele segura referencia forte ao
+  // que observa, e os elementos da render anterior morrem com o HTML antigo.
+  // No redimensionamento NAO se desconecta - reobservar os mesmos elementos
+  // dispararia a notificacao inicial de cada um e o callback se chamaria de
+  // novo. Por isso o WeakSet: so entra quem ainda nao estava.
+  if (reconectar) {
+    rolagemObserver.disconnect();
+    rolagemObservados = new WeakSet();
+  }
   // O `.nome-encolhe` e a propria caixa (a fonte muda nele); o `.nome-rolante`
   // mora dentro da caixa que corta, entao quem muda de tamanho e o pai.
   nomes.forEach((nome) => {
     const alvo = nome.classList.contains("nome-encolhe") ? nome : nome.parentElement;
-    if (alvo) rolagemObserver.observe(alvo);
+    if (!alvo || rolagemObservados.has(alvo)) return;
+    rolagemObservados.add(alvo);
+    rolagemObserver.observe(alvo);
   });
 }
 
+// Mudou de largura sem trocar de pagina (janela redimensionada, breakpoint
+// cruzado): refaz o ciclo inteiro, inclusive a varredura - o que passou a
+// cortar agora precisa ser embrulhado, e o que voltou a caber tem a rolagem
+// desligada por medirNomeRolante.
 function remedirTextosVariaveis() {
-  document.querySelectorAll(".nome-rolante").forEach(medirNomeRolante);
   document.querySelectorAll(".nome-encolhe").forEach(medirNomeQueEncolhe);
+  embrulharTextosCortados(document);
+  const rolantes = [...document.querySelectorAll(".nome-rolante")];
+  observarTextosVariaveis([...rolantes, ...document.querySelectorAll(".nome-encolhe")], false);
+  rolantes.forEach(medirNomeRolante);
 }
 
 // Os mapas na ordem em que foram jogados, no meio da faixa de cima. Numa md3 ou
@@ -14931,8 +15248,12 @@ function matchMapSequence(item) {
   if (!names.length) return "";
   // --maps alimenta a largura do holofote e a das fatias: os nomes e as artes
   // usam a mesma conta, entao cada nome cai centrado sobre o proprio mapa.
+  // O nome vai dentro de .nome-rolante pela mesma regra do campeonato: a fatia
+  // de uma md3 tem 41px a 1280px e "Ascent" pede 44px, entao a reticencia
+  // entrava por 3px de falta e levava embora treze - "Asc...". Rolando, os 3px
+  // se resolvem num percurso que nao se nota.
   return `<span class="result-meta-maps" style="--maps:${names.length}">${names
-    .map((name) => `<span class="result-meta-map">${escapeHtml(name)}</span>`)
+    .map((name) => `<span class="result-meta-map"><span class="nome-rolante">${escapeHtml(name)}</span></span>`)
     .join("")}</span>`;
 }
 
@@ -15044,8 +15365,14 @@ function eventRowCoverPath(event) {
 
 function eventListRow(event) {
   const capa = eventRowCoverPath(event);
+  // A capa cheia viaja junto como reserva. O derivado de linha e gerado por um
+  // script a parte (scripts/build_event_row_banners.py) e nada obriga ele a
+  // rodar quando um campeonato novo entra - foi o que aconteceu com a Copa LUCE
+  // Inters, que tinha capa e nao mostrava nada. Com a reserva, campeonato novo
+  // sempre revela capa; o que se perde sem o derivado e peso, nao a capa.
+  const capaCheia = String(event?.banner || "").trim();
   return `
-    <a class="event-row" href="#/events/${event.id}"${capa ? ` data-cover="${escapeHtml(assetPath(capa))}"` : ""}>
+    <a class="event-row" href="#/events/${event.id}"${capa ? ` data-cover="${escapeHtml(assetPath(capa))}"` : ""}${capaCheia ? ` data-cover-cheia="${escapeHtml(assetPath(capaCheia))}"` : ""}>
       ${eventLogo(event, "small")}
       <span class="row-main"><strong>${escapeHtml(event.name)}</strong><small>${escapeHtml(eventTimeRange(event))}</small><span class="event-status ${eventStatusClass(event.status)}">${escapeHtml(event.status || "Evento")}</span>${window.Comments ? window.Comments.selo("event", event.id) : ""}</span>
       ${eventTierBadge(event)}

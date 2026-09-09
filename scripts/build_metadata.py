@@ -22,6 +22,10 @@ PHOTO_ALIASES = {
     "pagode": ["pagod"],
     "gbzz": ["gbz"],
     "japinha99": ["jeyp"],
+    # Trocaram de nick em 09/09/2026 e o arquivo ficou com o nome antigo. Sem o
+    # alias a foto some em silencio, que e o modo de falha desta indexacao.
+    "dark": ["filiceta"],
+    "spx": ["entropy"],
 }
 
 
@@ -229,7 +233,17 @@ def player_photo_keys(name):
     add_key(name)
     for alias in PHOTO_ALIASES.get(slug_key(name), []):
         add_key(alias)
-    return keys
+
+    # Sufixo `_new`: a foto nova do jogador entra ao lado da antiga em vez de
+    # sobrescreve-la, e ganha. Sem isto os arquivos `<nick>_new.png` ficavam no
+    # disco sem nunca serem escolhidos - `kzr_new` nao casa com `kzr` - e a
+    # unica saida era apagar a foto velha. Vale para cada chave, entao alias
+    # tambem tem versao nova (`gbz_new` para gbzz).
+    expandidas = []
+    for key in keys:
+        expandidas.append(f"{key}_new")
+        expandidas.append(key)
+    return expandidas
 
 
 # Pastas por organizacao ("macklogic" para "macklogic_red") e por equipe antiga
@@ -681,6 +695,39 @@ def read_players():
     return players
 
 
+# O elenco em teams.xlsx aponta para o jogador SO PELO NOME, e o site resolve
+# com `playersByName`. Quando o nome de exibicao muda em players.xlsx e ninguem
+# atualiza teams.xlsx, a busca falha e o card vira "Perfil em atualizacao": sem
+# link, sem estatistica, como se fosse outra pessoa. Nada quebra no build e o
+# erro so aparece para quem abre a pagina da equipe.
+#
+# Em 09/09/2026 isso aconteceu com tres renomeacoes de uma vez. O aviso abaixo
+# repete a mesma regra do site (nome, nick e nick sem a tag) e transforma a
+# falha silenciosa em falha visivel.
+def warn_lineups_sem_jogador(teams, players):
+    conhecidos = set()
+    for player in players:
+        for valor in [player.get("name"), *(player.get("nickHistory") or [])]:
+            if not valor:
+                continue
+            conhecidos.add(slug_key(valor))
+            conhecidos.add(slug_key(str(valor).split("#")[0]))
+
+    orfaos = []
+    for team in teams:
+        for slot in team.get("lineup", []):
+            nome = slot.get("name", "")
+            if nome and slug_key(nome) not in conhecidos:
+                orfaos.append((team["id"], slot.get("slot"), nome))
+
+    if orfaos:
+        print(f"AVISO: {len(orfaos)} nome(s) no elenco sem jogador correspondente.")
+        print("       O card vai sair como 'Perfil em atualizacao'. Confira dados_excel/teams.xlsx.")
+        for team_id, slot, nome in orfaos:
+            print(f"       {team_id} player{slot}: {nome!r}")
+    return orfaos
+
+
 def main():
     states = read_states()
     states_by_sigla = {state["sigla"]: state for state in states}
@@ -707,6 +754,7 @@ def main():
         "maps": read_maps(),
         "stateWinrates": read_state_winrates(),
     }
+    warn_lineups_sem_jogador(metadata["teams"], metadata["players"])
     output_path = ROOT / "metadata.json"
     escreve_json(output_path, metadata)
     data_sources = build_data_sources()

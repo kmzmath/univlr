@@ -46,7 +46,7 @@
           "lastSeenAt": 1788282220289,
           "matches": 43,
           "source": "auto-json+players-history",
-          "profileConfidence": 844,
+          "profileConfidence": 858,
           "players": [
             {
               "slot": 1,
@@ -170,7 +170,8 @@
               "matches": 7,
               "rounds": 139,
               "profileMatches": 7,
-              "profileConfidence": 14,
+              "profileConfidence": 28,
+              "currentTeam": "a2e_uff",
               "teamHistory": [
                 "a2e_uff"
               ]
@@ -6577,13 +6578,13 @@
           "lastSeenAt": 1786039808997,
           "matches": 14,
           "source": "auto-json+players-history",
-          "profileConfidence": 278,
+          "profileConfidence": 252,
           "players": [
             {
               "slot": 1,
-              "playerId": "mpTLXCmu8rofOXHJctIf_lQkKkRQrW-P6oMxUuRl57lv5MUpV7y693-NkmBQXxbcU8p5fXAenncQ4g",
-              "name": "Kaname",
-              "handle": "Kaname#omg",
+              "playerId": "PbHP3ohEFQEMKgUHZFecqpR12J5lxUD704TIzWgTAW5Vubs-5gWLR1aIGAriryRMhXUuOxGmTDTjcw",
+              "name": "soap",
+              "handle": "ブレンノ#jjk",
               "firstSeenAt": "2026-06-05",
               "lastSeenAt": "2026-08-06",
               "matches": 14,
@@ -6597,18 +6598,19 @@
             },
             {
               "slot": 2,
-              "playerId": "PbHP3ohEFQEMKgUHZFecqpR12J5lxUD704TIzWgTAW5Vubs-5gWLR1aIGAriryRMhXUuOxGmTDTjcw",
-              "name": "soap",
-              "handle": "ブレンノ#jjk",
+              "playerId": "mpTLXCmu8rofOXHJctIf_lQkKkRQrW-P6oMxUuRl57lv5MUpV7y693-NkmBQXxbcU8p5fXAenncQ4g",
+              "name": "Kaname",
+              "handle": "Kaname#omg",
               "firstSeenAt": "2026-06-05",
               "lastSeenAt": "2026-08-06",
               "matches": 14,
               "rounds": 235,
               "profileMatches": 14,
-              "profileConfidence": 56,
-              "currentTeam": "ufrj_minerva",
+              "profileConfidence": 28,
+              "currentTeam": "minerva_artemis",
               "teamHistory": [
-                "ufrj_minerva"
+                "ufrj_minerva",
+                "minerva_artemis"
               ]
             },
             {
@@ -6685,7 +6687,8 @@
               "matches": 1,
               "rounds": 22,
               "profileMatches": 1,
-              "profileConfidence": 2,
+              "profileConfidence": 4,
+              "currentTeam": "ufrj_minerva",
               "teamHistory": [
                 "ufrj_minerva"
               ]

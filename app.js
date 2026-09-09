@@ -104,6 +104,7 @@ const TROPHY_GENERIC_ASSETS = {
 // e o candidato volta a ser tentado - uma vez so, e com sucesso.
 const TROPHY_ART_FILES = new Set([
   "rivvalsgg.png",
+  "unicup-rj-campeao.png",
 ]);
 const DAY_MS = 24 * 60 * 60 * 1000;
 const WEEK_MS = 7 * DAY_MS;

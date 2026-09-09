@@ -66,7 +66,58 @@
         },
         {
           "slot": 8,
+          "name": "zuw"
+        }
+      ]
+    },
+    {
+      "id": "a2e_uff_shadows",
+      "sourceId": "2842",
+      "slug": "a2e_uff_shadows",
+      "tag": "A2E S",
+      "displayName": "A2E UFF Shadows",
+      "org": "Universidade Federal Fluminense",
+      "orgTag": "UFF",
+      "logo": "assets/team-logos/a2e_uff.png",
+      "state": "RJ",
+      "stateName": "Rio de Janeiro",
+      "stateFlag": "assets/state-flags/rj.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#7617ad",
+        "#a388f8"
+      ],
+      "socials": {
+        "instagram": "https://www.instagram.com/a2euff/"
+      },
+      "lineup": [
+        {
+          "slot": 1,
+          "name": "GalinhaMamifera"
+        },
+        {
+          "slot": 2,
+          "name": "drk"
+        },
+        {
+          "slot": 3,
+          "name": "gL X"
+        },
+        {
+          "slot": 4,
+          "name": "Hast"
+        },
+        {
+          "slot": 5,
+          "name": "ferRomantica"
+        },
+        {
+          "slot": 6,
           "name": "Borrachinha"
+        },
+        {
+          "slot": 7,
+          "name": "Kafaja"
         }
       ]
     },
@@ -2255,6 +2306,53 @@
       ]
     },
     {
+      "id": "minerva_artemis",
+      "sourceId": "2841",
+      "slug": "minerva_artemis",
+      "tag": "ARTMS",
+      "displayName": "Minerva Artemis",
+      "org": "Universidade Federal do Rio de Janeiro",
+      "orgTag": "UFRJ",
+      "logo": "assets/team-logos/ufrj_minerva.png",
+      "state": "RJ",
+      "stateName": "Rio de Janeiro",
+      "stateFlag": "assets/state-flags/rj.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#131732",
+        "#fdc725"
+      ],
+      "socials": {
+        "instagram": "https://www.instagram.com/minervaesports/"
+      },
+      "lineup": [
+        {
+          "slot": 1,
+          "name": "Kaname"
+        },
+        {
+          "slot": 2,
+          "name": "raining stars"
+        },
+        {
+          "slot": 3,
+          "name": "dudinhal"
+        },
+        {
+          "slot": 4,
+          "name": "Mey"
+        },
+        {
+          "slot": 5,
+          "name": "DavyJones"
+        },
+        {
+          "slot": 6,
+          "name": "kissa"
+        }
+      ]
+    },
+    {
       "id": "minerva_thunders",
       "sourceId": "2836",
       "slug": "minerva_thunders",
@@ -2741,6 +2839,53 @@
         {
           "slot": 8,
           "name": "qweqawq"
+        }
+      ]
+    },
+    {
+      "id": "sheriff_iff",
+      "sourceId": "2843",
+      "slug": "sheriff_iff",
+      "tag": "SHF",
+      "displayName": "Sheriff IFF",
+      "org": "Instituto Federal de Educação, Ciência e Tecnologia Fluminense",
+      "orgTag": "IFF",
+      "logo": "assets/team-logos/sheriff.png",
+      "state": "RJ",
+      "stateName": "Rio de Janeiro",
+      "stateFlag": "assets/state-flags/rj.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#f9b70b",
+        "#775e25"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": [
+        {
+          "slot": 1,
+          "name": "Fael"
+        },
+        {
+          "slot": 2,
+          "name": "rahg"
+        },
+        {
+          "slot": 3,
+          "name": "aQc"
+        },
+        {
+          "slot": 4,
+          "name": "Eraj"
+        },
+        {
+          "slot": 5,
+          "name": "Kossar Osako"
+        },
+        {
+          "slot": 6,
+          "name": "lucKZin"
         }
       ]
     },
@@ -3582,11 +3727,23 @@
         },
         {
           "slot": 5,
-          "name": "Kaname"
+          "name": "Kozolove"
         },
         {
           "slot": 6,
-          "name": "Kozolove"
+          "name": "Zerando"
+        },
+        {
+          "slot": 7,
+          "name": "loverman"
+        },
+        {
+          "slot": 8,
+          "name": "DG"
+        },
+        {
+          "slot": 9,
+          "name": "draCo"
         }
       ]
     },
@@ -4590,6 +4747,10 @@
         {
           "slot": 7,
           "name": "wpv"
+        },
+        {
+          "slot": 8,
+          "name": "salem"
         }
       ]
     },
@@ -4776,7 +4937,8 @@
         "wolf_gaming"
       ],
       "nickHistory": [
-        "filiceta#2107"
+        "filiceta#2107",
+        "dark#2107"
       ],
       "photo": "assets/player-photos/wolf_gaming/filiceta.png"
     },
@@ -4789,7 +4951,8 @@
         "wolf_gaming"
       ],
       "nickHistory": [
-        "entropy#fermi"
+        "entropy#fermi",
+        "spx#six7"
       ],
       "photo": "assets/player-photos/wolf_gaming/entropy.png"
     },
@@ -6488,7 +6651,8 @@
         "ufrj_minerva"
       ],
       "nickHistory": [
-        "Zuhazana#2004"
+        "Zuhazana#2004",
+        "BBL lovers rock#1912"
       ],
       "photo": ""
     },
@@ -6536,9 +6700,10 @@
       "id": "mpTLXCmu8rofOXHJctIf_lQkKkRQrW-P6oMxUuRl57lv5MUpV7y693-NkmBQXxbcU8p5fXAenncQ4g",
       "name": "Kaname",
       "puuid": "mpTLXCmu8rofOXHJctIf_lQkKkRQrW-P6oMxUuRl57lv5MUpV7y693-NkmBQXxbcU8p5fXAenncQ4g",
-      "currentTeam": "ufrj_minerva",
+      "currentTeam": "minerva_artemis",
       "teamHistory": [
-        "ufrj_minerva"
+        "ufrj_minerva",
+        "minerva_artemis"
       ],
       "nickHistory": [
         "Kaname#omg"
@@ -8537,7 +8702,8 @@
       ],
       "nickHistory": [
         "AFG stalkzinnn#szz",
-        "risk it all#szz"
+        "risk it all#szz",
+        "Stalkzin#szz"
       ],
       "photo": ""
     },
@@ -12216,7 +12382,8 @@
         "a2e_uff"
       ],
       "nickHistory": [
-        "RACFLU#2812"
+        "RACFLU#2812",
+        "rac#manu"
       ],
       "photo": ""
     },
@@ -12237,12 +12404,14 @@
       "id": "YxfNWtbF20Z1tRTaFBSFyL1tHiLxkIV836jBLC96PNLp2lcAK-ZVauekN83dxgTq83Wdt6mwE4xUnQ",
       "name": "Borrachinha",
       "puuid": "YxfNWtbF20Z1tRTaFBSFyL1tHiLxkIV836jBLC96PNLp2lcAK-ZVauekN83dxgTq83Wdt6mwE4xUnQ",
-      "currentTeam": "a2e_uff",
+      "currentTeam": "a2e_uff_shadows",
       "teamHistory": [
-        "a2e_uff"
+        "a2e_uff",
+        "a2e_uff_shadows"
       ],
       "nickHistory": [
-        "A2E Borrachinha#UFF"
+        "A2E Borrachinha#UFF",
+        "Snoopy#D0GGY"
       ],
       "photo": ""
     },
@@ -12277,7 +12446,7 @@
       "id": "pdRsfXh651uh4CZQd0fw9odXzapO0ncZnyXfwybzgMFl8XMthzJWeXl33l0k6by9eb85rmaRvFnDtg",
       "name": "zuw",
       "puuid": "pdRsfXh651uh4CZQd0fw9odXzapO0ncZnyXfwybzgMFl8XMthzJWeXl33l0k6by9eb85rmaRvFnDtg",
-      "currentTeam": "",
+      "currentTeam": "a2e_uff",
       "teamHistory": [
         "a2e_uff"
       ],
@@ -13264,12 +13433,285 @@
       "id": "6VmRqgEcADA3-FPKNyHudktkAmRCQ24f4-7qULqSetlt4BwhJOMPordrLxy5QW_H7xCbO87n8YDM4w",
       "name": "Zerando",
       "puuid": "6VmRqgEcADA3-FPKNyHudktkAmRCQ24f4-7qULqSetlt4BwhJOMPordrLxy5QW_H7xCbO87n8YDM4w",
-      "currentTeam": "",
+      "currentTeam": "ufrj_minerva",
       "teamHistory": [
         "ufrj_minerva"
       ],
       "nickHistory": [
         "Zerando#BAGRE"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "t08VZ3J89mOM5yLqJpgOe_xyYY5GskO8DAvT18IkG9iMnLESQhAeq-EcnQHSI7T8Z5sNRNO-huvKZQ",
+      "name": "loverman",
+      "puuid": "t08VZ3J89mOM5yLqJpgOe_xyYY5GskO8DAvT18IkG9iMnLESQhAeq-EcnQHSI7T8Z5sNRNO-huvKZQ",
+      "currentTeam": "ufrj_minerva",
+      "teamHistory": [
+        "ufrj_minerva"
+      ],
+      "nickHistory": [
+        "loverman#yzz"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "lpWxQCvw4rkk9GfEF-1WUoiuEhqGc9fXGYLDvnjv-BRasolYpyUlcrULHKHYqwNks8kZIbFPBtiJig",
+      "name": "DG",
+      "puuid": "lpWxQCvw4rkk9GfEF-1WUoiuEhqGc9fXGYLDvnjv-BRasolYpyUlcrULHKHYqwNks8kZIbFPBtiJig",
+      "currentTeam": "ufrj_minerva",
+      "teamHistory": [
+        "ufrj_minerva"
+      ],
+      "nickHistory": [
+        "DG  叶#Deus"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "APM9XNdFLPZ0XIsxhQtKwlURG6MwycOF4EA0OZgJy-DCHEHh4vZmPDsjOjw2mUkEsJ-73BZEbseMrQ",
+      "name": "draCo",
+      "puuid": "APM9XNdFLPZ0XIsxhQtKwlURG6MwycOF4EA0OZgJy-DCHEHh4vZmPDsjOjw2mUkEsJ-73BZEbseMrQ",
+      "currentTeam": "ufrj_minerva",
+      "teamHistory": [
+        "ufrj_minerva"
+      ],
+      "nickHistory": [
+        "draCo#044"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "mhUL_Fn0WJcLpLYtjzvnF2zVpyxhkZAPX0ljZpHbQeU25c8SzH-iu8arXjuyMcH7N48AHDXp2sgFEA",
+      "name": "salem",
+      "puuid": "mhUL_Fn0WJcLpLYtjzvnF2zVpyxhkZAPX0ljZpHbQeU25c8SzH-iu8arXjuyMcH7N48AHDXp2sgFEA",
+      "currentTeam": "wolf_gaming",
+      "teamHistory": [
+        "wolf_gaming"
+      ],
+      "nickHistory": [
+        "salem#rosa"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "amjD_6OtKf_MwccutUhwOMy4jLU803YXM7JslAaEcR0-v1vQyB9ukp0s9CfDvDnIh-_d3I2_Hsr_oA",
+      "name": "raining stars",
+      "puuid": "amjD_6OtKf_MwccutUhwOMy4jLU803YXM7JslAaEcR0-v1vQyB9ukp0s9CfDvDnIh-_d3I2_Hsr_oA",
+      "currentTeam": "minerva_artemis",
+      "teamHistory": [
+        "minerva_artemis"
+      ],
+      "nickHistory": [
+        "raining stars#yuni"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "oZf3TOi8xYXZTqpYzgw2eM8zmWyHuiHYUHHEYslpw81Q7OtfHrBWYXUS9aL1FGJ5N9870U6UuTi6ow",
+      "name": "dudinhal",
+      "puuid": "oZf3TOi8xYXZTqpYzgw2eM8zmWyHuiHYUHHEYslpw81Q7OtfHrBWYXUS9aL1FGJ5N9870U6UuTi6ow",
+      "currentTeam": "minerva_artemis",
+      "teamHistory": [
+        "minerva_artemis"
+      ],
+      "nickHistory": [
+        "chocolate n mint#lwykm"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "chLoZYtUyKY0CiH_AznDtIu9nU2fEOArkDqU2kT7WwjhyDafLkI5AUtRygkEX78T7nsW8WMP_oJllg",
+      "name": "Mey",
+      "puuid": "chLoZYtUyKY0CiH_AznDtIu9nU2fEOArkDqU2kT7WwjhyDafLkI5AUtRygkEX78T7nsW8WMP_oJllg",
+      "currentTeam": "minerva_artemis",
+      "teamHistory": [
+        "minerva_artemis"
+      ],
+      "nickHistory": [
+        "美 Mey#余家贤"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Cl7a6Q8hzvSHU3T84nMR0vxVt6q7BYF0Bi3Zf5e128gLkuMSsBaKUMp0bqW9xo0fK4pv75X-VXOPbA",
+      "name": "DavyJones",
+      "puuid": "Cl7a6Q8hzvSHU3T84nMR0vxVt6q7BYF0Bi3Zf5e128gLkuMSsBaKUMp0bqW9xo0fK4pv75X-VXOPbA",
+      "currentTeam": "minerva_artemis",
+      "teamHistory": [
+        "minerva_artemis"
+      ],
+      "nickHistory": [
+        "DavyJonesAndThe6#momo"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "BudR61mnu-MK5jvQyvZAUK_WNzWd3Vza4kvbeBtYJ0orRfRl5YSsEdwiI54OTcb6leXH9XlCTf3cDw",
+      "name": "kissa",
+      "puuid": "BudR61mnu-MK5jvQyvZAUK_WNzWd3Vza4kvbeBtYJ0orRfRl5YSsEdwiI54OTcb6leXH9XlCTf3cDw",
+      "currentTeam": "minerva_artemis",
+      "teamHistory": [
+        "minerva_artemis"
+      ],
+      "nickHistory": [
+        "kissa#fada"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "K2nP5lhGeWcXKEoVzO1O-lICjLS4f2l_7X5U2uamQbAIxx3Jgkj_95sVV_ip-8TjWGrzQ1Yo4E049w",
+      "name": "GalinhaMamifera",
+      "puuid": "K2nP5lhGeWcXKEoVzO1O-lICjLS4f2l_7X5U2uamQbAIxx3Jgkj_95sVV_ip-8TjWGrzQ1Yo4E049w",
+      "currentTeam": "a2e_uff_shadows",
+      "teamHistory": [
+        "a2e_uff_shadows"
+      ],
+      "nickHistory": [
+        "GalinhaMamifera#prota"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "RRuFlSaUvwSAbsU0VZWUccWHztIDpZw_Q0uTHOpnzEfsCQUfxdzlNn3j5BEPEcQHEgwmSnmSfIzK1w",
+      "name": "drk",
+      "puuid": "RRuFlSaUvwSAbsU0VZWUccWHztIDpZw_Q0uTHOpnzEfsCQUfxdzlNn3j5BEPEcQHEgwmSnmSfIzK1w",
+      "currentTeam": "a2e_uff_shadows",
+      "teamHistory": [
+        "a2e_uff_shadows"
+      ],
+      "nickHistory": [
+        "drk#calmo"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "uojDz5vQxGiQKP7g90cebiqhnWN3EL1qBNljUxvSQvAf4k3oDTwnq6KQviDPThkPSSWfxssA0NrQ1w",
+      "name": "gL X",
+      "puuid": "uojDz5vQxGiQKP7g90cebiqhnWN3EL1qBNljUxvSQvAf4k3oDTwnq6KQviDPThkPSSWfxssA0NrQ1w",
+      "currentTeam": "a2e_uff_shadows",
+      "teamHistory": [
+        "a2e_uff_shadows"
+      ],
+      "nickHistory": [
+        "gL X#fate"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "1_hQmAKryuKCb0iUe3VrPTRdSVQaukeApnXQjOJSgxKreJmPhiARIkJ_Ho1adcFAVz2rSqsVkq3b3g",
+      "name": "Hast",
+      "puuid": "1_hQmAKryuKCb0iUe3VrPTRdSVQaukeApnXQjOJSgxKreJmPhiARIkJ_Ho1adcFAVz2rSqsVkq3b3g",
+      "currentTeam": "a2e_uff_shadows",
+      "teamHistory": [
+        "a2e_uff_shadows"
+      ],
+      "nickHistory": [
+        "Hдsτ#puro"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "J7-IUFRYPuKeg94Dw37IP77y47Hfs3e281XUhN2sJVs6o4DYtcDo9APe7RaJq9YWPHNiY5kf0j4Uxw",
+      "name": "ferRomantica",
+      "puuid": "J7-IUFRYPuKeg94Dw37IP77y47Hfs3e281XUhN2sJVs6o4DYtcDo9APe7RaJq9YWPHNiY5kf0j4Uxw",
+      "currentTeam": "a2e_uff_shadows",
+      "teamHistory": [
+        "a2e_uff_shadows"
+      ],
+      "nickHistory": [
+        "ferRomantica#dsz"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "yhYgxQ1ptlFWqeif57GjQXFcHNTNyEgzDsMoSmfiOExbq79qnHdP4JQOQu9NIAHf_KeLqIviM0-uYw",
+      "name": "Kafaja",
+      "puuid": "yhYgxQ1ptlFWqeif57GjQXFcHNTNyEgzDsMoSmfiOExbq79qnHdP4JQOQu9NIAHf_KeLqIviM0-uYw",
+      "currentTeam": "a2e_uff_shadows",
+      "teamHistory": [
+        "a2e_uff_shadows"
+      ],
+      "nickHistory": [
+        "Kafaja#hope"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "DQeT0eDF3SHvDHlHce_p-IHH-ZzGorImLBwcd6sw5Zl9VqZ6xLI1isr8cQk5w4cbVRgvUnKxsxDKxQ",
+      "name": "Fael",
+      "puuid": "DQeT0eDF3SHvDHlHce_p-IHH-ZzGorImLBwcd6sw5Zl9VqZ6xLI1isr8cQk5w4cbVRgvUnKxsxDKxQ",
+      "currentTeam": "sheriff_iff",
+      "teamHistory": [
+        "sheriff_iff"
+      ],
+      "nickHistory": [
+        "Fael#Love"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "PX9Q4jAJAD7qzjhaKpI9OaR1V2nzy4nP4k4VobAgj4-r61FFnxlSMgPmAEef3mjFxhvewv8nb4IRnA",
+      "name": "rahg",
+      "puuid": "PX9Q4jAJAD7qzjhaKpI9OaR1V2nzy4nP4k4VobAgj4-r61FFnxlSMgPmAEef3mjFxhvewv8nb4IRnA",
+      "currentTeam": "sheriff_iff",
+      "teamHistory": [
+        "sheriff_iff"
+      ],
+      "nickHistory": [
+        "rahg#Jesus"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "LXqUks3cWUhxyVuwWNNPZgLi7WDOmgePhEMh2SqbN73VLZVEyjNYefabtZEvCxXkndvQyTc1NyOxhw",
+      "name": "aQc",
+      "puuid": "LXqUks3cWUhxyVuwWNNPZgLi7WDOmgePhEMh2SqbN73VLZVEyjNYefabtZEvCxXkndvQyTc1NyOxhw",
+      "currentTeam": "sheriff_iff",
+      "teamHistory": [
+        "sheriff_iff"
+      ],
+      "nickHistory": [
+        "aQc#0000"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Q0mKW1c7ZtJuYT_LL9Ub4l7weqUWxxYLH9UGHKmAU-3eMzxCseuORCE2e9UxPqza2Z1xjQPXY9qHrg",
+      "name": "Eraj",
+      "puuid": "Q0mKW1c7ZtJuYT_LL9Ub4l7weqUWxxYLH9UGHKmAU-3eMzxCseuORCE2e9UxPqza2Z1xjQPXY9qHrg",
+      "currentTeam": "sheriff_iff",
+      "teamHistory": [
+        "sheriff_iff"
+      ],
+      "nickHistory": [
+        "SHF Eraj#Adc"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "KviH96suaczjX80gkl5o8zlBiOub18_Saz0VMFcyCxoTFrJo5OeP3SsSHRoH4PkfmS2-kBqgsF6MnQ",
+      "name": "Kossar Osako",
+      "puuid": "KviH96suaczjX80gkl5o8zlBiOub18_Saz0VMFcyCxoTFrJo5OeP3SsSHRoH4PkfmS2-kBqgsF6MnQ",
+      "currentTeam": "sheriff_iff",
+      "teamHistory": [
+        "sheriff_iff"
+      ],
+      "nickHistory": [
+        "Kossar Osako#poger"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "IFQTwyLBTjVhxuivh4J05ik0JSim3r6W0PbWtkrT4y3L_f9fzMLCtCmc4b74IXvnmjT90o6RmMQkhg",
+      "name": "lucKZin",
+      "puuid": "IFQTwyLBTjVhxuivh4J05ik0JSim3r6W0PbWtkrT4y3L_f9fzMLCtCmc4b74IXvnmjT90o6RmMQkhg",
+      "currentTeam": "sheriff_iff",
+      "teamHistory": [
+        "sheriff_iff"
+      ],
+      "nickHistory": [
+        "lucKZin#KLZ"
       ],
       "photo": ""
     }

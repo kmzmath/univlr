@@ -26,6 +26,47 @@ const HOME_RECENT_MATCH_LIMIT = 8;
 const HOME_EVENT_LIMIT = 8;
 const PLAYER_FALLBACK_PHOTO = "assets/user-silhouette.png";
 
+// Vaivem do texto que nao cabe na caixa (ver ajustarTextosVariaveis).
+// Declarado aqui em cima, e nao junto da funcao, porque init() roda no meio do
+// arquivo (linha ~2709): um const la embaixo cairia em temporal dead zone na
+// primeira render, que e quando a funcao e chamada pela primeira vez.
+// ROLAGEM_CICLO amarra o JS aos @keyframes: a animacao gasta 26% do ciclo em
+// cada travessia e 24% parada em cada ponta, entao o ciclo inteiro e 1/0,26 =
+// 3,85 vezes o tempo de uma travessia. Mexeu nos keyframes, mexa aqui.
+// 4px, e nao um numero maior: a reticencia custa ~7px de texto, entao um nome
+// que passa 5px da caixa perde MAIS letra cortado do que rolando. "Unicamp
+// Tritons Black" (129px numa caixa de 124px) virava "Unicamp Tritons Bl…".
+// Nesses casos o percurso e curto e a animacao quase nao se nota - o que se
+// nota e o nome inteiro aparecendo.
+const ROLAGEM_MINIMO = 4;
+const ROLAGEM_VELOCIDADE = 46;
+const ROLAGEM_CICLO = 3.85;
+const ROLAGEM_TEMPO_MIN = 4.5;
+const ROLAGEM_TEMPO_MAX = 14;
+// Piso da fonte de um `.nome-encolhe`. O sistema tipografico tem chao de 11px
+// em texto funcional; aqui o degrau abaixo e aceito porque o apelido na faixa
+// da semana e legenda de um numero, nao texto de leitura, e o piso so entra
+// para 5 dos 643 apelidos do banco (os que passam de 95px a 13px). Abaixo
+// disso o nome volta a cortar com reticencia.
+const NOME_FONTE_MINIMA = 10;
+let rolagemObserver = null;
+let rolagemAdiada = 0;
+
+// Os formatos que o filtro "Melhor de" oferece. Fixos e nao derivados do banco
+// porque a lista precisa ser estavel: medido em 08/09/2026, as 445 series sao
+// 298 MD1, 146 MD3 e 1 MD5, e um formato novo nao deve fazer a caixa de filtro
+// mudar de tamanho sozinha. Quem protege o formato de fora da lista e o atalho
+// de "todos selecionados" em filteredMatches.
+// Aqui em cima, e nao junto do filtro, porque init() roda no meio do arquivo e
+// ensureResultFilterDefaults e chamado ja na primeira render.
+const MELHOR_DE_OPCOES = ["1", "3", "5"];
+// A ordem em que os campeonatos aparecem DENTRO da gaveta de filtro. Nao e
+// filtro: nao entra na URL, do mesmo jeito que a busca de equipe.
+const ORDENS_DE_CAMPEONATO = [
+  { id: "az", rotulo: "A-Z" },
+  { id: "recentes", rotulo: "Recentes" },
+];
+
 // Os renderizadores de busca por tipo chamam renderSearchButton sem saber a
 // posicao; guardar o indice aqui evita mudar a assinatura dos seis. Declarado
 // aqui em cima porque init() roda no meio do arquivo (linha ~2709) e uma
@@ -406,6 +447,28 @@ const TOURNAMENT_OVERRIDES = {
         },
       ],
     },
+  },
+  "copa-luce-inters": {
+    name: "Copa LUCE Inters",
+    organizer: "AcadArena",
+    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
+    banner: "assets/tournament-banners/copa_luce.webp",
+    prizePool: "-",
+    tier: "B",
+    type: "Online - Inters",
+    startAt: "2026-09-06T13:00:00",
+    endAt: "2026-11-07T23:00:00",
+    teamCount: 8,
+    teams: [
+      "ufrj_minerva",
+      "minerva_thunders",
+      "minerva_artemis",
+      "wolf_gaming",
+      "a2e_uff",
+      "a2e_uff_shadows",
+      "unirio_krakens",
+      "sheriff_iff",
+    ],
   },
   lpe: {
     hidden: true,
@@ -2722,7 +2785,8 @@ const state = {
   matchTeams: [],
   matchTournament: "all",
   matchTournaments: null,
-  matchBestOf: "all",
+  matchBestOfs: null,
+  matchTournamentOrder: "az",
   matchTeamQuery: "",
   resultFilterOpen: {
     bestOf: false,
@@ -5156,6 +5220,7 @@ function render() {
     news: (slug) => window.News.renderNews(slug),
   };
   (pages[section] || renderHomeCompact)(id);
+  ajustarTextosVariaveis();
   syncTopbarHeight();
   scrollToRouteTop(routeChanged);
   restoreFilterFocus();
@@ -5369,7 +5434,7 @@ function matchFilterSidebar() {
         <summary>${filterIcon()}<span>Melhor de</span><strong>${matchBestOfLabel()}</strong></summary>
         <div class="filter-dropdown-body">
           <div class="filter-button-grid best-of-grid">
-            ${[1, 3, 5].map((value) => filterPill("bestOf", String(value), String(value), state.matchBestOf === String(value))).join("")}
+            ${MELHOR_DE_OPCOES.map((value) => filterPill("bestOf", value, `MD${value}`, state.matchBestOfs.includes(value))).join("")}
           </div>
         </div>
       </details>
@@ -5384,8 +5449,9 @@ function matchFilterSidebar() {
       <details class="filter-dropdown" data-filter-group="tournaments"${resultFilterOpenAttr("tournaments")}>
         <summary>${filterIcon()}<span>Campeonato</span><strong>${tournamentFilterSummary()}</strong></summary>
         <div class="filter-dropdown-body">
-          <div class="filter-option-stack event-filter-options">
-            ${visibleTournaments().map(eventFilterButton).join("")}
+          ${ordemDeCampeonatoControle()}
+          <div class="filter-option-stack event-filter-options" data-event-options>
+            ${campeonatosDoFiltro().map(eventFilterButton).join("")}
           </div>
         </div>
       </details>
@@ -5429,9 +5495,12 @@ function matchFiltersToQuery() {
   const p = new URLSearchParams();
   const todosMapas = state.db.maps.map((m) => m.id);
   const todosEventos = visibleTournaments().map((e) => e.id);
-  if (state.matchBestOf && state.matchBestOf !== "all") p.set("md", state.matchBestOf);
   // Serializa o lado mais curto. Desmarcar 1 de 12 mapas vira "sem-mapas=lotus"
   // em vez de listar os outros 11.
+  // `md` guarda a mesma chave de antes de o filtro virar multipla escolha, e
+  // continua legivel do jeito antigo: um link salvo com `?md=3` cai em lerSelecao
+  // como a lista de um item so, que e exatamente o que ele queria dizer.
+  escreverSelecao(p, "md", state.matchBestOfs, MELHOR_DE_OPCOES);
   escreverSelecao(p, "mapas", state.matchMaps, todosMapas);
   escreverSelecao(p, "eventos", state.matchTournaments, todosEventos);
   if (Array.isArray(state.matchTeams) && state.matchTeams.length) p.set("equipes", state.matchTeams.join(LISTA_SEP));
@@ -5470,11 +5539,16 @@ function applyMatchFiltersFromQuery(p) {
   // selecao, e essa ja viaja em `equipes`.
   const aberto = state.resultFilterOpen;
   const buscaDeEquipe = state.matchTeamQuery;
+  // A ordem da lista de campeonatos e preferencia de leitura, nao filtro: ela
+  // atravessa o Reset pelo mesmo motivo que a busca de equipe atravessa.
+  const ordemDeCampeonato = state.matchTournamentOrder;
   resetResultFilters();
   if (aberto) state.resultFilterOpen = aberto;
   state.matchTeamQuery = buscaDeEquipe;
+  state.matchTournamentOrder = ordemDeCampeonato;
   const lista = (chave) => (p.get(chave) || "").split(LISTA_SEP).filter(Boolean);
-  if (p.get("md")) state.matchBestOf = p.get("md");
+  const formatos = lerSelecao(p, "md", MELHOR_DE_OPCOES);
+  if (formatos) state.matchBestOfs = formatos;
   const mapas = lerSelecao(p, "mapas", state.db.maps.map((m) => m.id));
   if (mapas) state.matchMaps = mapas;
   const eventos = lerSelecao(p, "eventos", visibleTournaments().map((e) => e.id));
@@ -5539,6 +5613,7 @@ function restoreFilterFocus() {
 }
 
 function ensureResultFilterDefaults() {
+  if (!Array.isArray(state.matchBestOfs)) state.matchBestOfs = [...MELHOR_DE_OPCOES];
   if (!Array.isArray(state.matchMaps)) {
     state.matchMaps = state.matchMap && state.matchMap !== "all" ? [state.matchMap] : state.db.maps.map((map) => map.id);
   }
@@ -5576,7 +5651,35 @@ function dateFilterSummary() {
 }
 
 function matchBestOfLabel() {
-  return state.matchBestOf === "all" ? "Todos" : `MD${state.matchBestOf}`;
+  const selecionados = Array.isArray(state.matchBestOfs) ? state.matchBestOfs : [];
+  if (!selecionados.length) return "Nenhum formato";
+  if (selecionados.length === MELHOR_DE_OPCOES.length) return "Todos";
+  // Sao no maximo tres, entao a gaveta fechada diz quais - "2 formatos" seria
+  // uma contagem onde cabe a resposta.
+  return MELHOR_DE_OPCOES.filter((valor) => selecionados.includes(valor)).map((valor) => `MD${valor}`).join(", ");
+}
+
+// A gaveta de campeonato abre com 16 nomes. Em ordem alfabetica se acha o que
+// se procura pelo nome; em ordem de data se ve primeiro o que ainda esta
+// acontecendo. As duas leituras sao legitimas e nenhuma serve para as duas
+// perguntas, por isso viraram um botao em vez de uma escolha nossa.
+function campeonatosDoFiltro() {
+  if (state.matchTournamentOrder === "recentes") return sortedEvents("end");
+  return visibleTournaments()
+    .slice()
+    .sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), "pt-BR", { numeric: true, sensitivity: "base" }));
+}
+
+function ordemDeCampeonatoControle() {
+  return `
+    <div class="filter-sort-row" role="group" aria-label="Ordem dos campeonatos">
+      <span class="filter-sort-label">Ordenar por</span>
+      ${ORDENS_DE_CAMPEONATO.map((ordem) => {
+        const ativo = state.matchTournamentOrder === ordem.id;
+        return `<button type="button" class="filter-sort-button ${ativo ? "active" : ""}" data-tournament-order="${escapeHtml(ordem.id)}" aria-pressed="${ativo ? "true" : "false"}">${escapeHtml(ordem.rotulo)}</button>`;
+      }).join("")}
+    </div>
+  `;
 }
 
 function mapFilterSummary() {
@@ -5602,8 +5705,11 @@ function selectedFilterSummary(selectedIds, items, singular, plural, emptyLabel,
   return `${selected.length} ${plural}`;
 }
 
+// Com a marca de selecao, como mapa e campeonato: o filtro passou a ser
+// marca/desmarca cada um, e tres pastilhas acesas sem marca ainda leem como
+// "escolha uma".
 function filterPill(filter, value, label, active) {
-  return `<button type="button" class="filter-pill ${active ? "active" : ""}" data-match-filter="${escapeHtml(filter)}" data-value="${escapeHtml(value)}" aria-pressed="${active ? "true" : "false"}">${escapeHtml(label)}</button>`;
+  return `<button type="button" class="filter-pill ${active ? "active" : ""}" data-match-filter="${escapeHtml(filter)}" data-value="${escapeHtml(value)}" aria-pressed="${active ? "true" : "false"}"><span class="filter-check" aria-hidden="true"></span><span>${escapeHtml(label)}</span></button>`;
 }
 
 function mapFilterButton(map) {
@@ -14194,8 +14300,13 @@ function filteredMatches() {
   ensureResultFilterDefaults();
   const from = dateInputToStart(state.matchDateFrom);
   const to = dateInputToEnd(state.matchDateTo);
+  // Tres de tres marcados nao vira `includes`: seriesBestOf le o numero do
+  // rotulo da serie, entao um formato que ainda nao existe no banco (MD2, MD7)
+  // sumiria da lista sem nenhum filtro ligado. Com todos marcados o filtro sai
+  // do caminho, que e o que "Todos" sempre significou aqui.
+  const todosOsFormatos = state.matchBestOfs.length === MELHOR_DE_OPCOES.length;
   return allMatchSeries()
-    .filter((series) => state.matchBestOf === "all" || seriesBestOf(series) === state.matchBestOf)
+    .filter((series) => todosOsFormatos || state.matchBestOfs.includes(seriesBestOf(series)))
     .filter((series) => state.matchMaps.some((mapId) => seriesHasMap(series, mapId)))
     .filter((series) => state.matchTeams.every((teamId) => seriesHasTeam(series, teamId)))
     .filter((series) => state.matchTournaments.includes(series.eventId))
@@ -14231,6 +14342,14 @@ function bindMatchFilters() {
     });
   });
   sidebar?.addEventListener("click", (event) => {
+    // Trocar a ordem nao muda o resultado da busca, so a ordem da lista de
+    // opcoes - entao ela repinta no lugar, como a busca de equipe faz. Uma
+    // re-render aqui fecharia a gaveta e jogaria o foco fora do botao.
+    const ordem = event.target.closest("[data-tournament-order]");
+    if (ordem) {
+      trocarOrdemDeCampeonato(sidebar, ordem.dataset.tournamentOrder);
+      return;
+    }
     const button = event.target.closest("[data-match-filter]");
     if (!button) return;
     const filter = button.dataset.matchFilter;
@@ -14242,9 +14361,7 @@ function bindMatchFilters() {
       pushFilterState("matches", new URLSearchParams(), foco);
       return;
     }
-    if (filter === "bestOf") {
-      state.matchBestOf = state.matchBestOf === value ? "all" : value;
-    }
+    if (filter === "bestOf") toggleResultFilterValue("matchBestOfs", value);
     if (filter === "map") toggleResultFilterValue("matchMaps", value);
     if (filter === "tournament") toggleResultFilterValue("matchTournaments", value);
     if (filter === "team") toggleResultFilterValue("matchTeams", value);
@@ -14272,13 +14389,25 @@ function bindMatchFilters() {
   });
 }
 
+function trocarOrdemDeCampeonato(sidebar, ordem) {
+  if (!ordem || state.matchTournamentOrder === ordem) return;
+  state.matchTournamentOrder = ordem;
+  const opcoes = sidebar.querySelector("[data-event-options]");
+  if (opcoes) opcoes.innerHTML = campeonatosDoFiltro().map(eventFilterButton).join("");
+  sidebar.querySelectorAll("[data-tournament-order]").forEach((botao) => {
+    const ativo = botao.dataset.tournamentOrder === ordem;
+    botao.classList.toggle("active", ativo);
+    botao.setAttribute("aria-pressed", ativo ? "true" : "false");
+  });
+}
+
 function toggleResultFilterValue(key, value) {
   const current = Array.isArray(state[key]) ? state[key] : [];
   state[key] = current.includes(value) ? current.filter((item) => item !== value) : [...current, value];
 }
 
 function resetResultFilters() {
-  state.matchBestOf = "all";
+  state.matchBestOfs = [...MELHOR_DE_OPCOES];
   state.matchMaps = state.db.maps.map((map) => map.id);
   state.matchTournaments = visibleTournaments().map((event) => event.id);
   state.matchTeams = [];
@@ -14453,7 +14582,7 @@ function weekTile({ category, player }) {
       <a class="week-tile" href="${playerHref(player)}">
         ${playerFigure(player, team, "week-tile-figure")}
         ${weekSupportStats(category, player, "week-tile-detail")}
-        <span class="week-tile-nick" title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</span>
+        <span class="week-tile-nick nome-encolhe" title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</span>
         ${team ? teamLogo(team.id, "week-tile-crest") : `<span class="week-tile-crest"></span>`}
         <span class="week-tile-stat">
           <small class="week-tile-category">${escapeHtml(category.statLabel)}</small>
@@ -14669,16 +14798,127 @@ function matchResultRow(item, options) {
   const score = matchListScore(series);
   const event = state.db.tournaments.find((row) => row.id === series.eventId);
   const when = opts.when === "hour" ? formatDate(series.startedAt, "hour") : formatDate(series.startedAt);
+  // O nome sai duas vezes: no title, para quem parar o ponteiro em cima ler de
+  // uma vez, e dentro do .nome-rolante, que e a caixa que a animacao move.
+  const nomeDoEvento = event?.name || "Evento";
   return `
     <a class="result-row" href="${matchSeriesHref(series)}">
       ${opts.art ? matchMapBanner(series) : ""}
-      <span class="result-team left">${teamLogo(series.teamA.id)}<strong title="${escapeHtml(series.teamA.name)}">${escapeHtml(series.teamA.name)}</strong></span>
+      <span class="result-team left">${teamLogo(series.teamA.id)}<strong title="${escapeHtml(series.teamA.name)}"><span class="nome-rolante">${escapeHtml(series.teamA.name)}</span></strong></span>
       <span class="result-score"><b class="${scoreNumberClass(score.a, score.b)}">${score.a}</b><i>:</i><b class="${scoreNumberClass(score.b, score.a)}">${score.b}</b><small>${escapeHtml(score.label)}</small></span>
-      <span class="result-team right"><strong title="${escapeHtml(series.teamB.name)}">${escapeHtml(series.teamB.name)}</strong>${teamLogo(series.teamB.id)}</span>
+      <span class="result-team right"><strong title="${escapeHtml(series.teamB.name)}"><span class="nome-rolante">${escapeHtml(series.teamB.name)}</span></strong>${teamLogo(series.teamB.id)}</span>
       ${matchMapStrip(series)}
-      <span class="result-meta"><span class="result-meta-when">${escapeHtml(when)}</span>${window.Comments ? window.Comments.selo("match", series.seriesKey) : ""}${opts.art ? matchMapSequence(series) : ""}<span class="result-meta-where">${escapeHtml(event?.name || "Evento")}</span>${event ? eventLogo(event, "tiny") : ""}</span>
+      <span class="result-meta"><span class="result-meta-when">${escapeHtml(when)}</span>${window.Comments ? window.Comments.selo("match", series.seriesKey) : ""}${opts.art ? matchMapSequence(series) : ""}<span class="result-meta-where" title="${escapeHtml(nomeDoEvento)}"><span class="nome-rolante">${escapeHtml(nomeDoEvento)}</span></span>${event ? eventLogo(event, "tiny") : ""}</span>
     </a>
   `;
+}
+
+// O nome do campeonato tem 84px na ponta direita da faixa de meta da home (ver
+// --ponta-da-faixa no styles.css). Antes ele nao encolhia: a faixa de nomes de
+// mapa e absoluta, entao sai do fluxo do flex e nunca espremia o nome - so
+// passava por baixo dele. Com o teto, "JUBS Goias 2026 - Etapa Presencial"
+// (174,6px) passou a ser cortado, e cortado ele nao se le. Entao o que sobrou
+// de fora vai ate o fim e volta.
+// A medida vive aqui e nao no CSS porque so o navegador sabe quantos pixels
+// ficaram para fora; o CSS recebe deslocamento e duracao em variaveis e cuida
+// do ritmo (para, vai, para, volta).
+// Vale para qualquer `.nome-rolante`: campeonato na faixa de meta e nome de
+// equipe no placar das listas cheias.
+// Duas saidas para "o texto e maior que a caixa", e a escolha e por elemento:
+// `.nome-rolante` vai e volta (nome de campeonato, nome de equipe no placar) e
+// `.nome-encolhe` diminui a fonte ate caber (apelido na faixa da semana). A
+// primeira preserva o tamanho do texto e gasta tempo; a segunda preserva o
+// tempo e gasta tamanho. Onde o texto e legenda de um numero, encolher le
+// melhor do que ficar em movimento ao lado dele.
+function ajustarTextosVariaveis(raiz) {
+  const escopo = raiz && raiz.querySelectorAll ? raiz : document;
+  const rolantes = [...escopo.querySelectorAll(".nome-rolante")];
+  const encolhem = [...escopo.querySelectorAll(".nome-encolhe")];
+  if (!rolantes.length && !encolhem.length) return;
+  observarTextosVariaveis([...rolantes, ...encolhem]);
+  // As fontes sao locais (assets/fonts) e chegam depois do primeiro layout.
+  // Medir antes disso e medir a largura do texto na fonte do sistema, que e
+  // outra - o nome caberia ou nao caberia por engano. Na segunda render a
+  // promessa ja esta resolvida e o then roda como microtarefa, antes de pintar.
+  Promise.resolve(document.fonts?.ready).then(() => {
+    rolantes.forEach(medirNomeRolante);
+    encolhem.forEach(medirNomeQueEncolhe);
+  });
+}
+
+// A fonte cai na proporcao exata do que faltou: largura de texto e linear no
+// corpo da fonte, entao uma passada basta. Medir com Range e nao com
+// scrollWidth porque scrollWidth arredonda para inteiro, e 1px de erro num
+// texto de 10px vira meia letra.
+function medirNomeQueEncolhe(nome) {
+  if (!nome.isConnected) return;
+  nome.style.removeProperty("font-size");
+  const caixa = nome.clientWidth;
+  if (!caixa) return;
+  const alcance = document.createRange();
+  alcance.selectNodeContents(nome);
+  const texto = alcance.getBoundingClientRect().width;
+  if (!texto || texto <= caixa) return;
+  const base = Number.parseFloat(getComputedStyle(nome).fontSize) || 13;
+  const alvo = Math.max(NOME_FONTE_MINIMA, Math.floor((base * caixa) / texto * 10) / 10);
+  nome.style.fontSize = `${alvo}px`;
+}
+
+function medirNomeRolante(nome) {
+  if (!nome.isConnected) return;
+  const caixa = nome.parentElement;
+  if (!caixa) return;
+  // Sempre do zero: entre uma medida e outra a caixa pode ter mudado de largura,
+  // e um nome que rolava passa a caber (ou o contrario). Tirar a classe tambem
+  // derruba a animacao, entao a medida abaixo pega o texto parado.
+  caixa.classList.remove("tem-rolagem");
+  caixa.style.removeProperty("--rolagem-fim");
+  caixa.style.removeProperty("--rolagem-tempo");
+  // scrollWidth do texto contra clientWidth da janela: sem a classe o
+  // .nome-rolante e um bloco que preenche o pai, entao offsetWidth devolveria a
+  // largura da janela e o transbordo daria sempre zero. E scrollWidth ignora o
+  // transform, que getBoundingClientRect traria junto.
+  // Numa lista com o dia recolhido os dois dao 0 e a diferenca cai abaixo do
+  // minimo - linha escondida nao anima.
+  const transbordo = Math.round(nome.scrollWidth - caixa.clientWidth);
+  if (transbordo < ROLAGEM_MINIMO) return;
+  const bruto = (transbordo / ROLAGEM_VELOCIDADE) * ROLAGEM_CICLO;
+  const tempo = Math.min(ROLAGEM_TEMPO_MAX, Math.max(ROLAGEM_TEMPO_MIN, bruto));
+  caixa.style.setProperty("--rolagem-fim", `${-transbordo}px`);
+  caixa.style.setProperty("--rolagem-tempo", `${tempo.toFixed(2)}s`);
+  caixa.classList.add("tem-rolagem");
+}
+
+// A caixa muda de largura sem a rota mudar: janela redimensionada, breakpoint
+// cruzado, barra de rolagem que aparece. render() sozinho so cobriria troca de
+// pagina, entao quem avisa e o observador.
+// Ele reconecta a cada render porque segura referencia forte ao que observa, e
+// os elementos da render anterior morrem junto com o HTML antigo. O callback
+// nao reobserva nada - se reobservasse, a notificacao inicial do observe()
+// realimentaria o proprio callback para sempre. E a classe que medirNomeRolante
+// liga so entra quando a caixa ja esta presa no max-width, e o max-content que
+// ela da ao texto e o mesmo que ele ja contribuia - a caixa observada nao muda
+// de tamanho, entao o trabalho dele tambem nao volta como evento.
+function observarTextosVariaveis(nomes) {
+  if (typeof ResizeObserver !== "function") return;
+  if (!rolagemObserver) {
+    rolagemObserver = new ResizeObserver(() => {
+      clearTimeout(rolagemAdiada);
+      rolagemAdiada = setTimeout(remedirTextosVariaveis, 120);
+    });
+  }
+  rolagemObserver.disconnect();
+  // O `.nome-encolhe` e a propria caixa (a fonte muda nele); o `.nome-rolante`
+  // mora dentro da caixa que corta, entao quem muda de tamanho e o pai.
+  nomes.forEach((nome) => {
+    const alvo = nome.classList.contains("nome-encolhe") ? nome : nome.parentElement;
+    if (alvo) rolagemObserver.observe(alvo);
+  });
+}
+
+function remedirTextosVariaveis() {
+  document.querySelectorAll(".nome-rolante").forEach(medirNomeRolante);
+  document.querySelectorAll(".nome-encolhe").forEach(medirNomeQueEncolhe);
 }
 
 // Os mapas na ordem em que foram jogados, no meio da faixa de cima. Numa md3 ou

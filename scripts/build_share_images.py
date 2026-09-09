@@ -57,14 +57,31 @@ def cartao_do_site(destino):
     return destino
 
 
+# Quanto o recorte pode comer antes de a capa caber inteira em vez de preencher.
+# A 2:1 contra 1,91:1 o corte e de 5% e ninguem nota; a capa 3:1 do MVP do JUBS
+# perdia 37% da largura - o medalhao entrava sem a borda e o "2026" saia pela
+# direita. Preencher e melhor quando cabe; quando nao cabe, o card tem que
+# mostrar a arte que o autor desenhou, e nao um pedaco dela.
+CORTE_TOLERADO = 0.12
+
+
 def cartao_da_capa(origem, destino):
-    """Recorta uma capa de materia para 1,91:1, pelo centro."""
+    """Capa de materia em 1,91:1: preenche quando o corte e pequeno, senao cabe inteira."""
     capa = Image.open(origem).convert("RGB")
-    escala = max(L / capa.width, A / capa.height)
-    capa = capa.resize((round(capa.width * escala), round(capa.height * escala)), Image.LANCZOS)
-    esq, topo = (capa.width - L) // 2, (capa.height - A) // 2
-    capa = capa.crop((esq, topo, esq + L, topo + A))
-    capa.save(destino, "JPEG", quality=86, optimize=True)
+    preencher = max(L / capa.width, A / capa.height)
+    caber = min(L / capa.width, A / capa.height)
+    perda = 1 - caber / preencher
+
+    if perda <= CORTE_TOLERADO:
+        capa = capa.resize((round(capa.width * preencher), round(capa.height * preencher)), Image.LANCZOS)
+        esq, topo = (capa.width - L) // 2, (capa.height - A) // 2
+        cartao = capa.crop((esq, topo, esq + L, topo + A))
+    else:
+        arte = capa.resize((round(capa.width * caber), round(capa.height * caber)), Image.LANCZOS)
+        cartao = fundo_da_marca()
+        cartao.paste(arte, ((L - arte.width) // 2, (A - arte.height) // 2))
+
+    cartao.save(destino, "JPEG", quality=86, optimize=True)
     return destino
 
 

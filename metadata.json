@@ -2860,7 +2860,7 @@
         "#775e25"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atleticasheriff.esports/"
       },
       "lineup": [
         {
@@ -3927,7 +3927,7 @@
         },
         {
           "slot": 3,
-          "name": "Queijo Coallho"
+          "name": "Marelo"
         },
         {
           "slot": 4,
@@ -4726,11 +4726,11 @@
         },
         {
           "slot": 2,
-          "name": "Filiceta"
+          "name": "dark"
         },
         {
           "slot": 3,
-          "name": "Entropy"
+          "name": "spx"
         },
         {
           "slot": 4,
@@ -4930,7 +4930,7 @@
     },
     {
       "id": "Lrz8JrMGV289q6Y-h7WmmFEmPRQpN605_evaJdPkprJHngtw1dRD8McS2bcAR2eaEDyb8nh12Cy5NQ",
-      "name": "Filiceta",
+      "name": "dark",
       "puuid": "Lrz8JrMGV289q6Y-h7WmmFEmPRQpN605_evaJdPkprJHngtw1dRD8McS2bcAR2eaEDyb8nh12Cy5NQ",
       "currentTeam": "wolf_gaming",
       "teamHistory": [
@@ -4944,7 +4944,7 @@
     },
     {
       "id": "JaI5Y_5_brBBnIfwV_cTgCSBnDL_yoKnMf0VU4WQXT4PTE3EX1S_vtef_JBkFTYNfxzrPS4s5ZqzDA",
-      "name": "Entropy",
+      "name": "spx",
       "puuid": "JaI5Y_5_brBBnIfwV_cTgCSBnDL_yoKnMf0VU4WQXT4PTE3EX1S_vtef_JBkFTYNfxzrPS4s5ZqzDA",
       "currentTeam": "wolf_gaming",
       "teamHistory": [
@@ -5707,7 +5707,7 @@
       "nickHistory": [
         "PESO PILANTRINHA#RATAO"
       ],
-      "photo": "assets/player-photos/uninassau_griffins/peso.png"
+      "photo": "assets/player-photos/uninassau_griffins/peso_new.png"
     },
     {
       "id": "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A",
@@ -5726,7 +5726,7 @@
         "Dogg#auau",
         "Joy 1955#rey"
       ],
-      "photo": "assets/player-photos/uninassau_griffins/mendes.png"
+      "photo": "assets/player-photos/uninassau_griffins/mendes_new.png"
     },
     {
       "id": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
@@ -5739,7 +5739,7 @@
       "nickHistory": [
         "jotave#081"
       ],
-      "photo": "assets/player-photos/uninassau_griffins/jv.png"
+      "photo": "assets/player-photos/uninassau_griffins/jv_new.png"
     },
     {
       "id": "i3aicKYbd7ACS0VMHleipcbPYOc2o3iCMx359INgLc2zdwcRHrmVPQKw3PtUUwXb8rWmp8SRiiCdFg",
@@ -5770,7 +5770,7 @@
         "NEGO DOCE#JayJ",
         "M4DM4X#lou"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/uninassau_griffins/jayj.png"
     },
     {
       "id": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw",
@@ -6286,7 +6286,7 @@
       "nickHistory": [
         "Gutoso#vlr"
       ],
-      "photo": "assets/player-photos/ufu_saints/gutoso.png"
+      "photo": "assets/player-photos/ufu_saints/gutoso_new.png"
     },
     {
       "id": "Rdq_GqNPqfdqLbfG31Rm59jFEGXJBZwO2nTjCgdZl6hvd5UeBLXgT4hcFH9jzUapRj6LkX8VfiKRpg",
@@ -6303,7 +6303,7 @@
     },
     {
       "id": "tSaFJT_JLz5jbwCRHVTcFto7ifeSEAY7atskMMHhL8mBfxy4e1jMGvAFV7IbViCgUVi_6EaB7Xqaow",
-      "name": "Queijo Coallho",
+      "name": "Marelo",
       "puuid": "tSaFJT_JLz5jbwCRHVTcFto7ifeSEAY7atskMMHhL8mBfxy4e1jMGvAFV7IbViCgUVi_6EaB7Xqaow",
       "currentTeam": "ufu_saints",
       "teamHistory": [
@@ -6313,7 +6313,7 @@
         "queijo coalho#praia",
         "marelo#UFU"
       ],
-      "photo": "assets/player-photos/ufu_saints/queijo.png"
+      "photo": "assets/player-photos/ufu_saints/marelo_new.png"
     },
     {
       "id": "sUUFPOjuKmXP9PxUz7d5YqJCuDRl0a9yyvXxV_19xOQMCGxI4XjZwbkuxhW9fK5B-S0QkHeyweh_gg",
@@ -6327,7 +6327,7 @@
         "fijora#bKIND",
         "lagan#bKIND"
       ],
-      "photo": "assets/player-photos/ufu_saints/fijora.png"
+      "photo": "assets/player-photos/ufu_saints/fijora_new.png"
     },
     {
       "id": "ZSViQUohmL_SYIBeMKxv62F4juuaRwBtUv9kQylbVctx8yxNkOkOC777n7cSCi08_zkyXXA2JZsvTw",
@@ -6340,7 +6340,7 @@
       "nickHistory": [
         "cks ヵ#777"
       ],
-      "photo": "assets/player-photos/ufu_saints/cks.png"
+      "photo": "assets/player-photos/ufu_saints/cks_new.png"
     },
     {
       "id": "PUcyfXweL2QkiapM6bxnyPCweB-ITtYFQHvdfkcSOPl1R0zdfUEgN7W0zs4M13zvj15XRUFd7W_GpQ",
@@ -6930,7 +6930,7 @@
         "TRN fafa#UFMT",
         "fafa#111"
       ],
-      "photo": "assets/player-photos/ufmt_turuna/fafa.png"
+      "photo": "assets/player-photos/ufmt_turuna/fafa_new.png"
     },
     {
       "id": "zsFjemN8H55MSgjZOazuxeGCfaIw6E53yC41xbIHYBpu1nk0_qYCfsM-P4yTfr20dO9XPpZqV6nPRA",
@@ -6943,7 +6943,7 @@
       "nickHistory": [
         "ONEZERA 愛#JPN"
       ],
-      "photo": "assets/player-photos/ufmt_turuna/onezera.png"
+      "photo": "assets/player-photos/ufmt_turuna/onezera_new.png"
     },
     {
       "id": "BGGCT8BEb6ej9WVEvzG0F2RazRuo2Dx5ty6YVEr-gPExwtsVbTtRuyQx0ttSnMMTB2vfyYjh0O2UXg",
@@ -6956,7 +6956,7 @@
       "nickHistory": [
         "ddz#evom"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/ufmt_turuna/ddz.png"
     },
     {
       "id": "f8hEkQ9pP_KxFUebzJa_Z4o18k0SKRQu7Embzd91LoCU4VnpDdYd0TEcEK3zC4N18eQ8xmNTFHLruQ",
@@ -6969,7 +6969,7 @@
       "nickHistory": [
         "Kaytoh#prime"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/ufmt_turuna/kaytoh.png"
     },
     {
       "id": "dhZG1J2Fpx_6Q-4RAKkaJUk_KKT0yPiZsZvVXzmfPxZBoXymvMvr22mSG1fRMKq1w3KH8nzo1Itrxw",
@@ -6982,7 +6982,7 @@
       "nickHistory": [
         "balalov3#pas"
       ],
-      "photo": "assets/player-photos/ufmt_turuna/balalov3.png"
+      "photo": "assets/player-photos/ufmt_turuna/balalov3_new.png"
     },
     {
       "id": "DQpto6xyBdpSTyema8pSbvFAC8ZJ1Gdya3YrJO0-nf0JcW8W3bI6JCs7tUc6CNbeHCquU72zQQSL_g",
@@ -9071,7 +9071,7 @@
         "GUβert#passs",
         "gubert 水#SEP"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/macklogic/gubert.png"
     },
     {
       "id": "0O_or2gyq0wKpir_EAA8w-X7ZIcSSPkoac_3kEbPoDgapSlk5QLduZ985SNal-v4qtbCqf_NljJcGQ",
@@ -9087,7 +9087,7 @@
         "Katojin#Lena",
         "Katojin#tofu"
       ],
-      "photo": "assets/player-photos/macklogic/Katojin.png"
+      "photo": "assets/player-photos/macklogic/Katojin_new.png"
     },
     {
       "id": "rFEJgUoul02DPJmUvpEPZlGn0rxTcS2zX8gQa0fm72gckzMh-5o1tmkzyzRjfufFa7mMDcRk5EhXHw",
@@ -9100,7 +9100,7 @@
       "nickHistory": [
         "lule#dfnt"
       ],
-      "photo": "assets/player-photos/macklogic/Lule.png"
+      "photo": "assets/player-photos/macklogic/lule_new.png"
     },
     {
       "id": "5Y0dngve2GCMgo-TOBpCSBHaYE6oBXzk6Qu5d4q6U1FT0MVpQMoEUAKah545q3tiy3-5Be4a7OXQ8Q",
@@ -9114,7 +9114,7 @@
         "sick#bntz",
         "sick soprano#bntz"
       ],
-      "photo": "assets/player-photos/macklogic/Sick.png"
+      "photo": "assets/player-photos/macklogic/Sick_new.png"
     },
     {
       "id": "UMqsz421_7TZxaMOWSfkHTe8pC3sApewo-dX9I-Em4VbL0PwyTh6QNaYOT2chpOseS1UmfxTl9zkNQ",
@@ -9140,7 +9140,7 @@
       "nickHistory": [
         "Eu sou o Choco#fezes"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/macklogic/chocolate.png"
     },
     {
       "id": "WOjQlhXcRrpVELVV7cglLJa2xdKfpaA07nLJb11eGBraJOFjf6gMBq-eK_GGsl91-mFtLWkHNyFiHQ",
@@ -11041,7 +11041,7 @@
         "reybl0ck#rbck",
         "reyblock#rbck"
       ],
-      "photo": "assets/player-photos/ceub_octopus/reyblock.png"
+      "photo": "assets/player-photos/ceub_octopus/reyblock_new.png"
     },
     {
       "id": "utlNcp1v2kLIG9L8w4ahS188beOZUaf-rrpIU2ipwKACAysaPKayQmx8OxVpcGArKqVFtEl9ioGr-Q",
@@ -11054,7 +11054,7 @@
       "nickHistory": [
         "kzr#bala"
       ],
-      "photo": "assets/player-photos/ceub_octopus/kzr.png"
+      "photo": "assets/player-photos/ceub_octopus/kzr_new.png"
     },
     {
       "id": "hR0K82-UBEAoRU-4Yc7FMR3lYhP4kb2th1cbu3EzwmKeTM4Yt9cBs7oIvY-cV0cvX8Txtf7RII_PaA",
@@ -11067,7 +11067,7 @@
       "nickHistory": [
         "seki#hanei"
       ],
-      "photo": "assets/player-photos/ceub_octopus/seki.png"
+      "photo": "assets/player-photos/ceub_octopus/seki_new.png"
     },
     {
       "id": "H12pckbkNnpJiUS5h9AhhHRTP1c_S30dXLfWm2sWdxmlmH6qCcw9UuiS_61TNYTnFj5fETRyLamb_Q",
@@ -11080,7 +11080,7 @@
       "nickHistory": [
         "gbzz#CEI"
       ],
-      "photo": "assets/player-photos/ceub_octopus/gbz.png"
+      "photo": "assets/player-photos/ceub_octopus/gbz_new.png"
     },
     {
       "id": "dsUDB7RGqdpVQg2f9bE8kKdEjkvK734PTW650lVHStgXWL4onVHvK3FVXPFZnUCIwJDdFHSGwk_HeQ",
@@ -11094,7 +11094,7 @@
         "PSC chadu#lari",
         "chadu#lari"
       ],
-      "photo": "assets/player-photos/ceub_octopus/chadu.png"
+      "photo": "assets/player-photos/ceub_octopus/chadu_new.png"
     },
     {
       "id": "z8R_B4bcp3eJqrB_aZLXmHSJ7j-tHxGSFIm8ICRNyuRwqhcSjbLUIGGsyM3ioRGXFErGItyTaCM2lA",
@@ -11691,7 +11691,7 @@
       "nickHistory": [
         "washin#kmi"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/azure_bears/washin.png"
     },
     {
       "id": "pitxmwX5T2Jnv28S8paGZ09-8l9qDXxIkz5y-AGNtXZ9R_jpGzPqz3nlWXqohM0vRWnZ-31xn7k7Mg",
@@ -11720,7 +11720,7 @@
       "nickHistory": [
         "andre#aaa12"
       ],
-      "photo": "assets/player-photos/azure_bears/andre.png"
+      "photo": "assets/player-photos/azure_bears/andre_new.png"
     },
     {
       "id": "6Ny-jKzYdIG6NNcruXAnjCT3wMCc3SUoJh6cAYPPFxD483ZkQLzZ1k8cEqgnmB5ZmtkjBhcFQ7tJ3A",
@@ -11733,7 +11733,7 @@
       "nickHistory": [
         "greiN#quel"
       ],
-      "photo": "assets/player-photos/azure_bears/greinzera.png"
+      "photo": "assets/player-photos/azure_bears/greinzera_new.png"
     },
     {
       "id": "DkDfO8DUoK3OJEthXMm-Tqyx0cGLicsrhdT4hZyjMgnh-zYOzQ4xzOJOayHADu5NsCr-v33tKC4bPQ",
@@ -11759,7 +11759,7 @@
       "nickHistory": [
         "taek#aim"
       ],
-      "photo": "assets/player-photos/azure_bears/taek.png"
+      "photo": "assets/player-photos/azure_bears/taek_new.png"
     },
     {
       "id": "KJ6FeYnH8RqbZHU-b0PJ3HlIsQD332VvNy9l29N9UV8XUmcZCZxrrh2k7TP9t7H0QRgxlMsYzPVd2g",
@@ -11772,7 +11772,7 @@
       "nickHistory": [
         "piM#まいさ"
       ],
-      "photo": "assets/player-photos/azure_bears/pim.png"
+      "photo": "assets/player-photos/azure_bears/pim_new.png"
     },
     {
       "id": "X6dK2xFXw4_isMR03zbzKl6bGGWP9X1kAFqdhsD4MV5qEcjArJhxIEiOp3xZP9fDpEUyCjNWTe2ajw",
@@ -11855,7 +11855,7 @@
       "nickHistory": [
         "stockão#BAGRE"
       ],
-      "photo": "assets/player-photos/azure_bears/stockao.png"
+      "photo": "assets/player-photos/azure_bears/stockao_new.png"
     },
     {
       "id": "N2UccDXtaLoHGrxpqhuNcZHOCN9hRe8pH_X4_Yr3u0Pk6VuvTKin5mBaV7sXlmrzfnBiRi9_WnNWSA",
@@ -12306,7 +12306,7 @@
         "mth#AURA",
         "mth#smoke"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/a2e_uff/mth.png"
     },
     {
       "id": "ibVvnw4_l-ZAm5QohRQ5z4jToFX1WPfjh_2hKZRZQkltwvaS5Kn_MKDr9Ltk1ZELPgew3KQQGirUPA",
@@ -12333,7 +12333,7 @@
       "nickHistory": [
         "daviZao#japy"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/a2e_uff/davizao.png"
     },
     {
       "id": "X4vjLLGTXsTH9ZXQ1yyxUooiieKE0HN60ETuV8YWvXJXPfYgHlWbwsDMtkr0Qi4hk8sfXn2UfGzF9w",
@@ -12353,7 +12353,7 @@
         "tgzin#zim",
         "tgzin#éele"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/a2e_uff/tgzin.png"
     },
     {
       "id": "FoN8evdKDCd14Xbgx1dwKDyz4CWQ9FMlKXDMgEadRBgV4VrkLVPXQpdyfO7P80SY-pzirdTXy7nTXg",
@@ -12371,7 +12371,7 @@
         "ninker#tbest",
         "ninker#TV1"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/a2e_uff/ninker.png"
     },
     {
       "id": "SzKAYkm2cFuykGk61-4E0AaelDHDNLj1ydWjV_DQsKl4e4ewJXFJa_g4TIAAnF2GUljmGjc9w3beIA",
@@ -12385,7 +12385,7 @@
         "RACFLU#2812",
         "rac#manu"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/a2e_uff/racflu.png"
     },
     {
       "id": "Df74d2ieNfbVcIg1xka_kpkqAHlIAm45fbCO-fa9jXFvPyfH_w5gC5kp51GDG2Q4VIzrUeeuf7JBDg",
@@ -13310,7 +13310,7 @@
       "nickHistory": [
         "Odysseys#Apex"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/uninassau_griffins/odysseys.png"
     },
     {
       "id": "4w3OWrJKpeBasc0x-2ghFy2y3-ftshuKPyu6iFCc7_peWdOgOe6CPlkrFzcyHwsAh6cpk7mDHP2aag",

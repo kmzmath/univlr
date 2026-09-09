@@ -1115,7 +1115,11 @@ img.state-flag + .state-flag.placeholder {
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.34));
 }
 
-.trophy-visual.generic-trophy .event-logo.trophy-event-logo {
+/* O escudo do campeonato aparece quando a arte NAO diz de qual campeonato ela e:
+   nos tres genericos e no MVP, cuja medalha e a mesma em todo evento. Arte
+   propria de um campeonato ja se identifica sozinha e dispensa o escudo. */
+.trophy-visual.generic-trophy .event-logo.trophy-event-logo,
+.trophy-visual.mvp-trophy .event-logo.trophy-event-logo {
   display: grid;
 }
 
@@ -15012,8 +15016,9 @@ small,
    da caixa mudaria junto - o ResizeObserver que dispara a medida veria o
    proprio trabalho como mudanca de tamanho e se realimentaria. Com a linha
    fixa, encolher a fonte nao mexe em nenhuma geometria.
-   A reticencia fica como ultimo recurso, para o apelido que nem no piso de 10px
-   couber (5 dos 643 do banco). */
+   O apelido que nem no piso de 10px couber (5 dos 643 do banco) nao corta: o
+   texto mora num .nome-rolante e o que sobrar de fora vira percurso. Encolher
+   primeiro, rolar depois - ver ajustarTextosVariaveis. */
 .week-tile-nick {
   grid-area: nick;
   min-width: 0;
@@ -16135,12 +16140,15 @@ small,
    levantaria a caixa de linha pela entrelinha inteira, mexendo na altura das
    outras seis listas de partida, que nao pediram nada. Em bloco, medido nas
    duas versoes, a linha de /partidas fica nos mesmos 77,69px.
-   Enquanto o nome cabe, quem corta com reticencia e esta caixa - o pai nao tem
-   mais texto direto para aplicar text-overflow. */
+   Sem reticencia, nunca - e por isso que ela nao esta aqui. A regra do projeto
+   e: nome que nao cabe inteiro vai e volta, nome que cabe fica parado. Nao
+   existe terceiro estado. Enquanto a medida do JS nao chega (fontes carregando),
+   o corte e reto, que e o mesmo corte do estado de repouso da rolagem - nada
+   pisca de um jeito para outro. */
 .nome-rolante {
   display: block;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
   white-space: nowrap;
 }
 
@@ -16148,9 +16156,7 @@ small,
    max-content encosta na borda ESQUERDA do pai, entao em repouso o que se ve e
    o comeco do nome, que e por onde se le - o text-align: right do pai so
    alinharia texto dentro de uma caixa que ja tem o tamanho exato do texto.
-   A reticencia sai junto: com o texto andando ela ficaria pairando sobre a
-   ultima letra visivel, e quem anuncia que ha mais nome passa a ser o
-   movimento.
+   Quem anuncia que ha mais nome e o proprio movimento.
    Deslocamento e duracao vem do JS (ajustarTextosVariaveis), porque so o navegador
    sabe quantos pixels sobraram de fora; o CSS fica com o ritmo - para, vai,
    para, volta. O intervalo parado em cada ponta e o que torna o nome legivel:
@@ -16158,7 +16164,6 @@ small,
 .tem-rolagem > .nome-rolante {
   width: max-content;
   overflow: visible;
-  text-overflow: clip;
   animation: nome-rolante var(--rolagem-tempo, 7s) cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
@@ -18475,11 +18480,27 @@ img {
   display: block;
 }
 
+/* Paragrafo que so tem imagem nao e texto e nao deve obedecer a medida de
+   leitura: preso nos 68ch do texto, a faixa de fotos de um jogador saia com
+   615px numa coluna de 780 e lia como figura solta, e nao como a abertura da
+   secao. Sozinha na linha, ela ocupa a coluna inteira. */
+.news-corpo p:has(> img:only-child) { max-width: none; }
+
 .news-corpo blockquote {
   padding-left: var(--space-5);
   border-left: 2px solid var(--brand);
   color: var(--muted);
   font-style: italic;
+}
+
+/* Envelope de rolagem, montado pelo news.js em volta de cada tabela. Uma tabela
+   larga nao pode encolher abaixo do proprio conteudo, entao sem isto ela vazava
+   da coluna de texto e as ultimas colunas eram cortadas na borda, sem aviso
+   nenhum ao leitor. `auto` so rola quando falta espaco: as tabelas que ja
+   cabiam continuam sem barra. */
+.news-corpo .news-tabela {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
 }
 
 .news-corpo table {

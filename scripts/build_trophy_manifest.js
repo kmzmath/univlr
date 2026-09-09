@@ -27,7 +27,10 @@ const MARCA = "const TROPHY_ART_FILES = new Set([";
 
 // Os tres genericos nao entram: eles sao o fim da fila, nao candidatos por
 // campeonato. Se entrassem, o filtro os trataria como arte especifica.
-const GENERICOS = new Set(["campeao-generico.png", "vice-generico.png", "terceiro-generico.png"]);
+// mvp.png entra aqui pelo mesmo motivo: e arte de PREMIO, igual para todo
+// campeonato, servida por TROPHY_GENERIC_ASSETS.mvp. Se entrasse no manifesto,
+// o filtro a trataria como arte de um campeonato chamado "mvp".
+const GENERICOS = new Set(["campeao-generico.png", "vice-generico.png", "terceiro-generico.png", "mvp.png"]);
 
 function main() {
   if (!fs.existsSync(PASTA)) {

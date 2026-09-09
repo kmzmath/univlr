@@ -71,7 +71,15 @@
       "endAt": "2026-11-07T23:00:00",
       "logo": "assets/tournament-icons/copa_luce.png",
       "folder": "campeonatos/Copa LUCE Inters",
-      "files": []
+      "files": [
+        "campeonatos/Copa LUCE Inters/LUCE_002a_08-09-26_a2e_uff_9_x_13_minerva_thunders_lotus.json",
+        "campeonatos/Copa LUCE Inters/LUCE_002b_08-09-26_a2e_uff_13_x_10_minerva_thunders_haven.json",
+        "campeonatos/Copa LUCE Inters/LUCE_002c_09-09-26_a2e_uff_13_x_11_minerva_thunders_ascent.json",
+        "campeonatos/Copa LUCE Inters/LUCE_003a_06-09-26_sheriff_iff_3_x_13_ufrj_minerva_haven.json",
+        "campeonatos/Copa LUCE Inters/LUCE_003b_06-09-26_sheriff_iff_2_x_13_ufrj_minerva_ascent.json",
+        "campeonatos/Copa LUCE Inters/LUCE_004a_06-09-26_a2e_uff_shadows_7_x_13_wolf_gaming_summit.json",
+        "campeonatos/Copa LUCE Inters/LUCE_004b_06-09-26_a2e_uff_shadows_4_x_13_wolf_gaming_abyss.json"
+      ]
     },
     {
       "id": "jubs-etapa-presencial",

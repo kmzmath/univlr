@@ -19786,8 +19786,14 @@ tbody .news-proj-equipe a:hover { color: var(--info); }
 }
 
 /* Fatia estreita nao cabe rotulo: some o texto e sobra a cor, que ja diz onde
-   a massa esta. Mais estreita ainda, sobra so a cor. */
-@container (max-width: 62px) {
+   a massa esta. Mais estreita ainda, sobra so a cor.
+
+   ATENCAO: `container-type: inline-size` mede a CAIXA DE CONTEUDO, nao a
+   largura da fatia. Com 8px de padding de cada lado, uma fatia de 72,8px
+   consulta como 56,8px - foi por isso que um cartao perdeu os dois rotulos
+   enquanto os outros cinco mantinham. O limite aqui e de conteudo: "UPPER"
+   em 11px maiusculo com espacejamento ocupa uns 43px. */
+@container (max-width: 44px) {
   .news-proj-fatia em { display: none; }
 }
 

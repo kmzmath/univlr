@@ -786,7 +786,15 @@
             // perde o texto no telefone e sobra so a cor: a forma continua
             // legivel, o numero exato nao.
             const legenda = `${c.rotulo}: ${c.v}%`;
-            return `<span class="news-proj-fatia${c.i < projecao.grupo ? " vaga" : ""}" style="--larg:${larg.toFixed(2)}%;--tinta:${tinta(p).toFixed(3)}" title="${esc(legenda)}" aria-label="${esc(legenda)}"><em>${esc(c.rotulo)}</em><b>${esc(c.v)}</b></span>`;
+            // So as fatias COM VAGA levam rotulo. Rotular todas fazia o texto
+            // ligar e desligar no meio da faixa - numa equipe saia Upper,
+            // Lower, 5o-6o, nada, 9o-12o, nada, 17o+ -, porque a largura de
+            // cada fatia depende da distribuicao e cruza o limite do que cabe
+            // em pontos diferentes. Duas ancoras na esquerda bastam: dali para
+            // a direita a leitura e o gradiente, e o rotulo exato fica no
+            // title. A grade logo acima e a legenda de verdade.
+            const vaga = c.i < projecao.grupo;
+            return `<span class="news-proj-fatia${vaga ? " vaga" : ""}" style="--larg:${larg.toFixed(2)}%;--tinta:${tinta(p).toFixed(3)}" title="${esc(legenda)}" aria-label="${esc(legenda)}">${vaga ? `<em>${esc(c.rotulo)}</em>` : ""}<b>${esc(c.v)}</b></span>`;
           }).join("")}
         </div>
       </div>`;

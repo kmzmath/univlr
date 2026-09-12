@@ -730,6 +730,53 @@
       </div>`;
   }
 
+  // A faixa do cartao, em dois niveis.
+  //
+  // As fatias COM VAGA ficam debaixo de UMA legenda, em vez de uma legenda
+  // cada. Rotular fatia por fatia fazia a palavra sumir justamente em quem
+  // tem chance baixa: a CAAP divide seus 13,4% em 6,1% e 7,3%, e nenhuma das
+  // duas tem largura para caber "UPPER". Somadas, as mesmas 13,4% dao 100px
+  // no cartao, e "COM VAGA" cabe - que e tambem a leitura que interessa ali,
+  // porque a divisao entre as duas rotas ja esta na grade acima.
+  //
+  // O resto da faixa nao leva texto nenhum: dali para a direita o que se le e
+  // o gradiente. O nome exato de cada fatia fica no title e no aria-label.
+  function fatiaProjecao(c, total) {
+    const p = numeroBr(c.v);
+    if (!Number.isFinite(p) || p <= 0) return { html: "", share: 0 };
+    const legenda = `${c.rotulo}: ${c.v}%`;
+    const share = (p / total) * 100;
+    return {
+      share,
+      html: `<span class="news-proj-fatia${c.i < projecao.grupo ? " vaga" : ""}" style="--larg:${share.toFixed(2)}%;--tinta:${tinta(p).toFixed(3)}" title="${esc(legenda)}" aria-label="${esc(legenda)}"><b>${esc(c.v)}</b></span>`,
+    };
+  }
+
+  function montaFaixa(faixas, total) {
+    const comVaga = faixas.filter((c) => c.i < projecao.grupo);
+    const resto = faixas.filter((c) => c.i >= projecao.grupo);
+    const partes = [];
+
+    if (comVaga.length) {
+      const fatias = comVaga.map((c) => fatiaProjecao(c, total)).filter((f) => f.html);
+      const larg = fatias.reduce((s, f) => s + f.share, 0);
+      // Dentro do grupo a largura de cada fatia e relativa AO GRUPO, nao a
+      // faixa inteira - senao as duas somariam 13% de um container que ja e
+      // os 13%.
+      const dentro = fatias
+        .map((f) => f.html.replace(/--larg:[\d.]+%/, `--larg:${((f.share / larg) * 100).toFixed(2)}%`))
+        .join("");
+      // Com uma coluna so o grupo nao e um par, entao a legenda e o nome dela.
+      const rotulo = comVaga.length > 1 ? "Com vaga" : comVaga[0].rotulo;
+      partes.push(
+        `<span class="news-proj-grupo" style="--larg:${larg.toFixed(2)}%"><em>${esc(rotulo)}</em><span class="news-proj-grupo-fatias">${dentro}</span></span>`
+      );
+    }
+
+    for (const c of resto) partes.push(fatiaProjecao(c, total).html);
+    return partes.join("");
+  }
+
   // O cartao da equipe: escudo grande, nome, a nota de forca que veio no token
   // e a MESMA linha da grade, agora lida como uma faixa so. E de proposito que
   // a faixa use a mesma rampa da tabela - quem ja viu a grade reconhece a
@@ -775,28 +822,7 @@
           ${nota ? `<div class="news-ficha-item"><strong>${esc(nota)}</strong><span>Nota de força</span></div>` : ""}
           <div class="news-ficha-item news-proj-vaga"><strong>${esc(vaga)}%</strong><span>Chance de vaga</span></div>
         </div>
-        <div class="news-proj-faixa-equipe">
-          ${faixas.map((c) => {
-            const p = numeroBr(c.v);
-            if (!Number.isFinite(p) || p <= 0) return "";
-            const larg = (p / total) * 100;
-            // Se o rotulo cabe quem decide e o CSS, por container query: a
-            // mesma fatia de 8,5% tem 63px no desktop e 29px no telefone.
-            // O rotulo completo fica no title porque a fatia mais estreita
-            // perde o texto no telefone e sobra so a cor: a forma continua
-            // legivel, o numero exato nao.
-            const legenda = `${c.rotulo}: ${c.v}%`;
-            // So as fatias COM VAGA levam rotulo. Rotular todas fazia o texto
-            // ligar e desligar no meio da faixa - numa equipe saia Upper,
-            // Lower, 5o-6o, nada, 9o-12o, nada, 17o+ -, porque a largura de
-            // cada fatia depende da distribuicao e cruza o limite do que cabe
-            // em pontos diferentes. Duas ancoras na esquerda bastam: dali para
-            // a direita a leitura e o gradiente, e o rotulo exato fica no
-            // title. A grade logo acima e a legenda de verdade.
-            const vaga = c.i < projecao.grupo;
-            return `<span class="news-proj-fatia${vaga ? " vaga" : ""}" style="--larg:${larg.toFixed(2)}%;--tinta:${tinta(p).toFixed(3)}" title="${esc(legenda)}" aria-label="${esc(legenda)}">${vaga ? `<em>${esc(c.rotulo)}</em>` : ""}<b>${esc(c.v)}</b></span>`;
-          }).join("")}
-        </div>
+        <div class="news-proj-faixa-equipe">${montaFaixa(faixas, total)}</div>
       </div>`;
   }
 

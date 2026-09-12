@@ -19744,9 +19744,50 @@ tbody .news-proj-equipe a:hover { color: var(--info); }
    Quem ja passou os olhos pela tabela reconhece o perfil sem reler numero. */
 .news-proj-faixa-equipe {
   display: flex;
+  align-items: stretch;
   flex-basis: 100%;
   gap: 1px;
   overflow: hidden;
+}
+
+/* O par "com vaga" e um nivel proprio: as duas fatias embaixo de UMA legenda.
+   Uma legenda por fatia sumia justamente em quem tem chance baixa - a CAAP
+   divide 13,4% em 6,1% e 7,3%, e nenhuma das duas cabe "UPPER". Somadas dao
+   100px, e "COM VAGA" cabe. A altura da legenda estica as outras fatias por
+   `align-items: stretch`, e o numero delas continua centrado. */
+.news-proj-grupo {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 var(--larg);
+  gap: 1px;
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.news-proj-grupo > em {
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-2);
+  color: var(--proj-clara);
+  font: 800 var(--text-2xs) / 1.2 var(--font-text);
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.news-proj-grupo-fatias {
+  display: flex;
+  flex: 1;
+  gap: 1px;
+  min-width: 0;
+}
+
+/* Nem o par cabe: sobra a cor, como em qualquer outra fatia. */
+@container (max-width: 58px) {
+  .news-proj-grupo > em { display: none; }
 }
 
 .news-proj-fatia {
@@ -19768,34 +19809,20 @@ tbody .news-proj-equipe a:hover { color: var(--info); }
   overflow: hidden;
 }
 
-.news-proj-fatia em {
-  color: var(--muted);
-  font: 600 var(--text-2xs) / 1 var(--font-text);
-  font-style: normal;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .news-proj-fatia b {
   color: var(--ink);
   font: 700 var(--text-lg) / 1 var(--font-display);
   font-variant-numeric: tabular-nums;
 }
 
-/* Fatia estreita nao cabe rotulo: some o texto e sobra a cor, que ja diz onde
-   a massa esta. Mais estreita ainda, sobra so a cor.
+/* Fatia estreita nao cabe nem o numero: sobra a cor, que ja diz onde a massa
+   esta.
 
-   ATENCAO: `container-type: inline-size` mede a CAIXA DE CONTEUDO, nao a
-   largura da fatia. Com 8px de padding de cada lado, uma fatia de 72,8px
-   consulta como 56,8px - foi por isso que um cartao perdeu os dois rotulos
-   enquanto os outros cinco mantinham. O limite aqui e de conteudo: "UPPER"
-   em 11px maiusculo com espacejamento ocupa uns 43px. */
-@container (max-width: 44px) {
-  .news-proj-fatia em { display: none; }
-}
+   ATENCAO nos limites abaixo: `container-type: inline-size` mede a CAIXA DE
+   CONTEUDO, nao a largura da fatia. Com 8px de padding de cada lado, uma
+   fatia de 72,8px consulta como 56,8px - foi assim que um cartao perdeu o
+   rotulo enquanto os outros cinco mantinham, quando cada fatia ainda tinha
+   legenda propria. */
 
 @container (max-width: 34px) {
   .news-proj-fatia b { font-size: var(--text-sm); }

@@ -326,7 +326,11 @@
       const args = m[2].split("|").map((s) => s.trim());
       let bloco = null;
       try {
-        bloco = monta(args);
+        // O paragrafo vai junto porque ha bloco que le o que vem DEPOIS dele
+        // no texto - a projecao consome a tabela que o autor escreveu logo
+        // abaixo do token. Quem nao precisa simplesmente ignora o segundo
+        // argumento.
+        bloco = monta(args, p);
       } catch (erro) {
         bloco = null;
       }
@@ -598,6 +602,201 @@
     return `<div class="news-formula"><span>${marcaMatematica(expr)}</span></div>`;
   }
 
+  // ------------------------------------------------------- a projecao
+  //
+  // Duas formas do mesmo dado: a grade com todas as equipes e o cartao de cada
+  // uma. As duas leem a MESMA tabela - a que o autor escreveu no Word, que o
+  // token consome e substitui. Fonte unica, entao cartao e grade nao tem como
+  // divergir: mudar um numero no Word muda os dois.
+  //
+  // Por que este bloco nao sai do banco como os outros: probabilidade de
+  // simulacao nao existe no database.json e nunca vai existir. O que o banco
+  // entrega aqui e escudo e nome, e esses sim saem de la na hora de desenhar.
+  //
+  // A grade e de DISTRIBUICAO, nao de acumulado: as colunas sao faixas
+  // exclusivas que somam 100%. Coluna acumulada (Top 8, Top 16) cresce sempre
+  // na mesma direcao e desenha um degrade; faixa exclusiva mostra ONDE a massa
+  // de cada equipe cai, e e isso que faz a diagonal aparecer.
+
+  // `grupo` = quantas colunas pertencem ao bloco "com vaga". `totais` = quantas
+  // delas, a partir da primeira, sao TOTAIS e nao faixas: "Classificado" e a
+  // soma de "upper" e "lower", entao somar as tres daria 100% mais a chance de
+  // vaga. A coluna existe para o leitor, mas fica fora da distribuicao.
+  const projecao = { colunas: [], linhas: new Map(), grupo: 1, totais: 0 };
+
+  // A intensidade da celula E a probabilidade. A rampa nao e linear de
+  // proposito: numa distribuicao a massa se acumula nas faixas baixas, entao
+  // uma escala linear deixaria quatro quintos da grade pretos e a diagonal -
+  // que e o assunto do grafico - sumiria. O expoente levanta a faixa de 5 a
+  // 25% sem estourar o topo.
+  //
+  // Vai ate o alfa CHEIO (era 0,9) porque a cor da materia e escura: entre o
+  // campo e o #3a08c2 chapado ha so 1,85:1 de luminancia, contra 3,38:1 do
+  // violeta claro anterior. Gastar a faixa toda e o que mantem a diagonal
+  // visivel, e da para gastar: mesmo no degrau cheio o texto claro tem 9,2:1.
+  const tinta = (p) => Math.pow(Math.max(0, Math.min(1, p / 100)), 0.62);
+
+  const numeroBr = (v) => Number(String(v).replace("%", "").replace(",", ".").trim());
+
+  // `corte` marca a primeira coluna depois do grupo com vaga: e ali que o
+  // torneio se parte em dois, entao e ali que a grade ganha a unica linha
+  // vertical que ela tem.
+  function celulaProjecao(valor, corte) {
+    const p = numeroBr(valor);
+    const marca = corte ? " corte" : "";
+    if (!Number.isFinite(p)) return `<td class="news-proj-vazia${marca}"></td>`;
+    return `<td class="news-proj-celula${p >= 10 ? " clara" : ""}${marca}" style="--tinta:${tinta(p).toFixed(3)}">${esc(String(valor).replace("%", ""))}</td>`;
+  }
+
+  // O id da equipe vem do href que o autor colou no Word - a mesma marcacao
+  // que vira mencao no resto do texto. Assim a planilha nao precisa repetir id
+  // nenhum: quem manda e o link.
+  function idDoLink(celula) {
+    const href = celula.querySelector('a[href*="/teams/"]')?.getAttribute("href") || "";
+    return href.split("/teams/")[1]?.split(/[?#/]/)[0] || "";
+  }
+
+  function montaTabelaProjecao(args, paragrafo) {
+    // A tabela de origem e a proxima irma do token. Ela e consumida: some do
+    // texto depois de virar grade, senao o leitor veria as duas.
+    let irma = paragrafo?.nextElementSibling;
+    while (irma && irma.tagName !== "TABLE" && !irma.querySelector?.("table")) irma = irma.nextElementSibling;
+    const tabela = irma?.tagName === "TABLE" ? irma : irma?.querySelector?.("table");
+    if (!tabela) return null;
+    const linhas = [...tabela.rows];
+    if (linhas.length < 2) return null;
+    (irma === tabela ? tabela : irma).remove();
+
+    projecao.grupo = Math.max(1, Number(args[1]) || 1);
+    projecao.totais = Math.max(0, Math.min(projecao.grupo - 1, Number(args[2]) || 0));
+    const cabecalho = [...linhas[0].cells].map((c) => (c.textContent || "").trim());
+    projecao.colunas = cabecalho.slice(1);
+
+    const corpo = [];
+    for (const linha of linhas.slice(1)) {
+      const celulas = [...linha.cells];
+      if (celulas.length < 2) continue;
+      const id = idDoLink(celulas[0]);
+      const cru = (celulas[0].textContent || "").trim();
+      // "(Seed)" e um estado da equipe no torneio, nao parte do nome dela:
+      // sai do nome e vira etiqueta propria. O autor continua escrevendo do
+      // jeito natural no Word.
+      const marca = cru.match(/\s*\((seed[^)]*)\)\s*$/i);
+      const nome = marca ? cru.slice(0, marca.index).trim() : cru;
+      const etiqueta = marca ? marca[1].trim() : "";
+      const valores = celulas.slice(1).map((c) => (c.textContent || "").trim());
+      corpo.push({ id, nome, etiqueta, valores });
+      if (id) projecao.linhas.set(id, { nome, etiqueta, valores });
+    }
+    if (!corpo.length) return null;
+
+    const nGrupo = projecao.grupo;
+    const nResto = projecao.colunas.length - nGrupo;
+    const escudo = (id) => (window.teamLogo ? window.teamLogo(id, "news-proj-escudo") : "");
+
+    return `
+      <div class="news-tabela news-proj-rolagem">
+        <table class="news-proj">
+          <colgroup>
+            <col class="news-proj-col-equipe" />
+            ${projecao.colunas.map(() => `<col style="width:${(62 / projecao.colunas.length).toFixed(3)}%" />`).join("")}
+          </colgroup>
+          <thead>
+            <tr class="news-proj-faixas">
+              <th class="news-proj-canto" scope="col"><span class="news-proj-legenda">Chance de terminar em</span></th>
+              <th class="news-proj-faixa vaga" scope="colgroup" colspan="${nGrupo}">Com vaga</th>
+              ${nResto > 0 ? `<th class="news-proj-faixa" scope="colgroup" colspan="${nResto}">Sem vaga</th>` : ""}
+            </tr>
+            <tr class="news-proj-colunas">
+              <th class="news-proj-equipe" scope="col">Equipe</th>
+              ${projecao.colunas.map((c, i) => `<th scope="col"${i === nGrupo ? ' class="corte"' : ""}>${esc(c)}</th>`).join("")}
+            </tr>
+          </thead>
+          <tbody>
+            ${corpo.map((r, i) => `
+              <tr>
+                <th class="news-proj-equipe" scope="row">
+                  <span class="news-proj-time">
+                    <span class="news-proj-pos">${i + 1}</span>
+                    ${escudo(r.id)}
+                    <a href="#/teams/${esc(r.id)}">${esc(r.nome)}</a>
+                    ${r.etiqueta ? `<span class="news-proj-tag">${esc(r.etiqueta)}</span>` : ""}
+                  </span>
+                </th>
+                ${r.valores.map((v, j) => celulaProjecao(v, j === nGrupo)).join("")}
+              </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  // O cartao da equipe: escudo grande, nome, a nota de forca que veio no token
+  // e a MESMA linha da grade, agora lida como uma faixa so. E de proposito que
+  // a faixa use a mesma rampa da tabela - quem ja viu a grade reconhece a
+  // forma da equipe sem precisar reler os numeros.
+  function montaCartaoProjecao([id, nota]) {
+    const linha = projecao.linhas.get(id);
+    if (!linha) return null;
+    const t = window.teamById ? window.teamById(id) : null;
+    const nome = t?.name || linha.nome;
+    const escudo = window.teamLogo ? window.teamLogo(id, "news-proj-cartao-escudo") : "";
+    // A faixa do cartao e a distribuicao, entao as colunas de total ficam de
+    // fora dela - elas entrariam duas vezes e a soma passaria de 100%.
+    const faixas = linha.valores
+      .map((v, i) => ({ v, i, rotulo: projecao.colunas[i] || "" }))
+      .filter((c) => c.i >= projecao.totais);
+    const vaga = projecao.totais ? linha.valores[0] : faixas[0].v;
+    const total = faixas.reduce((s, c) => s + (Number.isFinite(numeroBr(c.v)) ? numeroBr(c.v) : 0), 0) || 100;
+
+    // O cartao veste as duas cores da equipe. Elas entram como variavel e o
+    // CSS decide a forca: cor de equipe vai de #ffffff a #040404, entao
+    // chapar qualquer uma delas atras de texto claro quebraria metade dos
+    // cartoes. Aqui elas tingem, nao pintam.
+    // Em canais, e nao em hex, para o CSS poder dar alfa nelas sem color-mix.
+    const canais = (hex) => {
+      const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || "").trim());
+      if (!m) return "";
+      const n = parseInt(m[1], 16);
+      return `${(n >> 16) & 255} ${(n >> 8) & 255} ${n & 255}`;
+    };
+    const cores = (Array.isArray(t?.colors) ? t.colors : []).map(canais).filter(Boolean);
+    const veste = cores.length
+      ? ` style="--c1:${cores[0]};--c2:${cores[1] || cores[0]}"`
+      : "";
+
+    return `
+      <div class="news-ficha news-proj-cartao${cores.length ? " vestido" : ""}"${veste}>
+        <div class="news-ficha-time">
+          ${escudo}
+          <a href="#/teams/${esc(id)}"><strong>${esc(nome)}</strong></a>
+          ${linha.etiqueta ? `<span class="news-proj-tag">${esc(linha.etiqueta)}</span>` : ""}
+        </div>
+        <div class="news-ficha-grade">
+          ${nota ? `<div class="news-ficha-item"><strong>${esc(nota)}</strong><span>Nota de força</span></div>` : ""}
+          <div class="news-ficha-item news-proj-vaga"><strong>${esc(vaga)}%</strong><span>Chance de vaga</span></div>
+        </div>
+        <div class="news-proj-faixa-equipe">
+          ${faixas.map((c) => {
+            const p = numeroBr(c.v);
+            if (!Number.isFinite(p) || p <= 0) return "";
+            const larg = (p / total) * 100;
+            // Se o rotulo cabe quem decide e o CSS, por container query: a
+            // mesma fatia de 8,5% tem 63px no desktop e 29px no telefone.
+            // O rotulo completo fica no title porque a fatia mais estreita
+            // perde o texto no telefone e sobra so a cor: a forma continua
+            // legivel, o numero exato nao.
+            const legenda = `${c.rotulo}: ${c.v}%`;
+            return `<span class="news-proj-fatia${c.i < projecao.grupo ? " vaga" : ""}" style="--larg:${larg.toFixed(2)}%;--tinta:${tinta(p).toFixed(3)}" title="${esc(legenda)}" aria-label="${esc(legenda)}"><em>${esc(c.rotulo)}</em><b>${esc(c.v)}</b></span>`;
+          }).join("")}
+        </div>
+      </div>`;
+  }
+
+  function montaProjecao(args, paragrafo) {
+    if ((args[0] || "").toLowerCase() === "tabela") return montaTabelaProjecao(args, paragrafo);
+    return montaCartaoProjecao(args);
+  }
+
   const BLOCOS = {
     placar: (args) => montaPlacar(args[0], args[1]),
     ficha: montaFicha,
@@ -605,6 +804,7 @@
     elenco: montaElenco,
     previsao: montaPrevisao,
     formula: montaFormula,
+    projecao: montaProjecao,
   };
 
   // Numa materia que apresenta equipe por equipe, cada bloco termina num

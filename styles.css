@@ -19496,6 +19496,313 @@ img {
 
 .news-ficha-estreia > a:hover { color: var(--info); }
 
+/* --------------------------------------------------------- a projecao */
+
+/* A grade de distribuicao e o cartao de equipe. O assunto do grafico nao e
+   nenhum numero isolado: e a DIAGONAL. Numa tabela de faixas exclusivas a
+   massa de cada equipe desliza da esquerda (favorita, concentrada na vaga)
+   para a direita (azarona, concentrada no 17o+), e essa crista e o que se le
+   de longe. Tudo aqui existe para ela aparecer - uma cor so, celula sem
+   contorno e sem raio, nenhum segundo destaque competindo.
+
+   Por que VIOLETA e nao o teal das outras barras: numa barra de 6px o teal e
+   um realce, mas aqui sao 120 celulas pintadas e ele viraria a superficie
+   dominante da pagina - exatamente o ciano-aceso-sobre-escuro que a escala de
+   tier recusou. O violeta ja esta na paleta, nao e a marca (vermelho) nem
+   vitoria (verde), e e a cor do proprio UNIVAVA: a grade ecoa a capa que esta
+   logo acima dela. */
+.news-proj-rolagem,
+.news-proj-cartao {
+  --proj-cor: 58 8 194;     /* #3a08c2, em canais para ganhar alfa */
+  --proj-clara: #9976f9;    /* o mesmo tom quando e TEXTO: 5,2:1 sobre grafite */
+  --proj-campo: #0b0d13;    /* o campo vazio: um degrau abaixo da superficie */
+}
+
+.news-proj-rolagem {
+  margin: var(--space-6) 0;
+}
+
+.news-proj {
+  width: 100%;
+  /* Fixo para que os quadrantes de dado tenham TODOS a mesma largura: no
+     automatico a coluna do cabecalho mais longo ("Classificado") roubava o
+     dobro das outras e a grade perdia o ritmo. Com fixo, a unica largura
+     declarada e a da equipe e o resto divide o que sobra em partes iguais. */
+  table-layout: fixed;
+  /* Piso medido para OITO colunas de dado: abaixo disto o rotulo "13o-16o"
+     nao cabe na celula e vaza por cima do vizinho. Acima da largura da
+     coluna do artigo (780px), entao so vale no telefone, onde a grade rola. */
+  min-width: 640px;
+  /* Gap de 1px sem nenhuma propriedade `border`: o fundo da tabela aparece
+     entre as celulas e vira o fio. Contorno desenhado em volta de numero e
+     justamente o que nao se faz neste site. */
+  border-collapse: separate;
+  border-spacing: 1px;
+  background: var(--line);
+}
+
+.news-proj th,
+.news-proj td {
+  padding: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* --------- cabecalho */
+
+.news-proj-faixas th {
+  padding: 0 var(--space-3) var(--space-2);
+  background: var(--bg);
+  color: var(--muted);
+  font: 700 var(--text-2xs) / 1 var(--font-text);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* A unica coisa que separa "com vaga" de "sem vaga" e o tom do rotulo. O
+   corte ja esta desenhado na coluna; repetir a divisao numa segunda cor seria
+   dizer duas vezes. */
+.news-proj-faixas .news-proj-faixa { text-align: center; }
+/* A versao clara da cor da materia: #3a08c2 como texto sobre grafite da
+   1,3:1 e reprova, entao o rotulo usa o mesmo tom clareado ate 5,2:1. */
+.news-proj-faixas .news-proj-faixa.vaga { color: var(--proj-clara); }
+.news-proj-canto { text-align: left !important; }
+.news-proj-legenda { font-weight: 600; letter-spacing: 0.06em; }
+
+/* O rotulo quebra em vez de vazar: a coluna de dado tem 64px numa grade de
+   oito, e `nowrap` aqui fazia o cabecalho longo passar por cima do vizinho.
+   O numero, esse continua em linha unica. */
+.news-proj-colunas th {
+  padding: var(--space-2) var(--space-2);
+  background: var(--surface-3);
+  color: var(--muted);
+  font: 700 var(--text-2xs) / 1.25 var(--font-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: normal;
+}
+
+.news-proj-colunas .news-proj-equipe { text-align: left; }
+
+/* --------- coluna da equipe */
+
+/* Gruda na rolagem horizontal: num telefone as colunas de numero passam por
+   baixo do nome, senao a linha vira uma fileira de porcentagens sem dono.
+   Funciona porque o proprio envelope e o scrollport - sticky dentro de um
+   ancestral com `overflow: hidden` nao gruda. */
+/* A largura mora no <colgroup>, nao na celula: com `table-layout: fixed` quem
+   manda e a PRIMEIRA linha, e a primeira linha aqui e o cabecalho de grupo,
+   nao a da equipe. Declarar na celula da equipe nao chegava a tempo. */
+.news-proj-col-equipe { width: 33%; }
+
+.news-proj-equipe {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  text-align: left;
+  background: var(--surface-3);
+}
+
+/* O respiro da direita e curto de proposito: a coluna da equipe encosta nos
+   quadrantes, e quem separa os dois e o vao de 1px, nao um corredor vazio. */
+tbody .news-proj-equipe {
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-3);
+}
+
+/* O flex mora num filho, nunca na celula: `display: flex` num <th> tira ele
+   do algoritmo de tabela e as colunas param de alinhar. */
+.news-proj-time {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+/* A posicao e outra coisa que o escudo: ela numera a projecao, nao identifica
+   a equipe. O vao maior aqui e o que separa as duas leituras. */
+.news-proj-pos {
+  min-width: 1.4em;
+  margin-right: var(--space-3);
+  color: var(--muted);
+  font: 600 var(--text-lg) / 1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* (Seed) nao e sobrenome: e chip preenchido, do mesmo feitio do .event-status
+   que o site ja usa. Sem contorno - so fundo e texto. */
+.news-proj-tag {
+  flex-shrink: 0;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: rgb(var(--proj-cor) / 0.55);
+  color: var(--ink);
+  font: 800 var(--text-2xs) / 1.35 var(--font-text);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Escudo grande: o espaco vazio de uma tabela se resolve aumentando o
+   conteudo, e o escudo e o que identifica a equipe antes do nome. */
+.news-proj-escudo {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+tbody .news-proj-equipe a {
+  color: var(--ink);
+  font: 600 var(--text-sm) / 1.2 var(--font-text);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+tbody .news-proj-equipe a:hover { color: var(--info); }
+
+/* --------- as celulas */
+
+.news-proj-celula,
+.news-proj-vazia {
+  padding: var(--space-3) var(--space-2);
+  background-color: var(--proj-campo);
+  font: 600 var(--text-lg) / 1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+/* A tinta. O alfa vem do JS porque e ele que conhece a probabilidade. */
+.news-proj-celula {
+  background-image: linear-gradient(
+    rgb(var(--proj-cor) / var(--tinta, 0)),
+    rgb(var(--proj-cor) / var(--tinta, 0))
+  );
+}
+
+/* Acima de 10% o numero vira claro, e e ele que carrega a leitura. Com a cor
+   escura da materia sobra folga: 9,2:1 no degrau cheio, e o texto fraco, que
+   so aparece abaixo de 10%, nunca desce de 7,5:1. */
+.news-proj-celula.clara { color: var(--ink); font-weight: 700; }
+
+/* O corte: onde o torneio se parte entre quem pega vaga e quem nao pega. E a
+   unica regua vertical da grade, e ela e um vao, nao um contorno. */
+.news-proj th.corte,
+.news-proj td.corte { box-shadow: inset 2px 0 0 var(--bg); }
+
+/* --------- o cartao da equipe */
+
+.news-proj-cartao { row-gap: var(--space-5); }
+.news-proj-cartao .news-ficha-time { gap: var(--space-4); }
+
+/* O cartao veste as duas cores da equipe. Elas TINGEM, nao chapam: cor de
+   equipe neste banco vai de #ffffff (Maua Blue) a #040404 (Inatel), entao
+   chapar qualquer uma atras de texto claro quebraria metade dos cartoes.
+   O alfa foi medido contra o pior fundo possivel, o branco puro: a 0,30 o
+   texto caia para 5,7:1 e o rotulo secundario para 2,6:1, que reprova. A
+   0,22 o pior caso sobe para 7,7:1 e a cor da equipe continua lendo.
+   A regua da esquerda troca o vermelho pela cor 1: num cartao vestido a
+   assinatura que importa e a da equipe, e cor de equipe e identidade, nao
+   dado - a mesma razao pela qual o vermelho da marca nunca mede nada. */
+.news-proj-cartao.vestido {
+  --rotulo: rgba(245, 241, 242, 0.78);
+  border-left-color: rgb(var(--c1));
+  background-color: var(--surface-2);
+  background-image: linear-gradient(
+    112deg,
+    rgb(var(--c1) / 0.22) 0%,
+    rgb(var(--c2) / 0.15) 58%,
+    rgb(var(--c2) / 0.05) 100%
+  );
+}
+
+/* Sobre 30 paletas de equipe diferentes nenhuma cor de texto sobrevive: quem
+   separa o numero principal do secundario aqui e o TAMANHO, nao a cor. */
+.news-proj-cartao.vestido .news-ficha-item > span { color: var(--rotulo); }
+.news-proj-cartao-escudo { width: 46px; height: 46px; object-fit: contain; }
+
+.news-proj-cartao .news-ficha-time a {
+  font: 700 var(--text-2xl) / 1 var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.news-proj-cartao .news-ficha-item > strong {
+  font: 700 var(--text-2xl) / 1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Depois do shorthand `font` acima, senao ele zera o tamanho de volta. */
+.news-proj-cartao .news-proj-vaga > strong {
+  color: var(--proj-clara);
+  font-size: var(--text-3xl);
+}
+
+.news-proj-cartao.vestido .news-proj-vaga > strong { color: var(--ink); }
+
+/* A mesma linha da grade, agora lida como uma faixa so: a forma da equipe.
+   Quem ja passou os olhos pela tabela reconhece o perfil sem reler numero. */
+.news-proj-faixa-equipe {
+  display: flex;
+  flex-basis: 100%;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.news-proj-fatia {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  flex: 0 0 var(--larg);
+  min-width: 0;
+  /* A fatia se mede: quem decide se o rotulo cabe e a largura real dela, nao
+     a porcentagem. Os mesmos 8,5% sao 63px no desktop e 29px no telefone. */
+  container-type: inline-size;
+  padding: var(--space-3) var(--space-3);
+  background-color: var(--proj-campo);
+  background-image: linear-gradient(
+    rgb(var(--proj-cor) / var(--tinta, 0)),
+    rgb(var(--proj-cor) / var(--tinta, 0))
+  );
+  overflow: hidden;
+}
+
+.news-proj-fatia em {
+  color: var(--muted);
+  font: 600 var(--text-2xs) / 1 var(--font-text);
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.news-proj-fatia b {
+  color: var(--ink);
+  font: 700 var(--text-lg) / 1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Fatia estreita nao cabe rotulo: some o texto e sobra a cor, que ja diz onde
+   a massa esta. Mais estreita ainda, sobra so a cor. */
+@container (max-width: 62px) {
+  .news-proj-fatia em { display: none; }
+}
+
+@container (max-width: 34px) {
+  .news-proj-fatia b { font-size: var(--text-sm); }
+}
+
+@container (max-width: 22px) {
+  .news-proj-fatia b { visibility: hidden; }
+}
+
+@media (max-width: 560px) {
+  .news-proj-col-equipe { width: 31%; }
+}
+
 /* --------------------------------------------------------- o map pool */
 
 /* Tabela larga dentro de coluna estreita: a rolagem e da tabela, nunca da

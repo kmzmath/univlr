@@ -1,10 +1,11 @@
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 from collections import defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 
@@ -19,12 +20,15 @@ import config_hub
 # A pasta de trabalho fica fora do repo: e la que estao os JSONs brutos e as
 # saidas de analise. Ver config_hub.
 BASE_DIR = config_hub.TRABALHO_DIR
-DEFAULT_INPUT_DIR = str(BASE_DIR / "Finalizados" / "Válidos" / "Univavá" / "Classificatórias 3")
+DEFAULT_INPUT_DIR = str(BASE_DIR / "Finalizados" / "Válidos")
 DEFAULT_OUTPUT_XLSX = ""  # vazio = gera analiseMatches_<nome_da_pasta>.xlsx automaticamente
 DEFAULT_RECURSIVE = True
 
+SITE_PIPELINE_HELPER = Path(__file__).resolve().with_name("export_site_match_stats.js")
 
-DEFAULT_TRADE_WINDOW_MS = 2000
+# Mantido apenas para a implementacao legada abaixo. A execucao principal usa
+# diretamente o pipeline do site, cujo trade window oficial e 5 segundos.
+DEFAULT_TRADE_WINDOW_MS = 5000
 
 
 def _strip_quotes(value: str) -> str:
@@ -185,7 +189,7 @@ HEADERS = [
     "Clutches",
     "Imp.Total (pp)",
     "Imp/Round (pp)",
-    "Rating",
+    "rAAting 3.0",
     "rAAting 1.0",
     "Partidas",
 ]
@@ -250,6 +254,9 @@ class KillEvent:
 class RowRecord:
     team_key: str
     cells: List[Any]
+    player_key: str = ""
+    current_team: str = ""
+    aggregate: Dict[str, float] = field(default_factory=dict)
 
 
 def iter_json_files(input_dir: Path, recursive: bool) -> Iterable[Path]:
@@ -267,6 +274,135 @@ def load_match(path: Path) -> Optional[Dict[str, Any]]:
         return data
     except Exception:
         return None
+
+
+SITE_AGGREGATE_FIELDS = (
+    "rounds",
+    "roundWins",
+    "roundLosses",
+    "score",
+    "kills",
+    "deaths",
+    "assists",
+    "damage",
+    "kastRounds",
+    "kastLegacyRounds",
+    "impactTotal",
+    "impactTotalLegacy",
+    "adjustedRoundSwingTotalPp",
+    "eKillPoints",
+    "eDeathPoints",
+    "eDamageTotal",
+    "eKastPoints",
+    "tradedDeaths",
+    "failedTradeDeaths",
+    "tradeKills",
+    "tradeDenials",
+    "savedLossRounds",
+    "survivedWinRounds",
+    "multiKillPoints",
+    "firstKills",
+    "firstDeaths",
+    "oneKills",
+    "twoKills",
+    "threeKills",
+    "fourKills",
+    "fiveKills",
+    "clutches",
+)
+
+
+def run_site_pipeline(input_dir: Path, recursive: bool) -> Dict[str, Any]:
+    """Executa o mesmo parser/normalizador usado para gerar o site."""
+    node = shutil.which("node")
+    if not node:
+        raise SystemExit("Node.js nao encontrado. Ele e necessario para usar o mesmo pipeline do site.")
+    if not SITE_PIPELINE_HELPER.exists():
+        raise SystemExit(f"Helper do pipeline do site nao encontrado: {SITE_PIPELINE_HELPER}")
+
+    result = subprocess.run(
+        [node, str(SITE_PIPELINE_HELPER), str(input_dir), "true" if recursive else "false"],
+        cwd=str(config_hub.REPO_DIR),
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
+    if result.returncode != 0:
+        detail = (result.stderr or result.stdout or "erro desconhecido").strip()
+        raise SystemExit(f"Falha ao executar o pipeline do site:\n{detail}")
+    try:
+        payload = json.loads(result.stdout)
+    except json.JSONDecodeError as exc:
+        raise SystemExit(f"Saida invalida do pipeline do site: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise SystemExit("Saida invalida do pipeline do site: objeto JSON esperado.")
+    return payload
+
+
+def _numeric_fields(player: Dict[str, Any]) -> Dict[str, float]:
+    values: Dict[str, float] = {}
+    for name in SITE_AGGREGATE_FIELDS:
+        raw = player.get(name, 0)
+        try:
+            values[name] = float(raw) if raw is not None else 0.0
+        except (TypeError, ValueError):
+            values[name] = 0.0
+    return values
+
+
+def build_records_from_site_pipeline(payload: Dict[str, Any]) -> List[RowRecord]:
+    """Converte as linhas normalizadas do site para o layout historico do XLSX."""
+    records: List[RowRecord] = []
+    for match in payload.get("matches") or []:
+        filename = str(match.get("fileName") or match.get("sourcePath") or "")
+        map_name = str(match.get("mapName") or "")
+        for player in match.get("players") or []:
+            rounds = int(float(player.get("rounds") or 0))
+            if rounds <= 0:
+                continue
+            aggregate = _numeric_fields(player)
+            records.append(
+                RowRecord(
+                    team_key=str(player.get("teamId") or "").strip(),
+                    player_key=str(player.get("id") or player.get("puuid") or player.get("handle") or "").strip(),
+                    current_team=str(player.get("currentTeam") or "").strip(),
+                    aggregate=aggregate,
+                    cells=[
+                        str(player.get("nick") or player.get("handle") or "Jogador"),
+                        str(player.get("agent") or ""),
+                        map_name,
+                        float(player.get("kastFrac") or 0),
+                        rounds,
+                        int(float(player.get("roundWins") or 0)),
+                        int(float(player.get("roundLosses") or 0)),
+                        int(float(player.get("kastRounds") or 0)),
+                        float(player.get("acs") or 0),
+                        int(float(player.get("kills") or 0)),
+                        int(float(player.get("deaths") or 0)),
+                        int(float(player.get("assists") or 0)),
+                        float(player.get("kpr") or 0),
+                        float(player.get("dpr") or 0),
+                        float(player.get("apr") or 0),
+                        float(player.get("adr") or 0),
+                        int(float(player.get("firstKills") or 0)),
+                        int(float(player.get("firstDeaths") or 0)),
+                        int(float(player.get("oneKills") or 0)),
+                        int(float(player.get("twoKills") or 0)),
+                        int(float(player.get("threeKills") or 0)),
+                        int(float(player.get("fourKills") or 0)),
+                        int(float(player.get("fiveKills") or 0)),
+                        int(float(player.get("clutches") or 0)),
+                        float(player.get("adjustedRoundSwingTotalPp") or player.get("impactTotal") or 0),
+                        float(player.get("impactRound") or 0),
+                        float(player.get("raating_3") or player.get("rating") or 0),
+                        float(player.get("raating_1") or 0),
+                        filename,
+                    ],
+                )
+            )
+    return records
 
 
 def rating_value(kast_frac: float, kpr: float, dpr: float, apr: float, adr: float) -> float:
@@ -318,6 +454,76 @@ def rAAting_1_0_value(
     )
 
     rating = 1 + 0.2883448104 * (score_wr - 0.0853107262)
+    return clamp(rating, 0.30, 1.80)
+
+
+RAATING_3_BASELINES = {
+    "kill": (0.69080751, 0.1786497375),
+    "damage": (1.01149739, 0.23446389),
+    "multikill": (0.2241625, 0.11087375),
+    "round_swing": (-0.3482385, 4.0305735),
+    "survival": (0.285871175, 0.08546929),
+    "kast": (0.71465847, 0.0765002825),
+}
+
+
+def _raa3_subrating(metric: float, baseline: Tuple[float, float]) -> float:
+    median, iqr = baseline
+    z_score = clamp((metric - median) / abs(iqr), -3.0, 3.0) if iqr else 0.0
+    return clamp(1.0 + 0.28 * z_score, 0.30, 1.80)
+
+
+def rAAting_3_0_value(values: Dict[str, float]) -> float:
+    """Porta a formula agregada oficial de raating-core.js."""
+    rounds = max(0.0, float(values.get("rounds", 0)))
+    if not rounds:
+        return 0.30
+
+    ekpr = float(values.get("eKillPoints", values.get("kills", 0))) / rounds
+    edpr = float(values.get("eDeathPoints", values.get("deaths", 0))) / rounds
+    eadr = float(values.get("eDamageTotal", values.get("damage", 0))) / rounds
+    ekast = float(values.get("eKastPoints", values.get("kastRounds", 0))) / rounds
+    mk_per_round = float(values.get("multiKillPoints", 0)) / rounds
+    adjusted_swing = float(values.get("adjustedRoundSwingTotalPp", values.get("impactTotal", 0))) / rounds
+    opening_kills = float(values.get("firstKills", 0)) / rounds
+    opening_deaths = float(values.get("firstDeaths", 0)) / rounds
+    trade_denials = float(values.get("tradeDenials", 0)) / rounds
+    traded_deaths = float(values.get("tradedDeaths", 0)) / rounds
+    failed_trade_deaths = float(values.get("failedTradeDeaths", 0)) / rounds
+    saved_losses = float(values.get("savedLossRounds", 0)) / rounds
+    survived_wins = float(values.get("survivedWinRounds", 0)) / rounds
+
+    metric_kill = ekpr + 0.025 * opening_kills + 0.015 * trade_denials
+    metric_damage = eadr / 100.0
+    metric_multikill = mk_per_round
+    metric_round_swing = adjusted_swing
+    metric_survival = (
+        (1.0 - edpr)
+        + 0.04 * traded_deaths
+        - 0.04 * failed_trade_deaths
+        - 0.03 * opening_deaths
+        - 0.02 * saved_losses
+        + 0.015 * survived_wins
+    )
+    metric_kast = ekast
+
+    subratings = {
+        "kill": _raa3_subrating(metric_kill, RAATING_3_BASELINES["kill"]),
+        "damage": _raa3_subrating(metric_damage, RAATING_3_BASELINES["damage"]),
+        "multikill": _raa3_subrating(metric_multikill, RAATING_3_BASELINES["multikill"]),
+        "round_swing": _raa3_subrating(metric_round_swing, RAATING_3_BASELINES["round_swing"]),
+        "survival": _raa3_subrating(metric_survival, RAATING_3_BASELINES["survival"]),
+        "kast": _raa3_subrating(metric_kast, RAATING_3_BASELINES["kast"]),
+    }
+    rating = (
+        0.25 * subratings["kill"]
+        + 0.15 * subratings["damage"]
+        + 0.04 * subratings["multikill"]
+        + 0.33 * subratings["round_swing"]
+        + 0.15 * subratings["survival"]
+        + 0.08 * subratings["kast"]
+        - 0.008426
+    )
     return clamp(rating, 0.30, 1.80)
 
 
@@ -541,7 +747,7 @@ def resolve_player_and_team(
 def infer_team_for_player(recs: List[RowRecord]) -> str:
     counts: Dict[str, int] = defaultdict(int)
     for r in recs:
-        t = (r.team_key or "").strip()
+        t = (r.current_team or "").strip()
         if t:
             counts[t] += 1
     if not counts:
@@ -1117,7 +1323,7 @@ def _apply_number_formats(ws, start_row: int, end_row: int) -> None:
     # 9  ACS (2dp)
     # 13-16 KPR/DPR/APR/ADR (2dp)
     # 25-26 Impact (2dp)
-    # 27 Rating antigo (3dp)
+    # 27 rAAting 3.0 (3dp)
     # 28 rAAting 1.0 (3dp)
     for r in range(start_row, end_row + 1):
         ws.cell(row=r, column=4).number_format = "0.0%"
@@ -1162,94 +1368,56 @@ def _to_float(v: Any) -> float:
 
 
 def compute_player_summary_cells(player_name: str, recs: List[RowRecord]) -> List[Any]:
-    # índices 0-based (baseados em HEADERS atual)
-    IDX_AGENT = 1
-    IDX_ROUNDS = 4
-    IDX_WINS = 5
-    IDX_LOSSES = 6
-    IDX_RKAST = 7
-    IDX_ACS = 8
-    IDX_KILLS = 9
-    IDX_DEATHS = 10
-    IDX_ASSISTS = 11
-    IDX_ADR = 15
-    IDX_FK = 16
-    IDX_FD = 17
-    IDX_1K = 18
-    IDX_2K = 19
-    IDX_3K = 20
-    IDX_4K = 21
-    IDX_5K = 22
-    IDX_CLUTCH = 23
-    IDX_IMP_TOTAL = 24
+    totals = {name: 0.0 for name in SITE_AGGREGATE_FIELDS}
+    for rec in recs:
+        for name in SITE_AGGREGATE_FIELDS:
+            totals[name] += float(rec.aggregate.get(name, 0) or 0)
 
-    match_count = len(recs)
-
-    total_rounds = sum(_to_int(r.cells[IDX_ROUNDS]) for r in recs)
-    total_wins = sum(_to_int(r.cells[IDX_WINS]) for r in recs)
-    total_losses = sum(_to_int(r.cells[IDX_LOSSES]) for r in recs)
-    total_rkast = sum(_to_int(r.cells[IDX_RKAST]) for r in recs)
-
-    total_kills = sum(_to_int(r.cells[IDX_KILLS]) for r in recs)
-    total_deaths = sum(_to_int(r.cells[IDX_DEATHS]) for r in recs)
-    total_assists = sum(_to_int(r.cells[IDX_ASSISTS]) for r in recs)
-
-    total_fk = sum(_to_int(r.cells[IDX_FK]) for r in recs)
-    total_fd = sum(_to_int(r.cells[IDX_FD]) for r in recs)
-    total_1k = sum(_to_int(r.cells[IDX_1K]) for r in recs)
-    total_2k = sum(_to_int(r.cells[IDX_2K]) for r in recs)
-    total_3k = sum(_to_int(r.cells[IDX_3K]) for r in recs)
-    total_4k = sum(_to_int(r.cells[IDX_4K]) for r in recs)
-    total_5k = sum(_to_int(r.cells[IDX_5K]) for r in recs)
-    total_clutch = sum(_to_int(r.cells[IDX_CLUTCH]) for r in recs)
-
+    total_rounds = int(totals["rounds"])
+    total_wins = int(totals["roundWins"])
+    total_losses = int(totals["roundLosses"])
+    total_rkast = int(totals["kastRounds"])
+    total_kills = int(totals["kills"])
+    total_deaths = int(totals["deaths"])
+    total_assists = int(totals["assists"])
+    total_fk = int(totals["firstKills"])
+    total_fd = int(totals["firstDeaths"])
     kast_frac = safe_div(float(total_rkast), float(total_rounds))
-
-    acs_vals = [_to_float(r.cells[IDX_ACS]) for r in recs]
-    avg_acs = safe_div(sum(acs_vals), float(len(acs_vals))) if acs_vals else 0.0
-
+    acs = safe_div(totals["score"], float(total_rounds))
     kpr = safe_div(float(total_kills), float(total_rounds))
     dpr = safe_div(float(total_deaths), float(total_rounds))
     apr = safe_div(float(total_assists), float(total_rounds))
+    adr = safe_div(totals["damage"], float(total_rounds))
+    total_imp = totals["adjustedRoundSwingTotalPp"]
+    imp_per_round = safe_div(total_imp, float(total_rounds))
 
-    total_damage_est = 0.0
-    for r in recs:
-        adr_match = _to_float(r.cells[IDX_ADR])
-        rounds_match = _to_int(r.cells[IDX_ROUNDS])
-        total_damage_est += adr_match * rounds_match
-    adr = safe_div(total_damage_est, float(total_rounds))
-
-    # role mais jogada (por match), senão Flex
-    role_counts: Dict[str, int] = defaultdict(int)
-    for r in recs:
-        agent = str(r.cells[IDX_AGENT] or "").strip()
+    role_rounds: Dict[str, int] = defaultdict(int)
+    for rec in recs:
+        agent = str(rec.cells[1] or "").strip()
         role = AGENT_TO_ROLE.get(agent, "")
         if role:
-            role_counts[role] += 1
-
-    if match_count > 0 and role_counts:
-        top_role, top_count = max(role_counts.items(), key=lambda kv: kv[1])
-        main_role = top_role if (top_count / match_count) > 0.5 else "Flex"
+            role_rounds[role] += _to_int(rec.cells[4])
+    if total_rounds > 0 and role_rounds:
+        top_role, top_rounds = max(role_rounds.items(), key=lambda item: item[1])
+        main_role = top_role if (top_rounds / total_rounds) > 0.5 else "Flex"
     else:
         main_role = "Flex"
 
-    # Impacto total e por round (total_rounds)
-    total_imp = sum(_to_float(r.cells[IDX_IMP_TOTAL]) for r in recs)
-    imp_pr_total = safe_div(total_imp, float(total_rounds))
-
-    rtg = rating_value(kast_frac, kpr, dpr, apr, adr)
-    raa = rAAting_1_0_value(kast_frac, kpr, dpr, apr, adr, imp_pr_total)
+    legacy_kast = safe_div(totals["kastLegacyRounds"], float(total_rounds))
+    legacy_impact = safe_div(totals["impactTotalLegacy"], float(total_rounds))
+    raa1 = rAAting_1_0_value(legacy_kast, kpr, dpr, apr, adr, legacy_impact)
+    raa3 = rAAting_3_0_value(totals)
 
     return [
-        player_name,     # Player
-        main_role,       # Agente (role)
-        "-",             # Mapa (ou Equipe no sheet totals)
+        player_name,
+        main_role,
+        "-",
         kast_frac,
         total_rounds,
         total_wins,
         total_losses,
         total_rkast,
-        avg_acs,
+        acs,
         total_kills,
         total_deaths,
         total_assists,
@@ -1259,17 +1427,17 @@ def compute_player_summary_cells(player_name: str, recs: List[RowRecord]) -> Lis
         adr,
         total_fk,
         total_fd,
-        total_1k,
-        total_2k,
-        total_3k,
-        total_4k,
-        total_5k,
-        total_clutch,
-        total_imp,       # Imp.Total (pp)
-        imp_pr_total,    # Imp/Round (pp)
-        rtg,             # Rating antigo
-        raa,             # rAAting 1.0
-        match_count,     # Partidas (count)
+        int(totals["oneKills"]),
+        int(totals["twoKills"]),
+        int(totals["threeKills"]),
+        int(totals["fourKills"]),
+        int(totals["fiveKills"]),
+        int(totals["clutches"]),
+        total_imp,
+        imp_per_round,
+        raa3,
+        raa1,
+        len(recs),
     ]
 
 
@@ -1293,16 +1461,20 @@ def write_totals_all_players_sheet(ws, records: List[RowRecord]) -> None:
 
     by_player: Dict[str, List[RowRecord]] = defaultdict(list)
     for r in records:
-        player = str(r.cells[0] or "").strip() or "SEM_NOME"
-        by_player[player].append(r)
+        player_key = (r.player_key or str(r.cells[0] or "")).strip() or "SEM_NOME"
+        by_player[player_key].append(r)
 
-    players_sorted = sorted(by_player.keys(), key=lambda s: s.casefold())
+    players_sorted = sorted(
+        by_player.keys(),
+        key=lambda key: str(by_player[key][0].cells[0] or key).casefold(),
+    )
 
     row_cursor = 2
     bold_font = Font(bold=True)
 
-    for player in players_sorted:
-        recs = by_player[player]
+    for player_key in players_sorted:
+        recs = by_player[player_key]
+        player = str(recs[0].cells[0] or player_key).strip() or "SEM_NOME"
         team = infer_team_for_player(recs)
 
         summary = compute_player_summary_cells(player, recs)
@@ -1324,18 +1496,22 @@ def write_team_sheet_per_player(ws, team_name: str, records: List[RowRecord]) ->
 
     by_player: Dict[str, List[RowRecord]] = defaultdict(list)
     for r in records:
-        player = str(r.cells[0] or "").strip() or "SEM_NOME"
-        by_player[player].append(r)
+        player_key = (r.player_key or str(r.cells[0] or "")).strip() or "SEM_NOME"
+        by_player[player_key].append(r)
 
-    players_sorted = sorted(by_player.keys(), key=lambda s: s.casefold())
+    players_sorted = sorted(
+        by_player.keys(),
+        key=lambda key: str(by_player[key][0].cells[0] or key).casefold(),
+    )
 
     title_font = Font(bold=True, size=14)
     title_align = Alignment(horizontal="left", vertical="center")
     total_font = Font(bold=True)
 
     row_cursor = 1
-    for player in players_sorted:
-        recs = by_player[player]
+    for player_key in players_sorted:
+        recs = by_player[player_key]
+        player = str(recs[0].cells[0] or player_key).strip() or "SEM_NOME"
 
         # título do jogador
         ws.merge_cells(start_row=row_cursor, start_column=1, end_row=row_cursor, end_column=len(HEADERS))
@@ -1449,40 +1625,25 @@ def main() -> int:
     print("Pasta analisada:", input_dir)
     print("Recursivo:", bool(DEFAULT_RECURSIVE))
 
-    teams_xlsx = resolve_user_path(DEFAULT_TEAMS_XLSX)
-    players_xlsx = resolve_user_path(DEFAULT_PLAYERS_XLSX)
-    state_xlsx = resolve_user_path(DEFAULT_STATE_WINRATES_XLSX)
-
-    team_order, nick_to_info = load_rosters(teams_xlsx, players_xlsx)
-
-    # Carrega winrates (XvY) do XLSX sempre atualizado.
-    state_wr = load_state_winrates_xlsx(state_xlsx)
-
-    json_files = list(iter_json_files(input_dir, recursive=DEFAULT_RECURSIVE))
-    if not json_files:
+    payload = run_site_pipeline(input_dir, recursive=DEFAULT_RECURSIVE)
+    json_file_count = int(payload.get("jsonFileCount") or 0)
+    if not json_file_count:
         raise SystemExit(f"Nenhum .json encontrado em DEFAULT_INPUT_DIR: {input_dir}")
 
-    print("JSONs encontrados:", len(json_files))
+    print("JSONs encontrados:", json_file_count)
+    print("Partidas unicas processadas:", int(payload.get("uniqueMatchCount") or 0))
+    print("Kills observadas no modelo economico:", int(payload.get("ecoObservedKills") or 0))
 
-    all_records: List[RowRecord] = []
-    invalid_files = 0
-    for json_path in json_files:
-        data = load_match(json_path)
-        if not data:
-            invalid_files += 1
-            continue
-        all_records.extend(
-            build_records_for_match(
-                data=data,
-                filename=json_path.name,
-                trade_window_ms=DEFAULT_TRADE_WINDOW_MS,
-                nick_to_info=nick_to_info,
-                state_wr=state_wr,
-            )
-        )
+    all_records = build_records_from_site_pipeline(payload)
+    if not all_records:
+        raise SystemExit("Nenhuma linha de jogador foi gerada pelo pipeline do site.")
+    team_order = [str(team) for team in payload.get("teamOrder") or [] if str(team).strip()]
+    invalid_files = payload.get("invalidFiles") or []
+    duplicate_files = payload.get("duplicateFiles") or []
 
     write_workbook(all_records, team_order, output_xlsx)
-    print(f"Arquivos inválidos/ignorados: {invalid_files}")
+    print(f"Arquivos invalidos/ignorados: {len(invalid_files)}")
+    print(f"Partidas duplicadas ignoradas: {len(duplicate_files)}")
     print(f"OK: {len(all_records)} linhas geradas em: {output_xlsx}")
 
     open_file_after_save(output_xlsx)

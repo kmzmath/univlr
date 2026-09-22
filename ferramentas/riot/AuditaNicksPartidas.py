@@ -48,6 +48,17 @@ import config_hub
 
 MIN_TEAM_PLAYERS_TO_IDENTIFY = 3
 
+# Mesma excecao de SHARED_ACCOUNT_RULES em app.js. Ela so entra quando as duas
+# contas coexistem na partida, sinal de que houve emprestimo de conta.
+SHARED_ACCOUNT_RULES = [
+    {
+        "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A":
+            "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw",
+        "n4gmlK3PBjD58Em3HdmK3czcYqqtRiehQ5m4fRpjVklg38w7oGz8qmEijZ5holGKPoPSgJoF9hSNJg":
+            "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A",
+    }
+]
+
 # A auditoria compara a equipe da partida com TODO o histórico do jogador
 # (colunas team 1, team 2, ... mais o current_team), não só com o current_team.
 # Jogar por uma equipe que já está no próprio histórico não é erro: é o caso de
@@ -698,14 +709,40 @@ def active_players(match: Dict[str, Any]) -> List[Dict[str, Any]]:
     return result
 
 
-def find_player_record(player: Dict[str, Any], pdata: PlayerData) -> Optional[PlayerRecord]:
+def shared_account_overrides(match: Dict[str, Any]) -> Dict[str, str]:
+    match_puuids = {
+        clean_str(player.get("puuid"))
+        for player in active_players(match)
+        if clean_str(player.get("puuid"))
+    }
+    overrides: Dict[str, str] = {}
+    for rule in SHARED_ACCOUNT_RULES:
+        if all(account in match_puuids for account in rule):
+            overrides.update(rule)
+    return overrides
+
+
+def find_player_record(
+    player: Dict[str, Any],
+    pdata: PlayerData,
+    account_overrides: Optional[Dict[str, str]] = None,
+) -> Optional[PlayerRecord]:
     puuid = clean_str(player.get("puuid"))
+    target_puuid = (account_overrides or {}).get(puuid)
+    if target_puuid and target_puuid in pdata.by_puuid:
+        return pdata.by_puuid[target_puuid]
     if puuid and puuid in pdata.by_puuid:
         return pdata.by_puuid[puuid]
 
     riot_id = riot_id_from_match_player(player)
     if riot_id:
-        return pdata.by_riot_id_norm.get(norm_key(riot_id))
+        by_riot_id = pdata.by_riot_id_norm.get(norm_key(riot_id))
+        if by_riot_id:
+            return by_riot_id
+
+    game_name = clean_str(player.get("gameName"))
+    if game_name:
+        return pdata.by_player_name_norm.get(norm_key(game_name))
 
     return None
 
@@ -762,12 +799,13 @@ def detect_sides_by_known_players(
     """
     votos_atual: Dict[str, Counter] = {"Blue": Counter(), "Red": Counter()}
     votos_com_historico: Dict[str, Counter] = {"Blue": Counter(), "Red": Counter()}
+    account_overrides = shared_account_overrides(match)
 
     for player in active_players(match):
         side = str(player.get("teamId"))
         if side not in votos_atual:
             continue
-        rec = find_player_record(player, pdata)
+        rec = find_player_record(player, pdata, account_overrides)
         if not rec:
             continue
         if rec.current_team:
@@ -1227,10 +1265,11 @@ def possivel_mesma_pessoa(
 def quem_votou(match: Dict[str, Any], side: str, equipe: str, pdata: PlayerData) -> List[str]:
     """Jogadores daquele lado cujo current_team e a equipe divergente."""
     nomes = []
+    account_overrides = shared_account_overrides(match)
     for player in active_players(match):
         if str(player.get("teamId")) != side:
             continue
-        rec = find_player_record(player, pdata)
+        rec = find_player_record(player, pdata, account_overrides)
         if rec and rec.current_team and norm_key(rec.current_team) == norm_key(equipe):
             nomes.append(rec.jogador)
     return sorted(nomes)
@@ -1487,6 +1526,7 @@ def audit_matches(
             "conflicts": conflicts,
         })
 
+        account_overrides = shared_account_overrides(match)
         for player in active_players(match):
             total_active_players_seen += 1
 
@@ -1495,7 +1535,7 @@ def audit_matches(
             side = clean_str(player.get("teamId"))
             inferred_team = side_to_team.get(side)
 
-            rec = find_player_record(player, pdata)
+            rec = find_player_record(player, pdata, account_overrides)
 
             chave = f"puuid:{puuid}" if puuid else f"riot:{norm_key(riot_id)}"
             historico_da_conta[chave][match_id] = (match_date, inferred_team or "")
@@ -1879,6 +1919,8 @@ DEFAULT_RECURSIVE = True
 
 
 def main() -> None:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     result = audit_matches(
         players_path=DEFAULT_PLAYERS_XLSX,
         teams_path=DEFAULT_TEAMS_XLSX,

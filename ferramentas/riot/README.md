@@ -43,13 +43,24 @@ continuam funcionando - só os que baixam partida é que param.
 | `PegaTeamMatch.py` | o mesmo, mirando 1 ou 2 equipes | `out_tournament/` |
 | `PegaPlayerMatch.py` | o mesmo, mirando jogadores | `out_tournament/` |
 | `AuditaNicksPartidas.py` | acha quem jogou e não bate com o cadastro | `out_auditoria_nicks/` |
-| `analiseMatches.py` | relatório por partida e por equipe | `analiseMatches_<pasta>.xlsx` |
-| `analiseAgentes.py` | relatório de agentes | `analiseAgentes_<pasta>.xlsx` |
+| `analiseMatches.py` | relatório por partida e por equipe, com identidade, KAST, ACS e rAAting iguais aos do site | `analiseMatches_<pasta>.xlsx` |
+| `analiseAgentes.py` | relatório de agentes com as métricas oficiais do site | `analiseAgentes_<pasta>.xlsx` |
 | `analiseMapas.py` | relatório de mapas | `analiseMapas.xlsx` |
 | `analiseWinSituations.py` | winrate por situação de round | `dados_excel/round_state_winrates.xlsx` |
 
 O `analiseWinSituations` é o único que escreve dentro do repo, e é porque a saída
 dele é **fonte** para o `analiseMatches` e o `analiseAgentes`.
+
+O `analiseMatches.py` e o `analiseAgentes.py` requerem Node.js porque reutilizam
+`app.js` e `raating-core.js` por meio de `export_site_match_stats.js`. Assim, os
+relatórios não recalculam identidade e métricas por uma implementação paralela.
+O contexto econômico do rAAting 3.0 continua sendo calculado sobre todo o
+manifesto de partidas, mesmo quando a análise seleciona apenas uma pasta.
+
+As quatro análises usam por padrão `trabalho/Finalizados/Válidos` e descartam
+repetições pelo `matchInfo.matchId`. Depois de regenerar os winrates de situação,
+rode `scripts/build_metadata.py` e `scripts/build_database.js`: o rAAting 3.0 do
+site e dos relatórios depende dessa mesma distribuição de estados.
 
 ## Duas armadilhas que já custaram caro
 

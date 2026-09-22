@@ -19,7 +19,7 @@ import config_hub
 # A pasta de trabalho fica fora do repo: e la que estao os JSONs brutos e as
 # saidas de analise. Ver config_hub.
 BASE_DIR = config_hub.TRABALHO_DIR
-DEFAULT_INPUT_DIR = str(BASE_DIR / "Finalizados" / "Válidos" / "Univavá" / "Classificatórias 1")
+DEFAULT_INPUT_DIR = str(BASE_DIR / "Finalizados" / "Válidos")
 DEFAULT_OUTPUT_XLSX = str(BASE_DIR / "analiseMapas.xlsx")
 DEFAULT_RECURSIVE = True
 
@@ -41,6 +41,7 @@ MAP_INTERNAL_TO_DISPLAY = {
     "Port": "Icebox",
     "Jam": "Lotus",
     "Pitt": "Pearl",
+    "Plummet": "Summit",
     "Bonsai": "Split",
     "Juliett": "Sunset",
 }
@@ -181,6 +182,7 @@ class MapAgg:
 
 def analyze_maps(input_dir: Path, recursive: bool) -> Dict[str, MapAgg]:
     aggs: Dict[str, MapAgg] = defaultdict(MapAgg)
+    seen_match_ids: Set[str] = set()
 
     for json_path in iter_json_files(input_dir, recursive=recursive):
         data = load_match(json_path)
@@ -188,6 +190,11 @@ def analyze_maps(input_dir: Path, recursive: bool) -> Dict[str, MapAgg]:
             continue
 
         match_info = data.get("matchInfo") or {}
+        match_id = str(match_info.get("matchId") or "").strip()
+        if match_id:
+            if match_id in seen_match_ids:
+                continue
+            seen_match_ids.add(match_id)
         map_name = map_name_from_map_id(match_info.get("mapId")) or "DESCONHECIDO"
 
         rr_list = data.get("roundResults") or []

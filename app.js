@@ -3779,8 +3779,6 @@ function applyTeamRankings(teams, matches, matchSeries, players, tournaments, ra
             statisticalModels: team.rankingScore,
             strengthOfSchedule: 50,
             dominance: team.rankingScore,
-            consistency: 50,
-            relevance: 50,
           },
           models: {},
           diagnostics: { fallback: true },
@@ -7015,7 +7013,7 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null) 
         </div>
         <div class="ranking-weight-bars">
           ${rankingWeightedBar("Desempenho", blocks.competitive, 70, "Mede desempenho coletivo através dos resultados, qualidade dos adversários, dominância, consistência e relevância das partidas.")}
-          ${rankingWeightedBar("Conquistas", blocks.achievements, 15, "Valoriza campanhas em campeonatos por colocação, peso do evento, tamanho e recência.")}
+          ${rankingWeightedBar("Conquistas", blocks.achievements, 15, "Soma os pontos de cada colocação em campeonatos encerrados; cada ponto perde valor em linha reta até zerar em 10 meses. A equipe com mais pontos vale 100, e as demais, a proporção dela.")}
           ${rankingWeightedBar("Forma recente", blocks.recentForm, 10, "Desempenho em uma janela de 60 dias, meia-vida de 30 dias.")}
           ${rankingWeightedBar("rAAting 3.0 jogadores", blocks.rosterStrength, 5, "Usa o rAAting 3.0 individual, estabilidade do core e profundidade.")}
         </div>
@@ -7027,11 +7025,9 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null) 
         </div>
         <div class="ranking-competitive-layout">
           <div class="ranking-weight-bars">
-            ${rankingWeightedBar("Modelos estatísticos", components.statisticalModels, 60, "Combina Colley, Massey, Elo final, Elo com margem, TrueSkill, PageRank, Bradley-Terry-Poisson e PCA.")}
-            ${rankingWeightedBar("Força dos adversários", components.strengthOfSchedule, 20, "SOS (Strength of Schedule) geral considera todos os adversários; SOS de vitórias destaca quem foi batido.")}
-            ${rankingWeightedBar("Dominância", components.dominance, 10, "Mede controle do placar pela margem relativa de rounds.")}
-            ${rankingWeightedBar("Consistência", components.consistency, 5, "Penaliza oscilação e derrotas abaixo do esperado, principalmente quando a equipe era favorita.")}
-            ${rankingWeightedBar("Relevância", components.relevance, 5, "Aumenta o peso de partidas mais importantes por campeonato, fase, série e recência.")}
+            ${rankingWeightedBar("Modelos estatísticos", components.statisticalModels, 66.7, "Combina Colley, Massey, Elo final, Elo com margem, TrueSkill, PageRank, Bradley-Terry-Poisson e PCA.")}
+            ${rankingWeightedBar("Força dos adversários", components.strengthOfSchedule, 22.2, "SOS (Strength of Schedule) geral considera todos os adversários; SOS de vitórias destaca quem foi batido.")}
+            ${rankingWeightedBar("Dominância", components.dominance, 11.1, "Mede controle do placar pela margem relativa de rounds.")}
           </div>
           <div class="ranking-side-cards">
             ${rankingMiniCard("SOS geral", sos.general, "Strength of Schedule: força média de todos os adversários enfrentados.")}
@@ -7064,9 +7060,9 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null) 
       <section class="ranking-visual-section">
         <div class="ranking-section-title">
           <h3>Conquistas</h3>
-          <span>${ranking.achievements?.length ? "campanhas recentes" : "fallback neutro"}</span>
+          <span>pontos dos últimos 10 meses</span>
         </div>
-        ${rankingAchievementSummary(ranking.achievements || [])}
+        ${rankingAchievementSummary(ranking.achievements || [], ranking.blocks?.achievements)}
       </section>
     </div>
   `;
@@ -7137,21 +7133,28 @@ function rankingModelTooltip(key) {
   return labels[key] || "Modelo estatístico normalizado em 0-100.";
 }
 
-function rankingAchievementSummary(achievements) {
-  if (!achievements.length) return `<div class="ranking-fallback-card ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText("Quando não há dados de conquistas, o bloco entra neutro em 50 para não quebrar nem punir artificialmente.")}"><strong>50.0</strong><span>fallback neutro por falta de conquistas</span></div>`;
+// Todo resultado soma (desde 22/09/2026), entao a lista mostra todas as
+// campanhas que ainda valem ponto. Colocacao de 0 ponto ou ja vencida fica de fora.
+function rankingAchievementSummary(achievements, blockScore) {
+  const scoring = achievements.filter((row) => Number(row.score) > 0);
+  if (!scoring.length) {
+    return `<div class="ranking-fallback-card ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText("A nota de conquistas é a proporção dos pontos da equipe sobre a equipe que mais pontuou. Sem pontos nos últimos 10 meses, ela fica em zero.")}"><strong>${fmt(blockScore ?? 0, 1)}</strong><span>sem pontos em campeonatos dos últimos 10 meses</span></div>`;
+  }
   return `
     <div class="ranking-achievement-list">
-      ${achievements
-        .slice(0, 4)
-        .map((row, index) => rankingAchievementCard(row, index))
-        .join("")}
+      ${scoring.map((row) => rankingAchievementCard(row)).join("")}
     </div>
   `;
 }
 
-function rankingAchievementCard(row, index) {
+function rankingAchievementCard(row) {
   const event = rankingTournamentForAchievement(row);
-  const tooltip = index < 3 ? "Resultado entra com peso integral pela regra anti-farm." : "Resultado adicional entra com peso reduzido de 50% pela regra anti-farm.";
+  const base = Number(row.basePoints);
+  const decay = Number(row.decay);
+  const tooltip =
+    Number.isFinite(base) && Number.isFinite(decay)
+      ? `A colocação vale ${fmt(base, 0)} pontos. Com o tempo desde o fim do campeonato, conta ${fmt(decay * 100, 0)}% hoje; zera 10 meses depois.`
+      : "Pontos da colocação, já descontado o tempo desde o fim do campeonato.";
   return `
     <span class="ranking-achievement-card ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText(tooltip)}">
       ${eventLogo(event, "small")}
@@ -7177,7 +7180,10 @@ function rankingTournamentForAchievement(row) {
 function rankingPlacementLabel(value) {
   const text = String(value || "").trim();
   const normalized = normalize(text);
-  if (["em andamento", "classificado", "classificada", "em disputa"].includes(normalized)) return "Em andamento";
+  // Campanha de conquista so existe em campeonato encerrado, e ali "Classificado"
+  // e o resultado de quem avancou (ver placementIsQualified).
+  if (placementIsQualified(text)) return "Classificado";
+  if (["em andamento", "em disputa"].includes(normalized)) return "Em andamento";
   if (normalized === "eliminado" || normalized === "eliminada") return "Eliminado";
   const range = text.match(/(\d+)\D+(\d+)/);
   if (range) return `${range[1]}º-${range[2]}º lugar`;

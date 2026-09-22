@@ -21,9 +21,11 @@
     competitiveWeights: {
       statisticalModels: 0.6,
       strengthOfSchedule: 0.2,
+      // Proporcao 6:2:1. Consistencia e relevancia sairam em 22/09/2026: medida
+      // entre as 105 equipes, a consistencia correlacionava -0,39 com a nota
+      // final (quem perdia sempre tirava 100) e a relevancia 0,89 com modelos e
+      // 0,92 com dominancia, ou seja, repetia o que ja estava contado.
       dominance: 0.1,
-      consistency: 0.05,
-      relevance: 0.05,
     },
     modelWeights: {
       mainModelsAverage: 0.85,
@@ -50,6 +52,15 @@
       playerRating: 90,
     },
     recentWindowDays: 60,
+    // O peso de campeonato e o de fase saem da tabela de pontos das conquistas.
+    // reference: pontos do titulo que valem peso 1. Os expoentes comprimem: o do
+    // campeonato compara eventos diferentes, o da fase opera dentro de um mesmo
+    // evento, onde a tabela ja e concentrada no topo.
+    pointsWeights: {
+      reference: 100,
+      tournamentExponent: 0.5,
+      phaseExponent: 0.25,
+    },
     defaultTournamentWeight: 1,
     defaultPhase: "regular",
     defaultPhaseWeight: 1,
@@ -60,8 +71,16 @@
     },
     achievements: {
       inferFromEventResults: true,
+      // Desde 22/09/2026 os pontos se acumulam: com multiplicador 1, todo
+      // resultado alem dos antiFarmFullResults primeiros tambem soma inteiro.
       antiFarmFullResults: 3,
-      additionalResultMultiplier: 0.5,
+      additionalResultMultiplier: 1,
+      // "top": a maior soma vale 100 e as demais a proporcao dela.
+      // "percentile": a regra antiga, esticada entre os percentis 5 e 95.
+      normalization: "top",
+      // Decaimento linear ate zerar em lifetimeDays (10 meses). Sem ele, vale a
+      // meia-vida de halfLives.achievements.
+      lifetimeDays: 304,
       placementPoints: {
         "1": 100,
         "2": 70,
@@ -110,8 +129,6 @@
     const modelScores = modelBundle.statisticalModels;
     const sosBundle = calculateStrengthOfSchedule(teamIds, observations, modelScores, weights);
     const dominance = calculateDominance(teamIds, observations);
-    const consistency = calculateConsistency(teamIds, observations, modelScores);
-    const relevance = calculateRelevance(teamIds, observations, modelScores);
     const competitive = weightedBlock(
       teamIds,
       weights.competitiveWeights,
@@ -119,8 +136,6 @@
         statisticalModels: modelScores,
         strengthOfSchedule: sosBundle.score,
         dominance,
-        consistency,
-        relevance,
       },
     );
     const achievements = calculateAchievements(teamIds, input.matchSeries || [], tournaments, weights, now);
@@ -131,7 +146,7 @@
       weights.finalWeights,
       {
         competitive,
-        achievements,
+        achievements: achievements.score,
         recentForm: recentForm.score,
         rosterStrength: rosterStrength.score,
       },
@@ -149,8 +164,6 @@
         statisticalModels: safeScore(modelScores[id]),
         strengthOfSchedule: safeScore(sosBundle.score[id]),
         dominance: safeScore(dominance[id]),
-        consistency: safeScore(consistency[id]),
-        relevance: safeScore(relevance[id]),
       };
       const provisional = basic.matches < finiteNumber(weights.minimumMatches, 9);
       const rosterSize = teamRosterSize(teamsById.get(id));
@@ -216,6 +229,11 @@
 
   function createObservations(matches, seriesByKey, tournamentsById, weights, now) {
     const rows = [];
+    const weightCache = new Map();
+    const cached = (key, make) => {
+      if (!weightCache.has(key)) weightCache.set(key, make());
+      return weightCache.get(key);
+    };
     for (const match of matches) {
       const scoreA = finiteNumber(match.teamA?.score, NaN);
       const scoreB = finiteNumber(match.teamB?.score, NaN);
@@ -226,8 +244,8 @@
       const series = seriesByKey.get(match.seriesKey || match.id) || {};
       const bestOf = bestOfForSeries(series, match);
       const phase = resolvePhase(match, series, eventConfig, weights);
-      const tournamentWeight = positiveNumber(eventConfig.weight, weights.defaultTournamentWeight || 1);
-      const phaseWeight = positiveNumber(eventConfig.phases?.[phase], positiveNumber(eventConfig.phaseWeights?.[phase], positiveNumber(weights.defaultPhaseWeight, 1)));
+      const tournamentWeight = cached(`t|${eventId}`, () => tournamentWeightFor(eventId, eventConfig, weights));
+      const phaseWeight = cached(`p|${eventId}|${phase}`, () => phaseWeightFor(phase, eventConfig, weights));
       const seriesWeight = positiveNumber(weights.seriesWeights?.[`MD${bestOf}`], 1);
       const startedAt = finiteNumber(match.startedAt, finiteNumber(series.startedAt, 0));
       const days = startedAt ? Math.max(0, (now - startedAt) / DAY_MS) : 0;
@@ -265,6 +283,80 @@
     return rows;
   }
 
+  // Pontos que o campeonato paga ao campeao. Classificatoria que paga 0 no topo
+  // aponta com `qualifiesTo` para o campeonato onde a vaga vira ponto.
+  function tournamentPointsTop(eventId, weights, seen = new Set()) {
+    const config = weights.tournaments?.[eventId];
+    if (!config || seen.has(eventId)) return NaN;
+    seen.add(eventId);
+    if (config.qualifiesTo) {
+      const inherited = tournamentPointsTop(config.qualifiesTo, weights, seen);
+      if (Number.isFinite(inherited) && inherited > 0) return inherited;
+    }
+    const values = Object.values(config.placementPoints || {}).map((value) => finiteNumber(value, NaN)).filter(Number.isFinite);
+    return values.length ? Math.max(...values) : NaN;
+  }
+
+  function tournamentWeightFor(eventId, eventConfig, weights) {
+    const top = tournamentPointsTop(eventId, weights);
+    const reference = positiveNumber(weights.pointsWeights?.reference, 100);
+    if (Number.isFinite(top) && top > 0) return Math.pow(top / reference, finiteNumber(weights.pointsWeights?.tournamentExponent, 0.5));
+    return positiveNumber(eventConfig.weight, weights.defaultTournamentWeight || 1);
+  }
+
+  // A tabela em vagas: "5-6" vale por duas, e o rotulo sem numero
+  // ("Classificado") cobre as vagas que as faixas numeradas deixam livres.
+  function placementTableRows(eventConfig) {
+    const table = eventConfig?.placementPoints;
+    if (!table) return [];
+    const rows = Object.entries(table).map(([label, value]) => {
+      const text = String(label).trim();
+      const range = text.match(/^(\d+)\s*-\s*(\d+)$/);
+      const single = /^\d+$/.test(text);
+      return {
+        points: finiteNumber(value, 0),
+        start: range ? Number(range[1]) : single ? Number(text) : 1,
+        teams: range ? Math.max(1, Number(range[2]) - Number(range[1]) + 1) : single ? 1 : 0,
+      };
+    });
+    const numbered = rows.reduce((sum, row) => sum + row.teams, 0);
+    const unnumbered = rows.filter((row) => row.teams === 0);
+    const free = Math.max(0, finiteNumber(eventConfig.teams, 0) - numbered);
+    for (const row of unnumbered) row.teams = Math.max(1, Math.floor(free / unnumbered.length));
+    return rows.sort((a, b) => a.start - b.start);
+  }
+
+  function averagePointsPerTeam(rows) {
+    const teams = rows.reduce((sum, row) => sum + row.teams, 0);
+    return teams ? rows.reduce((sum, row) => sum + row.points * row.teams, 0) / teams : 0;
+  }
+
+  function phasePointsFor(rows, phase, average) {
+    if (phase === "final") {
+      const podium = [];
+      for (const row of rows) for (let i = 0; i < row.teams && podium.length < 2; i += 1) podium.push(row.points);
+      return podium.length ? mean(podium) : average;
+    }
+    if (phase === "playoffs" || phase === "qualifier") {
+      const above = rows.filter((row) => row.points > average);
+      const teams = above.reduce((sum, row) => sum + row.teams, 0);
+      return teams ? above.reduce((sum, row) => sum + row.points * row.teams, 0) / teams : average;
+    }
+    return average;
+  }
+
+  // Peso da fase: os pontos que ela decide sobre a media por equipe do evento.
+  // Fase regular fica na media, ou seja, em 1.
+  function phaseWeightFor(phase, eventConfig, weights) {
+    const rows = placementTableRows(eventConfig);
+    const average = averagePointsPerTeam(rows);
+    if (rows.length && average > 0) {
+      const points = phasePointsFor(rows, phase, average);
+      if (points > 0) return Math.pow(points / average, finiteNumber(weights.pointsWeights?.phaseExponent, 0.25));
+    }
+    return positiveNumber(eventConfig.phases?.[phase], positiveNumber(eventConfig.phaseWeights?.[phase], positiveNumber(weights.defaultPhaseWeight, 1)));
+  }
+
   function bestOfForSeries(series, match) {
     const label = String(series?.label || "");
     const labelMatch = label.match(/\d+/);
@@ -284,6 +376,9 @@
     for (const rule of eventConfig.phaseRules || []) {
       if (rule.seriesCode && String(rule.seriesCode) === seriesCode) return rule.phase;
       if (rule.matchCodeIncludes && String(match.code || "").includes(rule.matchCodeIncludes)) return rule.phase;
+      // Regra sem faixa numerica ja disse tudo que tinha a dizer: sem esta linha,
+      // os limites vazios viram -Infinito e +Infinito e ela pega o evento inteiro.
+      if (rule.seriesCodeMin === undefined && rule.seriesCodeMax === undefined) continue;
       const min = rule.seriesCodeMin === undefined ? -Infinity : Number(rule.seriesCodeMin);
       const max = rule.seriesCodeMax === undefined ? Infinity : Number(rule.seriesCodeMax);
       if (Number.isFinite(seriesNumber) && seriesNumber >= min && seriesNumber <= max) return rule.phase;
@@ -596,48 +691,7 @@
     return robustNormalizeMap(raw, teamIds);
   }
 
-  function calculateConsistency(teamIds, observations, baseStrength) {
-    const buckets = Object.fromEntries(teamIds.map((id) => [id, { error: 0, favoritePenalty: 0, weight: 0 }]));
-    for (const obs of observations) {
-      applySide(obs, (teamId, opponentId, roundsFor, roundsAgainst, won) => {
-        const expected = expectedFromStrength(baseStrength[teamId], baseStrength[opponentId]);
-        const actual = won ? 1 : 0;
-        const favoritePenalty = !won && expected > 0.55 ? (expected - 0.55) / 0.45 : 0;
-        buckets[teamId].error += Math.abs(actual - expected) * obs.weight;
-        buckets[teamId].favoritePenalty += favoritePenalty * obs.weight;
-        buckets[teamId].weight += obs.weight;
-      });
-    }
-    const raw = {};
-    for (const id of teamIds) {
-      const bucket = buckets[id];
-      if (!bucket.weight) {
-        raw[id] = 50;
-        continue;
-      }
-      const error = bucket.error / bucket.weight;
-      const favoritePenalty = bucket.favoritePenalty / bucket.weight;
-      raw[id] = clampNumber(100 * (1 - (0.72 * error + 0.28 * favoritePenalty)), 0, 100);
-    }
-    return robustNormalizeMap(raw, teamIds);
-  }
 
-  function calculateRelevance(teamIds, observations, baseStrength) {
-    const buckets = Object.fromEntries(teamIds.map((id) => [id, { sum: 0, weight: 0 }]));
-    for (const obs of observations) {
-      applySide(obs, (teamId, opponentId, roundsFor, roundsAgainst, won) => {
-        const opponentTerm = (safeScore(baseStrength[opponentId]) - 50) / 50;
-        const resultQuality = won ? 0.74 + 0.26 * opponentTerm : 0.23 + 0.16 * opponentTerm;
-        const marginRelative = (roundsFor - roundsAgainst) / Math.max(1, roundsFor + roundsAgainst);
-        const dominance = (clampNumber(marginRelative * 1.5, -1, 1) + 1) / 2;
-        const performance = clampNumber(100 * (0.72 * resultQuality + 0.28 * dominance), 0, 100);
-        buckets[teamId].sum += performance * obs.weight;
-        buckets[teamId].weight += obs.weight;
-      });
-    }
-    const raw = Object.fromEntries(teamIds.map((id) => [id, buckets[id].weight ? buckets[id].sum / buckets[id].weight : 50]));
-    return robustNormalizeMap(raw, teamIds);
-  }
 
   function calculateAchievements(teamIds, matchSeries, tournaments, weights, now) {
     const campaigns = [];
@@ -696,9 +750,22 @@
     }
 
     return {
-      score: campaigns.length ? robustNormalizeMap(raw, teamIds) : constantMap(teamIds, 50),
+      score: campaigns.length ? normalizeAchievementScores(raw, teamIds, weights) : constantMap(teamIds, 50),
       details,
     };
+  }
+
+  function normalizeAchievementScores(raw, teamIds, weights) {
+    if (String(weights.achievements?.normalization || "percentile") !== "top") return robustNormalizeMap(raw, teamIds);
+    const top = Math.max(0, ...teamIds.map((id) => finiteNumber(raw[id], 0)));
+    if (top <= EPSILON) return constantMap(teamIds, 50);
+    return Object.fromEntries(teamIds.map((id) => [id, safeScore((100 * Math.max(0, finiteNumber(raw[id], 0))) / top)]));
+  }
+
+  function achievementDecay(days, weights) {
+    const lifetime = finiteNumber(weights.achievements?.lifetimeDays, 0);
+    if (lifetime > 0) return clampNumber(1 - Math.max(0, finiteNumber(days, 0)) / lifetime, 0, 1);
+    return decayWeight(days, weights.halfLives?.achievements || 210);
   }
 
   function createAchievementCampaign(result, eventId, eventConfig, event, weights, now, source) {
@@ -707,11 +774,14 @@
       finiteNumber(event?.end, finiteNumber(event?.start, now));
     const size = finiteNumber(result.teams, finiteNumber(result.size, finiteNumber(eventConfig.teams, Array.isArray(event?.teams) ? event.teams.length : 0)));
     const placementRange = achievementPlacementRange(result);
-    const score =
-      placementRangePoints(placementRange, weights) *
-      positiveNumber(eventConfig.weight, weights.defaultTournamentWeight || 1) *
-      sizeWeight(size, weights) *
-      decayWeight(Math.max(0, (now - date) / DAY_MS), weights.halfLives?.achievements || 210);
+    // Tabela propria do campeonato: o valor ja e o da colocacao, sem peso do
+    // evento nem de tamanho por cima. Posicao fora da tabela cai na regra geral.
+    const tablePoints = eventPlacementTablePoints(eventConfig.placementPoints, result, placementRange);
+    const basePoints = Number.isFinite(tablePoints)
+      ? tablePoints
+      : placementRangePoints(placementRange, weights) * positiveNumber(eventConfig.weight, weights.defaultTournamentWeight || 1) * sizeWeight(size, weights);
+    const decay = achievementDecay(Math.max(0, (now - date) / DAY_MS), weights);
+    const score = basePoints * decay;
     return {
       teamId: result.teamId,
       eventId,
@@ -723,6 +793,9 @@
       placementLabel: result.placementLabel || placementRange.label,
       size,
       date,
+      basePoints,
+      decay,
+      pointsSource: Number.isFinite(tablePoints) ? "table" : "rule",
       score,
       source,
     };
@@ -745,8 +818,16 @@
       .map((row, index) => ({ ...row, originalIndex: index }));
 
     const grouped = new Map();
+    const unnumbered = new Map();
     for (const row of rows) {
       const range = achievementPlacementRange(row);
+      if (!range.start) {
+        const label = placementSourceLabel(row);
+        if (!placementIsQualified(label)) continue;
+        if (!unnumbered.has(label)) unnumbered.set(label, []);
+        unnumbered.get(label).push(row);
+        continue;
+      }
       const key = `${range.start}-${range.end}`;
       if (!grouped.has(key)) grouped.set(key, []);
       grouped.get(key).push({ row, range });
@@ -765,6 +846,30 @@
           placementEnd: Math.max(range.start, end),
           placementLabel: placementRangeLabel(range.start, Math.max(range.start, end)),
         });
+      }
+    }
+
+    // Faixa sem numero ("Classificado") e o resultado de quem avancou numa fase
+    // eliminatoria: ocupa as primeiras colocacoes que as faixas numeradas deixam
+    // livres, uma por equipe. O rotulo do site continua sendo o exibido.
+    const covered = new Set();
+    for (const row of output) {
+      for (let place = row.placementStart; place <= row.placementEnd; place += 1) covered.add(place);
+    }
+    let nextPlace = 1;
+    for (const [label, group] of unnumbered) {
+      const places = [];
+      while (places.length < group.length) {
+        if (!covered.has(nextPlace)) {
+          places.push(nextPlace);
+          covered.add(nextPlace);
+        }
+        nextPlace += 1;
+      }
+      const start = places[0];
+      const end = places[places.length - 1];
+      for (const row of group) {
+        output.push({ ...row, placement: start, placementStart: start, placementEnd: end, placementLabel: label });
       }
     }
 
@@ -822,6 +927,25 @@
       count += 1;
     }
     return count ? total / count : placementPoints(range.start, weights);
+  }
+
+  function placementSourceLabel(row = {}) {
+    return String(row.range || row.placementRange || row.place || "").trim();
+  }
+
+  function placementIsQualified(label) {
+    return ["classificado", "classificada"].includes(String(label || "").trim().toLowerCase());
+  }
+
+  function eventPlacementTablePoints(table, result, range) {
+    if (!table || typeof table !== "object") return NaN;
+    const keys = [placementSourceLabel(result), result.placementLabel, placementRangeLabel(range.start, range.end)];
+    for (const key of keys) {
+      if (!key || table[key] === undefined) continue;
+      const value = Number(table[key]);
+      if (Number.isFinite(value)) return value;
+    }
+    return NaN;
   }
 
   function placementRangeLabel(start, end) {
@@ -1093,9 +1217,6 @@
     return Math.pow(0.5, Math.max(0, finiteNumber(days, 0)) / resolvedHalfLife);
   }
 
-  function expectedFromStrength(a, b) {
-    return 1 / (1 + Math.exp(-(safeScore(a) - safeScore(b)) / 14));
-  }
 
   function solveLinearSystem(matrix, vector) {
     const n = matrix.length;

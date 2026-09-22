@@ -4463,11 +4463,16 @@ tr:hover td {
   min-width: 0;
 }
 
-.ranking-achievement-main strong,
-.ranking-achievement-main small {
+.ranking-achievement-main strong {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* A linha de baixo e o dado (colocacao e pontos): quebra em vez de cortar.
+   Com reticencias, "Classificado - 25.2 pts" perdia justamente os pontos. */
+.ranking-achievement-main small {
+  overflow-wrap: anywhere;
 }
 
 .ranking-achievement-list {

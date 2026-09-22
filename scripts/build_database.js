@@ -177,6 +177,42 @@ function main() {
   console.log(`  campos mortos removidos: ${strippedFields}`);
   console.log(`  times: ${db.teams.length} | jogadores: ${db.players.length} | snapshots de ranking: ${db.rankingSnapshots.length}`);
   console.log(`  tamanho: ${mb(json.length)} bruto | ${mb(gzipBytes)} gzip | nós: ${payload.nodes.length}`);
+  // A tabela de pontos casa pelo id do evento e pelo rotulo da colocacao, e as
+  // duas falhas sao silenciosas: chave errada nao pontua nada (a `jubs` ficou
+  // orfa assim em jul/2026) e rotulo fora da tabela cai na regra geral.
+  const weightTournaments = rankingWeights?.tournaments || {};
+  const eventIds = new Set(db.tournaments.map((event) => event.id));
+  const orphanKeys = Object.keys(weightTournaments).filter((id) => !eventIds.has(id));
+  if (orphanKeys.length) console.warn(`  aviso: ranking-weights.json tem campeonato sem evento: ${orphanKeys.join(", ")}`);
+  const offTable = new Set();
+  for (const team of db.ranking.teams || []) {
+    for (const campaign of team.achievements || []) {
+      if (weightTournaments[campaign.eventId]?.placementPoints && campaign.pointsSource !== "table") offTable.add(`${campaign.eventId} "${campaign.placementLabel}"`);
+    }
+  }
+  if (offTable.size) console.warn(`  aviso: colocação fora da tabela de pontos (usou a regra geral): ${[...offTable].join(", ")}`);
+  // Regra de fase que nao casa com nenhuma serie e silenciosa: a fase decisiva
+  // entra com o peso da fase padrao. Só vale checar em campeonato encerrado,
+  // porque em andamento a fase ainda pode não ter acontecido.
+  const seriesByEvent = new Map();
+  for (const series of db.matchSeries) {
+    const code = Number(String(series.seriesCode || "").match(/\d+/)?.[0]);
+    if (!seriesByEvent.has(series.eventId)) seriesByEvent.set(series.eventId, []);
+    seriesByEvent.get(series.eventId).push({ code, raw: String(series.seriesCode || "") });
+  }
+  const deadRules = [];
+  for (const [id, cfg] of Object.entries(weightTournaments)) {
+    const event = db.tournaments.find((row) => row.id === id);
+    if (!event || !/finalizado/i.test(event.status || "")) continue;
+    for (const rule of cfg.phaseRules || []) {
+      const rows = seriesByEvent.get(id) || [];
+      const min = rule.seriesCodeMin === undefined ? -Infinity : Number(rule.seriesCodeMin);
+      const max = rule.seriesCodeMax === undefined ? Infinity : Number(rule.seriesCodeMax);
+      const hits = rows.filter((row) => (rule.seriesCode ? row.raw === String(rule.seriesCode) : Number.isFinite(row.code) && row.code >= min && row.code <= max)).length;
+      if (!hits) deadRules.push(`${id} "${rule.phase}"`);
+    }
+  }
+  if (deadRules.length) console.warn(`  aviso: regra de fase sem nenhuma série correspondente: ${deadRules.join(", ")}`);
   // O home.json e um recorte deste arquivo: se ficar para tras, a home pinta o
   // primeiro render com dados velhos ate o banco completo chegar e corrigir.
   // Encadear aqui evita depender de alguem lembrar do segundo comando.

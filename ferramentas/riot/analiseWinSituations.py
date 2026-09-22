@@ -142,11 +142,18 @@ def analyze_all_round_states(input_dir: Path, recursive: bool) -> Dict[str, Dict
     Calcula win% do "lado com X vivos" no momento do estado.
     """
     stats: Dict[str, Dict[str, int]] = defaultdict(lambda: {"occ": 0, "win": 0})
+    seen_match_ids: Set[str] = set()
 
     for jp in iter_json_files(input_dir, recursive=recursive):
         data = load_match(jp)
         if not data:
             continue
+
+        match_id = str((data.get("matchInfo") or {}).get("matchId") or "").strip()
+        if match_id:
+            if match_id in seen_match_ids:
+                continue
+            seen_match_ids.add(match_id)
 
         roster_blue, roster_red, side_by_puuid = extract_rosters(data.get("players") or [])
         if not roster_blue or not roster_red:

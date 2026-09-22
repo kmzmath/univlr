@@ -4,7 +4,7 @@ import re
 import subprocess
 import sys
 from collections import defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 
@@ -15,6 +15,7 @@ from openpyxl.utils import get_column_letter
 
 # ---- CONFIG PARA RODAR DIRETO NO VS CODE ----
 import config_hub
+from analiseMatches import SITE_AGGREGATE_FIELDS, rAAting_3_0_value, run_site_pipeline
 
 # A pasta de trabalho fica fora do repo: e la que estao os JSONs brutos e as
 # saidas de analise. Ver config_hub.
@@ -24,12 +25,12 @@ BASE_DIR = config_hub.TRABALHO_DIR
 # Exemplos:
 # DEFAULT_INPUT_DIR = str(BASE_DIR / "Finalizados" / "Válidos" / "CIA 2026")
 # DEFAULT_INPUT_DIR = str(BASE_DIR / "Finalizados" / "Válidos" / "UNI Ascension")
-DEFAULT_INPUT_DIR = str(BASE_DIR / "Finalizados" / "Válidos" / "Univavá" / "Classificatórias 1")
+DEFAULT_INPUT_DIR = str(BASE_DIR / "Finalizados" / "Válidos")
 
 # Se vazio, gera automaticamente: analiseAgentes_<nome_da_pasta>.xlsx
 DEFAULT_OUTPUT_XLSX = ""
 DEFAULT_RECURSIVE = True
-DEFAULT_TRADE_WINDOW_MS = 2000
+DEFAULT_TRADE_WINDOW_MS = 5000
 DEFAULT_STATE_WINRATES_XLSX = str(config_hub.ROUND_STATE_WINRATES_XLSX)
 OPEN_FILE_AFTER_SAVE = True
 
@@ -168,7 +169,7 @@ SUMMARY_HEADERS = [
     "Clutches",
     "Imp.Total (pp)",
     "Imp/Round (pp)",
-    "Rating",
+    "rAAting 3.0",
 ]
 
 MAP_HEADERS = ["Mapa"] + SUMMARY_HEADERS
@@ -205,7 +206,7 @@ DETAIL_HEADERS = [
     "Clutches",
     "Imp.Total (pp)",
     "Imp/Round (pp)",
-    "Rating",
+    "rAAting 3.0",
 ]
 
 
@@ -332,6 +333,7 @@ class AgentPickRecord:
     impact_total: float
     impact_per_round: float
     rating: float
+    aggregate: Dict[str, float] = field(default_factory=dict)
 
     @property
     def kast(self) -> float:
@@ -372,6 +374,71 @@ class AgentPickRecord:
             self.impact_per_round,
             self.rating,
         ]
+
+
+def _site_numeric_fields(player: Dict[str, Any]) -> Dict[str, float]:
+    values: Dict[str, float] = {}
+    for name in SITE_AGGREGATE_FIELDS:
+        raw = player.get(name, 0)
+        try:
+            values[name] = float(raw) if raw is not None else 0.0
+        except (TypeError, ValueError):
+            values[name] = 0.0
+    return values
+
+
+def build_agent_records_from_site_pipeline(payload: Dict[str, Any]) -> List[AgentPickRecord]:
+    records: List[AgentPickRecord] = []
+    for match in payload.get("matches") or []:
+        filename = str(match.get("fileName") or match.get("sourcePath") or "")
+        map_name = str(match.get("mapName") or "")
+        winner_id = str(match.get("winnerId") or "")
+        for player in match.get("players") or []:
+            rounds = int(float(player.get("rounds") or 0))
+            if rounds <= 0:
+                continue
+            impact_total = float(
+                player.get("adjustedRoundSwingTotalPp")
+                or player.get("impactTotal")
+                or 0
+            )
+            records.append(
+                AgentPickRecord(
+                    file_name=filename,
+                    player=str(player.get("nick") or player.get("handle") or "Jogador"),
+                    riot_id=str(player.get("handle") or ""),
+                    side=str(player.get("teamColor") or ""),
+                    agent=str(player.get("agent") or ""),
+                    role=str(player.get("agentClass") or "DESCONHECIDO"),
+                    map_name=map_name,
+                    map_win=int(bool(winner_id) and str(player.get("teamId") or "") == winner_id),
+                    rounds=rounds,
+                    rounds_won=int(float(player.get("roundWins") or 0)),
+                    rounds_lost=int(float(player.get("roundLosses") or 0)),
+                    kast_rounds=int(float(player.get("kastRounds") or 0)),
+                    acs=float(player.get("acs") or 0),
+                    kills=int(float(player.get("kills") or 0)),
+                    deaths=int(float(player.get("deaths") or 0)),
+                    assists=int(float(player.get("assists") or 0)),
+                    kpr=float(player.get("kpr") or 0),
+                    dpr=float(player.get("dpr") or 0),
+                    apr=float(player.get("apr") or 0),
+                    adr=float(player.get("adr") or 0),
+                    fk=int(float(player.get("firstKills") or 0)),
+                    fd=int(float(player.get("firstDeaths") or 0)),
+                    k1=int(float(player.get("oneKills") or 0)),
+                    k2=int(float(player.get("twoKills") or 0)),
+                    k3=int(float(player.get("threeKills") or 0)),
+                    k4=int(float(player.get("fourKills") or 0)),
+                    k5=int(float(player.get("fiveKills") or 0)),
+                    clutches=int(float(player.get("clutches") or 0)),
+                    impact_total=impact_total,
+                    impact_per_round=safe_div(impact_total, rounds),
+                    rating=float(player.get("raating_3") or player.get("rating") or 0),
+                    aggregate=_site_numeric_fields(player),
+                )
+            )
+    return records
 
 
 # ---------------- Winrates por estado XvY ----------------
@@ -872,32 +939,37 @@ def build_agent_records_for_match(
 
 def aggregate_records(records: List[AgentPickRecord], pickrate_denominator: int, agent_name: str, role: str) -> List[Any]:
     picks = len(records)
-    total_rounds = sum(r.rounds for r in records)
-    total_wins = sum(r.rounds_won for r in records)
-    total_losses = sum(r.rounds_lost for r in records)
-    total_kast = sum(r.kast_rounds for r in records)
-    total_kills = sum(r.kills for r in records)
-    total_deaths = sum(r.deaths for r in records)
-    total_assists = sum(r.assists for r in records)
-    total_fk = sum(r.fk for r in records)
-    total_fd = sum(r.fd for r in records)
-    total_1k = sum(r.k1 for r in records)
-    total_2k = sum(r.k2 for r in records)
-    total_3k = sum(r.k3 for r in records)
-    total_4k = sum(r.k4 for r in records)
-    total_5k = sum(r.k5 for r in records)
-    total_clutches = sum(r.clutches for r in records)
-    total_impact = sum(r.impact_total for r in records)
+    totals = {name: 0.0 for name in SITE_AGGREGATE_FIELDS}
+    for record in records:
+        for name in SITE_AGGREGATE_FIELDS:
+            totals[name] += float(record.aggregate.get(name, 0) or 0)
+
+    total_rounds = int(totals["rounds"])
+    total_wins = int(totals["roundWins"])
+    total_losses = int(totals["roundLosses"])
+    total_kast = int(totals["kastRounds"])
+    total_kills = int(totals["kills"])
+    total_deaths = int(totals["deaths"])
+    total_assists = int(totals["assists"])
+    total_fk = int(totals["firstKills"])
+    total_fd = int(totals["firstDeaths"])
+    total_1k = int(totals["oneKills"])
+    total_2k = int(totals["twoKills"])
+    total_3k = int(totals["threeKills"])
+    total_4k = int(totals["fourKills"])
+    total_5k = int(totals["fiveKills"])
+    total_clutches = int(totals["clutches"])
+    total_impact = totals["adjustedRoundSwingTotalPp"]
     map_wins = sum(r.map_win for r in records)
 
-    acs = safe_div(sum(r.acs * r.rounds for r in records), total_rounds)
-    adr = safe_div(sum(r.adr * r.rounds for r in records), total_rounds)
+    acs = safe_div(totals["score"], total_rounds)
+    adr = safe_div(totals["damage"], total_rounds)
     kast = safe_div(total_kast, total_rounds)
     kpr = safe_div(total_kills, total_rounds)
     dpr = safe_div(total_deaths, total_rounds)
     apr = safe_div(total_assists, total_rounds)
     imp_pr = safe_div(total_impact, total_rounds)
-    rtg = rating_value(kast, kpr, dpr, apr, adr)
+    rtg = rAAting_3_0_value(totals)
 
     return [
         agent_name,
@@ -1051,7 +1123,7 @@ def write_workbook(records: List[AgentPickRecord], output_path: Path) -> None:
     ws_raw = wb.create_sheet("raw_picks")
     write_headers(ws_raw, DETAIL_HEADERS)
     for r in sorted(records, key=lambda x: (x.file_name.casefold(), x.agent.casefold(), x.player.casefold())):
-        ws_raw.append(r.detail_row())
+        ws_raw.append([config_hub.texto_seguro(v) for v in r.detail_row()])
     ws_raw.freeze_panes = "A2"
     ws_raw.auto_filter.ref = f"A1:{get_column_letter(len(DETAIL_HEADERS))}{ws_raw.max_row}"
     apply_detail_formats(ws_raw, 2, ws_raw.max_row)
@@ -1082,26 +1154,8 @@ def main() -> int:
         raise SystemExit(f"Pasta inválida: {input_dir}")
 
     output_xlsx = resolve_user_path(DEFAULT_OUTPUT_XLSX) if DEFAULT_OUTPUT_XLSX else build_default_output_path(input_dir)
-    state_wr = load_state_winrates_xlsx(resolve_user_path(DEFAULT_STATE_WINRATES_XLSX))
-
-    all_records: List[AgentPickRecord] = []
-    processed = 0
-    ignored = 0
-
-    for json_path in iter_json_files(input_dir, recursive=DEFAULT_RECURSIVE):
-        data = load_match(json_path)
-        if not data:
-            ignored += 1
-            continue
-        processed += 1
-        all_records.extend(
-            build_agent_records_for_match(
-                data=data,
-                filename=json_path.name,
-                trade_window_ms=DEFAULT_TRADE_WINDOW_MS,
-                state_wr=state_wr,
-            )
-        )
+    payload = run_site_pipeline(input_dir, recursive=DEFAULT_RECURSIVE)
+    all_records = build_agent_records_from_site_pipeline(payload)
 
     if not all_records:
         raise SystemExit(f"Nenhuma linha de agente foi gerada. Verifique a pasta: {input_dir}")
@@ -1111,8 +1165,10 @@ def main() -> int:
     unique_agents = len({r.agent for r in all_records})
     unique_maps = len({r.map_name for r in all_records})
     print("Input:", input_dir)
-    print("JSONs processados:", processed)
-    print("JSONs ignorados:", ignored)
+    print("JSONs encontrados:", int(payload.get("jsonFileCount") or 0))
+    print("Partidas unicas processadas:", int(payload.get("uniqueMatchCount") or 0))
+    print("JSONs invalidos/ignorados:", len(payload.get("invalidFiles") or []))
+    print("Partidas duplicadas ignoradas:", len(payload.get("duplicateFiles") or []))
     print("Picks analisados:", len(all_records))
     print("Agentes encontrados:", unique_agents)
     print("Mapas encontrados:", unique_maps)

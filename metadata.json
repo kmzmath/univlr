@@ -126,6 +126,10 @@
         {
           "slot": 7,
           "name": "Kafaja"
+        },
+        {
+          "slot": 8,
+          "name": "GLEP"
         }
       ]
     },
@@ -14697,6 +14701,19 @@
         "kbcdin#SHIFF"
       ],
       "photo": ""
+    },
+    {
+      "id": "sG6YMdoUQcKILISv_UyNs2fuHoFnci0fg9dzjFswyXoOQjOfOKF0XBsnSxNwodvNPeyjFzjOordWMQ",
+      "name": "GLEP",
+      "puuid": "sG6YMdoUQcKILISv_UyNs2fuHoFnci0fg9dzjFswyXoOQjOfOKF0XBsnSxNwodvNPeyjFzjOordWMQ",
+      "currentTeam": "a2e_uff_shadows",
+      "teamHistory": [
+        "a2e_uff_shadows"
+      ],
+      "nickHistory": [
+        "GLEP#GIL"
+      ],
+      "photo": ""
     }
   ],
   "states": [
@@ -15180,200 +15197,200 @@
       "state": "1v1",
       "allies": 1,
       "enemies": 1,
-      "occurrences": "4780",
-      "wins": "2390",
+      "occurrences": "4972",
+      "wins": "2486",
       "winRate": 0.5
     },
     {
       "state": "1v2",
       "allies": 1,
       "enemies": 2,
-      "occurrences": "6054",
-      "wins": "929",
-      "winRate": 0.1534522629666336
+      "occurrences": "6287",
+      "wins": "964",
+      "winRate": 0.1533322729441705
     },
     {
       "state": "1v3",
       "allies": 1,
       "enemies": 3,
-      "occurrences": "6357",
-      "wins": "232",
-      "winRate": 0.03649520213937392
+      "occurrences": "6610",
+      "wins": "239",
+      "winRate": 0.03615733736762481
     },
     {
       "state": "1v4",
       "allies": 1,
       "enemies": 4,
-      "occurrences": "5172",
-      "wins": "43",
-      "winRate": 0.008313998453209591
+      "occurrences": "5362",
+      "wins": "45",
+      "winRate": 0.008392390898918314
     },
     {
       "state": "1v5",
       "allies": 1,
       "enemies": 5,
-      "occurrences": "2449",
+      "occurrences": "2527",
       "wins": "5",
-      "winRate": 0.002041649652919559
+      "winRate": 0.001978630787495053
     },
     {
       "state": "2v1",
       "allies": 2,
       "enemies": 1,
-      "occurrences": "6054",
-      "wins": "5125",
-      "winRate": 0.8465477370333664
+      "occurrences": "6287",
+      "wins": "5323",
+      "winRate": 0.8466677270558295
     },
     {
       "state": "2v2",
       "allies": 2,
       "enemies": 2,
-      "occurrences": "7408",
-      "wins": "3704",
+      "occurrences": "7688",
+      "wins": "3844",
       "winRate": 0.5
     },
     {
       "state": "2v3",
       "allies": 2,
       "enemies": 3,
-      "occurrences": "8190",
-      "wins": "1753",
-      "winRate": 0.214041514041514
+      "occurrences": "8514",
+      "wins": "1817",
+      "winRate": 0.2134132017852948
     },
     {
       "state": "2v4",
       "allies": 2,
       "enemies": 4,
-      "occurrences": "7458",
-      "wins": "569",
-      "winRate": 0.07629391257709842
+      "occurrences": "7754",
+      "wins": "589",
+      "winRate": 0.07596079442868198
     },
     {
       "state": "2v5",
       "allies": 2,
       "enemies": 5,
-      "occurrences": "4257",
-      "wins": "99",
-      "winRate": 0.02325581395348837
+      "occurrences": "4410",
+      "wins": "104",
+      "winRate": 0.0235827664399093
     },
     {
       "state": "3v1",
       "allies": 3,
       "enemies": 1,
-      "occurrences": "6357",
-      "wins": "6125",
-      "winRate": 0.963504797860626
+      "occurrences": "6610",
+      "wins": "6371",
+      "winRate": 0.9638426626323752
     },
     {
       "state": "3v2",
       "allies": 3,
       "enemies": 2,
-      "occurrences": "8190",
-      "wins": "6437",
-      "winRate": 0.7859584859584859
+      "occurrences": "8514",
+      "wins": "6697",
+      "winRate": 0.7865867982147052
     },
     {
       "state": "3v3",
       "allies": 3,
       "enemies": 3,
-      "occurrences": "10024",
-      "wins": "5012",
+      "occurrences": "10420",
+      "wins": "5210",
       "winRate": 0.5
     },
     {
       "state": "3v4",
       "allies": 3,
       "enemies": 4,
-      "occurrences": "10721",
-      "wins": "2768",
-      "winRate": 0.2581848708142897
+      "occurrences": "11141",
+      "wins": "2866",
+      "winRate": 0.2572480028722736
     },
     {
       "state": "3v5",
       "allies": 3,
       "enemies": 5,
-      "occurrences": "7795",
-      "wins": "858",
-      "winRate": 0.1100705580500321
+      "occurrences": "8099",
+      "wins": "889",
+      "winRate": 0.1097666378565255
     },
     {
       "state": "4v1",
       "allies": 4,
       "enemies": 1,
-      "occurrences": "5172",
-      "wins": "5129",
-      "winRate": 0.9916860015467904
+      "occurrences": "5362",
+      "wins": "5317",
+      "winRate": 0.9916076091010817
     },
     {
       "state": "4v2",
       "allies": 4,
       "enemies": 2,
-      "occurrences": "7458",
-      "wins": "6889",
-      "winRate": 0.9237060874229016
+      "occurrences": "7754",
+      "wins": "7165",
+      "winRate": 0.924039205571318
     },
     {
       "state": "4v3",
       "allies": 4,
       "enemies": 3,
-      "occurrences": "10721",
-      "wins": "7953",
-      "winRate": 0.7418151291857102
+      "occurrences": "11141",
+      "wins": "8275",
+      "winRate": 0.7427519971277264
     },
     {
       "state": "4v4",
       "allies": 4,
       "enemies": 4,
-      "occurrences": "14438",
-      "wins": "7219",
+      "occurrences": "14980",
+      "wins": "7490",
       "winRate": 0.5
     },
     {
       "state": "4v5",
       "allies": 4,
       "enemies": 5,
-      "occurrences": "14993",
-      "wins": "4326",
-      "winRate": 0.2885346495031014
+      "occurrences": "15568",
+      "wins": "4486",
+      "winRate": 0.2881551901336074
     },
     {
       "state": "5v1",
       "allies": 5,
       "enemies": 1,
-      "occurrences": "2449",
-      "wins": "2444",
-      "winRate": 0.9979583503470805
+      "occurrences": "2527",
+      "wins": "2522",
+      "winRate": 0.998021369212505
     },
     {
       "state": "5v2",
       "allies": 5,
       "enemies": 2,
-      "occurrences": "4257",
-      "wins": "4158",
-      "winRate": 0.9767441860465116
+      "occurrences": "4410",
+      "wins": "4306",
+      "winRate": 0.9764172335600907
     },
     {
       "state": "5v3",
       "allies": 5,
       "enemies": 3,
-      "occurrences": "7795",
-      "wins": "6937",
-      "winRate": 0.8899294419499679
+      "occurrences": "8099",
+      "wins": "7210",
+      "winRate": 0.8902333621434745
     },
     {
       "state": "5v4",
       "allies": 5,
       "enemies": 4,
-      "occurrences": "14993",
-      "wins": "10667",
-      "winRate": 0.7114653504968985
+      "occurrences": "15568",
+      "wins": "11082",
+      "winRate": 0.7118448098663926
     },
     {
       "state": "5v5",
       "allies": 5,
       "enemies": 5,
-      "occurrences": "29864",
-      "wins": "14932",
+      "occurrences": "31014",
+      "wins": "15507",
       "winRate": 0.5
     }
   ]

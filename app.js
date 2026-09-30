@@ -539,13 +539,15 @@ const TOURNAMENT_OVERRIDES = {
         },
         {
           title: "Rodada 4",
-          status: "Agendada - 27/09",
+          // Resultados confirmados pelo dono em 30/09.
+          status: "Concluida",
           bestOf: "MD3",
           matches: [
-            { code: "Partida 13", a: "a2e_uff_shadows", b: "unirio_krakens", status: "Agendada" },
-            { code: "Partida 14", a: "wolf_gaming", b: "sheriff_iff", status: "Agendada" },
-            { code: "Partida 15", a: "ufrj_minerva", b: "a2e_uff", status: "Agendada" },
-            { code: "Partida 16", a: "minerva_thunders", b: "minerva_artemis", status: "Agendada" },
+            { code: "Partida 13", a: "a2e_uff_shadows", scoreA: 2, b: "unirio_krakens", scoreB: 0, winner: "a2e_uff_shadows" },
+            { code: "Partida 14", a: "wolf_gaming", scoreA: 2, b: "sheriff_iff", scoreB: 0, winner: "wolf_gaming" },
+            { code: "Partida 15", a: "ufrj_minerva", scoreA: 0, b: "a2e_uff", scoreB: 2, winner: "a2e_uff" },
+            // W.O. da Artemis, confirmado pelo dono em 30/09.
+            { code: "Partida 16", a: "minerva_thunders", scoreA: 2, b: "minerva_artemis", scoreB: 0, winner: "minerva_thunders", status: "W.O." },
           ],
         },
         {
@@ -582,17 +584,17 @@ const TOURNAMENT_OVERRIDES = {
           ],
         },
       ],
-      // Depois da Rodada 3. Empate de campanha vai como faixa: o desempate do
+      // Depois da Rodada 4. Empate de campanha vai como faixa: o desempate do
       // regulamento nao foi publicado aqui, e a ordem dentro da faixa e alfabetica.
       standings: [
-        { id: "a2e_uff", wins: 3, losses: 0, range: "1º - 2º" },
-        { id: "wolf_gaming", wins: 3, losses: 0, range: "1º - 2º" },
-        { id: "minerva_thunders", wins: 2, losses: 1, range: "3º - 4º" },
-        { id: "sheriff_iff", wins: 2, losses: 1, range: "3º - 4º" },
-        { id: "ufrj_minerva", wins: 1, losses: 2, range: "5º - 6º" },
-        { id: "unirio_krakens", wins: 1, losses: 2, range: "5º - 6º" },
-        { id: "a2e_uff_shadows", wins: 0, losses: 3, range: "7º - 8º" },
-        { id: "minerva_artemis", wins: 0, losses: 3, range: "7º - 8º" },
+        { id: "a2e_uff", wins: 4, losses: 0, range: "1º - 2º" },
+        { id: "wolf_gaming", wins: 4, losses: 0, range: "1º - 2º" },
+        { id: "minerva_thunders", wins: 3, losses: 1, range: "3º" },
+        { id: "sheriff_iff", wins: 2, losses: 2, range: "4º" },
+        { id: "a2e_uff_shadows", wins: 1, losses: 3, range: "5º - 7º" },
+        { id: "ufrj_minerva", wins: 1, losses: 3, range: "5º - 7º" },
+        { id: "unirio_krakens", wins: 1, losses: 3, range: "5º - 7º" },
+        { id: "minerva_artemis", wins: 0, losses: 4, range: "8º" },
       ],
     },
     // A Etapa 2 (eliminacao simples com as 4 primeiras) NAO entra como
@@ -1802,11 +1804,10 @@ const TOURNAMENT_OVERRIDES = {
     prizePool: "-",
     tier: "S",
     type: "Online - Fase de grupos",
-    // Sem isto o status sairia do endAt, que e o ultimo mapa coletado: a fase
-    // apareceria "Finalizado" no dia seguinte a Rodada 3. Trocar ao fim da Rodada 5.
-    status: "Em andamento",
+    // Encerrada com a Rodada 5 (27/09/2026).
+    status: "Finalizado",
     teamCount: 16,
-    // Os 7 mapas jogados nas Rodadas 1 a 3 (47 mapas).
+    // Os 7 mapas jogados nas Rodadas 1 a 5 (69 mapas).
     mapPool: ["Abyss", "Ascent", "Haven", "Lotus", "Split", "Summit", "Sunset"],
     format: {
       summary: "Sistema Su\u00ed\u00e7o",
@@ -1816,8 +1817,28 @@ const TOURNAMENT_OVERRIDES = {
         "3 vit\u00f3rias classificam, 3 derrotas eliminam",
         "8 equipes avan\u00e7am",
       ],
-      standings: "Classifica\u00e7\u00e3o su\u00ed\u00e7a atual",
+      standings: "Classifica\u00e7\u00e3o su\u00ed\u00e7a final",
     },
+    // Rotulos iguais aos de ranking-weights.json (placementPoints). Dentro de cada
+    // faixa a ordem e a das seeds: a plataforma nao publicou desempate.
+    placements: [
+      { range: "Classificado", id: "ceub_octopus", note: "3-0" },
+      { range: "Classificado", id: "macklogic_red", note: "3-0" },
+      { range: "Classificado", id: "ufu_saints", note: "3-1" },
+      { range: "Classificado", id: "caap_hellhounds", note: "3-1" },
+      { range: "Classificado", id: "axis_anteaters", note: "3-1" },
+      { range: "Classificado", id: "azure_bears_golden", note: "3-2" },
+      { range: "Classificado", id: "wolf_gaming", note: "3-2" },
+      { range: "Classificado", id: "ufmt_turuna", note: "3-2" },
+      { range: "9-11", id: "minerva_thunders", note: "2-3" },
+      { range: "9-11", id: "usp_stars", note: "2-3" },
+      { range: "9-11", id: "azure_bears_black", note: "2-3" },
+      { range: "12-14", id: "green_owls_noctua", note: "1-3" },
+      { range: "12-14", id: "totale_umc", note: "1-3" },
+      { range: "12-14", id: "green_owls_jacurutu", note: "1-3" },
+      { range: "15-16", id: "furia_utfpr", note: "0-3" },
+      { range: "15-16", id: "ceub_octopus_vulgaris", note: "0-3" },
+    ],
     // Ordem das seeds da plataforma: 1-4 vieram da C1, 5-8 da C2, 9-12 da C3, 13-16 da C4.
     teams: [
       "azure_bears_golden",
@@ -1840,7 +1861,7 @@ const TOURNAMENT_OVERRIDES = {
     swiss: {
       // 8 series por rodada nas Rodadas 1 a 3, 6 na Rodada 4 e 3 na Rodada 5.
       seriesCount: 33,
-      standingsLabel: "Depois da Rodada 3 - 3 vit\u00f3rias classificam, 3 derrotas eliminam",
+      standingsLabel: "Final - 3 vit\u00f3rias classificam, 3 derrotas eliminam",
       rounds: [
         {
           title: "Rodada 1",
@@ -1889,26 +1910,49 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 24", a: "furia_utfpr", scoreA: 0, b: "usp_stars", scoreB: 2, winner: "usp_stars", status: "W.O. no mapa 2" },
           ],
         },
+        {
+          title: "Rodada 4",
+          status: "Concluida",
+          bestOf: "MD3",
+          matches: [
+            { code: "Partida 25", a: "azure_bears_golden", scoreA: 0, b: "axis_anteaters", scoreB: 2, winner: "axis_anteaters" },
+            { code: "Partida 26", a: "wolf_gaming", scoreA: 0, b: "caap_hellhounds", scoreB: 2, winner: "caap_hellhounds" },
+            { code: "Partida 27", a: "ufu_saints", scoreA: 2, b: "ufmt_turuna", scoreB: 0, winner: "ufu_saints" },
+            { code: "Partida 28", a: "minerva_thunders", scoreA: 2, b: "green_owls_jacurutu", scoreB: 0, winner: "minerva_thunders" },
+            { code: "Partida 29", a: "green_owls_noctua", scoreA: 0, b: "azure_bears_black", scoreB: 2, winner: "azure_bears_black" },
+            { code: "Partida 30", a: "totale_umc", scoreA: 1, b: "usp_stars", scoreB: 2, winner: "usp_stars" },
+          ],
+        },
+        {
+          title: "Rodada 5",
+          status: "Concluida",
+          bestOf: "MD3",
+          matches: [
+            { code: "Partida 31", a: "azure_bears_golden", scoreA: 2, b: "usp_stars", scoreB: 1, winner: "azure_bears_golden" },
+            { code: "Partida 32", a: "wolf_gaming", scoreA: 2, b: "minerva_thunders", scoreB: 1, winner: "wolf_gaming" },
+            { code: "Partida 33", a: "azure_bears_black", scoreA: 1, b: "ufmt_turuna", scoreB: 2, winner: "ufmt_turuna" },
+          ],
+        },
       ],
-      // Empate de campanha sai como faixa (3o - 8o), nao como posicao: a plataforma
+      // Empate de campanha sai como faixa (3o - 5o), nao como posicao: a plataforma
       // nao publicou desempate, e a ordem dentro da faixa e so a das seeds.
       standings: [
         { id: "ceub_octopus", wins: 3, losses: 0, range: "1\u00ba - 2\u00ba", status: "Classificado" },
         { id: "macklogic_red", wins: 3, losses: 0, range: "1\u00ba - 2\u00ba", status: "Classificado" },
-        { id: "azure_bears_golden", wins: 2, losses: 1, range: "3\u00ba - 8\u00ba" },
-        { id: "wolf_gaming", wins: 2, losses: 1, range: "3\u00ba - 8\u00ba" },
-        { id: "ufu_saints", wins: 2, losses: 1, range: "3\u00ba - 8\u00ba" },
-        { id: "caap_hellhounds", wins: 2, losses: 1, range: "3\u00ba - 8\u00ba" },
-        { id: "ufmt_turuna", wins: 2, losses: 1, range: "3\u00ba - 8\u00ba" },
-        { id: "axis_anteaters", wins: 2, losses: 1, range: "3\u00ba - 8\u00ba" },
-        { id: "minerva_thunders", wins: 1, losses: 2, range: "9\u00ba - 14\u00ba" },
-        { id: "green_owls_noctua", wins: 1, losses: 2, range: "9\u00ba - 14\u00ba" },
-        { id: "totale_umc", wins: 1, losses: 2, range: "9\u00ba - 14\u00ba" },
-        { id: "usp_stars", wins: 1, losses: 2, range: "9\u00ba - 14\u00ba" },
-        { id: "azure_bears_black", wins: 1, losses: 2, range: "9\u00ba - 14\u00ba" },
-        { id: "green_owls_jacurutu", wins: 1, losses: 2, range: "9\u00ba - 14\u00ba" },
+        { id: "ufu_saints", wins: 3, losses: 1, range: "3\u00ba - 5\u00ba", status: "Classificado" },
+        { id: "caap_hellhounds", wins: 3, losses: 1, range: "3\u00ba - 5\u00ba", status: "Classificado" },
+        { id: "axis_anteaters", wins: 3, losses: 1, range: "3\u00ba - 5\u00ba", status: "Classificado" },
+        { id: "azure_bears_golden", wins: 3, losses: 2, range: "6\u00ba - 8\u00ba", status: "Classificado" },
+        { id: "wolf_gaming", wins: 3, losses: 2, range: "6\u00ba - 8\u00ba", status: "Classificado" },
+        { id: "ufmt_turuna", wins: 3, losses: 2, range: "6\u00ba - 8\u00ba", status: "Classificado" },
       ],
       eliminated: [
+        { id: "minerva_thunders", wins: 2, losses: 3, range: "9\u00ba - 11\u00ba lugar" },
+        { id: "usp_stars", wins: 2, losses: 3, range: "9\u00ba - 11\u00ba lugar" },
+        { id: "azure_bears_black", wins: 2, losses: 3, range: "9\u00ba - 11\u00ba lugar" },
+        { id: "green_owls_noctua", wins: 1, losses: 3, range: "12\u00ba - 14\u00ba lugar" },
+        { id: "totale_umc", wins: 1, losses: 3, range: "12\u00ba - 14\u00ba lugar" },
+        { id: "green_owls_jacurutu", wins: 1, losses: 3, range: "12\u00ba - 14\u00ba lugar" },
         { id: "furia_utfpr", wins: 0, losses: 3, range: "15\u00ba - 16\u00ba lugar" },
         { id: "ceub_octopus_vulgaris", wins: 0, losses: 3, range: "15\u00ba - 16\u00ba lugar" },
       ],

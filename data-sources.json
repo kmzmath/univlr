@@ -92,7 +92,13 @@
         "campeonatos/Copa LUCE Inters/LUCE_011a_18-09-26_wolf_gaming_13_x_0_minerva_artemis_ascent.json",
         "campeonatos/Copa LUCE Inters/LUCE_011b_18-09-26_wolf_gaming_13_x_6_minerva_artemis_haven.json",
         "campeonatos/Copa LUCE Inters/LUCE_012a_20-09-26_ufrj_minerva_11_x_13_minerva_thunders_lotus.json",
-        "campeonatos/Copa LUCE Inters/LUCE_012b_20-09-26_ufrj_minerva_5_x_13_minerva_thunders_summit.json"
+        "campeonatos/Copa LUCE Inters/LUCE_012b_20-09-26_ufrj_minerva_5_x_13_minerva_thunders_summit.json",
+        "campeonatos/Copa LUCE Inters/LUCE_013a_27-09-26_a2e_uff_shadows_13_x_2_unirio_krakens_haven.json",
+        "campeonatos/Copa LUCE Inters/LUCE_013b_27-09-26_a2e_uff_shadows_13_x_6_unirio_krakens_summit.json",
+        "campeonatos/Copa LUCE Inters/LUCE_014a_23-09-26_wolf_gaming_13_x_3_sheriff_iff_ascent.json",
+        "campeonatos/Copa LUCE Inters/LUCE_014b_23-09-26_wolf_gaming_13_x_5_sheriff_iff_split.json",
+        "campeonatos/Copa LUCE Inters/LUCE_015a_25-09-26_ufrj_minerva_3_x_13_a2e_uff_ascent.json",
+        "campeonatos/Copa LUCE Inters/LUCE_015b_25-09-26_ufrj_minerva_7_x_13_a2e_uff_sunset.json"
       ]
     },
     {
@@ -1029,7 +1035,29 @@
         "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_022b_20-09-26_axis_anteaters_14_x_12_green_owls_noctua_lotus.json",
         "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_023a_20-09-26_minerva_thunders_13_x_10_ceub_octopus_vulgaris_haven.json",
         "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_023b_20-09-26_minerva_thunders_13_x_9_ceub_octopus_vulgaris_sunset.json",
-        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_024a_20-09-26_furia_utfpr_3_x_13_usp_stars_sunset.json"
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_024a_20-09-26_furia_utfpr_3_x_13_usp_stars_sunset.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_025a_26-09-26_azure_bears_golden_12_x_14_axis_anteaters_summit.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_025b_26-09-26_azure_bears_golden_11_x_13_axis_anteaters_ascent.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_026a_24-09-26_wolf_gaming_9_x_13_caap_hellhounds_abyss.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_026b_24-09-26_wolf_gaming_6_x_13_caap_hellhounds_summit.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_027a_26-09-26_ufu_saints_13_x_11_ufmt_turuna_sunset.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_027b_26-09-26_ufu_saints_13_x_4_ufmt_turuna_abyss.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_028a_26-09-26_minerva_thunders_16_x_14_green_owls_jacurutu_lotus.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_028b_26-09-26_minerva_thunders_13_x_7_green_owls_jacurutu_haven.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_029a_26-09-26_green_owls_noctua_2_x_13_azure_bears_black_lotus.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_029b_26-09-26_green_owls_noctua_8_x_13_azure_bears_black_abyss.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_030a_26-09-26_totale_umc_13_x_6_usp_stars_haven.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_030b_26-09-26_totale_umc_11_x_13_usp_stars_sunset.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_030c_26-09-26_totale_umc_12_x_14_usp_stars_ascent.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_031a_27-09-26_azure_bears_golden_13_x_5_usp_stars_ascent.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_031b_27-09-26_azure_bears_golden_11_x_13_usp_stars_haven.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_031c_27-09-26_azure_bears_golden_13_x_5_usp_stars_split.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_032a_27-09-26_wolf_gaming_9_x_13_minerva_thunders_split.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_032b_27-09-26_wolf_gaming_13_x_1_minerva_thunders_haven.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_032c_27-09-26_wolf_gaming_13_x_4_minerva_thunders_sunset.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_033a_27-09-26_azure_bears_black_13_x_15_ufmt_turuna_split.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_033b_27-09-26_azure_bears_black_13_x_8_ufmt_turuna_summit.json",
+        "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_033c_27-09-26_azure_bears_black_9_x_13_ufmt_turuna_haven.json"
       ]
     }
   ]

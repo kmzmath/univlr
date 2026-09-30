@@ -372,6 +372,34 @@ const letters = Object.fromEntries(letterResult.observations.map((row) => [row.i
 assert.equal(letters.l1.phase, "final", "the series named FINAL is the final");
 assert.equal(letters.l2.phase, "regular", "a rule with no numeric range does not catch every other series");
 
+// Massey com grafo desconexo: um par que so jogou entre si e uma equipe sem
+// partida. A nota nao pode depender da ordem em que as equipes chegam.
+const splitTeams = [team("alpha"), team("beta"), team("gamma"), team("pairA"), team("pairB"), team("idle")];
+const splitMatches = [
+  match("s1", 5, "alpha", 13, "beta", 7),
+  match("s2", 8, "beta", 13, "gamma", 9),
+  match("s3", 12, "alpha", 13, "gamma", 4),
+  match("s4", 6, "pairA", 13, "pairB", 3),
+];
+const masseyFor = (order) => {
+  const ranked = RankingCore.calculateTeamRankings({
+    teams: order,
+    matches: splitMatches,
+    matchSeries: splitMatches.map(seriesFromMatch),
+    tournaments: [],
+    players: [],
+    now,
+  });
+  return Object.fromEntries(splitTeams.map((row) => [row.id, ranked.byTeamId[row.id].models.massey]));
+};
+const masseyForward = masseyFor(splitTeams);
+for (const order of [splitTeams.slice().reverse(), [...splitTeams.slice(3), ...splitTeams.slice(0, 3)]]) {
+  const other = masseyFor(order);
+  for (const row of splitTeams) {
+    assert(Math.abs(other[row.id] - masseyForward[row.id]) < 1e-9, `massey of ${row.id} does not depend on the team order (${masseyForward[row.id]} vs ${other[row.id]})`);
+  }
+}
+
 const pca = RankingCore.pcaCorrected(
   [
     { id: "a", inverted: 0 },

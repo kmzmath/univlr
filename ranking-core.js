@@ -502,12 +502,48 @@
       vector[i] += w * diff;
       vector[j] -= w * diff;
     }
-    if (n > 0) {
-      matrix[n - 1] = Array(n).fill(1);
-      vector[n - 1] = 0;
+    // A Laplaciana so enxerga diferencas dentro de um componente conexo, entao
+    // cada componente (e cada equipe sem partida) precisa da sua restricao de
+    // soma zero. Com uma so para o grafo inteiro, os cortes com grupos isolados
+    // ficavam singulares, o solveLinearSystem trocava o pivo nulo por EPSILON e
+    // a nota passava a depender da ordem das equipes. Grafo conexo: a linha
+    // trocada continua sendo a ultima, e o sistema e o mesmo de antes.
+    for (const members of connectedComponents(n, observations, index)) {
+      const anchor = members[members.length - 1];
+      matrix[anchor] = Array(n).fill(0);
+      for (const member of members) matrix[anchor][member] = 1;
+      vector[anchor] = 0;
     }
     const solved = solveLinearSystem(matrix, vector);
     return mapFromArray(teamIds, solved);
+  }
+
+  // Componentes conexos do grafo de partidas, em indices crescentes. Equipe sem
+  // partida vira um componente de um so.
+  function connectedComponents(n, observations, index) {
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const find = (i) => {
+      while (parent[i] !== i) {
+        parent[i] = parent[parent[i]];
+        i = parent[i];
+      }
+      return i;
+    };
+    for (const obs of observations) {
+      const i = index.get(obs.teamAId);
+      const j = index.get(obs.teamBId);
+      if (i === undefined || j === undefined) continue;
+      const rootI = find(i);
+      const rootJ = find(j);
+      if (rootI !== rootJ) parent[rootI] = rootJ;
+    }
+    const groups = new Map();
+    for (let i = 0; i < n; i += 1) {
+      const root = find(i);
+      if (!groups.has(root)) groups.set(root, []);
+      groups.get(root).push(i);
+    }
+    return [...groups.values()];
   }
 
   function eloRatings(teamIds, observations, weights, useMargin) {

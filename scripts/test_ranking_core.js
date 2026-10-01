@@ -307,6 +307,53 @@ const decayCheck = RankingCore.calculateTeamRankings({
 assert.equal(decayCheck.byTeamId.alpha.achievements[0].score, 10, "points fall in a straight line: half of the value at 152 of 304 days");
 assert.equal(decayCheck.byTeamId.alpha.achievements[0].basePoints, 20, "the campaign keeps the table value before decay");
 
+// Regra de 30/09/2026: classificatorias do mesmo campeonato (`bestOfGroup`) nao
+// se acumulam. Por equipe conta so a de maior valor de tabela, e todas param de
+// contar juntas quando a primeira do grupo completa os 304 dias.
+function qualifierEvent2(id, order, daysAgo) {
+  return { id, name: id, teams: order, end: now - daysAgo * day, placements: order.map((teamId, index) => ({ id: teamId, range: String(index + 1) })) };
+}
+const groupEvents = [
+  qualifierEvent2("q1", ["alpha", "beta", "gamma", "delta"], 152),
+  qualifierEvent2("q2", ["beta", "gamma", "delta"], 76),
+  qualifierEvent2("q3", ["gamma", "delta"], 0),
+  qualifierEvent2("solo", ["beta", "alpha", "gamma", "delta"], 0),
+];
+const groupTables = {
+  q1: { placementPoints: { "1": 40, "2": 30, "3": 0, "4": 0 } },
+  q2: { placementPoints: { "1": 25, "2": 20, "3": 10 } },
+  q3: { placementPoints: { "1": 20, "2": 20 } },
+  solo: { placementPoints: { "1": 10, "2": 0, "3": 0, "4": 0 } },
+};
+const grouped = (config) => Object.fromEntries(Object.entries(config).map(([id, row]) => [id, id === "solo" ? row : { ...row, bestOfGroup: "quali" }]));
+const groupRun = (tournamentWeights, at = now) =>
+  RankingCore.calculateTeamRankings({ teams, matches: [], matchSeries: [], tournaments: groupEvents, players: [], weights: { tournaments: tournamentWeights }, now: at });
+const campaignOf = (run, teamId, eventId) => run.byTeamId[teamId].achievements.find((row) => row.eventId === eventId);
+
+const bestOf = groupRun(grouped(groupTables));
+assert.equal(campaignOf(bestOf, "beta", "q1").score, 15, "the qualifier with the highest table value counts, with its own decay (30 at half life)");
+assert.equal(campaignOf(bestOf, "beta", "q1").counted, true, "the counted qualifier is marked");
+assert.equal(campaignOf(bestOf, "beta", "q2").score, 0, "a lower table value does not count, even when it is worth more today (25 x 0.75 > 30 x 0.5)");
+assert.equal(campaignOf(bestOf, "beta", "q2").counted, false, "the qualifier left out is marked");
+assert.equal(campaignOf(bestOf, "beta", "q2").basePoints, 25, "the qualifier left out keeps its table value and placement");
+assert.equal(campaignOf(bestOf, "gamma", "q3").score, 20, "on a tie of table value the most recent qualifier counts");
+assert.equal(campaignOf(bestOf, "gamma", "q2").score, 0, "on a tie of table value the older qualifier does not count");
+assert.equal(campaignOf(bestOf, "beta", "solo").score, 10, "an event outside the group still adds up");
+assert.equal(bestOf.byTeamId.beta.blocks.achievements, 100, "best qualifier plus the event outside the group: 15 + 10 is the top total");
+assert.equal(bestOf.byTeamId.alpha.blocks.achievements, 80, "a team that only played the first qualifier is not overtaken by the sum of the others (20 of 25)");
+assert.equal(campaignOf(bestOf, "gamma", "q3").expiresAt, now - 152 * day + 304 * day, "every qualifier of the group expires when the first one does");
+
+const notGrouped = groupRun(groupTables);
+assert.equal(campaignOf(notGrouped, "beta", "q2").score, 18.75, "control: without bestOfGroup the same results add up");
+
+const dayBefore = groupRun(grouped(groupTables), now + 151 * day);
+assert(campaignOf(dayBefore, "gamma", "q3").score > 0, "the group still counts the day before the first qualifier expires");
+const groupExpired = groupRun(grouped(groupTables), now + 152 * day);
+assert.equal(campaignOf(groupExpired, "gamma", "q3").score, 0, "when the first qualifier expires the newer ones stop counting too, ahead of their own 304 days");
+assert.equal(campaignOf(groupExpired, "delta", "q3").score, 0, "the group expires for every team, including one with no points in the first qualifier");
+const notGroupedLater = groupRun(groupTables, now + 152 * day);
+assert.equal(campaignOf(notGroupedLater, "gamma", "q3").score, 10, "control: without bestOfGroup the newer result keeps its own 304 days");
+
 // Regra de 22/09/2026: o peso do mapa sai da tabela de pontos do campeonato, e o
 // da fase, dos pontos que a fase decide. Nada mais e escrito a mao.
 const weightedMatches = [

@@ -7056,8 +7056,8 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null) 
           <span>valor do bloco x peso</span>
         </div>
         <div class="ranking-weight-bars">
-          ${rankingWeightedBar("Desempenho", blocks.competitive, 70, "Mede desempenho coletivo através dos resultados, qualidade dos adversários, dominância, consistência e relevância das partidas.")}
-          ${rankingWeightedBar("Conquistas", blocks.achievements, 15, "Soma os pontos de cada colocação em campeonatos encerrados; cada ponto perde valor em linha reta até zerar em 10 meses. A equipe com mais pontos vale 100, e as demais, a proporção dela.")}
+          ${rankingWeightedBar("Desempenho", blocks.competitive, 70, "Mede desempenho coletivo através dos resultados, qualidade dos adversários e dominância.")}
+          ${rankingWeightedBar("Conquistas", blocks.achievements, 15, "Soma os pontos de cada colocação em campeonatos encerrados; das classificatórias da UNIVAVÁ, conta só a de maior pontuação. Cada ponto perde valor em linha reta até zerar em 10 meses. A equipe com mais pontos vale 100, e as demais, a proporção dela.")}
           ${rankingWeightedBar("Forma recente", blocks.recentForm, 10, "Desempenho em uma janela de 60 dias, meia-vida de 30 dias.")}
           ${rankingWeightedBar("rAAting 3.0 jogadores", blocks.rosterStrength, 5, "Usa o rAAting 3.0 individual, estabilidade do core e profundidade.")}
         </div>
@@ -7178,7 +7178,9 @@ function rankingModelTooltip(key) {
 }
 
 // Todo resultado soma (desde 22/09/2026), entao a lista mostra todas as
-// campanhas que ainda valem ponto. Colocacao de 0 ponto ou ja vencida fica de fora.
+// campanhas que ainda valem ponto. Colocacao de 0 ponto ou ja vencida fica de fora,
+// e tambem a classificatoria que perdeu para outra do mesmo grupo (`bestOfGroup`),
+// que o ranking-core entrega com 0 ponto.
 function rankingAchievementSummary(achievements, blockScore) {
   const scoring = achievements.filter((row) => Number(row.score) > 0);
   if (!scoring.length) {
@@ -7195,9 +7197,14 @@ function rankingAchievementCard(row) {
   const event = rankingTournamentForAchievement(row);
   const base = Number(row.basePoints);
   const decay = Number(row.decay);
+  // Classificatoria de grupo nao zera nos proprios 10 meses: vence junto com a
+  // primeira do grupo, na data que o ranking-core entrega em `expiresAt`.
+  const expiry = row.group && row.expiresAt
+    ? `Das classificatórias do mesmo campeonato, conta só a de maior pontuação, e todas deixam de contar em ${formatShortDate(row.expiresAt)}.`
+    : "Zera 10 meses depois.";
   const tooltip =
     Number.isFinite(base) && Number.isFinite(decay)
-      ? `A colocação vale ${fmt(base, 0)} pontos. Com o tempo desde o fim do campeonato, conta ${fmt(decay * 100, 0)}% hoje; zera 10 meses depois.`
+      ? `A colocação vale ${fmt(base, 0)} pontos. Com o tempo desde o fim do campeonato, conta ${fmt(decay * 100, 0)}% hoje. ${expiry}`
       : "Pontos da colocação, já descontado o tempo desde o fim do campeonato.";
   return `
     <span class="ranking-achievement-card ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText(tooltip)}">

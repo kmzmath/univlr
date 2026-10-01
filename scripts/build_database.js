@@ -191,6 +191,14 @@ function main() {
     }
   }
   if (offTable.size) console.warn(`  aviso: colocação fora da tabela de pontos (usou a regra geral): ${[...offTable].join(", ")}`);
+  // `bestOfGroup` casa pelo nome do grupo: escrito diferente em um campeonato,
+  // ele fica sozinho num grupo proprio e volta a somar com os outros em silencio.
+  const groupSizes = new Map();
+  for (const cfg of Object.values(weightTournaments)) {
+    if (cfg.bestOfGroup) groupSizes.set(cfg.bestOfGroup, (groupSizes.get(cfg.bestOfGroup) || 0) + 1);
+  }
+  const loneGroups = [...groupSizes].filter(([, size]) => size < 2).map(([name]) => name);
+  if (loneGroups.length) console.warn(`  aviso: bestOfGroup com um campeonato só (nome escrito diferente?): ${loneGroups.join(", ")}`);
   // Regra de fase que nao casa com nenhuma serie e silenciosa: a fase decisiva
   // entra com o peso da fase padrao. Só vale checar em campeonato encerrado,
   // porque em andamento a fase ainda pode não ter acontecido.

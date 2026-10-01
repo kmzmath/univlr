@@ -34,8 +34,13 @@ Regra em vigor desde 22/09/2026:
 
 - Cada campeonato tem a própria tabela de pontos por colocação, em `ranking-weights.json` → `tournaments.<id do evento>.placementPoints`. A chave é o rótulo que o site mostra (`"1"`, `"5-6"`, `"Classificado"`). O valor da tabela é o valor final da colocação: peso do campeonato e tamanho não multiplicam por cima.
 - "Classificado" ocupa as primeiras colocações que as faixas numeradas deixam livres (1-4 numa classificatória de 4 vagas).
-- Todo resultado soma inteiro: os pontos de todos os campeonatos se acumulam.
+- Todo resultado soma inteiro: os pontos de todos os campeonatos se acumulam. A exceção são as classificatórias de um mesmo campeonato (ver abaixo).
 - Cada ponto perde valor em linha reta desde o fim do campeonato e zera em 304 dias (10 meses): `valor × (1 - dias / 304)`.
+- **Classificatórias do mesmo campeonato não se acumulam** (desde 30/09/2026). Campeonatos com o mesmo `bestOfGroup` formam um grupo; hoje, as quatro classificatórias da Univavá (`univava-classificatorias`). O motivo: quem pega a vaga na primeira não joga as demais, e somando tudo ficava atrás de quem jogou várias.
+  - Por equipe, conta só a classificatória de maior valor na tabela (o valor original, antes do decaimento). No empate, a mais recente. Ela decai pela própria data.
+  - As outras continuam na lista de campanhas da equipe com `counted: false` e 0 ponto, porque a página da equipe lê a colocação de lá.
+  - O grupo inteiro deixa de contar, para todas as equipes, quando a primeira classificatória completa os 304 dias. As mais novas param antes dos próprios 10 meses: a C1 terminou em 28/06/2026, então as quatro param em 28/04/2027.
+  - Fase de grupos e playoffs não fazem parte do grupo e somam normalmente.
 - A equipe com a maior soma recebe 100 no bloco, e as demais recebem `100 × soma / maior soma`. Sem pontos, a nota do bloco é 0.
 - Campeonato com `ignoreAchievements: true` não gera conquista (hoje, a LPE). Campeonato em andamento só conta depois de encerrado e com todas as colocações preenchidas.
 - Colocação cujo rótulo não está na tabela cai na regra geral antiga (`achievements.placementPoints` × peso × tamanho). O `build_database.js` avisa quando isso acontece e quando uma chave de `tournaments` não corresponde a nenhum evento.
@@ -61,6 +66,7 @@ Os pesos de campeonatos, fases, séries e pontos por colocação ficam em `ranki
 - `tournaments.<id>.placementPoints`: pontos por colocação daquele campeonato (ver Conquistas). É de onde saem também o peso do campeonato e o das fases (ver Peso do mapa).
 - `pointsWeights`: `reference` (100 pontos = peso 1), `tournamentExponent` (0.5) e `phaseExponent` (0.25).
 - `achievements.normalization` (`"top"`), `achievements.lifetimeDays` (304) e `achievements.additionalResultMultiplier` (1): a regra de conquistas descrita acima.
+- `tournaments.<id>.bestOfGroup`: nome do grupo de classificatórias em que só a melhor conta. O `build_database.js` avisa quando um grupo tem um campeonato só, que é o sintoma de nome escrito diferente.
 - `achievements.placementPoints` e `achievements.sizeWeights`: regra geral antiga, usada só por colocação sem tabela.
 - `achievements.manualResults`: resultados manuais opcionais quando a colocação real não deve ser inferida.
 

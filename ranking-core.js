@@ -774,12 +774,14 @@
       }
     }
 
+    applyBestOfGroups(campaigns, weights, now);
+
     const details = Object.fromEntries(teamIds.map((id) => [id, []]));
     const raw = Object.fromEntries(teamIds.map((id) => [id, 0]));
     for (const id of teamIds) {
       const rows = campaigns.filter((campaign) => campaign.teamId === id).sort((a, b) => b.score - a.score);
       details[id] = rows;
-      rows.forEach((campaign, index) => {
+      rows.filter((campaign) => campaign.counted).forEach((campaign, index) => {
         const multiplier = index < finiteNumber(weights.achievements?.antiFarmFullResults, 3) ? 1 : finiteNumber(weights.achievements?.additionalResultMultiplier, 0.5);
         raw[id] += campaign.score * multiplier;
       });
@@ -789,6 +791,38 @@
       score: campaigns.length ? normalizeAchievementScores(raw, teamIds, weights) : constantMap(teamIds, 50),
       details,
     };
+  }
+
+  // Campeonatos com o mesmo `bestOfGroup` (as classificatorias da Univava) nao se
+  // acumulam: quem pega a vaga na primeira nao joga as outras, e a soma dava mais
+  // pontos a quem jogou varias. Por equipe conta so a campanha de maior valor de
+  // tabela (no empate, a mais recente), com o decaimento dela. As demais ficam na
+  // lista com `counted: false` e 0 ponto, porque a pagina da equipe le a colocacao
+  // de la. O grupo inteiro para de contar, para todas as equipes, quando a
+  // primeira classificatoria dele completa lifetimeDays.
+  function applyBestOfGroups(campaigns, weights, now) {
+    const lifetime = finiteNumber(weights.achievements?.lifetimeDays, 0);
+    const grouped = campaigns.filter((campaign) => campaign.group);
+    const firstDate = new Map();
+    for (const campaign of grouped) {
+      firstDate.set(campaign.group, Math.min(firstDate.get(campaign.group) ?? Infinity, campaign.date));
+    }
+    const best = new Map();
+    for (const campaign of grouped) {
+      if (lifetime > 0) {
+        campaign.expiresAt = firstDate.get(campaign.group) + lifetime * DAY_MS;
+        if (now >= campaign.expiresAt) campaign.decay = 0;
+      }
+      const key = `${campaign.teamId}|${campaign.group}`;
+      const current = best.get(key);
+      if (!current || campaign.basePoints > current.basePoints || (campaign.basePoints === current.basePoints && campaign.date > current.date)) {
+        best.set(key, campaign);
+      }
+    }
+    for (const campaign of grouped) {
+      campaign.counted = best.get(`${campaign.teamId}|${campaign.group}`) === campaign;
+      campaign.score = campaign.counted ? campaign.basePoints * campaign.decay : 0;
+    }
   }
 
   function normalizeAchievementScores(raw, teamIds, weights) {
@@ -834,6 +868,8 @@
       pointsSource: Number.isFinite(tablePoints) ? "table" : "rule",
       score,
       source,
+      group: String(eventConfig.bestOfGroup || ""),
+      counted: true,
     };
   }
 

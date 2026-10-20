@@ -256,6 +256,30 @@
         "13-14": 0
       }
     },
+    "rush-series-3": {
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 62
+        }
+      ],
+      "name": "Rush Series 3ª Edição",
+      "logo": "assets/tournament-icons/rushSeries.png",
+      "teams": 21,
+      "endAt": "2026-10-19T01:00:00.000Z",
+      "placementPoints": {
+        "1": 35,
+        "2": 30,
+        "3": 25,
+        "4": 20,
+        "5-6": 15,
+        "7-8": 10,
+        "9-12": 5,
+        "13-16": 0,
+        "17-21": 0
+      }
+    },
     "univava-classificatoria-2": {
       "defaultPhase": "regular",
       "phaseRules": [

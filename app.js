@@ -392,6 +392,83 @@ const TOURNAMENT_OVERRIDES = {
       ],
     },
   },
+  // Campeonato presencial da AcadArena na Arena Sanja Gamer (Sao Jose dos Campos),
+  // exclusivo para mulheres cis, pessoas trans e nao-binarias. Montado em 21/10/2026
+  // a partir do Challengermode (d4de85fc-2938-4cd9-3f6a-08df086b80e0). Capa e
+  // trofeu genericos, por escolha do dono.
+  "astra-cup": {
+    name: "Astra Cup Inclusivo",
+    organizer: "AcadArena",
+    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
+    logo: "assets/tournament-icons/AstraCup.png",
+    banner: "assets/tournament-banners/acadarena_banner_generic.jpeg",
+    prizePool: "Valorant Points (1º lugar)",
+    tier: "B",
+    type: "Presencial - Inclusivo",
+    teamCount: 4,
+    mapPool: ["Abyss", "Ascent", "Haven", "Lotus", "Split", "Summit", "Sunset"],
+    format: {
+      summary: "Pontos corridos",
+      details: [
+        "4 equipes, todas contra todas",
+        "Todos os jogos MD1",
+        "Desempate: saldo de rounds, depois confronto direto",
+        "Exclusivo para mulheres cis, pessoas trans e não-binárias",
+      ],
+      standings: "Classificação final",
+    },
+    // Seeds da plataforma.
+    teams: ["inatel_gray", "macklogic_rainbow", "usp_stars_gc", "pucc_canaries"],
+    // A Canaries SANJA e a PUCC Canaries (decisao do dono em 21/10/2026), com a
+    // Violetx, da CAAP Auroras, de reforco.
+    placements: [
+      { range: "1", id: "macklogic_rainbow", note: "3-0" },
+      { range: "2", id: "pucc_canaries", note: "2-1" },
+      { range: "3", id: "usp_stars_gc", note: "1-2" },
+      { range: "4", id: "inatel_gray", note: "0-3" },
+    ],
+    swiss: {
+      roundRobin: true,
+      seriesCount: 6,
+      standingsLabel: "Classificação final",
+      rounds: [
+        {
+          title: "Rodada 1",
+          status: "Concluida - 10/10",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 1", a: "usp_stars_gc", scoreA: 13, b: "inatel_gray", scoreB: 3, winner: "usp_stars_gc" },
+            { code: "Partida 2", a: "pucc_canaries", scoreA: 10, b: "macklogic_rainbow", scoreB: 13, winner: "macklogic_rainbow" },
+          ],
+        },
+        {
+          title: "Rodada 2",
+          status: "Concluida - 10/10",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 3", a: "pucc_canaries", scoreA: 13, b: "inatel_gray", scoreB: 3, winner: "pucc_canaries" },
+            { code: "Partida 4", a: "macklogic_rainbow", scoreA: 13, b: "usp_stars_gc", scoreB: 1, winner: "macklogic_rainbow" },
+          ],
+        },
+        {
+          title: "Rodada 3",
+          status: "Concluida - 10/10",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 5", a: "macklogic_rainbow", scoreA: 13, b: "inatel_gray", scoreB: 1, winner: "macklogic_rainbow" },
+            { code: "Partida 6", a: "usp_stars_gc", scoreA: 7, b: "pucc_canaries", scoreB: 13, winner: "pucc_canaries" },
+          ],
+        },
+      ],
+      // Sem empate de campanha; o saldo de rounds seria +27, +13, -8 e -32.
+      standings: [
+        { id: "macklogic_rainbow", wins: 3, losses: 0, range: "1º", status: "Campeão" },
+        { id: "pucc_canaries", wins: 2, losses: 1, range: "2º", status: "Vice" },
+        { id: "usp_stars_gc", wins: 1, losses: 2, range: "3º", status: "3º lugar" },
+        { id: "inatel_gray", wins: 0, losses: 3, range: "4º", status: "4º lugar" },
+      ],
+    },
+  },
   "cia-2026": {
     organizerLogo: "assets/tournament-icons/cia.png",
     prizePool: "-",
@@ -615,6 +692,93 @@ const TOURNAMENT_OVERRIDES = {
     // primeira linha - havendo `swiss.rounds`, ele nunca chega a desenhar a
     // chave curada, entao o dado ficaria morto no app.js E no database.json.
     // Enquanto os playoffs nao comecam, a Etapa 2 vive no `format.details`.
+  },
+  // E-Tusca, os Inters de e-sports da TUSCA. Montado em 21/10/2026 a partir do
+  // Challengermode (5dba489e-2e54-48ed-3794-08df10190155). A plataforma recomeca a
+  // contagem nos playoffs; aqui as partidas seguem 1-7, como os arquivos ETUSCA_.
+  // A fase suica de 2 rodadas tem a forma de uma chave dupla de 4 (vencedores
+  // contra vencedores na 2a rodada), entao vai desenhada como a da CIA 2026.
+  "e-tusca": {
+    name: "E-Tusca 2026",
+    organizer: "AcadArena",
+    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
+    logo: "assets/tournament-icons/tusca.png",
+    banner: "assets/tournament-banners/acadarena_banner_generic.jpeg",
+    prizePool: "-",
+    tier: "B",
+    type: "Online - Inters",
+    teamCount: 4,
+    mapPool: ["Abyss", "Ascent", "Haven", "Lotus", "Split", "Summit", "Sunset"],
+    format: {
+      summary: "Suíço + eliminação simples",
+      details: [
+        "Fase inicial: sistema suíço de 2 rodadas em MD1, que define o chaveamento",
+        "Playoffs: as 4 equipes em eliminação simples MD3",
+        "Sem disputa de 3º lugar",
+      ],
+      standings: "Colocação oficial do campeonato",
+    },
+    // Seeds da plataforma. A LAP PUCCAMPINAS e a PUCC Cardinals (decisao do dono em
+    // 21/10/2026: 4 dos 5 inscritos sao de la).
+    teams: ["pucc_cardinals", "ufscar_fire", "unicamp_tritons_black", "axis_anteaters"],
+    // A final foi LAP 2x1 AXIS nos arquivos da Riot; a plataforma registrou AXIS 2x1,
+    // com o 3o mapa invertido. O dono confirmou em 21/10 que a PUCC venceu.
+    placements: [
+      { range: "1", id: "pucc_cardinals" },
+      { range: "2", id: "axis_anteaters" },
+      { range: "3-4", id: "unicamp_tritons_black", note: "Semifinal" },
+      { range: "3-4", id: "ufscar_fire", note: "Semifinal" },
+    ],
+    bracket: {
+      title: "Suíço + eliminação simples",
+      regions: [
+        {
+          name: "Final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Final",
+              matches: [
+                { code: "Partida 7", bestOf: "MD3", a: "pucc_cardinals", scoreA: 2, b: "axis_anteaters", scoreB: 1, winner: "pucc_cardinals" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Playoffs",
+          className: "upper-bracket single-elimination",
+          columns: [
+            {
+              title: "Semifinais",
+              matches: [
+                { code: "Partida 5", bestOf: "MD3", a: "pucc_cardinals", scoreA: 2, b: "ufscar_fire", scoreB: 0, winner: "pucc_cardinals" },
+                { code: "Partida 6", bestOf: "MD3", a: "axis_anteaters", scoreA: 2, b: "unicamp_tritons_black", scoreB: 0, winner: "axis_anteaters" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Fase inicial (suíço)",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada 1",
+              matches: [
+                { code: "Partida 1", bestOf: "MD1", a: "unicamp_tritons_black", scoreA: 13, b: "ufscar_fire", scoreB: 4, winner: "unicamp_tritons_black" },
+                { code: "Partida 2", bestOf: "MD1", a: "axis_anteaters", scoreA: 12, b: "pucc_cardinals", scoreB: 14, winner: "pucc_cardinals" },
+              ],
+            },
+            {
+              title: "Rodada 2",
+              matches: [
+                { code: "Partida 3", bestOf: "MD1", a: "unicamp_tritons_black", scoreA: 8, b: "pucc_cardinals", scoreB: 13, winner: "pucc_cardinals" },
+                { code: "Partida 4", bestOf: "MD1", a: "axis_anteaters", scoreA: 13, b: "ufscar_fire", scoreB: 5, winner: "axis_anteaters" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   },
   lpe: {
     hidden: true,

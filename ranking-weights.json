@@ -95,6 +95,19 @@
         "4": 0
       }
     },
+    "astra-cup": {
+      "defaultPhase": "regular",
+      "name": "Astra Cup Inclusivo",
+      "logo": "assets/tournament-icons/AstraCup.png",
+      "teams": 4,
+      "endAt": "2026-10-11T00:00:00.000Z",
+      "placementPoints": {
+        "1": 20,
+        "2": 15,
+        "3": 10,
+        "4": 5
+      }
+    },
     "jubs-pre-jubs-sp": {
       "defaultPhase": "qualifier",
       "phaseRules": [
@@ -533,6 +546,29 @@
         "6": 4,
         "7": 2,
         "8": 0,
+        "3-4": 10
+      }
+    },
+    "e-tusca": {
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 5,
+          "seriesCodeMax": 6
+        },
+        {
+          "phase": "final",
+          "seriesCodeMin": 7
+        }
+      ],
+      "name": "E-Tusca 2026",
+      "logo": "assets/tournament-icons/tusca.png",
+      "teams": 4,
+      "endAt": "2026-10-04T20:30:00.000Z",
+      "placementPoints": {
+        "1": 20,
+        "2": 15,
         "3-4": 10
       }
     },

@@ -35,6 +35,25 @@
       ]
     },
     {
+      "id": "astra-cup",
+      "name": "Astra Cup Inclusivo",
+      "organizer": "AcadArena",
+      "source": "Histórico",
+      "sourceId": "",
+      "startAt": "2026-10-10T15:00:00",
+      "endAt": "2026-10-10T21:00:00",
+      "logo": "assets/tournament-icons/AstraCup.png",
+      "folder": "campeonatos/Astra Cup",
+      "files": [
+        "campeonatos/Astra Cup/ASTRA_001_10-10-26_usp_stars_gc_13_x_3_inatel_gray_sunset.json",
+        "campeonatos/Astra Cup/ASTRA_002_10-10-26_pucc_canaries_10_x_13_macklogic_rainbow_haven.json",
+        "campeonatos/Astra Cup/ASTRA_003_10-10-26_pucc_canaries_13_x_3_inatel_gray_lotus.json",
+        "campeonatos/Astra Cup/ASTRA_004_10-10-26_macklogic_rainbow_13_x_1_usp_stars_gc_ascent.json",
+        "campeonatos/Astra Cup/ASTRA_005_10-10-26_macklogic_rainbow_13_x_1_inatel_gray_haven.json",
+        "campeonatos/Astra Cup/ASTRA_006_10-10-26_usp_stars_gc_7_x_13_pucc_canaries_abyss.json"
+      ]
+    },
+    {
       "id": "cia-2026",
       "name": "CIA 2026",
       "organizer": "CIA",
@@ -108,6 +127,30 @@
         "campeonatos/Copa LUCE Inters/LUCE_024b_12-10-26_a2e_uff_13_x_4_sheriff_iff_sunset.json",
         "campeonatos/Copa LUCE Inters/LUCE_027a_13-10-26_a2e_uff_13_x_15_wolf_gaming_haven.json",
         "campeonatos/Copa LUCE Inters/LUCE_027b_14-10-26_a2e_uff_8_x_13_wolf_gaming_split.json"
+      ]
+    },
+    {
+      "id": "e-tusca",
+      "name": "E-Tusca 2026",
+      "organizer": "AcadArena",
+      "source": "Histórico",
+      "sourceId": "",
+      "startAt": "2026-09-27T14:00:00",
+      "endAt": "2026-10-04T17:30:00",
+      "logo": "assets/tournament-icons/tusca.png",
+      "folder": "campeonatos/E-Tusca",
+      "files": [
+        "campeonatos/E-Tusca/ETUSCA_001_27-09-26_unicamp_tritons_black_13_x_4_ufscar_fire_lotus.json",
+        "campeonatos/E-Tusca/ETUSCA_002_27-09-26_axis_anteaters_12_x_14_pucc_cardinals_abyss.json",
+        "campeonatos/E-Tusca/ETUSCA_003_27-09-26_unicamp_tritons_black_8_x_13_pucc_cardinals_lotus.json",
+        "campeonatos/E-Tusca/ETUSCA_004_27-09-26_axis_anteaters_13_x_5_ufscar_fire_ascent.json",
+        "campeonatos/E-Tusca/ETUSCA_005a_27-09-26_pucc_cardinals_13_x_5_ufscar_fire_abyss.json",
+        "campeonatos/E-Tusca/ETUSCA_005b_27-09-26_pucc_cardinals_13_x_7_ufscar_fire_split.json",
+        "campeonatos/E-Tusca/ETUSCA_006a_27-09-26_axis_anteaters_13_x_10_unicamp_tritons_black_haven.json",
+        "campeonatos/E-Tusca/ETUSCA_006b_27-09-26_axis_anteaters_13_x_3_unicamp_tritons_black_summit.json",
+        "campeonatos/E-Tusca/ETUSCA_007a_04-10-26_pucc_cardinals_10_x_13_axis_anteaters_lotus.json",
+        "campeonatos/E-Tusca/ETUSCA_007b_04-10-26_pucc_cardinals_13_x_10_axis_anteaters_split.json",
+        "campeonatos/E-Tusca/ETUSCA_007c_04-10-26_pucc_cardinals_13_x_9_axis_anteaters_ascent.json"
       ]
     },
     {

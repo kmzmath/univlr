@@ -480,6 +480,7 @@ const TOURNAMENT_OVERRIDES = {
         "Etapa 1: turno unico, as 8 equipes se enfrentam uma vez (7 rodadas, 28 partidas)",
         "Etapa 2: eliminacao simples com as 4 primeiras da Etapa 1",
         "Etapa 1 em MD3",
+        "Semifinais em 01/11: Wolf Gaming x UFRJ Minerva e A2E UFF x Minerva Thunders. Final em 07/11",
       ],
       standings: "Classificacao da Etapa 1",
     },
@@ -550,53 +551,65 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 16", a: "minerva_thunders", scoreA: 2, b: "minerva_artemis", scoreB: 0, winner: "minerva_thunders", status: "W.O." },
           ],
         },
+        // Rodadas 5 a 7: resultados da plataforma, conferidos em 21/10. Os 8 W.O. foram
+        // confirmados pelo dono em 21/10: a plataforma tem 13x0 lancado pelo admin nos
+        // dois mapas e nenhuma partida entre as duas equipes nas matchlists dos inscritos.
         {
           title: "Rodada 5",
-          status: "Agendada - 04/10",
+          status: "Concluida",
           bestOf: "MD3",
           matches: [
-            { code: "Partida 17", a: "wolf_gaming", b: "unirio_krakens", status: "Agendada" },
-            { code: "Partida 18", a: "ufrj_minerva", b: "a2e_uff_shadows", status: "Agendada" },
-            { code: "Partida 19", a: "minerva_thunders", b: "sheriff_iff", status: "Agendada" },
-            { code: "Partida 20", a: "minerva_artemis", b: "a2e_uff", status: "Agendada" },
+            { code: "Partida 17", a: "wolf_gaming", scoreA: 2, b: "unirio_krakens", scoreB: 0, winner: "wolf_gaming", status: "W.O." },
+            { code: "Partida 18", a: "ufrj_minerva", scoreA: 2, b: "a2e_uff_shadows", scoreB: 0, winner: "ufrj_minerva" },
+            { code: "Partida 19", a: "minerva_thunders", scoreA: 2, b: "sheriff_iff", scoreB: 0, winner: "minerva_thunders", status: "W.O." },
+            { code: "Partida 20", a: "minerva_artemis", scoreA: 0, b: "a2e_uff", scoreB: 2, winner: "a2e_uff", status: "W.O." },
           ],
         },
         {
           title: "Rodada 6",
-          status: "Agendada - 17/10",
+          status: "Concluida",
           bestOf: "MD3",
           matches: [
-            { code: "Partida 21", a: "ufrj_minerva", b: "unirio_krakens", status: "Agendada" },
-            { code: "Partida 22", a: "minerva_thunders", b: "wolf_gaming", status: "Agendada" },
-            { code: "Partida 23", a: "minerva_artemis", b: "a2e_uff_shadows", status: "Agendada" },
-            { code: "Partida 24", a: "a2e_uff", b: "sheriff_iff", status: "Agendada" },
+            { code: "Partida 21", a: "ufrj_minerva", scoreA: 2, b: "unirio_krakens", scoreB: 0, winner: "ufrj_minerva", status: "W.O." },
+            { code: "Partida 22", a: "minerva_thunders", scoreA: 1, b: "wolf_gaming", scoreB: 2, winner: "wolf_gaming" },
+            { code: "Partida 23", a: "minerva_artemis", scoreA: 0, b: "a2e_uff_shadows", scoreB: 2, winner: "a2e_uff_shadows", status: "W.O." },
+            { code: "Partida 24", a: "a2e_uff", scoreA: 2, b: "sheriff_iff", scoreB: 0, winner: "a2e_uff" },
           ],
         },
         {
           title: "Rodada 7",
-          status: "Agendada - 18/10",
+          status: "Concluida",
           bestOf: "MD3",
           matches: [
-            { code: "Partida 25", a: "minerva_thunders", b: "unirio_krakens", status: "Agendada" },
-            { code: "Partida 26", a: "minerva_artemis", b: "ufrj_minerva", status: "Agendada" },
-            { code: "Partida 27", a: "a2e_uff", b: "wolf_gaming", status: "Agendada" },
-            { code: "Partida 28", a: "sheriff_iff", b: "a2e_uff_shadows", status: "Agendada" },
+            { code: "Partida 25", a: "minerva_thunders", scoreA: 2, b: "unirio_krakens", scoreB: 0, winner: "minerva_thunders", status: "W.O." },
+            { code: "Partida 26", a: "minerva_artemis", scoreA: 0, b: "ufrj_minerva", scoreB: 2, winner: "ufrj_minerva", status: "W.O." },
+            { code: "Partida 27", a: "a2e_uff", scoreA: 0, b: "wolf_gaming", scoreB: 2, winner: "wolf_gaming" },
+            { code: "Partida 28", a: "sheriff_iff", scoreA: 0, b: "a2e_uff_shadows", scoreB: 2, winner: "a2e_uff_shadows", status: "W.O." },
           ],
         },
       ],
-      // Depois da Rodada 4. Empate de campanha vai como faixa: o desempate do
-      // regulamento nao foi publicado aqui, e a ordem dentro da faixa e alfabetica.
+      // Final da Etapa 1, sem empate de campanha. As 4 primeiras vao aos playoffs.
       standings: [
-        { id: "a2e_uff", wins: 4, losses: 0, range: "1º - 2º" },
-        { id: "wolf_gaming", wins: 4, losses: 0, range: "1º - 2º" },
-        { id: "minerva_thunders", wins: 3, losses: 1, range: "3º" },
-        { id: "sheriff_iff", wins: 2, losses: 2, range: "4º" },
-        { id: "a2e_uff_shadows", wins: 1, losses: 3, range: "5º - 7º" },
-        { id: "ufrj_minerva", wins: 1, losses: 3, range: "5º - 7º" },
-        { id: "unirio_krakens", wins: 1, losses: 3, range: "5º - 7º" },
-        { id: "minerva_artemis", wins: 0, losses: 4, range: "8º" },
+        { id: "wolf_gaming", wins: 7, losses: 0, range: "1º", status: "Classificado" },
+        { id: "a2e_uff", wins: 6, losses: 1, range: "2º", status: "Classificado" },
+        { id: "minerva_thunders", wins: 5, losses: 2, range: "3º", status: "Classificado" },
+        { id: "ufrj_minerva", wins: 4, losses: 3, range: "4º", status: "Classificado" },
+      ],
+      eliminated: [
+        { id: "a2e_uff_shadows", wins: 3, losses: 4, range: "5º" },
+        { id: "sheriff_iff", wins: 2, losses: 5, range: "6º" },
+        { id: "unirio_krakens", wins: 1, losses: 6, range: "7º" },
+        { id: "minerva_artemis", wins: 0, losses: 7, range: "8º" },
       ],
     },
+    // Os eliminados na Etapa 1 ja tem colocacao (rotulos de ranking-weights.json).
+    // Do 1o ao 4o, depois dos playoffs.
+    placements: [
+      { range: "5", id: "a2e_uff_shadows", note: "3-4 na Etapa 1" },
+      { range: "6", id: "sheriff_iff", note: "2-5 na Etapa 1" },
+      { range: "7", id: "unirio_krakens", note: "1-6 na Etapa 1" },
+      { range: "8", id: "minerva_artemis", note: "0-7 na Etapa 1" },
+    ],
     // A Etapa 2 (eliminacao simples com as 4 primeiras) NAO entra como
     // `bracket` aqui: `tournamentBracketSection` faz curto-circuito na
     // primeira linha - havendo `swiss.rounds`, ele nunca chega a desenhar a

@@ -4055,31 +4055,155 @@ function calculateRankingForCutoff({ teams, matches, matchSeries, players, tourn
     const date = Number(series.sortAt || series.startedAt || 0);
     return !date || date <= cutoffAt;
   });
-  const cutoffTeams = teamsForRankingCutoff(teams, filteredMatches, cutoffAt);
-  return window.RankingCore.calculateTeamRankings({
+  const aliases = rankingSuccessionAliases(teams, filteredMatches, cutoffAt);
+  const inherited = applyRankingSuccessions(
+    { teams, matches: filteredMatches, matchSeries: filteredSeries, tournaments: tournaments.filter(eventIsVisible), rankingWeights: rankingWeights || {} },
+    aliases,
+  );
+  const currentWeek = cutoffAt >= rankingTuesdayStartOnOrBefore(Date.now());
+  const cutoffTeams = teamsForRankingCutoff(inherited.teams, inherited.matches, cutoffAt, currentWeek);
+  const ranking = window.RankingCore.calculateTeamRankings({
     teams: cutoffTeams,
-    matches: filteredMatches,
-    matchSeries: filteredSeries,
+    matches: inherited.matches,
+    matchSeries: inherited.matchSeries,
     players,
-    tournaments: tournaments.filter(eventIsVisible),
-    weights: rankingWeights || {},
+    tournaments: inherited.tournaments,
+    weights: inherited.rankingWeights,
     now: cutoffAt,
   });
+  return withSucceededRankingRows(ranking, aliases);
 }
 
-function teamsForRankingCutoff(teams, matches, cutoffAt) {
+function teamsForRankingCutoff(teams, matches, cutoffAt, currentWeek = true) {
   return teams.map((team) => {
     const lineup = rankingLineupEntriesForMatches(team, matches, cutoffAt);
     return {
       ...team,
       // O core usa currentLineup para a forca de elenco (observada na semana) e
-      // activeRoster para saber se a equipe esta completa hoje.
-      activeRoster: teamActiveRoster(team),
+      // activeRoster para saber se a equipe esta completa. Na semana atual vale
+      // o elenco cadastrado; nas passadas, a formacao que jogou ate ali. Com o
+      // elenco de hoje, uma equipe que perdeu jogadores depois sumia tambem das
+      // semanas em que jogava completa (Axis Ego, Carcaras e Momentum sumiam de
+      // 14 a 23 semanas).
+      activeRoster: currentWeek ? teamActiveRoster(team) : lineup,
       currentLineup: lineup,
       observedLineup: lineup,
       lineup,
     };
   });
+}
+
+// Sucessao de equipe: quando o nucleo de uma line passa para um id novo (a UFRN
+// Carcaras virou UFRN Tirana), a nova herda no ranking, a partir da primeira
+// partida dela, tudo o que a antiga construiu: partidas, colocacoes e jogadores.
+// Nada muda fora do ranking - a pagina da antiga continua com as partidas e os
+// trofeus dela. Declarada na coluna `sucede` de teams_infos.xlsx; o build avisa
+// dos pares que parecem sucessao e nao foram declarados.
+//
+// Devolve predecessora -> { to, by, since }: `by` e a sucessora direta, `to` e
+// o fim da cadeia (A -> B -> C manda as partidas de A direto para C) e `since`
+// e a estreia de `by`, quando a heranca comeca.
+function rankingSuccessionAliases(teams, matches, cutoffAt) {
+  const successors = (teams || []).filter((team) => team.succeeds && team.succeeds !== team.id);
+  if (!successors.length) return new Map();
+  const debut = new Map();
+  for (const match of matches || []) {
+    const startedAt = Number(match.startedAt || 0);
+    if (!startedAt || startedAt > cutoffAt) continue;
+    for (const side of [match.teamA, match.teamB]) {
+      if (side?.id) debut.set(side.id, Math.min(debut.get(side.id) ?? Infinity, startedAt));
+    }
+  }
+  const direct = new Map();
+  for (const team of successors) {
+    if (debut.has(team.id)) direct.set(team.succeeds, { by: team.id, since: debut.get(team.id) });
+  }
+  const aliases = new Map();
+  for (const [from, row] of direct) {
+    let to = row.by;
+    const seen = new Set([from]);
+    while (direct.has(to) && !seen.has(to)) {
+      seen.add(to);
+      to = direct.get(to).by;
+    }
+    aliases.set(from, { ...row, to });
+  }
+  return aliases;
+}
+
+function applyRankingSuccessions(input, aliases) {
+  if (!aliases.size) return input;
+  const to = (id) => aliases.get(id)?.to || id;
+  const touches = (row) => aliases.has(row?.teamA?.id) || aliases.has(row?.teamB?.id);
+  const side = (row) => (row && aliases.has(row.id) ? { ...row, id: to(row.id) } : row);
+  const renameSides = (row) => ({ ...row, teamA: side(row.teamA), teamB: side(row.teamB), winnerId: to(row.winnerId), loserId: to(row.loserId) });
+  const againstItself = (row) => touches(row) && to(row.teamA?.id) === to(row.teamB?.id);
+  const renamePlacement = (row) => {
+    if (!row || (!aliases.has(row.id) && !aliases.has(row.teamId))) return row;
+    return { ...row, ...(row.id ? { id: to(row.id) } : {}), ...(row.teamId ? { teamId: to(row.teamId) } : {}) };
+  };
+  const weights = input.rankingWeights || {};
+  return {
+    teams: input.teams.filter((team) => !aliases.has(team.id)),
+    // Uma partida entre a predecessora e a sucessora viraria a equipe contra
+    // ela mesma; o build avisa quando isso acontece.
+    matches: input.matches
+      .filter((match) => !againstItself(match))
+      .map((match) => (!touches(match) ? match : { ...renameSides(match), players: (match.players || []).map((player) => (aliases.has(player.teamId) ? { ...player, teamId: to(player.teamId) } : player)) })),
+    matchSeries: input.matchSeries.filter((series) => !againstItself(series)).map((series) => (touches(series) ? renameSides(series) : series)),
+    tournaments: input.tournaments.map((event) => ({
+      ...event,
+      teams: (event.teams || []).map((id) => (typeof id === "string" ? to(id) : id)),
+      placements: (event.placements || []).map(renamePlacement),
+    })),
+    rankingWeights: {
+      ...weights,
+      tournaments: Object.fromEntries(Object.entries(weights.tournaments || {}).map(([id, config]) => [id, config?.placements ? { ...config, placements: config.placements.map(renamePlacement) } : config])),
+      ...(weights.achievements ? { achievements: { ...weights.achievements, manualResults: (weights.achievements.manualResults || []).map(renamePlacement) } } : {}),
+    },
+  };
+}
+
+// A predecessora sai do calculo, mas continua precisando de uma linha: a pagina
+// dela le o ranking pelo byTeamId. A linha tem 0 partida (a lista do ranking e
+// o historico ja escondem linha assim, como a de quem ainda nao estreou) e diz
+// para onde a nota foi. A sucessora ganha `inherits` com as predecessoras.
+function withSucceededRankingRows(ranking, aliases) {
+  if (!aliases.size) return ranking;
+  const inherits = new Map();
+  for (const [from, alias] of aliases) inherits.set(alias.to, [...(inherits.get(alias.to) || []), from]);
+  for (const row of ranking.teams) if (inherits.has(row.id)) row.inherits = inherits.get(row.id);
+  for (const [from, alias] of aliases) {
+    const row = {
+      id: from,
+      score: 0,
+      blocks: { competitive: 0, achievements: 0, recentForm: 0, rosterStrength: 0 },
+      components: { statisticalModels: 0, strengthOfSchedule: 0, dominance: 0 },
+      models: {},
+      sos: { general: 50, wins: 50 },
+      achievements: [],
+      recent: { matches: 0 },
+      roster: {},
+      matches: 0,
+      wins: 0,
+      losses: 0,
+      roundsWon: 0,
+      roundsLost: 0,
+      roundDiff: 0,
+      provisional: false,
+      rosterSize: 0,
+      inactive: true,
+      overallRank: null,
+      validRank: null,
+      canonicalRank: null,
+      rank: null,
+      succeededBy: alias.by,
+      succeededAt: alias.since,
+    };
+    ranking.teams.push(row);
+    ranking.byTeamId[from] = row;
+  }
+  return ranking;
 }
 
 function buildRankingSnapshots({ teams, matches, matchSeries, players, tournaments, rankingWeights }) {
@@ -5636,6 +5760,7 @@ function applyTeamMetadata(teams, players, metadata, teamProfiles) {
       lineupHistory: manualProfile.lineupHistory || metadataProfile.lineupHistory || teamProfiles.defaults.lineupHistory || [],
     };
     team.registered = Boolean(registered);
+    if (registered?.succeeds) team.succeeds = registered.succeeds;
     team.name = registered?.displayName || team.name;
     team.sourceTag = registered?.tag || team.sourceTag || team.id;
     team.shortTag = team.shortTag || teamTag(team.id);
@@ -6664,7 +6789,7 @@ function renderRankingPage(teamId = route().id || "") {
     <header class="page-header slim-header">
       <div class="page-title">
         <h1>Ranking</h1>
-        <p>Nota final: 70% desempenho, 15% conquistas, 10% forma recente e 5% rAAting 3.0 dos jogadores. Equipes com menos de ${minimumMatches} partidas ficam marcadas como provisórias e equipes com elenco incompleto (menos de ${minimumRosterSize} jogadores) ficam inativas.</p>
+        <p>Nota final: 70% desempenho, 15% conquistas, 10% forma recente e 5% rAAting 3.0 dos jogadores. Equipes com menos de ${minimumMatches} partidas ficam marcadas como provisórias e equipes com elenco incompleto (menos de ${minimumRosterSize} jogadores) ficam inativas; nas semanas passadas, conta a formação que jogou em cada uma. Quando o núcleo de uma equipe passa para uma equipe nova, a nova herda o histórico da antiga no ranking.</p>
       </div>
     </header>
     <section class="hub-panel ranking-full-panel">
@@ -7263,7 +7388,7 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null) 
           ${rankingWeightedBar("Desempenho", blocks.competitive, 70, "Mede desempenho coletivo através dos resultados, qualidade dos adversários e dominância.")}
           ${rankingWeightedBar("Conquistas", blocks.achievements, 15, "Soma os pontos de cada colocação em campeonatos encerrados; das classificatórias da UNIVAVÁ, conta só a de maior pontuação. Cada ponto perde valor em linha reta até zerar em 10 meses. A equipe com mais pontos vale 100, e as demais, a proporção dela.")}
           ${rankingWeightedBar("Forma recente", blocks.recentForm, 10, "Desempenho em uma janela de 60 dias, meia-vida de 30 dias.")}
-          ${rankingWeightedBar("rAAting 3.0 jogadores", blocks.rosterStrength, 5, "Usa o rAAting 3.0 individual, estabilidade do core e profundidade.")}
+          ${rankingWeightedBar("rAAting 3.0 jogadores", blocks.rosterStrength, 5, "Usa o rAAting 3.0 individual da formação, com as partidas de cada jogador por qualquer equipe, mais a estabilidade do core e a profundidade.")}
         </div>
       </section>
       <section class="ranking-visual-section">
@@ -12303,6 +12428,7 @@ function teamResumoTab(team, context) {
     <div class="stack team-resumo-stack">
       <section class="data-panel team-ranking-main">
         ${sectionHead("Histórico do ranking", "Posição semanal na escala de #1 ao fim do ranking.", `teams/${team.id}/ranking`, "Ver o cálculo da nota")}
+        ${teamSuccessionNote(team)}
         ${historico.length ? teamRankingChart(historico) : `<div class="empty-state">Sem histórico válido suficiente para calcular ranking.</div>`}
       </section>
       <section class="section-band">
@@ -12358,6 +12484,9 @@ function teamRankHero(team) {
 // decaimento e o comportamento normal do ranking), entao "manteve" e uma
 // resposta legitima e nao um dado faltando.
 function teamRankWeeklyMove(team) {
+  // Sem posicao hoje nao ha movimento: o historico pularia para as duas ultimas
+  // semanas ranqueadas e poria um "=" ao lado de "Inativo".
+  if (!teamValidRank(team)) return null;
   const historico = teamRankingCanonicalHistory(team);
   if (historico.length < 2) return null;
   const atual = Number(historico[0].rank);
@@ -12447,15 +12576,39 @@ function teamTabLink(team, tab, label, activeTab) {
 
 function teamRankingTab(team) {
   const history = teamRankingCanonicalHistory(team);
+  // A sucedida nao tem nota propria: o painel do calculo mostraria tudo zerado.
+  const succeeded = Boolean(team.ranking?.succeededBy);
   return `
     <section class="data-panel team-ranking-main">
       <div class="section-head"><h2>Histórico do ranking</h2><p>Evolução semanal considerando apenas equipes válidas no ranking canônico.</p></div>
+      ${teamSuccessionNote(team)}
       ${history.length ? teamRankingChart(history) : `<div class="empty-state">Sem histórico válido suficiente para calcular ranking.</div>`}
     </section>
+    ${succeeded ? "" : `
     <section class="data-panel team-ranking-explainer">
       ${rankingExplanationPanel(team)}
-    </section>
+    </section>`}
   `;
+}
+
+// Sucessao de equipe (ver rankingSuccessionAliases): a pagina da antiga diz para
+// onde a nota foi, e a da nova, de quem ela herdou. As partidas e os trofeus de
+// cada uma continuam na propria pagina.
+function teamSuccessionNote(team) {
+  const ranking = team.ranking || {};
+  const link = (id) => {
+    const other = teamById(id);
+    return other ? `<a href="#/teams/${other.id}">${escapeHtml(other.name)}</a>` : escapeHtml(id);
+  };
+  if (ranking.succeededBy) {
+    return `<p class="ranking-note">Desde ${escapeHtml(formatDate(ranking.succeededAt))}, a nota desta equipe conta para a ${link(ranking.succeededBy)}, que reuniu o núcleo dela. As partidas e os troféus continuam nesta página.</p>`;
+  }
+  if (ranking.inherits?.length) {
+    const rows = latestRankingSnapshot()?.byTeamId || {};
+    const parts = ranking.inherits.map((id) => `${link(id)}${rows[id]?.succeededAt ? ` (desde ${escapeHtml(formatDate(rows[id].succeededAt))})` : ""}`);
+    return `<p class="ranking-note">A nota inclui as partidas e colocações da ${parts.join(" e da ")}, que esta equipe sucedeu.</p>`;
+  }
+  return "";
 }
 
 function teamRankingCanonicalHistory(team) {
@@ -12513,6 +12666,10 @@ function teamRankingChart(history) {
   const yTicks = rankingChartTicks(tamanho);
   const xTicks = chartDateTicks(rows);
   const latest = rows[rows.length - 1];
+  // Equipe que saiu do ranking (inativa, ou sucedida por outra) tem como ultimo
+  // ponto uma semana passada; chamar isso de posicao atual seria falso.
+  const latestCutoff = Number(latestRankingSnapshot()?.cutoffAt || 0);
+  const latestIsCurrent = !latestCutoff || dateValue(latest.date) >= latestCutoff;
   const best = Math.min(...rows.map((row) => Number(row.rank)));
   // Bolinha so onde a posicao MUDOU (mais a primeira e a ultima semana). Uma
   // por semana virava colar de contas: 19 pontos identicos numa reta, e nenhum
@@ -12542,7 +12699,7 @@ function teamRankingChart(history) {
   return `
     <div class="ranking-chart-card">
       <dl class="ranking-chart-kpis">
-        <div><dd>${rankingHistoryRankLabel(latest.rank)}</dd><dt>Posição atual</dt></div>
+        <div><dd>${rankingHistoryRankLabel(latest.rank)}</dd><dt>${latestIsCurrent ? "Posição atual" : "Última posição"}</dt></div>
         <div><dd>#${best}</dd><dt>Melhor</dt></div>
         <div><dd>${rows.length}</dd><dt>${rows.length === 1 ? "Semana válida" : "Semanas válidas"}</dt></div>
         <div><dd>${tamanho}</dd><dt>Equipes no ranking</dt></div>

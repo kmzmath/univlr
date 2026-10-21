@@ -1142,6 +1142,14 @@
 
     const ratingStats = zStats(playerGames.map((game) => game.rating));
     const opponentStats = zStats(teamIds.map((id) => safeScore(baseStrength[id])));
+    // O rAAting e do jogador, nao da camisa: quem troca de line dentro da
+    // faculdade (85 das 91 trocas do acervo) leva o nivel medido junto. Estabilidade
+    // e profundidade continuam contando so as partidas pela propria equipe.
+    const gamesByPlayer = new Map();
+    for (const game of playerGames) {
+      if (!gamesByPlayer.has(game.playerId)) gamesByPlayer.set(game.playerId, []);
+      gamesByPlayer.get(game.playerId).push(game);
+    }
     const individualRaw = {};
     const coreScore = {};
     const depthRaw = {};
@@ -1151,8 +1159,9 @@
       const games = playerGames.filter((game) => game.teamId === id);
       const currentIds = (team.currentLineup || []).map((slot) => slot.playerId).filter(Boolean);
       const candidateIds = currentIds.length ? new Set(currentIds) : new Set(games.map((game) => game.playerId));
+      const ratedGames = currentIds.length ? [...candidateIds].flatMap((playerId) => gamesByPlayer.get(playerId) || []) : games;
       const playerBuckets = new Map();
-      for (const game of games) {
+      for (const game of ratedGames) {
         if (candidateIds.size && !candidateIds.has(game.playerId)) continue;
         const days = Math.max(0, (now - game.startedAt) / DAY_MS);
         const recency = decayWeight(days, weights.halfLives?.playerRating || 90);

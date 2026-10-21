@@ -28,6 +28,11 @@ Modelos estatísticos:
 
 Modelos principais implementados: Colley, Massey, Elo final, Elo com margem, TrueSkill aproximado, PageRank de vitórias e Bradley-Terry-Poisson. O PCA usa os modelos normalizados e inverte o sinal quando a correlação com a média dos modelos é negativa.
 
+rAAting 3.0 dos jogadores:
+
+- 70% rAAting individual dos cinco da formação da semana. Desde 20/10/2026 o rAAting do jogador conta as partidas dele por **qualquer** equipe: quem troca de line dentro da faculdade leva o nível medido junto.
+- 20% estabilidade do core e 10% profundidade, essas duas só com as partidas pela própria equipe.
+
 ## Conquistas
 
 Regra em vigor desde 22/09/2026:
@@ -46,6 +51,18 @@ Regra em vigor desde 22/09/2026:
 - Colocação cujo rótulo não está na tabela cai na regra geral antiga (`achievements.placementPoints` × peso × tamanho). O `build_database.js` avisa quando isso acontece e quando uma chave de `tournaments` não corresponde a nenhum evento.
 
 Tabelas já cadastradas para campeonatos que ainda não terminaram: `univava-fase-de-grupos` e `univava-playoffs` (este último para a pasta `campeonatos/Univavá/Playoffs`, que ainda não existe).
+
+## Sucessão de equipe
+
+Regra em vigor desde 20/10/2026. A identidade no ranking é a line: ela segue a mesma através das seletivas, sem reset por ano. Quando o núcleo de uma line passa para um id novo (mudou de nome ou de organização) e a antiga para de jogar, a nova **sucede** a antiga.
+
+- Declarada na coluna `sucede` de `dados_excel/teams_infos.xlsx`, na linha da equipe nova, com o slug da antiga. O `build_metadata.py` avisa de slug que não existe, de sucessão circular e de duas equipes sucedendo a mesma.
+- A partir da primeira partida da nova, o ranking conta como dela as partidas, as colocações (também as de `placements` e `manualResults` em `ranking-weights.json`) e os jogadores da antiga. Em cadeia (A → B → C), tudo vai para a última.
+- Só o ranking muda. As partidas e os troféus da antiga continuam na página dela, com o nome dela, e as semanas anteriores à estreia da nova não mudam.
+- Depois da estreia da nova, a antiga fica com uma linha vazia no snapshot (0 partida, inativa, `succeededBy` e `succeededAt`), que a lista do ranking esconde. A nova ganha `inherits`. As duas páginas mostram uma nota dizendo para onde a nota foi e de quem veio.
+- O `build_database.js` avisa de par que parece sucessão e não foi declarado (o núcleo das últimas 6 partidas da antiga divide 3 ou mais jogadores com o das 6 primeiras da nova, a antiga joga no máximo 2 mapas depois da estreia da nova e as duas são da mesma faculdade) e de sucessão declarada que as partidas desmentem (a antiga segue jogando, ou jogou contra a nova).
+
+Declaradas em 20/10/2026: Azure Bears → Azure Bears Black, Axis Ego → CAAP Momentum, Dark UFRJ → Minerva Thunders, UFRN Carcarás → UFRN Tirana, UFPE Virtus → Incinera E-Sports e UFU Saints Trigons → UFU Saints Onyx. Não são sucessão, por decisão do dono: CAAP Momentum → CAAP Malditos (só 2 em comum) e Unicamp Tritons Red → Black (a Red acabou e 3 dela foram para a Black, que já existia; a Black segue sendo a mesma line).
 
 ## Peso do mapa
 
@@ -76,7 +93,7 @@ Os pesos de campeonatos, fases, séries e pontos por colocação ficam em `ranki
 - Sem estatísticas de jogadores: rAAting 3.0 dos jogadores fica neutro em 50.
 - Sem dados suficientes em um modelo estatístico: o modelo usa um resultado neutro/regularizado e ainda entra normalizado.
 - Times com menos de `minimumMatches` partidas são marcados como provisórios. O valor atual em `ranking-weights.json` é 9 partidas.
-- Times com elenco atual incompleto (menos de `minimumRosterSize` jogadores cadastrados, hoje 5) são marcados como inativos e ficam fora do ranking válido, independentemente do número de partidas. Sem nenhum jogador cadastrado, a equipe some do ranking (inclusive do escopo "Todos").
+- Times com elenco incompleto (menos de `minimumRosterSize` jogadores, hoje 5) são marcados como inativos e ficam fora do ranking válido, independentemente do número de partidas. Na semana atual vale o elenco cadastrado em `teams.xlsx`; sem nenhum jogador cadastrado, a equipe some do ranking (inclusive do escopo "Todos"). Desde 20/10/2026, nas semanas passadas vale a formação que jogou até aquela semana: com o elenco de hoje, uma equipe que perdeu jogadores depois sumia também das semanas em que jogava completa.
 - A posição canônica é sempre a posição no ranking "Apenas válidos"; a visualização "Todos" recalcula a numeração incluindo equipes provisórias e inativas, sem alterar históricos ou snapshots.
 - A lineup exibida na semana atual é o elenco cadastrado da equipe; com mais de cinco jogadores registrados, aparecem os cinco com mais partidas pela equipe. Semanas anteriores mantêm a lineup observada nas partidas daquela semana.
 - Valores `NaN`, infinito ou ausentes são tratados como neutros e nunca chegam ao resultado final.
@@ -119,4 +136,5 @@ Teste básico:
 
 ```bash
 node scripts/test_ranking_core.js
+node scripts/test_team_successions.js
 ```

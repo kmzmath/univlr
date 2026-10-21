@@ -461,7 +461,8 @@
           "slot": 7,
           "name": "Rapunzel"
         }
-      ]
+      ],
+      "succeeds": "azure_bears"
     },
     {
       "id": "azure_bears_golden",
@@ -982,7 +983,8 @@
           "slot": 1,
           "name": "Klouzz"
         }
-      ]
+      ],
+      "succeeds": "axis_ego"
     },
     {
       "id": "carrascos_fd8j",
@@ -2194,7 +2196,8 @@
           "slot": 5,
           "name": "Death Knives"
         }
-      ]
+      ],
+      "succeeds": "ufpe_virtus"
     },
     {
       "id": "liga_vulkanica",
@@ -2793,7 +2796,8 @@
           "slot": 8,
           "name": "Kaname"
         }
-      ]
+      ],
+      "succeeds": "dark_ufrj"
     },
     {
       "id": "nox_unievangelica",
@@ -4337,7 +4341,8 @@
           "slot": 5,
           "name": "GBR"
         }
-      ]
+      ],
+      "succeeds": "ufrn_carcaras"
     },
     {
       "id": "ufs_bugados",
@@ -4596,7 +4601,8 @@
           "slot": 6,
           "name": "cesinhas"
         }
-      ]
+      ],
+      "succeeds": "ufu_saints_trigons"
     },
     {
       "id": "ufu_saints_trigons",

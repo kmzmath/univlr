@@ -1999,6 +1999,93 @@ const TOURNAMENT_OVERRIDES = {
       ],
     },
   },
+  "univava-playoffs": {
+    name: "UNIVAV\u00c1 - Playoffs",
+    organizer: "AcadArena",
+    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
+    // A mesma capa da fase de grupos, escolha do dono.
+    banner: "assets/tournament-banners/univava_fase_de_grupos.webp",
+    logo: "assets/tournament-icons/UNIVAVA.png",
+    prizePool: "R$15.000",
+    tier: "S",
+    type: "Online - Final presencial",
+    // Quartas em 17 e 18/10/2026; semifinais e final ainda sem data. Com a
+    // final: status "Finalizado", endAt e as colocacoes do 1o ao 4o.
+    status: "Em andamento",
+    startAt: "2026-10-17T00:00:00",
+    teamCount: 8,
+    // O pool da fase de grupos: os 5 mapas jogados nas quartas estao nele.
+    mapPool: ["Abyss", "Ascent", "Haven", "Lotus", "Split", "Summit", "Sunset"],
+    format: {
+      summary: "Elimina\u00e7\u00e3o simples",
+      details: [
+        "8 equipes: as classificadas da fase de grupos",
+        "Quartas e semifinais MD3, online",
+        "Final MD5, presencial",
+        "Sem disputa de 3\u00ba lugar",
+        "Premia\u00e7\u00e3o: R$ 8.000 (1\u00ba), R$ 4.000 (2\u00ba) e R$ 1.500 para cada 3\u00ba-4\u00ba",
+      ],
+      standings: "Coloca\u00e7\u00e3o oficial do campeonato",
+    },
+    // Rotulos iguais aos de ranking-weights.json. So os eliminados nas quartas
+    // ja tem colocacao; o campeonato em andamento nao pontua no ranking.
+    placements: [
+      { range: "5-8", id: "macklogic_red", note: "Quartas de final" },
+      { range: "5-8", id: "axis_anteaters", note: "Quartas de final" },
+      { range: "5-8", id: "ufmt_turuna", note: "Quartas de final" },
+      { range: "5-8", id: "wolf_gaming", note: "Quartas de final" },
+    ],
+    // Seeds da plataforma, de 1 a 8.
+    teams: [
+      "azure_bears_golden",
+      "ceub_octopus",
+      "wolf_gaming",
+      "macklogic_red",
+      "ufu_saints",
+      "caap_hellhounds",
+      "ufmt_turuna",
+      "axis_anteaters",
+    ],
+    bracket: {
+      title: "Elimina\u00e7\u00e3o simples",
+      regions: [
+        {
+          name: "Final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Final",
+              matches: [
+                { code: "Partida 7", bestOf: "MD5", aLabel: "Vencedor da Partida 5", bLabel: "Vencedor da Partida 6" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave principal",
+          className: "upper-bracket single-elimination",
+          columns: [
+            {
+              title: "Quartas de final",
+              matches: [
+                { code: "Partida 1", bestOf: "MD3", a: "macklogic_red", scoreA: 0, b: "azure_bears_golden", scoreB: 2, winner: "azure_bears_golden" },
+                { code: "Partida 2", bestOf: "MD3", a: "ufu_saints", scoreA: 2, b: "axis_anteaters", scoreB: 1, winner: "ufu_saints" },
+                { code: "Partida 3", bestOf: "MD3", a: "ceub_octopus", scoreA: 2, b: "ufmt_turuna", scoreB: 0, winner: "ceub_octopus" },
+                { code: "Partida 4", bestOf: "MD3", a: "caap_hellhounds", scoreA: 2, b: "wolf_gaming", scoreB: 0, winner: "caap_hellhounds" },
+              ],
+            },
+            {
+              title: "Semifinais",
+              matches: [
+                { code: "Partida 5", bestOf: "MD3", a: "azure_bears_golden", b: "ufu_saints" },
+                { code: "Partida 6", bestOf: "MD3", a: "ceub_octopus", b: "caap_hellhounds" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
   "univava-fase-de-grupos": {
     name: "UNIVAV\u00c1 - Fase de Grupos",
     organizer: "AcadArena",

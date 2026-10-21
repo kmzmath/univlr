@@ -465,6 +465,16 @@
       "qualifiesTo": "univava-playoffs"
     },
     "univava-playoffs": {
+      "defaultPhase": "playoffs",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 7
+        }
+      ],
+      "name": "UNIVAVÁ - Playoffs",
+      "logo": "assets/tournament-icons/UNIVAVA.png",
+      "teams": 8,
       "placementPoints": {
         "1": 100,
         "2": 80,

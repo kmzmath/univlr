@@ -50,7 +50,7 @@ Regra em vigor desde 22/09/2026:
 - Campeonato com `ignoreAchievements: true` não gera conquista (hoje, a LPE). Campeonato em andamento só conta depois de encerrado e com todas as colocações preenchidas.
 - Colocação cujo rótulo não está na tabela cai na regra geral antiga (`achievements.placementPoints` × peso × tamanho). O `build_database.js` avisa quando isso acontece e quando uma chave de `tournaments` não corresponde a nenhum evento.
 
-Tabelas já cadastradas para campeonatos que ainda não terminaram: `univava-fase-de-grupos` e `univava-playoffs` (este último para a pasta `campeonatos/Univavá/Playoffs`, que ainda não existe).
+Tabela já cadastrada para campeonato que ainda não terminou: `univava-playoffs` (pasta `campeonatos/Univavá/Playoffs`, no site desde 20/10/2026 com as quartas). Enquanto o override disser `status: "Em andamento"`, ele não pontua.
 
 ## Sucessão de equipe
 

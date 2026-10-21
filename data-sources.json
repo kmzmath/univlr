@@ -1109,6 +1109,28 @@
         "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_033b_27-09-26_azure_bears_black_13_x_8_ufmt_turuna_summit.json",
         "campeonatos/Univavá/Fase de Grupos/UNIVAVA_G_033c_27-09-26_azure_bears_black_9_x_13_ufmt_turuna_haven.json"
       ]
+    },
+    {
+      "id": "univava-playoffs",
+      "name": "Playoffs",
+      "organizer": "UNIVLR",
+      "source": "Histórico",
+      "sourceId": "",
+      "startAt": "",
+      "endAt": "",
+      "logo": "",
+      "folder": "campeonatos/Univavá/Playoffs",
+      "files": [
+        "campeonatos/Univavá/Playoffs/UNIVAVA_P_001a_17-10-26_macklogic_red_2_x_13_azure_bears_golden_lotus.json",
+        "campeonatos/Univavá/Playoffs/UNIVAVA_P_001b_17-10-26_macklogic_red_5_x_13_azure_bears_golden_split.json",
+        "campeonatos/Univavá/Playoffs/UNIVAVA_P_002a_17-10-26_ufu_saints_12_x_14_axis_anteaters_ascent.json",
+        "campeonatos/Univavá/Playoffs/UNIVAVA_P_002b_17-10-26_ufu_saints_13_x_6_axis_anteaters_split.json",
+        "campeonatos/Univavá/Playoffs/UNIVAVA_P_002c_17-10-26_ufu_saints_13_x_11_axis_anteaters_abyss.json",
+        "campeonatos/Univavá/Playoffs/UNIVAVA_P_003a_18-10-26_ceub_octopus_13_x_7_ufmt_turuna_split.json",
+        "campeonatos/Univavá/Playoffs/UNIVAVA_P_003b_18-10-26_ceub_octopus_13_x_4_ufmt_turuna_lotus.json",
+        "campeonatos/Univavá/Playoffs/UNIVAVA_P_004a_18-10-26_caap_hellhounds_13_x_11_wolf_gaming_sunset.json",
+        "campeonatos/Univavá/Playoffs/UNIVAVA_P_004b_18-10-26_caap_hellhounds_13_x_10_wolf_gaming_lotus.json"
+      ]
     }
   ]
 }

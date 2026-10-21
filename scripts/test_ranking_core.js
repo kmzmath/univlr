@@ -447,6 +447,43 @@ for (const order of [splitTeams.slice().reverse(), [...splitTeams.slice(3), ...s
   }
 }
 
+// rAAting portatil: o jogador leva o nivel medido para a line nova. "star" fez
+// 5 partidas otimas pela alpha e 1 ruim pela beta, onde esta hoje. Com as
+// partidas da alpha contando, a forca de elenco da beta tem que subir; o
+// controle troca o id dele nas partidas da alpha, o que nao mexe na alpha.
+function ratedMatch(id, daysAgo, teamAId, scoreA, teamBId, scoreB, ratingsA, ratingsB) {
+  const row = match(id, daysAgo, teamAId, scoreA, teamBId, scoreB);
+  row.players = [
+    ...ratingsA.map(([playerId, rating]) => ({ id: playerId, teamId: teamAId, rating, rounds: 20 })),
+    ...ratingsB.map(([playerId, rating]) => ({ id: playerId, teamId: teamBId, rating, rounds: 20 })),
+  ];
+  return row;
+}
+const filler = (prefix, rating) => [1, 2, 3, 4].map((n) => [`${prefix}${n}`, rating]);
+const portableMatches = (starIdAtAlpha) => [
+  ...[10, 12, 14, 16, 18].map((days, index) => ratedMatch(`pa${index}`, days, "alpha", 13, "gamma", 8, [[starIdAtAlpha, 2.0], ...filler("a", 1.0)], filler("g", 1.0).concat([["g5", 1.0]]))),
+  ratedMatch("pb1", 4, "beta", 13, "delta", 10, [["star", 0.5], ...filler("b", 1.0)], filler("d", 1.1).concat([["d5", 1.1]])),
+  ratedMatch("pb2", 3, "gamma", 13, "delta", 11, filler("g", 1.0).concat([["g5", 1.0]]), filler("d", 1.1).concat([["d5", 1.1]])),
+];
+const portableTeams = [
+  { id: "alpha", name: "alpha", currentLineup: [] },
+  { id: "beta", name: "beta", currentLineup: ["star", "b1", "b2", "b3", "b4"].map((playerId) => ({ playerId })) },
+  { id: "gamma", name: "gamma", currentLineup: [] },
+  { id: "delta", name: "delta", currentLineup: [] },
+];
+const rosterFor = (starIdAtAlpha) => {
+  const rows = portableMatches(starIdAtAlpha);
+  return RankingCore.calculateTeamRankings({ teams: portableTeams, matches: rows, matchSeries: rows.map(seriesFromMatch), tournaments: [], players: [], now }).byTeamId;
+};
+const portable = rosterFor("star");
+const control = rosterFor("ghost");
+assert(
+  portable.beta.roster.individualRating > control.beta.roster.individualRating,
+  `the rating a player earned at another team counts for his current team (${portable.beta.roster.individualRating} vs ${control.beta.roster.individualRating})`,
+);
+assert.equal(portable.alpha.roster.individualRating, control.alpha.roster.individualRating, "renaming star at alpha leaves alpha alone");
+assert.equal(portable.beta.roster.coreStability, control.beta.roster.coreStability, "core stability still counts only the team's own games");
+
 const pca = RankingCore.pcaCorrected(
   [
     { id: "a", inverted: 0 },

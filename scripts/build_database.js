@@ -68,6 +68,7 @@ loadScript("ranking-core.js");
 loadScript("app.js");
 
 const codec = require(path.join(ROOT, "db-codec.js"));
+const { checkTeamSuccessions } = require("./team_successions.js");
 
 function readJson(relPath) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relPath), "utf8"));
@@ -221,6 +222,18 @@ function main() {
     }
   }
   if (deadRules.length) console.warn(`  aviso: regra de fase sem nenhuma série correspondente: ${deadRules.join(", ")}`);
+  // Sucessao de equipe (coluna `sucede` de teams_infos.xlsx): sem declaracao, a
+  // equipe nova entra no ranking do zero e a antiga fica inativa com a nota
+  // dela parada. Os dois erros sao silenciosos, entao o build confere.
+  const successions = checkTeamSuccessions(db.matches, db.teams);
+  const day = (value) => new Date(value).toISOString().slice(0, 10).split("-").reverse().join("/");
+  for (const row of successions.undeclared) {
+    console.warn(`  aviso: ${row.to} parece suceder ${row.from} (estreou em ${day(row.debut)} com ${row.players.join(", ")}). Se for, preencha "sucede" em teams_infos.xlsx.`);
+  }
+  for (const row of successions.contradicted) {
+    const detail = row.headToHead ? `jogou ${row.headToHead} mapa(s) contra ela, que o ranking descarta` : `jogou ${row.laterMaps} mapas depois da estreia dela, que contam para ela no ranking`;
+    console.warn(`  aviso: ${row.to} sucede ${row.from}, mas ${row.from} ${detail}. Confira a coluna "sucede".`);
+  }
   // O home.json e um recorte deste arquivo: se ficar para tras, a home pinta o
   // primeiro render com dados velhos ate o banco completo chegar e corrigir.
   // Encadear aqui evita depender de alguem lembrar do segundo comando.

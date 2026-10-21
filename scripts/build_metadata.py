@@ -595,6 +595,7 @@ def read_team_infos(states_by_sigla, logos_by_slug):
             "socials": {
                 "instagram": row.get("instagram", ""),
             },
+            "succeeds": slug_key(row.get("sucede", "")),
         }
     return teams
 
@@ -645,6 +646,8 @@ def read_teams(states_by_sigla):
                 "colors": info.get("colors", []),
                 "socials": info.get("socials", {}),
                 "lineup": roster.get("lineup", []),
+                # So as sucessoras levam o campo, como o "accounts" dos jogadores.
+                **({"succeeds": info["succeeds"]} if info.get("succeeds") else {}),
             }
         )
     return teams
@@ -728,6 +731,40 @@ def warn_lineups_sem_jogador(teams, players):
     return orfaos
 
 
+# A coluna "sucede" de teams_infos.xlsx diz que a equipe herda, no ranking, o
+# historico de outra (a UFRN Tirana sucede a UFRN Carcaras). Um slug escrito
+# errado nao quebra nada: o site so deixa de fazer a heranca, em silencio. O
+# aviso abaixo pega isso e os dois casos sem sentido (sucessao circular e duas
+# equipes herdando a mesma predecessora).
+def warn_sucessoes_invalidas(teams):
+    ids = {team["id"] for team in teams}
+    sucede = {team["id"]: team["succeeds"] for team in teams if team.get("succeeds")}
+    problemas = []
+    for sucessora, predecessora in sucede.items():
+        if predecessora == sucessora:
+            problemas.append(f"{sucessora} sucede a si mesma")
+        elif predecessora not in ids:
+            problemas.append(f"{sucessora} sucede {predecessora!r}, que nao existe em teams_infos.xlsx")
+        visto, atual = {sucessora}, predecessora
+        while atual in sucede:
+            if atual in visto:
+                problemas.append(f"sucessao circular passando por {sucessora}")
+                break
+            visto.add(atual)
+            atual = sucede[atual]
+    herdeiras = {}
+    for sucessora, predecessora in sucede.items():
+        herdeiras.setdefault(predecessora, []).append(sucessora)
+    for predecessora, lista in herdeiras.items():
+        if len(lista) > 1:
+            problemas.append(f"{predecessora} tem mais de uma sucessora: {', '.join(sorted(lista))}")
+    if problemas:
+        print(f"AVISO: {len(problemas)} problema(s) na coluna 'sucede' de teams_infos.xlsx.")
+        for texto in problemas:
+            print(f"       {texto}")
+    return problemas
+
+
 def main():
     states = read_states()
     states_by_sigla = {state["sigla"]: state for state in states}
@@ -755,6 +792,7 @@ def main():
         "stateWinrates": read_state_winrates(),
     }
     warn_lineups_sem_jogador(metadata["teams"], metadata["players"])
+    warn_sucessoes_invalidas(metadata["teams"])
     output_path = ROOT / "metadata.json"
     escreve_json(output_path, metadata)
     data_sources = build_data_sources()

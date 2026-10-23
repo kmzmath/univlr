@@ -910,3 +910,247 @@
   color: var(--muted);
   font-size: 12px;
 }
+
+/* ==========================================================================
+   Home em trilhos: tres colunas desde o topo, como HLTV e vlr.gg
+   ========================================================================== */
+
+.vp-home {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr) 340px;
+  gap: 32px;
+  align-items: start;
+}
+
+/* minmax(0, 1fr) e nao a trilha implicita: a trilha auto cresceria ate o
+   min-content dos nove cartoes do carrossel lado a lado e estouraria o trilho. */
+.vp-trilho {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 30px;
+  align-content: start;
+  min-width: 0;
+}
+
+.vp-trilho > * {
+  min-width: 0;
+}
+
+.vp-trilho-meio .vp-lista {
+  grid-template-columns: fit-content(210px) 30px minmax(0, 1fr) 120px;
+}
+
+.vp-dia {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font: 600 12px/1 var(--font-text);
+}
+
+.vp-lista + .vp-dia {
+  margin-top: 16px;
+}
+
+/* "Ranking completo", "Ver todas": link pequeno, sem o botao em caixa. */
+.panel-footer-link {
+  display: inline-block;
+  width: auto;
+  min-height: 0;
+  margin-top: 8px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.panel-footer-link:hover {
+  background: none;
+  color: var(--ink);
+}
+
+/* Atividade recente numa linha so, embaixo das partidas. */
+.vp-trilho .atividade-faixa {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 18px;
+  margin: 0;
+  padding: 14px 0 0;
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.vp-trilho .atividade-faixa .atv-rotulo {
+  margin: 0;
+  color: var(--muted);
+  font: 600 13px/1.2 var(--font-text);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-trilho .atividade-faixa .atv-rotulo::before {
+  display: none;
+}
+
+.vp-trilho .atividade-faixa .atv-lista {
+  display: contents;
+}
+
+.vp-trilho .atividade-faixa .atv-linha {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.vp-trilho .atividade-faixa .atv-tipo {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-trilho .atividade-faixa .atv-nome {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-trilho .atividade-faixa .atv-conta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Noticias no trilho direito: a principal com a capa em cima, as outras duas
+   como lista com miniatura. */
+.vp-noticia-principal {
+  display: grid;
+  gap: 6px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-noticia-principal img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2.3;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.vp-noticia-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-noticia-principal h3 {
+  margin: 0;
+  font: 600 18px/1.25 var(--font-text);
+  text-wrap: balance;
+}
+
+.vp-noticias-lista {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vp-noticias-lista a {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-noticias-lista img,
+.vp-noticia-sem-capa {
+  display: block;
+  width: 88px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 2px;
+  background: var(--surface);
+}
+
+.vp-noticias-lista h4 {
+  margin: 2px 0 0;
+  font: 600 13px/1.3 var(--font-text);
+}
+
+.vp-noticia-principal:hover h3,
+.vp-noticias-lista a:hover h4 {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* Tela media: o trilho da direita desce e vira duas colunas lado a lado. */
+@media (max-width: 1180px) {
+  .vp-home {
+    grid-template-columns: 340px minmax(0, 1fr);
+  }
+
+  .vp-trilho-dir {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 32px;
+  }
+}
+
+/* Celular: uma coluna, na ordem do que mais importa. */
+@media (max-width: 760px) {
+  .vp-home {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .vp-trilho {
+    display: contents;
+  }
+
+  /* Precisa repetir a regra de celular da lista: a do trilho do meio e mais
+     especifica e seguraria 120px para o campeonato, que no celular nao entra. */
+  .vp-trilho-meio .vp-lista {
+    grid-template-columns: fit-content(190px) 28px minmax(0, 1fr);
+  }
+
+  .vp-home .vp-semana { order: 1; }
+  .vp-home .vp-s-partidas { order: 2; }
+  .vp-home .vp-s-ranking { order: 3; }
+  .vp-home .vp-noticias { order: 4; }
+  .vp-home .vp-s-campeonatos { order: 5; }
+  .vp-home .atividade-faixa { order: 6; }
+
+  .vp-trilho .atividade-faixa {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+  .vp-trilho .atividade-faixa > *,
+  .vp-trilho .atividade-faixa .atv-linha {
+    flex: none;
+  }
+
+  .vp-placa-rk {
+    grid-template-columns: 4px 20px 22px 22px minmax(0, 1fr) auto auto 6px;
+  }
+}

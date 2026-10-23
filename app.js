@@ -7,22 +7,14 @@ const RANKING_WEIGHTS_MANIFEST = "ranking-weights.json";
 const SITE_NAME = "UNIVLR";
 const SITE_LOGO_SRC = "assets/logo_univlr.png";
 const SITE_WORDMARK_SRC = "assets/univlr_logo_longa.png";
-// Pesos diferentes de proposito: partidas e o que muda todo dia e leva a
-// coluna mais longa; ranking e referencia (tem "Ver completo"); campeonato
-// e contexto. Antes eram 15/15/15, o que dava 45 linhas de peso identico.
-// Os tres limites da home sao calibrados JUNTOS, para os paineis terminarem
-// mais ou menos na mesma altura - o board tem align-items:start, entao quem
-// equilibra a composicao e a quantidade de itens, nao o CSS. As alturas de
-// linha medidas em 30/08/2026, ja incluindo espacamento: ranking 62px,
-// partida 111px, campeonato 112px, mais ~82px de cabecalho e rodape por
-// painel. Da 957 / 971 / 980 - 23px de diferenca entre a coluna mais alta e a
-// mais baixa. Mexeu num limite, remede os tres.
-const HOME_RANKING_LIMIT = 14;
-// 10 e nao 15: com a linha de partida crescida (escudo de 52px, nome de 20px,
-// placar de 24px) a linha passou de 79px para 115px, e 15 delas davam 1.884px
-// de coluna contra 822px da de campeonatos - mil pixels de vazio ao lado. Dez
-// partidas ao lado das dez primeiras colocadas fecham as colunas juntas.
-const HOME_RECENT_MATCH_LIMIT = 8;
+// Os tres limites da home sao calibrados JUNTOS, para os tres trilhos
+// terminarem mais ou menos na mesma altura: quem equilibra a composicao e a
+// quantidade de itens, nao o CSS. Medido no visual Placar em 23/10/2026, a
+// 1440px: trilho esquerdo (semana e 12 do ranking) 823px, meio (12 partidas e
+// a atividade) 868px, direito (noticias e 8 campeonatos) 901px. Mexeu num
+// limite, remede os tres.
+const HOME_RANKING_LIMIT = 12;
+const HOME_RECENT_MATCH_LIMIT = 12;
 const HOME_EVENT_LIMIT = 8;
 // Risco e banho de equipe sem cor cadastrada no visual Placar (teamLineColor).
 const TEAM_LINE_SEM_COR = "#8a8d98";
@@ -6422,30 +6414,43 @@ function renderMapsCompact(id) {
   return renderNotFound("Recurso");
 }
 
+// A home em trilhos, como HLTV e vlr.gg: tres colunas desde o topo. Na
+// esquerda, os melhores da semana e o ranking; no meio, as partidas por dia e a
+// atividade; na direita, noticias e campeonatos. Abaixo de 1180px o trilho da
+// direita desce, e abaixo de 760px fica uma coluna so, na ordem do que mais
+// importa (ver placar.css).
 function renderHomeCompact() {
   const events = sortedEvents("recent").slice(0, HOME_EVENT_LIMIT);
   const topTeams = state.db.teams.slice(0, HOME_RANKING_LIMIT);
   const recentMatches = allMatchSeries().slice().sort(compareSeriesDateDesc).slice(0, HOME_RECENT_MATCH_LIMIT);
+  const partidasPorDia = agruparPorDia(recentMatches)
+    .map((grupo) => `<p class="vp-dia">${escapeHtml(grupo.rotulo)}</p><div class="vp-lista">${grupo.itens.map((item) => matchResultRow(item, { when: "hour" })).join("")}</div>`)
+    .join("");
   Shell(`
     <h1 class="sr-only">${SITE_NAME}</h1>
-    ${weekHighlights()}
-    ${window.News ? window.News.blocoHome() : ""}
-    <div class="home-board univlr-home">
-      <section class="hub-panel ranking-panel">
-        ${panelTitle("Ranking")}
-        <div class="vp-placa vp-placa-rk">${topTeams.map(compactRankingRow).join("")}</div>
-        ${panelFooterLink("ranking", "Ver completo")}
-      </section>
-      <section class="hub-panel matches-panel">
-        ${panelTitle("Últimas partidas")}
-        <div class="vp-lista">${recentMatches.map((series) => matchResultRow(series)).join("")}</div>
-        ${panelFooterLink("matches", "Ver todas as partidas")}
-      </section>
-      <section class="hub-panel events-panel">
-        ${panelTitle("Campeonatos")}
-        <div class="vp-placa vp-placa-ev">${events.map(eventListRow).join("")}</div>
-        ${panelFooterLink("events", "Ver todos os campeonatos")}
-      </section>
+    <div class="vp-home">
+      <div class="vp-trilho vp-trilho-esq">
+        ${weekHighlights()}
+        <section class="ranking-panel vp-s-ranking">
+          ${panelTitle("Ranking")}
+          <div class="vp-placa vp-placa-rk">${topTeams.map(compactRankingRow).join("")}</div>
+          ${panelFooterLink("ranking", "Ranking completo")}
+        </section>
+      </div>
+      <div class="vp-trilho vp-trilho-meio">
+        <section class="vp-s-partidas">
+          ${panelTitle("Últimas partidas", "matches", "Ver todas")}
+          ${recentMatches.length ? partidasPorDia : `<div class="empty-state">Nenhuma partida registrada ainda.</div>`}
+        </section>
+        ${window.Comments ? window.Comments.atividadeFaixa(5) : ""}
+      </div>
+      <div class="vp-trilho vp-trilho-dir">
+        ${window.News ? window.News.blocoTrilho() : ""}
+        <section class="events-panel vp-s-campeonatos">
+          ${panelTitle("Campeonatos", "events", "Ver todos")}
+          <div class="vp-placa vp-placa-ev">${events.map(eventListRow).join("")}</div>
+        </section>
+      </div>
     </div>
   `);
   bindHomeRankingPanel();

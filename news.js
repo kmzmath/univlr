@@ -87,6 +87,35 @@
       </a>`;
   }
 
+  // O bloco de noticias do trilho direito da home: a principal com a capa
+  // inteira em cima e o titulo embaixo, as outras duas como lista com
+  // miniatura. Sem materia, o trilho nao ganha bloco vazio.
+  function blocoTrilho() {
+    const itens = lista();
+    if (!itens.length) return "";
+    const [destaque, ...resto] = itens;
+    const meta = (a, curta) => `<time datetime="${esc(a.data)}">${curta ? dataCurta(a.data) : dataLonga(a.data)}</time>${window.Comments ? window.Comments.selo("article", a.slug) : ""}`;
+    return `
+      <section class="vp-noticias">
+        <header class="vp-sec"><h2>Notícias</h2><a class="vp-sec-more" href="#/news">Ver todas</a></header>
+        <a class="vp-noticia-principal" href="#/news/${esc(destaque.slug)}">
+          ${destaque.capa ? `<img src="${esc(destaque.capa)}" alt="" loading="eager" decoding="async" />` : ""}
+          <span class="vp-noticia-meta">${meta(destaque, false)}</span>
+          <h3>${esc(destaque.titulo)}</h3>
+        </a>
+        ${
+          resto.length
+            ? `<ul class="vp-noticias-lista">${resto
+                .slice(0, 2)
+                .map(
+                  (a) => `<li><a href="#/news/${esc(a.slug)}">${a.capa ? `<img src="${esc(a.capa)}" alt="" loading="lazy" decoding="async" />` : `<span class="vp-noticia-sem-capa" aria-hidden="true"></span>`}<span><span class="vp-noticia-meta">${meta(a, true)}</span><h4>${esc(a.titulo)}</h4></span></a></li>`,
+                )
+                .join("")}</ul>`
+            : ""
+        }
+      </section>`;
+  }
+
   function blocoHome() {
     const itens = lista();
     const atividade = window.Comments ? window.Comments.atividadeHome(5) : "";
@@ -933,5 +962,5 @@
   // caminho por onde um visitante ponha conteudo aqui - o que o publico escreve
   // vive em comments, e la tudo passa por esc().
 
-  window.News = { carregar, lista, porSlug, blocoHome, renderNews, dataLonga };
+  window.News = { carregar, lista, porSlug, blocoHome, blocoTrilho, renderNews, dataLonga };
 })();

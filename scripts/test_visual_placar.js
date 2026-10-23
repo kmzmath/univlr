@@ -200,5 +200,29 @@ assert(semanaVazia.includes("Nenhum jogador atingiu o mínimo") && !semanaVazia.
 assert.strictEqual(typeof context.bindWeekCarousel, "function", "o carrossel tem quem o ligue");
 vm.runInContext("state.homeSummary = null;", context);
 
+// ---------------------------------------------------------------- Tarefa 6
+// Home em trilhos: esquerda (semana e ranking), meio (partidas), direita
+// (noticias e campeonatos). As noticias vem do news.js, que nao roda neste vm,
+// entao a ordem aqui e conferida sem elas e o bloco do trilho e testado a parte.
+assert.strictEqual(vm.runInContext("HOME_RANKING_LIMIT", context), 12, "a home mostra 12 equipes do ranking");
+assert.strictEqual(vm.runInContext("HOME_RECENT_MATCH_LIMIT", context), 12, "a home mostra 12 partidas");
+vm.runInContext(
+  `Object.assign(state.db.tournaments[0], { status: "Finalizado", tier: "A", start: ${Date.UTC(2026, 9, 17, 15)}, end: ${Date.UTC(2026, 9, 18, 15)}, matches: 35, teams: ["azr", "ceub"] });
+   state.ready = true;`,
+  context,
+);
+context.renderHomeCompact();
+const home = appElement.innerHTML;
+const blocos = ["vp-trilho-esq", "vp-semana", "vp-placa-rk", "vp-trilho-meio", "vp-s-partidas", "vp-trilho-dir", "vp-placa-ev"];
+const posicoes = blocos.map((bloco) => home.indexOf(bloco));
+posicoes.forEach((pos, i) => assert(pos > -1, `a home tem ${blocos[i]}`));
+assert.deepStrictEqual(posicoes, [...posicoes].sort((a, b) => a - b), "os blocos da home vem na ordem dos trilhos");
+assert(!home.includes("hub-panel"), "a home nao tem mais o painel em volta de cada lista");
+
+context.Community = { esc: (v) => String(v ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;") };
+vm.runInContext(ler("news.js"), context);
+assert.strictEqual(typeof context.News.blocoTrilho, "function", "o news.js expoe o bloco do trilho");
+assert.strictEqual(context.News.blocoTrilho(), "", "sem materia, o trilho nao ganha bloco vazio");
+
 void vp;
 console.log("Visual Placar contract tests passed");

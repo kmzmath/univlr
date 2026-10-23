@@ -151,5 +151,28 @@ assert(linhaSemArte.includes("Mapa Novo"), "o nome do mapa continua por cima");
 const listaAgrupada = context.listaDeResultados([md3, md1], 50);
 assert(listaAgrupada.includes('class="vp-lista"'), "as linhas de um dia ficam numa vp-lista");
 
+// ---------------------------------------------------------------- Tarefa 4
+// Placa: ranking e campeonatos da home. A nota cola nas partidas, o
+// campeonato encerrado nao repete "Finalizado" e so o em andamento e marcado.
+const equipeRanking = { id: "ceub", name: "CEUB Octopus", tag: "CEUB OCT", colors: ["#551d66", "#020103"], matches: 48, wins: 47, losses: 1, rankingScore: 99.94, rank: 1, validRank: 1, canonicalRank: 1 };
+const linhaRanking = context.compactRankingRow(equipeRanking);
+assert(linhaRanking.includes('class="vp-rk pintura-de-equipe"'), "a linha do ranking e uma vp-rk com a pintura de equipe");
+assert(linhaRanking.includes("data-trama="), "a trama do teamPatternFor continua");
+assert(/48 partidas<\/span>\s*<span class="vp-rk-nota">99\.9<\/span>/.test(linhaRanking), "a nota vem logo depois das partidas");
+
+const diaUtc = (mes, dia) => Date.UTC(2026, mes - 1, dia, 15);
+const campeonatoVivo = { id: "copa", name: "Copa LUCE Inters", status: "Em andamento", tier: "B", start: diaUtc(9, 6), end: diaUtc(11, 7), matches: 17, teams: Array(8).fill("x"), logo: "assets/tournament-icons/copa_luce.png" };
+const campeonatoEncerrado = { id: "rush", name: "Rush Series 3ª Edição", status: "Finalizado", tier: "A", start: diaUtc(10, 17), end: diaUtc(10, 18), matches: 35, teams: Array(21).fill("x"), logo: "assets/tournament-icons/rushSeries.png" };
+const linhaViva = context.eventListRow(campeonatoVivo);
+assert(linhaViva.includes('class="vp-evrow"'), "a linha de campeonato e uma vp-evrow");
+assert(linhaViva.includes('class="vp-ao-vivo"') && /Em andamento<\/span> até 7 de nov/.test(linhaViva), "em andamento mostra ate quando vai");
+const linhaEncerrada = context.eventListRow(campeonatoEncerrado);
+assert(!linhaEncerrada.includes("Finalizado"), "campeonato encerrado nao repete Finalizado");
+assert(linhaEncerrada.includes("17 - 18 de out"), "datas do mesmo mes juntam o mes no fim, sem ano");
+assert(linhaEncerrada.includes("vp-tier vp-tier-a"), "a letra do tier ganha a cor do degrau");
+assert.strictEqual(context.eventDatesShort({ status: "Finalizado", start: diaUtc(9, 27), end: diaUtc(10, 4) }), "27 de set - 4 de out", "meses diferentes ficam nos dois lados");
+assert.strictEqual(context.eventDatesShort({ status: "Finalizado", start: diaUtc(10, 10), end: diaUtc(10, 10) }), "10 de out", "um dia so vira uma data");
+assert.strictEqual(context.eventDatesShort({ status: "Em andamento", start: diaUtc(10, 17) }), "desde 17 de out", "em andamento sem fim conta desde o inicio");
+
 void vp;
 console.log("Visual Placar contract tests passed");

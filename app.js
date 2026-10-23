@@ -6433,7 +6433,7 @@ function renderHomeCompact() {
     <div class="home-board univlr-home">
       <section class="hub-panel ranking-panel">
         ${panelTitle("Ranking")}
-        <div class="ranking-list">${topTeams.map(compactRankingRow).join("")}</div>
+        <div class="vp-placa vp-placa-rk">${topTeams.map(compactRankingRow).join("")}</div>
         ${panelFooterLink("ranking", "Ver completo")}
       </section>
       <section class="hub-panel matches-panel">
@@ -6443,7 +6443,7 @@ function renderHomeCompact() {
       </section>
       <section class="hub-panel events-panel">
         ${panelTitle("Campeonatos")}
-        <div class="event-list">${events.map(eventListRow).join("")}</div>
+        <div class="vp-placa vp-placa-ev">${events.map(eventListRow).join("")}</div>
         ${panelFooterLink("events", "Ver todos os campeonatos")}
       </section>
     </div>
@@ -16053,8 +16053,8 @@ function bindHomeEventCovers() {
     };
     img.src = capa;
   };
-  panel.addEventListener("pointerover", (event) => revelar(event.target.closest(".event-row")));
-  panel.addEventListener("focusin", (event) => revelar(event.target.closest(".event-row")));
+  panel.addEventListener("pointerover", (event) => revelar(event.target.closest(".vp-evrow")));
+  panel.addEventListener("focusin", (event) => revelar(event.target.closest(".vp-evrow")));
 }
 
 function bindHomeRankingPanel() {
@@ -16070,13 +16070,17 @@ function compactRankingRow(team) {
   const score = team.rankingScore ?? team.points;
   const snapshot = latestRankingSnapshot();
   const ranking = snapshot?.byTeamId?.[team.id] || team.ranking;
+  // Uma linha da Placa do ranking. Ela vive numa .vp-placa-rk, que e uma grade
+  // so com as linhas em subgrade: a coluna do nome tem o tamanho do nome mais
+  // longo e a nota cola no "N partidas", em vez de ir para a ponta do quadro.
   return `
-    <a class="compact-ranking-row pintura-de-equipe" href="#/ranking/${escapeHtml(team.id)}" data-home-ranking-team="${escapeHtml(team.id)}" ${teamAccentStyle(team)}>
-      <span class="rank-position">${teamShortRankLabel(team)}</span>
-      ${rankingPositionChangeBadge({ team, ranking, snapshot }, "rank-delta")}
+    <a class="vp-rk pintura-de-equipe" href="#/ranking/${escapeHtml(team.id)}" data-home-ranking-team="${escapeHtml(team.id)}" ${teamAccentStyle(team)}>
+      <span class="vp-rk-pos">${escapeHtml(teamShortRankLabel(team).replace(/^#/, ""))}</span>
+      ${rankingPositionChangeBadge({ team, ranking, snapshot }, "vp-rk-delta")}
       ${teamLogo(team.id)}
-      <span class="row-main"><strong><span class="nome-rolante">${escapeHtml(team.name)}</span></strong><small><span class="nome-rolante">${team.matches || team.wins + team.losses} partidas - ${team.sourceTag || team.tag}</span></small></span>
-      <span class="row-score">${fmt(score, 1)}</span>
+      <span class="vp-rk-nome" title="${escapeHtml(team.name)}">${escapeHtml(team.name)}</span>
+      <span class="vp-rk-partidas">${team.matches || team.wins + team.losses} partidas</span>
+      <span class="vp-rk-nota">${fmt(score, 1)}</span>
     </a>
   `;
 }
@@ -16457,14 +16461,41 @@ function eventListRow(event) {
   // Inters, que tinha capa e nao mostrava nada. Com a reserva, campeonato novo
   // sempre revela capa; o que se perde sem o derivado e peso, nao a capa.
   const capaCheia = String(event?.banner || "").trim();
+  // Linha da Placa de campeonatos. Encerrado nao repete "Finalizado": o normal
+  // nao precisa de selo, so o em andamento ganha o ponto vermelho de ao vivo.
+  const situacao = eventStatusClass(event.status);
+  const marca = situacao === "live" ? `<span class="vp-ao-vivo">Em andamento</span> ` : situacao === "scheduled" ? `${escapeHtml(event.status)}, ` : "";
   return `
-    <a class="event-row" href="#/events/${event.id}"${capa ? ` data-cover="${escapeHtml(assetPath(capa))}"` : ""}${capaCheia ? ` data-cover-cheia="${escapeHtml(assetPath(capaCheia))}"` : ""}>
+    <a class="vp-evrow" href="#/events/${event.id}"${capa ? ` data-cover="${escapeHtml(assetPath(capa))}"` : ""}${capaCheia ? ` data-cover-cheia="${escapeHtml(assetPath(capaCheia))}"` : ""}>
       ${eventLogo(event, "small")}
-      <span class="row-main"><strong>${escapeHtml(event.name)}</strong><small>${escapeHtml(eventTimeRange(event))}</small><span class="event-status ${eventStatusClass(event.status)}">${escapeHtml(event.status || "Evento")}</span>${window.Comments ? window.Comments.selo("event", event.id) : ""}</span>
+      <span class="vp-evrow-txt"><strong class="vp-evrow-nome" title="${escapeHtml(event.name)}">${escapeHtml(event.name)}</strong><span class="vp-evrow-quando">${marca}${escapeHtml(eventDatesShort(event))}${window.Comments ? window.Comments.selo("event", event.id) : ""}</span></span>
       ${eventTierBadge(event)}
-      <span class="event-numbers">${event.matches} partidas<br>${event.teams.length} equipes</span>
+      <span class="vp-evrow-tam">${event.matches} partidas<br>${event.teams.length} equipes</span>
     </a>
   `;
+}
+
+// As datas curtas das listas: sem o ano e sem repetir o mes ("17 - 18 de out",
+// "27 de set - 4 de out", "10 de out"). Campeonato em andamento diz ate quando
+// vai, ou desde quando, se o fim ainda e a ultima data com jogo; com as duas
+// datas, o texto cortava no trilho de 340px.
+function eventDatesShort(event) {
+  const mes = (date) => date.toLocaleDateString("pt-BR", { month: "short" }).replace(".", "");
+  const dia = (value) => {
+    const date = new Date(value);
+    return `${date.getDate()} de ${mes(date)}`;
+  };
+  if (!event?.start && !event?.end) return "";
+  if (eventStatusClass(event.status) === "live") {
+    if (!event.end || periodEndIsCurrent(event.end)) return event.start ? `desde ${dia(event.start)}` : "";
+    return `até ${dia(event.end)}`;
+  }
+  if (!event.start || !event.end) return dia(event.start || event.end);
+  const inicio = new Date(event.start);
+  const fim = new Date(event.end);
+  if (dayKey(event.start) === dayKey(event.end)) return dia(event.start);
+  if (inicio.getMonth() === fim.getMonth() && inicio.getFullYear() === fim.getFullYear()) return `${inicio.getDate()} - ${dia(event.end)}`;
+  return `${dia(event.start)} - ${dia(event.end)}`;
 }
 
 // O tier e a unica hierarquia entre campeonatos que o site publica, e ate aqui
@@ -16481,7 +16512,9 @@ function eventTierBadge(event) {
   // caixa: o selo com contorno foi reprovado por parecer feito por IA, e um
   // dado de um caractere nao precisa de moldura para ser lido - o tamanho e a
   // cor ja o separam de tudo em volta. O nome inteiro fica no rotulo acessivel.
-  return `<span class="event-tier tier-${key}" title="Tier ${escapeHtml(tier)}" aria-label="Tier ${escapeHtml(tier)}" role="img">${escapeHtml(tier)}</span>`;
+  // vp-tier e a cor do degrau no visual Placar; event-tier fica enquanto as
+  // listas que ainda nao trocaram de marcacao usarem o desenho de antes.
+  return `<span class="event-tier tier-${key} vp-tier vp-tier-${key}" title="Tier ${escapeHtml(tier)}" aria-label="Tier ${escapeHtml(tier)}" role="img">${escapeHtml(tier)}</span>`;
 }
 
 function eventDirectoryRow(event) {

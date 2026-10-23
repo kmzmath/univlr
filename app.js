@@ -6450,6 +6450,7 @@ function renderHomeCompact() {
   `);
   bindHomeRankingPanel();
   bindHomeEventCovers();
+  bindWeekCarousel();
 }
 
 function renderMatchesCompact(id) {
@@ -15834,72 +15835,116 @@ function homeSummaryLeaders() {
   }));
 }
 
+// Melhores da semana: um lider por vez, deslizando para o lado, como o
+// carrossel de antes de agosto. O cartao troca no fim de cada tracinho
+// (PLAYER_OF_WEEK_INTERVAL_MS, vindo pelo --vp-passo) e o primeiro vai clonado
+// no fim, para a volta do ultimo ao primeiro seguir para a frente em vez de
+// rebobinar os nove. As setas e as bolinhas de 7px sairam em agosto por serem
+// pequenas para o dedo; cada tracinho tem 22px de area de clique.
 function weekHighlights() {
   const leaders = state.homeSummary ? homeSummaryLeaders() : playerOfWeekLeaders();
-  const note = `Mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas jogados no período exibido para entrar.`;
+  const note = `Mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas no período.`;
   if (!leaders.length) {
     return `
-      <section class="week-board week-board-empty" aria-labelledby="week-board-title">
-        <header class="week-board-head">
-          <h2 id="week-board-title">Melhores da semana</h2>
-        </header>
+      <section class="vp-semana vp-semana-vazia" aria-labelledby="week-board-title">
+        <header class="vp-sec"><h2 id="week-board-title">Melhores da semana</h2></header>
         <p class="empty-state">Nenhum jogador atingiu o mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas nesta janela.</p>
       </section>
     `;
   }
-  const [lead, ...rest] = leaders;
   return `
-    <section class="week-board" aria-labelledby="week-board-title">
-      <header class="week-board-head">
-        <h2 id="week-board-title">Melhores da semana</h2>
-        <span class="week-board-range">${escapeHtml(lead.windowLabel)}</span>
-        <small class="week-board-note">${escapeHtml(note)}</small>
-      </header>
-      <div class="week-board-body">
-        ${weekLeadCard(lead)}
-        <ul class="week-rail">${rest.map(weekTile).join("")}</ul>
+    <section class="vp-semana" aria-roledescription="carrossel" aria-labelledby="week-board-title">
+      <header class="vp-sec"><h2 id="week-board-title">Melhores da semana</h2><span class="vp-sec-aside">${escapeHtml(leaders[0].windowLabel)}</span></header>
+      <div class="vp-semana-cartao" tabindex="0" style="--vp-passo:${PLAYER_OF_WEEK_INTERVAL_MS}ms">
+        <div class="vp-semana-trilho">${leaders.map((leader) => weekSlide(leader, false)).join("")}${weekSlide(leaders[0], true)}</div>
+        <div class="vp-passos">${leaders.map(({ category }) => `<button type="button" class="vp-passo" aria-label="${escapeHtml(category.label)}"><i></i></button>`).join("")}</div>
       </div>
+      <p class="vp-semana-nota">${escapeHtml(note)}</p>
     </section>
   `;
 }
 
-function weekLeadCard({ category, player }) {
+// Um cartao do carrossel: fundo na cor da equipe do lider, foto solta
+// sangrando na base (silhueta para quem nao tem foto) e o numero grande. O
+// clone do fim sai da arvore de acessibilidade e da ordem de Tab.
+function weekSlide({ category, player }, clone) {
   const team = teamById(player.teamId);
   const tag = team?.sourceTag || team?.tag || player.teamTag || "";
+  const valor = category.format(player);
+  const acessivel = clone ? ` aria-hidden="true" tabindex="-1"` : ` aria-label="${escapeHtml(`${category.label}: ${player.nick}, ${valor}`)}"`;
   return `
-    <a class="week-lead" href="${playerHref(player)}">
-      ${playerFigure(player, team, "week-lead-figure")}
-      <span class="week-lead-copy">
-        <small class="week-lead-category">${escapeHtml(category.label)}</small>
-        <strong class="week-lead-nick" title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong>
-        <span class="week-lead-team">${team ? teamLogo(team.id) : ""}<em>${escapeHtml(tag)}</em></span>
+    <a class="vp-slide" href="${playerHref(player)}" style="--team-line:${teamLineColor(player.teamId)}"${acessivel}>
+      ${playerFigure(player, team, "vp-slide-foto")}
+      <span class="vp-slide-txt">
+        <small>${escapeHtml(category.label)}</small>
+        <strong class="vp-slide-nick" title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong>
+        <span class="vp-slide-equipe">${team ? teamLogo(team.id) : ""}${escapeHtml(tag)}</span>
+        <span class="vp-slide-valor"><b>${escapeHtml(valor)}</b><span>${escapeHtml(category.statLabel)}</span></span>
       </span>
-      <span class="week-lead-value">
-        <strong>${escapeHtml(category.format(player))}</strong>
-        <small>${escapeHtml(category.statLabel)}</small>
-      </span>
-      ${weekSupportStats(category, player, "week-lead-detail")}
-      <span class="week-lead-context">${escapeHtml(`${player.matches} mapas · ${player.rounds} rounds`)}</span>
+      <span class="vp-slide-ctx">${escapeHtml(`${player.matches} mapas, ${player.rounds} rounds`)}</span>
     </a>
   `;
 }
 
-function weekTile({ category, player }) {
-  const team = teamById(player.teamId);
-  return `
-    <li>
-      <a class="week-tile" href="${playerHref(player)}">
-        ${playerFigure(player, team, "week-tile-figure")}
-        ${weekSupportStats(category, player, "week-tile-detail")}
-        <span class="week-tile-nick nome-encolhe" title="${escapeHtml(player.nick)}"><span class="nome-rolante">${escapeHtml(player.nick)}</span></span>
-        ${team ? teamLogo(team.id, "week-tile-crest") : `<span class="week-tile-crest"></span>`}
-        <span class="week-tile-stat">
-          <small class="week-tile-category">${escapeHtml(category.statLabel)}</small>
-          <strong class="week-tile-value">${escapeHtml(category.format(player))}</strong>
-        </span>
-      </a>
-    </li>
-  `;
+// Liga o carrossel que o weekHighlights desenhou. Nao ha timer: quem avanca e o
+// fim da animacao do tracinho atual, entao pausar no hover ou no foco por
+// teclado (CSS) tambem pausa a troca, e aba em segundo plano nao acumula
+// trocas. Foco por clique nao pausa: clicar num tracinho pararia o carrossel
+// de vez.
+function bindWeekCarousel() {
+  const cartao = document.querySelector(".vp-semana-cartao");
+  if (!cartao) return;
+  const trilho = cartao.querySelector(".vp-semana-trilho");
+  const passos = [...cartao.querySelectorAll(".vp-passo")];
+  const total = passos.length;
+  if (!trilho || total < 2) return;
+  let indice = 0;
+  const pintar = () => {
+    const visivel = indice % total;
+    passos.forEach((passo, i) => {
+      passo.classList.toggle("vp-feito", i < visivel);
+      passo.removeAttribute("aria-current");
+      // Recriar o atributo depois de um reflow faz a animacao do tracinho
+      // recomecar do zero quando a pessoa volta para um que ja estava cheio.
+      if (i === visivel) {
+        void passo.offsetWidth;
+        passo.setAttribute("aria-current", "true");
+      }
+    });
+  };
+  const ir = (destino, animar = true) => {
+    indice = destino;
+    trilho.classList.toggle("vp-sem-animacao", !animar);
+    trilho.style.transform = `translateX(-${indice * 100}%)`;
+    pintar();
+  };
+  const proximo = () => ir(indice >= total ? 1 : indice + 1);
+  const anterior = () => ir(((indice % total) - 1 + total) % total);
+  trilho.addEventListener("transitionend", (evento) => {
+    if (evento.target === trilho && evento.propertyName === "transform" && indice === total) ir(0, false);
+  });
+  cartao.querySelector(".vp-passos").addEventListener("animationend", proximo);
+  passos.forEach((passo, i) => passo.addEventListener("click", () => ir(i)));
+  cartao.addEventListener("keydown", (evento) => {
+    if (evento.key === "ArrowRight") {
+      evento.preventDefault();
+      proximo();
+    } else if (evento.key === "ArrowLeft") {
+      evento.preventDefault();
+      anterior();
+    }
+  });
+  let inicioX = null;
+  cartao.addEventListener("pointerdown", (evento) => {
+    inicioX = evento.clientX;
+  });
+  cartao.addEventListener("pointerup", (evento) => {
+    if (inicioX === null) return;
+    const dx = evento.clientX - inicioX;
+    inicioX = null;
+    if (Math.abs(dx) > 40) (dx < 0 ? proximo : anterior)();
+  });
+  ir(0, false);
 }
 
 function playerOfWeekLeaders() {

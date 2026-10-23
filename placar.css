@@ -724,3 +724,189 @@
     opacity: 1;
   }
 }
+
+/* ==========================================================================
+   Melhores da semana: um lider por vez
+   ========================================================================== */
+
+.vp-semana-cartao {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--surface);
+}
+
+.vp-semana-trilho {
+  display: flex;
+  transition: transform 220ms ease;
+  touch-action: pan-y;
+}
+
+.vp-semana-trilho.vp-sem-animacao {
+  transition: none;
+}
+
+/* Fundo na cor da equipe do lider, entao ele muda junto quando passa de uma
+   equipe para outra. */
+.vp-slide {
+  position: relative;
+  flex: 0 0 100%;
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  height: 206px;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  background: linear-gradient(
+    115deg,
+    color-mix(in srgb, var(--team-line) 34%, var(--surface)) 0%,
+    color-mix(in srgb, var(--team-line) 12%, var(--surface)) 46%,
+    var(--surface) 78%
+  );
+}
+
+/* A foto solta, sangrando na base: sem moldura, sem fundo. */
+.vp-slide .player-figure {
+  align-self: end;
+  width: 150px;
+  height: 190px;
+  margin-left: -6px;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.vp-slide .player-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left bottom;
+}
+
+.vp-slide-txt {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  min-width: 0;
+  padding: 16px 16px 22px 6px;
+  text-align: right;
+}
+
+.vp-slide-txt > small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-slide-nick {
+  margin-top: 2px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font: 600 24px/1.1 var(--font-text);
+}
+
+.vp-slide-equipe {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-slide-equipe .team-logo {
+  width: 16px;
+  height: 16px;
+}
+
+.vp-slide-valor {
+  align-self: end;
+}
+
+.vp-slide-valor b {
+  display: block;
+  font: 600 56px/0.9 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-slide-valor span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-slide-ctx {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  text-shadow: 0 1px 2px #000;
+}
+
+/* Os tracinhos: o atual enche enquanto conta o tempo. A barra tem 3px, a area
+   de clique 22px. */
+.vp-passos {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  gap: 3px;
+  padding: 0 8px;
+}
+
+.vp-passo {
+  display: flex;
+  align-items: flex-end;
+  flex: 1 1 0;
+  height: 22px;
+  padding: 0 0 7px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.vp-passo i {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 3px;
+  overflow: hidden;
+  background: rgba(245, 241, 242, 0.22);
+}
+
+.vp-passo.vp-feito i {
+  background: rgba(245, 241, 242, 0.55);
+}
+
+.vp-passo[aria-current="true"] i::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform-origin: left;
+  animation: vp-encher var(--vp-passo, 4500ms) linear forwards;
+}
+
+.vp-semana-cartao:hover .vp-passo[aria-current="true"] i::after,
+.vp-semana-cartao:focus-visible .vp-passo[aria-current="true"] i::after,
+.vp-semana-cartao:has(:focus-visible) .vp-passo[aria-current="true"] i::after {
+  animation-play-state: paused;
+}
+
+@keyframes vp-encher {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.vp-semana-nota {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}

@@ -174,5 +174,31 @@ assert.strictEqual(context.eventDatesShort({ status: "Finalizado", start: diaUtc
 assert.strictEqual(context.eventDatesShort({ status: "Finalizado", start: diaUtc(10, 10), end: diaUtc(10, 10) }), "10 de out", "um dia so vira uma data");
 assert.strictEqual(context.eventDatesShort({ status: "Em andamento", start: diaUtc(10, 17) }), "desde 17 de out", "em andamento sem fim conta desde o inicio");
 
+// ---------------------------------------------------------------- Tarefa 5
+// Carrossel dos melhores da semana: um lider por vez, o primeiro clonado no fim
+// e um tracinho por categoria. Sem ninguem com o minimo de mapas, o estado
+// vazio de hoje continua.
+const categorias = ["Melhor rAAting 3.0", "Melhor ACS", "Melhor ADR", "Melhor KAST", "Melhor Swing/R", "Melhor K/D", "Melhor KPR", "Melhor DPR", "Melhor APR"];
+const lideres = categorias.map((label, i) => ({
+  key: `k${i}`, label, statLabel: label.replace("Melhor ", ""), value: String(100 + i), windowLabel: "13 de out - 20 de out",
+  player: { id: `p${i}`, nick: i % 2 ? "Gutoso" : "bada", teamId: i % 2 ? "azr" : "ceub", matches: 11, rounds: 217, photo: "" },
+}));
+vm.runInContext(`state.homeSummary = { leaders: ${JSON.stringify(lideres)} };`, context);
+const semana = context.weekHighlights();
+assert(semana.includes('class="vp-semana"'), "a secao vira o carrossel vp-semana");
+const slides = semana.match(/<a class="vp-slide"[^>]*>/g) || [];
+assert.strictEqual(slides.length, 10, "nove cartoes e o clone do primeiro no fim");
+assert(slides[9].includes('aria-hidden="true"') && !slides[0].includes('aria-hidden="true"'), "so o clone sai da arvore de acessibilidade");
+const passos = semana.match(/<button type="button" class="vp-passo"[^>]*>/g) || [];
+assert.strictEqual(passos.length, 9, "um tracinho por categoria");
+assert(passos[1].includes('aria-label="Melhor ACS"'), "o tracinho diz a categoria");
+assert(semana.includes("11 mapas, 217 rounds"), "o contexto fica sem ponto do meio");
+assert(semana.includes(`--vp-passo:${vm.runInContext("PLAYER_OF_WEEK_INTERVAL_MS", context)}ms`), "o tempo do tracinho vem do intervalo de sempre");
+vm.runInContext("state.homeSummary = { leaders: [] };", context);
+const semanaVazia = context.weekHighlights();
+assert(semanaVazia.includes("Nenhum jogador atingiu o mínimo") && !semanaVazia.includes("vp-slide"), "semana sem lideres mostra o estado vazio");
+assert.strictEqual(typeof context.bindWeekCarousel, "function", "o carrossel tem quem o ligue");
+vm.runInContext("state.homeSummary = null;", context);
+
 void vp;
 console.log("Visual Placar contract tests passed");

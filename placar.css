@@ -1,0 +1,13 @@
+/* Visual "Placar": a versao alternativa descrita em
+   docs/superpowers/specs/2026-10-23-identidade-placar-design.md.
+
+   Esta folha carrega depois do styles.css. Componente novo mora aqui, sempre
+   com prefixo vp- (o prefixo existe porque uma classe curta ja colidiu com a
+   barra do topo no mockup). O que continua com a marcacao de hoje (topo,
+   rodape) recebe aqui as poucas sobrescritas, e a regra que ficar morta no
+   styles.css sai na ultima tarefa do plano.
+
+   Tres jeitos de separar, cada um com o seu uso (secao 4.1 do documento):
+   - Placa: um fundo so por lista, item como linha separada por fio de 1px.
+   - Placar: linha na cor da equipe, quem perdeu apagado.
+   - Mapa de fundo: a arte dos mapas da serie atras de cada partida. */

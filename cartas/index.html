@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#040306" />
+    <meta name="description" content="Cartinhas e estatísticas dos jogadores de VALORANT universitário em 2026." />
+    <title>Cartinhas 2026 | UNIVLR</title>
+    <link rel="icon" type="image/png" href="/assets/logo_univlr.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="/#/home" aria-label="UNIVLR, início"><img src="/assets/univlr_logo_longa.png" alt="UNIVLR" /></a>
+        <nav aria-label="Navegação principal">
+          <a href="/#/home">Inicial</a>
+          <a class="nav-optional" href="/#/news">Notícias</a>
+          <a class="nav-optional" href="/#/matches">Partidas</a>
+          <a class="nav-optional" href="/#/events">Eventos</a>
+          <a href="/#/players">Players</a>
+          <a class="nav-optional" href="/#/ranking">Ranking</a>
+          <span aria-current="page">Cartinhas</span>
+        </nav>
+      </div>
+    </header>
+
+    <div class="page-wrap">
+      <div class="page-heading">
+        <div>
+          <div class="breadcrumbs">UNIVLR <span>/</span> PLAYERS <span>/</span> 2026</div>
+          <h1>Cartinhas 2026</h1>
+        </div>
+        <div class="release-total"><strong id="revealed-count">—</strong><span id="total-count">/ 216 reveladas</span></div>
+      </div>
+
+      <div class="explore-bar" id="explore-bar">
+        <div class="search-control">
+          <label class="sr-only" for="player-search">Buscar jogador revelado</label>
+          <input id="player-search" type="search" autocomplete="off" placeholder="Buscar jogador" />
+          <div id="search-results" class="search-results" hidden></div>
+        </div>
+        <details class="date-menu" id="date-menu">
+          <summary><span>Datas</span><strong id="current-date">23/10</strong></summary>
+          <div id="date-options" class="date-options"></div>
+        </details>
+      </div>
+      <main id="feed" class="feed"><div class="panel loading">Carregando…</div></main>
+    </div>
+    <footer class="site-footer"><img src="/assets/logo_univlr.png" alt="UNIVLR" /></footer>
+  </body>
+</html>

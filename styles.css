@@ -3207,7 +3207,7 @@ tr:hover td {
 
 .former-member-card {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) minmax(190px, 0.7fr) auto auto;
+  grid-template-columns: 46px minmax(0, 1.25fr) minmax(0, 0.9fr) minmax(0, 0.9fr) 86px;
   gap: 14px;
   align-items: center;
   min-height: 58px;
@@ -3233,9 +3233,10 @@ tr:hover td {
    deixar de ser um indice de nomes. */
 .former-member-events {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 6px;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   min-width: 0;
 }
 
@@ -3309,6 +3310,68 @@ tr:hover td {
   font-size: var(--text-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+@media (max-width: 1180px) {
+  .former-member-card {
+    grid-template-columns: 46px minmax(130px, 0.75fr) minmax(260px, 1.25fr) 86px;
+    gap: 4px 12px;
+  }
+
+  .former-member-card .former-photo {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .former-member-main {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .former-member-period {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .former-member-events {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .former-member-rating {
+    grid-column: 4;
+    grid-row: 1 / span 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .former-member-card {
+    grid-template-columns: 46px minmax(0, 1fr) 86px;
+    gap: 6px 12px;
+  }
+
+  .former-member-card .former-photo {
+    grid-row: 1 / span 3;
+  }
+
+  .former-member-main {
+    grid-row: 1;
+  }
+
+  .former-member-period {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .former-member-events {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .former-member-rating {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+  }
 }
 
 .team-results-section {
@@ -13942,8 +14005,39 @@ img.search-state-flag + .search-state-flag.placeholder {
 }
 
 .team-page .roster-feature-grid {
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
   gap: 12px;
+}
+
+.team-roster-groups {
+  display: grid;
+  gap: 28px;
+}
+
+.team-roster-group-head {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.team-roster-group-head h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  font-size: var(--text-lg);
+}
+
+.team-roster-group-head h3 span {
+  color: var(--team-muted);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.team-roster-group-head p {
+  margin: 0;
+  color: var(--team-muted);
+  font-size: var(--text-sm);
 }
 
 .team-page .roster-player-card {

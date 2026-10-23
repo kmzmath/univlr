@@ -82,6 +82,39 @@ function readJsonOptional(relPath) {
   }
 }
 
+function checkRosterPlayerIdentities(db, metadata) {
+  const teamsById = new Map(db.teams.map((team) => [team.id, team]));
+  for (const registeredTeam of metadata.teams) {
+    const team = teamsById.get(registeredTeam.id);
+    for (const slot of registeredTeam.lineup || []) {
+      const candidates = metadata.players.filter((player) =>
+        player.puuid &&
+        normalizeNameKey(player.name) === normalizeNameKey(slot.name) &&
+        (player.currentTeam === registeredTeam.id || (player.teamHistory || []).includes(registeredTeam.id))
+      );
+      if (candidates.length !== 1) continue;
+      const resolved = (team?.currentLineup || []).find((entry) => entry.slot === slot.slot);
+      if (resolved?.playerId !== candidates[0].id) {
+        throw new Error(`Elenco ${registeredTeam.id} player${slot.slot} (${slot.name}) vinculado ao perfil errado`);
+      }
+    }
+  }
+}
+
+function checkTeamColors(db, metadata) {
+  const teamsById = new Map(db.teams.map((team) => [team.id, team]));
+  for (const registeredTeam of metadata.teams) {
+    const expected = registeredTeam.colors;
+    const actual = teamsById.get(registeredTeam.id)?.colors;
+    if (!Array.isArray(expected) || expected.length !== 2 || !expected.every((color) => /^#[0-9a-f]{6}$/i.test(color))) {
+      throw new Error(`Cores invalidas no metadata.json para ${registeredTeam.id}`);
+    }
+    if (!Array.isArray(actual) || actual.length !== 2 || actual.some((color, index) => color !== expected[index])) {
+      throw new Error(`Cores de ${registeredTeam.id} divergentes do metadata.json`);
+    }
+  }
+}
+
 function main() {
   const startedAt = Date.now();
   const manifest = readJson("data-sources.json");
@@ -103,6 +136,8 @@ function main() {
   const metadata = prepareMetadata(rawMetadata);
   const teamProfiles = prepareTeamProfiles(rawTeamProfiles);
   const db = buildDatabase(manifest.events, loaded, metadata, teamProfiles, rankingWeights);
+  checkRosterPlayerIdentities(db, metadata);
+  checkTeamColors(db, metadata);
 
   // Poda 2: campos que o raating-core produz e ninguém consome. Seis deles são
   // o mesmo número em duas convenções de nome (damage_rating/DamageRating), e

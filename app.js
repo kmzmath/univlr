@@ -4590,7 +4590,7 @@ function rankingMinimumRosterSize(weights) {
 
 // Elenco atual cadastrado da equipe (metadata/planilha), sem depender de partidas.
 function teamActiveRoster(team) {
-  return (team?.currentLineup || []).filter((entry) => entry && (entry.playerId || entry.name || entry.handle));
+  return (team?.currentLineup || []).filter((entry) => entry && entry.role !== "comissao" && (entry.playerId || entry.name || entry.handle));
 }
 
 function rankingIsInactive(ranking) {
@@ -5978,8 +5978,8 @@ function applyTeamMetadata(teams, players, metadata, teamProfiles) {
   // tratar a mesma pessoa como dois perfis. Indexar tambem o nick SEM a tag
   // faz a troca se resolver sozinha ate a planilha ser atualizada.
   //
-  // Duas passadas de proposito: nick e handle atuais primeiro, historico depois.
-  // Assim o nick antigo de um jogador nunca rouba o nome atual de outro.
+  // O nome cadastrado tem prioridade sobre handles e historico. JV usa
+  // jotave#081, mas JotaVe#2511 e outro jogador no elenco da CEUB.
   const playersByName = new Map();
   const indexa = (chave, player) => {
     const key = normalizeNameKey(chave);
@@ -5987,6 +5987,8 @@ function applyTeamMetadata(teams, players, metadata, teamProfiles) {
   };
   for (const player of players) {
     indexa(player.nick, player);
+  }
+  for (const player of players) {
     indexa(player.handle, player);
     indexa(String(player.handle || "").split("#")[0], player);
   }
@@ -6026,6 +6028,9 @@ function applyTeamMetadata(teams, players, metadata, teamProfiles) {
     team.registered = Boolean(registered);
     if (registered?.succeeds) team.succeeds = registered.succeeds;
     team.name = registered?.displayName || team.name;
+    if (Array.isArray(registered?.colors) && registered.colors.length === 2) {
+      team.colors = registered.colors.slice();
+    }
     team.sourceTag = registered?.tag || team.sourceTag || team.id;
     team.shortTag = team.shortTag || teamTag(team.id);
     team.org = registered?.org || "";
@@ -6039,6 +6044,7 @@ function applyTeamMetadata(teams, players, metadata, teamProfiles) {
         slot: slot.slot,
         name: slot.name,
         playerId: player?.id || "",
+        role: slot.role || "",
       };
     });
   }
@@ -6272,6 +6278,7 @@ function Shell(content, options = {}) {
           </a>
           <nav class="nav" aria-label="Navegação principal">
             ${navItems.map(([key, label]) => `<a class="nav-link ${section === key ? "active" : ""}"${section === key ? ` aria-current="page"` : ""} href="#/${key}">${label}</a>`).join("")}
+            <a class="nav-link" href="/cartas/">Cartinhas</a>
             <span class="nav-indicator" aria-hidden="true"></span>
           </nav>
           <div class="global-search">
@@ -7515,8 +7522,9 @@ function rankingTeamPreviewPanel(team, cutoffAt = null) {
   `;
 }
 
-// Lineup do ranking: na semana atual, apenas quem esta no elenco cadastrado da
-// equipe (com mais de cinco registrados, os cinco com mais partidas pela equipe).
+// Na semana atual, a escolha manual de titulares tem prioridade. Sem escolha
+// manual, as cinco series mais recentes indicam a formacao em destaque.
+// Reservas declarados nao ocupam uma vaga nessa formacao.
 // Semanas anteriores mantem a lineup que jogou naquela semana.
 function rankingLineupEntries(team, cutoffAt = null) {
   const cutoff = Number(cutoffAt);
@@ -7538,13 +7546,32 @@ function rankingObservedLineupAt(team, cutoffAt) {
 }
 
 function rankingRosterTopFive(team, roster = teamActiveRoster(team)) {
-  if (roster.length <= 5) return roster;
-  return roster
-    .map((entry, index) => ({ entry, index, matches: rosterEntryTeamMatches(entry, team.id) }))
-    .sort((a, b) => b.matches - a.matches || a.index - b.index)
+  const candidates = roster.filter((entry) => entry.role !== "reserva" && entry.role !== "comissao");
+  const recent = teamRecentRosterCounts(team);
+  return candidates
+    .map((entry, index) => ({ entry, index, explicit: entry.role === "titular", recent: recent.get(entry.playerId) || 0, matches: rosterEntryTeamMatches(entry, team.id) }))
+    .sort((a, b) => Number(b.explicit) - Number(a.explicit) || b.recent - a.recent || b.matches - a.matches || a.index - b.index)
     .slice(0, 5)
     .sort((a, b) => a.index - b.index)
     .map((row) => row.entry);
+}
+
+function teamRecentRosterCounts(team) {
+  const counts = new Map();
+  const recentSeries = (state.db?.matchSeries || [])
+    .filter((series) => series.teamA?.id === team.id || series.teamB?.id === team.id)
+    .sort((a, b) => Number(b.startedAt || b.sortAt || 0) - Number(a.startedAt || a.sortAt || 0))
+    .slice(0, 5);
+  for (const series of recentSeries) {
+    const players = new Set();
+    for (const match of series.maps || []) {
+      for (const player of match.players || []) {
+        if (player.teamId === team.id && player.id) players.add(player.id);
+      }
+    }
+    for (const id of players) counts.set(id, (counts.get(id) || 0) + 1);
+  }
+  return counts;
 }
 
 function rosterEntryTeamMatches(entry, teamId) {
@@ -12696,8 +12723,8 @@ function teamResumoTab(team, context) {
         ${historico.length ? teamRankingChart(historico) : `<div class="empty-state">Sem histórico válido suficiente para calcular ranking.</div>`}
       </section>
       <section class="section-band">
-        ${sectionHead("Elenco atual", "Jogadores ativos no perfil público da equipe.", `teams/${team.id}/roster`, "Ver histórico e ex-membros")}
-        <div class="roster-grid roster-feature-grid">${lineup.length ? lineup.map((entry) => lineupEntryCard(entry, team)).join("") : `<div class="empty-state">Equipe sem elenco atual cadastrado.</div>`}</div>
+        ${sectionHead("Elenco atual", "A formação em destaque usa as séries recentes até que as funções sejam confirmadas.", `teams/${team.id}/roster`, "Ver reservas e histórico")}
+        ${teamRosterSections(team, lineup)}
       </section>
       <section class="team-results-section">
         ${sectionHead(
@@ -12778,14 +12805,8 @@ function teamHeroCover(team, currentLineup, observedPlayers = []) {
 }
 
 function teamHeroCoverSelection(lineupPlayers, team) {
-  if (lineupPlayers.length <= 5) return lineupPlayers;
-  const teamMatches = (row) => Number((row.player ? playerStatsForTeam(row.player, team.id).matches : 0) || 0);
-  const chosen = new Set(
-    [...lineupPlayers]
-      .sort((a, b) => teamMatches(b) - teamMatches(a) || Number(Boolean(b.player?.photo)) - Number(Boolean(a.player?.photo)))
-      .slice(0, 5),
-  );
-  return lineupPlayers.filter((row) => chosen.has(row));
+  const chosen = new Set(rankingRosterTopFive(team, lineupPlayers.map((row) => row.entry)));
+  return lineupPlayers.filter((row) => chosen.has(row.entry));
 }
 
 function teamHeroCoverPlayer({ entry, player }) {
@@ -13013,8 +13034,8 @@ function teamRosterTab(team, currentLineup, historicalPlayers) {
   return `
     <div class="stack team-roster-stack">
       <section class="section-band">
-        ${sectionHead("Elenco atual", "Jogadores ativos no perfil público da equipe.", null, null)}
-        <div class="roster-grid roster-feature-grid">${currentLineup.length ? currentLineup.map((entry) => lineupEntryCard(entry, team)).join("") : `<div class="empty-state">Equipe sem elenco atual cadastrado.</div>`}</div>
+        ${sectionHead("Elenco atual", "Titulares e reservas aparecem separados. Os demais continuam vinculados à equipe enquanto sua função é investigada.", null, null)}
+        ${teamRosterSections(team, currentLineup)}
       </section>
       <section class="section-band">
         ${sectionHead("Histórico do elenco", "Cada faixa é uma passagem; cada marca no eixo é um campeonato que a equipe disputou.", null, null)}
@@ -13026,6 +13047,33 @@ function teamRosterTab(team, currentLineup, historicalPlayers) {
       </section>
     </div>
   `;
+}
+
+function teamRosterSections(team, roster) {
+  if (!roster.length) return `<div class="empty-state">Equipe sem elenco atual cadastrado.</div>`;
+  const starters = roster.filter((entry) => entry.role === "titular");
+  const reserves = roster.filter((entry) => entry.role === "reserva");
+  const staff = roster.filter((entry) => entry.role === "comissao");
+  const featured = rankingRosterTopFive(team, roster);
+  const featuredUnknown = featured.filter((entry) => !entry.role);
+  const otherUnknown = roster.filter((entry) => !entry.role && !featuredUnknown.includes(entry));
+  const hasRecentSeries = teamRecentRosterCounts(team).size > 0;
+  const blocks = [];
+  if (starters.length) blocks.push(teamRosterGroup("Titulares", starters, team));
+  if (featuredUnknown.length) blocks.push(teamRosterGroup(
+    hasRecentSeries ? "Formação recente" : "Elenco cadastrado",
+    featuredUnknown,
+    team,
+    hasRecentSeries ? "Selecionada pelas cinco séries mais recentes; a titularidade ainda não foi confirmada." : "Ainda não há partidas suficientes para identificar uma formação recente.",
+  ));
+  if (reserves.length) blocks.push(teamRosterGroup("Reservas", reserves, team));
+  if (staff.length) blocks.push(teamRosterGroup("Comissão técnica", staff, team));
+  if (otherUnknown.length) blocks.push(teamRosterGroup("Demais integrantes cadastrados", otherUnknown, team));
+  return `<div class="team-roster-groups">${blocks.join("")}</div>`;
+}
+
+function teamRosterGroup(title, entries, team, description = "") {
+  return `<div class="team-roster-group"><div class="team-roster-group-head"><h3>${escapeHtml(title)} <span>${entries.length}</span></h3>${description ? `<p>${escapeHtml(description)}</p>` : ""}</div><div class="roster-grid roster-feature-grid">${entries.map((entry) => lineupEntryCard(entry, team)).join("")}</div></div>`;
 }
 
 // Mesma lista de #/matches: agrupada por dia, com a tira de mapas (arte e
@@ -14067,7 +14115,7 @@ function teamHistoricalPlayers(team) {
   return state.db.players
     .filter((player) => {
       if (!(player.teamHistory || []).includes(team.id)) return false;
-      if (!registeredLineup.length) return player.teamId !== team.id;
+      if (!registeredLineup.length) return player.currentTeam !== team.id;
       if (lineupIds.has(player.id) || playerLookupKeys(player).some((key) => lineupNameKeys.has(key))) return false;
       return player.currentTeam !== team.id;
     })
@@ -14475,7 +14523,8 @@ function renderPlayerTab(activeTab, player, context) {
 }
 
 function playerPrimaryTeam(player) {
-  return teamById(player.teamId) || teamById(player.observedTeamId) || teamById((player.teamHistory || [])[0]);
+  if (player.currentTeam) return teamById(player.currentTeam);
+  return (state.db?.teams || []).find((team) => (team.currentLineup || []).some((entry) => entry.playerId === player.id)) || null;
 }
 
 function playerAccentStyle(team) {
@@ -15104,7 +15153,7 @@ function playerTeamHistoryRows(player, matches = matchSeriesForPlayer(player.id)
       const start = minPositive(timeline?.start, bucket.start);
       const end = maxPositive(timeline?.end, bucket.end, start);
       const trophies = playerTeamTrophies(teamId, tournamentRows);
-      const current = teamId === player.teamId;
+      const current = teamId === playerPrimaryTeam(player)?.id;
       const range = start || end ? formatDateRange(start, end, { current }) : "Período não informado";
       const duration = start || end ? formatTenureDuration(start || end, end || start) : "Duração indisponível";
       return {
@@ -16881,7 +16930,7 @@ function playerDirectoryTable(players) {
 }
 
 function playerDirectoryCard(player) {
-  const team = teamById(player.teamId) || teamById(player.currentTeam) || teamById(player.observedTeamId);
+  const team = playerPrimaryTeam(player);
   const name = playerDirectoryName(player);
   const currentNick = playerCurrentNick(player);
   const teamName = team?.name || "Sem time atual";

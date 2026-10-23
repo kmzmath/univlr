@@ -236,3 +236,271 @@
     font-size: 26px;
   }
 }
+
+/* ==========================================================================
+   Placar: a linha de partida, com o mapa da serie de fundo
+   A lista e uma grade so e cada partida e uma subgrade dela: a coluna do nome
+   tem a largura do nome mais longo da lista (ate 230px, dai corta com
+   reticencias) e o placar cola nela. Todos os placares ficam alinhados.
+   ========================================================================== */
+
+@property --vp-wash {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 26%;
+}
+
+.vp-lista {
+  display: grid;
+  grid-template-columns: fit-content(230px) 30px minmax(0, 1fr) 128px;
+  row-gap: 4px;
+  min-width: 0;
+}
+
+.vp-lista.vp-lista-kd {
+  grid-template-columns: fit-content(230px) 30px minmax(0, 1fr) 128px 66px;
+}
+
+.vp-lista > .empty-state {
+  grid-column: 1 / -1;
+}
+
+.vp-m {
+  position: relative;
+  isolation: isolate;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: 26px 26px;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Uma equipe: risco de 3px e banho saindo da ponta, os dois na --team-line.
+   Quem venceu acende; quem perdeu recua e o banho cai pela metade. */
+.vp-t {
+  --vp-wash: 26%;
+  grid-column: 1 / 3;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+  min-width: 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--team-line) var(--vp-wash), transparent) 0, transparent 100%);
+  box-shadow: inset 3px 0 0 var(--team-line);
+  transition: --vp-wash 200ms ease;
+}
+
+.vp-t:not(.vp-ganhou) {
+  --vp-wash: 11%;
+}
+
+.vp-m:hover .vp-t {
+  --vp-wash: 36%;
+}
+
+.vp-m:hover .vp-t:not(.vp-ganhou) {
+  --vp-wash: 17%;
+}
+
+.vp-who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 0 12px 0 13px;
+}
+
+.vp-t .team-logo {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.vp-nome {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--loss-ink);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.vp-ganhou .vp-nome {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.vp-t b {
+  padding-right: 8px;
+  text-align: right;
+  font: 600 19px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--loss-ink);
+}
+
+.vp-ganhou b {
+  color: var(--ink);
+}
+
+/* O mapa de fundo: comeca no placar e vai ate o fim da linha, entra e sai em
+   degrade. Cada fatia e um paralelogramo por recorte, com a arte em pe. */
+.vp-mapas {
+  --lean: 14px;
+  --seam: 2px;
+  position: absolute;
+  z-index: -1;
+  grid-column: 2 / -1;
+  grid-row: 1 / -1;
+  inset: 0;
+  display: flex;
+  overflow: hidden;
+  opacity: 0.36;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%, #000 84%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 22%, #000 84%, transparent 100%);
+  transition: opacity 200ms ease;
+}
+
+.vp-m:hover .vp-mapas {
+  opacity: 0.52;
+}
+
+.vp-mapas i {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  clip-path: polygon(
+    calc(var(--lean) / 2 + var(--seam) / 2) 0,
+    calc(100% + var(--lean) / 2 - var(--seam) / 2) 0,
+    calc(100% - var(--lean) / 2 - var(--seam) / 2) 100%,
+    calc(var(--seam) / 2 - var(--lean) / 2) 100%
+  );
+}
+
+.vp-mapas img {
+  position: absolute;
+  top: 0;
+  left: calc(var(--lean) / -2);
+  width: calc(100% + var(--lean));
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+.vp-maplist {
+  grid-column: 3;
+  grid-row: 1 / 3;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 2px;
+  min-width: 0;
+  text-shadow: 0 1px 2px #000, 0 0 8px #000;
+}
+
+.vp-maplist span {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font: 600 12px/1.15 var(--font-text);
+}
+
+.vp-maplist small {
+  color: rgba(245, 241, 242, 0.78);
+  font: 500 11px/1.15 var(--font-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-ev {
+  grid-column: 4;
+  grid-row: 1 / 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding-left: 8px;
+  text-shadow: 0 1px 2px #000;
+}
+
+.vp-ev .event-logo.tiny {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.vp-ev-txt {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.vp-ev-nome {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.vp-ev-txt small {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.vp-kd {
+  grid-column: 5;
+  grid-row: 1 / 3;
+  display: grid;
+  align-content: center;
+  justify-items: end;
+  padding-right: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-kd b {
+  font: 600 15px/1 var(--font-display);
+}
+
+.vp-kd small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* O cabecalho do dia nas listas agrupadas: sem fundo e sem fio, so o dia. */
+.result-day {
+  margin: 14px 0 6px;
+  background: none;
+  border: 0;
+}
+
+.result-day-toggle {
+  padding: 0;
+  color: var(--muted);
+  font: 600 12px/1.2 var(--font-text);
+}
+
+@media (max-width: 760px) {
+  .vp-lista {
+    grid-template-columns: fit-content(190px) 28px minmax(0, 1fr);
+  }
+
+  .vp-lista.vp-lista-kd {
+    grid-template-columns: fit-content(170px) 28px minmax(0, 1fr) 52px;
+  }
+
+  .vp-ev {
+    display: none;
+  }
+
+  .vp-lista-kd .vp-kd {
+    grid-column: 4;
+  }
+}

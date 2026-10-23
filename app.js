@@ -24,6 +24,8 @@ const HOME_RANKING_LIMIT = 14;
 // partidas ao lado das dez primeiras colocadas fecham as colunas juntas.
 const HOME_RECENT_MATCH_LIMIT = 8;
 const HOME_EVENT_LIMIT = 8;
+// Risco e banho de equipe sem cor cadastrada no visual Placar (teamLineColor).
+const TEAM_LINE_SEM_COR = "#8a8d98";
 const PLAYER_FALLBACK_PHOTO = "assets/user-silhouette.png";
 
 // Vaivem do texto que nao cabe na caixa (ver ajustarTextosVariaveis).
@@ -6436,7 +6438,7 @@ function renderHomeCompact() {
       </section>
       <section class="hub-panel matches-panel">
         ${panelTitle("Últimas partidas")}
-        <div class="result-list">${recentMatches.map((series) => matchResultRow(series, { art: true })).join("")}</div>
+        <div class="vp-lista">${recentMatches.map((series) => matchResultRow(series)).join("")}</div>
         ${panelFooterLink("matches", "Ver todas as partidas")}
       </section>
       <section class="hub-panel events-panel">
@@ -6540,7 +6542,7 @@ function listaDeResultados(filtered, limite) {
           </h2>
           <div class="result-day-rows" id="${painelId}" ${aberto ? "" : "inert"}>
             <div class="result-day-rows-inner">
-              ${grupo.itens.map((item) => matchResultRow(item, { when: "hour" })).join("")}
+              <div class="vp-lista">${grupo.itens.map((item) => matchResultRow(item, { when: "hour" })).join("")}</div>
             </div>
           </div>
         </section>
@@ -10862,7 +10864,7 @@ function tournamentTeamPreviewHtml(event, matches, standings, teamId) {
               </div>
             </section>
             <section class="lineup-tab-panel">
-              <div class="lineup-match-list">
+              <div class="lineup-match-list vp-lista">
                 ${teamMatches.length ? teamMatches.map(matchResultRow).join("") : `<div class="empty-state">Nenhuma partida registrada para esta equipe.</div>`}
               </div>
             </section>
@@ -11275,7 +11277,7 @@ function tournamentMatchesSection(matches) {
         <h2>Jogos</h2>
         <span>${rows.length} séries</span>
       </div>
-      <div class="result-list tournament-results">${rows.length ? rows.map(matchResultRow).join("") : `<div class="empty-state">Nenhuma partida registrada.</div>`}</div>
+      <div class="result-list tournament-results vp-lista">${rows.length ? rows.map(matchResultRow).join("") : `<div class="empty-state">Nenhuma partida registrada.</div>`}</div>
     </section>
   `;
 }
@@ -14608,7 +14610,7 @@ function playerSummaryTab(player, matches, trophies) {
     </div>
     <section class="section-band player-recent-matches">
       ${sectionHead("Últimas partidas", "Partidas mais recentes associadas ao jogador.", null, null)}
-      <div class="match-list">${matches.length ? matches.slice(0, 6).map(matchResultRow).join("") : `<div class="empty-state">Nenhuma partida registrada para este jogador.</div>`}</div>
+      <div class="match-list vp-lista">${matches.length ? matches.slice(0, 6).map(matchResultRow).join("") : `<div class="empty-state">Nenhuma partida registrada para este jogador.</div>`}</div>
     </section>
   `;
 }
@@ -14761,7 +14763,7 @@ function playerMatchesTab(player, matches) {
         ${stat(pct(matchSummary.winRate), "Winrate")}
         ${stat(playerRating(player), "rAAting 3.0")}
       </div>
-      <div class="result-list team-result-list">${matches.length ? matches.map(matchResultRow).join("") : `<div class="empty-state">Nenhuma partida registrada para este jogador.</div>`}</div>
+      <div class="result-list team-result-list vp-lista">${matches.length ? matches.map(matchResultRow).join("") : `<div class="empty-state">Nenhuma partida registrada para este jogador.</div>`}</div>
     </section>
   `;
 }
@@ -16104,34 +16106,67 @@ function matchSeriesMetaLabel(item) {
   return `MVP: ${series.mvp ? series.mvp.nick : "-"}`;
 }
 
+// A linha de partida do visual Placar: as duas equipes uma embaixo da outra,
+// cada uma com a propria cor, o mapa da serie como fundo e o campeonato na
+// ponta. Ela vive dentro de uma .vp-lista: a lista e uma grade so e cada
+// partida e uma subgrade dela, entao a coluna do nome tem a largura do nome
+// mais longo da lista e o placar cola nela.
 // Opcoes num objeto de proposito: `.map(matchResultRow)` passa o indice no
-// segundo argumento, e um numero nao tem `.when` nem `.art`. Assim as cinco
-// listas que chamam pelo `.map` cru recebem exatamente o padrao (data, sem
-// arte de mapa) sem precisar saber que o indice chega ali.
-// A data e o padrao porque so uma das sete listas agrupa por dia; nas outras
-// a hora sozinha ("16:17") nao respondia "quando foi isso". Quem agrupa pede
-// `{ when: "hour" }`, porque la o dia ja e o cabecalho do grupo.
-// A arte do mapa so e emitida por quem a exibe: o CSS a esconde fora da home,
-// e gerar essa marcacao nas outras listas custava 253 nos de DOM em /partidas.
+// segundo argumento, e um numero nao tem `.when` nem `.kd`. Assim as listas que
+// chamam pelo `.map` cru recebem exatamente o padrao (a data) sem precisar
+// saber que o indice chega ali. Quem agrupa por dia pede `{ when: "hour" }`,
+// porque la o dia ja e o cabecalho do grupo. A pagina do jogador pede
+// `{ kd: [abates, mortes] }` para a coluna do K / D dele na serie.
 function matchResultRow(item, options) {
   const opts = options && typeof options === "object" ? options : {};
   const series = normalizeMatchItem(item);
   const score = matchListScore(series);
   const event = state.db.tournaments.find((row) => row.id === series.eventId);
   const when = opts.when === "hour" ? formatDate(series.startedAt, "hour") : formatDate(series.startedAt);
-  // O nome sai duas vezes: no title, para quem parar o ponteiro em cima ler de
-  // uma vez, e dentro do .nome-rolante, que e a caixa que a animacao move.
   const nomeDoEvento = event?.name || "Evento";
+  const variosMapas = series.maps.length > 1;
+  const mapas = series.maps
+    .map((match) => {
+      const nome = escapeHtml(match.mapName || "");
+      if (!variosMapas) return `<span>${nome}</span>`;
+      return `<span>${nome} <small>${scoreForTeamInMatch(match, series.teamA.id)}-${scoreForTeamInMatch(match, series.teamB.id)}</small></span>`;
+    })
+    .join("");
+  const kd = Array.isArray(opts.kd) ? `<span class="vp-kd"><b>${escapeHtml(opts.kd[0])} / ${escapeHtml(opts.kd[1])}</b><small>K / D</small></span>` : "";
   return `
-    <a class="result-row" href="${matchSeriesHref(series)}">
-      ${opts.art ? matchMapBanner(series) : ""}
-      <span class="result-team left">${teamLogo(series.teamA.id)}<strong title="${escapeHtml(series.teamA.name)}"><span class="nome-rolante">${escapeHtml(series.teamA.name)}</span></strong></span>
-      <span class="result-score"><b class="${scoreNumberClass(score.a, score.b)}">${score.a}</b><i>:</i><b class="${scoreNumberClass(score.b, score.a)}">${score.b}</b><small>${escapeHtml(score.label)}</small></span>
-      <span class="result-team right"><strong title="${escapeHtml(series.teamB.name)}"><span class="nome-rolante">${escapeHtml(series.teamB.name)}</span></strong>${teamLogo(series.teamB.id)}</span>
-      ${matchMapStrip(series)}
-      <span class="result-meta"><span class="result-meta-when">${escapeHtml(when)}</span>${window.Comments ? window.Comments.selo("match", series.seriesKey) : ""}${opts.art ? matchMapSequence(series) : ""}<span class="result-meta-where" title="${escapeHtml(nomeDoEvento)}"><span class="nome-rolante">${escapeHtml(nomeDoEvento)}</span></span>${event ? eventLogo(event, "tiny") : ""}</span>
+    <a class="vp-m" href="${matchSeriesHref(series)}">
+      ${matchMapBanner(series)}
+      ${placarLinhaEquipe(series.teamA, score.a, score.a > score.b)}
+      ${placarLinhaEquipe(series.teamB, score.b, score.b > score.a)}
+      <span class="vp-maplist">${mapas}</span>
+      <span class="vp-ev">${event ? eventLogo(event, "tiny") : ""}<span class="vp-ev-txt"><span class="vp-ev-nome" title="${escapeHtml(nomeDoEvento)}">${escapeHtml(nomeDoEvento)}</span><small>${escapeHtml(when)}${window.Comments ? window.Comments.selo("match", series.seriesKey) : ""}</small></span></span>
+      ${kd}
     </a>
   `;
+}
+
+// Uma equipe na linha do Placar: o risco e o banho saem da --team-line, e quem
+// venceu fica com nome e placar acesos.
+function placarLinhaEquipe(team, score, ganhou) {
+  return `<span class="vp-t${ganhou ? " vp-ganhou" : ""}" style="--team-line:${teamLineColor(team.id)}"><span class="vp-who">${teamLogo(team.id)}<span class="vp-nome" title="${escapeHtml(team.name)}">${escapeHtml(team.name)}</span></span><b>${escapeHtml(score)}</b></span>`;
+}
+
+// A cor de risco, barra e banho de uma equipe: a mesma --team-line que o
+// teamAccentStyle calcula (teamChartInk, 4,5:1 contra o painel), sem montar o
+// resto do estilo, que pesa numa lista de 50 linhas. Equipe sem cor cadastrada
+// fica num cinza neutro, e nao no vermelho de reserva do teamAccentStyle:
+// vermelho e marca, nunca dado. O cache vive na propria funcao porque ela pode
+// rodar antes de o init() terminar, e uma const de topo depois dele cairia na
+// zona morta temporal.
+function teamLineColor(teamId) {
+  const cache = (teamLineColor.cache ||= new Map());
+  if (cache.has(teamId)) return cache.get(teamId);
+  const team = teamById(teamId);
+  const [primary, secondary] = team?.colors || [];
+  if (!primary) return TEAM_LINE_SEM_COR;
+  const cor = teamChartInk(safeCssColor(primary, TEAM_LINE_SEM_COR), safeCssColor(secondary || primary, TEAM_LINE_SEM_COR));
+  cache.set(teamId, cor);
+  return cor;
 }
 
 // O nome do campeonato tem 84px na ponta direita da faixa de meta da home (ver
@@ -16340,25 +16375,6 @@ function remedirTextosVariaveis() {
   rolantes.forEach(medirNomeRolante);
 }
 
-// Os mapas na ordem em que foram jogados, no meio da faixa de cima. Numa md3 ou
-// md5 a sequencia e parte do resultado - antes so o primeiro mapa aparecia, sob
-// o placar. So a home mostra isso: nas listas cheias os mapas ja tem a propria
-// tira com placar por mapa (.result-maps), e repetir os nomes seria ruido.
-function matchMapSequence(item) {
-  const series = normalizeMatchItem(item);
-  const names = (series.mapNames || []).filter(Boolean);
-  if (!names.length) return "";
-  // --maps alimenta a largura do holofote e a das fatias: os nomes e as artes
-  // usam a mesma conta, entao cada nome cai centrado sobre o proprio mapa.
-  // O nome vai dentro de .nome-rolante pela mesma regra do campeonato: a fatia
-  // de uma md3 tem 41px a 1280px e "Ascent" pede 44px, entao a reticencia
-  // entrava por 3px de falta e levava embora treze - "Asc...". Rolando, os 3px
-  // se resolvem num percurso que nao se nota.
-  return `<span class="result-meta-maps" style="--maps:${names.length}">${names
-    .map((name) => `<span class="result-meta-map"><span class="nome-rolante">${escapeHtml(name)}</span></span>`)
-    .join("")}</span>`;
-}
-
 // Arte do mapa em versao web: 640x360 WebP (~20 KB) em vez do PNG de origem
 // 1600x900 (~500 KB, e 2 MB no caso do summit). Nenhum lugar do site desenha
 // essa arte acima de 640px de largura - nem o holofote da home nem o tile de
@@ -16402,56 +16418,24 @@ function mapBannerSrc(name) {
   return mapArtAttrs(mapByName(name));
 }
 
-// Uma fatia por mapa, na ordem jogada. Numa md3 o holofote vira tres paineis
-// lado a lado separados por fio - a serie inteira aparece de uma vez, em vez de
+// O mapa de fundo da linha do Placar: uma fatia por mapa, na ordem jogada,
+// cortada em diagonal. Numa md3 a serie inteira aparece de uma vez, em vez de
 // escolhermos um mapa "representativo" e esconder os outros.
 function matchMapBanner(item) {
   const series = normalizeMatchItem(item);
   const names = (series.mapNames || []).filter(Boolean);
-  // Uma fatia por NOME, e nao por arte encontrada. Filtrar as que nao resolvem
-  // deixava, numa md3 com um mapa novo fora da base, tres nomes sobre duas
-  // fatias: `--maps` dizia 3, as duas fatias flex dividiam a largura em 50%
-  // cada e os nomes deixavam de cair sobre a propria arte. A fatia sem arte
-  // entra vazia e segura a coluna.
+  // Uma fatia por NOME, e nao por arte encontrada: numa md3 com um mapa novo
+  // fora da base, filtrar as que nao resolvem deixaria tres nomes sobre duas
+  // fatias. A fatia sem arte entra vazia e segura a coluna.
   const slices = names.map((name) => mapBannerSrc(name));
   if (!slices.some(Boolean)) return "";
-  return `<span class="result-banner" aria-hidden="true" style="--maps:${names.length}">${slices
+  return `<span class="vp-mapas" aria-hidden="true">${slices
     .map((art) =>
       art
         ? `<i><img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" /></i>`
         : "<i></i>",
     )
     .join("")}</span>`;
-}
-
-function matchMapStrip(item) {
-  const series = normalizeMatchItem(item);
-  const maps = series.maps.slice(0, 3);
-  const extra = Math.max(0, series.maps.length - maps.length);
-  return `
-    <span class="result-maps" aria-label="Mapas da série">
-      ${maps.map((match, index) => matchMapTile(match, series, index)).join("")}
-      ${extra ? `<span class="result-map-extra">+${extra}</span>` : ""}
-    </span>
-  `;
-}
-
-function matchMapTile(match, series, index) {
-  const map = mapById(match.mapId) || mapByName(match.mapName) || {};
-  const art = mapArtAttrs(map, match.mapIcon);
-  const scoreA = scoreForTeamInMatch(match, series.teamA.id);
-  const scoreB = scoreForTeamInMatch(match, series.teamB.id);
-  const name = map.name || match.mapName || `Mapa ${index + 1}`;
-  const mapNumber = match.mapNumber || index + 1;
-  const winnerClass = match.winnerId === series.teamA.id ? "left-win" : "right-win";
-  const bannerClass = art ? "has-banner" : "";
-  return `
-    <span class="result-map-tile ${winnerClass} ${bannerClass}" data-map="${escapeHtml(name)}" title="${escapeHtml(`${name} ${scoreA}-${scoreB}`)}">
-      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="${escapeHtml(name)}" loading="lazy" onerror="mapArtError(this)" />` : ""}
-      <span class="result-map-index">M${mapNumber}</span>
-      <span class="result-map-score">${scoreA}-${scoreB}</span>
-    </span>
-  `;
 }
 
 // A capa de hero e pesada demais para hover: 121 KB de media, 315 KB no pior

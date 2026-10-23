@@ -92,5 +92,64 @@ context.Shell("<p>conteudo</p>");
 assert(appElement.innerHTML.includes("Estatísticas do cenário universitário brasileiro de VALORANT."), "rodape tem a frase");
 assert(/class="vp-rodape-links"[\s\S]*#\/matches[\s\S]*#\/events[\s\S]*#\/ranking[\s\S]*#\/news/.test(appElement.innerHTML), "rodape tem os quatro links");
 
+// ---------------------------------------------------------------- Tarefa 3
+// Base sintetica: tres equipes (uma toda branca), um campeonato e quatro mapas
+// com arte. `state` e const no app.js, entao so da para alcancar por dentro.
+vm.runInContext(
+  `state.db = {
+    teams: [
+      { id: "azr", name: "Azure Bears Black", tag: "AZR B", colors: ["#037aff", "#fefeff"], logo: "assets/team-logos/azure_bears.png" },
+      { id: "ceub", name: "CEUB Octopus Vulgaris", tag: "CEUB VLG", colors: ["#551d66", "#020103"], logo: "assets/team-logos/ceub_octopus.png" },
+      { id: "mack", name: "MackLogic White", tag: "LOGIC", colors: ["#ffffff", "#ffffff"], logo: "assets/team-logos/macklogic_white.png" },
+    ],
+    tournaments: [{ id: "rush", name: "Rush Series 3ª Edição", logo: "assets/tournament-icons/rushSeries.png" }],
+    maps: ["Bind", "Abyss", "Ascent", "Lotus"].map((name) => ({ id: name.toLowerCase(), name, icon: "assets/maps/" + name.toLowerCase() + ".png" })),
+    matches: [], matchSeries: [], players: [],
+  };`,
+  context,
+);
+const mapaDaSerie = (a, b, id, name, n, sa, sb) => ({ id: `${a}-${b}-${n}`, mapId: id, mapName: name, mapNumber: n, teamA: { id: a, score: sa }, teamB: { id: b, score: sb }, winnerId: sa > sb ? a : b });
+const serie = (key, a, nomeA, b, nomeB, scoreA, scoreB, mapas) => ({
+  id: key, primaryMatchId: mapas[0].id, seriesKey: key, eventId: "rush",
+  startedAt: Date.UTC(2026, 9, 18, 22), sortAt: Date.UTC(2026, 9, 18, 23),
+  teamA: { id: a, name: nomeA }, teamB: { id: b, name: nomeB },
+  scoreA, scoreB, mapCount: mapas.length, maps: mapas, mapNames: mapas.map((m) => m.mapName),
+  label: mapas.length > 1 ? `MD${mapas.length}` : mapas[0].mapName, winnerId: scoreA > scoreB ? a : b,
+});
+const md3 = serie("k-md3", "azr", "Azure Bears Black", "ceub", "CEUB Octopus Vulgaris", 1, 2, [
+  mapaDaSerie("azr", "ceub", "bind", "Bind", 1, 13, 8),
+  mapaDaSerie("azr", "ceub", "abyss", "Abyss", 2, 13, 15),
+  mapaDaSerie("azr", "ceub", "ascent", "Ascent", 3, 7, 13),
+]);
+const md1 = serie("k-md1", "mack", "MackLogic White", "ceub", "CEUB Octopus Vulgaris", 0, 1, [mapaDaSerie("mack", "ceub", "lotus", "Lotus", 1, 6, 13)]);
+const linhasDeEquipe = (rowHtml) => rowHtml.split('<span class="vp-t').slice(1).map((pedaco) => pedaco.split('<span class="vp-t')[0].split('class="vp-maplist"')[0]);
+
+const linhaMd3 = context.matchResultRow(md3);
+assert(linhaMd3.startsWith('\n    <a class="vp-m"') || linhaMd3.includes('<a class="vp-m"'), "a partida vira uma vp-m");
+const equipesMd3 = linhasDeEquipe(linhaMd3);
+assert.strictEqual(equipesMd3.length, 2, "duas linhas de equipe por partida");
+assert.strictEqual(equipesMd3.filter((l) => l.startsWith(" vp-ganhou")).length, 1, "so uma das duas e a vencedora");
+assert(equipesMd3.find((l) => l.startsWith(" vp-ganhou")).includes("CEUB Octopus Vulgaris"), "a vencedora da MD3 e a CEUB");
+assert(linhaMd3.includes("Bind <small>13-8</small>"), "em serie de varios mapas, cada mapa mostra o proprio placar");
+assert(linhaMd3.includes('data-fallback="assets/maps/bind.png"') && linhaMd3.includes('onerror="mapArtError(this)"'), "a arte cai no PNG de reserva e depois some");
+for (const linha of equipesMd3) assert(/--team-line:#[0-9a-f]{6}/i.test(linha), "toda linha de equipe leva a --team-line");
+
+const linhaMd1 = context.matchResultRow(md1);
+assert(linhaMd1.includes("<b>6</b>") && linhaMd1.includes("<b>13</b>"), "MD1 mostra o placar de rounds");
+const listaMd1 = linhaMd1.split('class="vp-maplist"')[1].split("</span>\n")[0];
+assert(listaMd1.includes("Lotus") && !listaMd1.includes("<small>"), "MD1 mostra so o nome do mapa");
+const corBranca = linhasDeEquipe(linhaMd1)[0].match(/--team-line:(#[0-9a-f]{6})/i)[1].toLowerCase();
+assert.notStrictEqual(corBranca, "#ffffff", "equipe toda branca nao vira risco branco puro");
+assert(context.matchResultRow(md1, { kd: [71, 41] }).includes("71 / 41"), "a coluna de K/D aparece quando pedida");
+assert(!linhaMd1.includes("vp-kd"), "sem K/D pedido, sem a coluna");
+
+const semArte = serie("k-novo", "azr", "Azure Bears Black", "ceub", "CEUB Octopus Vulgaris", 0, 1, [mapaDaSerie("azr", "ceub", "novo", "Mapa Novo", 1, 9, 13)]);
+const linhaSemArte = context.matchResultRow(semArte);
+assert(!linhaSemArte.includes("vp-mapas"), "sem nenhuma arte, a faixa de mapas nao entra");
+assert(linhaSemArte.includes("Mapa Novo"), "o nome do mapa continua por cima");
+
+const listaAgrupada = context.listaDeResultados([md3, md1], 50);
+assert(listaAgrupada.includes('class="vp-lista"'), "as linhas de um dia ficam numa vp-lista");
+
 void vp;
 console.log("Visual Placar contract tests passed");

@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UNIVLR - página de partida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #040306;
+    --surface: #11131a;
+    --surface-2: #171a23;
+    --ink: #f5f1f2;
+    --muted: #a3a5af;
+    --loss-ink: rgba(245, 241, 242, 0.62);
+    --line: rgba(245, 241, 242, 0.08);
+    --line-strong: rgba(245, 241, 242, 0.14);
+    --brand: #f6132a;
+    --brand-text: #ff5f6d;
+    --on-brand: #040306;
+    --win: #31e981;
+    --danger: #ff6678;
+    --font-text: "Barlow", system-ui, sans-serif;
+    --font-num: "Barlow Condensed", "Barlow", system-ui, sans-serif;
+    --gutter: clamp(16px, 3cqi, 40px);
+    --rail: 340px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #000; color: var(--ink); font: 400 13px/1.4 var(--font-text); }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  h1, h2, h3, h4, p { margin: 0; }
+  button { font: inherit; color: inherit; }
+  a:focus-visible, button:focus-visible, input:focus-visible, tr:focus-visible { outline: 2px solid var(--brand-text); outline-offset: 2px; }
+  .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+
+  /* ---- moldura do mockup, fora do design ---- */
+  .toolbar { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 10px 20px; background: #000; border-bottom: 1px solid var(--line-strong); font-size: 13px; color: var(--muted); }
+  .toolbar .seg { display: inline-flex; gap: 4px; }
+  .toolbar button { font: 600 13px/1 var(--font-text); background: transparent; border: 1px solid rgba(245, 241, 242, 0.3); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+  .toolbar button[aria-pressed="true"] { background: var(--ink); color: #000; border-color: var(--ink); }
+  .toolbar strong { color: var(--ink); font-weight: 600; }
+  .frame { container: page / inline-size; margin: 0 auto; background: var(--bg); }
+  body.phone .frame { width: 390px; margin: 24px auto; outline: 1px solid var(--line-strong); }
+
+  /* ---- topo do site (igual a home) ---- */
+  .top { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(200px, 340px) auto; align-items: center; gap: 28px; height: 56px; padding: 0 var(--gutter); border-bottom: 1px solid var(--line); }
+  .top .brand img { height: 26px; width: auto; }
+  .nav { display: flex; gap: 22px; height: 100%; }
+  .nav a { position: relative; display: flex; align-items: center; font: 600 14px/1 var(--font-text); color: var(--muted); white-space: nowrap; }
+  .nav a:hover, .nav a[aria-current] { color: var(--ink); }
+  .nav a[aria-current]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand); }
+  .search { position: relative; }
+  .search input { width: 100%; height: 34px; border: 0; border-radius: 3px; background: var(--surface); color: var(--ink); font: 400 13px var(--font-text); padding: 0 34px 0 12px; }
+  .search input::placeholder { color: var(--muted); }
+  .search span { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+  .enter { font: 600 13px/1 var(--font-text); color: var(--on-brand); background: var(--brand); border: 0; border-radius: 3px; padding: 10px 16px; cursor: pointer; }
+  .foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 18px var(--gutter); border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+  .foot img { width: 22px; height: 22px; object-fit: contain; }
+  .foot nav { display: flex; gap: 18px; margin-left: auto; }
+
+  .page { max-width: 1360px; margin: 0 auto; padding: 18px var(--gutter) 48px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .page > * { min-width: 0; }
+  .sec-head { display: flex; align-items: baseline; gap: 12px; margin: 0 0 10px; min-width: 0; flex-wrap: wrap; }
+  .sec-head h2 { font: 600 30px/1 var(--font-num); white-space: nowrap; }
+  .sec-head .aside { color: var(--muted); font-size: 12px; }
+  .sec-head .end { margin-left: auto; }
+
+  /* Fatias de mapa: o mesmo recorte diagonal das linhas da home. */
+  .slices { display: flex; --lean: 18px; --seam: 2px; }
+  .slices > * { position: relative; flex: 1 1 0; min-width: 0;
+    clip-path: polygon(calc(var(--lean) / 2 + var(--seam) / 2) 0, calc(100% + var(--lean) / 2 - var(--seam) / 2) 0, calc(100% - var(--lean) / 2 - var(--seam) / 2) 100%, calc(var(--seam) / 2 - var(--lean) / 2) 100%); }
+  .slices > * > img.art { position: absolute; top: 0; left: calc(var(--lean) / -2); width: calc(100% + var(--lean)); max-width: none; height: 100%; object-fit: cover; object-position: center 42%; }
+
+  /* ================= placar da serie ================= */
+  .hero { position: relative; isolation: isolate; }
+  .hero-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+  .hero-meta a { display: inline-flex; align-items: center; gap: 6px; color: var(--ink); font-weight: 600; font-size: 13px; }
+  .hero-meta img { width: 18px; height: 18px; object-fit: contain; }
+  .hero-main { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; height: 104px; }
+  .hero-art { position: absolute; inset: 0 22%; z-index: -1; opacity: 0.34;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent); }
+  .hero-art > * > img.art { opacity: 1; }
+  .side { display: flex; align-items: center; gap: 16px; height: 100%; padding: 0 20px; min-width: 0; }
+  .side.a { background: linear-gradient(90deg, color-mix(in srgb, var(--tc) 34%, transparent), transparent 75%); box-shadow: inset 3px 0 0 var(--tl); }
+  .side.b { flex-direction: row-reverse; text-align: right; background: linear-gradient(270deg, color-mix(in srgb, var(--tc) 34%, transparent), transparent 75%); box-shadow: inset -3px 0 0 var(--tl); }
+  .side img { width: 64px; height: 64px; object-fit: contain; flex: none; }
+  .side span { display: grid; gap: 2px; min-width: 0; }
+  .side strong { font: 600 26px/1.1 var(--font-text); }
+  .side small { color: var(--muted); font-size: 12px; }
+  .side:hover strong { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .score { display: grid; justify-items: center; padding: 0 28px; text-shadow: 0 2px 12px #000; }
+  .score .big { display: flex; align-items: center; gap: 10px; font: 700 64px/0.9 var(--font-num); font-variant-numeric: tabular-nums; }
+  .score .big .l { color: var(--loss-ink); }
+  .score .big i { font-style: normal; font-size: 34px; color: var(--muted); }
+  .score small { color: var(--muted); font-size: 12px; margin-top: 4px; }
+
+  /* ================= abas de mapa ================= */
+  .maptabs { height: 48px; --lean: 22px; background: #000; }
+  .maptabs a { display: grid; grid-template-columns: auto auto; justify-content: center; align-items: center; gap: 10px; color: var(--muted); }
+  .maptabs a img.art { opacity: 0.3; transition: opacity 200ms ease; }
+  .maptabs a:hover img.art { opacity: 0.45; }
+  .maptabs a[aria-current] { color: var(--ink); }
+  .maptabs a[aria-current]::after { content: ""; position: absolute; left: 18%; right: 18%; bottom: 0; height: 2px; background: var(--brand); }
+  .maptabs a > span { position: relative; text-shadow: 0 1px 3px #000; }
+  .maptabs .tn { font: 600 14px/1 var(--font-text); }
+  .maptabs .ts { display: inline-flex; align-items: center; gap: 6px; font: 600 16px/1 var(--font-num); font-variant-numeric: tabular-nums; color: var(--ink); }
+  .maptabs .ts img { width: 16px; height: 16px; object-fit: contain; }
+  .maptabs .serie { background: var(--surface); }
+
+  /* ================= corpo: scoreboard + trilho ================= */
+  .body { display: grid; grid-template-columns: minmax(0, 1fr) var(--rail); gap: 32px; align-items: start; }
+  .body > * { min-width: 0; }
+  .rail, .main { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .seg2 { display: inline-flex; gap: 14px; }
+  .seg2 button { background: none; border: 0; padding: 4px 0; cursor: pointer; color: var(--muted); font-weight: 600; font-size: 13px; }
+  .seg2 button[aria-pressed="true"] { color: var(--ink); box-shadow: inset 0 -2px var(--brand); }
+
+  .sb-wrap { overflow-x: auto; background: var(--surface); border-radius: 2px; }
+  .sb { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .sb th, .sb td { height: 38px; padding: 0 7px; text-align: right; white-space: nowrap; font-size: 13px; }
+  .sb thead th { height: 32px; color: var(--muted); font-weight: 500; font-size: 12px; border-bottom: 1px solid var(--line-strong); position: sticky; top: 0; background: var(--surface); }
+  .sb th:first-child, .sb td:first-child { text-align: left; padding-left: 14px; }
+  .sb .ag { text-align: left; }
+  .sb tbody tr { border-top: 1px solid var(--line); }
+  .sb tr.team-row { border-top: 0; background: linear-gradient(90deg, color-mix(in srgb, var(--tc) 30%, var(--surface)), var(--surface) 70%); }
+  .sb tr.team-row th:first-child { box-shadow: inset 3px 0 0 var(--tl); }
+  .sb tr.team-row th, .sb tr.team-row td { height: 40px; font-weight: 600; }
+  .sb tr.team-row td { color: var(--muted); font-weight: 500; }
+  .sb tr.team-row td.rt { color: var(--ink); font-weight: 600; }
+  .sb .tm { display: inline-flex; align-items: center; gap: 8px; }
+  .sb .tm img { width: 20px; height: 20px; object-fit: contain; }
+  .sb .tm small { color: var(--muted); font-weight: 500; font-size: 12px; }
+  .sb tbody + tbody tr.team-row { border-top: 6px solid var(--bg); }
+  .sb tr.p { cursor: pointer; }
+  .sb tr.p:hover { background: var(--surface-2); }
+  .sb tr.p.sel { background: color-mix(in srgb, var(--tc) 18%, var(--surface)); }
+  .sb tr.p.sel th:first-child { box-shadow: inset 3px 0 0 var(--tl); }
+  .sb .pl { display: grid; gap: 1px; max-width: 170px; }
+  .sb .pl b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+  .sb .pl small { color: var(--muted); font-size: 11px; font-weight: 400; overflow: hidden; text-overflow: ellipsis; }
+  .sb .ag span { display: inline-flex; gap: 3px; vertical-align: middle; }
+  .sb .ag img { width: 22px; height: 22px; border-radius: 2px; }
+  .sb td.rt { font-weight: 700; }
+  .sb .good { color: var(--win); }
+  .sb .bad { color: var(--danger); }
+
+  /* ---- melhor da partida: o mesmo cartao do jogador da semana ---- */
+  .mvp { position: relative; height: 196px; display: grid; grid-template-columns: 128px minmax(0, 1fr); overflow: hidden; border-radius: 2px;
+         background: linear-gradient(115deg, color-mix(in srgb, var(--tc) 46%, var(--surface)) 0%, color-mix(in srgb, var(--tc) 14%, var(--surface)) 46%, var(--surface) 78%); }
+  .mvp .fig { align-self: end; width: 150px; height: 182px; object-fit: contain; object-position: left bottom; margin-left: -6px; }
+  .mvp .copy { display: grid; grid-template-rows: auto auto auto 1fr auto; padding: 14px 16px 14px 6px; text-align: right; min-width: 0; }
+  .mvp .copy small { color: var(--muted); font-size: 12px; }
+  .mvp .copy strong { font: 600 24px/1.1 var(--font-text); margin-top: 2px; }
+  .mvp .team { display: flex; justify-content: flex-end; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .mvp .team img { width: 16px; height: 16px; object-fit: contain; }
+  .mvp .value { align-self: end; }
+  .mvp .value b { display: block; font: 600 56px/0.9 var(--font-num); font-variant-numeric: tabular-nums; }
+  .mvp .value span { color: var(--muted); font-size: 12px; }
+  .mvp .ctx { position: absolute; left: 12px; top: 12px; color: var(--muted); font-size: 12px; }
+  .mvp-stats { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; margin-top: 10px; }
+  .mvp-stats span { display: grid; gap: 2px; }
+  .mvp-stats small { color: var(--muted); font-size: 12px; }
+  .mvp-stats b { font: 600 20px/1 var(--font-num); font-variant-numeric: tabular-nums; }
+
+  /* ---- comparativo e historico: barras espelhadas a partir do centro ---- */
+  .vs-head { display: grid; grid-template-columns: 1fr 1fr; align-items: center; margin-bottom: 8px; }
+  .vs-head span { display: flex; align-items: center; gap: 8px; font-weight: 600; min-width: 0; }
+  .vs-head span:last-child { flex-direction: row-reverse; text-align: right; }
+  .vs-head img { width: 20px; height: 20px; object-fit: contain; flex: none; }
+  /* Duas linhas: os numeros e o rotulo em cima, a barra espelhada embaixo,
+     crescendo do centro para cada lado. Cabe em 340px com a fracao junto. */
+  .bf { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: baseline; row-gap: 5px; padding: 6px 0 7px; border-top: 1px solid var(--line); }
+  .duel-heads + .bf { border-top: 0; }
+  .s-cmp { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 32px; margin-top: -8px; }
+  .s-cmp .bf { border-top: 0; }
+  .bf .v { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 13px; white-space: nowrap; }
+  .bf .v.hi { color: var(--ink); font-weight: 600; }
+  .bf .v.b { text-align: right; }
+  .bf .v small { color: var(--muted); font-size: 11px; font-weight: 400; margin: 0 4px; }
+  .bf .lb { text-align: center; color: var(--muted); font-size: 12px; white-space: nowrap; padding: 0 8px; }
+  .bf .bars { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; height: 5px; }
+  .bf .bars span { display: flex; background: rgba(245, 241, 242, 0.06); }
+  .bf .bars span:first-child { justify-content: flex-end; }
+  .bf .bars i { display: block; height: 100%; width: var(--w); background: var(--tl); opacity: 0.5; }
+  .bf .bars i.hi { opacity: 1; }
+
+  .duel-heads { display: grid; grid-template-columns: 1fr 1fr; align-items: end; margin-bottom: 6px; }
+  .duel-heads a { display: grid; grid-template-columns: 52px minmax(0, 1fr); align-items: end; gap: 8px; min-width: 0; }
+  .duel-heads a:last-child { grid-template-columns: minmax(0, 1fr) 52px; text-align: right; }
+  .duel-heads a:last-child img { order: 2; }
+  .duel-heads img { width: 52px; height: 62px; object-fit: contain; object-position: bottom; }
+  .duel-heads strong { display: block; font-weight: 600; font-size: 15px; }
+  .duel-heads small { color: var(--muted); font-size: 12px; }
+  .duel-heads a:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+  .hint { color: var(--muted); font-size: 12px; margin: -4px 0 10px; }
+
+  /* ================= lineups ================= */
+  .lineups { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+  .band-head { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; font-weight: 600;
+               background: linear-gradient(90deg, color-mix(in srgb, var(--tc) 30%, transparent), transparent 80%); box-shadow: inset 3px 0 0 var(--tl); }
+  .band-head img { width: 20px; height: 20px; object-fit: contain; }
+  .band-head small { margin-left: auto; color: var(--muted); font-weight: 500; font-size: 12px; }
+  .band { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; margin-top: 4px; }
+  .who-card { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 104px auto; justify-items: center; gap: 6px; padding: 0 0 8px; background: none; border: 0; cursor: pointer; border-radius: 2px; min-width: 0; }
+  .who-card .ph { width: 100%; height: 104px; object-fit: contain; object-position: bottom; }
+  .who-card > span { font-size: 12px; }
+  .who-card span { display: inline-flex; align-items: center; gap: 5px; font-weight: 600; font-size: 13px; max-width: 100%; }
+  .who-card span img { width: 14px; height: 14px; opacity: 0.8; flex: none; }
+  .who-card:hover { background: var(--surface); }
+  .who-card[aria-pressed="true"] { background: color-mix(in srgb, var(--tc) 18%, transparent); box-shadow: inset 0 -2px var(--tl); }
+
+  /* ================= comentarios ================= */
+  .cmt-empty { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; color: var(--muted); }
+  .cmt-empty button { font: 600 13px/1 var(--font-text); color: var(--on-brand); background: var(--brand); border: 0; border-radius: 3px; padding: 10px 16px; cursor: pointer; }
+
+  /* ---- tela media: o trilho desce para baixo do scoreboard ---- */
+  @container page (max-width: 1180px) {
+    .body { grid-template-columns: minmax(0, 1fr); }
+    .rail { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); column-gap: 32px; }
+  }
+  /* ---- celular ---- */
+  @container page (max-width: 760px) {
+    .top { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: 52px 40px; height: auto; gap: 0 12px; }
+    .nav { grid-column: 1 / -1; grid-row: 2; overflow-x: auto; gap: 18px; scrollbar-width: none; }
+    .page { gap: 22px; padding-top: 14px; }
+    .sec-head h2 { font-size: 26px; }
+    .hero-main { height: auto; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+    .side { flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 10px; }
+    .side.b { flex-direction: column; align-items: flex-end; }
+    .side img { width: 40px; height: 40px; }
+    .side strong { font-size: 15px; white-space: normal; }
+    .score { padding: 0 10px; }
+    .score .big { font-size: 44px; }
+    .score .big i { font-size: 24px; }
+    .hero-art { inset: 0 10%; }
+    .maptabs { overflow-x: auto; scrollbar-width: none; }
+    .maptabs a { flex: 0 0 auto; min-width: 118px; grid-template-columns: auto; justify-items: center; gap: 3px; }
+    .maptabs .tn { font-size: 12px; }
+    .rail { grid-template-columns: minmax(0, 1fr); }
+    .s-cmp { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; margin-top: -4px; }
+    /* no celular: melhor da partida, scoreboard, lineups e so depois o historico */
+    .body { display: flex; flex-direction: column; align-items: stretch; gap: 22px; }
+    .body section { min-width: 0; }
+    .body .rail, .body .main { display: contents; }
+    .s-mvp { order: 1; } .s-sb { order: 2; } .s-lineups { order: 3; } .s-duel { order: 4; }
+    .sb th:first-child, .sb td:first-child { position: sticky; left: 0; z-index: 1; background: var(--surface); }
+    .sb tr.team-row th:first-child { background: color-mix(in srgb, var(--tc) 30%, var(--surface)); }
+    .sb .pl { max-width: 118px; }
+    .lineups { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+    .band { overflow-x: auto; grid-template-columns: repeat(5, 92px); scrollbar-width: none; }
+    .who-card { grid-template-rows: 96px auto; }
+    .who-card .ph { height: 96px; }
+  }
+</style>
+</head>
+<body>
+  <div class="toolbar">
+    <span class="seg" role="group" aria-label="Largura">
+      <button type="button" data-w="full" aria-pressed="true">Computador</button>
+      <button type="button" data-w="phone" aria-pressed="false">Celular (390px)</button>
+    </span>
+    <span data-metric></span>
+  </div>
+
+  <div class="frame">
+    <header class="top">
+      <a class="brand" href="#"><img src="/assets/univlr_logo_longa.png" alt="UNIVLR"></a>
+      <nav class="nav" aria-label="Principal"><a href="#">Início</a><a href="#">Notícias</a><a href="#" aria-current="page">Partidas</a><a href="#">Eventos</a><a href="#">Players</a><a href="#">Ranking</a><a href="#">Cartinhas</a></nav>
+      <label class="search"><input type="search" placeholder="Buscar time, jogador, campeonato ou mapa" aria-label="Buscar"><span aria-hidden="true">/</span></label>
+      <button class="enter" type="button">Entrar</button>
+    </header>
+    <main class="page" id="page"></main>
+    <footer class="foot">
+      <img src="/assets/logo_univlr.png" alt="">
+      <span>Estatísticas do cenário universitário brasileiro de VALORANT.</span>
+      <nav aria-label="Rodapé"><a href="#">Partidas</a><a href="#">Eventos</a><a href="#">Ranking</a><a href="#">Notícias</a></nav>
+    </footer>
+  </div>
+
+<script>
+  const SITE = "/";
+  const src = (p) => SITE + p;
+  const art = (m) => `<img class="art" src="${SITE}assets/maps/web/${m.toLowerCase()}.webp" alt="">`;
+
+  // ---------------- dados reais da serie 062 da Rush Series 3 ----------------
+  // tc: cor da equipe para o banho; tl: --team-line que o site ja calcula para linha e barra
+  const A = { name: "Azure Bears Black", tag: "AZR B", logo: "assets/team-logos/azure_bears.png", rank: 10, tc: "#037aff", tl: "#177ae8" };
+  const B = { name: "CEUB Octopus Vulgaris", tag: "CEUB VLG", logo: "assets/team-logos/ceub_octopus.png", rank: 12, tc: "#551d66", tl: "#b050cd" };
+  const MAPS = [["Bind", 13, 8], ["Abyss", 13, 15], ["Ascent", 7, 13]];
+  const COLS = ["rAAting 3.0", "ACS", "K", "D", "A", "+/-", "KAST", "ADR", "Swing/R", "MKs", "FK", "FD", "FK-FD"];
+  const TOT_A = ["1.02", "205", "47.8", "46.4", "18.2", "+7.0", "72%", "108", "-0.5", "11.6", "7.4", "6.4", "+5.0"];
+  const TOT_B = ["1.00", "190", "46.4", "48.0", "18.0", "-8.0", "64%", "100", "+0.5", "12.2", "6.4", "7.4", "-5.0"];
+  // [nick, riot id, agentes, papel, foto, numeros na ordem de COLS]
+  const PA = [
+    ["Aldeath", "zeNith#mond", ["neon"], "Duelist", "assets/player-photos/azure_bears/Aldeath.png", ["1.46", "296", "71", "41", "20", "+30", "80%", "148", "+6.3", "21", "8", "5", "+3"]],
+    ["Stockão", "stockão#BAGRE", ["omen", "chamber", "vyse"], "Sentinel", "assets/player-photos/azure_bears/stockao_new.png", ["1.02", "197", "46", "46", "16", "0", "70%", "102", "+0.3", "13", "3", "11", "-8"]],
+    ["Droga é o pedro", "droga é o pedro#GOAT", ["sova", "fade"], "Initiator", "assets/player-photos/azure_bears/droga_e_o_pedro.png", ["0.96", "180", "44", "46", "13", "-2", "68%", "97", "-1.3", "9", "10", "6", "+4"]],
+    ["Skydvjj", "sky444#jesus", ["yoru"], "Duelist", "assets/player-photos/azure_bears/skydvjj.png", ["0.86", "170", "37", "49", "20", "-12", "72%", "97", "-3.2", "6", "9", "7", "+2"]],
+    ["Lacerdão", "Lacer#Daoo", ["harbor", "brimstone", "omen"], "Controller", "assets/player-photos/azure_bears/lacerdao.png", ["0.81", "180", "41", "50", "22", "-9", "70%", "94", "-4.7", "9", "7", "3", "+4"]],
+  ];
+  const PB = [
+    ["bada", "badaBIGBOSS#bagre", ["phoenix", "waylay"], "Duelist", "assets/user-silhouette.png", ["1.52", "282", "72", "38", "14", "+34", "68%", "141", "+9.3", "25", "9", "7", "+2"]],
+    ["Dante", "Dante#Jully", ["sova", "fade"], "Initiator", "assets/player-photos/ceub_octopus_vulgaris/DANTE.png", ["0.91", "166", "42", "49", "18", "-7", "62%", "84", "-0.2", "10", "5", "8", "-3"]],
+    ["pipo166", "about#soul", ["jett", "yoru"], "Duelist", "assets/user-silhouette.png", ["0.91", "175", "43", "49", "7", "-6", "67%", "91", "-2.0", "10", "10", "9", "+1"]],
+    ["Japinha99", "J3YP#END", ["cypher", "clove"], "Sentinel", "assets/player-photos/ceub_octopus_vulgaris/JEYP.png", ["0.86", "185", "39", "56", "21", "-17", "59%", "108", "-2.2", "11", "6", "8", "-2"]],
+    ["tanizaki", "bubbaloo#tani", ["omen", "brimstone"], "Controller", "assets/player-photos/ceub_octopus_vulgaris/TANIZAKI.png", ["0.81", "144", "36", "48", "30", "-12", "64%", "75", "-2.3", "5", "2", "5", "-3"]],
+  ];
+  // historico de cada um (media de todas as partidas), na ordem de HIST_ROWS
+  const HIST_ROWS = ["rAAting 3.0", "ACS", "K/D", "KAST", "ADR", "Swing/R", "HS%", "Partidas"];
+  const HIST = {
+    "Aldeath": ["1.04", "204", "1.02", "74%", "107", "-0.1", "23%", "53"],
+    "Stockão": ["1.13", "228", "1.14", "74%", "117", "+1.4", "22%", "76"],
+    "Droga é o pedro": ["1.01", "189", "1.00", "71%", "98", "+0.3", "30%", "44"],
+    "Skydvjj": ["1.15", "229", "1.22", "76%", "117", "+1.9", "24%", "50"],
+    "Lacerdão": ["0.94", "176", "0.91", "72%", "92", "-1.8", "29%", "54"],
+    "bada": ["1.47", "272", "1.72", "76%", "133", "+8.9", "31%", "27"],
+    "Dante": ["1.13", "217", "1.15", "72%", "111", "+1.4", "34%", "30"],
+    "pipo166": ["1.13", "212", "1.22", "74%", "111", "+2.0", "35%", "11"],
+    "Japinha99": ["1.09", "220", "1.08", "75%", "114", "+0.5", "19%", "40"],
+    "tanizaki": ["0.97", "181", "0.92", "74%", "93", "-0.6", "30%", "41"],
+  };
+  // [rotulo, A ganhos, A jogados, B ganhos, B jogados]
+  const CMP = [["Rounds", 33, 69, 36, 69], ["Ataque", 13, 31, 18, 38], ["Defesa", 20, 38, 18, 31], ["Pistols", 1, 6, 5, 6]];
+
+  const num = (s) => parseFloat(String(s).replace("%", "").replace("+", ""));
+  const tone = (col, v) => {
+    const n = num(v);
+    if (col === "rAAting 3.0") return n >= 1.1 ? "good" : n < 0.9 ? "bad" : "";
+    if (["+/-", "Swing/R", "FK-FD"].includes(col)) return n > 0 ? "good" : n < 0 ? "bad" : "";
+    return "";
+  };
+  const roleIcon = (r) => `${SITE}assets/roles/${r}ClassSymbol.webp`;
+
+  // ---------------- blocos ----------------
+  const hero = `
+    <header class="hero">
+      <div class="hero-meta"><a href="#"><img src="${src("assets/tournament-icons/rushSeries.png")}" alt="">Rush Series 3ª Edição</a><span>Série 062, MD3</span><span>18 de out de 2026, 19:04</span><span>Patch 13.08</span></div>
+      <div class="hero-main">
+        <div class="hero-art slices">${MAPS.map(([m]) => `<span>${art(m)}</span>`).join("")}</div>
+        <a class="side a" href="#" style="--tc:${A.tc};--tl:${A.tl}"><img src="${src(A.logo)}" alt=""><span><strong class="name">${A.name}</strong><small>Rank ${A.rank}</small></span></a>
+        <div class="score"><span class="big"><b class="l">1</b><i>:</i><b>2</b></span><small>33 - 36 rounds</small></div>
+        <a class="side b" href="#" style="--tc:${B.tc};--tl:${B.tl}"><img src="${src(B.logo)}" alt=""><span><strong class="name">${B.name}</strong><small>Rank ${B.rank}</small></span></a>
+      </div>
+    </header>`;
+
+  const tabs = `
+    <nav class="maptabs slices" aria-label="Mapas da série">
+      <a href="#" class="serie" aria-current="page"><span class="tn">Série</span><span class="ts">1-2</span></a>
+      ${MAPS.map(([m, ra, rb], i) => `<a href="#">${art(m)}<span class="tn">${i + 1} ${m}</span><span class="ts"><img src="${src(ra > rb ? A.logo : B.logo)}" alt="">${ra}-${rb}</span></a>`).join("")}
+    </nav>`;
+
+  const teamBody = (T, tot, players, side) => `
+    <tbody style="--tc:${T.tc};--tl:${T.tl}">
+      <tr class="team-row"><th colspan="2"><span class="tm"><img src="${src(T.logo)}" alt="">${T.name}<small>${T.tag}</small></span></th>${tot.map((v, i) => `<td class="${i === 0 ? "rt" : ""}">${v}</td>`).join("")}</tr>
+      ${players.map(([nick, riot, agents, , , stats]) => `
+        <tr class="p" tabindex="0" data-side="${side}" data-nick="${nick}">
+          <th><span class="pl"><b>${nick}</b><small>${riot}</small></span></th>
+          <td class="ag"><span>${agents.map((a) => `<img src="${src(`assets/agent-icons/${a}.png`)}" alt="${a}" title="${a}">`).join("")}</span></td>
+          ${stats.map((v, i) => `<td class="${[i === 0 ? "rt" : "", tone(COLS[i], v)].join(" ").trim()}">${v}</td>`).join("")}
+        </tr>`).join("")}
+    </tbody>`;
+  const scoreboard = `
+    <section class="s-sb">
+      <header class="sec-head"><h2>Scoreboard</h2><span class="aside">Série inteira, 3 mapas</span><span class="seg2 end"><button type="button" aria-pressed="true">Padrão</button><button type="button" aria-pressed="false">Avançado</button></span></header>
+      <div class="sb-wrap"><table class="sb">
+        <thead><tr><th>Jogador</th><th class="ag">Agentes</th>${COLS.map((c) => `<th>${c}</th>`).join("")}</tr></thead>
+        ${teamBody(A, TOT_A, PA, "a")}${teamBody(B, TOT_B, PB, "b")}
+      </table></div>
+    </section>`;
+
+  const mvp = `
+    <section class="s-mvp">
+      <header class="sec-head"><h2>Melhor da partida</h2></header>
+      <a class="mvp" href="#" style="--tc:${B.tc}">
+        <img class="fig" src="${src("assets/user-silhouette.png")}" alt="">
+        <span class="copy"><small>rAAting da série</small><strong>bada</strong><span class="team"><img src="${src(B.logo)}" alt="">CEUB VLG</span><span></span><span class="value"><b>1.52</b><span>rAAting 3.0</span></span></span>
+        <span class="ctx">3 mapas, 69 rounds</span>
+      </a>
+      <div class="mvp-stats"><span><small>ACS</small><b>282</b></span><span><small>KAST</small><b>68%</b></span><span><small>ADR</small><b>141</b></span><span><small>Swing/R</small><b>+9.3</b></span></div>
+    </section>`;
+
+  // Comparativo como faixa sob as abas: cada equipe fica do mesmo lado do placar.
+  const cmp = `
+    <section class="s-cmp" aria-label="Comparativo da série">
+      ${CMP.map(([lb, aw, ap, bw, bp]) => {
+        const ra = aw / ap, rb = bw / bp, aTop = ra >= rb, bTop = rb >= ra;
+        return `<div class="bf">
+          <span class="v a ${aTop ? "hi" : ""}">${Math.round(ra * 100)}%<small>${aw}/${ap}</small></span>
+          <span class="lb">${lb}</span>
+          <span class="v b ${bTop ? "hi" : ""}"><small>${bw}/${bp}</small>${Math.round(rb * 100)}%</span>
+          <span class="bars"><span style="--tl:${A.tl}"><i class="${aTop ? "hi" : ""}" style="--w:${ra * 100}%"></i></span><span style="--tl:${B.tl}"><i class="${bTop ? "hi" : ""}" style="--w:${rb * 100}%"></i></span></span>
+        </div>`;
+      }).join("")}
+    </section>`;
+
+  const duel = `
+    <section class="s-duel">
+      <header class="sec-head"><h2>Histórico dos jogadores</h2></header>
+      <p class="hint">Média de todas as partidas de cada um. Clique num jogador do scoreboard ou da lineup para trocar.</p>
+      <div id="duel"></div>
+    </section>`;
+
+  const band = (T, players, side) => `
+    <section style="--tc:${T.tc};--tl:${T.tl}">
+      <div class="band-head"><img src="${src(T.logo)}" alt="">${T.name}<small>Rank ${T.rank}</small></div>
+      <div class="band">${players.map(([nick, , , role, photo]) => `
+        <button type="button" class="who-card" data-side="${side}" data-nick="${nick}" aria-pressed="false">
+          <img class="ph" src="${src(photo)}" alt=""><span><img src="${roleIcon(role)}" alt=""><span class="name">${nick}</span></span>
+        </button>`).join("")}</div>
+    </section>`;
+  const lineups = `
+    <section class="s-lineups">
+      <header class="sec-head"><h2>Lineups</h2></header>
+      <div class="lineups">${band(A, PA, "a")}${band(B, PB, "b")}</div>
+    </section>`;
+
+  const comments = `
+    <section class="s-cmt">
+      <header class="sec-head"><h2>Comentários</h2><span class="aside">Ninguém comentou ainda</span></header>
+      <div class="cmt-empty"><span>Entre na sua conta para comentar.</span><button type="button">Entrar ou criar conta</button></div>
+    </section>`;
+
+  document.getElementById("page").innerHTML = `${hero}${tabs}${cmp}
+    <div class="body"><div class="main">${scoreboard}${lineups}</div><aside class="rail">${mvp}${duel}</aside></div>
+    ${comments}`;
+
+  // ---------------- duelo: troca pelo clique ----------------
+  const sel = { a: "Aldeath", b: "bada" };
+  const photoOf = (nick) => [...PA, ...PB].find((p) => p[0] === nick)[4];
+  const scale = HIST_ROWS.map((_, i) => {
+    const vals = Object.values(HIST).map((h) => num(h[i]));
+    return [Math.min(...vals), Math.max(...vals)];
+  });
+  function renderDuel() {
+    const ha = HIST[sel.a], hb = HIST[sel.b];
+    document.getElementById("duel").innerHTML = `
+      <div class="duel-heads">
+        <a href="#"><img src="${src(photoOf(sel.a))}" alt=""><span><strong class="name">${sel.a}</strong><small>${A.tag}</small></span></a>
+        <a href="#"><img src="${src(photoOf(sel.b))}" alt=""><span><strong class="name">${sel.b}</strong><small>${B.tag}</small></span></a>
+      </div>
+      ${HIST_ROWS.map((lb, i) => {
+        const va = num(ha[i]), vb = num(hb[i]);
+        const [lo, hi] = scale[i];
+        // a barra mostra onde cada um esta entre os dez jogadores da serie
+        const w = (v) => `${Math.round(18 + 82 * ((v - lo) / (hi - lo || 1)))}%`;
+        const aTop = va >= vb, bTop = vb >= va;
+        return `<div class="bf">
+          <span class="v a ${aTop ? "hi" : ""}">${ha[i]}</span>
+          <span class="lb">${lb}</span>
+          <span class="v b ${bTop ? "hi" : ""}">${hb[i]}</span>
+          <span class="bars"><span style="--tl:${A.tl}"><i class="${aTop ? "hi" : ""}" style="--w:${w(va)}"></i></span><span style="--tl:${B.tl}"><i class="${bTop ? "hi" : ""}" style="--w:${w(vb)}"></i></span></span>
+        </div>`;
+      }).join("")}`;
+    document.querySelectorAll("[data-nick]").forEach((el) => {
+      const on = sel[el.dataset.side] === el.dataset.nick;
+      el.classList.toggle("sel", on && el.tagName === "TR");
+      if (el.tagName === "BUTTON") el.setAttribute("aria-pressed", String(on));
+    });
+  }
+  document.querySelectorAll("[data-nick]").forEach((el) => {
+    const pick = () => { sel[el.dataset.side] = el.dataset.nick; renderDuel(); };
+    el.addEventListener("click", pick);
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+  });
+  renderDuel();
+
+  // ---------------- medida ----------------
+  const ATUAL = { full: 3404, phone: 7300 };
+  function measure() {
+    const phone = document.body.classList.contains("phone");
+    const h = Math.round(document.querySelector(".frame").getBoundingClientRect().height);
+    document.querySelector("[data-metric]").innerHTML = phone
+      ? `A 390px a página tem <strong>${h}px</strong> de altura (hoje ${ATUAL.phone}px).`
+      : `Nesta largura a página tem <strong>${h}px</strong> de altura (a 1440px, hoje, são ${ATUAL.full}px).`;
+  }
+  document.querySelectorAll("[data-w]").forEach((b) => b.addEventListener("click", () => {
+    document.body.classList.toggle("phone", b.dataset.w === "phone");
+    document.querySelectorAll("[data-w]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    setTimeout(measure, 80);
+  }));
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(measure, 300));
+</script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UNIVLR - home em trilhos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #040306;
+    --surface: #11131a;
+    --surface-2: #171a23;
+    --ink: #f5f1f2;
+    --muted: #a3a5af;
+    --loss-ink: rgba(245, 241, 242, 0.62);
+    --line: rgba(245, 241, 242, 0.08);
+    --line-strong: rgba(245, 241, 242, 0.14);
+    --brand: #f6132a;
+    --brand-text: #ff5f6d;
+    --on-brand: #040306;
+    --win: #31e981;
+    --teal: #2ad4c1;
+    --tier-s: #ffb340;
+    --tier-a: #8ab4ff;
+    --tier-b: #9b8ec9;
+    --tier-c: #7f8496;
+    --font-text: "Barlow", system-ui, sans-serif;
+    --font-num: "Barlow Condensed", "Barlow", system-ui, sans-serif;
+    --gutter: clamp(16px, 3cqi, 40px);
+    --rail: 340px;
+    --slide-ms: 220ms;
+    --step-ms: 4500ms;
+  }
+  @property --wash { syntax: "<percentage>"; inherits: true; initial-value: 26%; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #000; color: var(--ink); font: 400 13px/1.4 var(--font-text); }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  h1, h2, h3, h4, p { margin: 0; }
+  a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--brand-text); outline-offset: 2px; }
+  .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+
+  /* ---- moldura do mockup, fora do design ---- */
+  .toolbar { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 10px 20px; background: #000; border-bottom: 1px solid var(--line-strong); font-size: 13px; color: var(--muted); }
+  .toolbar .seg { display: inline-flex; gap: 4px; }
+  .toolbar button { font: 600 13px/1 var(--font-text); color: var(--ink); background: transparent; border: 1px solid rgba(245, 241, 242, 0.3); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+  .toolbar button[aria-pressed="true"] { background: var(--ink); color: #000; border-color: var(--ink); }
+  .toolbar strong { color: var(--ink); font-weight: 600; }
+  .frame { container: page / inline-size; margin: 0 auto; background: var(--bg); }
+  body.phone .frame { width: 390px; margin: 24px auto; outline: 1px solid var(--line-strong); }
+
+  /* ---- topo ---- */
+  .top { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(200px, 340px) auto; align-items: center; gap: 28px; height: 56px; padding: 0 var(--gutter); border-bottom: 1px solid var(--line); }
+  .top .brand img { height: 26px; width: auto; }
+  .nav { display: flex; gap: 22px; height: 100%; }
+  .nav a { position: relative; display: flex; align-items: center; font: 600 14px/1 var(--font-text); color: var(--muted); white-space: nowrap; }
+  .nav a:hover, .nav a[aria-current] { color: var(--ink); }
+  .nav a[aria-current]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand); }
+  .search { position: relative; }
+  .search input { width: 100%; height: 34px; border: 0; border-radius: 3px; background: var(--surface); color: var(--ink); font: 400 13px var(--font-text); padding: 0 34px 0 12px; }
+  .search input::placeholder { color: var(--muted); }
+  .search span { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+  .enter { font: 600 13px/1 var(--font-text); color: var(--on-brand); background: var(--brand); border: 0; border-radius: 3px; padding: 10px 16px; cursor: pointer; }
+
+  /* ---- esqueleto: tres trilhos ---- */
+  .home { max-width: 1360px; margin: 0 auto; padding: 22px var(--gutter) 48px; display: grid; grid-template-columns: var(--rail) minmax(0, 1fr) var(--rail); gap: 32px; align-items: start; }
+  /* minmax(0, 1fr) e nao a trilha implicita: a trilha auto cresceria ate o
+     min-content dos nove cartoes do carrossel lado a lado e estouraria o trilho. */
+  .stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px; align-content: start; min-width: 0; }
+  .sec-head { display: flex; align-items: baseline; gap: 12px; margin: 0 0 10px; min-width: 0; }
+  .sec-head h2 { font: 600 30px/1 var(--font-num); white-space: nowrap; }
+  .sec-head .aside { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .sec-head .more { margin-left: auto; color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .sec-head .more:hover, .col-foot:hover { color: var(--ink); }
+  .col-foot { display: inline-block; margin-top: 8px; color: var(--muted); font-size: 12px; }
+
+  /* ---- pintura de equipe (copiada do styles.css de hoje) ---- */
+  .pintura-de-equipe { position: relative; isolation: isolate; }
+  .pintura-de-equipe::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background-color: var(--team-wash, var(--brand));
+    clip-path: ellipse(0% 10% at 4% 88%); transition: clip-path 480ms cubic-bezier(0.5, 0.02, 0.35, 1); pointer-events: none; }
+  .pintura-de-equipe[data-trama="bordas"]::before { background-image: linear-gradient(90deg, var(--team-wash-2) 0%, var(--team-wash) 34%, var(--team-wash) 66%, var(--team-wash-2) 100%); }
+  .pintura-de-equipe[data-trama="lateral"]::before { background-image: linear-gradient(90deg, var(--team-wash) 0%, var(--team-wash) 46%, var(--team-wash-2) 100%); }
+  .pintura-de-equipe[data-trama="canto"]::before { background-image: radial-gradient(ellipse 64% 220% at 8% 0%, var(--team-wash-2) 0%, transparent 76%); }
+  .pintura-de-equipe[data-trama="nucleo"]::before { background-image: radial-gradient(ellipse 56% 200% at 50% 50%, var(--team-wash-2) 0%, transparent 78%); }
+  .pintura-de-equipe[data-trama="mare"]::before { background-image: radial-gradient(ellipse 120% 140% at 50% 118%, var(--team-wash-2) 0%, transparent 70%); }
+  .pintura-de-equipe[data-trama="cinta"]::before { background-image: linear-gradient(104deg, var(--team-wash) 0%, var(--team-wash-2) 44%, var(--team-wash-2) 56%, var(--team-wash) 100%); }
+  .pintura-de-equipe[data-trama="deriva"]::before { background-image: linear-gradient(96deg, var(--team-wash) 0%, var(--team-wash-2) 30%, var(--team-wash) 74%, var(--team-wash) 100%); }
+  .pintura-de-equipe[data-trama="vinheta"]::before { background-image: radial-gradient(ellipse 74% 210% at 50% 50%, transparent 42%, var(--team-wash-2) 100%); }
+  .pintura-de-equipe .paint-ink { transition: color 160ms ease; }
+  .pintura-de-equipe .crest { transition: filter 200ms ease; }
+  @media (hover: hover) and (pointer: fine) {
+    .pintura-de-equipe:hover, .pintura-de-equipe:focus-visible { box-shadow: inset 0 0 0 2px var(--team-accent-2, var(--teal)); }
+    .pintura-de-equipe:hover::before, .pintura-de-equipe:focus-visible::before { clip-path: ellipse(78% 106% at 38% 48%); }
+    .pintura-de-equipe:hover .crest, .pintura-de-equipe:focus-visible .crest { filter: drop-shadow(0.75px 0 0 var(--team-ink)) drop-shadow(-0.75px 0 0 var(--team-ink)) drop-shadow(0 0.75px 0 var(--team-ink)) drop-shadow(0 -0.75px 0 var(--team-ink)); }
+    .pintura-de-equipe:hover .paint-ink, .pintura-de-equipe:focus-visible .paint-ink { color: var(--team-ink, var(--ink)); transition: color 220ms ease 210ms; }
+  }
+
+  /* ---- jogador da semana: um por vez ---- */
+  .potw-card { position: relative; overflow: hidden; border-radius: 2px; background: var(--surface); }
+  .potw-track { display: flex; transition: transform var(--slide-ms) ease; touch-action: pan-y; }
+  .potw-track.no-anim { transition: none; }
+  .slide { position: relative; flex: 0 0 100%; height: 206px; display: grid; grid-template-columns: 128px minmax(0, 1fr); overflow: hidden;
+           background: linear-gradient(115deg, color-mix(in srgb, var(--tc) 46%, var(--surface)) 0%, color-mix(in srgb, var(--tc) 14%, var(--surface)) 46%, var(--surface) 78%); }
+  .slide .fig { align-self: end; width: 150px; height: 190px; object-fit: contain; object-position: left bottom; margin-left: -6px; }
+  .slide .copy { position: relative; display: grid; grid-template-rows: auto auto auto 1fr auto; padding: 16px 16px 20px 6px; min-width: 0; text-align: right; }
+  .slide .copy small { color: var(--muted); font-size: 12px; }
+  .slide .copy strong { font: 600 24px/1.1 var(--font-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+  .slide .team { display: flex; justify-content: flex-end; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .slide .team img { width: 16px; height: 16px; object-fit: contain; }
+  .slide .value { align-self: end; }
+  .slide .value b { display: block; font: 600 56px/0.9 var(--font-num); font-variant-numeric: tabular-nums; }
+  .slide .value span { color: var(--muted); font-size: 12px; }
+  .slide .ctx { position: absolute; left: 12px; top: 12px; color: var(--muted); font-size: 12px; text-shadow: 0 1px 2px #000; }
+  .potw-steps { position: absolute; left: 0; right: 0; bottom: 0; display: flex; gap: 3px; padding: 0 8px; }
+  .potw-steps button { flex: 1 1 0; height: 22px; padding: 0 0 7px; border: 0; background: transparent; cursor: pointer; display: flex; align-items: flex-end; }
+  .potw-steps button i { position: relative; display: block; width: 100%; height: 3px; background: rgba(245, 241, 242, 0.22); overflow: hidden; }
+  .potw-steps button.done i { background: rgba(245, 241, 242, 0.55); }
+  .potw-steps button[aria-current="true"] i::after { content: ""; position: absolute; inset: 0; background: var(--ink); transform-origin: left; animation: fill var(--step-ms) linear forwards; }
+  .potw-card:hover .potw-steps button[aria-current="true"] i::after,
+  .potw-card:has(:focus-visible) .potw-steps button[aria-current="true"] i::after,
+  .potw-card:focus-visible .potw-steps button[aria-current="true"] i::after { animation-play-state: paused; }
+  @keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .potw-note { color: var(--muted); font-size: 12px; margin-top: 8px; }
+
+  /* ---- ranking: placa, subgrade, cabe no trilho de 340px ---- */
+  .plate { background: var(--surface); border-radius: 2px; overflow: hidden; }
+  .rank-plate { display: grid; grid-template-columns: 4px 18px 20px 20px fit-content(150px) auto auto 4px; column-gap: 7px; }
+  .r { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: center; height: 38px; border-top: 1px solid var(--line); }
+  .r:first-child { border-top: 0; }
+  .r .pos { grid-column: 2; font: 600 16px/1 var(--font-num); color: var(--muted); }
+  .r:first-child .pos { color: var(--ink); }
+  .r .delta { font-size: 12px; color: var(--muted); }
+  .r .delta.up { color: var(--win); }
+  .r .crest { width: 20px; height: 20px; object-fit: contain; justify-self: center; }
+  .r .nm { font-weight: 600; font-size: 13px; }
+  .r small { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .r .score { font: 600 18px/1 var(--font-num); font-variant-numeric: tabular-nums; text-align: right; padding-left: 4px; }
+
+  /* ---- partidas: placar com o mapa de fundo ---- */
+  .day { font: 600 12px/1 var(--font-text); color: var(--muted); margin: 0 0 6px; }
+  .list + .day { margin-top: 16px; }
+  .list { display: grid; grid-template-columns: fit-content(210px) 30px minmax(0, 1fr) 120px; row-gap: 4px; }
+  .m { position: relative; isolation: isolate; grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; grid-template-rows: 26px 26px; }
+  .t { --wash: 26%; grid-column: 1 / 3; display: grid; grid-template-columns: subgrid; align-items: center;
+       background: linear-gradient(90deg, color-mix(in srgb, var(--tc) var(--wash), transparent) 0, transparent 100%); box-shadow: inset 3px 0 0 var(--tc); transition: --wash 200ms ease; }
+  .t:not(.win) { --wash: 11%; }
+  .t .who { display: flex; align-items: center; gap: 8px; padding: 0 12px 0 13px; min-width: 0; }
+  .t .who img { width: 18px; height: 18px; object-fit: contain; flex: none; }
+  .t .name { color: var(--loss-ink); font-weight: 500; }
+  .t.win .name { color: var(--ink); font-weight: 600; }
+  .t b { font: 600 19px/1 var(--font-num); font-variant-numeric: tabular-nums; color: var(--loss-ink); text-align: right; padding-right: 8px; }
+  .t.win b { color: var(--ink); }
+  .m:hover .t { --wash: 36%; }
+  .m:hover .t:not(.win) { --wash: 17%; }
+  .maps { position: absolute; grid-column: 2 / -1; grid-row: 1 / -1; inset: 0; z-index: -1; display: flex; opacity: 0.36; --lean: 14px; --seam: 2px;
+          -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%, #000 84%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 22%, #000 84%, transparent 100%); transition: opacity 200ms ease; }
+  .m:hover .maps { opacity: 0.52; }
+  .slice { position: relative; flex: 1 1 0; min-width: 0; clip-path: polygon(calc(var(--lean) / 2 + var(--seam) / 2) 0, calc(100% + var(--lean) / 2 - var(--seam) / 2) 0, calc(100% - var(--lean) / 2 - var(--seam) / 2) 100%, calc(var(--seam) / 2 - var(--lean) / 2) 100%); }
+  .slice img { position: absolute; top: 0; left: calc(var(--lean) / -2); width: calc(100% + var(--lean)); max-width: none; height: 100%; object-fit: cover; object-position: center 42%; }
+  .maplist { grid-column: 3; grid-row: 1 / 3; display: grid; align-content: center; justify-items: center; gap: 2px; text-shadow: 0 1px 2px #000, 0 0 8px #000; min-width: 0; }
+  .maplist span { font: 600 12px/1.15 var(--font-text); white-space: nowrap; }
+  .maplist small { font: 500 11px/1.15 var(--font-text); color: rgba(245, 241, 242, 0.78); font-variant-numeric: tabular-nums; }
+  .ev { grid-column: 4; grid-row: 1 / 3; display: flex; align-items: center; gap: 8px; padding-left: 8px; color: var(--muted); font-size: 12px; line-height: 1.25; min-width: 0; text-shadow: 0 1px 2px #000; }
+  .ev img { width: 18px; height: 18px; object-fit: contain; flex: none; }
+  .ev span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .activity { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; font-size: 13px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .activity > span { color: var(--muted); font-weight: 600; }
+  .activity a { display: inline-flex; align-items: baseline; gap: 6px; min-width: 0; }
+  .activity a em { font-style: normal; color: var(--muted); font-size: 12px; }
+  .activity a b { font-weight: 600; }
+  .activity a i { font-style: normal; color: var(--muted); font-size: 12px; }
+  .activity a:hover b { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ---- noticias no trilho direito ---- */
+  .news-lead { display: grid; gap: 8px; }
+  .news-lead img { width: 100%; aspect-ratio: 2.3; object-fit: cover; border-radius: 2px; }
+  .news-lead time, .news-more time { color: var(--muted); font-size: 12px; }
+  .news-lead h3 { font: 600 18px/1.25 var(--font-text); margin-top: 3px; text-wrap: balance; }
+  .news-lead:hover h3, .news-more a:hover h4 { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .news-more { display: grid; gap: 12px; margin-top: 16px; }
+  .news-more a { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 12px; align-items: center; }
+  .news-more img { width: 88px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 2px; }
+  .news-more h4 { font: 600 13px/1.3 var(--font-text); margin-top: 2px; }
+
+  /* ---- campeonatos: placa, letra de tier grande e solta ---- */
+  .ev-plate { display: grid; grid-template-columns: 4px 24px minmax(0, 1fr) 18px auto 4px; column-gap: 9px; }
+  .e { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: center; height: 54px; border-top: 1px solid var(--line); }
+  .e:first-child { border-top: 0; }
+  .e:hover { background: var(--surface-2); }
+  .e .logo { grid-column: 2; width: 24px; height: 24px; object-fit: contain; }
+  .e .copy { min-width: 0; display: grid; gap: 3px; }
+  .e .copy strong { font-weight: 600; font-size: 13px; }
+  .e .copy span { color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .e .live { color: var(--ink); }
+  .e .live::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--brand); margin: 0 6px 1px 0; vertical-align: middle; }
+  .e .tier { font: 700 24px/1 var(--font-num); text-align: center; }
+  .e .tier.s { color: var(--tier-s); } .e .tier.a { color: var(--tier-a); } .e .tier.b { color: var(--tier-b); } .e .tier.c { color: var(--tier-c); }
+  .e .size { color: var(--muted); font-size: 12px; text-align: right; line-height: 1.3; white-space: nowrap; }
+
+  /* ---- rodape ---- */
+  .foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 18px var(--gutter); border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+  .foot img { width: 22px; height: 22px; object-fit: contain; }
+  .foot nav { display: flex; gap: 18px; margin-left: auto; }
+  .foot a:hover { color: var(--ink); }
+
+  /* ---- tela media: o trilho da direita desce e vira duas colunas ---- */
+  @container page (max-width: 1180px) {
+    .home { grid-template-columns: var(--rail) minmax(0, 1fr); }
+    .stack-r { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; }
+  }
+  /* ---- celular: uma coluna, na ordem do que mais importa ---- */
+  @container page (max-width: 760px) {
+    .top { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: 52px 40px; height: auto; gap: 0 12px; }
+    .nav { grid-column: 1 / -1; grid-row: 2; overflow-x: auto; gap: 18px; scrollbar-width: none; }
+    .home { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-top: 16px; }
+    .stack, .stack-l, .stack-r { display: contents; }
+    .s-potw { order: 1; } .s-matches { order: 2; } .s-rank { order: 3; } .s-news { order: 4; } .s-events { order: 5; } .s-activity { order: 6; }
+    .sec-head h2 { font-size: 26px; }
+    .list { grid-template-columns: fit-content(190px) 28px minmax(0, 1fr); }
+    .ev { display: none; }
+    .rank-plate { grid-template-columns: 4px 18px 20px 20px minmax(0, 1fr) auto auto 4px; }
+    .activity { flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    .activity > *, .activity a { flex: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="toolbar">
+    <span class="seg" role="group" aria-label="Largura">
+      <button type="button" data-w="full" aria-pressed="true">Computador</button>
+      <button type="button" data-w="phone" aria-pressed="false">Celular (390px)</button>
+    </span>
+    <span data-metric></span>
+  </div>
+
+  <div class="frame">
+    <header class="top">
+      <a class="brand" href="#"><img src="/assets/univlr_logo_longa.png" alt="UNIVLR"></a>
+      <nav class="nav" aria-label="Principal"><a href="#" aria-current="page">Início</a><a href="#">Notícias</a><a href="#">Partidas</a><a href="#">Eventos</a><a href="#">Players</a><a href="#">Ranking</a><a href="#">Cartinhas</a></nav>
+      <label class="search"><input type="search" placeholder="Buscar time, jogador, campeonato ou mapa" aria-label="Buscar"><span aria-hidden="true">/</span></label>
+      <button class="enter" type="button">Entrar</button>
+    </header>
+    <main class="home" id="home"></main>
+    <footer class="foot">
+      <img src="/assets/logo_univlr.png" alt="">
+      <span>Estatísticas do cenário universitário brasileiro de VALORANT.</span>
+      <nav aria-label="Rodapé"><a href="#">Partidas</a><a href="#">Eventos</a><a href="#">Ranking</a><a href="#">Notícias</a></nav>
+    </footer>
+  </div>
+
+<script>
+  const SITE = "/";
+  const src = (p) => (p.startsWith("http") ? p : SITE + p);
+  const logo = (slug) => `${SITE}assets/team-logos/${slug}.png`;
+  function teamColor(colors) {
+    let best = null, bestChroma = -1;
+    for (const hex of colors) {
+      const n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+      const chroma = Math.max(r, g, b) - Math.min(r, g, b);
+      if (chroma > bestChroma) { best = hex; bestChroma = chroma; }
+    }
+    return bestChroma < 40 ? "#6b6e78" : best;
+  }
+
+  // ---------------- dados reais de 23/10 ----------------
+  const T = {
+    azure_bears_black: ["Azure Bears Black", "azure_bears", ["#037aff", "#fefeff"]],
+    azure_bears_silver: ["Azure Bears Silver", "azure_bears", ["#037aff", "#fefeff"]],
+    ceub_octopus_vulgaris: ["CEUB Octopus Vulgaris", "ceub_octopus", ["#551d66", "#020103"]],
+    ceub_octopus: ["CEUB Octopus", "ceub_octopus", ["#551d66", "#020103"]],
+    macklogic_white: ["MackLogic White", "macklogic_white", ["#ffffff", "#ffffff"]],
+    maua_blue: ["Mauá Blue", "maua_blue", ["#ffffff", "#2d477c"]],
+    ufu_saints_onyx: ["UFU Saints Onyx", "ufu_saints", ["#fefefe", "#d7ad00"]],
+    caap_hellhounds: ["CAAP Hellhounds", "caap_hellhounds", ["#630002", "#fdfdfd"]],
+    wolf_gaming: ["Wolf Gaming", "wolf_gaming", ["#b60703", "#858585"]],
+    ufpr_bbn: ["Burning Bunnies", "ufpr_bbn", ["#e11e31", "#fefefe"]],
+    ufrn_tirana: ["UFRN Tirana", "tirana", ["#f07436", "#282828"]],
+    ufmt_turuna: ["UFMT Turuna", "ufmt_turuna", ["#b93b07", "#fbfbf9"]],
+    inatel_gray: ["INATEL Gray", "inatel", ["#040404", "#e6e6e6"]],
+    atletica_sustenta: ["Atlética Sustenta", "atletica_sustenta", ["#6d0407", "#c38d4d"]],
+  };
+  const EVI = { rush: ["Rush Series 3ª Edição", "assets/tournament-icons/rushSeries.png"], univava: ["UNIVAVÁ - Playoffs", "assets/tournament-icons/UNIVAVA.png"] };
+  const DAYS = [
+    ["18 de outubro", [
+      ["azure_bears_black", "ceub_octopus_vulgaris", 1, 2, "rush", [["Bind", 13, 8], ["Abyss", 13, 15], ["Ascent", 7, 13]]],
+      ["macklogic_white", "ceub_octopus_vulgaris", 6, 13, "rush", [["Lotus", 6, 13]]],
+      ["maua_blue", "ceub_octopus_vulgaris", 10, 13, "rush", [["Lotus", 10, 13]]],
+      ["ufu_saints_onyx", "ceub_octopus_vulgaris", 8, 13, "rush", [["Sunset", 8, 13]]],
+      ["azure_bears_silver", "maua_blue", 3, 13, "rush", [["Lotus", 3, 13]]],
+      ["caap_hellhounds", "wolf_gaming", 2, 0, "univava", [["Sunset", 13, 11], ["Lotus", 13, 10]]],
+      ["ceub_octopus_vulgaris", "ufpr_bbn", 13, 4, "rush", [["Lotus", 13, 4]]],
+      ["ufrn_tirana", "maua_blue", 4, 13, "rush", [["Lotus", 4, 13]]],
+      ["ceub_octopus", "ufmt_turuna", 2, 0, "univava", [["Split", 13, 7], ["Lotus", 13, 4]]],
+    ]],
+    ["17 de outubro", [
+      ["macklogic_white", "azure_bears_black", 14, 16, "rush", [["Lotus", 14, 16]]],
+      ["inatel_gray", "ceub_octopus_vulgaris", 1, 13, "rush", [["Bind", 1, 13]]],
+      ["maua_blue", "atletica_sustenta", 13, 5, "rush", [["Summit", 13, 5]]],
+    ]],
+  ];
+  const RANK = [
+    ["CEUB Octopus", "ceub_octopus", 48, "99.9", 0, "bordas", "--team-accent:#551d66;--team-accent-2:#020103;--team-wash:#551d66;--team-wash-2:#1e0a24;--team-ink:#f5f1f2"],
+    ["Azure Bears Golden", "azure_bears", 73, "98.1", 0, "bordas", "--team-accent:#037aff;--team-accent-2:#fefeff;--team-wash:#0650a4;--team-wash-2:#21364f;--team-ink:#f5f1f2"],
+    ["UFU Saints", "ufu_saints", 65, "93.4", 0, "canto", "--team-accent:#fefefe;--team-accent-2:#d7ad00;--team-wash:#fefefe;--team-wash-2:#dbcc8c;--team-ink:#040306"],
+    ["CAAP Hellhounds", "caap_hellhounds", 82, "92.0", 1, "vinheta", "--team-accent:#630002;--team-accent-2:#fdfdfd;--team-wash:#5d0103;--team-wash-2:#965f60;--team-ink:#f5f1f2"],
+    ["MackLogic Red", "macklogic_red", 53, "89.5", -1, "bordas", "--team-accent:#e90101;--team-accent-2:#ff5556;--team-wash:#d10203;--team-wash-2:#931616;--team-ink:#f5f1f2"],
+    ["Uninassau Griffins", "uninassau_griffins", 25, "87.9", 0, "deriva", "--team-accent:#0d326f;--team-accent-2:#fad506;--team-wash:#0d326e;--team-wash-2:#6b7244;--team-ink:#f5f1f2"],
+    ["Axis Anteaters", "axis_anteaters", 49, "87.2", 0, "nucleo", "--team-accent:#2b772b;--team-accent-2:#e1e3e2;--team-wash:#225823;--team-wash-2:#557657;--team-ink:#f5f1f2"],
+    ["Wolf Gaming", "wolf_gaming", 59, "84.9", 0, "bordas", "--team-accent:#b60703;--team-accent-2:#858585;--team-wash:#b60703;--team-wash-2:#6b2624;--team-ink:#f5f1f2"],
+    ["PUCC Cardinals", "pucc_cardinals", 55, "79.1", 0, "cinta", "--team-accent:#1e71b6;--team-accent-2:#000001;--team-wash:#1e71b6;--team-wash-2:#12446e;--team-ink:#f5f1f2"],
+    ["Azure Bears Black", "azure_bears", 51, "79.0", 2, "bordas", "--team-accent:#037aff;--team-accent-2:#fefeff;--team-wash:#0650a4;--team-wash-2:#21364f;--team-ink:#f5f1f2"],
+    ["UFMT Turuna", "ufmt_turuna", 60, "76.9", -1, "mare", "--team-accent:#b93b07;--team-accent-2:#fbfbf9;--team-wash:#832c0a;--team-wash-2:#95614d;--team-ink:#f5f1f2"],
+    ["CEUB Octopus Vulgaris", "ceub_octopus", 44, "74.6", 7, "bordas", "--team-accent:#551d66;--team-accent-2:#020103;--team-wash:#551d66;--team-wash-2:#1e0a24;--team-ink:#f5f1f2"],
+  ];
+  const SIL = "assets/user-silhouette.png", GUTOSO = "assets/player-photos/ufu_saints/gutoso_new.png";
+  const LEADERS = [
+    ["Melhor rAAting 3.0", "rAAting 3.0", "1.53", "bada", "CEUB VLG", "ceub_octopus", "#551d66", 11, 217, SIL],
+    ["Melhor ACS", "ACS", "318", "Gutoso", "UFU", "ufu_saints", "#d7ad00", 4, 88, GUTOSO],
+    ["Melhor ADR", "ADR", "162", "Gutoso", "UFU", "ufu_saints", "#d7ad00", 4, 88, GUTOSO],
+    ["Melhor KAST", "KAST", "80%", "SNZ", "MAUA", "maua_blue", "#2d477c", 7, 143, SIL],
+    ["Melhor Swing/R", "Swing/R", "+9.7", "bada", "CEUB VLG", "ceub_octopus", "#551d66", 11, 217, SIL],
+    ["Melhor K/D", "K/D", "1.99", "bada", "CEUB VLG", "ceub_octopus", "#551d66", 11, 217, SIL],
+    ["Melhor KPR", "KPR", "1.09", "Gutoso", "UFU", "ufu_saints", "#d7ad00", 4, 88, GUTOSO],
+    ["Melhor DPR", "DPR", "0.52", "bada", "CEUB VLG", "ceub_octopus", "#551d66", 11, 217, SIL],
+    ["Melhor APR", "APR", "0.51", "Foca Não", "LOGIC", "macklogic_white", "#6b6e78", 5, 107, SIL],
+  ];
+  const EVENTS = [
+    ["Copa LUCE Inters", "assets/tournament-icons/copa_luce.png", "até 7 de nov", true, "b", 17, 8],
+    ["Rush Series 3ª Edição", "assets/tournament-icons/rushSeries.png", "17 - 18 de out", false, "a", 35, 21],
+    ["UNIVAVÁ - Playoffs", "assets/tournament-icons/UNIVAVA.png", "desde 17 de out", true, "s", 4, 8],
+    ["Astra Cup Inclusivo", "assets/tournament-icons/AstraCup.png", "10 de out", false, "b", 6, 4],
+    ["E-Tusca 2026", "assets/tournament-icons/tusca.png", "27 de set - 4 de out", false, "b", 7, 4],
+    ["UNIVAVÁ - Fase de Grupos", "assets/tournament-icons/UNIVAVA.png", "18 - 27 de set", false, "s", 31, 16],
+    ["UNIVAVÁ - Classificatória 4", "assets/tournament-icons/UNIVAVA.png", "12 - 13 de set", false, "a", 62, 36],
+    ["JUBS Goiás 2026 - Etapa Presencial", "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png", "30 de ago - 5 de set", false, "s", 14, 8],
+  ];
+  const NEWS = [
+    ["12 de setembro", "UNIVAVÁ: quem chega como favorito à Classificatória 4?", "assets/noticias/univava-classificatoria-4-quem-chega-como-favorito/capa.webp"],
+    ["9 de setembro", "JUBS Goiás 2026: a análise dos jogadores e o MVP do campeonato", "assets/noticias/jubs-2026-mvp-e-analise-dos-jogadores/capa.webp"],
+    ["31 de agosto", "JUBS 2026: quem chega como favorito à etapa presencial?", "assets/noticias/jubs-2026-quem-chega-como-favorito/capa.webp"],
+  ];
+  const ACTIVITY = [["Jogador", "piM", 1], ["Equipe", "Green Owls Noctua", 3], ["Notícia", "JUBS Goiás 2026: a análise dos jogadores e o MVP", 1], ["Jogador", "Stockão", 1], ["Jogador", "kssarato", 1]];
+
+  // ---------------- blocos ----------------
+  const slideHtml = ([cat, stat, val, nick, tag, crest, color, maps, rounds, photo], clone) => `
+    <a class="slide" href="#" style="--tc:${color}" ${clone ? 'aria-hidden="true" tabindex="-1"' : `aria-label="${cat}: ${nick}, ${val}"`}>
+      <img class="fig" src="${src(photo)}" alt="">
+      <span class="copy"><small>${cat}</small><strong>${nick}</strong><span class="team"><img src="${logo(crest)}" alt="">${tag}</span><span></span><span class="value"><b>${val}</b><span>${stat}</span></span></span>
+      <span class="ctx">${maps} mapas, ${rounds} rounds</span>
+    </a>`;
+  const potw = `
+    <section class="s-potw" aria-roledescription="carrossel" aria-label="Melhores da semana">
+      <header class="sec-head"><h2>Melhores da semana</h2><span class="aside">13 - 20 de out</span></header>
+      <div class="potw-card" tabindex="0">
+        <div class="potw-track" id="track">${LEADERS.map((l) => slideHtml(l, false)).join("")}${slideHtml(LEADERS[0], true)}</div>
+        <div class="potw-steps" id="steps">${LEADERS.map(([cat]) => `<button type="button" aria-label="${cat}"><i></i></button>`).join("")}</div>
+      </div>
+      <p class="potw-note">Mínimo de 4 mapas no período.</p>
+    </section>`;
+
+  const delta = (d) => d > 0 ? `<span class="delta up paint-ink">+${d}</span>` : d < 0 ? `<span class="delta paint-ink">${d}</span>` : `<span class="delta paint-ink">-</span>`;
+  const ranking = `
+    <section class="s-rank" aria-labelledby="h-rank">
+      <header class="sec-head"><h2 id="h-rank">Ranking</h2></header>
+      <div class="plate rank-plate">${RANK.map(([nm, slug, games, score, d, trama, vars], i) => `
+        <a class="r pintura-de-equipe" href="#" data-trama="${trama}" style="${vars}"><span class="pos paint-ink">${i + 1}</span>${delta(d)}<img class="crest" src="${logo(slug)}" alt=""><span class="nm name paint-ink">${nm}</span><small class="paint-ink">${games} partidas</small><span class="score paint-ink">${score}</span></a>`).join("")}
+      </div>
+      <a class="col-foot" href="#">Ranking completo</a>
+    </section>`;
+
+  function teamLine(id, score, win) {
+    const [name, slug, colors] = T[id];
+    return `<div class="t${win ? " win" : ""}" style="--tc:${teamColor(colors)}"><span class="who"><img src="${logo(slug)}" alt=""><span class="name">${name}</span></span><b>${score}</b></div>`;
+  }
+  const matchRow = ([a, b, sa, sb, ev, maps]) => {
+    const multi = maps.length > 1;
+    return `<a class="m" href="#"><div class="maps">${maps.map(([map]) => `<div class="slice"><img src="${SITE}assets/maps/web/${map.toLowerCase()}.webp" alt=""></div>`).join("")}</div>${teamLine(a, sa, sa > sb)}${teamLine(b, sb, sb > sa)}<span class="maplist">${maps.map(([map, ra, rb]) => `<span>${map}${multi ? ` <small>${ra}-${rb}</small>` : ""}</span>`).join("")}</span><span class="ev"><img src="${SITE}${EVI[ev][1]}" alt=""><span>${EVI[ev][0]}</span></span></a>`;
+  };
+  const matches = `
+    <section class="s-matches" aria-labelledby="h-matches">
+      <header class="sec-head"><h2 id="h-matches">Últimas partidas</h2><a class="more" href="#">Ver todas</a></header>
+      ${DAYS.map(([day, rows]) => `<p class="day">${day}</p><div class="list">${rows.map(matchRow).join("")}</div>`).join("")}
+    </section>`;
+  const activity = `<p class="activity s-activity"><span>Atividade recente</span>${ACTIVITY.map(([k, n, c]) => `<a href="#"><em>${k}</em><b class="name">${n}</b><i>${c} ${c === 1 ? "comentário" : "comentários"}</i></a>`).join("")}</p>`;
+
+  const news = `
+    <section class="s-news" aria-labelledby="h-news">
+      <header class="sec-head"><h2 id="h-news">Notícias</h2><a class="more" href="#">Ver todas</a></header>
+      <a class="news-lead" href="#"><img src="${src(NEWS[0][2])}" alt=""><span><time>${NEWS[0][0]}</time><h3>${NEWS[0][1]}</h3></span></a>
+      <ul class="news-more">${NEWS.slice(1).map(([d, t, i]) => `<li><a href="#"><img src="${src(i)}" alt=""><span><time>${d}</time><h4>${t}</h4></span></a></li>`).join("")}</ul>
+    </section>`;
+  const events = `
+    <section class="s-events" aria-labelledby="h-events">
+      <header class="sec-head"><h2 id="h-events">Campeonatos</h2><a class="more" href="#">Ver todos</a></header>
+      <div class="plate ev-plate">${EVENTS.map(([nm, ic, dates, live, tier, games, teams]) => `
+        <a class="e" href="#"><img class="logo" src="${src(ic)}" alt=""><span class="copy"><strong class="name">${nm}</strong><span>${live ? `<span class="live">Em andamento</span>${/^(desde|até)/.test(dates) ? " " : ", "}` : ""}${dates}</span></span><span class="tier ${tier}" aria-label="Tier ${tier.toUpperCase()}">${tier.toUpperCase()}</span><span class="size">${games} partidas<br>${teams} equipes</span></a>`).join("")}
+      </div>
+    </section>`;
+
+  document.getElementById("home").innerHTML = `
+    <div class="stack stack-l">${potw}${ranking}</div>
+    <div class="stack stack-c">${matches}${activity}</div>
+    <div class="stack stack-r">${news}${events}</div>`;
+
+  // ---------------- carrossel ----------------
+  // O primeiro cartao vai clonado no fim: do ultimo para o primeiro ele
+  // continua deslizando para a frente, em vez de rebobinar os nove.
+  const track = document.getElementById("track");
+  const stepBtns = [...document.querySelectorAll("#steps button")];
+  let index = 0;
+  function paint() {
+    const shown = index % LEADERS.length;
+    stepBtns.forEach((b, i) => {
+      b.classList.toggle("done", i < shown);
+      b.removeAttribute("aria-current");
+      if (i === shown) { void b.offsetWidth; b.setAttribute("aria-current", "true"); }
+    });
+  }
+  function go(to, animate = true) {
+    index = to;
+    track.classList.toggle("no-anim", !animate);
+    track.style.transform = `translateX(-${index * 100}%)`;
+    paint();
+  }
+  track.addEventListener("transitionend", () => { if (index === LEADERS.length) go(0, false); });
+  document.getElementById("steps").addEventListener("animationend", () => go(index + 1));
+  stepBtns.forEach((b, i) => b.addEventListener("click", () => go(i)));
+  const card = document.querySelector(".potw-card");
+  card.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); go(index + 1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); go((index - 1 + LEADERS.length) % LEADERS.length); }
+  });
+  let startX = null;
+  card.addEventListener("pointerdown", (e) => { startX = e.clientX; });
+  card.addEventListener("pointerup", (e) => {
+    if (startX === null) return;
+    const dx = e.clientX - startX; startX = null;
+    if (Math.abs(dx) > 40) go(dx < 0 ? index + 1 : (index - 1 + LEADERS.length) % LEADERS.length);
+  });
+  go(0, false);
+
+  // ---------------- medida ----------------
+  // Medido na home de hoje, com a mesma base: altura total e topo da primeira partida.
+  const ATUAL = { full: 2169, phone: 4849, fullMatch: 995, phoneMatch: 2588 };
+  function measure() {
+    const phone = document.body.classList.contains("phone");
+    const frame = document.querySelector(".frame").getBoundingClientRect();
+    const h = Math.round(frame.height);
+    const first = Math.round(document.querySelector(".m").getBoundingClientRect().top - frame.top);
+    document.querySelector("[data-metric]").innerHTML = phone
+      ? `A 390px a home tem <strong>${h}px</strong> de altura (hoje ${ATUAL.phone}px). A primeira partida aparece a <strong>${first}px</strong> do topo (hoje ${ATUAL.phoneMatch}px).`
+      : `Nesta largura a home tem <strong>${h}px</strong> de altura (a 1440px, hoje, são ${ATUAL.full}px). A primeira partida aparece a <strong>${first}px</strong> do topo (hoje ${ATUAL.fullMatch}px).`;
+  }
+  document.querySelectorAll("[data-w]").forEach((b) => b.addEventListener("click", () => {
+    document.body.classList.toggle("phone", b.dataset.w === "phone");
+    document.querySelectorAll("[data-w]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    setTimeout(measure, 80);
+  }));
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(measure, 300));
+</script>
+</body>
+</html>

@@ -6292,10 +6292,12 @@ function Shell(content, options = {}) {
       </header>
       <main class="main">${content}</main>
       <footer class="footer">
-        <div class="footer-inner">
+        <div class="footer-inner vp-rodape">
           <a class="footer-logo-link" href="#/home" aria-label="${SITE_NAME}">
             <img class="footer-logo" src="${SITE_LOGO_SRC}" alt="" loading="lazy" decoding="async" />
           </a>
+          <span class="vp-rodape-texto">Estatísticas do cenário universitário brasileiro de VALORANT.</span>
+          <nav class="vp-rodape-links" aria-label="Rodapé"><a href="#/matches">Partidas</a><a href="#/events">Eventos</a><a href="#/ranking">Ranking</a><a href="#/news">Notícias</a></nav>
         </div>
       </footer>
     </div>
@@ -15515,8 +15517,10 @@ function renderMapDetail(id) {
   `);
 }
 
+// panelTitle e sectionHead devolvem a mesma peca do visual Placar: titulo
+// condensado grande, o contexto curto ao lado e o link na ponta direita.
 function panelTitle(title, routeName, linkLabel) {
-  return `<header class="panel-title"><h2>${escapeHtml(title)}</h2>${routeName ? `<a href="#/${routeName}">${escapeHtml(linkLabel)}</a>` : ""}</header>`;
+  return sectionHead(title, "", routeName, linkLabel);
 }
 
 function panelFooterLink(routeName, label) {
@@ -17520,7 +17524,7 @@ function metric(value, label) {
 }
 
 function sectionHead(title, desc, routeName, linkLabel) {
-  return `<div class="section-head"><div><h2>${escapeHtml(title)}</h2>${desc ? `<p>${escapeHtml(desc)}</p>` : ""}</div>${routeName ? `<a class="subtle-link" href="#/${routeName}">${escapeHtml(linkLabel)}</a>` : ""}</div>`;
+  return `<header class="vp-sec"><h2>${escapeHtml(title)}</h2>${desc ? `<span class="vp-sec-aside">${escapeHtml(desc)}</span>` : ""}${routeName ? `<a class="vp-sec-more" href="#/${routeName}">${escapeHtml(linkLabel)}</a>` : ""}</header>`;
 }
 
 function matchCard(item) {

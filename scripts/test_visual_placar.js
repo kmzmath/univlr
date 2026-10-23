@@ -224,5 +224,32 @@ vm.runInContext(ler("news.js"), context);
 assert.strictEqual(typeof context.News.blocoTrilho, "function", "o news.js expoe o bloco do trilho");
 assert.strictEqual(context.News.blocoTrilho(), "", "sem materia, o trilho nao ganha bloco vazio");
 
+// ---------------------------------------------------------------- Tarefa 7
+// Pagina de partida: barra espelhada (comparativo e historico) e o scoreboard
+// das duas equipes numa tabela so, com um cabecalho que ordena as duas.
+const espelho = context.espelhoLinha({ label: "Rounds", valorA: "48%", valorB: "52%", fracA: "33/69", fracB: "36/69", larguraA: 48, larguraB: 52, maiorA: false, maiorB: true, corA: "#177ae8", corB: "#b050cd" });
+assert(espelho.includes('class="vp-espelho"') && espelho.includes(">Rounds<"), "a barra espelhada tem o rotulo no meio");
+const barras = espelho.match(/<i[^>]*style="--w:[^"]*"[^>]*>/g) || [];
+assert.strictEqual(barras.length, 2, "uma barra para cada lado");
+assert(barras[0].includes("--w:48%") && !barras[0].includes("vp-maior"), "a barra de A vai a 48% e nao e a maior");
+assert(barras[1].includes("--w:52%") && barras[1].includes("vp-maior"), "a barra de B vai a 52% e e a maior");
+assert(espelho.includes("33/69") && espelho.includes("36/69"), "a fracao fica junto do valor");
+assert(!/#f6132a/i.test(espelho), "a barra espelhada nao usa o vermelho da marca");
+
+const jogador = (id, nick, teamId, kills) => ({ id, nick, teamId, rounds: 21, kills, deaths: 12, assists: 4, acs: 200 + kills, adr: 120, kast: 70, agentSlug: "jett", agent: "Jett", agentIcon: "assets/agent-icons/jett.png" });
+const partidaFake = { id: "m-1", seriesKey: "k-md3", teamA: { id: "azr", name: "Azure Bears Black", score: 13 }, teamB: { id: "ceub", name: "CEUB Octopus Vulgaris", score: 8 } };
+const colunas = context.scoreboardColumns("standard");
+const sb = context.placarScoreboard(partidaFake, [
+  { team: partidaFake.teamA, players: [jogador("p1", "Aldeath", "azr", 20), jogador("p2", "Stockão", "azr", 15)], side: "a" },
+  { team: partidaFake.teamB, players: [jogador("p3", "bada", "ceub", 25), jogador("p4", "Dante", "ceub", 10)], side: "b" },
+], colunas, { compareKey: "m-1:all", selection: { a: "p1", b: "p3" } });
+assert.strictEqual((sb.match(/<table class="vp-sb/g) || []).length, 1, "o scoreboard e uma tabela so");
+assert.strictEqual((sb.match(/<thead>/g) || []).length, 1, "o cabecalho de colunas aparece uma vez");
+assert.strictEqual((sb.match(/<tbody/g) || []).length, 2, "um tbody por equipe");
+assert.strictEqual((sb.match(/class="vp-sb-equipe"/g) || []).length, 2, "cada equipe abre com a linha dela");
+assert(/data-board-key="[^"]*:azr\|[^"]*:ceub"/.test(sb), "o cabecalho ordena as duas equipes juntas");
+assert(/<tr class="vp-sb-jogador vp-escolhido"[^>]*data-lineup-player="p1"/.test(sb), "a linha do jogador escolhido para o historico fica marcada");
+assert(/data-lineup-side="b"[^>]*data-lineup-player="p4"|data-lineup-player="p4"[^>]*data-lineup-side="b"/.test(sb.replace(/\n/g, " ")) || sb.includes('data-lineup-player="p4"'), "toda linha pode escolher o jogador do historico");
+
 void vp;
 console.log("Visual Placar contract tests passed");

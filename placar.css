@@ -3068,3 +3068,651 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* ==========================================================================
+   Campeonato: banner no fundo do topo, dados soltos, podio e map pool, chave
+   em celulas de mesma altura e classificacao final com a campanha
+   ========================================================================== */
+
+.tournament-hub.tournament-hub {
+  gap: 24px;
+}
+
+/* As secoes do campeonato saem da caixa: o titulo fica solto e o conteudo
+   logo embaixo, como no resto do site. */
+.tournament-hub .tournament-section {
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.tournament-hub .tournament-section-head {
+  min-height: 0;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 4px 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.tournament-hub .tournament-section-head h2 {
+  font: 600 30px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.tournament-hub .tournament-section-head span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* As abas do campeonato tinham 150px de largura minima cada, espalhadas como
+   botoes; aqui ficam no desenho do menu, do tamanho do rotulo. */
+.tournament-hub .tournament-page-tabs a {
+  display: block;
+  width: auto;
+  min-width: 0;
+}
+
+/* ---- topo ---- */
+.vp-hero-camp {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0 20px;
+  height: 170px;
+  padding: 0 22px;
+  overflow: hidden;
+}
+
+.vp-camp-banner {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  opacity: 0.38;
+  -webkit-mask-image: linear-gradient(90deg, #000 20%, rgba(0, 0, 0, 0.5) 70%, transparent);
+  mask-image: linear-gradient(90deg, #000 20%, rgba(0, 0, 0, 0.5) 70%, transparent);
+}
+
+.vp-hero-camp > .event-logo {
+  width: 84px;
+  height: 84px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-hero-camp > .event-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vp-camp-id {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.vp-camp-status {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-camp-id h1 {
+  margin: 0;
+  font: 700 48px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+.vp-camp-quando {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.vp-camp-org {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+  text-align: right;
+}
+
+.vp-camp-org small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-camp-org span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.vp-camp-org .organizer-logo {
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.vp-camp-org .organizer-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vp-fatos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 40px;
+  margin-top: -8px;
+}
+
+.vp-fatos > span {
+  display: grid;
+  align-content: start;
+  gap: 3px;
+}
+
+.vp-fatos small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-fatos strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.vp-fatos .vp-tier {
+  font-size: 22px;
+  line-height: 0.9;
+}
+
+/* ---- primeira faixa: podio, resumo e map pool ---- */
+.vp-camp-topo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.8fr) minmax(0, 1.3fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.vp-camp-topo > section {
+  min-width: 0;
+}
+
+.vp-podio {
+  display: grid;
+  gap: 4px;
+}
+
+.vp-pod {
+  display: grid;
+  grid-template-columns: 34px 36px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 12px 0 10px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--team-line) 24%, transparent), transparent 85%);
+  box-shadow: inset 3px 0 0 var(--team-line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-pod b {
+  font: 700 24px/1 var(--font-display);
+}
+
+.vp-pod:first-child b {
+  color: var(--tier-s, #ffb340);
+}
+
+.vp-pod .team-logo {
+  width: 34px;
+  height: 34px;
+}
+
+.vp-pod strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-pod small {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-pod-vaga strong {
+  color: var(--muted);
+}
+
+.vp-resumo-camp {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+  gap: 10px 30px;
+}
+
+.vp-resumo-camp span {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-resumo-camp b {
+  font: 600 34px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-resumo-camp small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-pool {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 14px;
+}
+
+.vp-pool-mapa {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 34px;
+  padding: 0 10px;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-pool-mapa img {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  opacity: 0.26;
+  -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent);
+  mask-image: linear-gradient(90deg, #000 40%, transparent);
+}
+
+.vp-pool-mapa b {
+  font-weight: 600;
+}
+
+.vp-pool-mapa small {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.vp-pool-mapa:hover b {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vp-pool-vazio {
+  color: var(--muted);
+}
+
+/* ---- chave ---- */
+.tournament-curated-bracket.vp-chaves {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: none;
+  gap: 22px;
+  padding: 0;
+  overflow: visible;
+}
+
+.vp-chaves.groups-layout,
+.vp-chaves.has-groups {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.vp-chaves .tournament-bracket-region {
+  grid-area: auto;
+  gap: 8px;
+  width: auto;
+}
+
+.vp-chaves .tournament-bracket-region.gsl-group {
+  grid-column: 1 / -1;
+}
+
+.vp-chaves .tournament-bracket-region > h3 {
+  color: var(--ink);
+  font: 600 14px/1 var(--font-text);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-chave-rolo {
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+
+/* Cada rodada e uma coluna de celulas de mesma altura: a partida da rodada
+   seguinte cai no meio das duas que a alimentam. Os fios sao
+   pseudo-elementos; o bye nao desenha nada. */
+.vp-chave {
+  display: flex;
+  gap: 24px;
+  min-width: max-content;
+}
+
+.vp-rodada {
+  display: flex;
+  flex-direction: column;
+  width: 168px;
+}
+
+.vp-rodada > small {
+  height: 22px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-rodada-corpo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.vp-celula {
+  position: relative;
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+}
+
+.vp-bm {
+  position: relative;
+  display: grid;
+  grid-template-rows: 20px 20px;
+  gap: 2px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.vp-bm-lado {
+  --vp-wash: 22%;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  height: 20px;
+  padding: 0 8px 0 9px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--team-line) var(--vp-wash), var(--surface)), var(--surface) 80%);
+  box-shadow: inset 2px 0 0 var(--team-line);
+  font-size: 12px;
+}
+
+.vp-bm-lado:not(.vp-ganhou) {
+  --vp-wash: 6%;
+}
+
+.vp-bm:hover .vp-bm-lado {
+  --vp-wash: 34%;
+}
+
+.vp-bm:hover .vp-bm-lado:not(.vp-ganhou) {
+  --vp-wash: 12%;
+}
+
+.vp-bm-lado .team-logo {
+  width: 16px;
+  height: 16px;
+}
+
+.vp-bm-nome {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--loss-ink);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-bm-lado.vp-ganhou .vp-bm-nome {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.vp-bm-lado b {
+  color: var(--loss-ink);
+  font: 600 14px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-bm-lado.vp-ganhou b {
+  color: var(--ink);
+}
+
+.vp-bm-wo {
+  position: absolute;
+  top: -13px;
+  right: -2px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.vp-bm:focus-visible {
+  outline: 2px solid var(--brand-text);
+  outline-offset: 2px;
+}
+
+/* fios: saida pela direita, chegada pela esquerda e a junta vertical dos pares */
+.vp-chave:not(.vp-sem-fios) .vp-rodada:not(:last-child) .vp-celula:not(.vp-bye) > :first-child::after,
+.vp-chave:not(.vp-sem-fios) .vp-rodada:not(:first-child) .vp-celula:not(.vp-bye) > :first-child::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  border-top: 1px solid var(--line-dark);
+}
+
+.vp-chave:not(.vp-sem-fios) .vp-rodada:not(:last-child) .vp-celula:not(.vp-bye) > :first-child::after {
+  left: 100%;
+}
+
+.vp-chave:not(.vp-sem-fios) .vp-rodada:not(:first-child) .vp-celula:not(.vp-bye) > :first-child::before {
+  right: 100%;
+}
+
+.vp-chave:not(.vp-sem-fios) .vp-rodada.vp-pares .vp-celula:not(.vp-bye)::after {
+  content: "";
+  position: absolute;
+  right: -12px;
+  border-right: 1px solid var(--line-dark);
+}
+
+.vp-chave:not(.vp-sem-fios) .vp-rodada.vp-pares .vp-celula:not(.vp-bye):nth-child(odd)::after {
+  top: 50%;
+  bottom: 0;
+}
+
+.vp-chave:not(.vp-sem-fios) .vp-rodada.vp-pares .vp-celula:not(.vp-bye):nth-child(even)::after {
+  top: 0;
+  bottom: 50%;
+}
+
+.vp-rodada.vp-gf .vp-bm {
+  grid-template-rows: 24px 24px;
+}
+
+.vp-rodada.vp-gf .vp-bm-lado {
+  height: 24px;
+}
+
+/* O cartao de classificado das classificatorias, no estilo novo. */
+.vp-celula .qualified-card {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-celula .qualified-card .tournament-bracket-meta {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.vp-celula .qualified-card .tournament-bracket-team {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 8px;
+  background: var(--surface);
+  box-shadow: inset 2px 0 0 var(--win);
+  font-size: 12px;
+}
+
+/* ---- classificacao final ---- */
+.vp-classif {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 28px;
+}
+
+.vp-classif-linha {
+  display: grid;
+  grid-template-columns: 52px 22px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  height: 34px;
+  border-top: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-classif-linha b {
+  color: var(--muted);
+  font: 600 17px/1 var(--font-display);
+}
+
+.vp-classif-linha .team-logo {
+  width: 22px;
+  height: 22px;
+}
+
+.vp-classif-linha span {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-classif-linha small {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-classif-linha:hover span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1180px) {
+  .vp-camp-topo {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .vp-camp-topo > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .vp-classif {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .tournament-hub.tournament-hub {
+    gap: 20px;
+  }
+
+  .tournament-hub .tournament-section-head h2 {
+    font-size: 26px;
+  }
+
+  .vp-hero-camp {
+    grid-template-columns: 56px minmax(0, 1fr);
+    height: auto;
+    gap: 6px 14px;
+    padding: 16px 14px;
+  }
+
+  .vp-hero-camp > .event-logo {
+    width: 56px;
+    height: 56px;
+  }
+
+  .vp-camp-banner {
+    opacity: 0.2;
+  }
+
+  .vp-camp-id h1 {
+    font-size: 30px;
+  }
+
+  .vp-camp-org {
+    grid-column: 1 / -1;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .vp-fatos {
+    gap: 10px 24px;
+  }
+
+  .vp-camp-topo,
+  .vp-classif {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

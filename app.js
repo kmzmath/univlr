@@ -9661,53 +9661,44 @@ function tournamentTabContent(event, matches, standings, activeTab) {
   if (activeTab === "mapas") return tournamentMapsSection(event, matches);
   if (activeTab === "agentes") return tournamentAgentsSection(event, matches);
   if (activeTab === "composicoes") return tournamentCompositionsSection(event, matches);
+  // Encerrado, a classificacao final (todas as equipes, com a campanha de cada
+  // uma) substitui a lista de participantes e o bloco de resultados. Em
+  // andamento, a lista continua, porque ainda nao ha ordem final.
+  const encerrado = eventIsDone(event);
   return `
     ${tournamentOverviewSection(event, matches, standings)}
     <div class="tournament-main">
-      ${tournamentTeamsSection(event, standings, matches)}
+      ${encerrado ? "" : tournamentTeamsSection(event, standings, matches)}
       ${tournamentBracketSection(event, matches)}
       ${tournamentSwissStandingsSection(event)}
-      ${tournamentPlacementsSection(event, standings)}
+      ${encerrado ? classificacaoFinal(event, standings, matches) : tournamentPlacementsSection(event, standings)}
     </div>
   `;
 }
 
 function tournamentHero(event, matches, standings) {
-  const [colorA, colorB] = eventColorPair(event);
   const banner = assetPath(event.banner || event.bannerPath || "");
   const patches = tournamentPatchLabels(matches);
+  const status = event.status || "Campeonato";
+  const formato = [tournamentFormatLabel(event, matches), ...(event.format?.details || []).map((item) => `${String(item).charAt(0).toLowerCase()}${String(item).slice(1)}`)].filter(Boolean).join(", ");
   return `
-    <section class="tournament-hero" style="--event-a:${escapeHtml(colorA)}; --event-b:${escapeHtml(colorB)}${banner ? `; --event-banner:url('${escapeHtml(banner)}')` : ""}">
-      <div class="tournament-hero-copy">
-        <span class="tournament-status-flag ${eventStatusClass(event.status)}">${escapeHtml(event.status || "Campeonato")}</span>
-        <div class="tournament-title-row">
-          ${eventLogo(event, "hero")}
-          <div>
-            <h1>${escapeHtml(event.name)}</h1>
-            <div class="tournament-hero-meta">
-              <span>${escapeHtml(eventTimeRange(event))}</span>
-              ${patches.length ? `<span>Patch${patches.length > 1 ? "es" : ""} ${escapeHtml(patches.join(" / "))}</span>` : ""}
-            </div>
-          </div>
-        </div>
+    <header class="vp-hero-camp">
+      ${banner ? `<img class="vp-camp-banner" src="${escapeHtml(banner)}" alt="" loading="lazy" onerror="this.remove()" />` : ""}
+      ${eventLogo(event, "hero")}
+      <div class="vp-camp-id">
+        <span class="vp-camp-status">${eventStatusClass(event.status) === "live" ? `<span class="vp-ao-vivo">${escapeHtml(status)}</span>` : escapeHtml(status)}</span>
+        <h1>${escapeHtml(event.name)}</h1>
+        <span class="vp-camp-quando">${escapeHtml(eventTimeRange(event))}${patches.length ? `, patch${patches.length > 1 ? "es" : ""} ${escapeHtml(patches.join(" e "))}` : ""}</span>
       </div>
-      <div class="tournament-organizer-card">
-        <span class="tournament-card-kicker">Organização</span>
-        <div class="tournament-organizer-main">
-          ${organizerLogo(event, "large")}
-          <strong>${escapeHtml(event.organizer || event.source || SITE_NAME)}</strong>
-        </div>
-        <small>${escapeHtml([event.type, event.tier ? `Tier ${event.tier}` : ""].filter(Boolean).join(" - ") || "Evento oficial")}</small>
-      </div>
-    </section>
-    <section class="tournament-facts">
-      ${tournamentFact("Datas", eventTimeRange(event))}
-      ${tournamentFact("Prize Pool", event.prizePool || "-")}
-      ${tournamentFact("Times", event.teamCount || event.teams.length)}
-      ${tournamentFact("Tier", event.tier || "A definir")}
+      <div class="vp-camp-org"><small>Organização</small><span>${organizerLogo(event, "large")}${escapeHtml(event.organizer || event.source || SITE_NAME)}</span></div>
+    </header>
+    <div class="vp-fatos">
+      ${tournamentFact("Prêmio", event.prizePool || "-")}
+      ${tournamentFact("Equipes", event.teamCount || event.teams.length)}
+      <span><small>Tier</small>${event.tier ? eventTierBadge(event) : "<strong>A definir</strong>"}</span>
       ${tournamentFact("Tipo", event.type || "Evento")}
-      ${tournamentFact("Formato", tournamentFormatLabel(event, matches))}
-    </section>
+      ${tournamentFact("Formato", formato || "-")}
+    </div>
   `;
 }
 
@@ -9732,23 +9723,73 @@ function tournamentOverviewSection(event, matches, standings) {
   const maps = event.mapPool || event.maps || [];
   const mapRows = tournamentMapPoolRows(maps, matches);
   const seriesCount = event.swiss?.seriesCount || matches.length;
+  const campanhas = campanhasDoCampeonato({ ...event, bracket: tournamentBracketDefinition(event, matches) || event.bracket });
+  const [dias, unidade] = /^(\d+) (dias?)$/.exec(tournamentDurationLabel(event))?.slice(1) || ["-", "dias"];
   return `
-    <section class="tournament-overview-grid">
-      <article class="tournament-overview-card tournament-summary-card overview-card-featured">
-        <span class="tournament-card-kicker">Resumo do torneio</span>
-        <div class="tournament-mini-stats">
-          <span><strong>${escapeHtml(String(event.teamCount || event.teams.length))}</strong><small>Times</small></span>
-          <span><strong>${escapeHtml(String(seriesCount))}</strong><small>Séries</small></span>
-          <span><strong>${escapeHtml(tournamentDurationLabel(event))}</strong><small>Duração</small></span>
+    <div class="vp-camp-topo">
+      <section class="vp-s-podio">
+        ${sectionHead("Pódio")}
+        <div class="vp-podio">${(podium.length ? podium : tournamentPodiumPlaceholderRows()).map((row) => tournamentPodiumCard(event, row, campanhas)).join("")}</div>
+      </section>
+      <section class="vp-s-resumo">
+        ${sectionHead("Resumo")}
+        <div class="vp-resumo-camp">
+          <span><b>${escapeHtml(String(event.teamCount || event.teams.length))}</b><small>equipes</small></span>
+          <span><b>${escapeHtml(String(seriesCount))}</b><small>séries</small></span>
+          <span><b>${escapeHtml(dias)}</b><small>${escapeHtml(unidade)}</small></span>
         </div>
-        <div class="tournament-podium-grid">
-          ${(podium.length ? podium : tournamentPodiumPlaceholderRows()).map((row) => tournamentPodiumCard(event, row)).join("")}
-        </div>
-      </article>
-      <article class="tournament-overview-card tournament-map-pool-card">
-        <span class="tournament-card-kicker">Map pool</span>
-        <div class="tournament-map-banner-grid">${mapRows.length ? mapRows.map(tournamentMapPoolBanner).join("") : `<small>A definir</small>`}</div>
-      </article>
+      </section>
+      <section class="vp-s-pool">
+        ${sectionHead("Map pool")}
+        <div class="vp-pool">${mapRows.length ? mapRows.map(tournamentMapPoolBanner).join("") : `<small class="vp-pool-vazio">A definir</small>`}</div>
+      </section>
+    </div>
+  `;
+}
+
+// A campanha de cada equipe no campeonato, em series: chave e suico. W.O.
+// conta, porque e resultado oficial; quem passou direto nao, porque nao houve
+// jogo.
+function campanhasDoCampeonato(event) {
+  const campanhas = new Map();
+  const conta = (match) => {
+    if (!match?.a || !match?.b) return;
+    const vencedor = tournamentBracketMatchWinner(match);
+    if (!vencedor) return;
+    const perdedor = vencedor === match.a ? match.b : match.a;
+    [match.a, match.b].forEach((id) => {
+      if (!campanhas.has(id)) campanhas.set(id, [0, 0]);
+    });
+    campanhas.get(vencedor)[0] += 1;
+    campanhas.get(perdedor)[1] += 1;
+  };
+  (event.bracket?.regions || []).forEach((region) => (region.columns || []).forEach((column) => (column.matches || []).forEach(conta)));
+  (event.swiss?.rounds || []).forEach((round) => (round.matches || []).forEach(conta));
+  return campanhas;
+}
+
+// Em campeonato encerrado: todas as equipes na ordem oficial, com a campanha.
+function classificacaoFinal(event, standings, matches = []) {
+  const rows = tournamentResultRows(event, standings);
+  if (!rows.length) return "";
+  const campanhas = campanhasDoCampeonato({ ...event, bracket: tournamentBracketDefinition(event, matches) || event.bracket });
+  const linhas = rows
+    .map((row, index) => {
+      const team = tournamentTeamById(event, row.id || row.teamId);
+      if (!team) return "";
+      // "5º-6º", sem o "lugar": a coluna da posicao e estreita e o rotulo cabe
+      // numa linha so.
+      const label = tournamentPlacementDisplayLabel(event, row.range || placementLabel(index)).replace(/ lugar$/, "");
+      const campanha = campanhas.get(team.id);
+      const detalhe = campanha ? `${campanha[0]}-${campanha[1]}` : row.note || (Number.isFinite(row.seriesWins) ? `${row.seriesWins}-${row.seriesLosses}` : "");
+      const miolo = `<b>${escapeHtml(label)}</b>${teamLogo(team.id, "tiny")}<span>${escapeHtml(team.name)}</span><small>${escapeHtml(detalhe)}</small>`;
+      return team.missing ? `<span class="vp-classif-linha">${miolo}</span>` : `<a class="vp-classif-linha" href="#/teams/${escapeHtml(team.id)}">${miolo}</a>`;
+    })
+    .join("");
+  return `
+    <section class="tournament-section vp-s-classif">
+      ${sectionHead("Classificação final", campanhas.size ? "Com a campanha de cada equipe" : "")}
+      <div class="vp-classif">${linhas}</div>
     </section>
   `;
 }
@@ -9819,16 +9860,16 @@ function tournamentPodiumPlaceholderRows() {
   return ["1", "2", "3"].map((range) => ({ range, team: null }));
 }
 
-function tournamentPodiumCard(event, row) {
+function tournamentPodiumCard(event, row, campanhas = new Map()) {
   const label = tournamentPodiumLabel(row.range);
   const team = row.team;
-  return `
-    <span class="tournament-podium-card podium-${escapeHtml(slugify(label))}${team ? "" : " podium-pending"}">
-      <b>${escapeHtml(label)}</b>
-      ${team ? teamLogo(team.id, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}
-      <strong>${escapeHtml(team ? team.name : "TBD")}</strong>
-    </span>
-  `;
+  const campanha = team ? campanhas.get(team.id) : null;
+  const miolo = `<b>${escapeHtml(label.replace(/ lugar$/, ""))}</b>${team ? teamLogo(team.id) : `<span class="team-logo clean-logo logo-empty"></span>`}<strong>${escapeHtml(team ? team.name : "TBD")}</strong><small>${campanha ? `${campanha[0]}-${campanha[1]}` : ""}</small>`;
+  const classes = `vp-pod podium-${escapeHtml(slugify(label))}${team ? "" : " vp-pod-vaga"}`;
+  const estilo = `--team-line:${team ? teamLineColor(team.id) : TEAM_LINE_SEM_COR}`;
+  return team && !team.missing
+    ? `<a class="${classes}" href="#/teams/${escapeHtml(team.id)}" style="${estilo}">${miolo}</a>`
+    : `<span class="${classes}" style="${estilo}">${miolo}</span>`;
 }
 
 function tournamentPodiumLabel(range) {
@@ -9849,9 +9890,9 @@ function tournamentPodiumLabel(range) {
 function tournamentMapPoolBanner(map) {
   const art = mapArtAttrs(map);
   return `
-    <a class="tournament-map-banner ${art ? "has-image" : ""}" href="#/maps/${escapeHtml(map.id)}">
-      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="${escapeHtml(map.name)}" loading="lazy" onerror="mapArtError(this)" />` : ""}
-      <span><strong>${escapeHtml(map.name || map.poolName)}</strong><small>${escapeHtml(`${map.played} jogos - ${map.rounds} rounds`)}</small></span>
+    <a class="vp-pool-mapa" href="#/maps/${escapeHtml(map.id)}">
+      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : ""}
+      <b>${escapeHtml(map.name || map.poolName)}</b><small>${escapeHtml(`${map.played} ${map.played === 1 ? "jogo" : "jogos"}, ${map.rounds} rounds`)}</small>
     </a>
   `;
 }
@@ -10428,7 +10469,7 @@ const TOURNAMENT_BRACKET_STAGES = [
 ];
 
 function tournamentCuratedBracketSection(event) {
-  const regions = tournamentBracketDisplayRegions(event.bracket.regions);
+  const regions = tournamentChaveRegioes(tournamentBracketDisplayRegions(event.bracket.regions));
   const stages = tournamentBracketStages(regions);
   // Uma fase so nao ganha titulo proprio: o cabecalho da secao ja diz o que e.
   const body = stages.length
@@ -10439,17 +10480,34 @@ function tournamentCuratedBracketSection(event) {
         </section>
       `).join("")
     : tournamentCuratedBracketRegions(event, regions);
+  const temBye = regions.some((region) => (region.columns || []).some((column) => (column.matches || []).some(tournamentChaveEhBye)));
   return `
-    <section class="tournament-section">
-      <div class="tournament-section-head">
-        <h2>Brackets</h2>
-        <span>${escapeHtml(event.bracket.title || "Bracket oficial")}</span>
-      </div>
-      <div class="tournament-curated-bracket ${stages.length ? "staged" : tournamentCuratedBracketLayoutClass(regions)}">
+    <section class="tournament-section vp-s-chave">
+      ${sectionHead("Chave", `${event.bracket.title || "Chave oficial"}${temBye ? ". Quem passou direto aparece só na rodada seguinte." : ""}`)}
+      <div class="tournament-curated-bracket vp-chaves ${stages.length ? "staged" : tournamentCuratedBracketLayoutClass(regions)}">
         ${body}
       </div>
     </section>
   `;
+}
+
+// A grande final vira a ultima coluna da chave superior. Cada partida leva a
+// chave da previa calculada na regiao de origem (coluna, partida e codigo),
+// entao clicar nela continua abrindo a mesma serie de antes.
+function tournamentChaveRegioes(regions) {
+  const comChave = regions.map((region) => ({
+    ...region,
+    columns: (region.columns || []).map((column, columnIndex) => ({
+      ...column,
+      matches: (column.matches || []).map((match, matchIndex) => ({ ...match, previewKey: tournamentBracketMatchKey(columnIndex, matchIndex, match.code) })),
+    })),
+  }));
+  const superior = comChave.find((region) => tournamentBracketRegionKind(region) === "upper-bracket" && region.layout !== "linked");
+  const final = comChave.find((region) => tournamentBracketRegionKind(region) === "grand-final" && region.layout !== "linked");
+  if (!superior || !final || (superior.stage || "") !== (final.stage || "")) return comChave;
+  superior.columns = [...superior.columns, ...final.columns.map((column) => ({ ...column, grandeFinal: true }))];
+  superior.name = `${superior.name || "Chave superior"} e grande final`;
+  return comChave.filter((region) => region !== final);
 }
 
 function tournamentBracketStages(regions = []) {
@@ -10553,16 +10611,59 @@ function tournamentCuratedBracketColumnEntries(column = {}) {
 
 function tournamentCuratedBracketRegion(event, region) {
   const columns = tournamentCuratedBracketColumns(event, region);
-  const maxMatches = Math.max(...columns.map((column) => tournamentCuratedBracketColumnEntries(column).length), 1);
-  const totalRows = maxMatches * 2;
+  // Fase de grupos nao tem chave: as partidas de uma coluna nao alimentam as da
+  // seguinte, entao nao ganham fio.
+  const semFios = String(region.className || "").includes("group-stage");
   return `
-    <section class="tournament-bracket-region ${escapeHtml(region.className || "")}">
+    <section class="tournament-bracket-region vp-chave-regiao ${escapeHtml(region.className || "")}">
       <h3>${escapeHtml(region.name || "Chave")}</h3>
-      <div class="tournament-bracket curated" style="--max-matches:${maxMatches}; --bracket-rows:${totalRows}; --bracket-columns:${Math.max(columns.length, 1)}">
-        ${columns.map((column, columnIndex) => tournamentCuratedBracketColumn(event, column, columns, columnIndex, maxMatches)).join("")}
+      <div class="vp-chave-rolo">
+        <div class="vp-chave${semFios ? " vp-sem-fios" : ""}">
+          ${columns.map((column, columnIndex) => tournamentChaveRodada(event, column, columns, columnIndex)).join("")}
+        </div>
       </div>
     </section>
   `;
+}
+
+// Uma rodada: as celulas dividem a altura da coluna em partes iguais, entao a
+// partida da rodada seguinte cai no meio das duas que a alimentam. A junta
+// vertical so existe quando a rodada seguinte tem metade das partidas.
+function tournamentChaveRodada(event, column, columns, columnIndex) {
+  const entries = tournamentCuratedBracketColumnEntries(column);
+  const proxima = tournamentCuratedBracketColumnEntries(columns[columnIndex + 1]).length;
+  const classes = ["vp-rodada", proxima && entries.length === proxima * 2 ? "vp-pares" : "", column.grandeFinal ? "vp-gf" : "", column.terminalCards ? "vp-classificados" : ""].filter(Boolean).join(" ");
+  const celulas = entries
+    .map((entry, matchIndex) => (column.terminalCards
+      ? `<div class="vp-celula">${tournamentCuratedBracketQualifiedCard(event, entry, { columnIndex, matchIndex, maxMatches: 1, columnMatches: 1 })}</div>`
+      : tournamentChaveCelula(event, entry, columnIndex, matchIndex)))
+    .join("");
+  return `<div class="${classes}"><small>${escapeHtml(column.title || "")}</small><div class="vp-rodada-corpo">${celulas}</div></div>`;
+}
+
+// "Sem adversario" e quem passou direto: vira celula vazia, sem fio, e a
+// equipe so aparece na rodada seguinte.
+function tournamentChaveEhBye(match) {
+  if (!match || (match.a && match.b)) return false;
+  return [match.aLabel, match.bLabel].some((label) => normalize(label || "").includes("sem advers"));
+}
+
+function tournamentChaveCelula(event, match, columnIndex, matchIndex) {
+  if (tournamentChaveEhBye(match)) {
+    const quem = tournamentTeamById(event, match.a || match.b)?.name || "";
+    return `<div class="vp-celula vp-bye"${quem ? ` title="${escapeHtml(`${match.code || "Partida"}: ${quem} passou direto`)}"` : ""}></div>`;
+  }
+  const winner = tournamentBracketMatchWinner(match);
+  const key = match.previewKey || tournamentBracketMatchKey(columnIndex, matchIndex, match.code);
+  const wo = match.status && normalize(match.status).startsWith("w.o") ? match.status : "";
+  const dica = [match.code, match.bestOf, match.status || (tournamentBracketMatchHasResult(match) ? "" : match.label)].filter(Boolean).join(", ");
+  return `<div class="vp-celula"><button type="button" class="vp-bm" data-tournament-match="${escapeHtml(key)}" title="${escapeHtml(dica)}">${tournamentChaveLado(event, match.a, match.aLabel, match.scoreA, Boolean(winner) && winner === match.a)}${tournamentChaveLado(event, match.b, match.bLabel, match.scoreB, Boolean(winner) && winner === match.b)}${wo ? `<span class="vp-bm-wo">${escapeHtml(wo)}</span>` : ""}</button></div>`;
+}
+
+function tournamentChaveLado(event, teamId, label, score, venceu) {
+  const team = teamId ? tournamentTeamById(event, teamId) : null;
+  const nome = team?.name || label || "A definir";
+  return `<span class="vp-bm-lado${venceu ? " vp-ganhou" : ""}" style="--team-line:${teamId ? teamLineColor(teamId) : TEAM_LINE_SEM_COR}">${teamId ? teamLogo(teamId, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}<span class="vp-bm-nome">${escapeHtml(nome)}</span><b>${escapeHtml(String(score ?? ""))}</b></span>`;
 }
 
 function tournamentCuratedBracketColumn(event, column, columns, columnIndex, maxMatches) {

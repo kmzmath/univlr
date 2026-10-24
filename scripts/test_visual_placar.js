@@ -325,5 +325,37 @@ const comJogador = (serie, linhas) => ({ ...serie, maps: serie.maps.map((mapa, i
 assert.deepStrictEqual(Array.from(context.kdDoJogadorNaSerie(jogadorFicha, comJogador(md3, [[20, 10], [15, 12], [9, 14]]))), [44, 36], "o K / D da serie soma os tres mapas do jogador");
 assert.strictEqual(context.kdDoJogadorNaSerie(jogadorFicha, comJogador(md1, [])), null, "serie em que o jogador nao jogou nao tem K / D");
 
+// ---------------------------------------------------------------- Tarefa 10
+// Pagina de campeonato com os dados reais do TOURNAMENT_OVERRIDES: campanha de
+// cada equipe na chave (W.O. conta, quem passou direto nao), chave em celulas
+// com o bye vazio, participantes so em campeonato em andamento.
+const overrides = vm.runInContext("TOURNAMENT_OVERRIDES", context);
+const rush = { id: "rush-series-3", name: "Rush Series 3ª Edição", status: "Finalizado", ...overrides["rush-series-3"] };
+const campanhas = context.campanhasDoCampeonato(rush);
+assert.deepStrictEqual(Array.from(campanhas.get("ceub_octopus_vulgaris")), [8, 1], "a CEUB fez 8-1 na Rush Series 3");
+assert.deepStrictEqual(Array.from(campanhas.get("azure_bears_black")), [4, 1], "a Azure Bears Black fez 4-1");
+assert.deepStrictEqual(Array.from(campanhas.get("inatel_gray")), [1, 2], "o W.O. sobre a UFRJ conta para a INATEL");
+
+const superior = rush.bracket.regions.find((region) => region.className === "upper-bracket");
+const chave = context.tournamentCuratedBracketRegion(rush, superior);
+const rodada32 = chave.split(/<div class="vp-rodada(?=["\s])/)[1] || "";
+const celulas = rodada32.match(/<div class="vp-celula[^"]*"[^>]*>[\s\S]*?<\/div>/g) || [];
+assert.strictEqual(celulas.length, 16, "a rodada de 32 tem 16 celulas");
+const byes = celulas.filter((celula) => celula.includes("vp-bye"));
+assert.strictEqual(byes.length, 11, "11 delas sao bye");
+assert(byes.every((celula) => !celula.includes("<button") && !celula.includes("Sem adversário")), "bye e celula vazia, sem partida dentro");
+assert(chave.includes('data-tournament-match="0-1-partida-2"'), "a partida da chave continua abrindo a previa pela mesma chave de antes");
+
+const visaoGeral = (evento) => context.tournamentTabContent(evento, [], [], "overview");
+const andamento = visaoGeral({ ...rush, status: "Em andamento" });
+assert(andamento.includes("Equipes Participantes"), "campeonato em andamento mostra a lista de participantes");
+const encerrado = visaoGeral(rush);
+assert(!encerrado.includes("Equipes Participantes"), "campeonato encerrado troca os participantes pela classificacao");
+assert(encerrado.includes("Classificação final") && encerrado.includes("vp-classif"), "campeonato encerrado tem a classificacao final");
+assert(/vp-classif-linha[\s\S]*?CEUB[\s\S]*?8-1/.test(encerrado) || encerrado.includes(">8-1<"), "a classificacao traz a campanha de cada equipe");
+
+const luce = { id: "copa-luce-inters", name: "Copa LUCE Inters", status: "Finalizado", ...overrides["copa-luce-inters"] };
+assert(context.tournamentSwissStandingsSection(luce).includes("<table"), "o suico continua mostrando a tabela");
+
 void vp;
 console.log("Visual Placar contract tests passed");

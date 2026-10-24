@@ -276,12 +276,13 @@
 }
 
 /* ==========================================================================
-   Placar: a linha de partida, com o mapa da serie de fundo
-   A lista e uma grade so e cada partida e uma subgrade dela: a coluna do nome
-   tem a largura do nome mais longo da lista (ate 230px, dai corta com
-   reticencias) e o placar cola nela. Todos os placares ficam alinhados.
+   A linha de partida: o modelo antigo, mais baixo
+   Escudo grande de cada lado, placar grande no meio com o vencedor em verde, e
+   em cima a hora, os nomes dos mapas e o campeonato. Cada dia e uma Placa: um
+   fundo so para o grupo, partida como linha.
    ========================================================================== */
 
+/* O banho da pintura de equipe no chaveamento (.vp-bm) anima por aqui. */
 @property --vp-wash {
   syntax: "<percentage>";
   inherits: true;
@@ -290,121 +291,86 @@
 
 .vp-lista {
   display: grid;
-  grid-template-columns: fit-content(230px) 30px minmax(0, 1fr) 128px;
-  row-gap: 4px;
   min-width: 0;
-}
-
-.vp-lista.vp-lista-kd {
-  grid-template-columns: fit-content(230px) 30px minmax(0, 1fr) 128px 66px;
+  background: var(--surface);
+  border-radius: 2px;
+  overflow: hidden;
 }
 
 .vp-lista > .empty-state {
-  grid-column: 1 / -1;
+  background: none;
 }
 
-.vp-m {
+/* --ponta e o espaco da hora e do campeonato nas pontas da linha de cima: os
+   nomes dos mapas ficam no meio e nunca passam por baixo deles. --fim e a
+   coluna do K / D com o vao dela, que fica fora do meio da partida. */
+.vp-pl {
+  --ponta: 150px;
+  --fim: 0px;
   position: relative;
   isolation: isolate;
-  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: subgrid;
-  grid-template-rows: 26px 26px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-areas:
+    "topo topo topo"
+    "a placar b";
+  align-items: center;
+  column-gap: 14px;
+  row-gap: 4px;
+  min-width: 0;
+  padding: 6px 14px 8px;
   color: inherit;
   text-decoration: none;
+  transition: background-color 160ms ease;
 }
 
-/* Uma equipe: risco de 3px e banho saindo da ponta, os dois na --team-line.
-   Quem venceu acende; quem perdeu recua e o banho cai pela metade. */
-.vp-t {
-  --vp-wash: 26%;
-  grid-column: 1 / 3;
-  display: grid;
-  grid-template-columns: subgrid;
-  align-items: center;
-  min-width: 0;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--team-line) var(--vp-wash), transparent) 0, transparent 100%);
-  box-shadow: inset 3px 0 0 var(--team-line);
-  transition: --vp-wash 200ms ease;
+.vp-pl + .vp-pl {
+  border-top: 1px solid var(--line);
 }
 
-.vp-t:not(.vp-ganhou) {
-  --vp-wash: 11%;
+.vp-pl:hover,
+.vp-pl:focus-visible {
+  background: var(--surface-2);
 }
 
-.vp-m:hover .vp-t {
-  --vp-wash: 36%;
+.vp-pl-kd {
+  --fim: 84px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) 70px;
+  grid-template-areas:
+    "topo topo topo kd"
+    "a placar b kd";
 }
 
-.vp-m:hover .vp-t:not(.vp-ganhou) {
-  --vp-wash: 17%;
-}
-
-.vp-who {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-  padding: 0 12px 0 13px;
-}
-
-.vp-t .team-logo {
-  flex: none;
-  width: 18px;
-  height: 18px;
-}
-
-.vp-nome {
-  min-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: var(--loss-ink);
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.vp-ganhou .vp-nome {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.vp-t b {
-  padding-right: 8px;
-  text-align: right;
-  font: 600 19px/1 var(--font-display);
-  font-variant-numeric: tabular-nums;
-  color: var(--loss-ink);
-}
-
-.vp-ganhou b {
-  color: var(--ink);
-}
-
-/* O mapa de fundo: comeca no placar e vai ate o fim da linha, entra e sai em
-   degrade. Cada fatia e um paralelogramo por recorte, com a arte em pe. */
-.vp-mapas {
-  --lean: 14px;
-  --seam: 2px;
+/* O holofote e os nomes dos mapas saem da mesma conta de largura, presos ao
+   mesmo bloco (a linha), e por isso cada nome cai sobre a propria fatia. */
+.vp-pl-artes,
+.vp-pl-mapas {
   position: absolute;
+  left: calc((100% - var(--fim)) / 2);
+  width: min(calc(200px + var(--maps, 1) * 120px), calc((100% - var(--fim)) * 0.62), calc(100% - var(--fim) - var(--ponta) * 2));
+  transform: translateX(-50%);
+}
+
+.vp-pl-artes {
+  --lean: 22px;
+  --seam: 2px;
   z-index: -1;
-  grid-column: 2 / -1;
-  grid-row: 1 / -1;
-  inset: 0;
+  top: 0;
+  bottom: 0;
   display: flex;
-  overflow: hidden;
-  opacity: 0.36;
+  opacity: 0.2;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%, #000 84%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 22%, #000 84%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 76%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 76%, transparent 100%);
   transition: opacity 200ms ease;
 }
 
-.vp-m:hover .vp-mapas {
-  opacity: 0.52;
+.vp-pl:hover .vp-pl-artes,
+.vp-pl:focus-visible .vp-pl-artes {
+  opacity: 0.32;
 }
 
-.vp-mapas i {
+.vp-pl-artes i {
   position: relative;
   flex: 1 1 0;
   min-width: 0;
@@ -416,7 +382,7 @@
   );
 }
 
-.vp-mapas img {
+.vp-pl-artes img {
   position: absolute;
   top: 0;
   left: calc(var(--lean) / -2);
@@ -427,84 +393,133 @@
   object-position: center 42%;
 }
 
-.vp-maplist {
-  grid-column: 3;
-  grid-row: 1 / 3;
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: 2px;
+.vp-pl-topo {
+  grid-area: topo;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   min-width: 0;
-  text-shadow: 0 1px 2px #000, 0 0 8px #000;
+  height: 16px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 16px;
 }
 
-.vp-maplist span {
-  max-width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font: 600 12px/1.15 var(--font-text);
-}
-
-.vp-maplist small {
-  color: rgba(245, 241, 242, 0.78);
-  font: 500 11px/1.15 var(--font-text);
-  font-variant-numeric: tabular-nums;
-}
-
-.vp-ev {
-  grid-column: 4;
-  grid-row: 1 / 3;
+.vp-pl-quando {
   display: flex;
   align-items: center;
   gap: 8px;
-  min-width: 0;
-  padding-left: 8px;
-  text-shadow: 0 1px 2px #000;
-}
-
-.vp-ev .event-logo.tiny {
   flex: none;
-  width: 18px;
-  height: 18px;
+  font-variant-numeric: tabular-nums;
 }
 
-.vp-ev-txt {
-  display: grid;
-  gap: 2px;
+.vp-pl-mapas {
+  top: 6px;
+  display: flex;
+  height: 16px;
+}
+
+.vp-pl-mapa {
+  flex: 1 1 0;
   min-width: 0;
-}
-
-.vp-ev-nome {
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.2;
+  text-align: center;
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.vp-ev-txt small {
+.vp-pl-evento {
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+  max-width: calc(var(--ponta) - 12px);
+}
+
+.vp-pl-evento-nome {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.vp-pl-evento .event-logo.tiny {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.vp-pl-lado {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.vp-pl-a {
+  grid-area: a;
+}
+
+.vp-pl-b {
+  grid-area: b;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.vp-pl-lado .team-logo {
+  flex: none;
+  width: 32px;
+  height: 32px;
+}
+
+.vp-pl-lado strong {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.vp-pl-placar {
+  grid-area: placar;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-pl-placar b {
+  min-width: 0.6em;
+  text-align: center;
+  color: var(--loss-ink);
+  font: 800 34px/1 var(--font-display);
+}
+
+.vp-pl-placar b.vp-venceu {
+  color: var(--win);
+}
+
+.vp-pl-placar i {
   color: var(--muted);
-  font-size: 11px;
-  line-height: 1.2;
+  font: 600 20px/1 var(--font-display);
+  font-style: normal;
 }
 
 .vp-kd {
-  grid-column: 5;
-  grid-row: 1 / 3;
+  grid-area: kd;
   display: grid;
   align-content: center;
   justify-items: end;
-  padding-right: 4px;
+  gap: 2px;
   font-variant-numeric: tabular-nums;
 }
 
 .vp-kd b {
-  font: 600 15px/1 var(--font-display);
+  font: 600 16px/1 var(--font-display);
 }
 
 .vp-kd small {
@@ -525,21 +540,51 @@
   font: 600 12px/1.2 var(--font-text);
 }
 
-@media (max-width: 760px) {
-  .vp-lista {
-    grid-template-columns: fit-content(190px) 28px minmax(0, 1fr);
+/* Celular: o campeonato vira so o escudo dele e a ponta encolhe, para os nomes
+   dos mapas caberem no meio da linha de cima. */
+@media (max-width: 560px) {
+  .vp-pl {
+    --ponta: 66px;
+    column-gap: 10px;
+    padding: 6px 10px 8px;
   }
 
-  .vp-lista.vp-lista-kd {
-    grid-template-columns: fit-content(170px) 28px minmax(0, 1fr) 52px;
+  .vp-pl-kd {
+    --fim: 64px;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) 54px;
   }
 
-  .vp-ev {
+  .vp-pl-evento-nome {
     display: none;
   }
 
-  .vp-lista-kd .vp-kd {
-    grid-column: 4;
+  .vp-pl-lado {
+    gap: 8px;
+  }
+
+  .vp-pl-lado .team-logo {
+    width: 26px;
+    height: 26px;
+  }
+
+  .vp-pl-lado strong {
+    font-size: 14px;
+  }
+
+  .vp-pl-placar {
+    gap: 6px;
+  }
+
+  .vp-pl-placar b {
+    font-size: 28px;
+  }
+
+  .vp-pl-placar i {
+    font-size: 17px;
+  }
+
+  .vp-kd b {
+    font-size: 14px;
   }
 }
 
@@ -974,10 +1019,6 @@
   min-width: 0;
 }
 
-.vp-trilho-meio .vp-lista {
-  grid-template-columns: fit-content(210px) 30px minmax(0, 1fr) 120px;
-}
-
 .vp-dia {
   margin: 0 0 6px;
   color: var(--muted);
@@ -1163,12 +1204,6 @@
     display: contents;
   }
 
-  /* Precisa repetir a regra de celular da lista: a do trilho do meio e mais
-     especifica e seguraria 120px para o campeonato, que no celular nao entra. */
-  .vp-trilho-meio .vp-lista {
-    grid-template-columns: fit-content(190px) 28px minmax(0, 1fr);
-  }
-
   .vp-home .vp-semana { order: 1; }
   .vp-home .vp-s-partidas { order: 2; }
   .vp-home .vp-s-ranking { order: 3; }
@@ -1194,7 +1229,7 @@
 }
 
 /* ==========================================================================
-   Partida: placar da serie, abas de mapa, comparativo, scoreboard e trilho
+   Partida: placar da serie, abas de mapa, comparativo, scoreboard e lineups
    ========================================================================== */
 
 .vp-partida {
@@ -1370,6 +1405,10 @@
   color: var(--loss-ink);
 }
 
+.vp-hero-numeros .vp-venceu {
+  color: var(--win);
+}
+
 .vp-hero-numeros i {
   color: var(--muted);
   font-size: 34px;
@@ -1383,10 +1422,12 @@
 }
 
 /* ---- abas de mapa ---- */
+/* A arte e o que diz qual aba e qual mapa: ela vem acesa, centrada na fatia,
+   com um veu so embaixo do texto para o nome continuar legivel. */
 .vp-abas-mapa {
   --lean: 22px;
   display: flex;
-  height: 48px;
+  height: 52px;
   background: #000;
 }
 
@@ -1405,12 +1446,30 @@
 }
 
 .vp-aba-arte {
-  opacity: 0.3;
+  object-position: center;
+  opacity: 0.68;
   transition: opacity 200ms ease;
 }
 
+.vp-aba::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(ellipse 30% 55% at 50% 50%, rgba(0, 0, 0, 0.5), transparent 100%);
+  pointer-events: none;
+}
+
+.vp-aba-serie::before {
+  display: none;
+}
+
 .vp-aba:hover .vp-aba-arte {
-  opacity: 0.45;
+  opacity: 0.84;
+}
+
+.vp-aba.active .vp-aba-arte {
+  opacity: 1;
 }
 
 .vp-aba.active {
@@ -1423,12 +1482,14 @@
   right: 18%;
   bottom: 0;
   left: 18%;
+  z-index: 2;
   height: 2px;
   background: var(--brand);
 }
 
 .vp-aba > span {
   position: relative;
+  z-index: 2;
   text-shadow: 0 1px 3px #000;
 }
 
@@ -1436,12 +1497,13 @@
   display: inline-flex;
   align-items: baseline;
   gap: 6px;
-  font: 600 14px/1 var(--font-text);
+  color: var(--ink);
+  font: 600 15px/1 var(--font-text);
   white-space: nowrap;
 }
 
 .vp-aba-nome small {
-  color: var(--muted);
+  color: rgba(245, 241, 242, 0.78);
   font-size: 12px;
   font-weight: 500;
 }
@@ -1451,7 +1513,7 @@
   align-items: center;
   gap: 6px;
   color: var(--ink);
-  font: 600 16px/1 var(--font-display);
+  font: 600 17px/1 var(--font-display);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1460,15 +1522,58 @@
   height: 16px;
 }
 
-/* ---- rounds do mapa ---- */
-.vp-rounds-wrap {
-  overflow-x: auto;
-  scrollbar-width: thin;
+/* ---- rounds do mapa: um bloco por tempo, lado a lado ---- */
+/* O primeiro bloco traz o escudo e a sigla de cada equipe; os seguintes, so o
+   escudo. Quando os blocos quebram de linha, o escudo continua dizendo quem e
+   quem. O round ganho segue na cor do lado que venceu (--side-attack e
+   --side-defense, do styles.css). */
+.vp-partida .vp-rounds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  width: auto;
+  max-width: 100%;
+  margin: 0;
+  overflow: visible;
 }
 
-.vp-rounds-wrap .round-timeline {
-  justify-self: start;
-  width: max-content;
+.vp-rounds-bloco {
+  --rotulo: 24px;
+  --celula: 25px;
+  display: grid;
+  gap: 4px;
+}
+
+.vp-rounds-bloco:first-child {
+  --rotulo: 84px;
+}
+
+.vp-partida .vp-rounds .round-row {
+  display: grid;
+  grid-template-columns: var(--rotulo) repeat(var(--rounds), var(--celula));
+  justify-content: start;
+  gap: 3px;
+}
+
+.vp-partida .vp-rounds .round-team-label {
+  justify-content: flex-start;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vp-rounds-bloco:not(:first-child) .round-team-label span {
+  display: none;
+}
+
+.vp-partida .vp-rounds .round-cell {
+  width: var(--celula);
+  min-width: 0;
+  height: 25px;
+  border: 0;
+  border-radius: 2px;
+  background: rgba(245, 241, 242, 0.06);
 }
 
 /* ---- barras espelhadas: comparativo e historico ---- */
@@ -1551,27 +1656,6 @@
   border-top: 0;
 }
 
-/* ---- corpo: scoreboard e lineups, com o trilho ao lado ---- */
-.vp-partida-corpo {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 340px;
-  gap: 32px;
-  align-items: start;
-}
-
-.vp-partida-main,
-.vp-partida-trilho {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 24px;
-  min-width: 0;
-}
-
-.vp-partida-main > section,
-.vp-partida-trilho > section {
-  min-width: 0;
-}
-
 /* Padrao e Avancado: duas palavras, a escolhida sublinhada. */
 .vp-partida .vp-sec .vp-modo {
   min-width: 0;
@@ -1601,21 +1685,21 @@
   box-shadow: inset 0 -2px var(--brand);
 }
 
-/* ---- scoreboard: as duas equipes numa tabela ---- */
+/* ---- scoreboard: as duas equipes numa tabela, na largura toda ---- */
+/* Largura fixa por coluna, e nao automatica: jogador e agentes tem o tamanho
+   do que mostram e as colunas de numero dividem o resto em partes iguais, com
+   o numero no meio. Assim nao sobra vao entre os agentes e o rAAting, e o
+   avancado (treze numeros, como o padrao) cabe sem rolar. Abaixo de 1000px a
+   tabela vira um bloco por jogador. */
 .vp-sb-wrap {
-  overflow-x: auto;
   border-radius: 2px;
   background: var(--surface);
-  scrollbar-width: thin;
 }
 
-/* Largura automatica: com `fixed` e o colgroup em porcentagem, a tabela
-   espremia no celular e o nick passava por cima dos agentes. Assim cada coluna
-   tem pelo menos o seu conteudo e a caixa rola. */
 .vp-partida .vp-sb {
   width: 100%;
-  min-width: 760px;
-  table-layout: auto;
+  min-width: 0;
+  table-layout: fixed;
   margin: 0;
   border: 0;
   border-collapse: collapse;
@@ -1623,19 +1707,34 @@
   font-variant-numeric: tabular-nums;
 }
 
-.vp-partida .vp-sb.scoreboard-advanced {
-  min-width: 1240px;
+.vp-partida .vp-sb col {
+  width: auto;
+}
+
+.vp-partida .vp-sb col.score-col-player {
+  width: 210px;
+}
+
+.vp-partida .vp-sb col.score-col-agents {
+  width: 112px;
 }
 
 .vp-partida .vp-sb th,
 .vp-partida .vp-sb td {
   height: 38px;
-  padding: 0 7px;
+  padding: 0 4px;
   border: 0;
   background: transparent;
   font-size: 13px;
-  text-align: right;
+  text-align: center;
   white-space: nowrap;
+}
+
+/* O styles.css listra as linhas pares (.match-scoreboard tr:nth-child(even) td),
+   e a listra cobria o destaque do escolhido e o hover. Aqui o fundo e da linha. */
+.vp-partida .vp-sb tr:nth-child(n) > td,
+.vp-partida .vp-sb tr:nth-child(n) > th {
+  background: transparent;
 }
 
 .vp-partida .vp-sb thead th {
@@ -1648,6 +1747,28 @@
   letter-spacing: 0;
 }
 
+/* O nome da coluna pode quebrar em duas linhas ("rAAting" e "3.0") quando a
+   coluna fica estreita, em vez de invadir a vizinha. */
+.vp-partida .vp-sb thead .score-sort-button {
+  justify-content: center;
+  width: 100%;
+  white-space: normal;
+  line-height: 1.1;
+}
+
+/* A linha de grupos do avancado: o nome da familia sobre as colunas dela. */
+.vp-partida .vp-sb thead tr.vp-sb-grupos th {
+  height: 24px;
+  border-bottom: 0;
+  font-size: 11px;
+  vertical-align: bottom;
+}
+
+.vp-partida .vp-sb thead tr.vp-sb-grupos th[scope="colgroup"] {
+  color: var(--ink);
+  box-shadow: inset 0 -1px var(--line-dark);
+}
+
 .vp-partida .vp-sb th:first-child,
 .vp-partida .vp-sb td:first-child {
   padding-left: 14px;
@@ -1657,6 +1778,14 @@
 .vp-partida .vp-sb th:nth-child(2),
 .vp-partida .vp-sb td:nth-child(2) {
   text-align: left;
+}
+
+.vp-partida .vp-sb thead tr.vp-sb-grupos th:nth-child(2) {
+  text-align: center;
+}
+
+.vp-partida .vp-sb td:first-child {
+  overflow: hidden;
 }
 
 .vp-partida .vp-sb .score-sort-button {
@@ -1693,15 +1822,23 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  max-width: 100%;
   font-weight: 600;
 }
 
 .vp-sb-equipe-nome .team-logo {
+  flex: none;
   width: 20px;
   height: 20px;
 }
 
+.vp-sb-equipe-nome strong {
+  min-width: 0;
+  overflow: hidden;
+}
+
 .vp-sb-equipe-nome small {
+  flex: none;
   color: var(--muted);
   font-size: 12px;
   font-weight: 500;
@@ -1770,7 +1907,19 @@
   height: 22px;
 }
 
-/* ---- lineups ---- */
+/* ---- embaixo do scoreboard: o melhor da partida e as lineups ---- */
+.vp-partida-baixo {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.vp-partida-baixo > section {
+  min-width: 0;
+}
+
+/* ---- lineups e historico ---- */
 .vp-lineups {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1801,7 +1950,6 @@
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 .vp-banda-cab small {
@@ -1844,20 +1992,15 @@
 }
 
 /* A foto solta, sem moldura: so a pessoa, sentada na base. */
-.vp-quem .player-portrait,
-.vp-duelo-quem .player-portrait {
+.vp-quem .player-portrait {
+  width: 100%;
+  height: 96px;
   aspect-ratio: auto;
   border-radius: 0;
   background: none;
 }
 
-.vp-quem .player-portrait {
-  width: 100%;
-  height: 96px;
-}
-
-.vp-quem .player-portrait img,
-.vp-duelo-quem .player-portrait img {
+.vp-quem .player-portrait img {
   object-fit: contain;
   object-position: bottom;
 }
@@ -1876,7 +2019,6 @@
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 .vp-quem-nome img,
@@ -1887,7 +2029,74 @@
   opacity: 0.8;
 }
 
-/* ---- trilho: melhor da partida e historico ---- */
+/* O historico logo abaixo das fotos: o nome de cada escolhido na ponta do lado
+   dele, e as barras em quatro colunas, como o comparativo do topo. */
+.vp-historico {
+  margin-top: 14px;
+}
+
+.vp-duelo-cab {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+.vp-duelo-quem {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-duelo-b {
+  justify-content: flex-end;
+}
+
+.vp-duelo-quem strong {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.vp-duelo-quem small {
+  flex: none;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-duelo-b small {
+  order: -1;
+}
+
+.vp-duelo-quem:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vp-duelo-titulo {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.vp-duelo-barras {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 28px;
+}
+
+.vp-duelo-barras .vp-espelho {
+  border-top: 0;
+}
+
+/* ---- melhor da partida ---- */
 .vp-mvp {
   height: 196px;
   border-radius: 2px;
@@ -1915,79 +2124,146 @@
   font-variant-numeric: tabular-nums;
 }
 
-.vp-dica {
-  margin: -4px 0 10px;
-  color: var(--muted);
-  font-size: 12px;
+/* O nick e o Riot ID em duas linhas curtas, para a linha ficar em 38px. O
+   link do nick perde a altura minima de toque do celular: quem recebe o toque
+   ali e a linha inteira, que escolhe o jogador do historico. */
+.vp-partida .vp-sb td:first-child {
+  line-height: 1.15;
 }
 
-.vp-duelo-cab {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: end;
-  margin-bottom: 6px;
+.vp-partida .vp-sb td:first-child a {
+  display: inline;
+  min-height: 0;
+  padding: 0;
 }
 
-.vp-duelo-quem {
-  display: grid;
-  grid-template-columns: 52px minmax(0, 1fr);
-  align-items: end;
-  gap: 8px;
-  min-width: 0;
-  color: inherit;
-  text-decoration: none;
+.vp-partida .vp-sb .agent-stack,
+.vp-partida .vp-sb .agent-mini {
+  vertical-align: middle;
 }
 
-.vp-duelo-b {
-  grid-template-columns: minmax(0, 1fr) 52px;
-  text-align: right;
+.vp-partida .vp-sb tr.vp-sb-equipe th {
+  text-transform: none;
+  letter-spacing: 0;
 }
 
-.vp-duelo-b .player-portrait {
-  order: 2;
-}
-
-.vp-duelo-quem .player-portrait {
-  width: 52px;
-  height: 62px;
-}
-
-.vp-duelo-quem > span {
-  min-width: 0;
-}
-
-.vp-duelo-quem strong {
-  display: block;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.vp-duelo-quem small {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.vp-duelo-quem:hover strong {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.vp-duelo-cab + .vp-espelho {
-  border-top: 0;
-}
-
-/* ---- tela media: o trilho desce para baixo do scoreboard ---- */
+/* ---- tela media: o melhor da partida sobe para cima das lineups ---- */
 @media (max-width: 1180px) {
-  .vp-partida-corpo {
+  .vp-partida-baixo {
     grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
   }
 
-  .vp-partida-trilho {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    column-gap: 32px;
+  .vp-s-mvp {
+    width: min(100%, 420px);
+  }
+
+  .vp-partida .vp-sb col.score-col-player {
+    width: 170px;
+  }
+
+  .vp-partida .vp-sb col.score-col-agents {
+    width: 104px;
+  }
+}
+
+/* ---- scoreboard em blocos: um por jogador, os numeros com rotulo ---- */
+/* A tabela vira grade de --sb-cols colunas: na primeira linha o nick com o
+   Riot ID, os agentes e o rAAting; embaixo os outros doze numeros, cada um com
+   o nome em cima (data-label). A linha da equipe segue o mesmo desenho com as
+   medias. O cabecalho de colunas sai: o rotulo ja esta em cada numero. */
+@media (max-width: 1000px) {
+  .vp-partida .vp-sb,
+  .vp-partida .vp-sb tbody {
+    display: block;
+  }
+
+  .vp-partida .vp-sb colgroup,
+  .vp-partida .vp-sb thead {
+    display: none;
+  }
+
+  .vp-partida .vp-sb tbody {
+    --sb-cols: 12;
+  }
+
+  .vp-partida .vp-sb tbody + tbody {
+    margin-top: 6px;
+  }
+
+  .vp-partida .vp-sb tr {
+    display: grid;
+    grid-template-columns: repeat(var(--sb-cols), minmax(0, 1fr));
+    align-items: center;
+    row-gap: 4px;
+    padding: 7px 10px 8px;
+  }
+
+  .vp-partida .vp-sb tbody + tbody tr.vp-sb-equipe {
+    border-top: 0;
+  }
+
+  .vp-partida .vp-sb th,
+  .vp-partida .vp-sb td,
+  .vp-partida .vp-sb tr.vp-sb-equipe > * {
+    display: block;
+    height: auto;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .vp-partida .vp-sb th:first-child,
+  .vp-partida .vp-sb td:first-child {
+    grid-column: span calc(var(--sb-cols) - 3);
+    padding-left: 0;
+  }
+
+  .vp-partida .vp-sb tr.vp-sb-jogador td:nth-child(2) {
+    grid-column: span 2;
+    text-align: right;
+  }
+
+  .vp-partida .vp-sb tr.vp-sb-equipe th:first-child {
+    grid-column: span calc(var(--sb-cols) - 1);
+    box-shadow: none;
+  }
+
+  .vp-partida .vp-sb tr.vp-sb-equipe {
+    box-shadow: inset 3px 0 0 var(--team-line);
+  }
+
+  .vp-partida .vp-sb tr.vp-escolhido {
+    box-shadow: inset 3px 0 0 var(--team-line);
+  }
+
+  .vp-partida .vp-sb tr.vp-escolhido td:first-child {
+    box-shadow: none;
+  }
+
+  .vp-partida .vp-sb td.numeric,
+  .vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric {
+    display: grid;
+    justify-items: center;
+    gap: 1px;
+    line-height: 15px;
+  }
+
+  .vp-partida .vp-sb td.numeric::before,
+  .vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric::before {
+    content: attr(data-label);
+    max-width: 100%;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 12px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .vp-partida .vp-sb tbody {
+    --sb-cols: 6;
   }
 }
 
@@ -2039,18 +2315,16 @@
     inset: 0 10%;
   }
 
+  /* As abas dividem a largura: numa md3 sao quatro de ~88px, sem rolar. */
   .vp-abas-mapa {
-    overflow-x: auto;
-    scrollbar-width: none;
+    --lean: 12px;
+    height: 54px;
   }
 
-  /* .vp-abas-mapa na frente: o styles.css zera o min-width de tudo dentro de
-     .match-page com um seletor mais forte que uma classe so. */
   .vp-abas-mapa .vp-aba {
-    flex: 0 0 auto;
-    min-width: 118px;
     grid-template-columns: auto;
     justify-items: center;
+    align-content: center;
     gap: 3px;
   }
 
@@ -2058,131 +2332,53 @@
     font-size: 12px;
   }
 
-  .vp-comparativo {
+  .vp-aba-placar {
+    font-size: 15px;
+  }
+
+  .vp-comparativo,
+  .vp-duelo-barras {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 20px;
   }
 
-  /* Melhor da partida, scoreboard, lineups e so depois o historico. */
-  .vp-partida-corpo {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 20px;
+  .vp-rounds-bloco:first-child {
+    --rotulo: 24px;
   }
 
-  .vp-partida-main,
-  .vp-partida-trilho {
-    display: contents;
-  }
-
-  .vp-s-mvp { order: 1; }
-  .vp-s-sb { order: 2; }
-  .vp-s-lineups { order: 3; }
-  .vp-s-historico { order: 4; }
-  .vp-s-fonte { order: 5; }
-
-  .vp-partida .vp-sb th:first-child,
-  .vp-partida .vp-sb td:first-child {
-    position: sticky;
-    left: 0;
-    z-index: 1;
-    background: var(--surface);
-  }
-
-  .vp-partida .vp-sb tr.vp-sb-equipe th:first-child {
-    background: color-mix(in srgb, var(--team-line) 26%, var(--surface));
-  }
-
-  .vp-partida .vp-sb tr.vp-escolhido td:first-child {
-    background: color-mix(in srgb, var(--team-line) 16%, var(--surface));
+  .vp-rounds-bloco .round-team-label span {
+    display: none;
   }
 
   .vp-lineups {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .vp-banda-fotos {
-    grid-template-columns: repeat(5, 92px);
-    overflow-x: auto;
-    scrollbar-width: none;
+    gap: 14px;
   }
 
   .vp-quem {
-    grid-template-rows: 84px auto;
+    grid-template-rows: 76px auto;
+    gap: 4px;
   }
 
   .vp-quem .player-portrait {
-    height: 84px;
+    height: 76px;
+  }
+
+  .vp-quem-nome {
+    font-size: 12px;
   }
 
   .vp-espelho {
     padding: 4px 0 5px;
   }
 
-  .vp-partida .vp-sb tr.vp-sb-equipe > * {
-    height: 36px;
+  .vp-duelo-titulo {
+    display: none;
   }
-}
 
-/* O nick e o Riot ID em duas linhas curtas, para a linha ficar em 38px. O
-   link do nick perde a altura minima de toque do celular: quem recebe o toque
-   ali e a linha inteira, que escolhe o jogador do historico. */
-.vp-partida .vp-sb td:first-child {
-  line-height: 1.15;
-}
-
-.vp-partida .vp-sb td:first-child a {
-  display: inline;
-  min-height: 0;
-  padding: 0;
-}
-
-.vp-partida .vp-sb .agent-stack,
-.vp-partida .vp-sb .agent-mini {
-  vertical-align: middle;
-}
-
-.vp-partida .vp-sb tr.vp-sb-equipe th {
-  text-transform: none;
-  letter-spacing: 0;
-}
-
-/* A fonte de cada mapa: o arquivo numa linha, o caminho embaixo, sem caixa. */
-.vp-s-fonte .simple-list {
-  display: grid;
-  gap: 0;
-}
-
-.vp-s-fonte .simple-row {
-  display: block;
-  padding: 5px 0;
-  border: 0;
-  border-top: 1px solid var(--line);
-  border-radius: 0;
-  background: none;
-  font-size: 12px;
-  line-height: 1.25;
-  overflow-wrap: anywhere;
-}
-
-.vp-s-fonte .simple-row:first-child {
-  border-top: 0;
-}
-
-.vp-s-fonte .simple-row .rank-number,
-.vp-s-fonte .simple-row br {
-  display: none;
-}
-
-.vp-s-fonte .simple-row strong {
-  display: block;
-  font-weight: 600;
-}
-
-.vp-s-fonte .simple-row .tiny {
-  color: var(--muted);
-  font-size: 11px;
+  .vp-duelo-cab {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
 }
 
 /* ==========================================================================

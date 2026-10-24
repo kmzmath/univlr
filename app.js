@@ -6509,7 +6509,7 @@ function eventosDoDia(itens) {
 // so faz sentido numa lista longa. `kd` traz o abate e morte de um jogador.
 function listaPorDia(series, options = {}) {
   return agruparPorDia(series)
-    .map((grupo) => `<p class="vp-dia">${escapeHtml(grupo.rotulo)}</p><div class="vp-lista${options.kd ? " vp-lista-kd" : ""}">${grupo.itens.map((item) => matchResultRow(item, { when: "hour", ...(options.kd ? { kd: options.kd(item) } : {}) })).join("")}</div>`)
+    .map((grupo) => `<p class="vp-dia">${escapeHtml(grupo.rotulo)}</p><div class="vp-lista">${grupo.itens.map((item) => matchResultRow(item, { when: "hour", ...(options.kd ? { kd: options.kd(item) } : {}) })).join("")}</div>`)
     .join("");
 }
 
@@ -8274,7 +8274,7 @@ function renderMatchDetail(id) {
           ${matchHeroBanners(selectedMatches)}
           ${placarHeroLado(match.teamA, "a")}
           <div class="vp-hero-score">
-            <span class="vp-hero-numeros"><b class="${score.a < score.b ? "vp-perdeu" : ""}">${score.a}</b><i>:</i><b class="${score.b < score.a ? "vp-perdeu" : ""}">${score.b}</b></span>
+            ${placarHeroNumeros(score.a, score.b)}
             <small>${escapeHtml(heroDetalhe)}</small>
           </div>
           ${placarHeroLado(match.teamB, "b")}
@@ -8284,40 +8284,22 @@ function renderMatchDetail(id) {
       ${matchMapTabs(match, series, aggregateMode)}
 
       <div class="match-tab-panel">
-        ${aggregateMode ? "" : `<section class="vp-s-rounds">${sectionHead("Rounds", `${match.mapName}, ${formatDuration(match.durationMillis)}`)}<div class="vp-rounds-wrap">${roundTimeline(match)}</div></section>`}
+        ${aggregateMode ? "" : `<section class="vp-s-rounds">${sectionHead("Rounds", `${match.mapName}, ${formatDuration(match.durationMillis)}`)}${roundTimeline(match)}</section>`}
         ${comparativoFaixa(match, selectedMatches)}
-        <div class="vp-partida-corpo">
-          <div class="vp-partida-main">
-            <section class="vp-s-sb">
-              <header class="vp-sec">
-                <h2>Scoreboard</h2>
-                <span class="vp-sec-aside">${escapeHtml(aggregateMode ? `Série inteira, ${selectedMatches.length} mapas` : match.mapName)}</span>
-                <div class="match-scoreboard-mode-switch vp-modo" data-scoreboard-mode="${escapeHtml(scoreboardMode)}" role="group" aria-label="Modo do scoreboard">
-                  <button type="button" data-match-scoreboard-mode="standard" aria-pressed="${scoreboardMode === "standard"}" class="${scoreboardMode === "standard" ? "active" : ""}">Padrão</button>
-                  <button type="button" data-match-scoreboard-mode="advanced" aria-pressed="${scoreboardMode === "advanced"}" class="${scoreboardMode === "advanced" ? "active" : ""}">Avançado</button>
-                </div>
-              </header>
-              ${placarScoreboard(match, lados, scoreboardColumnsList, { compareKey, selection })}
-            </section>
-            <section class="vp-s-lineups">
-              ${sectionHead("Lineups")}
-              ${matchLineupBands(compareKey, selection, match.teamA, teamALineupPlayers, match.teamB, teamBLineupPlayers)}
-            </section>
-            <section class="vp-s-fonte">
-              ${sectionHead("Fonte")}
-              <div class="simple-list">
-                ${selectedMatches.map((item) => `<div class="simple-row"><span class="rank-number">API</span><span><strong>${escapeHtml(item.fileName)}</strong><br><span class="tiny">${escapeHtml(item.sourcePath)}</span></span><span></span></div>`).join("")}
-              </div>
-            </section>
-          </div>
-          <aside class="vp-partida-trilho">
-            ${matchMvpCard(mvp, selectedMatches.length)}
-            <section class="vp-s-historico">
-              ${sectionHead("Histórico dos jogadores")}
-              <p class="vp-dica">Média de todas as partidas de cada um. Clique num jogador para trocar.</p>
-              ${matchLineupDuel(selection, match.teamA, escolhiveisA, match.teamB, escolhiveisB)}
-            </section>
-          </aside>
+        <section class="vp-s-sb">
+          <header class="vp-sec">
+            <h2>Scoreboard</h2>
+            <span class="vp-sec-aside">${escapeHtml(aggregateMode ? `Série inteira, ${selectedMatches.length} mapas` : match.mapName)}</span>
+            <div class="match-scoreboard-mode-switch vp-modo" data-scoreboard-mode="${escapeHtml(scoreboardMode)}" role="group" aria-label="Modo do scoreboard">
+              <button type="button" data-match-scoreboard-mode="standard" aria-pressed="${scoreboardMode === "standard"}" class="${scoreboardMode === "standard" ? "active" : ""}">Padrão</button>
+              <button type="button" data-match-scoreboard-mode="advanced" aria-pressed="${scoreboardMode === "advanced"}" class="${scoreboardMode === "advanced" ? "active" : ""}">Avançado</button>
+            </div>
+          </header>
+          ${placarScoreboard(match, lados, scoreboardColumnsList, { compareKey, selection })}
+        </section>
+        <div class="vp-partida-baixo">
+          ${matchMvpCard(mvp, selectedMatches.length)}
+          ${matchLineupsSecao(compareKey, selection, match.teamA, teamALineupPlayers, match.teamB, teamBLineupPlayers, escolhiveisA, escolhiveisB)}
         </div>
       </div>
       ${window.Comments ? window.Comments.shell("match", match.seriesKey) : ""}
@@ -8429,23 +8411,33 @@ function scoreForTeamInMatch(match, teamId) {
   return 0;
 }
 
+// A linha do tempo em blocos: primeiro tempo, segundo tempo e prorrogacao.
+// Lado a lado ela se le como uma linha so, com o intervalo marcado pelo vao, e
+// no celular cada bloco cabe na largura da tela: nada rola de lado.
 function roundTimeline(match) {
   const rounds = match.roundResults || [];
-  const grid = `grid-template-columns:128px repeat(${rounds.length}, 27px)`;
+  const blocos = [rounds.slice(0, 12), rounds.slice(12, 24), rounds.slice(24)].filter((bloco) => bloco.length);
   return `
-    <div class="round-timeline">
-      <div class="round-row numbers" style="${grid}"><span></span>${rounds.map((round) => `<span>${round.roundNum + 1}</span>`).join("")}</div>
-      ${roundTimelineTeam(match, match.teamA, grid)}
-      ${roundTimelineTeam(match, match.teamB, grid)}
+    <div class="round-timeline vp-rounds">
+      ${blocos
+        .map(
+          (bloco) => `
+        <div class="vp-rounds-bloco" style="--rounds:${bloco.length}">
+          <div class="round-row numbers"><span></span>${bloco.map((round) => `<span>${round.roundNum + 1}</span>`).join("")}</div>
+          ${roundTimelineTeam(match, match.teamA, bloco)}
+          ${roundTimelineTeam(match, match.teamB, bloco)}
+        </div>`,
+        )
+        .join("")}
     </div>
   `;
 }
 
-function roundTimelineTeam(match, team, grid) {
+function roundTimelineTeam(match, team, rounds) {
   return `
-    <div class="round-row" style="${grid}">
-      <strong class="round-team-label">${teamLogo(team.id, "round-mini")}<span>${escapeHtml(team.sourceTag || team.tag || team.shortTag)}</span></strong>
-      ${(match.roundResults || [])
+    <div class="round-row">
+      <strong class="round-team-label">${teamLogo(team.id, "round-mini")}<span>${escapeHtml(team.sourceTag || team.tag || team.shortTag || "")}</span></strong>
+      ${rounds
         .map((round) => {
           const won = round.winningTeam === team.color;
           const sideClass = won ? roundSideClass(round) : "";
@@ -8607,16 +8599,16 @@ const SCOREBOARD_STANDARD_COLUMNS = [
 
 const SCOREBOARD_ADVANCED_COLUMNS = [
   SCOREBOARD_STANDARD_COLUMNS[0],
-  { key: "kill_rating", col: "kill-rating", label: "KillRating", aggregate: "weighted", value: (player) => metricValue(player, "kill_rating"), format: (value) => formatScoreboardNumber(value) },
-  { key: "damage_rating", col: "damage-rating", label: "DamageRating", aggregate: "weighted", value: (player) => metricValue(player, "damage_rating"), format: (value) => formatScoreboardNumber(value) },
-  { key: "round_swing_rating", col: "round-swing-rating", label: "RoundSwingRating", aggregate: "weighted", value: (player) => metricValue(player, "round_swing_rating"), format: (value) => formatScoreboardNumber(value) },
-  { key: "survival_rating", col: "survival-rating", label: "SurvivalRating", aggregate: "weighted", value: (player) => metricValue(player, "survival_rating"), format: (value) => formatScoreboardNumber(value) },
-  { key: "kast_rating", col: "kast-rating", label: "KASTRating", aggregate: "weighted", value: (player) => metricValue(player, "kast_rating"), format: (value) => formatScoreboardNumber(value) },
-  { key: "multi_kill_rating", col: "multi-kill-rating", label: "MultiKillRating", aggregate: "weighted", value: (player) => metricValue(player, "multi_kill_rating"), format: (value) => formatScoreboardNumber(value) },
-  { key: "ekpr", col: "ekpr", label: "eKPR", aggregate: "weighted", value: (player) => metricValue(player, "ekpr"), format: (value) => formatScoreboardNumber(value) },
-  { key: "edpr", col: "edpr", label: "eDPR", aggregate: "weighted", value: (player) => metricValue(player, "edpr"), format: (value) => formatScoreboardNumber(value) },
-  { key: "eadr", col: "eadr", label: "eADR", aggregate: "weighted", value: (player) => metricValue(player, "eadr"), format: (value) => formatScoreboardNumber(value, 0) },
-  { key: "ekast", col: "ekast", label: "eKAST", aggregate: "weighted", value: (player) => metricValue(player, "ekast"), format: (value) => formatScoreboardPercent(value) },
+  { key: "kill_rating", col: "kill-rating", label: "KillRating", short: "Kill", grupo: "Componentes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "kill_rating"), format: (value) => formatScoreboardNumber(value) },
+  { key: "damage_rating", col: "damage-rating", label: "DamageRating", short: "Dano", grupo: "Componentes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "damage_rating"), format: (value) => formatScoreboardNumber(value) },
+  { key: "round_swing_rating", col: "round-swing-rating", label: "RoundSwingRating", short: "Swing", grupo: "Componentes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "round_swing_rating"), format: (value) => formatScoreboardNumber(value) },
+  { key: "survival_rating", col: "survival-rating", label: "SurvivalRating", short: "Sobrev.", grupo: "Componentes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "survival_rating"), format: (value) => formatScoreboardNumber(value) },
+  { key: "kast_rating", col: "kast-rating", label: "KASTRating", short: "KAST", grupo: "Componentes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "kast_rating"), format: (value) => formatScoreboardNumber(value) },
+  { key: "multi_kill_rating", col: "multi-kill-rating", label: "MultiKillRating", short: "Multi", grupo: "Componentes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "multi_kill_rating"), format: (value) => formatScoreboardNumber(value) },
+  { key: "ekpr", col: "ekpr", label: "eKPR", grupo: "Ajustado por economia", aggregate: "weighted", value: (player) => metricValue(player, "ekpr"), format: (value) => formatScoreboardNumber(value) },
+  { key: "edpr", col: "edpr", label: "eDPR", grupo: "Ajustado por economia", aggregate: "weighted", value: (player) => metricValue(player, "edpr"), format: (value) => formatScoreboardNumber(value) },
+  { key: "eadr", col: "eadr", label: "eADR", grupo: "Ajustado por economia", aggregate: "weighted", value: (player) => metricValue(player, "eadr"), format: (value) => formatScoreboardNumber(value, 0) },
+  { key: "ekast", col: "ekast", label: "eKAST", grupo: "Ajustado por economia", aggregate: "weighted", value: (player) => metricValue(player, "ekast"), format: (value) => formatScoreboardPercent(value) },
   { key: "mk_per_r", col: "mk-r", label: "MK/R", aggregate: "weighted", value: (player) => metricValue(player, "mk_per_r"), format: (value) => formatScoreboardNumber(value) },
   { key: "swing", col: "swing", label: "Swing/R", headingClass: "case-heading", aggregate: "weighted", value: (player) => playerSwingPerRound(player), format: (value) => formatScoreboardSignedDecimal(value), tone: (value) => directionalTone(value) },
 ];
@@ -8634,8 +8626,22 @@ function scoreboardColgroup(columns = scoreboardColumns()) {
   return `<colgroup>${colNames.map((name) => `<col class="score-col-${name}" />`).join("")}</colgroup>`;
 }
 
+// O avancado tem treze colunas de numero. Para caber na largura da pagina sem
+// rolar, o cabecalho usa o nome curto ("Kill", e nao "KillRating") e uma linha
+// de cima diz de que familia ele e. O nome completo fica no rotulo de
+// acessibilidade e o significado no title, como no padrao.
 function scoreboardHeader(boardKey, columns = scoreboardColumns()) {
+  const grupos = [];
+  for (const column of columns) {
+    const ultimo = grupos[grupos.length - 1];
+    if (ultimo && ultimo.nome === (column.grupo || "")) ultimo.tamanho += 1;
+    else grupos.push({ nome: column.grupo || "", tamanho: 1 });
+  }
+  const linhaDeGrupos = grupos.some((grupo) => grupo.nome)
+    ? `<tr class="vp-sb-grupos"><th colspan="2"></th>${grupos.map((grupo) => (grupo.nome ? `<th colspan="${grupo.tamanho}" scope="colgroup">${escapeHtml(grupo.nome)}</th>` : `<th colspan="${grupo.tamanho}"></th>`)).join("")}</tr>`
+    : "";
   return `
+    ${linhaDeGrupos}
     <tr>
       <th>Jogador</th>
       <th>Agentes</th>
@@ -8656,7 +8662,7 @@ function scoreboardHeaderCell(boardKey, column) {
   return `
     <th class="${escapeHtml(className)}" aria-sort="${direction === "asc" ? "ascending" : direction === "desc" ? "descending" : "none"}">
       <button type="button" class="score-sort-button" data-board-key="${escapeHtml(boardKey)}" data-scoreboard-sort="${escapeHtml(column.key)}" aria-label="Ordenar por ${escapeHtml(column.label)}: ${nextLabel}" title="${escapeHtml(metricHint(column.label))}">
-        <span>${escapeHtml(column.label)}</span><i aria-hidden="true">${escapeHtml(indicator)}</i>
+        <span>${escapeHtml(column.short || column.label)}</span><i aria-hidden="true">${escapeHtml(indicator)}</i>
       </button>
     </th>
   `;
@@ -8668,7 +8674,7 @@ function scoreboardTeamAverages(players, columns = scoreboardColumns()) {
     const tone = column.tone?.(value) || "";
     const className = ["vlr-board-metric", tone].filter(Boolean).join(" ");
     const title = column.summaryTitle ? ` title="${escapeHtml(column.summaryTitle)}"` : "";
-    return `<td class="${escapeHtml(className)}"${title}><small>${escapeHtml(column.summaryLabel || column.label)}</small><strong>${escapeHtml(formatScoreboardColumnValue(column, value, true))}</strong></td>`;
+    return `<td class="${escapeHtml(className)}" data-label="${escapeHtml(column.short || column.label)}"${title}><small>${escapeHtml(column.summaryLabel || column.label)}</small><strong>${escapeHtml(formatScoreboardColumnValue(column, value, true))}</strong></td>`;
   }).join("");
 }
 
@@ -8810,7 +8816,9 @@ function scoreboardCell(player, column) {
   const title = column.title?.(player);
   const titleAttr = title ? ` title="${escapeHtml(title)}" tabindex="0"` : "";
   const display = column.cellFormat ? column.cellFormat(player, value) : formatScoreboardColumnValue(column, value, false);
-  return `<td class="${escapeHtml(className)}"${titleAttr}>${escapeHtml(display)}</td>`;
+  // data-label e o rotulo do numero no celular, onde a linha vira um bloco e o
+  // cabecalho de colunas fica longe demais para ser lido.
+  return `<td class="${escapeHtml(className)}" data-label="${escapeHtml(column.short || column.label)}"${titleAttr}>${escapeHtml(display)}</td>`;
 }
 
 function playerMatchHandle(player) {
@@ -8991,6 +8999,13 @@ function placarRankRotulo(teamId) {
 }
 
 // Uma ponta do placar da serie: a equipe do seu lado, pintada com a cor dela.
+// O placar grande do topo: quem venceu em verde, quem perdeu apagado, e no
+// empate (mapa em andamento) os dois ficam na cor normal.
+function placarHeroNumeros(a, b) {
+  const classe = (valor, contra) => (Number(valor) > Number(contra) ? ' class="vp-venceu"' : Number(valor) < Number(contra) ? ' class="vp-perdeu"' : "");
+  return `<span class="vp-hero-numeros"><b${classe(a, b)}>${escapeHtml(a)}</b><i>:</i><b${classe(b, a)}>${escapeHtml(b)}</b></span>`;
+}
+
 function placarHeroLado(team, side) {
   const rotulo = placarRankRotulo(team.id);
   return `<a class="vp-hero-lado vp-lado-${side}" href="#/teams/${escapeHtml(team.id)}" style="--team-line:${teamLineColor(team.id)}">${teamLogo(team.id, "large")}<span><strong>${escapeHtml(team.name)}</strong>${rotulo ? `<small>${escapeHtml(rotulo)}</small>` : ""}</span></a>`;
@@ -9069,6 +9084,19 @@ function placarScoreboard(match, lados, columns = scoreboardColumns(), escolha =
   `;
 }
 
+// Lineups e historico sao uma secao so: as fotos das duas equipes lado a lado
+// e, logo embaixo, as barras dos dois jogadores escolhidos. Clicar numa foto
+// (ou numa linha do scoreboard, para chegar num reserva) troca quem aparece.
+function matchLineupsSecao(compareKey, selection, teamA, lineupA, teamB, lineupB, escolhiveisA = lineupA, escolhiveisB = lineupB) {
+  return `
+    <section class="vp-s-lineups">
+      ${sectionHead("Lineups", "Clique num jogador para ver o histórico dele aqui embaixo.")}
+      ${matchLineupBands(compareKey, selection, teamA, lineupA, teamB, lineupB)}
+      <div class="vp-historico">${matchLineupDuel(selection, teamA, escolhiveisA, teamB, escolhiveisB)}</div>
+    </section>
+  `;
+}
+
 // As lineups lado a lado, com a foto solta e o icone da funcao. Clicar numa
 // foto escolhe o jogador do historico.
 function matchLineupBands(compareKey, selection, teamA, playersA, teamB, playersB) {
@@ -9102,17 +9130,17 @@ function matchLineupDuel(selection, teamA, playersA, teamB, playersB) {
   const scales = lineupStatScales([...lineupScalePlayers(playersA, playersB), left, right]);
   const corA = teamLineColor(teamA.id);
   const corB = teamLineColor(teamB.id);
-  const cabeca = (team, historical, matchPlayer, side) => `<a class="vp-duelo-quem vp-duelo-${side}" href="${playerHref(matchPlayer)}">${playerPortrait(historical)}<span><strong>${escapeHtml(historical.nick || matchPlayer.nick)}</strong><small>${escapeHtml(team.sourceTag || team.tag || "")}</small></span></a>`;
+  const cabeca = (team, historical, matchPlayer, side) => `<a class="vp-duelo-quem vp-duelo-${side}" href="${playerHref(matchPlayer)}"><strong>${escapeHtml(historical.nick || matchPlayer.nick)}</strong><small>${escapeHtml(team.sourceTag || team.tag || "")}</small></a>`;
   return `
     <div class="vp-duelo">
-      <div class="vp-duelo-cab">${cabeca(teamA, left, escolhidoA, "a")}${cabeca(teamB, right, escolhidoB, "b")}</div>
-      ${lineupStatRows()
+      <div class="vp-duelo-cab">${cabeca(teamA, left, escolhidoA, "a")}<span class="vp-duelo-titulo">Histórico, média de todas as partidas</span>${cabeca(teamB, right, escolhidoB, "b")}</div>
+      <div class="vp-duelo-barras">${lineupStatRows()
         .map((row) => {
           const va = Number(row.value(left)) || 0;
           const vb = Number(row.value(right)) || 0;
           return espelhoLinha({ label: row.label, valorA: row.format(va, left), valorB: row.format(vb, right), larguraA: lineupMetricLevel(va, scales[row.key]), larguraB: lineupMetricLevel(vb, scales[row.key]), maiorA: va > vb, maiorB: vb > va, corA, corB });
         })
-        .join("")}
+        .join("")}</div>
     </div>
   `;
 }
@@ -16094,11 +16122,13 @@ function matchSeriesMetaLabel(item) {
   return `MVP: ${series.mvp ? series.mvp.nick : "-"}`;
 }
 
-// A linha de partida do visual Placar: as duas equipes uma embaixo da outra,
-// cada uma com a propria cor, o mapa da serie como fundo e o campeonato na
-// ponta. Ela vive dentro de uma .vp-lista: a lista e uma grade so e cada
-// partida e uma subgrade dela, entao a coluna do nome tem a largura do nome
-// mais longo da lista e o placar cola nela.
+// A linha de partida: o modelo antigo, mais baixo (pedido do dono em 24/10).
+// Escudo grande de cada lado, nome ao lado do escudo, placar grande no meio
+// com o vencedor em verde. Em cima, uma linha so de contexto: a hora, os nomes
+// dos mapas no meio, cada um sobre a propria fatia de arte, e o campeonato na
+// ponta direita. A arte fica num holofote no meio da linha, e nao de fundo na
+// linha inteira: assim ela marca qual mapa foi jogado sem deixar um vao vazio
+// entre o nome e o campeonato.
 // Opcoes num objeto de proposito: `.map(matchResultRow)` passa o indice no
 // segundo argumento, e um numero nao tem `.when` nem `.kd`. Assim as listas que
 // chamam pelo `.map` cru recebem exatamente o padrao (a data) sem precisar
@@ -16112,31 +16142,29 @@ function matchResultRow(item, options) {
   const event = state.db.tournaments.find((row) => row.id === series.eventId);
   const when = opts.when === "hour" ? formatDate(series.startedAt, "hour") : formatDate(series.startedAt);
   const nomeDoEvento = event?.name || "Evento";
-  const variosMapas = series.maps.length > 1;
-  const mapas = series.maps
-    .map((match) => {
-      const nome = escapeHtml(match.mapName || "");
-      if (!variosMapas) return `<span>${nome}</span>`;
-      return `<span>${nome} <small>${scoreForTeamInMatch(match, series.teamA.id)}-${scoreForTeamInMatch(match, series.teamB.id)}</small></span>`;
-    })
-    .join("");
+  const nomes = (series.mapNames || []).filter(Boolean);
+  // --maps vai nos dois, arte e nomes: a largura dos dois sai da mesma conta,
+  // e e isso que poe cada nome em cima da propria fatia.
+  const mapas = nomes.length
+    ? `<span class="vp-pl-mapas" style="--maps:${nomes.length}">${nomes.map((nome) => `<span class="vp-pl-mapa">${escapeHtml(nome)}</span>`).join("")}</span>`
+    : "";
+  const numero = (valor, contra) => `<b${Number(valor) > Number(contra) ? ' class="vp-venceu"' : ""}>${escapeHtml(valor)}</b>`;
+  const lado = (team) => `<strong title="${escapeHtml(team.name)}"><span class="nome-rolante">${escapeHtml(team.name)}</span></strong>`;
   const kd = Array.isArray(opts.kd) ? `<span class="vp-kd"><b>${escapeHtml(opts.kd[0])} / ${escapeHtml(opts.kd[1])}</b><small>K / D</small></span>` : "";
   return `
-    <a class="vp-m" href="${matchSeriesHref(series)}">
+    <a class="vp-pl${kd ? " vp-pl-kd" : ""}" href="${matchSeriesHref(series)}">
       ${matchMapBanner(series)}
-      ${placarLinhaEquipe(series.teamA, score.a, score.a > score.b)}
-      ${placarLinhaEquipe(series.teamB, score.b, score.b > score.a)}
-      <span class="vp-maplist">${mapas}</span>
-      <span class="vp-ev">${event ? eventLogo(event, "tiny") : ""}<span class="vp-ev-txt"><span class="vp-ev-nome" title="${escapeHtml(nomeDoEvento)}">${escapeHtml(nomeDoEvento)}</span><small>${escapeHtml(when)}${window.Comments ? window.Comments.selo("match", series.seriesKey) : ""}</small></span></span>
+      <span class="vp-pl-topo">
+        <span class="vp-pl-quando">${escapeHtml(when)}${window.Comments ? window.Comments.selo("match", series.seriesKey) : ""}</span>
+        ${mapas}
+        <span class="vp-pl-evento" title="${escapeHtml(nomeDoEvento)}"><span class="vp-pl-evento-nome"><span class="nome-rolante">${escapeHtml(nomeDoEvento)}</span></span>${event ? eventLogo(event, "tiny") : ""}</span>
+      </span>
+      <span class="vp-pl-lado vp-pl-a">${teamLogo(series.teamA.id)}${lado(series.teamA)}</span>
+      <span class="vp-pl-placar">${numero(score.a, score.b)}<i>:</i>${numero(score.b, score.a)}</span>
+      <span class="vp-pl-lado vp-pl-b">${lado(series.teamB)}${teamLogo(series.teamB.id)}</span>
       ${kd}
     </a>
   `;
-}
-
-// Uma equipe na linha do Placar: o risco e o banho saem da --team-line, e quem
-// venceu fica com nome e placar acesos.
-function placarLinhaEquipe(team, score, ganhou) {
-  return `<span class="vp-t${ganhou ? " vp-ganhou" : ""}" style="--team-line:${teamLineColor(team.id)}"><span class="vp-who">${teamLogo(team.id)}<span class="vp-nome" title="${escapeHtml(team.name)}">${escapeHtml(team.name)}</span></span><b>${escapeHtml(score)}</b></span>`;
 }
 
 // A cor de risco, barra e banho de uma equipe: a mesma --team-line que o
@@ -16406,9 +16434,9 @@ function mapBannerSrc(name) {
   return mapArtAttrs(mapByName(name));
 }
 
-// O mapa de fundo da linha do Placar: uma fatia por mapa, na ordem jogada,
-// cortada em diagonal. Numa md3 a serie inteira aparece de uma vez, em vez de
-// escolhermos um mapa "representativo" e esconder os outros.
+// O holofote de mapas da linha de partida: uma fatia por mapa, na ordem
+// jogada, cortada em diagonal. Numa md3 a serie inteira aparece de uma vez, em
+// vez de escolhermos um mapa "representativo" e esconder os outros.
 function matchMapBanner(item) {
   const series = normalizeMatchItem(item);
   const names = (series.mapNames || []).filter(Boolean);
@@ -16417,7 +16445,7 @@ function matchMapBanner(item) {
   // fatias. A fatia sem arte entra vazia e segura a coluna.
   const slices = names.map((name) => mapBannerSrc(name));
   if (!slices.some(Boolean)) return "";
-  return `<span class="vp-mapas" aria-hidden="true">${slices
+  return `<span class="vp-pl-artes" style="--maps:${slices.length}" aria-hidden="true">${slices
     .map((art) =>
       art
         ? `<i><img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" /></i>`

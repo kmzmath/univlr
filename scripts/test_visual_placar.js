@@ -123,24 +123,27 @@ const md3 = serie("k-md3", "azr", "Azure Bears Black", "ceub", "CEUB Octopus Vul
   mapaDaSerie("azr", "ceub", "ascent", "Ascent", 3, 7, 13),
 ]);
 const md1 = serie("k-md1", "mack", "MackLogic White", "ceub", "CEUB Octopus Vulgaris", 0, 1, [mapaDaSerie("mack", "ceub", "lotus", "Lotus", 1, 6, 13)]);
-const linhasDeEquipe = (rowHtml) => rowHtml.split('<span class="vp-t').slice(1).map((pedaco) => pedaco.split('<span class="vp-t')[0].split('class="vp-maplist"')[0]);
+// A linha de partida e o modelo antigo, mais baixo (escolha do dono em 24/10):
+// escudo grande de cada lado, placar grande no meio com o vencedor em verde, e
+// a arte dos mapas num holofote no meio, com os nomes em cima, cada um sobre a
+// propria arte.
+const placarDa = (linha) => linha.split('class="vp-pl-placar"')[1].split("</span>")[0];
+const nomesDosMapas = (linha) => (linha.split('class="vp-pl-mapas"')[1] || "").match(/<span class="vp-pl-mapa">[^<]+</g)?.map((s) => s.split(">")[1].slice(0, -1)) || [];
 
 const linhaMd3 = context.matchResultRow(md3);
-assert(linhaMd3.startsWith('\n    <a class="vp-m"') || linhaMd3.includes('<a class="vp-m"'), "a partida vira uma vp-m");
-const equipesMd3 = linhasDeEquipe(linhaMd3);
-assert.strictEqual(equipesMd3.length, 2, "duas linhas de equipe por partida");
-assert.strictEqual(equipesMd3.filter((l) => l.startsWith(" vp-ganhou")).length, 1, "so uma das duas e a vencedora");
-assert(equipesMd3.find((l) => l.startsWith(" vp-ganhou")).includes("CEUB Octopus Vulgaris"), "a vencedora da MD3 e a CEUB");
-assert(linhaMd3.includes("Bind <small>13-8</small>"), "em serie de varios mapas, cada mapa mostra o proprio placar");
+assert(linhaMd3.includes('<a class="vp-pl"'), "a partida vira uma vp-pl");
+assert(/<b class="vp-venceu">2<\/b>/.test(placarDa(linhaMd3)) && /<b>1<\/b>/.test(placarDa(linhaMd3)), "so o placar do vencedor ganha a cor de vitoria");
+const posicoesMd3 = ["Azure Bears Black", "CEUB Octopus Vulgaris"].map((nome) => linhaMd3.indexOf(nome));
+assert(posicoesMd3[0] > -1 && posicoesMd3[1] > posicoesMd3[0], "equipe A a esquerda e B a direita");
+assert.deepStrictEqual(nomesDosMapas(linhaMd3), ["Bind", "Abyss", "Ascent"], "os nomes dos mapas vem em cima, na ordem da serie");
+assert.strictEqual((linhaMd3.match(/--maps:3/g) || []).length, 2, "arte e nomes usam a mesma contagem, para cada nome cair sobre a propria arte");
 assert(linhaMd3.includes('data-fallback="assets/maps/bind.png"') && linhaMd3.includes('onerror="mapArtError(this)"'), "a arte cai no PNG de reserva e depois some");
-for (const linha of equipesMd3) assert(/--team-line:#[0-9a-f]{6}/i.test(linha), "toda linha de equipe leva a --team-line");
+assert(linhaMd3.includes("Rush Series 3ª Edição"), "o campeonato fica na linha de cima");
 
 const linhaMd1 = context.matchResultRow(md1);
-assert(linhaMd1.includes("<b>6</b>") && linhaMd1.includes("<b>13</b>"), "MD1 mostra o placar de rounds");
-const listaMd1 = linhaMd1.split('class="vp-maplist"')[1].split("</span>\n")[0];
-assert(listaMd1.includes("Lotus") && !listaMd1.includes("<small>"), "MD1 mostra so o nome do mapa");
-const corBranca = linhasDeEquipe(linhaMd1)[0].match(/--team-line:(#[0-9a-f]{6})/i)[1].toLowerCase();
-assert.notStrictEqual(corBranca, "#ffffff", "equipe toda branca nao vira risco branco puro");
+assert(/<b>6<\/b>/.test(placarDa(linhaMd1)) && /<b class="vp-venceu">13<\/b>/.test(placarDa(linhaMd1)), "MD1 mostra o placar de rounds");
+assert.deepStrictEqual(nomesDosMapas(linhaMd1), ["Lotus"], "MD1 mostra so o nome do mapa");
+assert.notStrictEqual(context.teamLineColor("mack"), "#ffffff", "equipe toda branca nao vira risco branco puro");
 assert.strictEqual(context.teamLineColor("nova"), "#8a8d98", "equipe sem cor cadastrada fica com o risco cinza");
 assert.strictEqual(context.teamLineColor("nao-existe"), "#8a8d98", "equipe fora do cadastro tambem fica cinza");
 assert.notStrictEqual(context.teamLineColor("azr"), "#8a8d98", "controle: equipe com cor nao cai no cinza");
@@ -149,8 +152,8 @@ assert(!linhaMd1.includes("vp-kd"), "sem K/D pedido, sem a coluna");
 
 const semArte = serie("k-novo", "azr", "Azure Bears Black", "ceub", "CEUB Octopus Vulgaris", 0, 1, [mapaDaSerie("azr", "ceub", "novo", "Mapa Novo", 1, 9, 13)]);
 const linhaSemArte = context.matchResultRow(semArte);
-assert(!linhaSemArte.includes("vp-mapas"), "sem nenhuma arte, a faixa de mapas nao entra");
-assert(linhaSemArte.includes("Mapa Novo"), "o nome do mapa continua por cima");
+assert(!linhaSemArte.includes("vp-pl-artes"), "sem nenhuma arte, o holofote de mapas nao entra");
+assert.deepStrictEqual(nomesDosMapas(linhaSemArte), ["Mapa Novo"], "o nome do mapa continua em cima");
 
 const listaAgrupada = context.listaDeResultados([md3, md1], 50);
 assert(listaAgrupada.includes('class="vp-lista"'), "as linhas de um dia ficam numa vp-lista");
@@ -254,6 +257,46 @@ assert.strictEqual((sb.match(/class="vp-sb-equipe"/g) || []).length, 2, "cada eq
 assert(/data-board-key="[^"]*:azr\|[^"]*:ceub"/.test(sb), "o cabecalho ordena as duas equipes juntas");
 assert(/<tr class="vp-sb-jogador vp-escolhido"[^>]*data-lineup-player="p1"/.test(sb), "a linha do jogador escolhido para o historico fica marcada");
 assert(/data-lineup-side="b"[^>]*data-lineup-player="p4"|data-lineup-player="p4"[^>]*data-lineup-side="b"/.test(sb.replace(/\n/g, " ")) || sb.includes('data-lineup-player="p4"'), "toda linha pode escolher o jogador do historico");
+
+// Rodada de 24/10 na partida: o vencedor em verde no topo, nada de rolagem
+// lateral (no celular cada jogador vira um bloco com os numeros rotulados), as
+// lineups e o historico numa secao so, e nenhuma mencao a arquivo de origem.
+const numerosDoTopo = context.placarHeroNumeros(1, 2);
+assert(/<b class="vp-perdeu">1<\/b><i>:<\/i><b class="vp-venceu">2<\/b>/.test(numerosDoTopo), "no topo, o numero de quem venceu ganha a cor de vitoria");
+assert(!context.placarHeroNumeros(1, 1).includes("vp-venceu"), "empate nao pinta ninguem");
+
+const linhaDoAldeath = sb.split('data-lineup-player="p1"')[1].split("</tr>")[0];
+for (const coluna of colunas) {
+  assert(linhaDoAldeath.includes(`data-label="${coluna.short || coluna.label}"`), `a celula de ${coluna.label} leva o rotulo para o celular`);
+}
+
+const avancadas = context.scoreboardColumns("advanced");
+const cabecalhoAvancado = context.scoreboardHeader("k-a|k-b", avancadas);
+assert(cabecalhoAvancado.includes('class="vp-sb-grupos"'), "o avancado agrupa as colunas numa linha de cima");
+assert(/colspan="6"[^>]*>Componentes do rAAting</.test(cabecalhoAvancado), "os seis componentes do rAAting ficam sob um titulo so");
+assert(/colspan="4"[^>]*>Ajustado por economia</.test(cabecalhoAvancado), "as quatro medidas por economia ficam sob um titulo so");
+assert(cabecalhoAvancado.includes("<span>Kill</span>") && cabecalhoAvancado.includes("Ordenar por KillRating"), "o nome curto vai no cabecalho e o completo no rotulo de acessibilidade");
+assert(!/<span>[A-Za-z]+Rating<\/span>/.test(cabecalhoAvancado), "nenhum nome comprido de componente no cabecalho");
+assert(!context.scoreboardHeader("k-a|k-b", colunas).includes("vp-sb-grupos"), "o padrao nao tem a linha de grupos");
+
+const secaoLineups = context.matchLineupsSecao("m-1:all", { a: "p1", b: "p3" }, partidaFake.teamA, [jogador("p1", "Aldeath", "azr", 20), jogador("p2", "Stockão", "azr", 15)], partidaFake.teamB, [jogador("p3", "bada", "ceub", 25), jogador("p4", "Dante", "ceub", 10)]);
+assert.strictEqual((secaoLineups.match(/<section class="vp-s-lineups"/g) || []).length, 1, "lineups e historico sao uma secao so");
+assert.strictEqual((secaoLineups.match(/<h2>/g) || []).length, 1, "com um titulo so");
+const posLineups = secaoLineups.indexOf('class="vp-lineups"');
+const posHistorico = secaoLineups.indexOf('class="vp-historico"');
+assert(posLineups > -1 && posHistorico > posLineups, "o historico vem logo abaixo das fotos");
+assert(secaoLineups.includes(">Aldeath<") && secaoLineups.includes(">bada<"), "o historico diz quem esta sendo comparado");
+
+const appFonte = ler("app.js");
+assert(!appFonte.includes('sectionHead("Fonte")'), "a partida nao tem mais a secao Fonte");
+assert(!/escapeHtml\(item\.(fileName|sourcePath)\)/.test(appFonte), "nenhum nome ou caminho de arquivo vai para a pagina");
+
+const rodadas = (n) => Array.from({ length: n }, (_, i) => ({ roundNum: i, winningTeam: i % 2 ? "Red" : "Blue", winningTeamRole: "Attacker", roundResultCode: "Elimination" }));
+const timeline = context.roundTimeline({ teamA: { id: "azr", color: "Blue", tag: "AZR" }, teamB: { id: "ceub", color: "Red", tag: "CEUB" }, roundResults: rodadas(26) });
+const blocosDeRounds = timeline.match(/<div class="vp-rounds-bloco"[^>]*>/g) || [];
+assert.strictEqual(blocosDeRounds.length, 3, "26 rounds viram dois tempos e a prorrogacao");
+assert(blocosDeRounds.every((bloco, i) => bloco.includes(`--rounds:${[12, 12, 2][i]}`)), "12, 12 e 2 rounds por bloco");
+assert.strictEqual((context.roundTimeline({ teamA: { id: "azr", color: "Blue" }, teamB: { id: "ceub", color: "Red" }, roundResults: rodadas(20) }).match(/class="vp-rounds-bloco"/g) || []).length, 2, "sem prorrogacao, dois blocos");
 
 // ---------------------------------------------------------------- Tarefa 8
 // Pagina de equipe: o Resumo vira coluna principal (historico do ranking e

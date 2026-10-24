@@ -6423,9 +6423,7 @@ function renderHomeCompact() {
   const events = sortedEvents("recent").slice(0, HOME_EVENT_LIMIT);
   const topTeams = state.db.teams.slice(0, HOME_RANKING_LIMIT);
   const recentMatches = allMatchSeries().slice().sort(compareSeriesDateDesc).slice(0, HOME_RECENT_MATCH_LIMIT);
-  const partidasPorDia = agruparPorDia(recentMatches)
-    .map((grupo) => `<p class="vp-dia">${escapeHtml(grupo.rotulo)}</p><div class="vp-lista">${grupo.itens.map((item) => matchResultRow(item, { when: "hour" })).join("")}</div>`)
-    .join("");
+  const partidasPorDia = listaPorDia(recentMatches);
   Shell(`
     <h1 class="sr-only">${SITE_NAME}</h1>
     <div class="vp-home">
@@ -6525,6 +6523,15 @@ function eventosDoDia(itens) {
     if (evento) eventos.push(evento);
   }
   return eventos;
+}
+
+// As partidas no formato da home: o dia como rotulo solto e as linhas do dia
+// numa lista so. Sem o botao de abrir e fechar dia da lista de #/matches, que
+// so faz sentido numa lista longa. `kd` traz o abate e morte de um jogador.
+function listaPorDia(series, options = {}) {
+  return agruparPorDia(series)
+    .map((grupo) => `<p class="vp-dia">${escapeHtml(grupo.rotulo)}</p><div class="vp-lista${options.kd ? " vp-lista-kd" : ""}">${grupo.itens.map((item) => matchResultRow(item, { when: "hour", ...(options.kd ? { kd: options.kd(item) } : {}) })).join("")}</div>`)
+    .join("");
 }
 
 function listaDeResultados(filtered, limite) {
@@ -12810,27 +12817,18 @@ function renderTeamDetail(id) {
   });
   Shell(`
     <section class="team-page" ${teamAccentStyle(team)}>
-      <div class="team-hero">
+      <header class="vp-hero-equipe">
         ${teamHeroField()}
-        <div class="team-hero-main">
-          <div class="team-identity">
-            ${teamProfileLogo(team)}
-            <div class="team-title-block">
-              <span class="eyebrow">${escapeHtml(team.sourceTag || team.tag || team.id)}</span>
-              <h1>${escapeHtml(team.name)}</h1>
-              <div class="team-meta-row">
-                ${teamStateBadge(team)}
-                <span class="team-meta-text">${escapeHtml(teamInstitutionLabel(team))}</span>
-                <span class="team-socials">${socialButtons(team)}</span>
-                ${window.Favorites ? window.Favorites.botao("team", team.id) : ""}
-              </div>
-            </div>
-          </div>
-          ${teamRankHero(team)}
+        ${teamProfileLogo(team)}
+        <div class="vp-equipe-id">
+          <span class="vp-equipe-tag">${escapeHtml(team.sourceTag || team.tag || team.id)}</span>
+          <h1>${escapeHtml(team.name)}</h1>
+          <span class="vp-equipe-onde">${teamStateBadge(team)}<span>${escapeHtml(teamInstitutionLabel(team))}</span></span>
+          <span class="vp-equipe-acoes">${window.Favorites ? window.Favorites.botao("team", team.id) : ""}${teamSocialLinks(team)}</span>
         </div>
+        ${teamRankHero(team)}
         ${teamHeroCover(team, currentLineup, observedPlayers)}
-      </div>
-      ${teamSummaryTrophyPanel(trophies)}
+      </header>
       <nav class="team-tabs" aria-label="Abas da equipe">
         ${teamTabLink(team, "resumo", "Resumo", activeTab)}
         ${teamTabLink(team, "ranking", "Ranking", activeTab)}
@@ -12840,7 +12838,7 @@ function renderTeamDetail(id) {
         ${teamTabLink(team, "stats", "Stats", activeTab)}
       </nav>
       <section class="team-tab-panel">
-        ${renderTeamTab(activeTab, team, { matches, currentLineup, observedPlayers, historicalPlayers, tournaments })}
+        ${renderTeamTab(activeTab, team, { matches, currentLineup, observedPlayers, historicalPlayers, tournaments, trophies })}
       </section>
       ${window.Comments ? window.Comments.shell("team", team.id) : ""}
     </section>
@@ -12874,26 +12872,27 @@ function teamResumoTab(team, context) {
   const historico = teamRankingCanonicalHistory(team);
   const ultimas = context.matches.slice(0, TEAM_RESUMO_PARTIDAS);
   const lineup = context.currentLineup.length ? context.currentLineup : [];
+  const trophies = context.trophies || [];
   return `
-    <div class="stack team-resumo-stack">
-      <section class="data-panel team-ranking-main">
-        ${sectionHead("Histórico do ranking", "Posição semanal na escala de #1 ao fim do ranking.", `teams/${team.id}/ranking`, "Ver o cálculo da nota")}
-        ${teamSuccessionNote(team)}
-        ${historico.length ? teamRankingChart(historico) : `<div class="empty-state">Sem histórico válido suficiente para calcular ranking.</div>`}
-      </section>
-      <section class="section-band">
-        ${sectionHead("Elenco atual", "A formação em destaque usa as séries recentes até que as funções sejam confirmadas.", `teams/${team.id}/roster`, "Ver reservas e histórico")}
-        ${teamRosterSections(team, lineup)}
-      </section>
-      <section class="team-results-section">
-        ${sectionHead(
-          ultimas.length === 1 ? "Última partida" : `Últimas ${ultimas.length} partidas`,
-          "Séries mais recentes, da mais nova para a mais antiga.",
-          `teams/${team.id}/matches`,
-          `Ver as ${context.matches.length}`,
-        )}
-        <div class="result-list team-result-list full-list-panel">${ultimas.length ? listaDeResultados(ultimas, TEAM_RESUMO_PARTIDAS) : `<div class="empty-state">Nenhuma partida registrada para esta equipe.</div>`}</div>
-      </section>
+    <div class="vp-equipe-corpo">
+      <div class="vp-equipe-principal">
+        <section class="vp-s-ranking-equipe">
+          ${sectionHead("Histórico do ranking", "", `teams/${team.id}/ranking`, "Ver o cálculo da nota")}
+          ${teamSuccessionNote(team)}
+          ${historico.length ? teamRankingChart(historico) : `<div class="empty-state">Sem histórico válido suficiente para calcular ranking.</div>`}
+        </section>
+        <section class="vp-s-partidas-equipe">
+          ${sectionHead(ultimas.length === 1 ? "Última partida" : "Últimas partidas", "", `teams/${team.id}/matches`, `Ver as ${context.matches.length}`)}
+          ${ultimas.length ? listaPorDia(ultimas) : `<div class="empty-state">Nenhuma partida registrada para esta equipe.</div>`}
+        </section>
+      </div>
+      <aside class="vp-equipe-trilho">
+        <section class="vp-s-elenco">
+          ${sectionHead("Elenco atual")}
+          ${elencoPlaca(team, lineup)}
+        </section>
+        ${trophies.length ? `<section class="vp-s-trofeus">${sectionHead("Troféus")}${trofeusLista(trophies)}</section>` : ""}
+      </aside>
     </div>
   `;
 }
@@ -12920,14 +12919,7 @@ function teamHeroField() {
 // aproveitamento no Resumo e nas Partidas.
 function teamRankHero(team) {
   const movimento = teamRankWeeklyMove(team);
-  return `
-    <dl class="team-hero-record">
-      <div class="lead">
-        <dd>${escapeHtml(teamCanonicalRankLabel(team))}${movimento ? `<em class="${movimento.tom}">${escapeHtml(movimento.curto)}</em>` : ""}</dd>
-        <dt>Ranking</dt>
-      </div>
-    </dl>
-  `;
+  return `<div class="vp-equipe-rank"><b>${escapeHtml(teamCanonicalRankLabel(team))}${movimento ? `<small class="vp-mov-${movimento.tom}" title="${escapeHtml(movimento.texto)}">${escapeHtml(movimento.curto)}</small>` : ""}</b><span>no ranking</span></div>`;
 }
 
 // Variacao contra a terca anterior. Semana sem jogo tambem mexe a posicao (o
@@ -12957,7 +12949,7 @@ function teamHeroCover(team, currentLineup, observedPlayers = []) {
   const rows = lineupPlayers.length ? teamHeroCoverSelection(lineupPlayers, team) : fallbackPlayers.slice(0, 5);
   if (!rows.length) return "";
   return `
-    <div class="team-hero-cover" aria-label="${escapeHtml(`Elenco ${team.name}`)}">
+    <div class="vp-equipe-fotos" aria-label="${escapeHtml(`Elenco ${team.name}`)}">
       ${rows.map(teamHeroCoverPlayer).join("")}
     </div>
   `;
@@ -12970,11 +12962,19 @@ function teamHeroCoverSelection(lineupPlayers, team) {
 
 function teamHeroCoverPlayer({ entry, player }) {
   const name = player?.nick || entry?.name || "Jogador";
-  const body = `
-    ${player ? playerLogo(player.id, "team-hero-cover-photo") : logo((name || "J").slice(0, 2).toUpperCase(), ["#181715", "#6c665d"], "round team-hero-cover-photo")}
-    <span>${escapeHtml(name)}</span>
-  `;
-  return player ? `<a class="team-hero-cover-player" href="${playerHref(player)}">${body}</a>` : `<span class="team-hero-cover-player">${body}</span>`;
+  const body = `${player ? playerLogo(player.id, "vp-equipe-foto-img") : ""}<span>${escapeHtml(name)}</span>`;
+  return player ? `<a class="vp-equipe-foto" href="${playerHref(player)}">${body}</a>` : `<span class="vp-equipe-foto">${body}</span>`;
+}
+
+// So as redes que a equipe cadastrou, como texto. Os seis icones apagados de
+// "nao informado" saem do topo; na aba de cada rede ja nao havia nada.
+function teamSocialLinks(team) {
+  const socials = team.profile?.socials || {};
+  const rotulos = { website: "Site", instagram: "Instagram", x: "X", twitch: "Twitch", youtube: "YouTube", discord: "Discord" };
+  return Object.entries(rotulos)
+    .filter(([key]) => socials[key])
+    .map(([key, label]) => `<a class="vp-equipe-rede" href="${escapeHtml(socials[key])}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`)
+    .join("");
 }
 
 // O hall era uma tira de celulas de 76px onde o nome do campeonato, a
@@ -12993,6 +12993,51 @@ function teamSummaryTrophyPanel(trophies) {
       </div>
     </section>
   `;
+}
+
+// O elenco do trilho: os cinco em destaque numa Placa, uma linha por jogador
+// com a foto solta, o Riot ID e os numeros pela equipe. A pintura no hover e a
+// mesma do ranking. Reservas e historico ficam na aba Elenco.
+function elencoPlaca(team, roster) {
+  if (!roster.length) return `<div class="empty-state">Equipe sem elenco atual cadastrado.</div>`;
+  const destaque = rankingRosterTopFive(team, roster);
+  const titulares = destaque.every((entry) => entry.role === "titular");
+  const estilo = teamAccentStyle(team);
+  const linhas = destaque.map((entry) => {
+    const player = entry.playerId ? playerById(entry.playerId) : null;
+    const nome = player?.nick || entry.name || "Jogador";
+    const stats = player ? playerStatsForTeam(player, team.id) : null;
+    const numeros = stats
+      ? `<span class="vp-elenco-n vp-elenco-nota paint-ink">${escapeHtml(playerRating(stats))}</span><span class="vp-elenco-n paint-ink">${escapeHtml(String(stats.matches || 0))}</span><span class="vp-elenco-n paint-ink">${escapeHtml(fmt(stats.acs, 0))}</span>`
+      : `<span class="vp-elenco-n">-</span><span class="vp-elenco-n">-</span><span class="vp-elenco-n">-</span>`;
+    const miolo = `<span class="vp-elenco-foto">${player ? playerLogo(player.id) : ""}</span><span class="vp-elenco-nome"><b class="paint-ink">${escapeHtml(nome)}</b><small class="paint-ink">${escapeHtml(player?.handle || "Perfil em atualização")}</small></span>${numeros}`;
+    return player
+      ? `<a class="vp-elenco-linha pintura-de-equipe" href="${playerHref(player)}" ${estilo}>${miolo}</a>`
+      : `<span class="vp-elenco-linha pintura-de-equipe" ${estilo}>${miolo}</span>`;
+  });
+  const fora = roster.filter((entry) => !destaque.includes(entry));
+  const soReservas = fora.length && fora.every((entry) => entry.role === "reserva");
+  const link = !fora.length
+    ? "Ver o histórico do elenco"
+    : soReservas
+      ? `Ver ${fora.length} ${fora.length === 1 ? "reserva" : "reservas"} e o histórico`
+      : `Ver mais ${fora.length} do elenco e o histórico`;
+  return `
+    <div class="vp-placa vp-elenco">
+      <div class="vp-elenco-cab" aria-hidden="true"><span>${titulares ? "Titulares" : "Formação recente"}</span><span>rAAting</span><span>Mapas</span><span>ACS</span></div>
+      ${linhas.join("")}
+    </div>
+    <a class="vp-elenco-mais" href="#/teams/${escapeHtml(team.id)}/roster">${escapeHtml(link)}</a>
+  `;
+}
+
+// Os trofeus soltos no trilho: a medalha do campeonato e, ao lado, a colocacao
+// e o campeonato com o mes. Serve para equipe e jogador.
+function trofeusLista(trophies) {
+  if (!trophies.length) return "";
+  return `<div class="vp-trofeus">${trophies
+    .map((trophy) => `<a class="vp-trofeu" href="#/tournaments/${escapeHtml(trophy.event.id)}">${trophyVisual(trophy)}<span><strong>${escapeHtml(trophy.placementLabel || "")}</strong><small>${escapeHtml([trophy.event.name || "Campeonato", trophy.detail || trophyMonthLabel(trophy.date)].filter(Boolean).join(", "))}</small></span></a>`)
+    .join("")}</div>`;
 }
 
 function trophyShelfItem(trophy) {

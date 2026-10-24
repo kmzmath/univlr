@@ -255,5 +255,53 @@ assert(/data-board-key="[^"]*:azr\|[^"]*:ceub"/.test(sb), "o cabecalho ordena as
 assert(/<tr class="vp-sb-jogador vp-escolhido"[^>]*data-lineup-player="p1"/.test(sb), "a linha do jogador escolhido para o historico fica marcada");
 assert(/data-lineup-side="b"[^>]*data-lineup-player="p4"|data-lineup-player="p4"[^>]*data-lineup-side="b"/.test(sb.replace(/\n/g, " ")) || sb.includes('data-lineup-player="p4"'), "toda linha pode escolher o jogador do historico");
 
+// ---------------------------------------------------------------- Tarefa 8
+// Pagina de equipe: o Resumo vira coluna principal (historico do ranking e
+// partidas) e trilho (elenco em Placa e trofeus). Os trofeus saem do topo.
+const atleta = (id, nick, handle, acs, nota, mapas) => ({ id, nick, handle, teamId: "azr", matches: mapas, teamStats: [{ teamId: "azr", matches: mapas, acs, raating_3: nota, rating: nota, rounds: mapas * 22 }] });
+vm.runInContext(
+  `state.db.players = ${JSON.stringify([
+    atleta("p1", "Aldeath", "zeNith#mond", 208, 1.07, 44),
+    atleta("p2", "Lacerdão", "Lacer#Daoo", 179, 0.96, 51),
+    atleta("p3", "Skydvjj", "sky444#jesus", 228, 1.14, 47),
+    atleta("p4", "Droga é o pedro", "droga é o pedro#GOAT", 189, 1.01, 44),
+    atleta("p5", "Stockão", "stockão#BAGRE", 238, 1.16, 51),
+    atleta("p6", "Reserva", "reserva#0001", 150, 0.8, 3),
+  ])};
+   state.db.teams[0].currentLineup = ["p1", "p2", "p3", "p4", "p5"].map((playerId) => ({ playerId, role: "titular" })).concat([{ playerId: "p6", role: "reserva" }]);`,
+  context,
+);
+const azr = context.teamById("azr");
+const elenco = context.elencoPlaca(azr, azr.currentLineup);
+assert(elenco.includes('class="vp-placa vp-elenco"'), "o elenco do trilho e uma Placa");
+assert.strictEqual((elenco.match(/class="vp-elenco-linha pintura-de-equipe"/g) || []).length, 5, "uma linha com pintura de equipe por titular");
+assert(!elenco.includes("Reserva<"), "reserva fica fora da Placa do trilho");
+assert(elenco.includes("zeNith#mond") && elenco.includes("1.07") && elenco.includes(">44<") && elenco.includes(">208<"), "a linha traz Riot ID, rAAting, mapas e ACS da equipe");
+assert(/href="#\/teams\/azr\/roster"[^>]*>[^<]*1 reserva/.test(elenco), "o link leva para o elenco completo e conta os reservas");
+
+const trofeus = context.trofeusLista([
+  { event: { id: "rush", name: "Rush Series 3ª Edição", logo: "assets/tournament-icons/rushSeries.png" }, placementLabel: "Vice-campeão", trophyKey: "second", podiumClass: "podium-silver", date: Date.UTC(2026, 9, 20) },
+]);
+assert(trofeus.includes('class="vp-trofeus"') && (trofeus.match(/class="vp-trofeu"/g) || []).length === 1, "um item por trofeu");
+assert(trofeus.includes("Vice-campeão") && trofeus.includes("Rush Series 3ª Edição, out de 2026"), "colocacao, campeonato e mes");
+assert.strictEqual(context.trofeusLista([]), "", "sem trofeu, sem bloco");
+
+const resumo = context.teamResumoTab(azr, { matches: [md3], currentLineup: azr.currentLineup });
+const principal = resumo.indexOf('class="vp-equipe-principal"');
+const trilho = resumo.indexOf('class="vp-equipe-trilho"');
+assert(principal > -1 && trilho > principal, "o Resumo tem a coluna principal e depois o trilho");
+const colunaPrincipal = resumo.slice(principal, trilho);
+assert(colunaPrincipal.includes("Histórico do ranking") && colunaPrincipal.includes("vp-lista"), "a coluna principal tem o ranking e as partidas");
+assert(resumo.slice(trilho).includes("vp-elenco"), "o elenco vai para o trilho");
+
+context.location.hash = "#/teams/azr";
+context.renderTeamDetail("azr");
+const paginaEquipe = appElement.innerHTML;
+const topoEquipe = paginaEquipe.slice(0, paginaEquipe.indexOf("team-tabs"));
+assert(topoEquipe.includes('class="vp-hero-equipe"'), "o topo da equipe e a faixa nova");
+assert(!paginaEquipe.includes("team-trophy-panel"), "o painel de trofeus sai do topo");
+assert(/class="vp-equipe-rank"[\s\S]*no ranking/.test(topoEquipe), "o ranking fica solto no topo");
+context.location.hash = "";
+
 void vp;
 console.log("Visual Placar contract tests passed");

@@ -213,6 +213,42 @@
   box-shadow: inset 0 -2px var(--brand);
 }
 
+/* O styles.css desenha as abas de equipe e jogador como botoes com seletor
+   mais forte (.team-page .team-tab) e pinta a ativa de vermelho com
+   !important. Aqui elas voltam ao desenho do menu, numa linha que rola. */
+.team-page .team-tabs,
+.player-page .player-tabs {
+  gap: 24px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.team-page .team-tabs .team-tab,
+.player-page .player-tabs .team-tab {
+  min-height: 0;
+  padding: 12px 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.team-page .team-tabs .team-tab:hover,
+.team-page .team-tabs .team-tab.active,
+.player-page .player-tabs .team-tab:hover,
+.player-page .player-tabs .team-tab.active {
+  background: none;
+  color: var(--ink) !important;
+}
+
+.team-page .team-tabs .team-tab.active,
+.player-page .player-tabs .team-tab.active {
+  box-shadow: inset 0 -2px var(--brand);
+}
+
 @media (max-width: 760px) {
   /* Menu numa linha so, rolando para o lado: em duas linhas o topo, que fica
      preso na tela, chegava a 215px a 390 de largura. */
@@ -2177,8 +2213,10 @@
 .cmt-secao .cmt-convite {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
   align-items: center;
   gap: 10px 20px;
+  text-align: left;
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -2187,4 +2225,456 @@
 
 .cmt-secao .cmt-convite p {
   margin: 0;
+}
+
+/* ==========================================================================
+   Equipe: faixa na cor dela, coluna principal e trilho com elenco e trofeus
+   ========================================================================== */
+
+.team-page.team-page {
+  gap: 24px;
+}
+
+/* O topo: o campo animado de sempre atras, o escudo solto, o nome grande, o
+   ranking solto e as cinco fotos do elenco sangrando na base. */
+.vp-hero-equipe {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) auto minmax(0, 560px);
+  align-items: center;
+  gap: 0 22px;
+  height: 196px;
+  padding: 0 0 0 20px;
+  overflow: hidden;
+  box-shadow: inset 3px 0 0 var(--team-line);
+}
+
+.vp-hero-equipe > :not(.team-field) {
+  position: relative;
+  z-index: 1;
+}
+
+.vp-hero-equipe .team-logo-frame {
+  display: block;
+  width: 112px;
+  height: 112px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-hero-equipe .team-logo-frame .team-logo {
+  width: 100%;
+  height: 100%;
+}
+
+.vp-equipe-id {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.vp-equipe-tag {
+  color: var(--team-line);
+  font: 700 14px/1 var(--font-text);
+}
+
+.vp-equipe-id h1 {
+  margin: 0;
+  font: 700 46px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+.vp-equipe-onde {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.vp-equipe-onde .state-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+
+.vp-equipe-onde .state-flag {
+  width: 20px;
+  height: 14px;
+  border-radius: 1px;
+  object-fit: cover;
+}
+
+.vp-equipe-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-top: 6px;
+}
+
+.vp-equipe-rede {
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.vp-equipe-rede:hover {
+  color: var(--ink);
+}
+
+.vp-equipe-rank {
+  display: grid;
+  justify-items: end;
+  align-self: end;
+  padding-bottom: 22px;
+}
+
+.vp-equipe-rank b {
+  font: 700 56px/0.9 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.vp-equipe-rank small {
+  margin-left: 4px;
+  font: 600 16px/1 var(--font-display);
+  vertical-align: top;
+}
+
+.vp-equipe-rank .vp-mov-up { color: var(--win); }
+.vp-equipe-rank .vp-mov-down { color: var(--danger); }
+.vp-equipe-rank .vp-mov-flat { color: var(--muted); }
+
+.vp-equipe-rank span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-equipe-fotos {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-self: end;
+  height: 186px;
+}
+
+.vp-equipe-foto {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-equipe-foto .player-avatar {
+  position: absolute;
+  inset: auto 0 0;
+  width: 100%;
+  height: 176px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-equipe-foto .player-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.vp-equipe-foto > span:last-child {
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  left: 0;
+  font: 600 12px/1 var(--font-text);
+  text-align: center;
+  text-shadow: 0 1px 3px #000, 0 0 10px #000;
+}
+
+/* ---- corpo do Resumo ---- */
+.vp-equipe-corpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 32px;
+  align-items: start;
+}
+
+.vp-equipe-principal,
+.vp-equipe-trilho {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  min-width: 0;
+}
+
+.vp-equipe-principal > section,
+.vp-equipe-trilho > section {
+  min-width: 0;
+}
+
+/* O grafico do ranking sem a caixa: quatro numeros soltos e a linha na cor da
+   equipe, em 170px. Vale tambem para a aba Ranking. */
+.team-page .ranking-chart-card {
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.team-page .ranking-chart-kpis {
+  gap: 8px 34px;
+}
+
+.team-page .ranking-chart-kpis dd {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.team-page .ranking-chart-kpis dt {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.team-page .ranking-chart-stage {
+  height: 170px;
+}
+
+.team-page .ranking-note {
+  max-width: 80ch;
+  margin: 0 0 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ---- elenco em Placa ---- */
+.vp-elenco {
+  display: grid;
+  grid-template-columns: 4px 34px minmax(0, 1fr) auto auto auto 6px;
+  column-gap: 10px;
+}
+
+.vp-elenco-cab,
+.vp-elenco-linha {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+}
+
+.vp-elenco-cab {
+  height: 28px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-elenco-cab span:first-child { grid-column: 3; }
+.vp-elenco-cab span:not(:first-child) { text-align: right; }
+
+.vp-elenco-linha {
+  height: 46px;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-elenco-linha + .vp-elenco-linha {
+  border-top: 1px solid var(--line);
+}
+
+.vp-elenco-foto {
+  grid-column: 2;
+  align-self: end;
+  width: 34px;
+  height: 42px;
+}
+
+.vp-elenco-foto .player-avatar {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-elenco-foto .player-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.vp-elenco-nome {
+  display: grid;
+  min-width: 0;
+}
+
+.vp-elenco-nome b,
+.vp-elenco-nome small {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-elenco-nome b { font-size: 13px; font-weight: 600; }
+.vp-elenco-nome small { color: var(--muted); font-size: 11px; }
+
+.vp-elenco-n {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-elenco-nota {
+  font: 600 16px/1 var(--font-display);
+}
+
+.vp-elenco-mais {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.vp-elenco-mais:hover { color: var(--ink); }
+
+/* ---- trofeus soltos ---- */
+.vp-trofeus {
+  display: grid;
+  gap: 10px;
+}
+
+.vp-trofeu {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-trofeu .trophy-visual {
+  position: relative;
+  width: 44px;
+  height: 52px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-trofeu .trophy-image {
+  width: 44px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.vp-trofeu .trophy-event-logo {
+  position: absolute;
+  right: -4px;
+  bottom: 2px;
+  width: 18px;
+  height: 18px;
+}
+
+.vp-trofeu strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-trofeu small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-trofeu:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1180px) {
+  .vp-hero-equipe {
+    grid-template-columns: 96px minmax(0, 1fr) auto;
+    padding-right: 20px;
+  }
+
+  .vp-hero-equipe .team-logo-frame {
+    width: 96px;
+    height: 96px;
+  }
+
+  .vp-equipe-fotos {
+    display: none;
+  }
+
+  .vp-equipe-corpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vp-equipe-trilho {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    column-gap: 32px;
+  }
+}
+
+@media (max-width: 760px) {
+  .team-page.team-page {
+    gap: 20px;
+  }
+
+  .vp-hero-equipe {
+    grid-template-columns: 64px minmax(0, 1fr);
+    height: auto;
+    padding: 16px 14px;
+    gap: 6px 14px;
+  }
+
+  .vp-hero-equipe .team-logo-frame {
+    width: 64px;
+    height: 64px;
+  }
+
+  .vp-equipe-id h1 {
+    font-size: 30px;
+  }
+
+  .vp-equipe-rank {
+    grid-column: 1 / -1;
+    grid-auto-flow: column;
+    justify-content: start;
+    align-items: baseline;
+    gap: 8px;
+    padding: 0;
+  }
+
+  .vp-equipe-rank b {
+    font-size: 34px;
+  }
+
+  .vp-equipe-trilho {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

@@ -137,27 +137,6 @@ const PLAYER_OF_WEEK_SUPPORT = {
   apr: ["kast", "acs", "kpr"],
 };
 
-// aria-hidden porque isto e uma camada visual de hover: o leitor de tela ja
-// recebe o nome do jogador e a estatistica principal pelo link, e os mesmos
-// numeros estao inteiros na pagina do jogador, a um clique.
-function weekSupportStats(category, player, extra = "") {
-  // Vindo do home.json os três já chegam formatados; vindo do banco completo
-  // são calculados aqui. As duas fontes produzem o mesmo par rótulo/valor.
-  const stats =
-    category?.support ||
-    (PLAYER_OF_WEEK_SUPPORT[category?.key] || [])
-      .map((key) => PLAYER_OF_WEEK_CATEGORIES.find((item) => item.key === key))
-      .filter(Boolean)
-      .map((item) => ({ statLabel: item.statLabel, value: item.format(player) }));
-  if (!stats.length) return "";
-  return `<span class="week-detail ${escapeHtml(extra)}" aria-hidden="true">${stats
-    .map(
-      (item) =>
-        `<span class="week-detail-stat"><small>${escapeHtml(item.statLabel)}</small><b>${escapeHtml(item.value)}</b></span>`,
-    )
-    .join("")}</span>`;
-}
-
 const MAP_API_SLUGS = {
   "/Game/Maps/Ascent/Ascent": "ascent",
   "/Game/Maps/Jam/Jam": "lotus",
@@ -6471,7 +6450,7 @@ function renderMatchesCompact(id) {
     </header>
     <div class="results-layout">
       ${matchFilterSidebar()}
-      <section class="hub-panel full-list-panel results-panel">
+      <section class="vp-lista-pagina full-list-panel results-panel">
         ${contagemDaLista(Math.min(limite, filtered.length), filtered.length, "partidas")}
         <div class="result-list">${listaDeResultados(filtered, limite)}</div>
         ${verMaisBotao("matches", Math.min(limite, filtered.length), filtered.length, matchFiltersToQuery())}
@@ -6942,7 +6921,7 @@ function renderEventsPage(id) {
       </div>
     </header>
     ${eventFilterBar()}
-    <section class="hub-panel full-list-panel">
+    <section class="vp-lista-pagina full-list-panel">
       ${eventFiltrosAtivos() ? contagemDaLista(events.length, total, "campeonatos") : ""}
       ${eventTableHead()}
       <div class="event-list large">${events.length ? events.map(eventDirectoryRow).join("") : `<p class="empty-state">Nenhum campeonato com esses filtros. Tire um filtro para ver mais.</p>`}</div>
@@ -6975,7 +6954,7 @@ function renderPlayersCompact(id) {
       </div>
     </header>
     <div class="letter-filter">${playerInitialOptions().map((letter) => `<button class="${state.playerInitial === letter ? "active" : ""}" data-letter="${escapeHtml(letter)}">${escapeHtml(letter === "all" ? "Todos" : letter)}</button>`).join("")}</div>
-    <section class="hub-panel full-list-panel">
+    <section class="vp-lista-pagina full-list-panel">
       ${contagemDaLista(visiveis.length, players.length, "jogadores")}
       ${playerDirectoryTable(visiveis)}
       ${verMaisBotao("players", visiveis.length, players.length, playerFiltersToQuery())}
@@ -7080,7 +7059,7 @@ function renderRankingPage(teamId = route().id || "") {
         <p>Nota final: 70% desempenho, 15% conquistas, 10% forma recente e 5% rAAting 3.0 dos jogadores. Equipes com menos de ${minimumMatches} partidas ficam marcadas como provisórias e equipes com elenco incompleto (menos de ${minimumRosterSize} jogadores) ficam inativas; nas semanas passadas, conta a formação que jogou em cada uma. Quando o núcleo de uma equipe passa para uma equipe nova, a nova herda o histórico da antiga no ranking.</p>
       </div>
     </header>
-    <section class="hub-panel ranking-full-panel">
+    <section class="vp-lista-pagina ranking-full-panel">
       <div class="ranking-page-toolbar">
         <div class="ranking-toolbar-context">
           <span data-ranking-count>${escapeHtml(aba === "partidas" ? rankingWeekMatchesSummary(semanaMatches, snapshot) : rankingScopeSummary(scope))}</span>
@@ -8430,19 +8409,6 @@ function matchHeroBanners(matches) {
     .join("")}</div>`;
 }
 
-function matchMapTabBackground(matches) {
-  return `
-    <span class="match-map-tab-bg" aria-hidden="true">
-      ${matches
-        .map((item) => {
-          const asset = matchMapAsset(item);
-          return `<span>${asset.src ? `<img src="${escapeHtml(asset.src)}" data-fallback="${escapeHtml(asset.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : ""}</span>`;
-        })
-        .join("")}
-    </span>
-  `;
-}
-
 function matchMapAsset(match) {
   const map =
     mapById(match.mapId) ||
@@ -8455,46 +8421,6 @@ function matchMapAsset(match) {
     src: art ? art.src : "",
     fallback: art ? art.fallback : "",
   };
-}
-
-function matchMapOverview(match, selectedMatches, aggregateMode) {
-  if (aggregateMode) {
-    return `
-      <section class="match-map-overview aggregate">
-        <div class="map-score-side">
-          <strong>${selectedMatches.reduce((sum, item) => sum + (item.teamA.id === match.teamA.id ? item.teamA.score : item.teamB.score), 0)}</strong>
-          <span>${escapeHtml(match.teamA.name)}</span>
-        </div>
-        <div class="map-center">
-          <h2>${escapeHtml(seriesFormatLabel(selectedMatches))}</h2>
-          <span>${selectedMatches.map((item) => item.mapName).join(" / ")}</span>
-          <div class="map-mini-list">${selectedMatches.map((item) => `<a href="#/matches/${item.id}">${escapeHtml(item.mapName)} ${scoreForTeamInMatch(item, match.teamA.id)}-${scoreForTeamInMatch(item, match.teamB.id)}</a>`).join("")}</div>
-        </div>
-        <div class="map-score-side right">
-          <strong>${selectedMatches.reduce((sum, item) => sum + (item.teamA.id === match.teamB.id ? item.teamA.score : item.teamB.score), 0)}</strong>
-          <span>${escapeHtml(match.teamB.name)}</span>
-        </div>
-      </section>
-    `;
-  }
-
-  return `
-    <section class="match-map-overview">
-      <div class="map-score-side">
-        <strong class="${match.teamA.score > match.teamB.score ? "score-win" : ""}">${match.teamA.score}</strong>
-        <span>${escapeHtml(match.teamA.name)}</span>
-      </div>
-      <div class="map-center">
-        <h2>${escapeHtml(match.mapName)}</h2>
-        <span>${formatDuration(match.durationMillis)} · Série ${escapeHtml(match.seriesCode || match.code)}</span>
-      </div>
-      <div class="map-score-side right">
-        <strong class="${match.teamB.score > match.teamA.score ? "score-win" : ""}">${match.teamB.score}</strong>
-        <span>${escapeHtml(match.teamB.name)}</span>
-      </div>
-      ${roundTimeline(match)}
-    </section>
-  `;
 }
 
 function scoreForTeamInMatch(match, teamId) {
@@ -8701,35 +8627,6 @@ function matchScoreboardMode() {
 
 function scoreboardColumns(mode = matchScoreboardMode()) {
   return mode === "advanced" ? SCOREBOARD_ADVANCED_COLUMNS : SCOREBOARD_STANDARD_COLUMNS;
-}
-
-function valorantScoreboard(match, team, players, columns = scoreboardColumns()) {
-  const boardKey = scoreboardBoardKey(match, team);
-  const modeClass = columns === SCOREBOARD_ADVANCED_COLUMNS ? "scoreboard-advanced" : "scoreboard-standard";
-  return `
-    <div class="vlr-board">
-      <div class="match-scoreboard-summary-wrap">
-        <table class="match-scoreboard match-scoreboard-summary ${escapeHtml(modeClass)}">
-          ${scoreboardColgroup(columns)}
-          <tbody>
-            <tr>
-              <td colspan="2" class="vlr-board-identity-cell">
-                <span class="vlr-board-identity">${teamLogo(team.id)}<strong>${escapeHtml(team.name)}</strong><small>${escapeHtml(team.sourceTag || team.tag)}</small></span>
-              </td>
-              ${scoreboardTeamAverages(players, columns)}
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="table-wrap match-scoreboard-wrap">
-        <table class="match-scoreboard ${escapeHtml(modeClass)}">
-          ${scoreboardColgroup(columns)}
-          <thead>${scoreboardHeader(boardKey, columns)}</thead>
-          <tbody>${players.map((player) => scoreboardRow(player, columns)).join("")}</tbody>
-        </table>
-      </div>
-    </div>
-  `;
 }
 
 function scoreboardColgroup(columns = scoreboardColumns()) {
@@ -8979,21 +8876,6 @@ function normalizeRoleKey(value) {
   return "";
 }
 
-function matchLineupComparison(match, teamA, playersA, teamB, playersB) {
-  const compareKey = lineupCompareKey(match);
-  const selection = ensureLineupCompareSelection(compareKey, playersA, playersB);
-  const selectedA = playersA.find((player) => player.id === selection.a) || playersA[0];
-  const selectedB = playersB.find((player) => player.id === selection.b) || playersB[0];
-  const scalePlayers = lineupScalePlayers(playersA, playersB);
-  return `
-    <div class="lineup-compare" data-lineup-key="${escapeHtml(compareKey)}">
-      ${lineupTeamSelector(compareKey, "a", teamA, playersA, selectedA)}
-      ${lineupComparisonStage(teamA, selectedA, teamB, selectedB, scalePlayers)}
-      ${lineupTeamSelector(compareKey, "b", teamB, playersB, selectedB)}
-    </div>
-  `;
-}
-
 function lineupScalePlayers(playersA, playersB) {
   const fallbackPlayers = [...playersA.slice(0, 5), ...playersB.slice(0, 5)].map(lineupHistoricalPlayer);
   const historicalPlayers = (state.db?.players || []).filter((player) => Number(player.matches || 0) > 0);
@@ -9019,79 +8901,6 @@ function ensureLineupCompareSelection(compareKey, playersA, playersB) {
   return selection;
 }
 
-function lineupTeamSelector(compareKey, side, team, players, selected) {
-  return `
-    <section class="lineup-team-panel lineup-team-panel-${side}">
-      <header>${teamLogo(team.id)}<strong>${escapeHtml(team.name)}</strong><span>Rank ${teamCanonicalRankLabel(teamById(team.id) || team)}</span></header>
-      <div class="lineup-photo-grid">${players.slice(0, 5).map((player) => lineupSelectCard(compareKey, side, player, selected?.id === player.id)).join("")}</div>
-    </section>
-  `;
-}
-
-function lineupSelectCard(compareKey, side, player, active) {
-  const historical = lineupHistoricalPlayer(player);
-  return `
-    <button type="button" class="lineup-photo-card lineup-select-card ${active ? "active" : ""}" data-lineup-key="${escapeHtml(compareKey)}" data-lineup-side="${escapeHtml(side)}" data-lineup-player="${escapeHtml(player.id)}" aria-pressed="${active ? "true" : "false"}">
-      ${playerPortrait(historical)}
-      <span>${roleMiniIcon(playerDominantRole(player))}</span>
-      <strong>${escapeHtml(player.nick)}</strong>
-    </button>
-  `;
-}
-
-function lineupComparisonStage(teamA, playerA, teamB, playerB, scalePlayers = []) {
-  if (!playerA || !playerB) return `<div class="empty-state">Selecione jogadores dos dois lados para comparar.</div>`;
-  const left = lineupHistoricalPlayer(playerA);
-  const right = lineupHistoricalPlayer(playerB);
-  const scales = lineupStatScales([...scalePlayers, left, right]);
-  return `
-    <section class="lineup-compare-stage">
-      ${lineupSelectedPlayer(teamA, left, playerA, "left")}
-      <div class="lineup-stat-center">
-        <h3>Histórico dos jogadores</h3>
-        <small>Média de todas as partidas do jogador</small>
-        <div class="lineup-stat-list">${lineupComparisonStats(left, right, scales)}</div>
-      </div>
-      ${lineupSelectedPlayer(teamB, right, playerB, "right")}
-    </section>
-  `;
-}
-
-function lineupSelectedPlayer(team, historical, matchPlayer, side) {
-  return `
-    <div class="lineup-selected-player ${side}">
-      ${playerPortrait(historical)}
-      <strong>${escapeHtml(historical.nick || matchPlayer.nick)}</strong>
-      <span>${teamLogo(team.id, "tiny")}${escapeHtml(team.sourceTag || team.tag || matchPlayer.teamTag || "")}</span>
-      <div class="lineup-selected-actions">
-        <a href="${playerHref(matchPlayer)}">Player profile</a>
-        <span>${escapeHtml(playerMatchHandle(matchPlayer))}</span>
-      </div>
-    </div>
-  `;
-}
-
-function lineupComparisonStats(left, right, scales) {
-  return lineupStatRows()
-    .map((row) => {
-      const leftValue = row.value(left);
-      const rightValue = row.value(right);
-      const scale = scales?.[row.key] || lineupSingleStatScale(row, [left, right]);
-      const leftLevel = lineupMetricLevel(leftValue, scale);
-      const rightLevel = lineupMetricLevel(rightValue, scale);
-      const leftClass = lineupMetricClasses(leftValue, rightValue, scale);
-      const rightClass = lineupMetricClasses(rightValue, leftValue, scale);
-      return `
-        <div class="lineup-stat-row" style="--left-level:${leftLevel}%; --right-level:${rightLevel}%;">
-          <strong class="lineup-stat-value lineup-stat-value-left ${leftClass}"><span>${escapeHtml(row.format(leftValue, left))}</span></strong>
-          <span class="lineup-stat-label">${escapeHtml(row.label)}</span>
-          <strong class="lineup-stat-value lineup-stat-value-right ${rightClass}"><span>${escapeHtml(row.format(rightValue, right))}</span></strong>
-        </div>
-      `;
-    })
-    .join("");
-}
-
 function lineupStatScales(players) {
   return Object.fromEntries(lineupStatRows().map((row) => [row.key, lineupSingleStatScale(row, players)]));
 }
@@ -9109,14 +8918,6 @@ function lineupMetricLevel(value, scale) {
   const max = Number(scale?.max || 0);
   if (max <= min) return 64;
   return Math.round(clamp(((numeric - min) / (max - min)) * 100, 8, 100));
-}
-
-function lineupMetricClasses(value, compareValue, scale) {
-  const numeric = Number(value) || 0;
-  const classes = [];
-  if (numeric > Number(compareValue || 0)) classes.push("better");
-  if (numeric === Number(scale?.max || 0) && Number(scale?.max || 0) > Number(scale?.min || 0)) classes.push("best");
-  return classes.join(" ");
 }
 
 function lineupStatRows() {
@@ -10666,22 +10467,6 @@ function tournamentChaveLado(event, teamId, label, score, venceu) {
   return `<span class="vp-bm-lado${venceu ? " vp-ganhou" : ""}" style="--team-line:${teamId ? teamLineColor(teamId) : TEAM_LINE_SEM_COR}">${teamId ? teamLogo(teamId, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}<span class="vp-bm-nome">${escapeHtml(nome)}</span><b>${escapeHtml(String(score ?? ""))}</b></span>`;
 }
 
-function tournamentCuratedBracketColumn(event, column, columns, columnIndex, maxMatches) {
-  const entries = tournamentCuratedBracketColumnEntries(column);
-  const currentMatches = Math.max(entries.length, 1);
-  const nextMatches = tournamentCuratedBracketColumnEntries(columns[columnIndex + 1]).length;
-  const connectorMode = tournamentBracketConnectorMode(currentMatches, nextMatches);
-  const renderEntry = column.terminalCards ? tournamentCuratedBracketQualifiedCard : tournamentCuratedBracketMatch;
-  return `
-    <div class="tournament-bracket-col" style="--column-matches:${currentMatches}">
-      <h3>${escapeHtml(column.title)}</h3>
-      <div class="tournament-bracket-stack">
-        ${entries.map((entry, matchIndex) => renderEntry(event, entry, { columnIndex, matchIndex, connectorMode, maxMatches, columnMatches: currentMatches })).join("")}
-      </div>
-    </div>
-  `;
-}
-
 function tournamentCuratedBracketQualifiedCard(event, card, context = {}) {
   const team = tournamentTeamById(event, card.id);
   const name = card.label || team?.name || card.id || "Equipe";
@@ -10694,23 +10479,6 @@ function tournamentCuratedBracketQualifiedCard(event, card, context = {}) {
         <strong>${escapeHtml(name)}</strong>
       </span>
     </article>
-  `;
-}
-
-function tournamentCuratedBracketMatch(event, match, context = {}) {
-  const winner = tournamentBracketMatchWinner(match);
-  const key = tournamentBracketMatchKey(context.columnIndex, context.matchIndex, match.code);
-  const connectorMode = context.connectorMode || "terminal";
-  const branch = connectorMode === "merge" ? (context.matchIndex % 2 === 0 ? "top" : "bottom") : "straight";
-  const rowStart = tournamentBracketRowStart(match.slot ?? context.matchIndex, context.maxMatches || 1, match.slot == null ? context.columnMatches || 1 : context.maxMatches || 1);
-  const connectorSpanRows = tournamentBracketConnectorSpanRows(context.maxMatches || 1, context.columnMatches || 1, connectorMode);
-  const classes = ["tournament-bracket-match", "curated-match", `connector-${connectorMode}`, connectorMode === "terminal" ? "terminal" : "", `branch-${branch}`].filter(Boolean).join(" ");
-  return `
-    <button type="button" class="${escapeHtml(classes)}" data-tournament-match="${escapeHtml(key)}" style="--match-row:${rowStart}; --connector-span-rows:${connectorSpanRows}">
-      ${tournamentBracketMatchMeta(match)}
-      ${tournamentCuratedBracketTeam(event, match.a, match.aLabel, match.scoreA, winner === match.a)}
-      ${tournamentCuratedBracketTeam(event, match.b, match.bLabel, match.scoreB, winner === match.b)}
-    </button>
   `;
 }
 
@@ -10741,20 +10509,6 @@ function tournamentBracketMatchStatusLabel(match, round = null) {
   if (match?.status) return match.status;
   if (tournamentBracketMatchHasResult(match)) return "Concluida";
   return round?.status || "A jogar";
-}
-
-function tournamentBracketConnectorMode(currentMatches, nextMatches) {
-  if (!nextMatches) return "terminal";
-  if (nextMatches === currentMatches) return "straight";
-  if (nextMatches < currentMatches) return "merge";
-  return "straight";
-}
-
-function tournamentBracketConnectorSpanRows(maxMatches, columnMatches, connectorMode) {
-  if (connectorMode !== "merge") return 0;
-  const safeMax = Math.max(maxMatches, 1);
-  const safeCount = Math.max(columnMatches, 1);
-  return Number((safeMax / safeCount).toFixed(3));
 }
 
 function tournamentBracketRowStart(matchIndex, maxMatches, columnMatches) {
@@ -13078,24 +12832,6 @@ function teamSocialLinks(team) {
     .join("");
 }
 
-// O hall era uma tira de celulas de 76px onde o nome do campeonato, a
-// colocacao e a data so existiam no `title`: para saber o que a equipe ganhou
-// era preciso passar o mouse em cada icone. A arte do trofeu e feita por evento
-// e e a melhor coisa que este bloco tem, entao ela cresce - e o que ela
-// representa passa a estar escrito embaixo. Sem caixa em volta de cada um: o
-// trofeu fica solto na prateleira, com o proprio peso.
-function teamSummaryTrophyPanel(trophies) {
-  if (!trophies.length) return "";
-  return `
-    <section class="team-trophy-panel team-trophy-full">
-      ${sectionHead("Hall de troféus", null, null, null)}
-      <div class="trophy-shelf">
-        ${trophies.map(trophyShelfItem).join("")}
-      </div>
-    </section>
-  `;
-}
-
 // O elenco do trilho: os cinco em destaque numa Placa, uma linha por jogador
 // com a foto solta, o Riot ID e os numeros pela equipe. A pintura no hover e a
 // mesma do ranking. Reservas e historico ficam na aba Elenco.
@@ -13139,19 +12875,6 @@ function trofeusLista(trophies) {
   return `<div class="vp-trofeus">${trophies
     .map((trophy) => `<a class="vp-trofeu" href="#/tournaments/${escapeHtml(trophy.event.id)}">${trophyVisual(trophy)}<span><strong>${escapeHtml(trophy.placementLabel || "")}</strong><small>${escapeHtml([trophy.event.name || "Campeonato", trophy.detail || trophyMonthLabel(trophy.date)].filter(Boolean).join(", "))}</small></span></a>`)
     .join("")}</div>`;
-}
-
-function trophyShelfItem(trophy) {
-  return `
-    <a class="trophy-shelf-item ${escapeHtml(trophy.podiumClass)}" href="#/tournaments/${escapeHtml(trophy.event.id)}">
-      ${trophyVisual(trophy)}
-      <span class="trophy-shelf-copy">
-        <em>${escapeHtml(trophy.placementLabel || "")}</em>
-        <strong>${escapeHtml(trophy.event.name || "Campeonato")}</strong>
-        <small>${escapeHtml(trophyMonthLabel(trophy.date))}</small>
-      </span>
-    </a>
-  `;
 }
 
 function trophyMonthLabel(value) {
@@ -14177,50 +13900,6 @@ function teamStateBadge(team) {
   return `<span class="state-badge">${flag}<span>${escapeHtml(stateLabel)}</span></span>`;
 }
 
-function socialButtons(team) {
-  const socials = team.profile?.socials || {};
-  const rows = [
-    ["website", "Site"],
-    ["instagram", "Instagram"],
-    ["x", "X"],
-    ["twitch", "Twitch"],
-    ["youtube", "YouTube"],
-    ["discord", "Discord"],
-  ];
-  const configured = rows.filter(([key]) => socials[key]);
-  const visible = configured.length ? configured : rows;
-  return visible
-    .map(([key, label]) => {
-      const url = socials[key];
-      const attrs = url ? `href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer"` : `aria-disabled="true"`;
-      return `<a class="social-button ${url ? "" : "disabled"}" ${attrs} title="${escapeHtml(label)}" aria-label="${escapeHtml(label)}">${socialIcon(key)}</a>`;
-    })
-    .join("");
-}
-
-function socialIcon(key) {
-  const icons = {
-    website: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.3 3 14.7 0 18M12 3c-3 3.3-3 14.7 0 18"></path></svg>`,
-    instagram: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="4"></rect><circle cx="12" cy="12" r="3.2"></circle><circle cx="16.5" cy="7.5" r="0.8"></circle></svg>`,
-    x: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5l12 14M18 5L6 19"></path></svg>`,
-    twitch: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h13v9l-4 4h-4l-3 3v-3H6z"></path><path d="M10 9v4M15 9v4"></path></svg>`,
-    youtube: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="10" rx="3"></rect><path d="M11 10l4 2-4 2z"></path></svg>`,
-    discord: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8c3-2 7-2 10 0l1 8c-2 2-4 3-6 3s-4-1-6-3z"></path><path d="M9 14h.1M15 14h.1"></path></svg>`,
-  };
-  return icons[key] || icons.website;
-}
-
-function trophyHallFromRows(trophies) {
-  if (!trophies.length) {
-    return "";
-  }
-  return `
-    <div class="trophy-list">
-      ${trophies.map(trophyHallItem).join("")}
-    </div>
-  `;
-}
-
 function teamTrophyAchievements(team) {
   if (!team?.id) return [];
   const rows = [];
@@ -14271,15 +13950,6 @@ function trophyPlacementInfo(row, index) {
     return { value: 3.5, label: "3º/4º lugar", trophyKey: "third", podiumClass: "place-3" };
   }
   return null;
-}
-
-function trophyHallItem(trophy) {
-  const label = [trophy.event.name || "Campeonato", trophy.placementLabel, eventTimeRange(trophy.event)].filter(Boolean).join(" - ");
-  return `
-    <a class="trophy-item ${escapeHtml(trophy.podiumClass)}" href="#/tournaments/${escapeHtml(trophy.event.id)}" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}">
-      ${trophyVisual(trophy)}
-    </a>
-  `;
 }
 
 function trophyVisual(trophy) {
@@ -14819,54 +14489,6 @@ function playerAccentStyle(team) {
   return `style="--team-accent:#d8323c;--team-accent-2:#009a96;"`;
 }
 
-function playerCurrentTeamCard(team) {
-  return `
-    <a class="player-current-team-card" href="#/teams/${team.id}">
-      <small>Equipe atual</small>
-      ${teamLogo(team.id, "player-current-team-logo")}
-      <span class="player-current-team-copy">
-        <strong>${escapeHtml(team.name)}</strong>
-        <em>${escapeHtml(team.sourceTag || team.tag || team.id)}</em>
-      </span>
-    </a>
-  `;
-}
-
-function playerHeroMetrics(player) {
-  return playerMetricList(
-    [
-      [playerRating(player), "rAAting 3.0"],
-      [fmt(player.acs, 0), "ACS"],
-      [fmt(player.adr, 0), "ADR"],
-      [fmt(player.kd), "K/D"],
-    ],
-    "player-hero-metrics",
-  );
-}
-
-function playerHeroRoleBadge(player) {
-  const role = playerDominantRole(player);
-  if (!role) return "";
-  const title = role.rounds ? `${role.label} - ${role.rounds} rounds` : role.label;
-  return `
-    <span class="player-role-badge" title="${escapeHtml(title)}">
-      ${roleMiniIcon(role)}
-      <strong>${escapeHtml(role.label)}</strong>
-    </span>
-  `;
-}
-
-function playerNickHistoryChips(player, context = "") {
-  const nicks = [...new Set((player.nickHistory || []).filter(Boolean))];
-  if (!nicks.length) return context === "hero" ? "" : `<div class="empty-state compact-empty">Sem histórico de nicks cadastrado.</div>`;
-  return `
-    <div class="player-nick-history ${context === "hero" ? "hero-nicks" : ""}">
-      ${context === "hero" ? `<span>Histórico de nicks</span>` : ""}
-      <div class="chip-row">${nicks.map((nick) => `<span class="chip">${escapeHtml(nick)}</span>`).join("")}</div>
-    </div>
-  `;
-}
-
 function playerSummaryTab(player, matches, trophies) {
   const ultimas = matches.slice(0, 6);
   const trofeus = trophies.map((trophy) => ({ ...trophy, detail: trophy.team ? `com a ${typeof trophy.team === "object" ? trophy.team.name : trophy.team}` : "" }));
@@ -15038,58 +14660,6 @@ function porMapaPlaca(player) {
   `;
 }
 
-function playerSummaryTrophyPanel(trophies) {
-  const hall = trophyHallFromRows(trophies);
-  if (!hall) return "";
-  return `
-    <section class="data-panel player-summary-trophy-panel">
-      <div class="section-head"><h2>Hall de troféus</h2></div>
-      ${hall}
-    </section>
-  `;
-}
-
-function playerStatCards(player) {
-  const fkpr = player.rounds ? player.firstKills / player.rounds : 0;
-  const fdpr = player.rounds ? player.firstDeaths / player.rounds : 0;
-  return playerMetricList([
-    [playerRating(player), "rAAting 3.0"],
-    [player.rounds, "Rounds"],
-    [player.matches, "Mapas"],
-    [fmt(player.acs, 0), "ACS"],
-    [fmt(player.kd), "K/D"],
-    [signed(player.kills - player.deaths), "K-D"],
-    [fmt(player.adr, 0), "ADR"],
-    [pct(player.kast), "KAST"],
-    [formatMaybeSwing(player), "Swing/R"],
-    [player.kills, "Kills"],
-    [player.deaths, "Deaths"],
-    [player.assists, "Assists"],
-    [fmt(player.kpr), "KPR"],
-    [fmt(player.dpr), "DPR"],
-    [fmt(player.apr), "APR"],
-    [fmt(fkpr), "FKPR"],
-    [fmt(fdpr), "FDPR"],
-    [pct(player.hs), "HS%"],
-  ], "player-primary-metrics");
-}
-
-function playerRatingCompositionPanel(player) {
-  return `
-    <section class="data-panel player-rating-panel">
-      <div class="section-head"><h2>Composição da rAAting 3.0</h2><p>${escapeHtml(ratingFormulaText(" "))}</p></div>
-      ${ratingComponentCards(player)}
-    </section>
-  `;
-}
-
-function ratingComponentCards(player) {
-  return playerMetricList(
-    ratingComponentDefinitions().map((item) => [formatMaybeMetric(player, item.key), item.label, item.description]),
-    "player-rating-metrics-list",
-  );
-}
-
 function ratingComponentDefinitions() {
   return [
     { key: "kill_rating", label: "KillRating", description: "Produção de kills ajustada por economia e contexto." },
@@ -15099,59 +14669,6 @@ function ratingComponentDefinitions() {
     { key: "kast_rating", label: "KASTRating", description: "Participação útil em rounds: kill, assistência, sobrevivência em round vencido ou morte tradada." },
     { key: "multi_kill_rating", label: "MultiKillRating", description: "Explosividade em rounds com 2K, 3K, 4K ou 5K." },
   ];
-}
-
-function playerRatingMetricsPanel(player) {
-  return `
-    <section class="data-panel player-rating-metrics-panel">
-      <div class="section-head"><h2>Métricas rAAting 3.0</h2><p>Métricas ajustadas usadas na fórmula oficial.</p></div>
-      ${playerMetricList([
-        [formatMaybeMetric(player, "ekpr"), "eKPR", "Kills por round ajustados por economia."],
-        [formatMaybeMetric(player, "edpr"), "eDPR", "Mortes por round ajustadas por economia."],
-        [formatMaybeMetric(player, "eadr", 0), "eADR", "Dano por round ajustado por economia."],
-        [formatMaybePercent(player, "ekast"), "eKAST", "KAST ajustado por economia."],
-        [formatMaybeMetric(player, "mk_per_r"), "MK/R", "Pontos de multi-kill por round."],
-        [formatMaybeSwing(player), "Swing/R", "Round Swing médio por round, em pontos percentuais."],
-      ], "player-rating-metrics-list")}
-    </section>
-  `;
-}
-
-function playerOpeningTradesPanel(player) {
-  const fkFdDiff = Number(player.firstKills || 0) - Number(player.firstDeaths || 0);
-  const fkpr = player.rounds ? player.firstKills / player.rounds : 0;
-  const fdpr = player.rounds ? player.firstDeaths / player.rounds : 0;
-  return `
-    <section class="data-panel player-rating-trades-panel">
-      <div class="section-head"><h2>Abertura e trades</h2><p>Eventos de abertura, trades e sobrevivência usados na auditoria da rAAting 3.0.</p></div>
-      ${playerMetricList([
-        [player.firstKills || 0, "First Kills"],
-        [player.firstDeaths || 0, "First Deaths"],
-        [signed(fkFdDiff), "FK-FD"],
-        [fmt(fkpr), "FKPR"],
-        [fmt(fdpr), "FDPR"],
-        [formatMaybeMetric(player, "tradeKills", 0), "Trade Kills"],
-        [formatMaybeMetric(player, "tradedDeaths", 0), "Mortes tradadas"],
-        [formatMaybeMetric(player, "failedTradeDeaths", 0), "Mortes sem trade"],
-        [formatMaybeMetric(player, "tradeDenials", 0), "Trade denials"],
-        [formatMaybeMetric(player, "savedLossRounds", 0), "Saves em derrota"],
-        [formatMaybeMetric(player, "survivedWinRounds", 0), "Sobrevivências em vitória"],
-      ], "player-rating-metrics-list")}
-    </section>
-  `;
-}
-
-function playerMetricList(items, extra = "") {
-  return `
-    <dl class="${escapeHtml(`player-metric-list ${extra}`.trim())}">
-      ${items
-        .map(([value, label, title]) => {
-          const titleAttr = title ? ` title="${escapeHtml(title)}"` : "";
-          return `<div class="player-metric-line"${titleAttr}><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(String(value))}</dd></div>`;
-        })
-        .join("")}
-    </dl>
-  `;
 }
 
 function playerTeamsTab(player, teamRows, trophies) {
@@ -18134,55 +17651,6 @@ function aggregateTeamStatsForMatches(matches, teamId) {
     }
     return total;
   }, emptyTeamRoundStats());
-}
-
-function teamCompareBars(match, selectedMatches = [match]) {
-  return `
-    <div class="team-compare-list">
-      ${teamCompareCard(match.teamA, selectedMatches)}
-      ${teamCompareCard(match.teamB, selectedMatches)}
-    </div>
-  `;
-}
-
-function teamCompareCard(team, selectedMatches) {
-  const stats = aggregateTeamStatsForMatches(selectedMatches, team.id);
-  const roundsWon = selectedMatches.reduce((sum, item) => sum + scoreForTeamInMatch(item, team.id), 0);
-  const roundsTotal = selectedMatches.reduce((sum, item) => sum + item.teamA.score + item.teamB.score, 0);
-  const rows = [
-    ["Rounds", roundsWon, roundsTotal],
-    ["Ataque", stats.attackWins, stats.attackRounds],
-    ["Defesa", stats.defenseWins, stats.defenseRounds],
-    ["Pistols", stats.pistolWins, stats.pistolRounds],
-  ];
-  return `
-    <section class="team-compare-card">
-      <div class="team-compare-head">${teamLogo(team.id, "small")}<strong>${escapeHtml(team.name)}</strong></div>
-      ${rows.map(([label, wins, total]) => teamCompareMetric(label, wins, total)).join("")}
-    </section>
-  `;
-}
-
-function teamCompareMetric(label, wins, total) {
-  const value = pctValue(wins, total);
-  return `
-    <div class="team-compare-row">
-      <span>${escapeHtml(label)}</span>
-      <div class="team-compare-track"><i style="width:${clamp(value, 0, 100)}%"></i><strong>${pct(value)}</strong></div>
-      <em>${escapeHtml(`${wins}/${total}`)}</em>
-    </div>
-  `;
-}
-
-function playerMapTable(player) {
-  return `
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Mapa</th><th class="numeric">Partidas</th><th class="numeric">rAAting 3.0</th><th class="numeric">ACS</th></tr></thead>
-        <tbody>${player.mapStats.map((row) => `<tr><td>${entityLink("maps", slugify(row.name), row.name)}</td><td class="numeric">${row.matches}</td><td class="numeric">${fmt(row.rating)}</td><td class="numeric">${fmt(row.acs, 0)}</td></tr>`).join("")}</tbody>
-      </table>
-    </div>
-  `;
 }
 
 function agentBars(rows, options = {}) {

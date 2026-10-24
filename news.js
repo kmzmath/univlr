@@ -57,36 +57,6 @@
 
   // ------------------------------------------------------------ bloco da home
   //
-  // Duas materias, as duas com capa: a mais recente grande a esquerda, a
-  // seguinte menor a direita. A atividade recente entra embaixo da menor e
-  // ocupa exatamente a sobra de altura entre as duas - ela e o detalhe da
-  // linha, nao uma terceira peca disputando espaco.
-  //
-  // Sincrono de proposito: a home e montada de uma vez em string. Se nao ha
-  // materia NEM atividade, devolve "" e o bloco nao existe - placeholder na
-  // home seria espaco morto na pagina mais importante do site.
-
-  function heroi(a, menor) {
-    // O titulo entra SOBRE a capa, sob um veu, e nao embaixo dela: assim cada
-    // cartao le como um bloco so em vez de duas pecas empilhadas. Sem capa nao
-    // ha veu - o titulo assenta na propria superficie do cartao.
-    const temCapa = Boolean(a.capa);
-    return `
-      <a class="news-heroi ${menor ? "menor" : ""} ${temCapa ? "com-capa" : "sem-capa"}" href="#/news/${esc(a.slug)}">
-        ${/* As duas capas carregam adiantadas: sao as duas maiores imagens do
-              topo da home, e `lazy` na segunda so trocava a espera por um
-              retangulo vazio no lugar mais visivel do site. */ ""}
-        ${temCapa ? `<img class="news-heroi-capa" src="${esc(a.capa)}" alt="" loading="eager" decoding="async" />` : ""}
-        <div class="news-heroi-texto">
-          <div class="news-heroi-meta">
-            <time datetime="${esc(a.data)}">${menor ? dataCurta(a.data) : dataLonga(a.data)}</time>
-            ${window.Comments ? window.Comments.selo("article", a.slug) : ""}
-          </div>
-          <h3>${esc(a.titulo)}</h3>
-        </div>
-      </a>`;
-  }
-
   // O bloco de noticias do trilho direito da home: a principal com a capa
   // inteira em cima e o titulo embaixo, as outras duas como lista com
   // miniatura. Sem materia, o trilho nao ganha bloco vazio.
@@ -113,51 +83,6 @@
                 .join("")}</ul>`
             : ""
         }
-      </section>`;
-  }
-
-  function blocoHome() {
-    const itens = lista();
-    const atividade = window.Comments ? window.Comments.atividadeHome(5) : "";
-
-    // Sem materia, a metade esquerda ficaria vazia e a direita sozinha. Entao
-    // a atividade deixa de ser coluna estreita e ocupa a largura toda.
-    if (!itens.length) {
-      return window.Comments ? window.Comments.atividadeLarga(9) : "";
-    }
-
-    const [destaque, ...resto] = itens;
-    const secundarias = resto.slice(0, 2);
-
-    // Com DUAS secundarias a coluna da direita fica inteira para elas e a
-    // atividade desce para uma faixa fina. Dois cartoes 2:1 empilhados nao
-    // cabem na coluna junto da atividade: eles somam mais que a altura do
-    // heroi, e o que sobraria para a conversa seria uma tira de 3,8:1.
-    const trio = secundarias.length === 2;
-    // Com uma materia so e nenhuma conversa, a coluna da direita nao teria
-    // nada - e meia largura de vazio ao lado do heroi e pior que um heroi
-    // largo. Nesse caso a linha vira de uma coluna so.
-    const sozinho = !secundarias.length && !atividade;
-    const faixa = trio && window.Comments ? window.Comments.atividadeFaixa(5) : "";
-
-    return `
-      <section class="${["home-topo", sozinho && "sozinho", trio && "trio"].filter(Boolean).join(" ")}">
-        <div class="section-head home-topo-head">
-          <div><h2>Notícias</h2></div>
-          <a class="subtle-link" href="#/news">Ver todas</a>
-        </div>
-        <div class="home-topo-principal">
-          ${heroi(destaque)}
-        </div>
-        ${
-          sozinho
-            ? ""
-            : `<div class="home-topo-lado">
-                 ${secundarias.map((item) => heroi(item, true)).join("")}
-                 ${trio ? "" : atividade}
-               </div>`
-        }
-        ${faixa}
       </section>`;
   }
 
@@ -962,5 +887,5 @@
   // caminho por onde um visitante ponha conteudo aqui - o que o publico escreve
   // vive em comments, e la tudo passa por esc().
 
-  window.News = { carregar, lista, porSlug, blocoHome, blocoTrilho, renderNews, dataLonga };
+  window.News = { carregar, lista, porSlug, blocoTrilho, renderNews, dataLonga };
 })();

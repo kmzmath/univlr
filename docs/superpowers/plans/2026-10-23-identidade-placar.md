@@ -257,3 +257,23 @@ Alturas de chegada (dos mockups): home 1086 e 2857; partida 1367 e 2518; equipe 
   - remover do `styles.css` só as regras de classes que sumiram dos templates, listadas antes de apagar e conferidas com `grep` de prefixo.
 - [ ] **Step 4:** medir as nove rotas da seção "Como medir" a 1440 e a 390 e anotar antes e depois numa tabela no fim deste plano. Sem estouro, console limpo, todos os `scripts/test_*.js` passam, build com 0.
 - [ ] **Step 5:** commit `placar: paginas restantes e limpeza`.
+
+## Medida final (24/10/2026)
+
+Altura da página (`document.documentElement.scrollHeight`) em px. "Antes" é a main local com o visual atual; "depois" é esta branch. Em todas as 18 medidas da branch, nenhum elemento estoura a tela fora de uma caixa que rola, e o controle negativo (um `div` 600px mais largo que a janela) foi detectado. Console sem erro, todos os `scripts/test_*.js` passam, build com 0.
+
+| Página | 1440 antes | 1440 depois | 390 antes | 390 depois |
+| --- | ---: | ---: | ---: | ---: |
+| Home | 2169 | 1103 | 4858 | 2922 |
+| Partida (série 062) | 3404 | 1594 | 7300 | 2886 |
+| Equipe (Azure Bears Black) | 2645 | 1328 | 5197 | 2057 |
+| Jogador (Aldeath) | 2106 | 1460 | 4558 | 2653 |
+| Campeonato (Rush Series 3) | 6720 | 2437 | 12780 | 3521 |
+| Partidas | 4870 | 3374 | 12124 | 3994 |
+| Eventos | 3007 | 2661 | 5445 | 5162 |
+| Players | 3762 | 3618 | 15893 | 15813 |
+| Ranking | 4226 | 3595 | 4374 | 3807 |
+
+Players quase não muda: a lista continua sendo a grade de cartões com foto, que não teve mockup. É a próxima candidata a virar Placa.
+
+A limpeza tirou 36 funções do `app.js`, o `blocoHome` e o `heroi` do `news.js`, e 794 seletores do `styles.css` (535 regras e 11 blocos `@media` vazios, de 511 KB para 399 KB). Uma classe só saiu se algum template a emitia no começo da branch e nenhum a emite hoje, com conferência de prefixo para nomes montados por interpolação. A prova foi feita no navegador: as 3.020 regras vivas do CSS antigo estão no novo com as mesmas declarações, e o diff de estilos computados em 22 rotas, nas duas larguras, só mostrou o mesmo ruído de carregamento que aparece comparando o CSS antigo com ele mesmo.

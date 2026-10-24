@@ -3716,3 +3716,156 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* ==========================================================================
+   Listas: partidas, eventos, jogadores e ranking completo
+   Um nivel de superficie so: a lista nao fica mais numa caixa, e onde as
+   linhas eram caixas separadas elas viram uma Placa com fios de 1px.
+   ========================================================================== */
+
+.page-header.slim-header {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.page-header .page-title h1 {
+  color: var(--ink);
+  font: 600 44px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.page-header .page-title p {
+  max-width: 90ch;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.page-header .page-count {
+  color: var(--muted);
+  font: 600 28px/1 var(--font-display);
+}
+
+.vp-lista-pagina.vp-lista-pagina {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-lista-pagina .lista-contagem {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* ---- partidas ---- */
+.vp-lista-pagina .result-day-label {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ---- eventos: uma Placa, a linha de cada campeonato separada por fio ---- */
+.vp-lista-pagina .event-table-head {
+  border-radius: 2px 2px 0 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.vp-lista-pagina .event-table-head,
+.vp-lista-pagina .event-table-head * {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-lista-pagina .event-list.large {
+  gap: 0;
+  border-radius: 0 0 2px 2px;
+  background: var(--surface);
+}
+
+.vp-lista-pagina .event-list.large > .event-row.event-row-rich {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-lista-pagina .event-list.large > .event-row.event-row-rich + .event-row.event-row-rich {
+  border-top: 1px solid var(--line);
+}
+
+.vp-lista-pagina .event-list.large > .event-row.event-row-rich:hover {
+  background: rgba(245, 241, 242, 0.03);
+}
+
+/* A situacao em texto: o ponto vermelho so em "Em andamento", como na home. */
+.vp-lista-pagina .event-status {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* O styles.css pinta .event-status.live de vermelho com !important. */
+.vp-lista-pagina .event-status.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink) !important;
+}
+
+.vp-lista-pagina .event-status.live::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+/* ---- ranking completo: uma Placa, a posicao em numero solto ---- */
+.vp-lista-pagina .ranking-accordion-head {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-lista-pagina .ranking-accordion-rows {
+  gap: 0;
+  border-radius: 2px;
+  background: var(--surface);
+}
+
+.vp-lista-pagina .ranking-accordion-item {
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.vp-lista-pagina .ranking-accordion-item + .ranking-accordion-item {
+  border-top: 1px solid var(--line);
+}
+
+.vp-lista-pagina .rank-cell {
+  min-height: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  font: 600 19px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 760px) {
+  .page-header .page-title h1 {
+    font-size: 36px;
+  }
+}

@@ -357,5 +357,15 @@ assert(/vp-classif-linha[\s\S]*?CEUB[\s\S]*?8-1/.test(encerrado) || encerrado.in
 const luce = { id: "copa-luce-inters", name: "Copa LUCE Inters", status: "Finalizado", ...overrides["copa-luce-inters"] };
 assert(context.tournamentSwissStandingsSection(luce).includes("<table"), "o suico continua mostrando a tabela");
 
+// ---------------------------------------------------------------- Tarefa 11
+// Fechamento: titulo de painel sem o traco vermelho, nenhuma caixa em volta
+// das listas, e travessao em lugar nenhum (a regra do projeto e hifen).
+const fonteDoApp = ler("app.js");
+assert(!/class="panel-title/.test(fonteDoApp), "nenhum template emite panel-title");
+assert(!/class="hub-panel/.test(fonteDoApp), "nenhuma lista fica dentro de um hub-panel");
+for (const arquivo of ["app.js", "placar.css", "news.js", "index.html"]) {
+  assert.strictEqual((ler(arquivo).match(new RegExp(String.fromCharCode(0x2014), "g")) || []).length, 0, `${arquivo} nao tem travessao`);
+}
+
 void vp;
 console.log("Visual Placar contract tests passed");

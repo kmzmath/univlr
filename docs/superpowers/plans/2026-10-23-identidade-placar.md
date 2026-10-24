@@ -294,3 +294,7 @@ Alturas (scrollHeight, main x branch):
 | Ranking | 4226 para 3595 | 4374 para 3807 |
 
 /partidas subiu em relacao a rodada anterior (3374 a 1440) porque a linha do modelo antigo tem 68px contra 56px da linha Placar; foi o que o dono pediu. Ainda rolam de lado no celular: o chaveamento do campeonato (dentro da propria caixa) e o menu do topo (escolha da Task 1, para o topo preso nao passar de 215px).
+
+### Retorno de 24/10, segunda rodada
+
+Home aprovada com dois ajustes: a nota do ranking da home tinha herdado 56px de uma classe com o mesmo nome no painel novo de detalhes (`vp-rk-nota`, renomeada para `vp-rk-nota-final`) e a foto do destaque da semana ficou na altura do cartao, com os tracinhos embaixo dele. Ranking aprovado. Na partida, a conversa e buscada uma vez por visita (antes cada clique buscava de novo; medido: abrir 1, quatro cliques 0, aba de mapa 0, sair e voltar 1; na main os mesmos cliques fazem uma busca cada), e o celular (ate 640px) mostra uma linha por jogador com K, D, A e rAAting, sempre no modo padrao. O `comments.js` da branch passou a ser o da main mais a memoria, para nao conflitar na integracao. Partida a 390: 3152 para 2246.

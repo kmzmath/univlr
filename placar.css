@@ -812,11 +812,12 @@
    Melhores da semana: um lider por vez
    ========================================================================== */
 
+/* O fundo e de cada slide; o cartao so recorta o trilho e leva os tracinhos
+   embaixo, fora da foto. */
 .vp-semana-cartao {
   position: relative;
   overflow: hidden;
   border-radius: 2px;
-  background: var(--surface);
 }
 
 .vp-semana-trilho {
@@ -848,12 +849,15 @@
   );
 }
 
-/* A foto solta, sangrando na base: sem moldura, sem fundo. */
+/* A foto solta, sangrando na base: sem moldura, sem fundo. As fotos sao
+   quadradas, com a pessoa no meio da metade de cima para baixo, entao a caixa
+   e quadrada e quase da altura do cartao: a pessoa ocupa a altura toda e cai
+   inteira na coluna da esquerda. */
 .vp-slide .player-figure {
   align-self: end;
-  width: 150px;
+  width: 190px;
   height: 190px;
-  margin-left: -6px;
+  margin-left: -18px;
   background: none;
   border: 0;
   border-radius: 0;
@@ -864,14 +868,26 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: left bottom;
+  object-position: center bottom;
+}
+
+/* Sem foto, a silhueta fica no fundo, e nao como um vulto cinza do tamanho da
+   pessoa. */
+.vp-slide .player-figure.is-silhouette {
+  width: 156px;
+  height: 156px;
+  margin-left: -2px;
+}
+
+.vp-slide .player-figure.is-silhouette img {
+  opacity: 0.38;
 }
 
 .vp-slide-txt {
   display: grid;
   grid-template-rows: auto auto auto 1fr auto;
   min-width: 0;
-  padding: 16px 16px 22px 6px;
+  padding: 16px 16px 16px 6px;
   text-align: right;
 }
 
@@ -927,24 +943,19 @@
   text-shadow: 0 1px 2px #000;
 }
 
-/* Os tracinhos: o atual enche enquanto conta o tempo. A barra tem 3px, a area
-   de clique 22px. */
+/* Os tracinhos: o atual enche enquanto conta o tempo. Ficam embaixo do
+   cartao, e nao por cima da foto. A barra tem 3px, a area de clique 18px. */
 .vp-passos {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
   display: flex;
   gap: 3px;
-  padding: 0 8px;
 }
 
 .vp-passo {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   flex: 1 1 0;
-  height: 22px;
-  padding: 0 0 7px;
+  height: 18px;
+  padding: 7px 0 0;
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -2249,9 +2260,87 @@
   }
 }
 
+/* Celular: uma linha por jogador, como a HLTV. Nick, K, D, A e rAAting; o
+   resto sai. A linha da equipe vira o cabecalho dela, com o nome das colunas
+   no lugar das medias. Tocar no jogador continua escolhendo o historico. */
 @media (max-width: 640px) {
-  .vp-partida .vp-sb tbody {
-    --sb-cols: 6;
+  .vp-partida .vp-s-sb .vp-modo {
+    display: none;
+  }
+
+  .vp-partida .vp-sb tbody + tbody {
+    margin-top: 10px;
+  }
+
+  .vp-partida .vp-sb tr {
+    grid-template-columns: minmax(0, 1fr) repeat(3, 34px) 56px;
+    column-gap: 6px;
+    min-height: 36px;
+    padding: 0 10px;
+  }
+
+  .vp-partida .vp-sb th:first-child,
+  .vp-partida .vp-sb td:first-child,
+  .vp-partida .vp-sb tr.vp-sb-equipe th:first-child {
+    grid-column: 1;
+    order: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .vp-partida .vp-sb tr.vp-sb-jogador td:nth-child(2),
+  .vp-partida .vp-sb td:first-child br,
+  .vp-partida .vp-sb td:first-child .tiny,
+  .vp-partida .vp-sb .vp-sb-equipe-nome small,
+  .vp-partida .vp-sb td.numeric:not([data-col="rating"], [data-col="kills"], [data-col="deaths"], [data-col="assists"]),
+  .vp-partida .vp-sb td.vlr-board-metric:not([data-col="rating"], [data-col="kills"], [data-col="deaths"], [data-col="assists"]) {
+    display: none;
+  }
+
+  .vp-partida .vp-sb td[data-col="kills"] { order: 1; }
+  .vp-partida .vp-sb td[data-col="deaths"] { order: 2; }
+  .vp-partida .vp-sb td[data-col="assists"] { order: 3; }
+  .vp-partida .vp-sb td[data-col="rating"] { order: 4; }
+
+  .vp-partida .vp-sb td.numeric,
+  .vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric {
+    display: block;
+    text-align: center;
+  }
+
+  .vp-partida .vp-sb td[data-col="rating"] {
+    text-align: right;
+    font-weight: 700;
+  }
+
+  /* So a linha da equipe mostra o nome da coluna; o jogador mostra o numero. */
+  .vp-partida .vp-sb tr.vp-sb-jogador td.numeric::before {
+    content: none;
+  }
+
+  .vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric > * {
+    display: none;
+  }
+
+  .vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric::before {
+    font-size: 11px;
+    line-height: 36px;
+  }
+
+  .vp-partida .vp-sb .vp-sb-equipe td[data-col="rating"]::before {
+    content: "rAAting";
+  }
+
+  .vp-partida .vp-sb .vp-sb-equipe td[data-col="rating"] {
+    text-align: right;
+  }
+
+  .vp-partida .vp-sb tr.vp-sb-equipe > * {
+    height: auto;
+  }
+
+  .vp-partida .vp-sb td:first-child a {
+    font-size: 13px;
   }
 }
 
@@ -4283,6 +4372,12 @@
   margin-top: 30px;
 }
 
+/* Em tela estreita o balao encolhe com a tela: com 260px ele nao cabia em
+   posicao nenhuma perto do terco do grafico num celular de 360. */
+.ranking-chart-tooltip {
+  max-width: min(260px, calc(100vw - 160px));
+}
+
 .ranking-chart-hotspot.na-esquerda .ranking-chart-tooltip {
   left: 0;
   transform: translate(0, 6px);
@@ -4331,7 +4426,7 @@
   justify-items: start;
 }
 
-.vp-rk-nota {
+.vp-rk-nota-final {
   font: 700 56px/0.9 var(--font-display);
   font-variant-numeric: tabular-nums;
 }

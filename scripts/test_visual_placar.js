@@ -270,6 +270,24 @@ for (const coluna of colunas) {
   assert(linhaDoAldeath.includes(`data-label="${coluna.short || coluna.label}"`), `a celula de ${coluna.label} leva o rotulo para o celular`);
 }
 
+// No celular o scoreboard fica numa linha por jogador, como a HLTV: nick, K,
+// D, A e rAAting. Cada celula diz de que coluna e, para o CSS escolher as
+// quatro, e o celular usa sempre o padrao (os extras do avancado nao cabem).
+for (const coluna of colunas) {
+  assert(linhaDoAldeath.includes(`data-col="${coluna.key}"`), `a celula de ${coluna.label} diz de que coluna e`);
+}
+const linhaDaEquipe = sb.split('class="vp-sb-equipe"')[1].split("</tr>")[0];
+assert(linhaDaEquipe.includes('data-col="kills"') && linhaDaEquipe.includes('data-col="rating"'), "a linha da equipe tambem marca as colunas, para virar o cabecalho no celular");
+vm.runInContext(`state.matchScoreboardMode = "advanced";`, context);
+context.matchMedia = (consulta) => ({ matches: consulta === "(max-width: 640px)" });
+assert.strictEqual(context.matchScoreboardMode(), "standard", "no celular o scoreboard e sempre o padrao");
+context.matchMedia = () => ({ matches: false });
+assert.strictEqual(context.matchScoreboardMode(), "advanced", "controle: fora do celular o avancado continua valendo");
+delete context.matchMedia;
+vm.runInContext(`state.matchScoreboardMode = "standard";`, context);
+const estiloDaPartida = ler("placar.css");
+assert(/@media \(max-width: 640px\)\s*\{[^@]*\.vp-sb td\.numeric:not\(\[data-col="rating"\], \[data-col="kills"\], \[data-col="deaths"\], \[data-col="assists"\]\)/.test(estiloDaPartida), "no celular so K, D, A e rAAting aparecem");
+
 const avancadas = context.scoreboardColumns("advanced");
 const cabecalhoAvancado = context.scoreboardHeader("k-a|k-b", avancadas);
 assert(cabecalhoAvancado.includes('class="vp-sb-grupos"'), "o avancado agrupa as colunas numa linha de cima");
@@ -442,6 +460,10 @@ const fatias = (detalhes.split('class="vp-rk-soma"')[1] || "").split("</div>")[0
 assert.strictEqual(fatias.length, 4, "a nota e uma barra so, com a parte de cada bloco");
 assert.deepStrictEqual(fatias.map((f) => Number(f.match(/[\d.]+/)[0])), [70, 15, 10, 4.94], "cada parte e valor x peso");
 assert(detalhes.includes("100.0 × 70% = 70.0"), "a conta de cada bloco continua escrita");
+// O numero grande do painel tem classe propria: em 24/10 ele usou .vp-rk-nota,
+// que e a nota do ranking da home, e a home herdou os 56px.
+assert(detalhes.includes('<b class="vp-rk-nota-final">99.9</b>'), "a nota do painel tem classe propria");
+assert.strictEqual((estiloDoRanking.match(/^\.vp-rk-nota \{/gm) || []).length, 1, "so a nota da home define .vp-rk-nota");
 // Com "Detalhes da nota" ligado em tela estreita, os quatro blocos descem para
 // uma segunda linha, e cada numero precisa do proprio rotulo.
 for (const rotulo of ["Desempenho", "Conquistas", "Forma", "rAAting 3.0"]) {

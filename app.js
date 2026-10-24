@@ -6334,6 +6334,9 @@ function render() {
   // query fica fora da chave de proposito, e o filtro sobe como evento
   // pelo pushFilterState().
   if (routeChanged) trackPageview();
+  // Cada navegacao avisa os comentarios: e assim que eles sabem que a pessoa
+  // saiu da pagina e, na volta, buscam a conversa de novo (comments.js).
+  window.Comments?.novaRender?.();
   const pages = {
     home: renderHomeCompact,
     matches: renderMatchesCompact,
@@ -7665,7 +7668,7 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null) 
     <div class="vp-rk-detalhes" style="--team-line:${teamLineColor(team.id)}">
       <div class="vp-rk-topo">
         <div class="vp-rk-nota-bloco ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText("A nota final mistura desempenho coletivo, conquistas, momento recente e rAAting 3.0 dos jogadores. Todos os blocos já chegam normalizados em 0-100.")}">
-          <b class="vp-rk-nota">${fmt(score, 1)}</b>
+          <b class="vp-rk-nota-final">${fmt(score, 1)}</b>
           <small>nota final</small>
         </div>
         <div class="vp-rk-formula">
@@ -8590,7 +8593,11 @@ const SCOREBOARD_ADVANCED_COLUMNS = [
   { key: "swing", col: "swing", label: "Swing/R", headingClass: "case-heading", aggregate: "weighted", value: (player) => playerSwingPerRound(player), format: (value) => formatScoreboardSignedDecimal(value), tone: (value) => directionalTone(value) },
 ];
 
+// No celular o scoreboard e uma linha por jogador com K, D, A e rAAting (como a
+// HLTV), entao ele e sempre o padrao: os componentes do avancado nao cabem ali,
+// e a chave Padrao/Avancado some no CSS.
 function matchScoreboardMode() {
+  if (window.matchMedia?.("(max-width: 640px)").matches) return "standard";
   return state.matchScoreboardMode === "advanced" ? "advanced" : "standard";
 }
 
@@ -8651,7 +8658,7 @@ function scoreboardTeamAverages(players, columns = scoreboardColumns()) {
     const tone = column.tone?.(value) || "";
     const className = ["vlr-board-metric", tone].filter(Boolean).join(" ");
     const title = column.summaryTitle ? ` title="${escapeHtml(column.summaryTitle)}"` : "";
-    return `<td class="${escapeHtml(className)}" data-label="${escapeHtml(column.short || column.label)}"${title}><small>${escapeHtml(column.summaryLabel || column.label)}</small><strong>${escapeHtml(formatScoreboardColumnValue(column, value, true))}</strong></td>`;
+    return `<td class="${escapeHtml(className)}" data-col="${escapeHtml(column.key)}" data-label="${escapeHtml(column.short || column.label)}"${title}><small>${escapeHtml(column.summaryLabel || column.label)}</small><strong>${escapeHtml(formatScoreboardColumnValue(column, value, true))}</strong></td>`;
   }).join("");
 }
 
@@ -8795,7 +8802,7 @@ function scoreboardCell(player, column) {
   const display = column.cellFormat ? column.cellFormat(player, value) : formatScoreboardColumnValue(column, value, false);
   // data-label e o rotulo do numero no celular, onde a linha vira um bloco e o
   // cabecalho de colunas fica longe demais para ser lido.
-  return `<td class="${escapeHtml(className)}" data-label="${escapeHtml(column.short || column.label)}"${titleAttr}>${escapeHtml(display)}</td>`;
+  return `<td class="${escapeHtml(className)}" data-col="${escapeHtml(column.key)}" data-label="${escapeHtml(column.short || column.label)}"${titleAttr}>${escapeHtml(display)}</td>`;
 }
 
 function playerMatchHandle(player) {
@@ -13003,10 +13010,11 @@ function teamRankingChart(history) {
       const left = (x(row.date) / width) * 100;
       const top = (y(row.rank) / height) * 100;
       const detail = [`Nota ${row.points === "" ? "-" : fmt(row.points, 1)}`, row.note || ""].filter(Boolean).join(" - ");
-      // Nas pontas o balao centrado sairia da tela (ate 130px para fora): perto
-      // da borda ele cresce para dentro do grafico.
+      // Nas pontas o balao centrado sairia da tela: ele tem ate 260px, e num
+      // grafico de 328px (celular de 360) so o terco do meio tem 130px livres
+      // dos dois lados. Fora dele, o balao cresce para dentro do grafico.
       return `
-        <span class="ranking-chart-hotspot ${marcada(row, index) ? "marked" : ""}${left < 12 ? " na-esquerda" : left > 88 ? " na-direita" : ""}" style="--x:${fmt(left, 2)};--y:${fmt(top, 2)}" tabindex="0" aria-label="${escapeHtml(`${formatDate(row.date)} ${rankingHistoryRankLabel(row.rank)}`)}">
+        <span class="ranking-chart-hotspot ${marcada(row, index) ? "marked" : ""}${left < 35 ? " na-esquerda" : left > 65 ? " na-direita" : ""}" style="--x:${fmt(left, 2)};--y:${fmt(top, 2)}" tabindex="0" aria-label="${escapeHtml(`${formatDate(row.date)} ${rankingHistoryRankLabel(row.rank)}`)}">
           <span class="ranking-chart-tooltip">
             <strong>${escapeHtml(rankingHistoryRankLabel(row.rank))}</strong>
             <span>${escapeHtml(formatDate(row.date))}</span>

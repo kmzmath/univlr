@@ -18,7 +18,29 @@
   // pai - a linha "respondendo a fulano" e quem carrega o vinculo.
   const RECUO_MAX = 3;
 
-  let atual = null; // { kind, id, comentarios, meusVotos, respondendo, editando }
+  // Uma conversa por raiz. A pagina das cartinhas tem a da colecao e a de
+  // cada cartinha aberta ao mesmo tempo, entao o estado mora junto do elemento
+  // e cada tratador le o da propria raiz - inclusive depois de um await, quando
+  // outra conversa da pagina pode ter sido mexida no meio.
+  const estados = new WeakMap(); // raiz -> { kind, id, comentarios, meusVotos, respondendo, editando }
+  // Prefixo dos links internos ("#/u/fulano"). A pagina das cartinhas fica
+  // fora do app e define "/", para esses links voltarem ao site.
+  const RAIZ = window.UNIVLR_RAIZ || "";
+
+  // A conversa das paginas do site e buscada uma vez por visita. Trocar o
+  // jogador da comparacao, ordenar o scoreboard ou trocar a aba de mapa da
+  // mesma serie redesenha a pagina inteira, raiz nova inclusive, e cada
+  // redesenho ia ao Supabase de novo (pedido do dono em 24/10: buscar so ao
+  // abrir ou recarregar). `assuntoDaRender` e o assunto da ultima casca
+  // desenhada; o roteador chama `novaRender()` a cada navegacao, e uma
+  // navegacao que nao desenhou casca nenhuma (a pessoa foi para outra pagina)
+  // esquece o assunto, para a volta buscar de novo. A pagina das cartinhas nao
+  // usa a casca, entao `continua` fica falso e ela busca como antes.
+  let assuntoDaRender = null;
+  let teveCasca = false;
+  let continua = false;
+  let rascunho = "";
+  let memoria = null; // { assunto, est } da ultima conversa carregada
 
   // ------------------------------------------------------------------ tempo
 
@@ -75,7 +97,7 @@
     if (autor.fav_team) {
       const t = typeof window.teamById === "function" ? window.teamById(autor.fav_team) : null;
       if (t && typeof window.teamLogo === "function") {
-        partes.push(`<a class="cmt-fa cmt-fa-time" href="#/teams/${esc(t.id)}" title="Equipe favorita">
+        partes.push(`<a class="cmt-fa cmt-fa-time" href="${RAIZ}#/teams/${esc(t.id)}" title="Equipe favorita">
                        <span class="cmt-fa-coracao" aria-hidden="true">♥</span>
                        ${window.teamLogo(t.id, "cmt-fa-logo")}
                        <span>${esc(t.name)}</span>
@@ -86,7 +108,7 @@
     if (autor.fav_player) {
       const j = typeof window.playerById === "function" ? window.playerById(autor.fav_player) : null;
       if (j) {
-        partes.push(`<a class="cmt-fa cmt-fa-jogador" href="#/players/${esc(j.routeSlug || j.id)}"
+        partes.push(`<a class="cmt-fa cmt-fa-jogador" href="${RAIZ}#/players/${esc(j.routeSlug || j.id)}"
                         title="Jogador favorito">
                        <span class="cmt-fa-coracao" aria-hidden="true">♥</span>
                        <span>${esc(j.nick || j.handle)}</span>
@@ -184,19 +206,19 @@
       // escreveu, para ela ver que algo ali nao foi aceito.
       if (!href) return dentro;
       const externo = href.startsWith("#") ? "" : ' target="_blank" rel="noopener nofollow ugc"';
-      return `<a class="cmt-url" href="${href}"${externo}>${dentro}</a>`;
+      return `<a class="cmt-url" href="${href.startsWith("#") ? RAIZ + href : href}"${externo}>${dentro}</a>`;
     });
     out = out.replace(/\[url\]([\s\S]*?)\[\/url\]/gi, (todo, dentro) => {
       const href = hrefSeguro(dentro);
       if (!href) return dentro;
       const externo = href.startsWith("#") ? "" : ' target="_blank" rel="noopener nofollow ugc"';
-      return `<a class="cmt-url" href="${href}"${externo}>${href}</a>`;
+      return `<a class="cmt-url" href="${href.startsWith("#") ? RAIZ + href : href}"${externo}>${href}</a>`;
     });
 
     out = out.replace(/\[hr\]/gi, '<hr class="cmt-hr">');
 
     // Mencao a usuario, que ja existia.
-    out = out.replace(/@([A-Za-z0-9_]{3,20})/g, '<a class="cmt-mencao" href="#/u/$1">@$1</a>');
+    out = out.replace(/@([A-Za-z0-9_]{3,20})/g, `<a class="cmt-mencao" href="${RAIZ}#/u/$1">@$1</a>`);
 
     out = out.replace(/\n/g, "<br>");
 
@@ -226,7 +248,7 @@
 
   // --------------------------------------------------------------- desenho
 
-  function umComentario(c, nivel, paiNome) {
+  function umComentario(c, nivel, paiNome, est) {
     const C = window.Community;
     const eu = C.usuario();
     const meu = eu && c.author_id === eu.id;
@@ -234,9 +256,9 @@
     const autor = c.profiles ? c.profiles.username : "desconhecido";
     const podeEditar = meu && !apagado && Date.now() - new Date(c.created_at).getTime() < 15 * 60 * 1000;
     const podeApagar = !apagado && (meu || C.ehAdmin());
-    const editando = atual.editando === c.id;
+    const editando = est.editando === c.id;
 
-    const meuVoto = atual.meusVotos.get(c.id) || 0;
+    const meuVoto = est.meusVotos.get(c.id) || 0;
     const acoes = apagado
       ? ""
       : `
@@ -268,7 +290,7 @@
 
     const filhos = c.filhos.length
       ? `<div class="cmt-filhos ${nivel >= RECUO_MAX ? "sem-recuo" : ""}">
-           ${c.filhos.map((f) => umComentario(f, nivel + 1, autor)).join("")}
+           ${c.filhos.map((f) => umComentario(f, nivel + 1, autor, est)).join("")}
          </div>`
       : "";
 
@@ -278,7 +300,7 @@
           ${apagado ? avatarRemovido() : avatar(autor)}
           <div class="cmt-conteudo">
             <header class="cmt-cabeca">
-              ${apagado ? `<span class="cmt-autor">-</span>` : `<a class="cmt-autor" href="#/u/${esc(autor)}">${esc(autor)}</a>`}
+              ${apagado ? `<span class="cmt-autor">-</span>` : `<a class="cmt-autor" href="${RAIZ}#/u/${esc(autor)}">${esc(autor)}</a>`}
               ${!apagado && c.profiles && c.profiles.role === "admin" ? `<span class="cmt-selo">admin</span>` : ""}
               ${apagado ? "" : selosDeFa(c.profiles)}
               <time datetime="${esc(c.created_at)}">${quando(c.created_at)}</time>
@@ -288,7 +310,7 @@
             ${texto}
             ${acoes}
             <div class="cmt-resposta-slot" data-slot="${esc(c.id)}">${
-              atual.respondendo === c.id ? formulario("responder", c.id, "") : ""
+              est.respondendo === c.id ? formulario("responder", c.id, "") : ""
             }</div>
           </div>
         </div>
@@ -412,18 +434,21 @@
     return formulario("novo", "", "");
   }
 
-  function desenha() {
-    const raiz = document.querySelector(`[data-comentarios]`);
-    if (!raiz || !atual) return;
-    const n = atual.comentarios.filter((c) => !c.deleted_at).length;
+  function desenha(raiz) {
+    const est = raiz && estados.get(raiz);
+    if (!est) return;
+    const n = est.comentarios.filter((c) => !c.deleted_at).length;
     raiz.innerHTML = `
       <div class="section-head">
         <div><h2>Comentários</h2><p>${n === 0 ? "Ninguém comentou ainda." : `${n} ${n === 1 ? "comentário" : "comentários"}`}</p></div>
       </div>
       ${cabecalhoForm()}
       <div class="cmt-lista">
-        ${emArvore(atual.comentarios).map((c) => umComentario(c, 0, null)).join("")}
+        ${emArvore(est.comentarios).map((c) => umComentario(c, 0, null, est)).join("")}
       </div>`;
+    // Quem mostra a contagem fora da conversa (o selo na linha da cartinha)
+    // ouve isto e troca o numero sem esperar outra consulta.
+    raiz.dispatchEvent(new CustomEvent("comentarios:desenhados", { bubbles: true, detail: { kind: est.kind, id: est.id, total: n } }));
   }
 
   // ---------------------------------------------------------------- eventos
@@ -435,11 +460,18 @@
     p.hidden = false;
   }
 
-  async function recarrega() {
-    const { comentarios, meusVotos } = await window.Community.listarComentarios(atual.kind, atual.id);
-    atual.comentarios = comentarios;
-    atual.meusVotos = meusVotos;
-    desenha();
+  async function recarrega(raiz) {
+    const est = estados.get(raiz);
+    const pedido = (est.pedido = (est.pedido || 0) + 1);
+    const { comentarios, meusVotos } = await window.Community.listarComentarios(est.kind, est.id);
+    // So a resposta mais nova da montagem atual desenha. Uma remontagem (o
+    // login) ou um segundo envio podem ter saido depois deste pedido e chegado
+    // antes; desenhar este por cima mostraria uma conversa velha.
+    if (estados.get(raiz) !== est || est.pedido !== pedido) return;
+    est.comentarios = comentarios;
+    est.meusVotos = meusVotos;
+    memoria = { assunto: `${est.kind}:${est.id}`, est };
+    desenha(raiz);
   }
 
   function liga(raiz) {
@@ -467,6 +499,7 @@
     });
 
     raiz.addEventListener("submit", async (ev) => {
+      const est = estados.get(raiz);
       const form = ev.target.closest(".cmt-form");
       if (!form) return;
       ev.preventDefault();
@@ -479,10 +512,10 @@
       botao.disabled = true;
       try {
         if (modo === "editar") await window.Community.editarComentario(alvo, texto);
-        else await window.Community.comentar(atual.kind, atual.id, texto, modo === "responder" ? alvo : null);
-        atual.respondendo = null;
-        atual.editando = null;
-        await recarrega();
+        else await window.Community.comentar(est.kind, est.id, texto, modo === "responder" ? alvo : null);
+        est.respondendo = null;
+        est.editando = null;
+        await recarrega(raiz);
       } catch (erro) {
         botao.disabled = false;
         erroNoForm(form, window.Community.mensagemDeErro(erro));
@@ -490,6 +523,7 @@
     });
 
     raiz.addEventListener("click", async (ev) => {
+      const est = estados.get(raiz);
       const alvo = ev.target;
 
       // --- formatacao
@@ -523,26 +557,26 @@
 
       const cancelar = alvo.closest("[data-cancelar]");
       if (cancelar) {
-        atual.respondendo = null;
-        atual.editando = null;
-        return desenha();
+        est.respondendo = null;
+        est.editando = null;
+        return desenha(raiz);
       }
 
       const responder = alvo.closest("[data-responder]");
       if (responder) {
-        atual.respondendo = atual.respondendo === responder.dataset.responder ? null : responder.dataset.responder;
-        atual.editando = null;
-        desenha();
-        raiz.querySelector(`[data-slot="${atual.respondendo}"] textarea`)?.focus();
+        est.respondendo = est.respondendo === responder.dataset.responder ? null : responder.dataset.responder;
+        est.editando = null;
+        desenha(raiz);
+        raiz.querySelector(`[data-slot="${est.respondendo}"] textarea`)?.focus();
         return;
       }
 
       const editar = alvo.closest("[data-editar]");
       if (editar) {
-        atual.editando = atual.editando === editar.dataset.editar ? null : editar.dataset.editar;
-        atual.respondendo = null;
-        desenha();
-        raiz.querySelector(`[data-cmt="${atual.editando}"] textarea`)?.focus();
+        est.editando = est.editando === editar.dataset.editar ? null : editar.dataset.editar;
+        est.respondendo = null;
+        desenha(raiz);
+        raiz.querySelector(`[data-cmt="${est.editando}"] textarea`)?.focus();
         return;
       }
 
@@ -551,24 +585,24 @@
         if (!window.Community.logado()) return window.Auth.abrir("entrar");
         const id = votar.dataset.votar;
         const clicado = Number(votar.dataset.sinal);
-        const atualDoVoto = atual.meusVotos.get(id) || 0;
+        const atualDoVoto = est.meusVotos.get(id) || 0;
         // Clicar de novo na mesma seta TIRA o voto; clicar na outra troca.
         const novoSinal = atualDoVoto === clicado ? 0 : clicado;
 
         // Otimista: o botao responde no clique e a lista so e refeita se o
         // servidor recusar. Esperar a ida e volta faz o voto parecer quebrado
         // numa conexao ruim.
-        const alvoCmt = atual.comentarios.find((c) => c.id === id);
+        const alvoCmt = est.comentarios.find((c) => c.id === id);
         if (alvoCmt) alvoCmt.score += novoSinal - atualDoVoto;
-        if (novoSinal === 0) atual.meusVotos.delete(id);
-        else atual.meusVotos.set(id, novoSinal);
-        desenha();
+        if (novoSinal === 0) est.meusVotos.delete(id);
+        else est.meusVotos.set(id, novoSinal);
+        desenha(raiz);
 
         try {
           await window.Community.votar(id, novoSinal);
         } catch (erro) {
           console.warn("voto recusado:", window.Community.mensagemDeErro(erro));
-          await recarrega();
+          await recarrega(raiz);
         }
         return;
       }
@@ -578,7 +612,7 @@
         if (!window.confirm("Apagar este comentário? O texto não volta.")) return;
         try {
           await window.Community.apagarComentario(apagar.dataset.apagar);
-          await recarrega();
+          await recarrega(raiz);
         } catch (erro) {
           window.alert(window.Community.mensagemDeErro(erro));
         }
@@ -607,8 +641,10 @@
 
   const BALAO = `<svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M8 2C4.7 2 2 4.2 2 7c0 1.5.8 2.9 2 3.8V14l2.9-1.7c.4.1.7.1 1.1.1 3.3 0 6-2.2 6-5S11.3 2 8 2Z"/></svg>`;
 
-  function selo(kind, id) {
-    const n = window.Community?.contagem(kind, id) || 0;
+  // `total` vem de quem acabou de desenhar a conversa e sabe o numero exato;
+  // sem ele, vale a contagem carregada com a pagina.
+  function selo(kind, id, total) {
+    const n = total ?? (window.Community?.contagem(kind, id) || 0);
     if (!n) return "";
     return `<span class="cmt-selo-contagem" title="${n} ${n === 1 ? "comentário" : "comentários"}">
               ${BALAO}<span>${n}</span>
@@ -625,6 +661,15 @@
 
   function assuntoDaThread(kind, id) {
     try {
+      // Antes do `state`: a pagina das cartinhas nao tem o banco do site, e o
+      // link precisa sair do mesmo jeito. "2026" e a conversa da colecao;
+      // "2026:<puuid>", a de uma cartinha.
+      if (kind === "card") {
+        const [temporada, puuid] = String(id).split(":");
+        if (!puuid) return { href: "/cartas/#comentarios", nome: `Cartinhas ${temporada}` };
+        const p = typeof window.playerById === "function" ? window.playerById(puuid) : null;
+        return { href: `/cartas/#jogador-${encodeURIComponent(puuid)}`, nome: p ? `Cartinha de ${p.nick || p.handle}` : "Cartinha" };
+      }
       if (typeof state === "undefined" || !state.db) return null;
       if (kind === "match") {
         // O assunto e a SERIE: `id` aqui e o seriesKey, nao um id de partida.
@@ -657,7 +702,7 @@
     return null;
   }
 
-  const ROTULO_TIPO = { match: "partida", event: "campeonato", team: "equipe", player: "jogador", article: "notícia" };
+  const ROTULO_TIPO = { match: "partida", event: "campeonato", team: "equipe", player: "jogador", article: "notícia", card: "cartinha" };
 
   function linhasDeAtividade(limite) {
     return (window.Community?.atividadeRecente(limite) || [])
@@ -715,19 +760,52 @@
   // ------------------------------------------------------------------ saida
 
   // Casca sincrona, para o HTML da partida sair inteiro no primeiro paint.
+  function novaRender() {
+    if (!teveCasca) assuntoDaRender = null;
+    teveCasca = false;
+  }
+
+  // A casca e chamada enquanto o HTML novo e montado, com o DOM antigo ainda na
+  // tela: e a hora de guardar o que a pessoa estava escrevendo.
   function shell(kind, id) {
+    const assunto = `${kind}:${id}`;
+    continua = assuntoDaRender === assunto;
+    assuntoDaRender = assunto;
+    teveCasca = true;
+    rascunho = continua ? document.querySelector("[data-comentarios]")?.querySelector("textarea[name=corpo]")?.value || "" : "";
     return `<section class="match-panel cmt-secao" data-comentarios data-kind="${esc(kind)}" data-id="${esc(id)}">
               <div class="section-head"><div><h2>Comentários</h2><p>Carregando...</p></div></div>
             </section>`;
   }
 
-  async function montar(kind, id) {
-    const raiz = document.querySelector("[data-comentarios]");
+  async function montar(kind, id, raiz = document.querySelector("[data-comentarios]")) {
     if (!raiz) return;
-    atual = { kind, id: String(id), comentarios: [], meusVotos: new Set(), respondendo: null, editando: null };
-    liga(raiz);
+    const assunto = `${kind}:${id}`;
+    if (continua && memoria?.assunto === assunto) {
+      continua = false;
+      const { comentarios, meusVotos } = memoria.est;
+      estados.set(raiz, { kind, id: String(id), comentarios, meusVotos, respondendo: null, editando: null });
+      if (!raiz.dataset.cmtLigado) {
+        liga(raiz);
+        raiz.dataset.cmtLigado = "1";
+      }
+      memoria = { assunto, est: estados.get(raiz) };
+      desenha(raiz);
+      const caixa = raiz.querySelector("textarea[name=corpo]");
+      if (caixa && rascunho) caixa.value = rascunho;
+      return;
+    }
+    // Map, como o listarComentarios devolve: o desenho le o sinal do voto com
+    // `.get`, e um Set aqui quebraria qualquer desenho antes da primeira lista.
+    estados.set(raiz, { kind, id: String(id), comentarios: [], meusVotos: new Map(), respondendo: null, editando: null });
+    // O site recria a raiz a cada render; a pagina das cartinhas remonta a
+    // mesma raiz depois do login. Ligar duas vezes dobraria cada clique.
+    if (!raiz.dataset.cmtLigado) {
+      liga(raiz);
+      raiz.dataset.cmtLigado = "1";
+    }
     try {
-      await recarrega();
+      await recarrega(raiz);
       destacaComentarioDaUrl();
     } catch (erro) {
       raiz.innerHTML = `<div class="section-head"><div><h2>Comentários</h2>
@@ -777,5 +855,5 @@
     setTimeout(() => alvo.classList.remove("destacado"), 2600);
   }
 
-  window.Comments = { shell, montar, avatar, quando, corpo, selo, atividadeHome, atividadeFaixa, atividadeLarga, assuntoDaThread };
+  window.Comments = { shell, montar, novaRender, avatar, quando, corpo, selo, atividadeHome, atividadeFaixa, atividadeLarga, assuntoDaThread };
 })();

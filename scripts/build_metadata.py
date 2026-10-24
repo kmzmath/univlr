@@ -614,7 +614,15 @@ def read_team_lineups():
         for index in range(1, 20):
             player_name = row.get(f"player{index}", "")
             if player_name:
-                lineup.append({"slot": index, "name": player_name})
+                role = row.get(f"role{index}", "").strip().lower()
+                if role and role not in {"titular", "reserva", "comissão", "comissao"}:
+                    print(f"AVISO: função desconhecida em {team_id}, player{index}: {role!r}")
+                    role = ""
+                if role == "comissão":
+                    role = "comissao"
+                lineup.append({"slot": index, "name": player_name, **({"role": role} if role else {})})
+        if sum(player.get("role") == "titular" for player in lineup) > 5:
+            print(f"AVISO: {team_id} tem mais de cinco titulares confirmados em teams.xlsx")
         teams[team_id] = {"id": team_id, "lineup": lineup}
     return teams
 

@@ -31,6 +31,13 @@ def exported_name(value):
     return re.sub(r"\s+", " ", ascii_name).strip()
 
 
+# A posicao na colecao e o contrario da ordem de revelacao: o calendario vai
+# do menor para o maior overall, entao a primeira revelada e a #216 e a ultima,
+# a melhor de todas, e a #1.
+def posicao(row, total):
+    return total + 1 - int(row["Ordem geral"])
+
+
 def load_schedule():
     with SCHEDULE.open(encoding="utf-8-sig", newline="") as stream:
         rows = list(csv.DictReader(stream, delimiter=";"))
@@ -98,8 +105,7 @@ def publish(through, preview):
         day = date.fromisoformat(row["Data"])
         if day > through:
             continue
-        rank = int(row["Ordem geral"])
-        filename = f"{rank:03d}.webp"
+        filename = f"{posicao(row, len(rows)):03d}.webp"
         source = IMAGES / exported_name(row["Time"]) / f'{exported_name(row["Jogador"])}.png'
         target = image_dir / filename
         if not target.is_file() or source.stat().st_mtime_ns > target.stat().st_mtime_ns:
@@ -120,12 +126,13 @@ def publish(through, preview):
         if day <= through:
             entry["cards"] = [
                 {
-                    "rank": int(row["Ordem geral"]),
+                    "rank": posicao(row, len(rows)),
+                    "thread": f'2026:{ids[(row["Jogador"], row["Time"])]}',
                     "name": row["Jogador"],
                     "team": row["Time"],
                     "overall": int(row["Overall"]),
-                    "image": f'cards/{int(row["Ordem geral"]):03d}.webp',
-                    "adjustedRating": eligible_by_key[(row["Jogador"], row["Time"])]["raatingFinal"],
+                    "image": f'cards/{posicao(row, len(rows)):03d}.webp',
+                    "opponentStrength": eligible_by_key[(row["Jogador"], row["Time"])]["nivelAdversarios"],
                     **details[ids[(row["Jogador"], row["Time"])]],
                 }
                 for row in day_rows

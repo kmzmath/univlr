@@ -7,8 +7,16 @@
     <meta name="description" content="Cartinhas e estatísticas dos jogadores de VALORANT universitário em 2026." />
     <title>Cartinhas 2026 | UNIVLR</title>
     <link rel="icon" type="image/png" href="/assets/logo_univlr.png" />
-    <link rel="stylesheet" href="styles.css?v=5" />
-    <script defer src="app.js?v=3"></script>
+    <link rel="stylesheet" href="styles.css?v=6" />
+    <!-- Comunidade, os mesmos arquivos do site, na ordem do index.html da
+         raiz. UNIVLR_RAIZ faz os links internos dos comentarios ("#/u/fulano")
+         voltarem ao site em vez de ficarem nesta pagina. -->
+    <script>window.UNIVLR_RAIZ = "/";</script>
+    <script defer src="/supabase-js.js?v=2112004"></script>
+    <script defer src="/community-core.js?v=12"></script>
+    <script defer src="/comments.js?v=14"></script>
+    <script defer src="/auth.js?v=7"></script>
+    <script defer src="app.js?v=4"></script>
   </head>
   <body>
     <header class="topo-site">
@@ -23,6 +31,7 @@
           <a href="/#/ranking">Ranking</a>
           <a href="/cartas/" aria-current="page">Cartinhas</a>
         </nav>
+        <div class="conta-slot"></div>
       </div>
     </header>
 
@@ -30,7 +39,7 @@
       <header class="cabeca">
         <div>
           <h1>Cartinhas 2026</h1>
-          <p>Um lote por dia, do menor para o maior overall. Os próximos nomes continuam em segredo.</p>
+          <p id="regra">É revelado um lote de cartinhas por dia, em ordem do menor para o maior overall. No total são 216 cartinhas, de jogadores com pelo menos 200 rounds e 12 mapas jogados no ano. Última revelação em 24 de novembro.</p>
         </div>
         <div class="contagem" id="contagem" aria-live="polite"></div>
       </header>
@@ -49,7 +58,9 @@
             <header class="sec"><h2>Calendário</h2></header>
             <div id="calendario"></div>
           </section>
+          <a class="atalho-conversa" href="#comentarios">Conversa da coleção <b id="conversa-total">Comente</b></a>
         </aside>
+        <section class="conversa cmt-secao" id="comentarios" aria-label="Comentários sobre a coleção"></section>
       </div>
     </div>
 

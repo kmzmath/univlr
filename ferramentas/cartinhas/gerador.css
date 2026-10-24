@@ -1,0 +1,206 @@
+/* A carta usa Oswald (fontes/, licença OFL em fontes/OFL-Oswald.txt).
+   A interface usa as fontes do próprio Hub Uni (assets/fonts): Barlow e Barlow Condensed. */
+@font-face { font-family: "Oswald"; font-weight: 400; font-display: block; src: url("fontes/oswald-latin-400-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Oswald"; font-weight: 400; font-display: block; src: url("fontes/oswald-latin-ext-400-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Oswald"; font-weight: 500; font-display: block; src: url("fontes/oswald-latin-500-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Oswald"; font-weight: 500; font-display: block; src: url("fontes/oswald-latin-ext-500-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Oswald"; font-weight: 600; font-display: block; src: url("fontes/oswald-latin-600-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Oswald"; font-weight: 600; font-display: block; src: url("fontes/oswald-latin-ext-600-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Oswald"; font-weight: 700; font-display: block; src: url("fontes/oswald-latin-700-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Oswald"; font-weight: 700; font-display: block; src: url("fontes/oswald-latin-ext-700-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Barlow Condensed"; font-weight: 700; font-display: block; src: url("/assets/fonts/barlow-condensed-700-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Barlow Condensed"; font-weight: 700; font-display: block; src: url("/assets/fonts/barlow-condensed-700-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Barlow Condensed"; font-weight: 600; font-display: block; src: url("/assets/fonts/barlow-condensed-600-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Barlow Condensed"; font-weight: 600; font-display: block; src: url("/assets/fonts/barlow-condensed-600-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Barlow"; font-weight: 500; font-display: swap; src: url("/assets/fonts/barlow-500-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Barlow"; font-weight: 700; font-display: swap; src: url("/assets/fonts/barlow-700-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --fundo: #14111c;
+  --painel: #1f1a2b;
+  --painel-2: #2a2339;
+  --linha: #3a3150;
+  --texto: #ece8f4;
+  --texto-2: #a79fbb;
+  --ouro: #fdb144;
+  --ouro-escuro: #c9852a;
+  --erro: #ff7a7a;
+  --atencao: #ffd27a;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 600px at 10% -10%, #2b1f44 0%, transparent 60%), var(--fundo);
+  color: var(--texto);
+  font: 500 15px/1.4 "Barlow", system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+button, input, select, textarea { font: inherit; color: inherit; }
+
+.topo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 22px 24px 12px;
+}
+.marca h1 {
+  margin: 0;
+  font: 700 34px/1 "Barlow Condensed", sans-serif;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ouro);
+}
+.marca p { margin: 4px 0 0; color: var(--texto-2); font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; font-size: 13px; }
+.acoes { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 24px;
+  background: rgba(20, 17, 28, 0.92);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid var(--linha);
+  border-bottom: 1px solid var(--linha);
+}
+.barra input[type="search"] { min-width: 220px; flex: 1 1 220px; max-width: 320px; }
+.separador { flex: 1 1 auto; }
+
+input:not([type="checkbox"]):not([type="range"]):not([type="file"]), select, textarea {
+  background: var(--painel);
+  border: 1px solid var(--linha);
+  border-radius: 8px;
+  padding: 7px 10px;
+  min-height: 36px;
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible {
+  outline: 2px solid var(--ouro);
+  outline-offset: 1px;
+}
+.rotulo-mini { display: inline-flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--texto-2); }
+.check { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; white-space: nowrap; cursor: pointer; }
+.check input { accent-color: var(--ouro); width: 16px; height: 16px; }
+
+button {
+  border: 1px solid var(--linha);
+  background: var(--painel-2);
+  border-radius: 8px;
+  padding: 8px 14px;
+  min-height: 36px;
+  cursor: pointer;
+  font-weight: 700;
+}
+button:hover { border-color: var(--ouro-escuro); }
+button.primario { background: var(--ouro); border-color: var(--ouro); color: #24170a; }
+button.primario:hover { background: #ffc266; }
+button:disabled { opacity: 0.5; cursor: progress; }
+
+.contagem { margin: 12px 24px 0; color: var(--texto-2); font-size: 13px; }
+.aviso { margin: 10px 24px 0; padding: 10px 14px; border-radius: 8px; background: var(--painel); border: 1px solid var(--linha); }
+.aviso[data-tipo="erro"] { border-color: var(--erro); color: var(--erro); }
+.aviso[data-tipo="atencao"] { border-color: var(--atencao); color: var(--atencao); }
+.progresso { margin: 10px 24px 0; display: flex; gap: 12px; align-items: center; color: var(--texto-2); }
+.progresso progress { flex: 1; max-width: 420px; accent-color: var(--ouro); }
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 18px;
+  padding: 18px 24px 48px;
+}
+.carta {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 14px;
+  aspect-ratio: 5 / 8;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.carta:hover { transform: translateY(-3px); }
+.carta .lugar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--painel-2), var(--painel));
+  animation: pulsar 1.2s ease-in-out infinite alternate;
+}
+@keyframes pulsar { from { opacity: 0.45; } to { opacity: 0.9; } }
+.carta .miniatura { width: 100%; height: 100%; display: block; filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45)); }
+.carta .selo {
+  position: absolute;
+  top: 8px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.7);
+  color: var(--atencao);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.dialogo {
+  border: 1px solid var(--linha);
+  border-radius: 14px;
+  background: var(--painel);
+  color: var(--texto);
+  padding: 0;
+  max-width: min(980px, calc(100vw - 24px));
+  width: 100%;
+}
+.dialogo::backdrop { background: rgba(8, 6, 14, 0.72); }
+.dialogo h2 { margin: 0 0 12px; font: 700 26px/1.1 "Barlow Condensed", sans-serif; text-transform: uppercase; color: var(--ouro); }
+.editor { display: grid; grid-template-columns: minmax(260px, 400px) 1fr; gap: 22px; padding: 20px; }
+.area-previa { position: relative; border-radius: 12px; padding: 6px; border: 2px dashed transparent; }
+.area-previa.soltando { border-color: var(--ouro); background: rgba(253, 177, 68, 0.06); }
+.area-previa canvas { width: 100%; height: auto; display: block; }
+.dica { text-align: center; color: var(--texto-2); font-size: 12px; margin: 6px 0 0; }
+#form-carta, #form-colar { display: flex; flex-direction: column; gap: 10px; }
+#form-colar { padding: 20px; }
+#form-carta label, #form-colar label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--texto-2); }
+#form-carta input, #form-carta select { color: var(--texto); }
+.linha2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.grade3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+fieldset { border: 1px solid var(--linha); border-radius: 10px; padding: 10px 12px 12px; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+legend { padding: 0 6px; color: var(--ouro); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+input[type="range"] { accent-color: var(--ouro); }
+.botao-arquivo {
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--ouro-escuro);
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  color: var(--texto) !important;
+  font-weight: 700;
+}
+.botao-arquivo input { display: none; }
+.botoes { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; margin-top: 4px; }
+.miudo { font-size: 12px; color: var(--texto-2); margin: 0; }
+.miudo.alerta { color: #e5484d; }
+.erro { color: var(--erro); min-height: 1em; margin: 0; }
+textarea { width: 100%; font-family: ui-monospace, Consolas, monospace; font-size: 12px; resize: vertical; }
+
+@media (max-width: 760px) {
+  .editor { grid-template-columns: 1fr; }
+  .area-previa { max-width: 340px; margin: 0 auto; }
+  .barra { padding: 10px 14px; }
+  .grade { padding: 14px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+  .topo { padding: 16px 14px 10px; }
+}

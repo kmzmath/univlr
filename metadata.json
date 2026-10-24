@@ -38,43 +38,43 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "mth"
+          "name": "mth",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "evatoj"
+          "name": "evatoj",
+          "role": "reserva"
         },
         {
           "slot": 3,
-          "name": "daviZao"
+          "name": "daviZao",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "tgzin"
+          "name": "tgzin",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "ninker"
+          "name": "ninker",
+          "role": "reserva"
         },
         {
           "slot": 6,
-          "name": "Racflu"
+          "name": "Racflu",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "Filipinwu"
+          "name": "Filipinwu",
+          "role": "reserva"
         },
         {
           "slot": 8,
-          "name": "zuw"
-        },
-        {
-          "slot": 9,
-          "name": "drk"
-        },
-        {
-          "slot": 10,
-          "name": "Borrachinha"
+          "name": "zuw",
+          "role": "titular"
         }
       ]
     },
@@ -101,35 +101,38 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "GalinhaMamifera"
+          "name": "drk",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "drk"
+          "name": "gL X",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "gL X"
+          "name": "Hast",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Hast"
+          "name": "ferRomantica",
+          "role": "reserva"
         },
         {
           "slot": 5,
-          "name": "ferRomantica"
+          "name": "Borrachinha",
+          "role": "reserva"
         },
         {
           "slot": 6,
-          "name": "Borrachinha"
+          "name": "Kafaja",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "Kafaja"
-        },
-        {
-          "slot": 8,
-          "name": "GLEP"
+          "name": "GLEP",
+          "role": "titular"
         }
       ]
     },
@@ -280,31 +283,33 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Zé Gotas"
+          "name": "Zé Gotas",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "akrasia"
+          "name": "dnk",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "dnk"
+          "name": "Vladi",
+          "role": "reserva"
         },
         {
           "slot": 4,
-          "name": "Vladi"
+          "name": "Bodo Glimt",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Bodo Glimt"
+          "name": "Duduka",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "Duduka"
-        },
-        {
-          "slot": 7,
-          "name": "Luqueta"
+          "name": "Luqueta",
+          "role": "titular"
         }
       ]
     },
@@ -435,31 +440,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Aldeath"
+          "name": "Aldeath",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Lacerdão"
+          "name": "Lacerdão",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Skydvjj"
+          "name": "Skydvjj",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Droga é o pedro"
+          "name": "Droga é o pedro",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Stockão"
-        },
-        {
-          "slot": 6,
-          "name": "GrimmW"
-        },
-        {
-          "slot": 7,
-          "name": "Rapunzel"
+          "name": "Stockão",
+          "role": "titular"
         }
       ],
       "succeeds": "azure_bears"
@@ -487,27 +489,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "André"
+          "name": "André",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "greinzera"
+          "name": "greinzera",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Kick"
+          "name": "Kick",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "taek"
+          "name": "taek",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "piM"
-        },
-        {
-          "slot": 6,
-          "name": "ScherBi"
+          "name": "piM",
+          "role": "titular"
         }
       ]
     },
@@ -577,35 +580,38 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "dvd"
+          "name": "dvd",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Omega"
+          "name": "Omega",
+          "role": "reserva"
         },
         {
           "slot": 3,
-          "name": "alskd"
+          "name": "alskd",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Melousa"
+          "name": "Melousa",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Washin"
+          "name": "khianh",
+          "role": "reserva"
         },
         {
           "slot": 6,
-          "name": "khianh"
+          "name": "GrimmW",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "GrimmW"
-        },
-        {
-          "slot": 8,
-          "name": "Arkseiro"
+          "name": "Arkseiro",
+          "role": "titular"
         }
       ]
     },
@@ -769,35 +775,38 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Terra"
+          "name": "Terra",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Lozartan"
+          "name": "Lozartan",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Juninho"
+          "name": "Juninho",
+          "role": "reserva"
         },
         {
           "slot": 4,
-          "name": "Ariemend"
+          "name": "Ariemend",
+          "role": "reserva"
         },
         {
           "slot": 5,
-          "name": "Caiv"
+          "name": "Caiv",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "nw"
+          "name": "nw",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "cailloou"
-        },
-        {
-          "slot": 8,
-          "name": "zeph"
+          "name": "cailloou",
+          "role": "titular"
         }
       ]
     },
@@ -824,35 +833,33 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "giugiujjzl"
+          "name": "Violetx",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Violetx"
+          "name": "Hoopa",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Hoopa"
+          "name": "Brusopas",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Brusopas"
+          "name": "AnaGi",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "yxwuki"
+          "name": "Haruauau",
+          "role": "reserva"
         },
         {
           "slot": 6,
-          "name": "AnaGi"
-        },
-        {
-          "slot": 7,
-          "name": "Haruauau"
-        },
-        {
-          "slot": 8,
-          "name": "manuMist"
+          "name": "manuMist",
+          "role": "titular"
         }
       ]
     },
@@ -879,35 +886,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Burrito"
+          "name": "Burrito",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Lopes"
+          "name": "Metal",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Metal"
+          "name": "Medina",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Medina"
+          "name": "sobrunin",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "sobrunin"
-        },
-        {
-          "slot": 6,
-          "name": "Coutinho"
-        },
-        {
-          "slot": 7,
-          "name": "Kaos"
-        },
-        {
-          "slot": 8,
-          "name": "SuperPedrin"
+          "name": "SuperPedrin",
+          "role": "titular"
         }
       ]
     },
@@ -934,27 +934,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "manuMist"
+          "name": "manuMist",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Ric"
+          "name": "Duarte",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Duarte"
+          "name": "Anzy",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Anzy"
+          "name": "anp4",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "anp4"
-        },
-        {
-          "slot": 6,
-          "name": "Doragon"
+          "name": "Doragon",
+          "role": "titular"
         }
       ]
     },
@@ -1056,27 +1057,33 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "chadu"
+          "name": "chadu",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "gbzz"
+          "name": "gbzz",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "kzr"
+          "name": "kzr",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "reyblock"
+          "name": "reyblock",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "seki"
+          "name": "seki",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "jotave"
+          "name": "JotaVe",
+          "role": "reserva"
         }
       ]
     },
@@ -1103,39 +1110,33 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Japinha99"
+          "name": "Japinha99",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Pockaus"
+          "name": "Dante",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Dante"
+          "name": "bada",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "bada"
+          "name": "tanizaki",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "tanizaki"
+          "name": "noway",
+          "role": "reserva"
         },
         {
           "slot": 6,
-          "name": "noway"
-        },
-        {
-          "slot": 7,
-          "name": "Leywin"
-        },
-        {
-          "slot": 8,
-          "name": "jotave"
-        },
-        {
-          "slot": 9,
-          "name": "pipo166"
+          "name": "pipo166",
+          "role": "titular"
         }
       ]
     },
@@ -1240,27 +1241,33 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "MRK"
+          "name": "MRK",
+          "role": "reserva"
         },
         {
           "slot": 2,
-          "name": "Targ1no"
+          "name": "Targ1no",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Maranguape"
+          "name": "Maranguape",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "suino"
+          "name": "suino",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "neguzera69"
+          "name": "neguzera69",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "mindos"
+          "name": "mindos",
+          "role": "titular"
         }
       ]
     },
@@ -1287,35 +1294,43 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "amonnixerus"
+          "name": "amonnixerus",
+          "role": "reserva"
         },
         {
           "slot": 2,
-          "name": "n0isy"
+          "name": "n0isy",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "jumbav"
+          "name": "jumbav",
+          "role": "reserva"
         },
         {
           "slot": 4,
-          "name": "set"
+          "name": "set",
+          "role": "reserva"
         },
         {
           "slot": 5,
-          "name": "Artzz"
+          "name": "Artzz",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "katori"
+          "name": "katori",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "bushikage"
+          "name": "bushikage",
+          "role": "titular"
         },
         {
           "slot": 8,
-          "name": "paivaz01"
+          "name": "paivaz01",
+          "role": "titular"
         }
       ]
     },
@@ -1364,23 +1379,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Lario"
+          "name": "Lario",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Oni"
+          "name": "Oni",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "xerp"
+          "name": "xerp",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Melo"
+          "name": "Melo",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Puosso"
+          "name": "Puosso",
+          "role": "titular"
         }
       ]
     },
@@ -1429,35 +1449,43 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Souza"
+          "name": "Souza",
+          "role": "reserva"
         },
         {
           "slot": 2,
-          "name": "fxz"
+          "name": "fxz",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "bibinubogao"
+          "name": "bibinubogao",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Adept"
+          "name": "Adept",
+          "role": "reserva"
         },
         {
           "slot": 5,
-          "name": "motta"
+          "name": "motta",
+          "role": "reserva"
         },
         {
           "slot": 6,
-          "name": "Japa"
+          "name": "Japa",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "huzuni"
+          "name": "huzuni",
+          "role": "titular"
         },
         {
           "slot": 8,
-          "name": "Kmkz"
+          "name": "Kmkz",
+          "role": "titular"
         }
       ]
     },
@@ -1484,27 +1512,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "krozz"
+          "name": "krozz",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Veterano"
+          "name": "Veterano",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "GabrielH"
+          "name": "GabrielH",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "nssj"
+          "name": "kssarato",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "kssarato"
-        },
-        {
-          "slot": 6,
-          "name": "AsianJack"
+          "name": "AsianJack",
+          "role": "titular"
         }
       ]
     },
@@ -1531,35 +1560,38 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "PedrinN"
+          "name": "PedrinN",
+          "role": "reserva"
         },
         {
           "slot": 2,
-          "name": "balao"
+          "name": "balao",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Bros"
+          "name": "Bros",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Mecenas"
+          "name": "Mecenas",
+          "role": "reserva"
         },
         {
           "slot": 5,
-          "name": "Duardao"
+          "name": "Duardao",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "Kurts"
+          "name": "Kurts",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "Thorfinn"
-        },
-        {
-          "slot": 8,
-          "name": "Kebi Láo"
+          "name": "Kebi Láo",
+          "role": "titular"
         }
       ]
     },
@@ -1629,23 +1661,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "cavaloanão"
+          "name": "cavaloanão",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Yasuzinn"
+          "name": "Yasuzinn",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "MistakeZ"
+          "name": "MistakeZ",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Lillos"
+          "name": "Lillos",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "konnZ"
+          "name": "konnZ",
+          "role": "titular"
         }
       ]
     },
@@ -1672,35 +1709,38 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "otts"
+          "name": "otts",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Tequila"
+          "name": "Tequila",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Jager"
+          "name": "Jager",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Melogames"
+          "name": "Melogames",
+          "role": "reserva"
         },
         {
           "slot": 5,
-          "name": "TheAvestruz"
+          "name": "TheAvestruz",
+          "role": "reserva"
         },
         {
           "slot": 6,
-          "name": "Straw"
+          "name": "Straw",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "Piubelli"
-        },
-        {
-          "slot": 8,
-          "name": "Vitebas"
+          "name": "Piubelli",
+          "role": "titular"
         }
       ]
     },
@@ -1978,23 +2018,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Zordan"
+          "name": "Zordan",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Nicotina"
+          "name": "Nicotina",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Kauan"
+          "name": "Kauan",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "DanJapa"
+          "name": "DanJapa",
+          "role": "reserva"
         },
         {
           "slot": 5,
-          "name": "DaviPsadelo"
+          "name": "DaviPsadelo",
+          "role": "titular"
         }
       ]
     },
@@ -2021,27 +2066,33 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Luurano"
+          "name": "Luurano",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "sane"
+          "name": "sane",
+          "role": "reserva"
         },
         {
           "slot": 3,
-          "name": "Toty"
+          "name": "Toty",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "twelve"
+          "name": "twelve",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "jgrb"
+          "name": "jgrb",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "yutaz"
+          "name": "yutaz",
+          "role": "titular"
         }
       ]
     },
@@ -2068,35 +2119,33 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Mile"
+          "name": "Mile",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Tambaqui"
+          "name": "Tambaqui",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Chica"
+          "name": "Chica",
+          "role": "reserva"
         },
         {
           "slot": 4,
-          "name": "JuhSS"
+          "name": "JuhSS",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "lost"
+          "name": "catdrug",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "kyriafn"
-        },
-        {
-          "slot": 7,
-          "name": "catdrug"
-        },
-        {
-          "slot": 8,
-          "name": "EllenDoKrav"
+          "name": "EllenDoKrav",
+          "role": "titular"
         }
       ]
     },
@@ -2178,23 +2227,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "BielKuma"
+          "name": "BielKuma",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "f1lipinho"
+          "name": "f1lipinho",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "rektzin"
+          "name": "rektzin",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "ari$e"
+          "name": "ari$e",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Death Knives"
+          "name": "Death Knives",
+          "role": "titular"
         }
       ],
       "succeeds": "ufpe_virtus"
@@ -2222,27 +2276,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Mateuspa"
+          "name": "Mateuspa",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "BK47"
+          "name": "BK47",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Kayto"
+          "name": "Kayto",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Slow"
+          "name": "Slow",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Jfalls"
-        },
-        {
-          "slot": 6,
-          "name": "reyzeratr"
+          "name": "Jfalls",
+          "role": "titular"
         }
       ]
     },
@@ -2375,31 +2430,33 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "stellaloretti"
+          "name": "stellaloretti",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "JubsAzvd"
+          "name": "JubsAzvd",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "SeaOfWaves"
+          "name": "SeaOfWaves",
+          "role": "reserva"
         },
         {
           "slot": 4,
-          "name": "Malagueta"
+          "name": "InstinctSoneca",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "InstinctSoneca"
+          "name": "yonaha",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "yonaha"
-        },
-        {
-          "slot": 7,
-          "name": "lule"
+          "name": "lule",
+          "role": "titular"
         }
       ]
     },
@@ -2426,35 +2483,38 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Gubert"
+          "name": "Gubert",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Katojin"
+          "name": "Katojin",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "lule"
+          "name": "lule",
+          "role": "reserva"
         },
         {
           "slot": 4,
-          "name": "Sick"
+          "name": "Sick",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Tapita"
+          "name": "Chocolate",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "Chocolate"
+          "name": "Hirama",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "Hirama"
-        },
-        {
-          "slot": 8,
-          "name": "kim"
+          "name": "kim",
+          "role": "reserva"
         }
       ]
     },
@@ -2481,55 +2541,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Untrusted"
+          "name": "Lodon6",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Finisher"
+          "name": "jungkook67",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Rafaelvlr"
+          "name": "Foca Não",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Lodon6"
+          "name": "EldenRot",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "leanza"
-        },
-        {
-          "slot": 6,
-          "name": "Piui"
-        },
-        {
-          "slot": 7,
-          "name": "Gabs"
-        },
-        {
-          "slot": 8,
-          "name": "jungkook67"
-        },
-        {
-          "slot": 9,
-          "name": "Foca Não"
-        },
-        {
-          "slot": 10,
-          "name": "EldenRot"
-        },
-        {
-          "slot": 11,
-          "name": "zezinhoDasPARTY"
-        },
-        {
-          "slot": 12,
-          "name": "Rocha1706"
-        },
-        {
-          "slot": 13,
-          "name": "luli"
+          "name": "zezinhoDasPARTY",
+          "role": "titular"
         }
       ]
     },
@@ -2621,35 +2654,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Krownnl"
+          "name": "Krownnl",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Kikito"
+          "name": "Kikito",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Pipão"
+          "name": "Greed",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Super"
+          "name": "Prime",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Greed"
-        },
-        {
-          "slot": 6,
-          "name": "Migg"
-        },
-        {
-          "slot": 7,
-          "name": "Prime"
-        },
-        {
-          "slot": 8,
-          "name": "SNZ"
+          "name": "SNZ",
+          "role": "titular"
         }
       ]
     },
@@ -2766,35 +2792,43 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "stalkz"
+          "name": "stalkz",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "mtch L"
+          "name": "mtch L",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "migs"
+          "name": "migs",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "swpz"
+          "name": "swpz",
+          "role": "reserva"
         },
         {
           "slot": 5,
-          "name": "Toronto"
+          "name": "Toronto",
+          "role": "reserva"
         },
         {
           "slot": 6,
-          "name": "Thenker"
+          "name": "Thenker",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "Schroud"
+          "name": "Schroud",
+          "role": "titular"
         },
         {
           "slot": 8,
-          "name": "Kaname"
+          "name": "Kaname",
+          "role": "reserva"
         }
       ],
       "succeeds": "dark_ufrj"
@@ -3057,43 +3091,43 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Dudaaa"
+          "name": "Dudaaa",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "raye"
+          "name": "raye",
+          "role": "reserva"
         },
         {
           "slot": 3,
-          "name": "Azitromicina"
+          "name": "Azitromicina",
+          "role": "reserva"
         },
         {
           "slot": 4,
-          "name": "Crystalline"
+          "name": "Crystalline",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "honeymoon"
+          "name": "honeymoon",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "gabribs"
+          "name": "gabribs",
+          "role": "reserva"
         },
         {
           "slot": 7,
-          "name": "BlackCat"
+          "name": "BlackCat",
+          "role": "reserva"
         },
         {
           "slot": 8,
-          "name": "caiotif"
-        },
-        {
-          "slot": 9,
-          "name": "art3mis"
-        },
-        {
-          "slot": 10,
-          "name": "aimeeaimee"
+          "name": "aimeeaimee",
+          "role": "titular"
         }
       ]
     },
@@ -3120,43 +3154,38 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Hasp"
+          "name": "htttps",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "htttps"
+          "name": "tiezo",
+          "role": "reserva"
         },
         {
           "slot": 3,
-          "name": "tiezo"
+          "name": "Apo",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Apo"
+          "name": "Nimu KM",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Gugutin"
+          "name": "Maldito",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "fr0st"
+          "name": "maumau",
+          "role": "reserva"
         },
         {
           "slot": 7,
-          "name": "Nimu KM"
-        },
-        {
-          "slot": 8,
-          "name": "Maldito"
-        },
-        {
-          "slot": 9,
-          "name": "maumau"
-        },
-        {
-          "slot": 10,
-          "name": "Nacaguma"
+          "name": "Nacaguma",
+          "role": "titular"
         }
       ]
     },
@@ -3183,35 +3212,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Albernaz"
+          "name": "demonlz",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "demonlz"
+          "name": "Darkzin",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Darkzin"
+          "name": "Não é o Gui",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Não é o Gui"
+          "name": "Dizin",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Dizin"
-        },
-        {
-          "slot": 6,
-          "name": "Verts"
-        },
-        {
-          "slot": 7,
-          "name": "lou"
-        },
-        {
-          "slot": 8,
-          "name": "Striker"
+          "name": "lou",
+          "role": "titular"
         }
       ]
     },
@@ -3340,31 +3362,38 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Fael"
+          "name": "Fael",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "rahg"
+          "name": "rahg",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "aQc"
+          "name": "aQc",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Eraj"
+          "name": "Eraj",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Kossar Osako"
+          "name": "Kossar Osako",
+          "role": "reserva"
         },
         {
           "slot": 6,
-          "name": "lucKZin"
+          "name": "lucKZin",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "kbcdin"
+          "name": "kbcdin",
+          "role": "reserva"
         }
       ]
     },
@@ -3544,27 +3573,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Sephamm"
+          "name": "Sephamm",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Dézinho"
+          "name": "Dézinho",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Leoexe"
+          "name": "Leoexe",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Thz"
+          "name": "Purikywa",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Purikywa"
-        },
-        {
-          "slot": 6,
-          "name": "th ˆˆ"
+          "name": "th ˆˆ",
+          "role": "titular"
         }
       ]
     },
@@ -4006,23 +4036,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Cientista"
+          "name": "Cientista",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "SunnyAnão"
+          "name": "SunnyAnão",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "MacMolho"
+          "name": "MacMolho",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Kamachow"
+          "name": "Kamachow",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Saiindrazin"
+          "name": "Saiindrazin",
+          "role": "titular"
         }
       ]
     },
@@ -4049,31 +4084,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "1zt"
+          "name": "fafa",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "fafa"
+          "name": "Onezera",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Onezera"
+          "name": "ddz",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "ddz"
+          "name": "Kaytoh",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Kaytoh"
-        },
-        {
-          "slot": 6,
-          "name": "Balalov3"
-        },
-        {
-          "slot": 7,
-          "name": "PedroBSilva"
+          "name": "Balalov3",
+          "role": "titular"
         }
       ]
     },
@@ -4131,43 +4163,43 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "MrMago"
+          "name": "MrMago",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Ishima"
+          "name": "Ishima",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Yuri"
+          "name": "Yuri",
+          "role": "reserva"
         },
         {
           "slot": 4,
-          "name": "Tazyg"
+          "name": "Tazyg",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Lucky"
+          "name": "Lucky",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "Biel"
+          "name": "Biel",
+          "role": "reserva"
         },
         {
           "slot": 7,
-          "name": "Wonder"
+          "name": "Madara",
+          "role": "reserva"
         },
         {
           "slot": 8,
-          "name": "mocejogafofo"
-        },
-        {
-          "slot": 9,
-          "name": "Madara"
-        },
-        {
-          "slot": 10,
-          "name": "migzzz69"
+          "name": "migzzz69",
+          "role": "titular"
         }
       ]
     },
@@ -4233,43 +4265,38 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Zuhazana"
+          "name": "Zuhazana",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Hiujin"
+          "name": "suzuk",
+          "role": "reserva"
         },
         {
           "slot": 3,
-          "name": "suzuk"
+          "name": "soap",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "soap"
+          "name": "Kozolove",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Kozolove"
+          "name": "loverman",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "Zerando"
+          "name": "DG",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "loverman"
-        },
-        {
-          "slot": 8,
-          "name": "DG"
-        },
-        {
-          "slot": 9,
-          "name": "draCo"
-        },
-        {
-          "slot": 10,
-          "name": "Kaname"
+          "name": "Kaname",
+          "role": "reserva"
         }
       ]
     },
@@ -4331,23 +4358,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "sinner"
+          "name": "sinner",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Randon"
+          "name": "Randon",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "zx6r"
+          "name": "zx6r",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Kaizin"
+          "name": "Kaizin",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "GBR"
+          "name": "GBR",
+          "role": "titular"
         }
       ],
       "succeeds": "ufrn_carcaras"
@@ -4426,47 +4458,48 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "1cuky"
+          "name": "1cuky",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "lmx777"
+          "name": "lmx777",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Guibello"
+          "name": "gbxz",
+          "role": "reserva"
         },
         {
           "slot": 4,
-          "name": "gbxz"
+          "name": "Moranguinho",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Moranguinho"
+          "name": "Gabos",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "Gabos"
+          "name": "DrogaeoTL",
+          "role": "titular"
         },
         {
           "slot": 7,
-          "name": "DrogaeoTL"
+          "name": "BigaBigato",
+          "role": "reserva"
         },
         {
           "slot": 8,
-          "name": "Daske"
+          "name": "Thigas",
+          "role": "reserva"
         },
         {
           "slot": 9,
-          "name": "BigaBigato"
-        },
-        {
-          "slot": 10,
-          "name": "Thigas"
-        },
-        {
-          "slot": 11,
-          "name": "nobukuni"
+          "name": "nobukuni",
+          "role": "reserva"
         }
       ]
     },
@@ -4493,35 +4526,28 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Gutoso"
+          "name": "Gutoso",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "oBigZe"
+          "name": "oBigZe",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Marelo"
+          "name": "Marelo",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Fijora"
+          "name": "Fijora",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "cks"
-        },
-        {
-          "slot": 6,
-          "name": "shanks"
-        },
-        {
-          "slot": 7,
-          "name": "Kyes"
-        },
-        {
-          "slot": 8,
-          "name": "Fillip1n"
+          "name": "cks",
+          "role": "titular"
         }
       ]
     },
@@ -4599,27 +4625,33 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "ppeuz"
+          "name": "ppeuz",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "PedroLucc4"
+          "name": "PedroLucc4",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "gsN"
+          "name": "gsN",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Gutoso"
+          "name": "Gutoso",
+          "role": "reserva"
         },
         {
           "slot": 5,
-          "name": "Athos778"
+          "name": "Athos778",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "cesinhas"
+          "name": "cesinhas",
+          "role": "titular"
         }
       ],
       "succeeds": "ufu_saints_trigons"
@@ -4647,11 +4679,13 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "speedzillaa"
+          "name": "speedzillaa",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "trash"
+          "name": "trash",
+          "role": "titular"
         }
       ]
     },
@@ -4721,35 +4755,38 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "llenn"
+          "name": "llenn",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Zap"
+          "name": "Zap",
+          "role": "reserva"
         },
         {
           "slot": 3,
-          "name": "piva"
+          "name": "MV",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "MV"
+          "name": "Makola",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Makola"
+          "name": "Driblas",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "Driblas"
+          "name": "Drs",
+          "role": "reserva"
         },
         {
           "slot": 7,
-          "name": "Drs"
-        },
-        {
-          "slot": 8,
-          "name": "Mdz"
+          "name": "Mdz",
+          "role": "titular"
         }
       ]
     },
@@ -4940,31 +4977,38 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Peso"
+          "name": "Peso",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Mendes"
+          "name": "Mendes",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "JV"
+          "name": "JV",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "JayJ"
+          "name": "JayJ",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Suflah"
+          "name": "Suflah",
+          "role": "reserva"
         },
         {
           "slot": 6,
-          "name": "Laves"
+          "name": "Laves",
+          "role": "reserva"
         },
         {
           "slot": 7,
-          "name": "Odysseys"
+          "name": "Odysseys",
+          "role": "titular"
         }
       ]
     },
@@ -4991,31 +5035,33 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "camlui12"
+          "name": "camlui12",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Mistic"
+          "name": "Catioro",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Catioro"
+          "name": "KRK Ego",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "KRK Ego"
+          "name": "KRK Lucky",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "KRK Lucky"
+          "name": "vvv",
+          "role": "reserva"
         },
         {
           "slot": 6,
-          "name": "vvv"
-        },
-        {
-          "slot": 7,
-          "name": "LTP"
+          "name": "LTP",
+          "role": "titular"
         }
       ]
     },
@@ -5242,39 +5288,43 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Vinoca"
+          "name": "Vinoca",
+          "role": "reserva"
         },
         {
           "slot": 2,
-          "name": "GuiEnis"
+          "name": "GuiEnis",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Cucinota"
+          "name": "Cucinota",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Burckzs"
+          "name": "Burckzs",
+          "role": "reserva"
         },
         {
           "slot": 5,
-          "name": "J5lidof"
+          "name": "J5lidof",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "akashi"
+          "name": "akashi",
+          "role": "reserva"
         },
         {
           "slot": 7,
-          "name": "must"
+          "name": "must",
+          "role": "titular"
         },
         {
           "slot": 8,
-          "name": "snwssj"
-        },
-        {
-          "slot": 9,
-          "name": "Blonded"
+          "name": "Blonded",
+          "role": "titular"
         }
       ]
     },
@@ -5301,31 +5351,33 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Dagn1"
+          "name": "Dagn1",
+          "role": "reserva"
         },
         {
           "slot": 2,
-          "name": "Dioguera"
+          "name": "Dioguera",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "Eizo"
+          "name": "GalloBill",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "GalloBill"
+          "name": "Pagode",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Pagode"
+          "name": "Rype",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "Rype"
-        },
-        {
-          "slot": 7,
-          "name": "xrz"
+          "name": "xrz",
+          "role": "titular"
         }
       ]
     },
@@ -5352,35 +5404,33 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Thaly"
+          "name": "Thaly",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "Misstressa"
+          "name": "Misstressa",
+          "role": "reserva"
         },
         {
           "slot": 3,
-          "name": "Ndmi"
+          "name": "Ndmi",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "KelvinMaii"
+          "name": "KelvinMaii",
+          "role": "titular"
         },
         {
           "slot": 5,
-          "name": "Bielorrusia"
+          "name": "kharuy",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "Sushi"
-        },
-        {
-          "slot": 7,
-          "name": "kharuy"
-        },
-        {
-          "slot": 8,
-          "name": "NoobViciada"
+          "name": "NoobViciada",
+          "role": "titular"
         }
       ]
     },
@@ -5407,35 +5457,38 @@
       "lineup": [
         {
           "slot": 1,
-          "name": "Nizk"
+          "name": "Nizk",
+          "role": "titular"
         },
         {
           "slot": 2,
-          "name": "dark"
+          "name": "dark",
+          "role": "titular"
         },
         {
           "slot": 3,
-          "name": "spx"
+          "name": "spx",
+          "role": "titular"
         },
         {
           "slot": 4,
-          "name": "Tayhihi"
+          "name": "Tayhihi",
+          "role": "reserva"
         },
         {
           "slot": 5,
-          "name": "Bielmonster"
+          "name": "Bielmonster",
+          "role": "titular"
         },
         {
           "slot": 6,
-          "name": "Dav1"
+          "name": "wpv",
+          "role": "reserva"
         },
         {
           "slot": 7,
-          "name": "wpv"
-        },
-        {
-          "slot": 8,
-          "name": "salem"
+          "name": "salem",
+          "role": "titular"
         }
       ]
     },
@@ -5671,7 +5724,7 @@
       "id": "u9ICdhbvgpXi42XhszYP0F1LscHkpiee1a2DApmiP0OzsI98RdWD8mcygA1-IlPQIxVb8deraS_KXw",
       "name": "Dav1",
       "puuid": "u9ICdhbvgpXi42XhszYP0F1LscHkpiee1a2DApmiP0OzsI98RdWD8mcygA1-IlPQIxVb8deraS_KXw",
-      "currentTeam": "wolf_gaming",
+      "currentTeam": "",
       "teamHistory": [
         "wolf_gaming"
       ],
@@ -5764,7 +5817,7 @@
       "id": "tAWTzpnPhLlsbGEYyNjIYcOm63rdaGGWGIMWrAvTCqSyR-ZI0gNvHsdH5fy37ddMcDIsPN0sZDnp6g",
       "name": "Bielorrusia",
       "puuid": "tAWTzpnPhLlsbGEYyNjIYcOm63rdaGGWGIMWrAvTCqSyR-ZI0gNvHsdH5fy37ddMcDIsPN0sZDnp6g",
-      "currentTeam": "usp_stars_gc",
+      "currentTeam": "",
       "teamHistory": [
         "usp_stars_gc"
       ],
@@ -5778,7 +5831,7 @@
       "id": "_WZpUmN7nBBFJ_MbGLditmDFthPf61fdPnYCei0g800r9lpc2My0rN31Dzoy4A_sbXIYGJ93wzSFMg",
       "name": "Sushi",
       "puuid": "_WZpUmN7nBBFJ_MbGLditmDFthPf61fdPnYCei0g800r9lpc2My0rN31Dzoy4A_sbXIYGJ93wzSFMg",
-      "currentTeam": "usp_stars_gc",
+      "currentTeam": "",
       "teamHistory": [
         "usp_stars_gc"
       ],
@@ -5817,7 +5870,7 @@
       "id": "mEl8mUKuDxynBb38jXsHTBnE6F-z2OUzk8PKpKljnHcT1PRnkWKFM44I3ZxXLHUItzz6DOhi9ksSyA",
       "name": "Eizo",
       "puuid": "mEl8mUKuDxynBb38jXsHTBnE6F-z2OUzk8PKpKljnHcT1PRnkWKFM44I3ZxXLHUItzz6DOhi9ksSyA",
-      "currentTeam": "usp_stars",
+      "currentTeam": "",
       "teamHistory": [
         "usp_stars"
       ],
@@ -6320,7 +6373,7 @@
       "id": "Utp2yVXMV4mmUCo09_RcsF64VrOXnIqBtyA_-kE_UBXqKvib8yyFYMX8nAze_UKK4Z56ngWTSMe1NA",
       "name": "Mistic",
       "puuid": "Utp2yVXMV4mmUCo09_RcsF64VrOXnIqBtyA_-kE_UBXqKvib8yyFYMX8nAze_UKK4Z56ngWTSMe1NA",
-      "currentTeam": "unirio_krakens",
+      "currentTeam": "",
       "teamHistory": [
         "unirio_krakens"
       ],
@@ -6768,7 +6821,7 @@
       "id": "88G6xgaAAef5qemLkAbm_UEo1nWCPnK1V7WQBy49e1BS4cCCAVOi16Ml33pCXqu6FrPnfVZu6c--QA",
       "name": "piva",
       "puuid": "88G6xgaAAef5qemLkAbm_UEo1nWCPnK1V7WQBy49e1BS4cCCAVOi16Ml33pCXqu6FrPnfVZu6c--QA",
-      "currentTeam": "unicamp_tritons_black",
+      "currentTeam": "",
       "teamHistory": [
         "unicamp_tritons_black"
       ],
@@ -7043,7 +7096,7 @@
       "id": "PUcyfXweL2QkiapM6bxnyPCweB-ITtYFQHvdfkcSOPl1R0zdfUEgN7W0zs4M13zvj15XRUFd7W_GpQ",
       "name": "shanks",
       "puuid": "PUcyfXweL2QkiapM6bxnyPCweB-ITtYFQHvdfkcSOPl1R0zdfUEgN7W0zs4M13zvj15XRUFd7W_GpQ",
-      "currentTeam": "ufu_saints",
+      "currentTeam": "",
       "teamHistory": [
         "ufu_saints"
       ],
@@ -7056,7 +7109,7 @@
       "id": "jfvKJJQmJ3vOg5rEUYN9Z67ibW2jnXGoQVITcE1IwK35-nsHLENNTnAN1npg0dzHUYERMrvzFbSM4A",
       "name": "Kyes",
       "puuid": "jfvKJJQmJ3vOg5rEUYN9Z67ibW2jnXGoQVITcE1IwK35-nsHLENNTnAN1npg0dzHUYERMrvzFbSM4A",
-      "currentTeam": "ufu_saints",
+      "currentTeam": "",
       "teamHistory": [
         "ufu_saints"
       ],
@@ -7112,7 +7165,7 @@
       "id": "bKsWXR9kAaZTMFmUA8Da_oBmzfFpE8JeS6QKFTUTmUprc8RSpLIw2FNBYRZNVpomvRshJzo1GI5S1g",
       "name": "Guibello",
       "puuid": "bKsWXR9kAaZTMFmUA8Da_oBmzfFpE8JeS6QKFTUTmUprc8RSpLIw2FNBYRZNVpomvRshJzo1GI5S1g",
-      "currentTeam": "ufscar_fire",
+      "currentTeam": "",
       "teamHistory": [
         "ufscar_fire"
       ],
@@ -7373,7 +7426,7 @@
       "id": "im4BHDdELr1YKI4fX4mx9xS4hI-7SLWjsv8w16mAnyhyyylhbNh6jS_VtNuGIZjI-mZfZUddHWDLCA",
       "name": "Hiujin",
       "puuid": "im4BHDdELr1YKI4fX4mx9xS4hI-7SLWjsv8w16mAnyhyyylhbNh6jS_VtNuGIZjI-mZfZUddHWDLCA",
-      "currentTeam": "ufrj_minerva",
+      "currentTeam": "",
       "teamHistory": [
         "ufrj_minerva"
       ],
@@ -7521,7 +7574,7 @@
       "id": "bKYcnZJ-ToLmXHs45QuEJV7tdqCUIoMEU5-vFzBsAogC9VGqFN9puYwigg6JKcVd5caFm4145uN1lg",
       "name": "Wonder",
       "puuid": "bKYcnZJ-ToLmXHs45QuEJV7tdqCUIoMEU5-vFzBsAogC9VGqFN9puYwigg6JKcVd5caFm4145uN1lg",
-      "currentTeam": "ufpr_bbn",
+      "currentTeam": "",
       "teamHistory": [
         "ufpr_bbn"
       ],
@@ -7534,7 +7587,7 @@
       "id": "g-IvHtnI6kdiFnRFVnSVmtzKk8uZF4tulJpTcoqMe7tFgw5GXPJZ7xD7KxlfvqrJac5YHrRB7jYaTQ",
       "name": "mocejogafofo",
       "puuid": "g-IvHtnI6kdiFnRFVnSVmtzKk8uZF4tulJpTcoqMe7tFgw5GXPJZ7xD7KxlfvqrJac5YHrRB7jYaTQ",
-      "currentTeam": "ufpr_bbn",
+      "currentTeam": "",
       "teamHistory": [
         "ufpr_bbn"
       ],
@@ -7628,7 +7681,7 @@
       "id": "WbmDscUxGUIMc2mq9e0W3SKTMxsMQL9xJ_P3jrFy4B5BATZ_9OaaUwDwznw2bFoBkZVnv6leOlzbpA",
       "name": "1zt",
       "puuid": "WbmDscUxGUIMc2mq9e0W3SKTMxsMQL9xJ_P3jrFy4B5BATZ_9OaaUwDwznw2bFoBkZVnv6leOlzbpA",
-      "currentTeam": "ufmt_turuna",
+      "currentTeam": "",
       "teamHistory": [
         "ufmt_turuna"
       ],
@@ -8482,7 +8535,7 @@
       "id": "DEHyORp293uMthwlUKVrqEY7oQk3GK6YkM57y0eenYaqqZH4ZwBsRdZULpZth5GDPPB1s3kX6meaDQ",
       "name": "Thz",
       "puuid": "DEHyORp293uMthwlUKVrqEY7oQk3GK6YkM57y0eenYaqqZH4ZwBsRdZULpZth5GDPPB1s3kX6meaDQ",
-      "currentTeam": "totale_umc",
+      "currentTeam": "",
       "teamHistory": [
         "totale_umc"
       ],
@@ -8815,7 +8868,7 @@
       "id": "Plj4rlGsRBSkIKnfisJi-MV2sepg3SpaxRB98OoGga07acGP2eVLbgLqLIYxQjYeKc82FRlMFqkcrg",
       "name": "Albernaz",
       "puuid": "Plj4rlGsRBSkIKnfisJi-MV2sepg3SpaxRB98OoGga07acGP2eVLbgLqLIYxQjYeKc82FRlMFqkcrg",
-      "currentTeam": "pucgo_sistematica",
+      "currentTeam": "",
       "teamHistory": [
         "pucgo_sistematica"
       ],
@@ -8855,7 +8908,7 @@
       "id": "P8aY38Slk3RKg60vPOCKSsWTDmFKMsN6eTJjQLnUxvvwOgW33hejt3vmLnCKCncWxyoNmS7TO9i0gQ",
       "name": "Verts",
       "puuid": "P8aY38Slk3RKg60vPOCKSsWTDmFKMsN6eTJjQLnUxvvwOgW33hejt3vmLnCKCncWxyoNmS7TO9i0gQ",
-      "currentTeam": "pucgo_sistematica",
+      "currentTeam": "",
       "teamHistory": [
         "pucgo_sistematica"
       ],
@@ -8881,7 +8934,7 @@
       "id": "dcX1EoCibLxmHNZRAyBwY-r81ItkAZe5NX2TtQXwbgY-YUdXSKSplOm7hL9pS-ftYB_ggFGkKY1Vhg",
       "name": "Striker",
       "puuid": "dcX1EoCibLxmHNZRAyBwY-r81ItkAZe5NX2TtQXwbgY-YUdXSKSplOm7hL9pS-ftYB_ggFGkKY1Vhg",
-      "currentTeam": "pucgo_sistematica",
+      "currentTeam": "",
       "teamHistory": [
         "pucgo_sistematica"
       ],
@@ -8921,7 +8974,7 @@
       "id": "301qhx0vRdUVcofBGyq_VoAhuOwFm2GLKQ93asIyj37qjY-dG2lzyjNQHKIalkgRT4G9l7htJmVQkQ",
       "name": "Hasp",
       "puuid": "301qhx0vRdUVcofBGyq_VoAhuOwFm2GLKQ93asIyj37qjY-dG2lzyjNQHKIalkgRT4G9l7htJmVQkQ",
-      "currentTeam": "pucc_cardinals",
+      "currentTeam": "",
       "teamHistory": [
         "pucc_cardinals"
       ],
@@ -8978,7 +9031,7 @@
       "id": "ua9cSJ_WLHTDUhQhJYjkWcZ20qEiMBblpkY2SUuGfXrZij10AMpGNKivg1OCuCWXcJL5XN6ZNTcHcQ",
       "name": "Gugutin",
       "puuid": "ua9cSJ_WLHTDUhQhJYjkWcZ20qEiMBblpkY2SUuGfXrZij10AMpGNKivg1OCuCWXcJL5XN6ZNTcHcQ",
-      "currentTeam": "pucc_cardinals",
+      "currentTeam": "",
       "teamHistory": [
         "pucc_cardinals"
       ],
@@ -8991,7 +9044,7 @@
       "id": "QAn49vDOOkmlsACPBxsDlBH-p5bl93HPVr0DwAcwsPoqOEthQdSKL_2-ecm5IlT2uVxv52uuVrW4ew",
       "name": "fr0st",
       "puuid": "QAn49vDOOkmlsACPBxsDlBH-p5bl93HPVr0DwAcwsPoqOEthQdSKL_2-ecm5IlT2uVxv52uuVrW4ew",
-      "currentTeam": "pucc_cardinals",
+      "currentTeam": "",
       "teamHistory": [
         "pucc_cardinals"
       ],
@@ -9618,7 +9671,7 @@
       "id": "HnS2m2EByAsSUFVsmd4FLWmlzRdtYLiURpHDpTYXYGZp6XS1YHKzXjPiBEe-biZAOcknSGbEcXyQ8w",
       "name": "Pipão",
       "puuid": "HnS2m2EByAsSUFVsmd4FLWmlzRdtYLiURpHDpTYXYGZp6XS1YHKzXjPiBEe-biZAOcknSGbEcXyQ8w",
-      "currentTeam": "maua_blue",
+      "currentTeam": "",
       "teamHistory": [
         "maua_blue"
       ],
@@ -9631,7 +9684,7 @@
       "id": "5DtyRi2zT34YBGF66FSePkScbdKjEW9pPNB_aguFegUuHPK9kOvny5ZtfQfgzSYJgEEMjxDsiBMisA",
       "name": "Super",
       "puuid": "5DtyRi2zT34YBGF66FSePkScbdKjEW9pPNB_aguFegUuHPK9kOvny5ZtfQfgzSYJgEEMjxDsiBMisA",
-      "currentTeam": "maua_blue",
+      "currentTeam": "",
       "teamHistory": [
         "maua_blue"
       ],
@@ -9657,7 +9710,7 @@
       "id": "gaSDlUryf--PXz557skg2GMkc2tLsessde_L76p-ArFgiId0mCbsPSnaDzS-mYuKT3MZiyBRNK_2Hg",
       "name": "Migg",
       "puuid": "gaSDlUryf--PXz557skg2GMkc2tLsessde_L76p-ArFgiId0mCbsPSnaDzS-mYuKT3MZiyBRNK_2Hg",
-      "currentTeam": "maua_blue",
+      "currentTeam": "",
       "teamHistory": [
         "maua_blue"
       ],
@@ -9684,7 +9737,7 @@
       "id": "2yslosTvB5-Q9mszSTYnUsHkt8dc2ryhnysRiaa_oUw7t3C45vaUQOWzro4OUYgztuiNKwu9zoaYtA",
       "name": "Untrusted",
       "puuid": "2yslosTvB5-Q9mszSTYnUsHkt8dc2ryhnysRiaa_oUw7t3C45vaUQOWzro4OUYgztuiNKwu9zoaYtA",
-      "currentTeam": "macklogic_white",
+      "currentTeam": "",
       "teamHistory": [
         "macklogic_white"
       ],
@@ -9698,7 +9751,7 @@
       "id": "9edCRwvelp9Ko7rrbtTbk86da6un1VgQVZ7HFf0x3G8hmQbpGxGkY1D9QBQOYECuAHROjMACZxeW-g",
       "name": "Finisher",
       "puuid": "9edCRwvelp9Ko7rrbtTbk86da6un1VgQVZ7HFf0x3G8hmQbpGxGkY1D9QBQOYECuAHROjMACZxeW-g",
-      "currentTeam": "macklogic_white",
+      "currentTeam": "",
       "teamHistory": [
         "macklogic_white"
       ],
@@ -9711,7 +9764,7 @@
       "id": "DgRoFzXydtAKcOh2ntoyp6iqGyAOgMG3CWFcXnYTmmoGnijHaKCFS_u8tT47bILJOS8V_0mqSyVw2A",
       "name": "Rafaelvlr",
       "puuid": "DgRoFzXydtAKcOh2ntoyp6iqGyAOgMG3CWFcXnYTmmoGnijHaKCFS_u8tT47bILJOS8V_0mqSyVw2A",
-      "currentTeam": "macklogic_white",
+      "currentTeam": "",
       "teamHistory": [
         "macklogic_white"
       ],
@@ -9755,7 +9808,7 @@
       "id": "-SEFIRD9iWcerWPwSbl2xqpiq2BWZnWrBz8ZbT0Wl4-QpQ_LTtAxbBW_Y3qAdL9dr-EJPrQCQg5dtg",
       "name": "leanza",
       "puuid": "-SEFIRD9iWcerWPwSbl2xqpiq2BWZnWrBz8ZbT0Wl4-QpQ_LTtAxbBW_Y3qAdL9dr-EJPrQCQg5dtg",
-      "currentTeam": "macklogic_white",
+      "currentTeam": "",
       "teamHistory": [
         "macklogic_white"
       ],
@@ -9768,7 +9821,7 @@
       "id": "zUF3dytt7KB_gS05Zkpnmjb138wJb3onG45XJIDiMnS4m3NbY8dpaXSSfPCJGRvx0Gq4ZAOcliMayA",
       "name": "Piui",
       "puuid": "zUF3dytt7KB_gS05Zkpnmjb138wJb3onG45XJIDiMnS4m3NbY8dpaXSSfPCJGRvx0Gq4ZAOcliMayA",
-      "currentTeam": "macklogic_white",
+      "currentTeam": "",
       "teamHistory": [
         "macklogic_white"
       ],
@@ -9781,7 +9834,7 @@
       "id": "vgkUmrOcSW5Ixdu2reA6OPH84XJHUecBOBsVuWLwo1WEIhp0w0GkwpiJVgCjIjy4bBmXEe-A1wJQ4w",
       "name": "Gabs",
       "puuid": "vgkUmrOcSW5Ixdu2reA6OPH84XJHUecBOBsVuWLwo1WEIhp0w0GkwpiJVgCjIjy4bBmXEe-A1wJQ4w",
-      "currentTeam": "macklogic_white",
+      "currentTeam": "",
       "teamHistory": [
         "macklogic_white"
       ],
@@ -9854,7 +9907,7 @@
       "id": "UMqsz421_7TZxaMOWSfkHTe8pC3sApewo-dX9I-Em4VbL0PwyTh6QNaYOT2chpOseS1UmfxTl9zkNQ",
       "name": "Tapita",
       "puuid": "UMqsz421_7TZxaMOWSfkHTe8pC3sApewo-dX9I-Em4VbL0PwyTh6QNaYOT2chpOseS1UmfxTl9zkNQ",
-      "currentTeam": "macklogic_red",
+      "currentTeam": "",
       "teamHistory": [
         "macklogic_red"
       ],
@@ -9921,7 +9974,7 @@
       "id": "w8dgJVfD_Y64jJfKQRN8eKJNmxOeCnJEZnuGgJs5rlG3a_zdNycRrHlLyMw4ryNLeNoRai8a5jcA5A",
       "name": "Malagueta",
       "puuid": "w8dgJVfD_Y64jJfKQRN8eKJNmxOeCnJEZnuGgJs5rlG3a_zdNycRrHlLyMw4ryNLeNoRai8a5jcA5A",
-      "currentTeam": "macklogic_rainbow",
+      "currentTeam": "",
       "teamHistory": [
         "macklogic_rainbow"
       ],
@@ -10357,7 +10410,7 @@
       "id": "PD2xOUFZLkq-i7-2FyDihzZEZNZtqNraY5XhJ0CqsB6WhXK9s-VtLuXy7dCepywKEjXgyyVPYp2Mvg",
       "name": "lost",
       "puuid": "PD2xOUFZLkq-i7-2FyDihzZEZNZtqNraY5XhJ0CqsB6WhXK9s-VtLuXy7dCepywKEjXgyyVPYp2Mvg",
-      "currentTeam": "inatel_gray",
+      "currentTeam": "",
       "teamHistory": [
         "inatel_gray"
       ],
@@ -10370,7 +10423,7 @@
       "id": "azLzX0-fc5yL96eqiV6QbzK6TmuOBf31YuoUScb0ELyWswIQDLOLoY5MbijUYfnGqUmJ-xqH_Odg-A",
       "name": "kyriafn",
       "puuid": "azLzX0-fc5yL96eqiV6QbzK6TmuOBf31YuoUScb0ELyWswIQDLOLoY5MbijUYfnGqUmJ-xqH_Odg-A",
-      "currentTeam": "inatel_gray",
+      "currentTeam": "",
       "teamHistory": [
         "inatel_gray"
       ],
@@ -11057,7 +11110,7 @@
       "id": "21R3F3xWR-kcyY9bP3cg684JI--MG0f3wv3loFoQPtR19ojbhniQ07Tr3yUusAi-ZoDgqs-rCMlR4Q",
       "name": "Vitebas",
       "puuid": "21R3F3xWR-kcyY9bP3cg684JI--MG0f3wv3loFoQPtR19ojbhniQ07Tr3yUusAi-ZoDgqs-rCMlR4Q",
-      "currentTeam": "green_owls_noctua",
+      "currentTeam": "",
       "teamHistory": [
         "green_owls_noctua"
       ],
@@ -11214,7 +11267,7 @@
       "id": "Thorfinn",
       "name": "Thorfinn",
       "puuid": "",
-      "currentTeam": "gambiarra_ufg",
+      "currentTeam": "",
       "teamHistory": [
         "gambiarra_ufg"
       ],
@@ -11266,7 +11319,7 @@
       "id": "gfM9fyh51WHYAr4dX7Rnds0UKwEY3WfPFsncjdfcxYTE9s2NbsmzxurTn76dKcuXhwygOj3WR_EKjA",
       "name": "nssj",
       "puuid": "gfM9fyh51WHYAr4dX7Rnds0UKwEY3WfPFsncjdfcxYTE9s2NbsmzxurTn76dKcuXhwygOj3WR_EKjA",
-      "currentTeam": "furia_utfpr",
+      "currentTeam": "",
       "teamHistory": [
         "furia_utfpr"
       ],
@@ -11711,7 +11764,7 @@
         "x2CH5wSlgIpaT7Pe44AXQb6Eb1phYUDI2a7wqfej6p0CdhqbtzCmLyCQ8KPyniuzUjnZ1ACCi87c_Q",
         "NcuYeNs0CNqqZicEFQf6AXPA435Bws431njlhVppURGWcGxED6JRw3UurdJbrBHb-ECvRsa3Hzb_YQ"
       ],
-      "currentTeam": "ceub_octopus_vulgaris",
+      "currentTeam": "",
       "teamHistory": [
         "ceub_octopus_vulgaris"
       ],
@@ -12032,7 +12085,7 @@
       "id": "E3ivYGaicB2XlnMhnolVgM0wf7s-1z7f3Xq8YCQtFgMsBw-I8ZFrfKmDgEeh7kD_k7P_AdfFuR20kg",
       "name": "Ric",
       "puuid": "E3ivYGaicB2XlnMhnolVgM0wf7s-1z7f3Xq8YCQtFgMsBw-I8ZFrfKmDgEeh7kD_k7P_AdfFuR20kg",
-      "currentTeam": "caap_malditos",
+      "currentTeam": "",
       "teamHistory": [
         "caap_hellhounds",
         "caap_momentum",
@@ -12105,7 +12158,7 @@
       "id": "_IMaT7l5138--TeO3kpZ_7ejIV_w32dNUnEmeJKzvNzh5KmslemzFZTQbydqibFW5ZHhifd-lcz54A",
       "name": "Lopes",
       "puuid": "_IMaT7l5138--TeO3kpZ_7ejIV_w32dNUnEmeJKzvNzh5KmslemzFZTQbydqibFW5ZHhifd-lcz54A",
-      "currentTeam": "caap_hellhounds",
+      "currentTeam": "",
       "teamHistory": [
         "caap_hellhounds"
       ],
@@ -12160,7 +12213,7 @@
       "id": "s_smSLBfGMdCnHDxwP0T0RFjRniaOr__qw72D73JzF7p4GXYPQx2qwbD2ILlrDsXPipLSplt3taL5Q",
       "name": "Coutinho",
       "puuid": "s_smSLBfGMdCnHDxwP0T0RFjRniaOr__qw72D73JzF7p4GXYPQx2qwbD2ILlrDsXPipLSplt3taL5Q",
-      "currentTeam": "caap_hellhounds",
+      "currentTeam": "",
       "teamHistory": [
         "caap_hellhounds"
       ],
@@ -12173,7 +12226,7 @@
       "id": "-k4zx9RhoxLQNGaEEVA4rw9o9_0HC-orLXCLIUtxJ0y8_-thVKLDNhfT1Ea-AGnXsOa0Nd0shSioYg",
       "name": "Kaos",
       "puuid": "-k4zx9RhoxLQNGaEEVA4rw9o9_0HC-orLXCLIUtxJ0y8_-thVKLDNhfT1Ea-AGnXsOa0Nd0shSioYg",
-      "currentTeam": "caap_hellhounds",
+      "currentTeam": "",
       "teamHistory": [
         "caap_hellhounds"
       ],
@@ -12186,7 +12239,7 @@
       "id": "9gI-LexrKcJkxI1-xWQqbRSN8SwVvz3lwY3h0xBip886cf5g8L0sVQ9NogF70PfYCgb2VUy9HMJXsg",
       "name": "giugiujjzl",
       "puuid": "9gI-LexrKcJkxI1-xWQqbRSN8SwVvz3lwY3h0xBip886cf5g8L0sVQ9NogF70PfYCgb2VUy9HMJXsg",
-      "currentTeam": "caap_auroras",
+      "currentTeam": "",
       "teamHistory": [
         "caap_auroras"
       ],
@@ -12241,7 +12294,7 @@
       "id": "6jBTCJWXhj2d2kq6cTNjE3ykg55HXWJn0BHp59Yb_ukHkkflQn8JYca_mmFdESMmZI3jW94mEOdU8Q",
       "name": "yxwuki",
       "puuid": "6jBTCJWXhj2d2kq6cTNjE3ykg55HXWJn0BHp59Yb_ukHkkflQn8JYca_mmFdESMmZI3jW94mEOdU8Q",
-      "currentTeam": "caap_auroras",
+      "currentTeam": "",
       "teamHistory": [
         "caap_auroras"
       ],
@@ -12459,7 +12512,7 @@
       "id": "FrflKIANQmKRQQTQPKmX0f8ZGnmo9n5eF42hWEDFL36laJkn_XbZX-u7VcHHNuOvsqMSgiKUc4zi9w",
       "name": "Washin",
       "puuid": "FrflKIANQmKRQQTQPKmX0f8ZGnmo9n5eF42hWEDFL36laJkn_XbZX-u7VcHHNuOvsqMSgiKUc4zi9w",
-      "currentTeam": "azure_bears_silver",
+      "currentTeam": "",
       "teamHistory": [
         "azure_bears_silver"
       ],
@@ -12553,7 +12606,7 @@
       "id": "X6dK2xFXw4_isMR03zbzKl6bGGWP9X1kAFqdhsD4MV5qEcjArJhxIEiOp3xZP9fDpEUyCjNWTe2ajw",
       "name": "ScherBi",
       "puuid": "X6dK2xFXw4_isMR03zbzKl6bGGWP9X1kAFqdhsD4MV5qEcjArJhxIEiOp3xZP9fDpEUyCjNWTe2ajw",
-      "currentTeam": "azure_bears_golden",
+      "currentTeam": "",
       "teamHistory": [
         "azure_bears_golden"
       ],
@@ -12655,7 +12708,7 @@
       "id": "LBnUfrUKZa1Ry2fK1bWp7Ok0EizDW86Jd0jyt3FJJl044o3eS_2ZFcEICcjImD_Ow26oiKVSgFFvRg",
       "name": "Rapunzel",
       "puuid": "LBnUfrUKZa1Ry2fK1bWp7Ok0EizDW86Jd0jyt3FJJl044o3eS_2ZFcEICcjImD_Ow26oiKVSgFFvRg",
-      "currentTeam": "azure_bears_black",
+      "currentTeam": "",
       "teamHistory": [
         "azure_bears_black",
         "azure_bears_silver",
@@ -12825,7 +12878,7 @@
       "id": "H9nhURrR2gDN2Ghe_WAJVEL6l9kwQx-FyYdgXSFWGlbd25WWYddYOEPDpTNtthxKn-PAl7v489qa8Q",
       "name": "akrasia",
       "puuid": "H9nhURrR2gDN2Ghe_WAJVEL6l9kwQx-FyYdgXSFWGlbd25WWYddYOEPDpTNtthxKn-PAl7v489qa8Q",
-      "currentTeam": "axis_anteaters",
+      "currentTeam": "",
       "teamHistory": [
         "axis_aura",
         "axis_anteaters"
@@ -13189,7 +13242,7 @@
       "id": "YxfNWtbF20Z1tRTaFBSFyL1tHiLxkIV836jBLC96PNLp2lcAK-ZVauekN83dxgTq83Wdt6mwE4xUnQ",
       "name": "Borrachinha",
       "puuid": "YxfNWtbF20Z1tRTaFBSFyL1tHiLxkIV836jBLC96PNLp2lcAK-ZVauekN83dxgTq83Wdt6mwE4xUnQ",
-      "currentTeam": "a2e_uff",
+      "currentTeam": "",
       "teamHistory": [
         "a2e_uff",
         "a2e_uff_shadows",
@@ -13441,9 +13494,9 @@
     },
     {
       "id": "uMAKnx1b2jQH9uLNWNJDfLDpa-agbwj5eIAWxLFqk8eSFYw6pz3sT4-RNn_WibW2ylccVgzY1tGBmQ",
-      "name": "jotave",
+      "name": "JotaVe",
       "puuid": "uMAKnx1b2jQH9uLNWNJDfLDpa-agbwj5eIAWxLFqk8eSFYw6pz3sT4-RNn_WibW2ylccVgzY1tGBmQ",
-      "currentTeam": "ceub_octopus_vulgaris",
+      "currentTeam": "ceub_octopus",
       "teamHistory": [
         "ceub_octopus",
         "ceub_octopus_vulgaris"
@@ -13451,7 +13504,7 @@
       "nickHistory": [
         "JotaVe#2511"
       ],
-      "photo": ""
+      "photo": "assets/player-photos/ceub_octopus/Jotave.png"
     },
     {
       "id": "8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA",
@@ -13516,7 +13569,7 @@
       "id": "TCUxMtkwuASrXI-eKQVBwhVWy64-Czu8fWw_VYLrCd_FYHVDOzXVX3QDMmrRTQVamSuYtfXR_JpHIg",
       "name": "Leywin",
       "puuid": "TCUxMtkwuASrXI-eKQVBwhVWy64-Czu8fWw_VYLrCd_FYHVDOzXVX3QDMmrRTQVamSuYtfXR_JpHIg",
-      "currentTeam": "ceub_octopus_vulgaris",
+      "currentTeam": "",
       "teamHistory": [
         "ceub_octopus_vulgaris"
       ],
@@ -13784,7 +13837,7 @@
       "id": "kVLPGLd0abwlSX6VkHzmWiuJtUe20TCvMaGG4R9bT6SezSyfhLjdcYO3gwzFMQciHDqNwOzQcfYkFg",
       "name": "Fillip1n",
       "puuid": "kVLPGLd0abwlSX6VkHzmWiuJtUe20TCvMaGG4R9bT6SezSyfhLjdcYO3gwzFMQciHDqNwOzQcfYkFg",
-      "currentTeam": "ufu_saints",
+      "currentTeam": "",
       "teamHistory": [
         "ufu_saints"
       ],
@@ -14230,7 +14283,7 @@
       "id": "6VmRqgEcADA3-FPKNyHudktkAmRCQ24f4-7qULqSetlt4BwhJOMPordrLxy5QW_H7xCbO87n8YDM4w",
       "name": "Zerando",
       "puuid": "6VmRqgEcADA3-FPKNyHudktkAmRCQ24f4-7qULqSetlt4BwhJOMPordrLxy5QW_H7xCbO87n8YDM4w",
-      "currentTeam": "ufrj_minerva",
+      "currentTeam": "",
       "teamHistory": [
         "ufrj_minerva"
       ],
@@ -14270,7 +14323,7 @@
       "id": "APM9XNdFLPZ0XIsxhQtKwlURG6MwycOF4EA0OZgJy-DCHEHh4vZmPDsjOjw2mUkEsJ-73BZEbseMrQ",
       "name": "draCo",
       "puuid": "APM9XNdFLPZ0XIsxhQtKwlURG6MwycOF4EA0OZgJy-DCHEHh4vZmPDsjOjw2mUkEsJ-73BZEbseMrQ",
-      "currentTeam": "ufrj_minerva",
+      "currentTeam": "",
       "teamHistory": [
         "ufrj_minerva"
       ],
@@ -14361,7 +14414,7 @@
       "id": "K2nP5lhGeWcXKEoVzO1O-lICjLS4f2l_7X5U2uamQbAIxx3Jgkj_95sVV_ip-8TjWGrzQ1Yo4E049w",
       "name": "GalinhaMamifera",
       "puuid": "K2nP5lhGeWcXKEoVzO1O-lICjLS4f2l_7X5U2uamQbAIxx3Jgkj_95sVV_ip-8TjWGrzQ1Yo4E049w",
-      "currentTeam": "a2e_uff_shadows",
+      "currentTeam": "",
       "teamHistory": [
         "a2e_uff_shadows"
       ],
@@ -14374,7 +14427,7 @@
       "id": "RRuFlSaUvwSAbsU0VZWUccWHztIDpZw_Q0uTHOpnzEfsCQUfxdzlNn3j5BEPEcQHEgwmSnmSfIzK1w",
       "name": "drk",
       "puuid": "RRuFlSaUvwSAbsU0VZWUccWHztIDpZw_Q0uTHOpnzEfsCQUfxdzlNn3j5BEPEcQHEgwmSnmSfIzK1w",
-      "currentTeam": "a2e_uff",
+      "currentTeam": "",
       "teamHistory": [
         "a2e_uff_shadows",
         "a2e_uff"
@@ -14786,7 +14839,7 @@
       "id": "7Kip5H0Ns-j3RgPJqPL2CnGrSlwFygVFu8vG8IdWfuOVimmXaM-_kRhNAeipehmkzovgQGE5L80Ksw",
       "name": "zeph",
       "puuid": "7Kip5H0Ns-j3RgPJqPL2CnGrSlwFygVFu8vG8IdWfuOVimmXaM-_kRhNAeipehmkzovgQGE5L80Ksw",
-      "currentTeam": "brutal_esports",
+      "currentTeam": "",
       "teamHistory": [
         "brutal_esports"
       ],
@@ -14799,7 +14852,7 @@
       "id": "lWC9k6Xq69PoP0M-UiJscZuSs-NM1jbc3aK2zyHKfIlTBpha1PE4Srp3CO7-jBLsWHXv4yuw--oUxQ",
       "name": "reyzeratr",
       "puuid": "lWC9k6Xq69PoP0M-UiJscZuSs-NM1jbc3aK2zyHKfIlTBpha1PE4Srp3CO7-jBLsWHXv4yuw--oUxQ",
-      "currentTeam": "liga_vulkanica",
+      "currentTeam": "",
       "teamHistory": [
         "liga_vulkanica"
       ],
@@ -14903,7 +14956,7 @@
       "id": "kwoCRlvJKOKZnqvre-rtLVpA9xF3DcIlvKs50HHUt7Ut1J7hItwYWqnybPUPzilSpis_Nxr9dCkWTQ",
       "name": "snwssj",
       "puuid": "kwoCRlvJKOKZnqvre-rtLVpA9xF3DcIlvKs50HHUt7Ut1J7hItwYWqnybPUPzilSpis_Nxr9dCkWTQ",
-      "currentTeam": "uscs_hawks",
+      "currentTeam": "",
       "teamHistory": [
         "uscs_hawks"
       ],
@@ -14970,7 +15023,7 @@
       "id": "7d0hebUA4GEqkQxDBBhP5q6wnf3jc-i0KNTi4dnksWpl__ZIuySN0QwqeXifmsRE0Ygukj-evMkL7A",
       "name": "Rocha1706",
       "puuid": "7d0hebUA4GEqkQxDBBhP5q6wnf3jc-i0KNTi4dnksWpl__ZIuySN0QwqeXifmsRE0Ygukj-evMkL7A",
-      "currentTeam": "macklogic_white",
+      "currentTeam": "",
       "teamHistory": [
         "macklogic_white"
       ],
@@ -14983,7 +15036,7 @@
       "id": "heDjhUTOfks5EfPbAo4f-I22sUyGjYg2YFzpV8ZgULa4VdRXy_bTWm6ChRTq5OWYxJHzdvNUiav5fg",
       "name": "luli",
       "puuid": "heDjhUTOfks5EfPbAo4f-I22sUyGjYg2YFzpV8ZgULa4VdRXy_bTWm6ChRTq5OWYxJHzdvNUiav5fg",
-      "currentTeam": "macklogic_white",
+      "currentTeam": "",
       "teamHistory": [
         "macklogic_white"
       ],
@@ -15152,7 +15205,7 @@
       "id": "0jpTPGN_JEwYgCuTUZsxHWHaLoDBphYgcttzYsfDyFGJzehatjfpv4qkrK11olQ7tYrSD2XC7A--yw",
       "name": "PedroBSilva",
       "puuid": "0jpTPGN_JEwYgCuTUZsxHWHaLoDBphYgcttzYsfDyFGJzehatjfpv4qkrK11olQ7tYrSD2XC7A--yw",
-      "currentTeam": "ufmt_turuna",
+      "currentTeam": "",
       "teamHistory": [
         "ufmt_turuna"
       ],
@@ -15432,7 +15485,7 @@
       "id": "YxhqrMTfJPwiamZD6LzTGMMDngG9hg7P98PB6lsPgWQVf_XpDAucgXMkZvPFQXNOi9cKvru5Z_1XqA",
       "name": "Daske",
       "puuid": "YxhqrMTfJPwiamZD6LzTGMMDngG9hg7P98PB6lsPgWQVf_XpDAucgXMkZvPFQXNOi9cKvru5Z_1XqA",
-      "currentTeam": "ufscar_fire",
+      "currentTeam": "",
       "teamHistory": [
         "ufscar_fire"
       ],
@@ -15471,7 +15524,7 @@
       "id": "Og1LoqH6b98DaYiu8Yb29wRQQOgAE7l1iS86k69tEH-pEPkIIIAJq3XA-ovATqLx394IczEvu-b6yw",
       "name": "caiotif",
       "puuid": "Og1LoqH6b98DaYiu8Yb29wRQQOgAE7l1iS86k69tEH-pEPkIIIAJq3XA-ovATqLx394IczEvu-b6yw",
-      "currentTeam": "pucc_canaries",
+      "currentTeam": "",
       "teamHistory": [
         "pucc_canaries"
       ],
@@ -15484,7 +15537,7 @@
       "id": "_eNAwYFIjong_F4UDZ_NXqMfc8KsXo6RjgYkaHIyP6xOChBcpT1yWBuCumOemACKAdfPxQnRafgWWQ",
       "name": "art3mis",
       "puuid": "_eNAwYFIjong_F4UDZ_NXqMfc8KsXo6RjgYkaHIyP6xOChBcpT1yWBuCumOemACKAdfPxQnRafgWWQ",
-      "currentTeam": "pucc_canaries",
+      "currentTeam": "",
       "teamHistory": [
         "pucc_canaries"
       ],

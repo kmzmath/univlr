@@ -2,10 +2,13 @@
 // (data e quantidade de cada dia) e o perfil completo so dos dias ja revelados;
 // nada do que ainda esta em segredo chega ao navegador.
 const dias = document.getElementById("dias");
+const regra = document.getElementById("regra");
 const contagem = document.getElementById("contagem");
 const calendario = document.getElementById("calendario");
 const busca = document.getElementById("busca-jogador");
 const buscaResultados = document.getElementById("busca-resultados");
+const conversa = document.getElementById("comentarios");
+const conversaTotal = document.getElementById("conversa-total");
 let manifest;
 let cartas = [];
 
@@ -23,6 +26,14 @@ function num(value, digits = 0) {
 
 function pos(rank) {
   return `#${String(rank).padStart(3, "0")}`;
+}
+
+// Com sinal na frente quando positivo; perto de zero, zero sem sinal.
+function comSinal(value, digits = 2) {
+  if (value === null || value === undefined || value === "" || !Number.isFinite(Number(value))) return "-";
+  const n = Number(value);
+  if (Math.abs(n) < 0.5 / 10 ** digits) return num(0, digits);
+  return `${n > 0 ? "+" : ""}${num(n, digits)}`;
 }
 
 function partes(iso) {
@@ -44,34 +55,113 @@ function dataDoJogo(value) {
   return new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit", timeZone: "America/Sao_Paulo" }).format(new Date(value));
 }
 
-// A faixa de posicoes de cada dia sai da ordem do calendario: o dia N comeca
-// onde o anterior parou.
+// Um dia so conta como revelado depois das 21:30 dele. O push da edicao sai
+// um pouco antes da hora: ate la as cartinhas ja estao no manifesto, mas ficam
+// fora da pagina, e entram quando o relogio zera.
+function liberado(day, agora = Date.now()) {
+  return Boolean(day.cards?.length) && agora >= horaDaRevelacao(day.date);
+}
+
+// A posicao na colecao e o contrario da ordem de revelacao: o calendario vai
+// do menor para o maior overall, entao o primeiro dia revela a #216 e o ultimo
+// termina na #1, a melhor de todas. Cada dia comeca onde o anterior parou.
 function diasComFaixa() {
-  let inicio = 1;
+  let inicio = manifest.total;
   return manifest.days.map((day) => {
-    const faixa = { ...day, primeira: inicio, ultima: inicio + day.count - 1, revelado: Boolean(day.cards?.length) };
-    inicio += day.count;
+    const faixa = { ...day, primeira: inicio, ultima: inicio - day.count + 1, revelado: liberado(day) };
+    inicio -= day.count;
     return faixa;
   });
 }
 
+// O texto do topo sai do manifesto, para o total e a ultima data nao ficarem
+// velhos se o calendario mudar. O HTML traz o mesmo texto para quem chega
+// antes do manifesto.
+function renderRegra() {
+  const ultimo = manifest.days[manifest.days.length - 1];
+  regra.textContent = `É revelado um lote de cartinhas por dia, em ordem do menor para o maior overall. No total são ${num(manifest.total)} cartinhas, de jogadores com pelo menos 200 rounds e 12 mapas jogados no ano. Última revelação em ${dataLonga(ultimo.date)}.`;
+}
+
 // ---------------------------------------------------------------- contagem
+
+// A revelacao e as 21:30 de Brasilia, que e UTC-3 o ano todo (o horario de
+// verao acabou em 2019): 00:30 UTC do dia seguinte. Date.UTC aceita a hora 24
+// e vira o dia sozinho.
+function horaDaRevelacao(iso) {
+  const { ano, mes, dia } = partes(iso);
+  return Date.UTC(ano, mes - 1, dia, 24, 30);
+}
 
 function renderContagem(faixas) {
   const reveladas = cartas.length;
   const proximo = faixas.find((day) => !day.revelado);
-  const ultimo = faixas[faixas.length - 1];
   const fracao = manifest.total ? (reveladas / manifest.total) * 100 : 0;
   contagem.innerHTML = `
     <p class="contagem-numero"><b>${num(reveladas)}</b><span>de ${num(manifest.total)} reveladas</span></p>
     <span class="contagem-barra" aria-hidden="true"><i style="--p:${fracao.toFixed(2)}%"></i></span>
-    <p class="contagem-proxima">${
+    ${
       proximo
-        ? `Próxima: ${esc(dataLonga(proximo.date))}, ${proximo.count} ${proximo.count === 1 ? "cartinha" : "cartinhas"} (${pos(proximo.primeira)} a ${pos(proximo.ultima)})`
-        : "Todas as cartinhas foram reveladas."
-    }</p>
-    <p class="contagem-regra">Entra quem tem pelo menos 200 rounds e 12 mapas na temporada. Última revelação em ${esc(dataLonga(ultimo.date))}.</p>
+        ? `<p class="contagem-timer">Próxima revelação <b id="relogio" data-alvo="${horaDaRevelacao(proximo.date)}"></b></p>
+           <p class="contagem-proxima">${esc(dataLonga(proximo.date))}, às 21:30 de Brasília, ${proximo.count} ${proximo.count === 1 ? "cartinha" : "cartinhas"} (${pos(proximo.primeira)} a ${pos(proximo.ultima)})</p>`
+        : `<p class="contagem-proxima">Todas as cartinhas foram reveladas.</p>`
+    }
   `;
+  pulsaRelogio();
+}
+
+// O relogio conta ate as 21:30 do proximo dia. Se a edicao ja chegou com o
+// push, a pagina so se refaz quando ele zera. Se ainda nao chegou (o deploy
+// leva uns dois minutos), busca o manifesto de novo a cada 30s por ate 20
+// minutos e se refaz quando ele vier.
+const BUSCA_INTERVALO = 30 * 1000;
+const BUSCA_JANELA = 20 * 60 * 1000;
+let relogio = null;
+let ultimaBusca = 0;
+
+function buscaManifesto() {
+  return fetch(`manifest.json?v=${Date.now()}`, { cache: "no-store" }).then((response) => {
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  });
+}
+
+function tempoQueFalta(ms) {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  return `${h ? `${h}h ` : ""}${h || m ? `${String(m).padStart(h ? 2 : 1, "0")}min ` : ""}${String(s).padStart(h || m ? 2 : 1, "0")}s`;
+}
+
+function pulsaRelogio() {
+  clearInterval(relogio);
+  const alvo = document.getElementById("relogio");
+  if (!alvo) return;
+  const quando = Number(alvo.dataset.alvo);
+  const bate = () => {
+    const agora = Date.now();
+    const falta = quando - agora;
+    if (falta > 0) {
+      alvo.textContent = `em ${tempoQueFalta(falta)}`;
+      return;
+    }
+    if (manifest.days.some((day) => liberado(day, agora) && horaDaRevelacao(day.date) === quando)) {
+      aplicar(manifest);
+      return;
+    }
+    const esperando = agora - quando < BUSCA_JANELA;
+    alvo.textContent = esperando ? "chegando, a página atualiza sozinha" : "em breve";
+    if (esperando && agora - ultimaBusca >= BUSCA_INTERVALO) {
+      ultimaBusca = agora;
+      buscaManifesto()
+        .then((data) => {
+          if (data.publishedThrough !== manifest.publishedThrough) aplicar(data);
+        })
+        .catch(() => {});
+    }
+  };
+  bate();
+  relogio = setInterval(bate, 1000);
 }
 
 // ---------------------------------------------------------------- lista
@@ -121,11 +211,12 @@ function perfil(card) {
           ${numero("ADR", num(stat.adr))}
           ${numero("HS", `${num(stat.hs)}%`)}
           ${numero("KPR", num(stat.kpr, 2))}
-          ${numero("Ajustado", num(card.adjustedRating, 2), "rAAting ajustado usado no overall da cartinha")}
+          ${numero("Força média de adversário", comSinal(card.opponentStrength), "Quanto, em rAAting, os times enfrentados costumam tirar de quem joga contra eles, pesado pelos rounds. Zero é o adversário típico; positivo, adversários mais fortes; negativo, mais fracos.")}
         </div>
         ${agentes ? `<div class="agentes"><h3>Agentes</h3><div>${agentes}</div></div>` : ""}
         <div class="jogos"><h3>Últimos jogos</h3>${jogosRecentes(card)}</div>
         <p class="links"><a href="${esc(card.profileHref)}">Perfil completo</a><a href="${esc(card.image)}" target="_blank" rel="noopener">Abrir cartinha</a></p>
+        ${comunidade && card.thread ? `<section class="cmt-secao cmt-carta" data-thread="${esc(card.thread)}" aria-label="Comentários sobre a cartinha de ${esc(card.name)}"></section>` : ""}
       </div>
     </div>
   `;
@@ -141,7 +232,7 @@ function linha(card) {
         <span class="r-pos">${pos(card.rank)}</span>
         <img class="r-mini" src="${esc(card.image)}" alt="" loading="lazy" />
         <span class="r-quem"><strong>${esc(card.name)}</strong><small>${card.teamLogo ? `<img src="${esc(card.teamLogo)}" alt="" loading="lazy" />` : ""}<span>${esc(card.team)}${card.role ? `, ${esc(card.role)}` : ""}</span></small></span>
-        <span class="r-ovr" aria-label="Overall ${esc(card.overall)}"><b>${esc(card.overall)}</b></span>
+        <span class="r-ovr"><span class="r-cmt"${card.thread ? ` data-thread="${esc(card.thread)}"` : ""}></span><b aria-label="Overall ${esc(card.overall)}">${esc(card.overall)}</b></span>
         <span class="r-n">${num(stat.raating, 2)}</span>
         <span class="r-n">${num(stat.acs)}</span>
         <span class="r-n">${num(stat.kd, 2)}</span>
@@ -175,10 +266,13 @@ function renderDias(faixas) {
     .join("");
 }
 
+// A conversa da cartinha so e buscada na primeira vez que ela abre.
 function abrir(article, aberto = !article.classList.contains("aberta")) {
   article.classList.toggle("aberta", aberto);
   article.querySelector(".resumo").setAttribute("aria-expanded", String(aberto));
   article.querySelector(".perfil").inert = !aberto;
+  const raiz = article.querySelector(".cmt-carta");
+  if (aberto && raiz && !raiz.dataset.montada) montaConversa(raiz);
 }
 
 // ---------------------------------------------------------------- calendario
@@ -251,9 +345,14 @@ function mostrarBusca() {
 
 // ---------------------------------------------------------------- endereco
 
-// #carta-12 abre o perfil e leva ate ele; #dia-2026-10-23 so leva ate o dia.
+// #carta-12 abre o perfil e leva ate ele; #jogador-<puuid> faz o mesmo pelo
+// jogador, que e o que os links de comentario usam (a posicao pode mudar se
+// os overalls forem recalculados). #dia-2026-10-23 e #comentarios so levam
+// ate o lugar.
 function seguirEndereco() {
-  const alvo = /^#(carta-\d+|dia-\d{4}-\d{2}-\d{2})$/.exec(location.hash)?.[1];
+  const jogador = /^#jogador-([A-Za-z0-9_-]+)$/.exec(location.hash)?.[1];
+  const card = jogador && cartas.find((item) => item.thread === `${manifest.season}:${jogador}`);
+  const alvo = card ? `carta-${card.rank}` : /^#(carta-\d+|dia-\d{4}-\d{2}-\d{2}|comentarios)$/.exec(location.hash)?.[1];
   if (!alvo) return;
   const el = document.getElementById(alvo);
   if (!el) return;
@@ -261,15 +360,94 @@ function seguirEndereco() {
   requestAnimationFrame(() => el.scrollIntoView({ block: "start" }));
 }
 
-function render(data) {
+// Refaz a pagina com um manifesto. Roda na carga e de novo quando uma edicao
+// e liberada com a pagina aberta; por isso guarda as cartinhas abertas e nao
+// mexe no scroll.
+function aplicar(data) {
   manifest = data;
-  cartas = data.days.flatMap((day) => day.cards || []);
   const faixas = diasComFaixa();
+  cartas = faixas.filter((day) => day.revelado).flatMap((day) => day.cards);
+  const abertas = [...dias.querySelectorAll(".linha.aberta")].map((el) => el.id);
+  renderRegra();
   renderContagem(faixas);
   renderDias(faixas);
   renderCalendario(faixas);
-  seguirEndereco();
+  abertas.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) abrir(el, true);
+  });
+  pintaSelos();
 }
+
+// ---------------------------------------------------------------- comentarios
+
+// Duas conversas: a da colecao, no fim da pagina, e a de cada cartinha, que
+// aparece quando ela abre na lista. As duas sao do tipo "card": "2026" e a
+// colecao e "2026:<puuid>" a cartinha. Sem os scripts da comunidade a pagina
+// segue inteira, so sem comentarios.
+const comunidade = Boolean(window.Community && window.Comments && window.Auth);
+
+// Quem esta logado, e o que muda o desenho da conversa: admin apaga o que for,
+// banido nao comenta.
+function chaveDaConta() {
+  const C = window.Community;
+  const perfilAtual = C.logado() ? C.perfil() : null;
+  return perfilAtual ? `${perfilAtual.id}:${perfilAtual.role}:${C.banido()}` : "";
+}
+
+let contaAnterior = "";
+const contaPronta = comunidade
+  ? window.Auth.iniciar()
+      .then(() => {
+        window.Auth.pintaSlot();
+        contaAnterior = chaveDaConta();
+      })
+      .catch(() => null)
+  : Promise.resolve();
+
+function montaConversa(raiz) {
+  if (!comunidade) return;
+  raiz.dataset.montada = "1";
+  contaPronta.then(() => window.Comments.montar("card", raiz.dataset.thread, raiz));
+}
+
+// Selo de comentarios a esquerda do overall, so quando a cartinha tem algum.
+function pintaSelos() {
+  if (!comunidade) return;
+  dias.querySelectorAll(".r-cmt[data-thread]").forEach((alvo) => {
+    alvo.innerHTML = window.Comments.selo("card", alvo.dataset.thread);
+  });
+  pintaTotalDaColecao();
+}
+
+function pintaTotalDaColecao(total) {
+  if (!comunidade || !manifest) return;
+  const n = total ?? window.Community.contagem("card", String(manifest.season));
+  conversaTotal.textContent = n ? `${num(n)} ${n === 1 ? "comentário" : "comentários"}` : "Comente";
+}
+
+// Cada conversa avisa quando se desenha, com o total exato: o selo da linha e
+// o atalho da colecao mudam na hora, sem esperar outra consulta.
+document.addEventListener("comentarios:desenhados", (event) => {
+  const { kind, id, total } = event.detail || {};
+  if (kind !== "card" || !manifest) return;
+  if (id === String(manifest.season)) return pintaTotalDaColecao(total);
+  dias.querySelectorAll(".r-cmt[data-thread]").forEach((alvo) => {
+    if (alvo.dataset.thread === id) alvo.innerHTML = window.Comments.selo("card", id, total);
+  });
+});
+
+// O auth.js chama window.render() quando a conta muda. Aqui so as conversas
+// ja montadas precisam refazer (o convite vira formulario e vice-versa), e so
+// quando quem esta logado mudou de fato: a renovacao do token tambem dispara
+// o aviso, e refazer apagaria o que a pessoa estivesse escrevendo.
+window.render = () => {
+  if (!comunidade) return;
+  const conta = chaveDaConta();
+  if (conta === contaAnterior) return;
+  contaAnterior = conta;
+  document.querySelectorAll(".cmt-secao[data-montada]").forEach((raiz) => window.Comments.montar("card", raiz.dataset.thread, raiz));
+};
 
 dias.addEventListener("click", (event) => {
   const botao = event.target.closest(".resumo");
@@ -300,12 +478,19 @@ window.addEventListener("hashchange", () => {
   if (manifest) seguirEndereco();
 });
 
-fetch(`manifest.json?v=${Date.now()}`, { cache: "no-store" })
-  .then((response) => {
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return response.json();
+if (comunidade) window.Community.carregarContagens().then(pintaSelos);
+else {
+  conversa.hidden = true;
+  document.querySelector(".atalho-conversa").hidden = true;
+}
+
+buscaManifesto()
+  .then((data) => {
+    aplicar(data);
+    seguirEndereco();
+    conversa.dataset.thread = String(data.season);
+    montaConversa(conversa);
   })
-  .then(render)
   .catch(() => {
     dias.innerHTML = `<p class="aviso">Não foi possível carregar as cartinhas.</p>`;
   });

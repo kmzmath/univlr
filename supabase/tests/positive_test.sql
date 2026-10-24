@@ -67,6 +67,17 @@ begin
 
   c_alice := public.post_comment('match', 'partida-pos', 'comentario raiz da alice');
 
+  -- Cartinhas (0007): a conversa da colecao e a de uma cartinha.
+  begin
+    perform public.post_comment('card', '2026', 'comentario na colecao');
+    perform public.post_comment('card', '2026:puuid-de_teste123', 'comentario na cartinha');
+    select count(*) into n from public.threads
+     where subject_kind = 'card' and subject_id in ('2026', '2026:puuid-de_teste123');
+    insert into _p (caso, esperado, obtido) values ('comentar nas cartinhas', '2', n::text);
+  exception when others then
+    insert into _p (caso, esperado, obtido) values ('comentar nas cartinhas', '2', 'ERRO: ' || SQLERRM);
+  end;
+
   -- Editar o proprio, dentro dos 15 min.
   begin
     perform public.edit_comment(c_alice, 'texto editado pela alice');

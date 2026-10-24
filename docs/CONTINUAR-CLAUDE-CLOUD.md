@@ -75,3 +75,19 @@ node scripts/test_raating3_ui.js
 ```
 
 Não executar um gerador que sobrescreva os arquivos atuais sem antes revisar o que ele produz. Não aplicar migração no Supabase nem publicar na `main` como parte da simples retomada.
+
+Verificações do checkpoint: sintaxe de `app.js`, `comments.js` e `cartas/app.js` aprovada; teste existente de UI da rAAting aprovado; JSONs alterados válidos e imagens do manifesto presentes. Na branch do visual, `scripts/test_visual_placar.js` passou. Isto não substitui testar as funcionalidades incompletas no navegador.
+
+## Mensagem original, reenviada pelo usuário durante a transferência
+
+Transcrição literal, incluindo a grafia original. As respostas posteriores sobre "um lote por dia", publicação manual sem antecipar cartas e execução do SQL pelo usuário estão registradas acima.
+
+> Vamos dar uma checada na aba cartinhas.
+> Vamos mudar "Um lote por dia, do menor para o maior overall. Os próximos nomes continuam em segredo."e "Entra quem tem pelo menos 200 rounds e 12 mapas na temporada. Última revelação em 24 de novembro." para: "É relevada uma cartinha por dia, em ordem do menor para o maior overall. No total são 216 cartinhas, de jogadores com pelo menos 200 rounds e 12 mapas jogados no ano. Última revelação em 24 de novembro."
+> Assim unificando em um texto só.
+> O horário é o horário de brasilia. As cartas devem ser reveladas as 21:30 todos os dias, vamos adiconar um timer que mostra quanto tempo falta para a próxima revelação.
+> A lógica da ordem de numeração de cartas é o contrário. #1 é o melhor jogador, e o ultimo a ser revelado. Hoje foram reveladas 216 até 206 ao invés de 1 a 10.
+> Deve ser possível comentar na página, e também em cada cartinhas (para usuarios com conta).
+> O menu de comentário na cartinha deve ser quando ele abre a cartinha na lista.
+> Ao lado esquerdo do overall na lista, antes do nome, deve mostrar um icone de comentarios com o numero de quantos comentarios teve na carta (apenas se ela tiver ao menos 1)
+> Nos detalhes dos stas, "Ajustado" deve ser trocado por "Força média de adversário", e mostrar esse dado.

@@ -14657,25 +14657,7 @@ function renderPlayerDetail(id) {
   });
   Shell(`
     <section class="player-page" ${playerAccentStyle(team)}>
-      <div class="player-hero">
-        ${team ? `<div class="player-hero-team-bg" aria-hidden="true">${teamLogo(team.id, "player-hero-bg-logo")}</div>` : ""}
-        <div class="player-hero-portrait">
-          ${playerLogo(player.id, "player-hero-photo")}
-        </div>
-        <div class="player-hero-copy">
-          <div class="player-hero-title-row">
-            <h1>${escapeHtml(player.nick)}</h1>
-            ${playerHeroRoleBadge(player)}
-            ${window.Favorites ? window.Favorites.botao("player", playerRouteId(player.id)) : ""}
-          </div>
-          <p>${escapeHtml(player.handle || player.nick)}</p>
-          ${playerNickHistoryChips(player, "hero")}
-        </div>
-        <aside class="player-quick-panel">
-          ${team ? playerCurrentTeamCard(team) : `<div class="player-current-team-card"><small>Equipe atual</small><strong>Sem equipe</strong></div>`}
-          ${playerHeroMetrics(player)}
-        </aside>
-      </div>
+      ${playerHeroPlacar(player, team)}
       <nav class="team-tabs player-tabs" aria-label="Abas do jogador">
         ${playerTabLink(player, "resumo", "Resumo", activeTab)}
         ${playerTabLink(player, "equipes", "Equipes", activeTab)}
@@ -14785,33 +14767,173 @@ function playerNickHistoryChips(player, context = "") {
 }
 
 function playerSummaryTab(player, matches, trophies) {
+  const ultimas = matches.slice(0, 6);
+  const trofeus = trophies.map((trophy) => ({ ...trophy, detail: trophy.team ? `com a ${typeof trophy.team === "object" ? trophy.team.name : trophy.team}` : "" }));
   return `
-    <div class="player-summary-layout">
-      <div class="stack">
-        ${playerSummaryTrophyPanel(trophies)}
-        <section class="data-panel player-stats-panel">
-          <div class="section-head"><h2>Dados do jogador</h2><p>Agregado das partidas registradas.</p></div>
-          ${playerStatCards(player)}
+    <div class="vp-equipe-corpo vp-jogador-corpo">
+      <div class="vp-equipe-principal">
+        <section class="vp-s-ficha">
+          ${sectionHead("Dados do jogador", "Agregado das partidas registradas")}
+          ${fichaJogador(player)}
         </section>
-        ${playerRatingCompositionPanel(player)}
-        ${playerRatingMetricsPanel(player)}
-        ${playerOpeningTradesPanel(player)}
+        <section class="vp-s-partidas-jogador">
+          ${sectionHead("Últimas partidas", "", playerPath(player, "partidas"), "Ver todas")}
+          ${ultimas.length ? listaPorDia(ultimas, { kd: (series) => kdDoJogadorNaSerie(player, series) }) : `<div class="empty-state">Nenhuma partida registrada para este jogador.</div>`}
+        </section>
       </div>
-      <aside class="stack">
-        <section class="data-panel">
-          <div class="section-head"><h2>Agentes mais usados</h2></div>
-          ${agentBars((player.agentStats || []).slice(0, 5))}
+      <aside class="vp-equipe-trilho">
+        <section class="vp-s-agentes">
+          ${sectionHead("Agentes", "", playerPath(player, "agentes"), "Ver todos")}
+          ${agentesTrilho(player)}
         </section>
-        <section class="data-panel">
-          <div class="section-head"><h2>Por mapa</h2></div>
-          ${playerMapTable(player)}
+        <section class="vp-s-pormapa">
+          ${sectionHead("Por mapa")}
+          ${porMapaPlaca(player)}
         </section>
+        ${trofeus.length ? `<section class="vp-s-trofeus">${sectionHead("Troféus")}${trofeusLista(trofeus)}</section>` : ""}
       </aside>
     </div>
-    <section class="section-band player-recent-matches">
-      ${sectionHead("Últimas partidas", "Partidas mais recentes associadas ao jogador.", null, null)}
-      <div class="match-list vp-lista">${matches.length ? matches.slice(0, 6).map(matchResultRow).join("") : `<div class="empty-state">Nenhuma partida registrada para este jogador.</div>`}</div>
-    </section>
+  `;
+}
+
+// O topo do jogador: a foto grande solta na base, a faixa na cor da equipe, a
+// funcao com icone, o nick grande, o Riot ID com o nick anterior, a equipe e
+// os cinco numeros principais a direita.
+function playerHeroPlacar(player, team) {
+  const role = playerDominantRole(player);
+  const anteriores = [...new Set((player.nickHistory || []).filter(Boolean))].filter((nick) => nick !== player.handle && nick !== player.nick);
+  const numeros = [
+    [playerRating(player), "rAAting 3.0"],
+    [fmt(player.acs, 0), "ACS"],
+    [fmt(player.adr, 0), "ADR"],
+    [fmt(player.kd), "K/D"],
+    [String(player.matches || 0), "Mapas"],
+  ];
+  return `
+    <header class="vp-hero-jogador">
+      <div class="vp-jogador-foto">${playerLogo(player.id)}</div>
+      <div class="vp-jogador-id">
+        ${role ? `<span class="vp-jogador-funcao" title="${escapeHtml(role.rounds ? `${role.label}, ${role.rounds} rounds` : role.label)}">${roleMiniIcon(role)}${escapeHtml(role.label)}</span>` : ""}
+        <h1>${escapeHtml(player.nick)}</h1>
+        <span class="vp-jogador-riot">${escapeHtml(player.handle || player.nick)}${anteriores.length ? `<em>, antes ${escapeHtml(anteriores.slice(0, 2).join(", "))}</em>` : ""}</span>
+        <span class="vp-jogador-acoes">
+          ${team ? `<a class="vp-jogador-equipe" href="#/teams/${escapeHtml(team.id)}">${teamLogo(team.id)}<span>${escapeHtml(team.name)}</span></a>` : `<span class="vp-jogador-sem-equipe">Sem equipe</span>`}
+          ${window.Favorites ? window.Favorites.botao("player", playerRouteId(player.id)) : ""}
+        </span>
+      </div>
+      <div class="vp-jogador-numeros">${numeros.map(([valor, rotulo]) => `<span><small>${escapeHtml(rotulo)}</small><b>${escapeHtml(valor)}</b></span>`).join("")}</div>
+    </header>
+  `;
+}
+
+// Os quatro quadros de dados viram uma ficha so, em Placa, um grupo por linha.
+// A composicao e as metricas da rAAting 3.0 entram como grupos so quando o
+// jogador tem algum valor nelas: para quem so tem partida antiga, os dois
+// quadros eram uma parede de hifens.
+function fichaJogador(player) {
+  const rounds = Number(player.rounds || 0);
+  const fkpr = rounds ? Number(player.firstKills || 0) / rounds : 0;
+  const fdpr = rounds ? Number(player.firstDeaths || 0) / rounds : 0;
+  const kMenosD = Number(player.kills || 0) - Number(player.deaths || 0);
+  const fkFd = Number(player.firstKills || 0) - Number(player.firstDeaths || 0);
+  const swing = playerSwingPerRound(player);
+  const tom = (valor) => (valor > 0 ? "vp-bom" : valor < 0 ? "vp-ruim" : "");
+  const grupo = (rotulo, itens) => `
+    <div class="vp-ficha-grupo"><small>${escapeHtml(rotulo)}</small>${itens
+      .map(([nome, valor, classe = "", dica = ""]) => `<span class="vp-ficha-n"${dica ? ` title="${escapeHtml(dica)}"` : ""}><small>${escapeHtml(nome)}</small><b${classe ? ` class="${classe}"` : ""}>${escapeHtml(String(valor))}</b></span>`)
+      .join("")}</div>`;
+  const composicao = ratingComponentDefinitions().map((item) => [item.label, formatMaybeMetric(player, item.key), "", item.description]);
+  const metricas = [
+    ["eKPR", formatMaybeMetric(player, "ekpr"), "", "Kills por round ajustados por economia."],
+    ["eDPR", formatMaybeMetric(player, "edpr"), "", "Mortes por round ajustadas por economia."],
+    ["eADR", formatMaybeMetric(player, "eadr", 0), "", "Dano por round ajustado por economia."],
+    ["eKAST", formatMaybePercent(player, "ekast"), "", "KAST ajustado por economia."],
+    ["MK/R", formatMaybeMetric(player, "mk_per_r"), "", "Pontos de multi-kill por round."],
+  ];
+  const temValor = (itens) => itens.some(([, valor]) => valor !== "-");
+  return `
+    <div class="vp-placa vp-ficha">
+      ${grupo("Geral", [
+        ["rAAting 3.0", playerRating(player)],
+        ["Rounds", rounds],
+        ["Mapas", player.matches || 0],
+        ["ACS", fmt(player.acs, 0)],
+        ["K/D", fmt(player.kd)],
+        ["K-D", signed(kMenosD), tom(kMenosD)],
+        ["ADR", fmt(player.adr, 0)],
+        ["KAST", pct(player.kast)],
+        ["Swing/R", formatMaybeSwing(player), Number.isFinite(swing) ? tom(swing) : ""],
+      ])}
+      ${grupo("Por round", [
+        ["KPR", fmt(player.kpr)],
+        ["DPR", fmt(player.dpr)],
+        ["APR", fmt(player.apr)],
+        ["FKPR", fmt(fkpr)],
+        ["FDPR", fmt(fdpr)],
+        ["HS%", pct(player.hs)],
+        ["Kills", player.kills || 0],
+        ["Deaths", player.deaths || 0],
+        ["Assists", player.assists || 0],
+      ])}
+      ${grupo("Abertura e trades", [
+        ["First kills", player.firstKills || 0],
+        ["First deaths", player.firstDeaths || 0],
+        ["FK-FD", signed(fkFd), tom(fkFd)],
+        ["Trade kills", formatMaybeMetric(player, "tradeKills", 0)],
+        ["Mortes tradadas", formatMaybeMetric(player, "tradedDeaths", 0)],
+        ["Mortes sem trade", formatMaybeMetric(player, "failedTradeDeaths", 0)],
+        ["Trade denials", formatMaybeMetric(player, "tradeDenials", 0)],
+        ["Saves em derrota", formatMaybeMetric(player, "savedLossRounds", 0)],
+        ["Sobrev. em vitória", formatMaybeMetric(player, "survivedWinRounds", 0), "", "Sobrevivências em rounds vencidos."],
+      ])}
+      ${temValor(composicao) ? grupo("Composição da rAAting 3.0", composicao) : ""}
+      ${temValor(metricas) ? grupo("Métricas rAAting 3.0", metricas) : ""}
+    </div>
+  `;
+}
+
+// Abates e mortes do jogador na serie inteira, somando os mapas. As linhas de
+// jogador de cada mapa existem mesmo antes de o detalhe da partida carregar.
+function kdDoJogadorNaSerie(player, series) {
+  const linhas = (series?.maps || []).map((mapa) => (mapa.players || []).find((linha) => linha.id === player.id)).filter(Boolean);
+  if (!linhas.length) return null;
+  return [linhas.reduce((soma, linha) => soma + Number(linha.kills || 0), 0), linhas.reduce((soma, linha) => soma + Number(linha.deaths || 0), 0)];
+}
+
+// Os cinco agentes mais jogados, com a barra na cor da equipe medida contra o
+// mais jogado.
+function agentesTrilho(player) {
+  const agentes = (player.agentStats || []).slice(0, 5);
+  if (!agentes.length) return `<div class="empty-state">Sem agentes registrados.</div>`;
+  const maximo = Math.max(...agentes.map((agente) => Number(agente.rounds || 0)), 1);
+  return `
+    <div class="vp-agentes">
+      ${agentes
+        .map((agente) => {
+          const nome = agente.name || agente.agent || "Agente";
+          const icone = agente.icon || agente.agentIcon || "";
+          return `${icone ? `<img src="${escapeHtml(assetPath(icone))}" alt="" loading="lazy" onerror="this.style.visibility='hidden'" />` : "<span></span>"}<span class="vp-agente-nome"><b>${escapeHtml(nome)}</b><small>${escapeHtml(agente.role || agente.agentClass || "")}</small></span><span class="vp-agente-barra"><i style="--w:${Math.round((Number(agente.rounds || 0) / maximo) * 100)}%"></i></span><span class="vp-agente-rounds">${escapeHtml(String(agente.rounds || 0))} rounds</span>`;
+        })
+        .join("")}
+    </div>
+  `;
+}
+
+// Desempenho por mapa em Placa, com a arte do mapa no fundo da linha.
+function porMapaPlaca(player) {
+  const mapas = player.mapStats || [];
+  if (!mapas.length) return `<div class="empty-state">Sem mapas registrados.</div>`;
+  const tom = (nota) => (nota >= 1.1 ? "vp-bom" : nota < 0.9 ? "vp-ruim" : "");
+  return `
+    <div class="vp-placa vp-pormapa">
+      <div class="vp-pm-cab" aria-hidden="true"><span>Mapa</span><span>Partidas</span><span>rAAting</span><span>ACS</span></div>
+      ${mapas
+        .map((row) => {
+          const arte = matchMapAsset({ mapName: row.name });
+          return `<a class="vp-pm" href="#/maps/${escapeHtml(slugify(row.name))}">${arte.src ? `<img src="${escapeHtml(arte.src)}" data-fallback="${escapeHtml(arte.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : ""}<b>${escapeHtml(row.name)}</b><span>${escapeHtml(String(row.matches || 0))}</span><span class="vp-pm-nota ${tom(Number(row.rating))}">${escapeHtml(fmt(row.rating))}</span><span>${escapeHtml(fmt(row.acs, 0))}</span></a>`;
+        })
+        .join("")}
+    </div>
   `;
 }
 

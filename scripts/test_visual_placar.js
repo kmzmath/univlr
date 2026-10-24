@@ -303,5 +303,27 @@ assert(!paginaEquipe.includes("team-trophy-panel"), "o painel de trofeus sai do 
 assert(/class="vp-equipe-rank"[\s\S]*no ranking/.test(topoEquipe), "o ranking fica solto no topo");
 context.location.hash = "";
 
+// ---------------------------------------------------------------- Tarefa 9
+// Pagina de jogador: os quatro quadros viram uma ficha em Placa com tres
+// grupos, e os paineis da rAAting 3.0 so aparecem quando tem algum valor.
+const jogadorFicha = { id: "aldeath", nick: "Aldeath", handle: "zeNith#mond", teamId: "azr", rounds: 1103, matches: 53, kills: 774, deaths: 757, assists: 292, acs: 204, adr: 107, kast: 74, kd: 1.02, kpr: 0.7, dpr: 0.69, apr: 0.26, hs: 23, firstKills: 99, firstDeaths: 101, agentStats: [], mapStats: [] };
+const ficha = context.fichaJogador(jogadorFicha);
+assert.strictEqual((ficha.match(/class="vp-ficha-grupo"/g) || []).length, 3, "a ficha tem tres grupos");
+["Geral", "Por round", "Abertura e trades"].forEach((rotulo) => assert(ficha.includes(`<small>${rotulo}</small>`), `a ficha tem o grupo ${rotulo}`));
+assert(ficha.includes("vp-placa vp-ficha"), "a ficha e uma Placa");
+
+const resumoVazio = context.playerSummaryTab(jogadorFicha, [], []);
+assert(!resumoVazio.includes("Composição da rAAting 3.0"), "com a composicao toda vazia, o painel nao aparece");
+assert(!resumoVazio.includes("Métricas rAAting 3.0"), "com as metricas todas vazias, o painel nao aparece");
+const resumoCheio = context.playerSummaryTab({ ...jogadorFicha, kill_rating: 1.12, ekpr: 0.71 }, [], []);
+assert(resumoCheio.includes("Composição da rAAting 3.0"), "com um valor de composicao, o painel aparece");
+assert(resumoCheio.includes("Métricas rAAting 3.0"), "com uma metrica, o painel aparece");
+
+// O K / D sai das linhas de jogador de cada mapa da serie, que existem mesmo
+// antes de carregar o detalhe da partida (o `recent` do jogador so guarda 6).
+const comJogador = (serie, linhas) => ({ ...serie, maps: serie.maps.map((mapa, i) => ({ ...mapa, players: linhas[i] ? [{ id: "outro", kills: 30, deaths: 1 }, { id: "aldeath", kills: linhas[i][0], deaths: linhas[i][1] }] : [{ id: "outro", kills: 30, deaths: 1 }] })) });
+assert.deepStrictEqual(Array.from(context.kdDoJogadorNaSerie(jogadorFicha, comJogador(md3, [[20, 10], [15, 12], [9, 14]]))), [44, 36], "o K / D da serie soma os tres mapas do jogador");
+assert.strictEqual(context.kdDoJogadorNaSerie(jogadorFicha, comJogador(md1, [])), null, "serie em que o jogador nao jogou nao tem K / D");
+
 void vp;
 console.log("Visual Placar contract tests passed");

@@ -2678,3 +2678,378 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* ==========================================================================
+   Jogador: foto solta no topo, ficha em Placa, agentes e mapas no trilho
+   ========================================================================== */
+
+.vp-bom { color: var(--win); }
+.vp-ruim { color: var(--danger); }
+
+.player-page.player-page {
+  gap: 24px;
+}
+
+.vp-hero-jogador {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0 26px;
+  height: 220px;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--team-line, #6b6e78) 30%, var(--bg)) 0%,
+    color-mix(in srgb, var(--team-line, #6b6e78) 10%, var(--bg)) 50%,
+    var(--bg) 100%
+  );
+  box-shadow: inset 3px 0 0 var(--team-line, #6b6e78);
+}
+
+.vp-jogador-foto {
+  align-self: end;
+  width: 220px;
+  height: 210px;
+}
+
+.vp-jogador-foto .player-avatar,
+.vp-jogador-foto .player-avatar img {
+  width: 100%;
+  height: 100%;
+}
+
+.vp-jogador-foto .player-avatar {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-jogador-foto .player-avatar img {
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.vp-jogador-id {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.vp-jogador-funcao {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-jogador-funcao img,
+.vp-jogador-funcao .role-mini {
+  width: 16px;
+  height: 16px;
+  opacity: 0.85;
+}
+
+.vp-jogador-id h1 {
+  margin: 0;
+  font: 700 64px/0.95 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+.vp-jogador-riot {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.vp-jogador-riot em {
+  color: rgba(163, 165, 175, 0.8);
+  font-style: normal;
+}
+
+.vp-jogador-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-top: 8px;
+}
+
+.vp-jogador-equipe {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.vp-jogador-equipe .team-logo {
+  width: 22px;
+  height: 22px;
+}
+
+.vp-jogador-equipe:hover span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vp-jogador-sem-equipe {
+  color: var(--muted);
+}
+
+.vp-jogador-numeros {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: end;
+  gap: 14px 30px;
+  padding-right: 26px;
+}
+
+.vp-jogador-numeros span {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-jogador-numeros span:first-child {
+  grid-row: span 2;
+  align-self: center;
+  padding-right: 8px;
+}
+
+.vp-jogador-numeros small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-jogador-numeros b {
+  font: 600 28px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-jogador-numeros span:first-child b {
+  font-size: 64px;
+  line-height: 0.9;
+}
+
+/* ---- ficha do jogador ---- */
+.vp-ficha {
+  display: grid;
+}
+
+.vp-ficha-grupo {
+  display: grid;
+  grid-template-columns: 118px repeat(9, minmax(0, 1fr));
+  align-items: end;
+  gap: 0 10px;
+  padding: 11px 14px;
+  border-top: 1px solid var(--line);
+}
+
+.vp-ficha-grupo:first-child {
+  border-top: 0;
+}
+
+.vp-ficha-grupo > small {
+  align-self: center;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vp-ficha-n {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.vp-ficha-n small {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.15;
+}
+
+.vp-ficha-n b {
+  font: 600 19px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- agentes ---- */
+.vp-agentes {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) 80px auto;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+.vp-agentes > img {
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+}
+
+.vp-agente-nome {
+  min-width: 0;
+}
+
+.vp-agente-nome b {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-agente-nome small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.vp-agente-barra {
+  height: 5px;
+  background: rgba(245, 241, 242, 0.06);
+}
+
+.vp-agente-barra i {
+  display: block;
+  width: var(--w);
+  height: 100%;
+  background: var(--team-line, var(--ink));
+}
+
+.vp-agente-rounds {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ---- desempenho por mapa ---- */
+.vp-pormapa {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  column-gap: 18px;
+}
+
+.vp-pm-cab,
+.vp-pm {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+  padding: 0 14px;
+}
+
+.vp-pm-cab {
+  height: 28px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-pm-cab span:not(:first-child),
+.vp-pm span {
+  text-align: right;
+}
+
+.vp-pm {
+  position: relative;
+  isolation: isolate;
+  height: 34px;
+  overflow: hidden;
+  color: inherit;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+}
+
+.vp-pm + .vp-pm {
+  border-top: 1px solid var(--line);
+}
+
+.vp-pm img {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: -1;
+  width: 55%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  opacity: 0.22;
+  -webkit-mask-image: linear-gradient(90deg, #000 30%, transparent);
+  mask-image: linear-gradient(90deg, #000 30%, transparent);
+}
+
+.vp-pm b {
+  font-weight: 600;
+}
+
+.vp-pm .vp-pm-nota {
+  font-weight: 700;
+}
+
+.vp-pm:hover b {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1180px) {
+  .vp-ficha-grupo {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    row-gap: 10px;
+  }
+
+  .vp-ficha-grupo > small {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .player-page.player-page {
+    gap: 20px;
+  }
+
+  .vp-hero-jogador {
+    grid-template-columns: 130px minmax(0, 1fr);
+    height: auto;
+    gap: 0 12px;
+  }
+
+  .vp-jogador-foto {
+    width: 130px;
+    height: 150px;
+  }
+
+  .vp-jogador-id {
+    padding: 12px 12px 12px 0;
+  }
+
+  .vp-jogador-id h1 {
+    font-size: 38px;
+  }
+
+  .vp-jogador-numeros {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(5, auto);
+    justify-content: space-between;
+    gap: 6px;
+    padding: 12px 14px 14px;
+  }
+
+  .vp-jogador-numeros span:first-child {
+    grid-row: auto;
+    padding: 0;
+  }
+
+  .vp-jogador-numeros b,
+  .vp-jogador-numeros span:first-child b {
+    font-size: 24px;
+  }
+
+  .vp-ficha-grupo {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

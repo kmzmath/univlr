@@ -1,0 +1,1531 @@
+{
+  "season": 2026,
+  "total": 216,
+  "publishedThrough": "2026-10-23",
+  "days": [
+    {
+      "date": "2026-10-23",
+      "count": 10,
+      "cards": [
+        {
+          "rank": 1,
+          "name": "Mile",
+          "team": "INATEL Gray",
+          "overall": 74,
+          "image": "cards/001.webp",
+          "adjustedRating": 0.4838565565566266,
+          "teamLogo": "/assets/team-logos/inatel.png",
+          "teamColor": "#7a7a7a",
+          "role": "Duelista",
+          "profileHref": "/#/players/mile",
+          "stats": {
+            "raating": 0.5524107176821071,
+            "acs": 141.17061611374407,
+            "adr": 73.86729857819905,
+            "kd": 0.49238578680203043,
+            "kast": 53.55450236966824,
+            "kpr": 0.4597156398104265,
+            "apr": 0.12322274881516587,
+            "hs": 25,
+            "kills": 97,
+            "deaths": 197,
+            "assists": 26,
+            "rounds": 211,
+            "maps": 13
+          },
+          "agents": [
+            {
+              "name": "Jett",
+              "icon": "/assets/agent-icons/jett.png",
+              "role": "Duelista",
+              "maps": 6,
+              "rounds": 103,
+              "share": 0.46153846153846156
+            },
+            {
+              "name": "Waylay",
+              "icon": "/assets/agent-icons/waylay.png",
+              "role": "Duelista",
+              "maps": 4,
+              "rounds": 63,
+              "share": 0.3076923076923077
+            },
+            {
+              "name": "Neon",
+              "icon": "/assets/agent-icons/neon.png",
+              "role": "Duelista",
+              "maps": 1,
+              "rounds": 16,
+              "share": 0.07692307692307693
+            },
+            {
+              "name": "Chamber",
+              "icon": "/assets/agent-icons/chamber.png",
+              "role": "Sentinela",
+              "maps": 1,
+              "rounds": 15,
+              "share": 0.07692307692307693
+            },
+            {
+              "name": "Phoenix",
+              "icon": "/assets/agent-icons/phoenix.png",
+              "role": "Duelista",
+              "maps": 1,
+              "rounds": 14,
+              "share": 0.07692307692307693
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-08-08T19:58:01.276Z",
+              "event": "Rush Series Inclusivo",
+              "map": "Split",
+              "opponent": "CAAP Auroras",
+              "opponentLogo": "/assets/team-logos/caap_hellhounds.png",
+              "score": "4-13",
+              "result": "D",
+              "rating": 0.5215723135124691,
+              "kills": 6,
+              "deaths": 16,
+              "assists": 3,
+              "agent": "Waylay",
+              "agentIcon": "/assets/agent-icons/waylay.png",
+              "href": "/#/matches/ed6a85d0-9c86-4065-9785-55590533de17"
+            },
+            {
+              "date": "2026-08-08T18:13:46.214Z",
+              "event": "Rush Series Inclusivo",
+              "map": "Lotus",
+              "opponent": "USP Stars GC",
+              "opponentLogo": "/assets/team-logos/usp_stars.png",
+              "score": "5-13",
+              "result": "D",
+              "rating": 0.8004074318497232,
+              "kills": 12,
+              "deaths": 17,
+              "assists": 4,
+              "agent": "Jett",
+              "agentIcon": "/assets/agent-icons/jett.png",
+              "href": "/#/matches/f653864b-d2dc-469c-922b-70461468aa3b"
+            },
+            {
+              "date": "2026-07-25T18:04:46.882Z",
+              "event": "UNIVAVÁ - Classificatória 2",
+              "map": "Ascent",
+              "opponent": "CAAP Auroras",
+              "opponentLogo": "/assets/team-logos/caap_hellhounds.png",
+              "score": "7-13",
+              "result": "D",
+              "rating": 0.4424569981589336,
+              "kills": 6,
+              "deaths": 18,
+              "assists": 5,
+              "agent": "Jett",
+              "agentIcon": "/assets/agent-icons/jett.png",
+              "href": "/#/matches/906aaf85-ba15-4e78-a1a2-6db0067cf0fd"
+            },
+            {
+              "date": "2026-07-25T17:19:20.361Z",
+              "event": "UNIVAVÁ - Classificatória 2",
+              "map": "Lotus",
+              "opponent": "Octacore Python",
+              "opponentLogo": "/assets/team-logos/octacore.png",
+              "score": "2-13",
+              "result": "D",
+              "rating": 0.7566791962721021,
+              "kills": 10,
+              "deaths": 15,
+              "assists": 1,
+              "agent": "Chamber",
+              "agentIcon": "/assets/agent-icons/chamber.png",
+              "href": "/#/matches/1666c566-3928-495c-8c29-13cf376e5264"
+            },
+            {
+              "date": "2026-06-20T19:54:51.513Z",
+              "event": "Rush Series Esquenta 2",
+              "map": "Breeze",
+              "opponent": "Azure Bears Golden",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "1-13",
+              "result": "D",
+              "rating": 0.4088442314920839,
+              "kills": 5,
+              "deaths": 13,
+              "assists": 1,
+              "agent": "Waylay",
+              "agentIcon": "/assets/agent-icons/waylay.png",
+              "href": "/#/matches/c0a6f1c9-6c55-4b1f-99f0-8ecd45c82db8"
+            }
+          ]
+        },
+        {
+          "rank": 2,
+          "name": "AnaGi",
+          "team": "CAAP Auroras",
+          "overall": 75,
+          "image": "cards/002.webp",
+          "adjustedRating": 0.5461035845957001,
+          "teamLogo": "/assets/team-logos/caap_hellhounds.png",
+          "teamColor": "#ea2a2d",
+          "role": "Iniciador",
+          "profileHref": "/#/players/anagi",
+          "stats": {
+            "raating": 0.7000155612298432,
+            "acs": 133.1067615658363,
+            "adr": 72.71886120996442,
+            "kd": 0.5761904761904761,
+            "kast": 66.54804270462633,
+            "kpr": 0.4306049822064057,
+            "apr": 0.3202846975088968,
+            "hs": 22.35294117647059,
+            "kills": 121,
+            "deaths": 210,
+            "assists": 90,
+            "rounds": 281,
+            "maps": 15
+          },
+          "agents": [
+            {
+              "name": "Fade",
+              "icon": "/assets/agent-icons/fade.png",
+              "role": "Iniciador",
+              "maps": 11,
+              "rounds": 202,
+              "share": 0.7333333333333333
+            },
+            {
+              "name": "Sova",
+              "icon": "/assets/agent-icons/sova.png",
+              "role": "Iniciador",
+              "maps": 4,
+              "rounds": 79,
+              "share": 0.26666666666666666
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-08-08T19:58:01.276Z",
+              "event": "Rush Series Inclusivo",
+              "map": "Split",
+              "opponent": "INATEL Gray",
+              "opponentLogo": "/assets/team-logos/inatel.png",
+              "score": "13-4",
+              "result": "V",
+              "rating": 0.5924088137805265,
+              "kills": 6,
+              "deaths": 11,
+              "assists": 3,
+              "agent": "Fade",
+              "agentIcon": "/assets/agent-icons/fade.png",
+              "href": "/#/matches/ed6a85d0-9c86-4065-9785-55590533de17"
+            },
+            {
+              "date": "2026-08-08T19:10:07.983Z",
+              "event": "Rush Series Inclusivo",
+              "map": "Ascent",
+              "opponent": "Macklogic Rainbow",
+              "opponentLogo": "/assets/team-logos/macklogic_rainbow.png",
+              "score": "5-13",
+              "result": "D",
+              "rating": 0.44340332117055026,
+              "kills": 3,
+              "deaths": 15,
+              "assists": 4,
+              "agent": "Sova",
+              "agentIcon": "/assets/agent-icons/sova.png",
+              "href": "/#/matches/2ccd2514-16c7-4eba-b2f0-d83e32d1068a"
+            },
+            {
+              "date": "2026-08-08T18:16:53.228Z",
+              "event": "Rush Series Inclusivo",
+              "map": "Lotus",
+              "opponent": "PUCC Canaries",
+              "opponentLogo": "/assets/team-logos/puccCanaries.png",
+              "score": "13-8",
+              "result": "V",
+              "rating": 1.117977399616962,
+              "kills": 12,
+              "deaths": 11,
+              "assists": 9,
+              "agent": "Fade",
+              "agentIcon": "/assets/agent-icons/fade.png",
+              "href": "/#/matches/3870ec70-0b23-43cd-b219-b0da3020df3d"
+            },
+            {
+              "date": "2026-07-25T19:19:51.410Z",
+              "event": "UNIVAVÁ - Classificatória 2",
+              "map": "Ascent",
+              "opponent": "Green Owls Noctua",
+              "opponentLogo": "/assets/team-logos/green_owls.png",
+              "score": "8-13",
+              "result": "D",
+              "rating": 0.6302152980623206,
+              "kills": 8,
+              "deaths": 17,
+              "assists": 5,
+              "agent": "Sova",
+              "agentIcon": "/assets/agent-icons/sova.png",
+              "href": "/#/matches/a409b986-a564-45fb-8037-cdef481559cc"
+            },
+            {
+              "date": "2026-07-25T18:04:46.882Z",
+              "event": "UNIVAVÁ - Classificatória 2",
+              "map": "Ascent",
+              "opponent": "INATEL Gray",
+              "opponentLogo": "/assets/team-logos/inatel.png",
+              "score": "13-7",
+              "result": "V",
+              "rating": 0.8670219878395257,
+              "kills": 8,
+              "deaths": 12,
+              "assists": 9,
+              "agent": "Sova",
+              "agentIcon": "/assets/agent-icons/sova.png",
+              "href": "/#/matches/906aaf85-ba15-4e78-a1a2-6db0067cf0fd"
+            }
+          ]
+        },
+        {
+          "rank": 3,
+          "name": "Todofeio",
+          "team": "Acucarados",
+          "overall": 77,
+          "image": "cards/003.webp",
+          "adjustedRating": 0.6226566594019979,
+          "teamLogo": "/assets/team-logos/umfa_acucarados.png",
+          "teamColor": "#4c859e",
+          "role": "Sentinela",
+          "profileHref": "/#/players/todofeio",
+          "stats": {
+            "raating": 0.8284307242552734,
+            "acs": 165.47967479674796,
+            "adr": 87.60162601626017,
+            "kd": 0.7216494845360825,
+            "kast": 63.41463414634146,
+            "kpr": 0.5691056910569106,
+            "apr": 0.23983739837398374,
+            "hs": 17.495029821073558,
+            "kills": 140,
+            "deaths": 194,
+            "assists": 59,
+            "rounds": 246,
+            "maps": 14
+          },
+          "agents": [
+            {
+              "name": "Killjoy",
+              "icon": "/assets/agent-icons/killjoy.png",
+              "role": "Sentinela",
+              "maps": 6,
+              "rounds": 104,
+              "share": 0.42857142857142855
+            },
+            {
+              "name": "Miks",
+              "icon": "/assets/agent-icons/miks.webp",
+              "role": "Controlador",
+              "maps": 4,
+              "rounds": 78,
+              "share": 0.2857142857142857
+            },
+            {
+              "name": "Jett",
+              "icon": "/assets/agent-icons/jett.png",
+              "role": "Duelista",
+              "maps": 3,
+              "rounds": 46,
+              "share": 0.21428571428571427
+            },
+            {
+              "name": "Breach",
+              "icon": "/assets/agent-icons/breach.png",
+              "role": "Iniciador",
+              "maps": 1,
+              "rounds": 18,
+              "share": 0.07142857142857142
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-06-06T17:55:52.831Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Ascent",
+              "opponent": "UNISC Ladaiada",
+              "opponentLogo": "/assets/team-logos/unisc_ladaiada.png",
+              "score": "11-13",
+              "result": "D",
+              "rating": 0.9424442216564917,
+              "kills": 14,
+              "deaths": 18,
+              "assists": 7,
+              "agent": "Killjoy",
+              "agentIcon": "/assets/agent-icons/killjoy.png",
+              "href": "/#/matches/f4d483b5-7947-4d1c-902e-72e9bade0bda"
+            },
+            {
+              "date": "2026-06-06T17:06:45.846Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Split",
+              "opponent": "UNISC Ladaiada",
+              "opponentLogo": "/assets/team-logos/unisc_ladaiada.png",
+              "score": "13-8",
+              "result": "V",
+              "rating": 1.0208753643753807,
+              "kills": 13,
+              "deaths": 13,
+              "assists": 8,
+              "agent": "Miks",
+              "agentIcon": "/assets/agent-icons/miks.webp",
+              "href": "/#/matches/bdd0ae94-2697-4ebf-aa8e-5590677dbfa7"
+            },
+            {
+              "date": "2026-05-21T01:22:26.638Z",
+              "event": "Pré-JUBS",
+              "map": "Lotus",
+              "opponent": "UEMA Turbulencia",
+              "opponentLogo": "/assets/team-logos/uema_turbulencia.png",
+              "score": "13-7",
+              "result": "V",
+              "rating": 0.9924667379173822,
+              "kills": 16,
+              "deaths": 18,
+              "assists": 9,
+              "agent": "Miks",
+              "agentIcon": "/assets/agent-icons/miks.webp",
+              "href": "/#/matches/5879f2c3-ae10-4aa7-81a1-d7a94ee0c977"
+            },
+            {
+              "date": "2026-05-20T02:33:25.609Z",
+              "event": "Pré-JUBS",
+              "map": "Split",
+              "opponent": "UFMA Naotemclutch",
+              "opponentLogo": "/assets/team-logos/ufma_naotemclutch.png",
+              "score": "2-13",
+              "result": "D",
+              "rating": 0.9898783296998978,
+              "kills": 11,
+              "deaths": 14,
+              "assists": 2,
+              "agent": "Killjoy",
+              "agentIcon": "/assets/agent-icons/killjoy.png",
+              "href": "/#/matches/2386f772-f3b1-4045-9f10-cc2a70698b04"
+            },
+            {
+              "date": "2026-05-20T01:56:02.720Z",
+              "event": "Pré-JUBS",
+              "map": "Pearl",
+              "opponent": "UFMA Naotemclutch",
+              "opponentLogo": "/assets/team-logos/ufma_naotemclutch.png",
+              "score": "3-13",
+              "result": "D",
+              "rating": 0.35606000394942255,
+              "kills": 3,
+              "deaths": 15,
+              "assists": 3,
+              "agent": "Killjoy",
+              "agentIcon": "/assets/agent-icons/killjoy.png",
+              "href": "/#/matches/cb0e75b4-0c24-409b-a932-b43eb810b1ed"
+            }
+          ]
+        },
+        {
+          "rank": 4,
+          "name": "Gepeto",
+          "team": "Acucarados",
+          "overall": 77,
+          "image": "cards/004.webp",
+          "adjustedRating": 0.6331416066273672,
+          "teamLogo": "/assets/team-logos/umfa_acucarados.png",
+          "teamColor": "#4c859e",
+          "role": "Sentinela",
+          "profileHref": "/#/players/gepeto",
+          "stats": {
+            "raating": 0.8293766887485213,
+            "acs": 164.07657657657657,
+            "adr": 93.36036036036036,
+            "kd": 0.7453416149068323,
+            "kast": 62.16216216216216,
+            "kpr": 0.5405405405405406,
+            "apr": 0.22972972972972974,
+            "hs": 16.96113074204947,
+            "kills": 120,
+            "deaths": 161,
+            "assists": 51,
+            "rounds": 222,
+            "maps": 13
+          },
+          "agents": [
+            {
+              "name": "Vyse",
+              "icon": "/assets/agent-icons/vyse.png",
+              "role": "Sentinela",
+              "maps": 2,
+              "rounds": 37,
+              "share": 0.15384615384615385
+            },
+            {
+              "name": "Fade",
+              "icon": "/assets/agent-icons/fade.png",
+              "role": "Iniciador",
+              "maps": 2,
+              "rounds": 35,
+              "share": 0.15384615384615385
+            },
+            {
+              "name": "Neon",
+              "icon": "/assets/agent-icons/neon.png",
+              "role": "Duelista",
+              "maps": 2,
+              "rounds": 33,
+              "share": 0.15384615384615385
+            },
+            {
+              "name": "Killjoy",
+              "icon": "/assets/agent-icons/killjoy.png",
+              "role": "Sentinela",
+              "maps": 2,
+              "rounds": 31,
+              "share": 0.15384615384615385
+            },
+            {
+              "name": "Cypher",
+              "icon": "/assets/agent-icons/cypher.png",
+              "role": "Sentinela",
+              "maps": 1,
+              "rounds": 21,
+              "share": 0.07692307692307693
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-06-06T18:44:42.490Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Breeze",
+              "opponent": "UNISC Ladaiada",
+              "opponentLogo": "/assets/team-logos/unisc_ladaiada.png",
+              "score": "13-7",
+              "result": "V",
+              "rating": 0.7852920380010195,
+              "kills": 10,
+              "deaths": 12,
+              "assists": 4,
+              "agent": "Sova",
+              "agentIcon": "/assets/agent-icons/sova.png",
+              "href": "/#/matches/7dabdd1d-6a45-4bbd-b216-8a450359bc72"
+            },
+            {
+              "date": "2026-06-06T17:06:45.846Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Split",
+              "opponent": "UNISC Ladaiada",
+              "opponentLogo": "/assets/team-logos/unisc_ladaiada.png",
+              "score": "13-8",
+              "result": "V",
+              "rating": 0.9759765779883542,
+              "kills": 9,
+              "deaths": 10,
+              "assists": 0,
+              "agent": "Cypher",
+              "agentIcon": "/assets/agent-icons/cypher.png",
+              "href": "/#/matches/bdd0ae94-2697-4ebf-aa8e-5590677dbfa7"
+            },
+            {
+              "date": "2026-05-21T01:22:26.638Z",
+              "event": "Pré-JUBS",
+              "map": "Lotus",
+              "opponent": "UEMA Turbulencia",
+              "opponentLogo": "/assets/team-logos/uema_turbulencia.png",
+              "score": "13-7",
+              "result": "V",
+              "rating": 0.6712067608674038,
+              "kills": 10,
+              "deaths": 16,
+              "assists": 5,
+              "agent": "Vyse",
+              "agentIcon": "/assets/agent-icons/vyse.png",
+              "href": "/#/matches/5879f2c3-ae10-4aa7-81a1-d7a94ee0c977"
+            },
+            {
+              "date": "2026-05-20T02:33:25.609Z",
+              "event": "Pré-JUBS",
+              "map": "Split",
+              "opponent": "UFMA Naotemclutch",
+              "opponentLogo": "/assets/team-logos/ufma_naotemclutch.png",
+              "score": "2-13",
+              "result": "D",
+              "rating": 0.7290832279395375,
+              "kills": 7,
+              "deaths": 13,
+              "assists": 3,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/2386f772-f3b1-4045-9f10-cc2a70698b04"
+            },
+            {
+              "date": "2026-05-20T01:56:02.720Z",
+              "event": "Pré-JUBS",
+              "map": "Pearl",
+              "opponent": "UFMA Naotemclutch",
+              "opponentLogo": "/assets/team-logos/ufma_naotemclutch.png",
+              "score": "3-13",
+              "result": "D",
+              "rating": 0.6655927751552233,
+              "kills": 6,
+              "deaths": 11,
+              "assists": 3,
+              "agent": "Fade",
+              "agentIcon": "/assets/agent-icons/fade.png",
+              "href": "/#/matches/cb0e75b4-0c24-409b-a932-b43eb810b1ed"
+            }
+          ]
+        },
+        {
+          "rank": 5,
+          "name": "Brusopas",
+          "team": "CAAP Auroras",
+          "overall": 77,
+          "image": "cards/005.webp",
+          "adjustedRating": 0.6586020004459966,
+          "teamLogo": "/assets/team-logos/caap_hellhounds.png",
+          "teamColor": "#ea2a2d",
+          "role": "Duelista",
+          "profileHref": "/#/players/brusopas",
+          "stats": {
+            "raating": 0.8286907829797996,
+            "acs": 175.54662379421222,
+            "adr": 91.50160771704181,
+            "kd": 0.7883817427385892,
+            "kast": 62.70096463022507,
+            "kpr": 0.6109324758842444,
+            "apr": 0.19614147909967847,
+            "hs": 20.481927710843372,
+            "kills": 190,
+            "deaths": 241,
+            "assists": 61,
+            "rounds": 311,
+            "maps": 16
+          },
+          "agents": [
+            {
+              "name": "Raze",
+              "icon": "/assets/agent-icons/raze.png",
+              "role": "Duelista",
+              "maps": 9,
+              "rounds": 166,
+              "share": 0.5625
+            },
+            {
+              "name": "Jett",
+              "icon": "/assets/agent-icons/jett.png",
+              "role": "Duelista",
+              "maps": 4,
+              "rounds": 79,
+              "share": 0.25
+            },
+            {
+              "name": "Phoenix",
+              "icon": "/assets/agent-icons/phoenix.png",
+              "role": "Duelista",
+              "maps": 3,
+              "rounds": 66,
+              "share": 0.1875
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-08-08T19:10:07.983Z",
+              "event": "Rush Series Inclusivo",
+              "map": "Ascent",
+              "opponent": "Macklogic Rainbow",
+              "opponentLogo": "/assets/team-logos/macklogic_rainbow.png",
+              "score": "5-13",
+              "result": "D",
+              "rating": 0.6265621036087871,
+              "kills": 9,
+              "deaths": 17,
+              "assists": 3,
+              "agent": "Jett",
+              "agentIcon": "/assets/agent-icons/jett.png",
+              "href": "/#/matches/2ccd2514-16c7-4eba-b2f0-d83e32d1068a"
+            },
+            {
+              "date": "2026-08-08T18:16:53.228Z",
+              "event": "Rush Series Inclusivo",
+              "map": "Lotus",
+              "opponent": "PUCC Canaries",
+              "opponentLogo": "/assets/team-logos/puccCanaries.png",
+              "score": "13-8",
+              "result": "V",
+              "rating": 0.7260083827035211,
+              "kills": 11,
+              "deaths": 17,
+              "assists": 2,
+              "agent": "Raze",
+              "agentIcon": "/assets/agent-icons/raze.png",
+              "href": "/#/matches/3870ec70-0b23-43cd-b219-b0da3020df3d"
+            },
+            {
+              "date": "2026-07-25T19:19:51.410Z",
+              "event": "UNIVAVÁ - Classificatória 2",
+              "map": "Ascent",
+              "opponent": "Green Owls Noctua",
+              "opponentLogo": "/assets/team-logos/green_owls.png",
+              "score": "8-13",
+              "result": "D",
+              "rating": 0.6331911388641462,
+              "kills": 12,
+              "deaths": 18,
+              "assists": 1,
+              "agent": "Jett",
+              "agentIcon": "/assets/agent-icons/jett.png",
+              "href": "/#/matches/a409b986-a564-45fb-8037-cdef481559cc"
+            },
+            {
+              "date": "2026-07-25T18:04:46.882Z",
+              "event": "UNIVAVÁ - Classificatória 2",
+              "map": "Ascent",
+              "opponent": "INATEL Gray",
+              "opponentLogo": "/assets/team-logos/inatel.png",
+              "score": "13-7",
+              "result": "V",
+              "rating": 1.4019943128531291,
+              "kills": 17,
+              "deaths": 8,
+              "assists": 7,
+              "agent": "Jett",
+              "agentIcon": "/assets/agent-icons/jett.png",
+              "href": "/#/matches/906aaf85-ba15-4e78-a1a2-6db0067cf0fd"
+            },
+            {
+              "date": "2026-07-25T17:17:10.734Z",
+              "event": "UNIVAVÁ - Classificatória 2",
+              "map": "Split",
+              "opponent": "PUCC Cardinals",
+              "opponentLogo": "/assets/team-logos/pucc_cardinals.png",
+              "score": "4-13",
+              "result": "D",
+              "rating": 0.6933457673849924,
+              "kills": 10,
+              "deaths": 17,
+              "assists": 3,
+              "agent": "Raze",
+              "agentIcon": "/assets/agent-icons/raze.png",
+              "href": "/#/matches/550ed86a-5778-403c-8eb8-3dfe253e997b"
+            }
+          ]
+        },
+        {
+          "rank": 6,
+          "name": "camlui12",
+          "team": "UNIRIO Krakens",
+          "overall": 78,
+          "image": "cards/006.webp",
+          "adjustedRating": 0.6716729238590577,
+          "teamLogo": "/assets/team-logos/unirio_krakens.png",
+          "teamColor": "#1392c3",
+          "role": "Controlador",
+          "profileHref": "/#/players/camlui12",
+          "stats": {
+            "raating": 0.7497511406063373,
+            "acs": 153.34448160535118,
+            "adr": 78.90301003344482,
+            "kd": 0.6401673640167364,
+            "kast": 68.89632107023411,
+            "kpr": 0.5117056856187291,
+            "apr": 0.3076923076923077,
+            "hs": 24.746450304259636,
+            "kills": 153,
+            "deaths": 239,
+            "assists": 92,
+            "rounds": 299,
+            "maps": 16
+          },
+          "agents": [
+            {
+              "name": "Omen",
+              "icon": "/assets/agent-icons/omen.png",
+              "role": "Controlador",
+              "maps": 11,
+              "rounds": 215,
+              "share": 0.6875
+            },
+            {
+              "name": "Astra",
+              "icon": "/assets/agent-icons/astra.png",
+              "role": "Controlador",
+              "maps": 3,
+              "rounds": 55,
+              "share": 0.1875
+            },
+            {
+              "name": "Breach",
+              "icon": "/assets/agent-icons/breach.png",
+              "role": "Iniciador",
+              "maps": 2,
+              "rounds": 29,
+              "share": 0.125
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-06-20T17:43:39.359Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Lotus",
+              "opponent": "Furia XV",
+              "opponentLogo": "/assets/team-logos/furia.png",
+              "score": "2-13",
+              "result": "D",
+              "rating": 0.7956047795385944,
+              "kills": 8,
+              "deaths": 12,
+              "assists": 5,
+              "agent": "Breach",
+              "agentIcon": "/assets/agent-icons/breach.png",
+              "href": "/#/matches/eaaaca8f-50eb-4f11-8fca-0b4155536f47"
+            },
+            {
+              "date": "2026-06-20T17:14:06.636Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Haven",
+              "opponent": "Furia XV",
+              "opponentLogo": "/assets/team-logos/furia.png",
+              "score": "2-13",
+              "result": "D",
+              "rating": 0.4016295524979568,
+              "kills": 4,
+              "deaths": 15,
+              "assists": 6,
+              "agent": "Breach",
+              "agentIcon": "/assets/agent-icons/breach.png",
+              "href": "/#/matches/a69e2885-c935-4ab8-87be-22faca12e255"
+            },
+            {
+              "date": "2026-06-13T18:04:04.286Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Ascent",
+              "opponent": "FAMETRO Berserkers",
+              "opponentLogo": "/assets/team-logos/fametro_berserkers.png",
+              "score": "0-13",
+              "result": "D",
+              "rating": 0.45332587184765766,
+              "kills": 6,
+              "deaths": 13,
+              "assists": 1,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/951fb99d-16c2-46e1-98e2-80ddccb814b7"
+            },
+            {
+              "date": "2026-06-13T17:16:16.791Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Lotus",
+              "opponent": "FAMETRO Berserkers",
+              "opponentLogo": "/assets/team-logos/fametro_berserkers.png",
+              "score": "10-13",
+              "result": "D",
+              "rating": 0.7895264479405264,
+              "kills": 10,
+              "deaths": 17,
+              "assists": 7,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/8f902526-fe94-47de-a254-bca2d3b4a688"
+            },
+            {
+              "date": "2026-06-06T17:59:19.854Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Lotus",
+              "opponent": "UNIFOR",
+              "opponentLogo": "/assets/team-logos/unifor.png",
+              "score": "13-3",
+              "result": "V",
+              "rating": 1.4056170064723754,
+              "kills": 14,
+              "deaths": 8,
+              "assists": 7,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/9672b97f-eb40-4da3-a65a-03e612014260"
+            }
+          ]
+        },
+        {
+          "rank": 7,
+          "name": "JuhSS",
+          "team": "INATEL Gray",
+          "overall": 78,
+          "image": "cards/007.webp",
+          "adjustedRating": 0.6770736437639917,
+          "teamLogo": "/assets/team-logos/inatel.png",
+          "teamColor": "#7a7a7a",
+          "role": "Duelista",
+          "profileHref": "/#/players/juhss",
+          "stats": {
+            "raating": 0.782256636587551,
+            "acs": 180.781990521327,
+            "adr": 98.40284360189574,
+            "kd": 0.644808743169399,
+            "kast": 54.502369668246445,
+            "kpr": 0.5592417061611374,
+            "apr": 0.1943127962085308,
+            "hs": 25.768321513002363,
+            "kills": 118,
+            "deaths": 183,
+            "assists": 41,
+            "rounds": 211,
+            "maps": 13
+          },
+          "agents": [
+            {
+              "name": "Raze",
+              "icon": "/assets/agent-icons/raze.png",
+              "role": "Duelista",
+              "maps": 5,
+              "rounds": 81,
+              "share": 0.38461538461538464
+            },
+            {
+              "name": "Phoenix",
+              "icon": "/assets/agent-icons/phoenix.png",
+              "role": "Duelista",
+              "maps": 3,
+              "rounds": 49,
+              "share": 0.23076923076923078
+            },
+            {
+              "name": "Breach",
+              "icon": "/assets/agent-icons/breach.png",
+              "role": "Iniciador",
+              "maps": 3,
+              "rounds": 47,
+              "share": 0.23076923076923078
+            },
+            {
+              "name": "Killjoy",
+              "icon": "/assets/agent-icons/killjoy.png",
+              "role": "Sentinela",
+              "maps": 1,
+              "rounds": 20,
+              "share": 0.07692307692307693
+            },
+            {
+              "name": "Viper",
+              "icon": "/assets/agent-icons/viper.png",
+              "role": "Controlador",
+              "maps": 1,
+              "rounds": 14,
+              "share": 0.07692307692307693
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-08-08T19:58:01.276Z",
+              "event": "Rush Series Inclusivo",
+              "map": "Split",
+              "opponent": "CAAP Auroras",
+              "opponentLogo": "/assets/team-logos/caap_hellhounds.png",
+              "score": "4-13",
+              "result": "D",
+              "rating": 1.1016469008747476,
+              "kills": 13,
+              "deaths": 14,
+              "assists": 4,
+              "agent": "Breach",
+              "agentIcon": "/assets/agent-icons/breach.png",
+              "href": "/#/matches/ed6a85d0-9c86-4065-9785-55590533de17"
+            },
+            {
+              "date": "2026-08-08T18:13:46.214Z",
+              "event": "Rush Series Inclusivo",
+              "map": "Lotus",
+              "opponent": "USP Stars GC",
+              "opponentLogo": "/assets/team-logos/usp_stars.png",
+              "score": "5-13",
+              "result": "D",
+              "rating": 1.1199068549273061,
+              "kills": 15,
+              "deaths": 17,
+              "assists": 6,
+              "agent": "Raze",
+              "agentIcon": "/assets/agent-icons/raze.png",
+              "href": "/#/matches/f653864b-d2dc-469c-922b-70461468aa3b"
+            },
+            {
+              "date": "2026-07-25T18:04:46.882Z",
+              "event": "UNIVAVÁ - Classificatória 2",
+              "map": "Ascent",
+              "opponent": "CAAP Auroras",
+              "opponentLogo": "/assets/team-logos/caap_hellhounds.png",
+              "score": "7-13",
+              "result": "D",
+              "rating": 1.5384738331548884,
+              "kills": 20,
+              "deaths": 13,
+              "assists": 3,
+              "agent": "Killjoy",
+              "agentIcon": "/assets/agent-icons/killjoy.png",
+              "href": "/#/matches/906aaf85-ba15-4e78-a1a2-6db0067cf0fd"
+            },
+            {
+              "date": "2026-07-25T17:19:20.361Z",
+              "event": "UNIVAVÁ - Classificatória 2",
+              "map": "Lotus",
+              "opponent": "Octacore Python",
+              "opponentLogo": "/assets/team-logos/octacore.png",
+              "score": "2-13",
+              "result": "D",
+              "rating": 0.7563274892676416,
+              "kills": 7,
+              "deaths": 12,
+              "assists": 2,
+              "agent": "Raze",
+              "agentIcon": "/assets/agent-icons/raze.png",
+              "href": "/#/matches/1666c566-3928-495c-8c29-13cf376e5264"
+            },
+            {
+              "date": "2026-06-20T19:54:51.513Z",
+              "event": "Rush Series Esquenta 2",
+              "map": "Breeze",
+              "opponent": "Azure Bears Golden",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "1-13",
+              "result": "D",
+              "rating": 0.43684784134476184,
+              "kills": 4,
+              "deaths": 14,
+              "assists": 2,
+              "agent": "Viper",
+              "agentIcon": "/assets/agent-icons/viper.png",
+              "href": "/#/matches/c0a6f1c9-6c55-4b1f-99f0-8ecd45c82db8"
+            }
+          ]
+        },
+        {
+          "rank": 8,
+          "name": "Hoopa",
+          "team": "CAAP Auroras",
+          "overall": 78,
+          "image": "cards/008.webp",
+          "adjustedRating": 0.6908398770157378,
+          "teamLogo": "/assets/team-logos/caap_hellhounds.png",
+          "teamColor": "#ea2a2d",
+          "role": "Controlador",
+          "profileHref": "/#/players/hoopa",
+          "stats": {
+            "raating": 0.8650750102337519,
+            "acs": 164.77170418006432,
+            "adr": 86.20900321543408,
+            "kd": 0.7641921397379913,
+            "kast": 70.41800643086816,
+            "kpr": 0.5627009646302251,
+            "apr": 0.34726688102893893,
+            "hs": 26.02040816326531,
+            "kills": 175,
+            "deaths": 229,
+            "assists": 108,
+            "rounds": 311,
+            "maps": 16
+          },
+          "agents": [
+            {
+              "name": "Omen",
+              "icon": "/assets/agent-icons/omen.png",
+              "role": "Controlador",
+              "maps": 16,
+              "rounds": 311,
+              "share": 1
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-08-08T19:10:07.983Z",
+              "event": "Rush Series Inclusivo",
+              "map": "Ascent",
+              "opponent": "Macklogic Rainbow",
+              "opponentLogo": "/assets/team-logos/macklogic_rainbow.png",
+              "score": "5-13",
+              "result": "D",
+              "rating": 0.5300089038744566,
+              "kills": 5,
+              "deaths": 16,
+              "assists": 8,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/2ccd2514-16c7-4eba-b2f0-d83e32d1068a"
+            },
+            {
+              "date": "2026-08-08T18:16:53.228Z",
+              "event": "Rush Series Inclusivo",
+              "map": "Lotus",
+              "opponent": "PUCC Canaries",
+              "opponentLogo": "/assets/team-logos/puccCanaries.png",
+              "score": "13-8",
+              "result": "V",
+              "rating": 0.9896498910512523,
+              "kills": 12,
+              "deaths": 15,
+              "assists": 12,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/3870ec70-0b23-43cd-b219-b0da3020df3d"
+            },
+            {
+              "date": "2026-07-25T19:19:51.410Z",
+              "event": "UNIVAVÁ - Classificatória 2",
+              "map": "Ascent",
+              "opponent": "Green Owls Noctua",
+              "opponentLogo": "/assets/team-logos/green_owls.png",
+              "score": "8-13",
+              "result": "D",
+              "rating": 0.7136763999543237,
+              "kills": 8,
+              "deaths": 16,
+              "assists": 4,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/a409b986-a564-45fb-8037-cdef481559cc"
+            },
+            {
+              "date": "2026-07-25T18:04:46.882Z",
+              "event": "UNIVAVÁ - Classificatória 2",
+              "map": "Ascent",
+              "opponent": "INATEL Gray",
+              "opponentLogo": "/assets/team-logos/inatel.png",
+              "score": "13-7",
+              "result": "V",
+              "rating": 1.048256285798799,
+              "kills": 12,
+              "deaths": 11,
+              "assists": 11,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/906aaf85-ba15-4e78-a1a2-6db0067cf0fd"
+            },
+            {
+              "date": "2026-07-25T17:17:10.734Z",
+              "event": "UNIVAVÁ - Classificatória 2",
+              "map": "Split",
+              "opponent": "PUCC Cardinals",
+              "opponentLogo": "/assets/team-logos/pucc_cardinals.png",
+              "score": "4-13",
+              "result": "D",
+              "rating": 0.8875579848149953,
+              "kills": 10,
+              "deaths": 13,
+              "assists": 7,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/550ed86a-5778-403c-8eb8-3dfe253e997b"
+            }
+          ]
+        },
+        {
+          "rank": 9,
+          "name": "Kozolove",
+          "team": "UFRJ Minerva",
+          "overall": 78,
+          "image": "cards/009.webp",
+          "adjustedRating": 0.7183542353453962,
+          "teamLogo": "/assets/team-logos/ufrj_minerva.png",
+          "teamColor": "#6b77c7",
+          "role": "Iniciador",
+          "profileHref": "/#/players/kozolove",
+          "stats": {
+            "raating": 0.7837365479440733,
+            "acs": 125.72029702970298,
+            "adr": 67.45049504950495,
+            "kd": 0.6777777777777778,
+            "kast": 67.82178217821783,
+            "kpr": 0.452970297029703,
+            "apr": 0.19306930693069307,
+            "hs": 32.78388278388278,
+            "kills": 183,
+            "deaths": 270,
+            "assists": 78,
+            "rounds": 404,
+            "maps": 23
+          },
+          "agents": [
+            {
+              "name": "Sova",
+              "icon": "/assets/agent-icons/sova.png",
+              "role": "Iniciador",
+              "maps": 10,
+              "rounds": 169,
+              "share": 0.43478260869565216
+            },
+            {
+              "name": "Fade",
+              "icon": "/assets/agent-icons/fade.png",
+              "role": "Iniciador",
+              "maps": 8,
+              "rounds": 153,
+              "share": 0.34782608695652173
+            },
+            {
+              "name": "Omen",
+              "icon": "/assets/agent-icons/omen.png",
+              "role": "Controlador",
+              "maps": 3,
+              "rounds": 53,
+              "share": 0.13043478260869565
+            },
+            {
+              "name": "Killjoy",
+              "icon": "/assets/agent-icons/killjoy.png",
+              "role": "Sentinela",
+              "maps": 2,
+              "rounds": 29,
+              "share": 0.08695652173913043
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-07-04T01:12:28.988Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Lotus",
+              "opponent": "UEPA Imperadores",
+              "opponentLogo": "/assets/team-logos/uepa_imperadores.png",
+              "score": "13-5",
+              "result": "V",
+              "rating": 1.015558125817616,
+              "kills": 10,
+              "deaths": 9,
+              "assists": 7,
+              "agent": "Fade",
+              "agentIcon": "/assets/agent-icons/fade.png",
+              "href": "/#/matches/b3dab74b-8cad-4e7f-a04d-22a7d35c0463"
+            },
+            {
+              "date": "2026-06-23T01:16:56.197Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Lotus",
+              "opponent": "UEG Hipertensa",
+              "opponentLogo": "/assets/team-logos/ueg_hipertensa.png",
+              "score": "13-8",
+              "result": "V",
+              "rating": 1.4668586460605557,
+              "kills": 17,
+              "deaths": 9,
+              "assists": 6,
+              "agent": "Fade",
+              "agentIcon": "/assets/agent-icons/fade.png",
+              "href": "/#/matches/0e22e9d8-4185-4143-806b-5a6792e2e5fb"
+            },
+            {
+              "date": "2026-06-17T00:42:28.373Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Pearl",
+              "opponent": "UFMT Turuna",
+              "opponentLogo": "/assets/team-logos/ufmt_turuna.png",
+              "score": "2-13",
+              "result": "D",
+              "rating": 0.4152916680596942,
+              "kills": 4,
+              "deaths": 12,
+              "assists": 4,
+              "agent": "Fade",
+              "agentIcon": "/assets/agent-icons/fade.png",
+              "href": "/#/matches/e8b4dd13-5bd9-4b54-a520-7d4f357b4c1a"
+            },
+            {
+              "date": "2026-06-17T00:07:29.334Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Haven",
+              "opponent": "UFMT Turuna",
+              "opponentLogo": "/assets/team-logos/ufmt_turuna.png",
+              "score": "3-13",
+              "result": "D",
+              "rating": 0.7928949509197326,
+              "kills": 10,
+              "deaths": 14,
+              "assists": 3,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/6d43c40e-02dc-4e83-9a1a-3e12c641efac"
+            },
+            {
+              "date": "2026-06-05T01:53:21.055Z",
+              "event": "JUBS Goiás 2026 - Fase inicial",
+              "map": "Haven",
+              "opponent": "Wolf Gaming",
+              "opponentLogo": "/assets/team-logos/wolf_gaming.png",
+              "score": "1-13",
+              "result": "D",
+              "rating": 0.3066108545072472,
+              "kills": 2,
+              "deaths": 14,
+              "assists": 1,
+              "agent": "Killjoy",
+              "agentIcon": "/assets/agent-icons/killjoy.png",
+              "href": "/#/matches/658f9a02-38bd-48db-9063-4285d8fb1979"
+            }
+          ]
+        },
+        {
+          "rank": 10,
+          "name": "Melousa",
+          "team": "Azure Bears Silver",
+          "overall": 79,
+          "image": "cards/010.webp",
+          "adjustedRating": 0.7210709516806018,
+          "teamLogo": "/assets/team-logos/azure_bears.png",
+          "teamColor": "#177ae8",
+          "role": "Controlador",
+          "profileHref": "/#/players/melousa",
+          "stats": {
+            "raating": 0.7999721410873978,
+            "acs": 148.20987654320987,
+            "adr": 75.40246913580246,
+            "kd": 0.6952054794520548,
+            "kast": 67.65432098765433,
+            "kpr": 0.5012345679012346,
+            "apr": 0.3432098765432099,
+            "hs": 28.000000000000004,
+            "kills": 203,
+            "deaths": 292,
+            "assists": 139,
+            "rounds": 405,
+            "maps": 20
+          },
+          "agents": [
+            {
+              "name": "Omen",
+              "icon": "/assets/agent-icons/omen.png",
+              "role": "Controlador",
+              "maps": 17,
+              "rounds": 342,
+              "share": 0.85
+            },
+            {
+              "name": "Brimstone",
+              "icon": "/assets/agent-icons/brimstone.png",
+              "role": "Controlador",
+              "maps": 2,
+              "rounds": 39,
+              "share": 0.1
+            },
+            {
+              "name": "Astra",
+              "icon": "/assets/agent-icons/astra.png",
+              "role": "Controlador",
+              "maps": 1,
+              "rounds": 24,
+              "share": 0.05
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-05-23T23:05:36.171Z",
+              "event": "VAL | UNI Ascension | Inters",
+              "map": "Ascent",
+              "opponent": "Wolf Gaming",
+              "opponentLogo": "/assets/team-logos/wolf_gaming.png",
+              "score": "7-13",
+              "result": "D",
+              "rating": 0.41649635499595544,
+              "kills": 2,
+              "deaths": 15,
+              "assists": 12,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/90734aaa-1384-4b23-ae22-5a3b0cad8976"
+            },
+            {
+              "date": "2026-05-23T22:04:04.553Z",
+              "event": "VAL | UNI Ascension | Inters",
+              "map": "Lotus",
+              "opponent": "Brutal eSports",
+              "opponentLogo": "/assets/team-logos/brutal_esports.png",
+              "score": "13-10",
+              "result": "V",
+              "rating": 1.0389382366145457,
+              "kills": 16,
+              "deaths": 14,
+              "assists": 6,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/471fa89e-1193-4499-81e1-0ae2ca87cea5"
+            },
+            {
+              "date": "2026-05-23T20:28:48.052Z",
+              "event": "VAL | UNI Ascension | Inters",
+              "map": "Ascent",
+              "opponent": "UNIRV Rush One",
+              "opponentLogo": "/assets/team-logos/unirv_rushone.png",
+              "score": "13-11",
+              "result": "V",
+              "rating": 0.760261422330712,
+              "kills": 9,
+              "deaths": 17,
+              "assists": 8,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/0a9a1557-32b5-4eb7-9b33-28ecfd43767a"
+            },
+            {
+              "date": "2026-05-23T19:26:31.959Z",
+              "event": "VAL | UNI Ascension | Inters",
+              "map": "Ascent",
+              "opponent": "Burning Bunnies",
+              "opponentLogo": "/assets/team-logos/ufpr_bbn.png",
+              "score": "13-11",
+              "result": "V",
+              "rating": 1.0911796845512598,
+              "kills": 15,
+              "deaths": 13,
+              "assists": 10,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/98b64818-e6db-4915-bd07-841deddfe7c5"
+            },
+            {
+              "date": "2026-05-23T18:04:34.848Z",
+              "event": "VAL | UNI Ascension | Inters",
+              "map": "Lotus",
+              "opponent": "Octacore Python",
+              "opponentLogo": "/assets/team-logos/octacore.png",
+              "score": "11-13",
+              "result": "D",
+              "rating": 0.8225355276889186,
+              "kills": 11,
+              "deaths": 16,
+              "assists": 13,
+              "agent": "Omen",
+              "agentIcon": "/assets/agent-icons/omen.png",
+              "href": "/#/matches/4e210638-452a-4a73-afdb-e4673330bf5f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-24",
+      "count": 10
+    },
+    {
+      "date": "2026-10-25",
+      "count": 10
+    },
+    {
+      "date": "2026-10-26",
+      "count": 10
+    },
+    {
+      "date": "2026-10-27",
+      "count": 10
+    },
+    {
+      "date": "2026-10-28",
+      "count": 10
+    },
+    {
+      "date": "2026-10-29",
+      "count": 9
+    },
+    {
+      "date": "2026-10-30",
+      "count": 9
+    },
+    {
+      "date": "2026-10-31",
+      "count": 9
+    },
+    {
+      "date": "2026-11-01",
+      "count": 9
+    },
+    {
+      "date": "2026-11-02",
+      "count": 9
+    },
+    {
+      "date": "2026-11-03",
+      "count": 8
+    },
+    {
+      "date": "2026-11-04",
+      "count": 8
+    },
+    {
+      "date": "2026-11-05",
+      "count": 8
+    },
+    {
+      "date": "2026-11-06",
+      "count": 8
+    },
+    {
+      "date": "2026-11-07",
+      "count": 8
+    },
+    {
+      "date": "2026-11-08",
+      "count": 8
+    },
+    {
+      "date": "2026-11-09",
+      "count": 8
+    },
+    {
+      "date": "2026-11-10",
+      "count": 7
+    },
+    {
+      "date": "2026-11-11",
+      "count": 7
+    },
+    {
+      "date": "2026-11-12",
+      "count": 7
+    },
+    {
+      "date": "2026-11-13",
+      "count": 7
+    },
+    {
+      "date": "2026-11-14",
+      "count": 7
+    },
+    {
+      "date": "2026-11-15",
+      "count": 2
+    },
+    {
+      "date": "2026-11-16",
+      "count": 2
+    },
+    {
+      "date": "2026-11-17",
+      "count": 2
+    },
+    {
+      "date": "2026-11-18",
+      "count": 2
+    },
+    {
+      "date": "2026-11-19",
+      "count": 2
+    },
+    {
+      "date": "2026-11-20",
+      "count": 2
+    },
+    {
+      "date": "2026-11-21",
+      "count": 2
+    },
+    {
+      "date": "2026-11-22",
+      "count": 2
+    },
+    {
+      "date": "2026-11-23",
+      "count": 2
+    },
+    {
+      "date": "2026-11-24",
+      "count": 2
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#040306" />
+    <meta name="description" content="Cartinhas e estatísticas dos jogadores de VALORANT universitário em 2026." />
+    <title>Cartinhas 2026 | UNIVLR</title>
+    <link rel="icon" type="image/png" href="/assets/logo_univlr.png" />
+    <link rel="stylesheet" href="styles.css?v=5" />
+    <script defer src="app.js?v=3"></script>
+  </head>
+  <body>
+    <header class="topo-site">
+      <div class="topo-site-dentro">
+        <a class="marca" href="/#/home" aria-label="UNIVLR, início"><img src="/assets/univlr_logo_longa.png" alt="UNIVLR" /></a>
+        <nav aria-label="Navegação principal">
+          <a href="/#/home">Inicial</a>
+          <a href="/#/news">Notícias</a>
+          <a href="/#/matches">Partidas</a>
+          <a href="/#/events">Eventos</a>
+          <a href="/#/players">Players</a>
+          <a href="/#/ranking">Ranking</a>
+          <a href="/cartas/" aria-current="page">Cartinhas</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="pagina">
+      <header class="cabeca">
+        <div>
+          <h1>Cartinhas 2026</h1>
+          <p>Um lote por dia, do menor para o maior overall. Os próximos nomes continuam em segredo.</p>
+        </div>
+        <div class="contagem" id="contagem" aria-live="polite"></div>
+      </header>
+
+      <div class="corpo">
+        <main class="principal">
+          <div class="busca">
+            <label class="sr-only" for="busca-jogador">Buscar jogador revelado</label>
+            <input id="busca-jogador" type="search" autocomplete="off" placeholder="Buscar jogador revelado" />
+            <div id="busca-resultados" class="busca-resultados" hidden></div>
+          </div>
+          <div id="dias"><p class="aviso">Carregando...</p></div>
+        </main>
+        <aside class="trilho" aria-label="Calendário de revelações">
+          <section>
+            <header class="sec"><h2>Calendário</h2></header>
+            <div id="calendario"></div>
+          </section>
+        </aside>
+      </div>
+    </div>
+
+    <footer class="rodape">
+      <a href="/#/home" aria-label="UNIVLR, início"><img src="/assets/logo_univlr.png" alt="" /></a>
+      <span>Estatísticas do cenário universitário brasileiro de VALORANT.</span>
+    </footer>
+  </body>
+</html>

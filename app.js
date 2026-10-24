@@ -6272,6 +6272,7 @@ function Shell(content, options = {}) {
           </a>
           <nav class="nav" aria-label="Navegação principal">
             ${navItems.map(([key, label]) => `<a class="nav-link ${section === key ? "active" : ""}"${section === key ? ` aria-current="page"` : ""} href="#/${key}">${label}</a>`).join("")}
+            <a class="nav-link" href="/cartas/">Cartinhas</a>
             <span class="nav-indicator" aria-hidden="true"></span>
           </nav>
           <div class="global-search">

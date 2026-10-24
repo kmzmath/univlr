@@ -357,6 +357,11 @@ assert(/vp-classif-linha[\s\S]*?CEUB[\s\S]*?8-1/.test(encerrado) || encerrado.in
 const luce = { id: "copa-luce-inters", name: "Copa LUCE Inters", status: "Finalizado", ...overrides["copa-luce-inters"] };
 assert(context.tournamentSwissStandingsSection(luce).includes("<table"), "o suico continua mostrando a tabela");
 
+// Revisao final: o ajuste que encolhe nome longo de equipe para caber em duas
+// linhas tem de mirar o titulo do topo novo, senao o nome passa da faixa de
+// 196px e e cortado.
+assert(/function ajustaTituloDaEquipe\(\) \{\s*const titulo = document\.querySelector\("[^"]*\.vp-equipe-id h1"\)/.test(ler("app.js")), "o ajuste do titulo da equipe mira o h1 do topo novo");
+
 // ---------------------------------------------------------------- Tarefa 11
 // Fechamento: titulo de painel sem o traco vermelho, nenhuma caixa em volta
 // das listas, e travessao em lugar nenhum (a regra do projeto e hifen).

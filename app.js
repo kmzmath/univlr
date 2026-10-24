@@ -13480,7 +13480,7 @@ const TITULO_EQUIPE_MINIMO = 22;
 // A busca e binaria porque a condicao e monotonica (corpo menor nunca produz
 // mais altura), o que da ~6 medicoes em vez de dezenas de descidas de 1px.
 function ajustaTituloDaEquipe() {
-  const titulo = document.querySelector(".team-page .team-title-block h1");
+  const titulo = document.querySelector(".team-page .vp-equipe-id h1");
   if (!titulo) return;
   // Zera antes de medir: sem isso, a chamada que roda depois do `fonts.ready`
   // leria como base o corpo que a primeira ja reduziu, e o titulo so poderia

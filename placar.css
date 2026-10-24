@@ -1571,9 +1571,13 @@
   scrollbar-width: thin;
 }
 
+/* Largura automatica: com `fixed` e o colgroup em porcentagem, a tabela
+   espremia no celular e o nick passava por cima dos agentes. Assim cada coluna
+   tem pelo menos o seu conteudo e a caixa rola. */
 .vp-partida .vp-sb {
   width: 100%;
   min-width: 760px;
+  table-layout: auto;
   margin: 0;
   border: 0;
   border-collapse: collapse;

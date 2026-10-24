@@ -101,6 +101,7 @@ vm.runInContext(
       { id: "azr", name: "Azure Bears Black", tag: "AZR B", colors: ["#037aff", "#fefeff"], logo: "assets/team-logos/azure_bears.png" },
       { id: "ceub", name: "CEUB Octopus Vulgaris", tag: "CEUB VLG", colors: ["#551d66", "#020103"], logo: "assets/team-logos/ceub_octopus.png" },
       { id: "mack", name: "MackLogic White", tag: "LOGIC", colors: ["#ffffff", "#ffffff"], logo: "assets/team-logos/macklogic_white.png" },
+      { id: "nova", name: "Equipe Nova", tag: "NOVA", colors: [], logo: "" },
     ],
     tournaments: [{ id: "rush", name: "Rush Series 3ª Edição", logo: "assets/tournament-icons/rushSeries.png" }],
     maps: ["Bind", "Abyss", "Ascent", "Lotus"].map((name) => ({ id: name.toLowerCase(), name, icon: "assets/maps/" + name.toLowerCase() + ".png" })),
@@ -140,6 +141,9 @@ const listaMd1 = linhaMd1.split('class="vp-maplist"')[1].split("</span>\n")[0];
 assert(listaMd1.includes("Lotus") && !listaMd1.includes("<small>"), "MD1 mostra so o nome do mapa");
 const corBranca = linhasDeEquipe(linhaMd1)[0].match(/--team-line:(#[0-9a-f]{6})/i)[1].toLowerCase();
 assert.notStrictEqual(corBranca, "#ffffff", "equipe toda branca nao vira risco branco puro");
+assert.strictEqual(context.teamLineColor("nova"), "#8a8d98", "equipe sem cor cadastrada fica com o risco cinza");
+assert.strictEqual(context.teamLineColor("nao-existe"), "#8a8d98", "equipe fora do cadastro tambem fica cinza");
+assert.notStrictEqual(context.teamLineColor("azr"), "#8a8d98", "controle: equipe com cor nao cai no cinza");
 assert(context.matchResultRow(md1, { kd: [71, 41] }).includes("71 / 41"), "a coluna de K/D aparece quando pedida");
 assert(!linhaMd1.includes("vp-kd"), "sem K/D pedido, sem a coluna");
 

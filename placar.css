@@ -227,7 +227,9 @@
 
 .team-page .team-tabs .team-tab,
 .player-page .player-tabs .team-tab {
+  min-width: 0;
   min-height: 0;
+  justify-content: flex-start;
   padding: 12px 0;
   border: 0;
   border-radius: 0;
@@ -2210,9 +2212,22 @@
   font-size: 12px;
 }
 
+/* O perfil de jogador encolhe todo .section-head h2 (.player-page
+   .section-head h2), e o cabecalho dos comentarios e um deles. */
+.cmt-secao > .section-head h2 {
+  font: 600 30px/1 var(--font-display);
+}
+
+@media (max-width: 760px) {
+  .cmt-secao > .section-head h2 {
+    font-size: 26px;
+  }
+}
+
 .cmt-secao .cmt-convite {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   gap: 10px 20px;

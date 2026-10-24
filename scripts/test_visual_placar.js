@@ -415,5 +415,39 @@ for (const arquivo of ["app.js", "placar.css", "news.js", "index.html"]) {
   assert.strictEqual((ler(arquivo).match(new RegExp(String.fromCharCode(0x2014), "g")) || []).length, 0, `${arquivo} nao tem travessao`);
 }
 
+// Ranking, rodada de 24/10: a nota fica um numero solto mesmo com os detalhes
+// ligados, e o painel "Detalhes do ranking" segue a Placa: sem anel, sem
+// cartoes em caixa, barras na cor da equipe e a nota como soma das partes.
+const estiloDoRanking = ler("placar.css");
+assert(/\.ranking-accordion\[data-details-visible="true"\] \.ranking-score-cell\s*\{[^}]*background:\s*none/.test(estiloDoRanking), "com os detalhes ligados, a nota continua sem a pilula verde");
+const rankingFake = {
+  score: 99.9,
+  matches: 48,
+  blocks: { competitive: 100, achievements: 100, recentForm: 100, rosterStrength: 98.8 },
+  components: { statisticalModels: 100, strengthOfSchedule: 100, dominance: 100 },
+  sos: { general: 79, wins: 78.8 },
+  recent: { matches: 14, adjustedPerformance: 100, dominance: 75.9 },
+  roster: { individualRating: 100, coreStability: 100, depth: 88.5 },
+  models: { colley: 100, massey: 100 },
+  achievements: [],
+};
+const detalhes = context.rankingExplanationPanel({ id: "azr", name: "Azure Bears Black" }, rankingFake);
+assert(detalhes.includes('class="vp-rk-detalhes"'), "o painel e o desenho novo");
+assert(/--team-line:#[0-9a-f]{6}/i.test(detalhes), "as barras usam a cor da equipe");
+for (const velho of ["ranking-score-ring", "ranking-formula-chips", "ranking-mini-card", "ranking-weight-bar"]) {
+  assert(!detalhes.includes(velho), `o painel nao usa mais ${velho}`);
+}
+assert(!/#f6132a|var\(--brand\)/i.test(detalhes), "nada de vermelho de marca no painel");
+const fatias = (detalhes.split('class="vp-rk-soma"')[1] || "").split("</div>")[0].match(/style="--w:[\d.]+%"/g) || [];
+assert.strictEqual(fatias.length, 4, "a nota e uma barra so, com a parte de cada bloco");
+assert.deepStrictEqual(fatias.map((f) => Number(f.match(/[\d.]+/)[0])), [70, 15, 10, 4.94], "cada parte e valor x peso");
+assert(detalhes.includes("100.0 × 70% = 70.0"), "a conta de cada bloco continua escrita");
+// Com "Detalhes da nota" ligado em tela estreita, os quatro blocos descem para
+// uma segunda linha, e cada numero precisa do proprio rotulo.
+for (const rotulo of ["Desempenho", "Conquistas", "Forma", "rAAting 3.0"]) {
+  assert(ler("app.js").includes(`<span class="numeric optional ranking-detail-cell" data-label="${rotulo}">`), `a celula de ${rotulo} leva o rotulo`);
+}
+assert(/@media \(max-width: 1180px\)\s*\{[^@]*data-details-visible="true"\][^{]*\.ranking-detail-cell::before/.test(estiloDoRanking), "o rotulo aparece na segunda linha em tela estreita");
+
 void vp;
 console.log("Visual Placar contract tests passed");

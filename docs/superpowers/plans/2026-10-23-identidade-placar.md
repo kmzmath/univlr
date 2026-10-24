@@ -277,3 +277,20 @@ Altura da página (`document.documentElement.scrollHeight`) em px. "Antes" é a 
 Players quase não muda: a lista continua sendo a grade de cartões com foto, que não teve mockup. É a próxima candidata a virar Placa.
 
 A limpeza tirou 36 funções do `app.js`, o `blocoHome` e o `heroi` do `news.js`, e 794 seletores do `styles.css` (535 regras e 11 blocos `@media` vazios, de 511 KB para 399 KB). Uma classe só saiu se algum template a emitia no começo da branch e nenhum a emite hoje, com conferência de prefixo para nomes montados por interpolação. A prova foi feita no navegador: as 3.020 regras vivas do CSS antigo estão no novo com as mesmas declarações, e o diff de estilos computados em 22 rotas, nas duas larguras, só mostrou o mesmo ruído de carregamento que aparece comparando o CSS antigo com ele mesmo.
+
+## Rodada de 24/10 (retorno do dono)
+
+O que mudou: a linha de partida voltou ao modelo antigo, mais baixa (106px para 68px); a partida ganhou o vencedor em verde, a arte das abas acesa, o scoreboard na largura toda sem rolagem (no avancado, nomes curtos e uma linha de grupos; abaixo de 1000px, um bloco por jogador com os numeros rotulados), os rounds em blocos por tempo, lineups e historico numa secao so, e a secao Fonte saiu. No ranking, a nota ficou sem a pilula verde, a linha aberta e o painel "Detalhes do ranking" foram para a Placa (sem anel, cartoes ou vermelho), e com "Detalhes da nota" ligado em tela estreita os blocos descem para uma segunda linha (antes ficavam cortados fora da tela, inclusive na main). Abas de equipe e jogador e a faixa de atividade quebram linha em vez de rolar.
+
+Alturas (scrollHeight, main x branch):
+
+| Rota | 1440 | 390 |
+| --- | --- | --- |
+| Home | 2169 para 1203 | 4858 para 3057 |
+| Partida (serie) | 3404 para 1542 | 7300 para 3152 |
+| Partidas | 4870 para 4036 | 12124 para 4357 |
+| Equipe | 3172 para 1422 | 6024 para 2221 |
+| Jogador | 2049 para 1405 | 4376 para 2606 |
+| Ranking | 4226 para 3595 | 4374 para 3807 |
+
+/partidas subiu em relacao a rodada anterior (3374 a 1440) porque a linha do modelo antigo tem 68px contra 56px da linha Placar; foi o que o dono pediu. Ainda rolam de lado no celular: o chaveamento do campeonato (dentro da propria caixa) e o menu do topo (escolha da Task 1, para o topo preso nao passar de 215px).

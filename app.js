@@ -7474,10 +7474,10 @@ function rankingAccordionItem(row) {
         <span class="ranking-team-cell">${teamLogo(team.id)}<span><strong>${escapeHtml(team.name)}</strong><small>${escapeHtml(team.sourceTag || team.tag || team.id)} - ${matchesCount} partidas</small></span></span>
         <span class="ranking-lineup-inline optional">${rankingInlineLineup(team, cutoffAt)}</span>
         <span class="numeric ranking-score-cell">${fmt(ranking.score ?? team.rankingScore ?? team.points, 1)}</span>
-        <span class="numeric optional ranking-detail-cell">${fmt(blocks.competitive, 1)}</span>
-        <span class="numeric optional ranking-detail-cell">${fmt(blocks.achievements, 1)}</span>
-        <span class="numeric optional ranking-detail-cell">${fmt(blocks.recentForm, 1)}</span>
-        <span class="numeric optional ranking-detail-cell">${fmt(blocks.rosterStrength, 1)}</span>
+        <span class="numeric optional ranking-detail-cell" data-label="Desempenho">${fmt(blocks.competitive, 1)}</span>
+        <span class="numeric optional ranking-detail-cell" data-label="Conquistas">${fmt(blocks.achievements, 1)}</span>
+        <span class="numeric optional ranking-detail-cell" data-label="Forma">${fmt(blocks.recentForm, 1)}</span>
+        <span class="numeric optional ranking-detail-cell" data-label="rAAting 3.0">${fmt(blocks.rosterStrength, 1)}</span>
         <span class="ranking-status-cell">${rankingStatusChip(team, ranking)}</span>
         <span class="ranking-toggle-mark" aria-hidden="true">+</span>
       </button>
@@ -7510,9 +7510,9 @@ function rankingTeamPreviewPanel(team, cutoffAt = null) {
       <div class="ranking-lineup">
         ${lineup.length ? lineup.map(rankingLineupCard).join("") : `<div class="empty-state">Equipe sem lineup atual cadastrada.</div>`}
       </div>
-      <div class="ranking-team-actions">
-        <a class="ranking-action-button" href="#/teams/${team.id}">Perfil da equipe</a>
-        <button class="ranking-action-button" type="button" data-ranking-details aria-expanded="false">Detalhes do ranking</button>
+      <div class="ranking-team-actions vp-rk-acoes">
+        <button class="vp-rk-acao" type="button" data-ranking-details aria-expanded="false">Detalhes do ranking${chevronIcon()}</button>
+        <a class="vp-rk-acao" href="#/teams/${team.id}">Perfil da equipe</a>
       </div>
     </div>
   `;
@@ -7638,6 +7638,11 @@ function rankingLineupCard(entry) {
   `;
 }
 
+// "Detalhes do ranking" no desenho da Placa: a nota solta no topo e, ao lado,
+// a nota desmontada numa barra so (cada fatia e valor do bloco x peso, entao o
+// comprimento total e a propria nota). Embaixo, os blocos em linhas e os
+// numeros de apoio soltos, cada um com uma barra fina. Tudo na cor da equipe:
+// vermelho e marca, nunca dado. As explicacoes continuam no hover.
 function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null) {
   const ranking = rankingOverride || team.ranking || {};
   const blocks = ranking.blocks || {};
@@ -7648,108 +7653,82 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null) 
   const minimumMatches = state.db?.rankingMinimumMatches || 9;
   const score = rankingSafeScore(ranking.score ?? team.rankingScore ?? team.points);
   const matchesCount = Number.isFinite(Number(ranking.matches)) ? Number(ranking.matches) : team.matches;
+  const partes = [
+    ["Desempenho", blocks.competitive, 70, "Mede desempenho coletivo através dos resultados, qualidade dos adversários e dominância."],
+    ["Conquistas", blocks.achievements, 15, "Soma os pontos de cada colocação em campeonatos encerrados; das classificatórias da UNIVAVÁ, conta só a de maior pontuação. Cada ponto perde valor em linha reta até zerar em 10 meses. A equipe com mais pontos vale 100, e as demais, a proporção dela."],
+    ["Forma recente", blocks.recentForm, 10, "Desempenho em uma janela de 60 dias, meia-vida de 30 dias."],
+    ["rAAting 3.0 jogadores", blocks.rosterStrength, 5, "Usa o rAAting 3.0 individual da formação, com as partidas de cada jogador por qualquer equipe, mais a estabilidade do core e a profundidade."],
+  ];
+  const fatia = (valor, peso) => Math.round(((rankingSafeScore(valor) * peso) / 100) * 100) / 100;
+  const secao = (titulo, legenda, corpo, extra = "") => `<section class="vp-rk-secao${extra}"><h3>${escapeHtml(titulo)}<small>${escapeHtml(legenda)}</small></h3>${corpo}</section>`;
   return `
-    <div class="ranking-visual-explainer">
-      <section class="ranking-score-hero">
-        <div class="ranking-score-ring ${rankingTooltipClass()}" tabindex="0" style="--score:${score}" data-tooltip="${rankingTooltipText("A nota final mistura desempenho coletivo, conquistas, momento recente e rAAting 3.0 dos jogadores. Todos os blocos já chegam normalizados em 0-100.")}">
-          <strong>${fmt(score, 1)}</strong>
-          <span>nota final</span>
+    <div class="vp-rk-detalhes" style="--team-line:${teamLineColor(team.id)}">
+      <div class="vp-rk-topo">
+        <div class="vp-rk-nota-bloco ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText("A nota final mistura desempenho coletivo, conquistas, momento recente e rAAting 3.0 dos jogadores. Todos os blocos já chegam normalizados em 0-100.")}">
+          <b class="vp-rk-nota">${fmt(score, 1)}</b>
+          <small>nota final</small>
         </div>
-        <div class="ranking-score-copy">
-          <h2>${escapeHtml(team.name)}</h2>
-          <p>Passe o mouse nos gráficos para mais detalhes e explicações.</p>
-          <div class="ranking-formula-chips">
-            <span>70% desempenho</span>
-            <span>15% conquistas</span>
-            <span>10% forma</span>
-            <span>5% rAAting 3.0 jogadores</span>
-          </div>
+        <div class="vp-rk-formula">
+          <p>70% desempenho, 15% conquistas, 10% forma recente e 5% rAAting 3.0 dos jogadores. Passe o mouse em cada parte para a explicação.</p>
+          <div class="vp-rk-soma" aria-hidden="true">${partes.map(([label, valor, peso]) => `<i style="--w:${fatia(valor, peso)}%" title="${escapeHtml(`${label}: ${fmt(fatia(valor, peso), 1)}`)}"></i>`).join("")}</div>
+          <div class="vp-rk-soma-legenda">${partes.map(([label, valor, peso]) => `<span><i></i>${escapeHtml(label)} <b>${fmt(fatia(valor, peso), 1)}</b></span>`).join("")}</div>
         </div>
-      </section>
-      <section class="ranking-visual-section">
-        <div class="ranking-section-title">
-          <h3>Composição da nota</h3>
-          <span>valor do bloco x peso</span>
-        </div>
-        <div class="ranking-weight-bars">
-          ${rankingWeightedBar("Desempenho", blocks.competitive, 70, "Mede desempenho coletivo através dos resultados, qualidade dos adversários e dominância.")}
-          ${rankingWeightedBar("Conquistas", blocks.achievements, 15, "Soma os pontos de cada colocação em campeonatos encerrados; das classificatórias da UNIVAVÁ, conta só a de maior pontuação. Cada ponto perde valor em linha reta até zerar em 10 meses. A equipe com mais pontos vale 100, e as demais, a proporção dela.")}
-          ${rankingWeightedBar("Forma recente", blocks.recentForm, 10, "Desempenho em uma janela de 60 dias, meia-vida de 30 dias.")}
-          ${rankingWeightedBar("rAAting 3.0 jogadores", blocks.rosterStrength, 5, "Usa o rAAting 3.0 individual da formação, com as partidas de cada jogador por qualquer equipe, mais a estabilidade do core e a profundidade.")}
-        </div>
-      </section>
-      <section class="ranking-visual-section">
-        <div class="ranking-section-title">
-          <h3>Por dentro do desempenho</h3>
-          <span>o motor do ranking</span>
-        </div>
-        <div class="ranking-competitive-layout">
-          <div class="ranking-weight-bars">
-            ${rankingWeightedBar("Modelos estatísticos", components.statisticalModels, 66.7, "Combina Colley, Massey, Elo final, Elo com margem, TrueSkill, PageRank, Bradley-Terry-Poisson e PCA.")}
-            ${rankingWeightedBar("Força dos adversários", components.strengthOfSchedule, 22.2, "SOS (Strength of Schedule) geral considera todos os adversários; SOS de vitórias destaca quem foi batido.")}
-            ${rankingWeightedBar("Dominância", components.dominance, 11.1, "Mede controle do placar pela margem relativa de rounds.")}
-          </div>
-          <div class="ranking-side-cards">
-            ${rankingMiniCard("SOS geral", sos.general, "Strength of Schedule: força média de todos os adversários enfrentados.")}
-            ${rankingMiniCard("SOS vitórias", sos.wins, "Força média dos adversários vencidos. Vitórias fortes sobem mais.")}
-            ${rankingMiniCard("Amostra", matchesCount, `${ranking.provisional ? `Provisório: menos de ${minimumMatches} partidas.` : "Amostra mínima validada."}`, 0, Math.max(12, minimumMatches))}
-          </div>
-        </div>
-      </section>
-      <section class="ranking-visual-section">
-        <div class="ranking-section-title">
-          <h3>Modelos estatísticos</h3>
-          <span>leituras independentes</span>
-        </div>
-        ${rankingModelGrid(ranking.models || {})}
-      </section>
-      <section class="ranking-visual-section">
-        <div class="ranking-section-title">
-          <h3>Momento e rAAting 3.0</h3>
-          <span>forma recente + lineup</span>
-        </div>
-        <div class="ranking-card-grid">
-          ${rankingMiniCard("Partidas recentes", recent.matches ?? 0, "Quantidade de jogos na janela de 60 dias.", 0, 8)}
-          ${rankingMiniCard("Desempenho ajustado", recent.adjustedPerformance, "Resultado recente ajustado pela força do adversário e margem.")}
-          ${rankingMiniCard("Dominância recente", recent.dominance, "Controle de placar na janela recente.")}
-          ${rankingMiniCard("rAAting individual", roster.individualRating, "rAAting 3.0 dos jogadores por esta equipe, ajustado pelo nível dos adversários.")}
-          ${rankingMiniCard("Estabilidade core", roster.coreStability, "Quanto do core atual aparece nos jogos recentes da equipe.")}
-          ${rankingMiniCard("Profundidade", roster.depth, "Quantidade de jogadores com volume suficiente pela equipe.")}
-        </div>
-      </section>
-      <section class="ranking-visual-section">
-        <div class="ranking-section-title">
-          <h3>Conquistas</h3>
-          <span>pontos dos últimos 10 meses</span>
-        </div>
-        ${rankingAchievementSummary(ranking.achievements || [], ranking.blocks?.achievements)}
-      </section>
+      </div>
+      <div class="vp-rk-colunas">
+        ${secao("Composição da nota", "valor do bloco x peso", partes.map(([label, valor, peso, dica]) => rankingBlocoLinha(label, valor, peso, dica)).join(""))}
+        ${secao(
+          "Por dentro do desempenho",
+          "o motor do ranking",
+          `${rankingBlocoLinha("Modelos estatísticos", components.statisticalModels, 66.7, "Combina Colley, Massey, Elo final, Elo com margem, TrueSkill, PageRank, Bradley-Terry-Poisson e PCA.")}
+          ${rankingBlocoLinha("Força dos adversários", components.strengthOfSchedule, 22.2, "SOS (Strength of Schedule) geral considera todos os adversários; SOS de vitórias destaca quem foi batido.")}
+          ${rankingBlocoLinha("Dominância", components.dominance, 11.1, "Mede controle do placar pela margem relativa de rounds.")}
+          <div class="vp-rk-dados">
+            ${rankingDado("SOS geral", sos.general, "Strength of Schedule: força média de todos os adversários enfrentados.")}
+            ${rankingDado("SOS vitórias", sos.wins, "Força média dos adversários vencidos. Vitórias fortes sobem mais.")}
+            ${rankingDado("Amostra", matchesCount, `${ranking.provisional ? `Provisório: menos de ${minimumMatches} partidas.` : "Amostra mínima validada."}`, 0, Math.max(12, minimumMatches))}
+          </div>`,
+        )}
+        ${secao("Modelos estatísticos", "leituras independentes", rankingModelGrid(ranking.models || {}))}
+        ${secao(
+          "Momento e rAAting 3.0",
+          "forma recente e lineup",
+          `<div class="vp-rk-dados">
+            ${rankingDado("Partidas recentes", recent.matches ?? 0, "Quantidade de jogos na janela de 60 dias.", 0, 8)}
+            ${rankingDado("Desempenho ajustado", recent.adjustedPerformance, "Resultado recente ajustado pela força do adversário e margem.")}
+            ${rankingDado("Dominância recente", recent.dominance, "Controle de placar na janela recente.")}
+            ${rankingDado("rAAting individual", roster.individualRating, "rAAting 3.0 dos jogadores por esta equipe, ajustado pelo nível dos adversários.")}
+            ${rankingDado("Estabilidade core", roster.coreStability, "Quanto do core atual aparece nos jogos recentes da equipe.")}
+            ${rankingDado("Profundidade", roster.depth, "Quantidade de jogadores com volume suficiente pela equipe.")}
+          </div>`,
+        )}
+      </div>
+      ${secao("Conquistas", "pontos dos últimos 10 meses", rankingAchievementSummary(ranking.achievements || [], ranking.blocks?.achievements), " vp-rk-conquistas")}
     </div>
   `;
 }
 
-function rankingWeightedBar(label, value, weight, tooltip) {
+// Um bloco da nota numa linha: nome, a conta (valor x peso) e a barra do valor.
+function rankingBlocoLinha(label, value, weight, tooltip) {
   const score = rankingSafeScore(value);
   const contribution = (score * weight) / 100;
   return `
-    <div class="ranking-weight-bar ${rankingTooltipClass()}" tabindex="0" style="--value:${score}" data-tooltip="${rankingTooltipText(tooltip)}">
-      <div class="ranking-weight-meta">
-        <strong>${escapeHtml(label)}</strong>
-          <span>${fmt(score, 1)} × ${weight}% = ${fmt(contribution, 1)}</span>
-      </div>
-      <div class="ranking-bar-track"><i></i></div>
+    <div class="vp-rk-linha ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText(tooltip)}">
+      <span class="vp-rk-linha-nome">${escapeHtml(label)}</span>
+      <span class="vp-rk-linha-conta">${fmt(score, 1)} × ${weight}% = ${fmt(contribution, 1)}</span>
+      <span class="vp-rk-barra"><i style="--w:${score}%"></i></span>
     </div>
   `;
 }
 
-function rankingMiniCard(label, value, tooltip, digits = 1, max = 100) {
+// Um numero de apoio solto: o valor grande, o nome embaixo e a barra fina.
+function rankingDado(label, value, tooltip, digits = 1, max = 100) {
   const numeric = Number.isFinite(Number(value)) ? Number(value) : 0;
   const percent = clamp((numeric / Math.max(1, max)) * 100, 0, 100);
   return `
-    <div class="ranking-mini-card ${rankingTooltipClass()}" tabindex="0" style="--value:${percent}" data-tooltip="${rankingTooltipText(tooltip)}">
-      <strong>${fmt(numeric, digits)}</strong>
+    <div class="vp-rk-dado ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText(tooltip)}">
+      <b>${fmt(numeric, digits)}</b>
       <span>${escapeHtml(label)}</span>
-      <div class="ranking-bar-track"><i></i></div>
+      <span class="vp-rk-barra"><i style="--w:${Math.round(percent * 10) / 10}%"></i></span>
     </div>
   `;
 }
@@ -7759,8 +7738,8 @@ function rankingModelGrid(models) {
   const entries = order.filter((key) => Object.hasOwn(models, key)).map((key) => [key, models[key]]);
   if (!entries.length) return `<div class="empty-state">Modelos indisponíveis para esta equipe.</div>`;
   return `
-    <div class="ranking-model-grid visual">
-      ${entries.map(([key, value]) => rankingMiniCard(rankingModelLabel(key), value, rankingModelTooltip(key))).join("")}
+    <div class="vp-rk-dados vp-rk-modelos">
+      ${entries.map(([key, value]) => rankingDado(rankingModelLabel(key), value, rankingModelTooltip(key))).join("")}
     </div>
   `;
 }
@@ -7800,10 +7779,10 @@ function rankingModelTooltip(key) {
 function rankingAchievementSummary(achievements, blockScore) {
   const scoring = achievements.filter((row) => Number(row.score) > 0);
   if (!scoring.length) {
-    return `<div class="ranking-fallback-card ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText("A nota de conquistas é a proporção dos pontos da equipe sobre a equipe que mais pontuou. Sem pontos nos últimos 10 meses, ela fica em zero.")}"><strong>${fmt(blockScore ?? 0, 1)}</strong><span>sem pontos em campeonatos dos últimos 10 meses</span></div>`;
+    return `<p class="vp-rk-vazio ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText("A nota de conquistas é a proporção dos pontos da equipe sobre a equipe que mais pontuou. Sem pontos nos últimos 10 meses, ela fica em zero.")}"><b>${fmt(blockScore ?? 0, 1)}</b> sem pontos em campeonatos dos últimos 10 meses</p>`;
   }
   return `
-    <div class="ranking-achievement-list">
+    <div class="vp-rk-conquista-lista">
       ${scoring.map((row) => rankingAchievementCard(row)).join("")}
     </div>
   `;
@@ -7823,12 +7802,10 @@ function rankingAchievementCard(row) {
       ? `A colocação vale ${fmt(base, 0)} pontos. Com o tempo desde o fim do campeonato, conta ${fmt(decay * 100, 0)}% hoje. ${expiry}`
       : "Pontos da colocação, já descontado o tempo desde o fim do campeonato.";
   return `
-    <span class="ranking-achievement-card ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText(tooltip)}">
+    <span class="vp-rk-conquista ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText(tooltip)}">
       ${eventLogo(event, "small")}
-      <span class="ranking-achievement-main">
-        <strong>${escapeHtml(event.name || row.eventId || "Campeonato")}</strong>
-        <small>${escapeHtml(rankingPlacementLabel(row.placementLabel || row.range || row.placement))} - ${fmt(row.score, 1)} pts</small>
-      </span>
+      <span class="vp-rk-conquista-nome"><strong>${escapeHtml(event.name || row.eventId || "Campeonato")}</strong><small>${escapeHtml(rankingPlacementLabel(row.placementLabel || row.range || row.placement))}</small></span>
+      <b>${fmt(row.score, 1)}<small>pts</small></b>
     </span>
   `;
 }
@@ -13026,8 +13003,10 @@ function teamRankingChart(history) {
       const left = (x(row.date) / width) * 100;
       const top = (y(row.rank) / height) * 100;
       const detail = [`Nota ${row.points === "" ? "-" : fmt(row.points, 1)}`, row.note || ""].filter(Boolean).join(" - ");
+      // Nas pontas o balao centrado sairia da tela (ate 130px para fora): perto
+      // da borda ele cresce para dentro do grafico.
       return `
-        <span class="ranking-chart-hotspot ${marcada(row, index) ? "marked" : ""}" style="--x:${fmt(left, 2)};--y:${fmt(top, 2)}" tabindex="0" aria-label="${escapeHtml(`${formatDate(row.date)} ${rankingHistoryRankLabel(row.rank)}`)}">
+        <span class="ranking-chart-hotspot ${marcada(row, index) ? "marked" : ""}${left < 12 ? " na-esquerda" : left > 88 ? " na-direita" : ""}" style="--x:${fmt(left, 2)};--y:${fmt(top, 2)}" tabindex="0" aria-label="${escapeHtml(`${formatDate(row.date)} ${rankingHistoryRankLabel(row.rank)}`)}">
           <span class="ranking-chart-tooltip">
             <strong>${escapeHtml(rankingHistoryRankLabel(row.rank))}</strong>
             <span>${escapeHtml(formatDate(row.date))}</span>

@@ -8,19 +8,17 @@ O app carrega o banco pré-agregado `database.json`, gerado por `scripts/build_d
 
 1. Atualize os JSONs em `campeonatos/` e as planilhas em `dados_excel/`.
 2. Rode `python scripts/build_metadata.py` para regenerar `metadata.json` e `data-sources.json` a partir das planilhas.
-3. Rode `node scripts/build_database.js` para regenerar `database.json` (commite o arquivo junto).
-4. Rode `node scripts/rewrite_asset_paths.js` e `node scripts/apply_team_colors.js`.
+3. Rode `node scripts/build_database.js` para regenerar `database.json` e `home.json` com as cores de `metadata.json` (commite os dois arquivos junto).
+4. Rode `node scripts/rewrite_asset_paths.js` se houver caminhos de assets para atualizar. `node scripts/apply_team_colors.js` serve apenas para corrigir artefatos antigos sem reprocessar partidas.
 5. Recarregue `index.html` pelo servidor local.
 6. O build gera a matriz econômica observada a partir dos kill events carregados. Se não houver eventos suficientes, usa multiplicador neutro `1.00`.
 
-### Por que os passos 4 existem
+### Ferramentas auxiliares
 
-`database.json` **não reproduz**: rodar o build hoje gera um arquivo diferente do commitado, com os índices de nós deslocados. Isolado em ago/2026 — não é mudança de código; ou o build depende da data, ou o artefato commitado saiu de um estado de fonte diferente.
-
-Enquanto isso não for resolvido, o que muda nas planilhas chega ao `database.json` e ao `home.json` por reescrita no lugar:
+O build normal já inclui as cores oficiais. Para corrigir caminhos ou cores em artefatos existentes sem reprocessar partidas, há dois scripts:
 
 - `scripts/rewrite_asset_paths.js` — troca caminhos de asset por uma tabela explícita, nos três artefatos. Aborta se qualquer alvo não existir no disco.
-- `scripts/apply_team_colors.js` — leva `colors` e `logo` do `metadata.json` para o `database.json` e o `home.json`, **casando por id de equipe**. Logo não entra na tabela do outro script: a troca lá é por string e é cega, e duas equipes que partilhem o mesmo caminho antes de um rename saem as duas com o escudo errado.
+- `scripts/apply_team_colors.js` — ferramenta de recuperação para levar `colors` e `logo` do `metadata.json` a um banco antigo, **casando por id de equipe**. O build atual já copia as cores oficiais. Logo não entra na tabela do outro script: a troca lá é por string e é cega, e duas equipes que partilhem o mesmo caminho antes de um rename saem as duas com o escudo errado.
 
 Os dois são idempotentes: rodar de novo não altera um byte.
 

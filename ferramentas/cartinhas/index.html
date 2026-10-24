@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cartinhas</title>
+  <link rel="icon" href="/assets/logo_univlr.png">
+  <link rel="stylesheet" href="gerador.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="marca">
+      <h1>Gerador de cartinhas</h1>
+      <p id="evento">Carregando…</p>
+    </div>
+    <div class="acoes">
+      <label class="rotulo-mini">Dados
+        <select id="conjunto" aria-label="Conjunto de dados"></select>
+      </label>
+      <button type="button" id="exportar-dados" class="secundario" title="Baixa o arquivo de dados com as suas edições aplicadas">Baixar dados (.json)</button>
+    </div>
+  </header>
+
+  <section class="barra" aria-label="Filtros e exportação">
+    <input id="busca" type="search" placeholder="Buscar jogador ou time" aria-label="Buscar">
+    <select id="filtro-time" aria-label="Time"></select>
+    <select id="ordem" aria-label="Ordem">
+      <option value="time">Por time</option>
+      <option value="overall">Por overall</option>
+      <option value="nick">Por nick</option>
+    </select>
+    <label class="check"><input type="checkbox" id="so-sem-foto"> Só sem foto</label>
+    <span class="separador" aria-hidden="true"></span>
+    <label class="check"><input type="checkbox" id="op-agente" checked> Agente (+PICK)</label>
+    <label class="check"><input type="checkbox" id="op-nome-fundo"> Nome do time na lateral</label>
+    <label class="check"><input type="checkbox" id="op-evento"> Logo do evento</label>
+    <label class="rotulo-mini">Tamanho
+      <select id="escala">
+        <option value="1">500 × 800</option>
+        <option value="1.5" selected>750 × 1200</option>
+        <option value="2">1000 × 1600</option>
+      </select>
+    </label>
+    <button type="button" id="baixar-posts" class="secundario" title="Um post 1080 × 1350 por time, com as cartas em fileiras">Posts por time (.zip)</button>
+    <button type="button" id="baixar-todas" class="primario">Baixar cartas (.zip)</button>
+  </section>
+
+  <p id="contagem" class="contagem"></p>
+  <div id="aviso" class="aviso" hidden></div>
+  <div id="progresso" class="progresso" hidden><span></span><progress></progress></div>
+
+  <main id="grade" class="grade" aria-live="polite"></main>
+
+  <dialog id="editor" class="dialogo">
+    <div class="editor">
+      <div id="area-previa" class="area-previa">
+        <canvas id="previa" width="500" height="800"></canvas>
+        <p class="dica">Arraste uma foto para cá para trocar</p>
+      </div>
+      <form id="form-carta" autocomplete="off">
+        <h2 id="editor-titulo"></h2>
+        <label>Nick <input name="nick"></label>
+        <div class="linha2">
+          <label>Overall <input name="overall" type="number" min="0" max="99"></label>
+          <label>Função <select name="funcao"></select></label>
+        </div>
+        <label>Agente mais jogado <select name="agente"></select></label>
+        <p id="agentes-info" class="miudo"></p>
+        <fieldset>
+          <legend>Estatísticas</legend>
+          <div id="campos-stats" class="grade3"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Foto</legend>
+          <label>Arquivo <input name="foto" placeholder="assets/player-photos/time/nick.png"></label>
+          <label class="botao-arquivo">Trocar foto… <input type="file" id="foto-arquivo" accept="image/*"></label>
+          <label>Zoom <input name="zoom" type="range" min="0.6" max="1.8" step="0.02"></label>
+          <label>Horizontal <input name="fotoX" type="range" min="-150" max="150" step="1"></label>
+          <label>Vertical <input name="fotoY" type="range" min="-150" max="150" step="1"></label>
+          <p id="enquadramento-info" class="miudo"></p>
+        </fieldset>
+        <div class="botoes">
+          <button type="button" id="restaurar" class="secundario">Restaurar</button>
+          <button type="button" id="fechar" class="secundario">Fechar</button>
+          <button type="button" id="baixar-uma" class="primario">Baixar PNG</button>
+        </div>
+        <p class="miudo">PageUp / PageDown: carta anterior / próxima. As edições ficam guardadas neste navegador; "Baixar dados" grava tudo num .json.</p>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog id="colar" class="dialogo">
+    <form id="form-colar">
+      <h2>Colar tabela do Excel</h2>
+      <p class="miudo">Copie a tabela com a linha de cabeçalho e cole abaixo. Colunas reconhecidas: Nome, Time, Overall, Função, ACS, Kast, KPR, MPR, APR, Swing; opcionais: Agente, Agentes (mapas), ADR, puuid, Foto. Escudo, cores e fotos vêm do metadata.json pelo nome do time e do jogador.</p>
+      <div class="linha2">
+        <label>Evento <input name="eventoNome" value="Univavá 2026"></label>
+        <label>Fase <input name="eventoFase" placeholder="Playoffs"></label>
+      </div>
+      <textarea name="tabela" rows="12" spellcheck="false" aria-label="Tabela"></textarea>
+      <p id="colar-erro" class="erro"></p>
+      <div class="botoes">
+        <button type="button" id="colar-cancelar" class="secundario">Cancelar</button>
+        <button class="primario">Importar</button>
+      </div>
+    </form>
+  </dialog>
+  <input type="file" id="arquivo-json" accept=".json,application/json" hidden>
+
+  <script src="cartinha.js"></script>
+  <script src="zip.js"></script>
+  <script src="gerador.js"></script>
+</body>
+</html>

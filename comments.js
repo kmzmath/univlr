@@ -18,7 +18,14 @@
   // pai - a linha "respondendo a fulano" e quem carrega o vinculo.
   const RECUO_MAX = 3;
 
-  let atual = null; // { kind, id, comentarios, meusVotos, respondendo, editando }
+  // Uma conversa por raiz. A pagina das cartinhas tem a da colecao e a de
+  // cada cartinha aberta ao mesmo tempo, entao o estado mora junto do elemento
+  // e cada tratador le o da propria raiz - inclusive depois de um await, quando
+  // outra conversa da pagina pode ter sido mexida no meio.
+  const estados = new WeakMap(); // raiz -> { kind, id, comentarios, meusVotos, respondendo, editando }
+  // Prefixo dos links internos ("#/u/fulano"). A pagina das cartinhas fica
+  // fora do app e define "/", para esses links voltarem ao site.
+  const RAIZ = window.UNIVLR_RAIZ || "";
 
   // ------------------------------------------------------------------ tempo
 
@@ -75,7 +82,7 @@
     if (autor.fav_team) {
       const t = typeof window.teamById === "function" ? window.teamById(autor.fav_team) : null;
       if (t && typeof window.teamLogo === "function") {
-        partes.push(`<a class="cmt-fa cmt-fa-time" href="#/teams/${esc(t.id)}" title="Equipe favorita">
+        partes.push(`<a class="cmt-fa cmt-fa-time" href="${RAIZ}#/teams/${esc(t.id)}" title="Equipe favorita">
                        <span class="cmt-fa-coracao" aria-hidden="true">♥</span>
                        ${window.teamLogo(t.id, "cmt-fa-logo")}
                        <span>${esc(t.name)}</span>
@@ -86,7 +93,7 @@
     if (autor.fav_player) {
       const j = typeof window.playerById === "function" ? window.playerById(autor.fav_player) : null;
       if (j) {
-        partes.push(`<a class="cmt-fa cmt-fa-jogador" href="#/players/${esc(j.routeSlug || j.id)}"
+        partes.push(`<a class="cmt-fa cmt-fa-jogador" href="${RAIZ}#/players/${esc(j.routeSlug || j.id)}"
                         title="Jogador favorito">
                        <span class="cmt-fa-coracao" aria-hidden="true">♥</span>
                        <span>${esc(j.nick || j.handle)}</span>
@@ -226,7 +233,7 @@
 
   // --------------------------------------------------------------- desenho
 
-  function umComentario(c, nivel, paiNome) {
+  function umComentario(c, nivel, paiNome, est) {
     const C = window.Community;
     const eu = C.usuario();
     const meu = eu && c.author_id === eu.id;
@@ -234,9 +241,9 @@
     const autor = c.profiles ? c.profiles.username : "desconhecido";
     const podeEditar = meu && !apagado && Date.now() - new Date(c.created_at).getTime() < 15 * 60 * 1000;
     const podeApagar = !apagado && (meu || C.ehAdmin());
-    const editando = atual.editando === c.id;
+    const editando = est.editando === c.id;
 
-    const meuVoto = atual.meusVotos.get(c.id) || 0;
+    const meuVoto = est.meusVotos.get(c.id) || 0;
     const acoes = apagado
       ? ""
       : `
@@ -268,7 +275,7 @@
 
     const filhos = c.filhos.length
       ? `<div class="cmt-filhos ${nivel >= RECUO_MAX ? "sem-recuo" : ""}">
-           ${c.filhos.map((f) => umComentario(f, nivel + 1, autor)).join("")}
+           ${c.filhos.map((f) => umComentario(f, nivel + 1, autor, est)).join("")}
          </div>`
       : "";
 
@@ -278,7 +285,7 @@
           ${apagado ? avatarRemovido() : avatar(autor)}
           <div class="cmt-conteudo">
             <header class="cmt-cabeca">
-              ${apagado ? `<span class="cmt-autor">-</span>` : `<a class="cmt-autor" href="#/u/${esc(autor)}">${esc(autor)}</a>`}
+              ${apagado ? `<span class="cmt-autor">-</span>` : `<a class="cmt-autor" href="${RAIZ}#/u/${esc(autor)}">${esc(autor)}</a>`}
               ${!apagado && c.profiles && c.profiles.role === "admin" ? `<span class="cmt-selo">admin</span>` : ""}
               ${apagado ? "" : selosDeFa(c.profiles)}
               <time datetime="${esc(c.created_at)}">${quando(c.created_at)}</time>
@@ -288,7 +295,7 @@
             ${texto}
             ${acoes}
             <div class="cmt-resposta-slot" data-slot="${esc(c.id)}">${
-              atual.respondendo === c.id ? formulario("responder", c.id, "") : ""
+              est.respondendo === c.id ? formulario("responder", c.id, "") : ""
             }</div>
           </div>
         </div>
@@ -412,17 +419,17 @@
     return formulario("novo", "", "");
   }
 
-  function desenha() {
-    const raiz = document.querySelector(`[data-comentarios]`);
-    if (!raiz || !atual) return;
-    const n = atual.comentarios.filter((c) => !c.deleted_at).length;
+  function desenha(raiz) {
+    const est = raiz && estados.get(raiz);
+    if (!est) return;
+    const n = est.comentarios.filter((c) => !c.deleted_at).length;
     raiz.innerHTML = `
       <div class="section-head">
         <div><h2>Comentários</h2><p>${n === 0 ? "Ninguém comentou ainda." : `${n} ${n === 1 ? "comentário" : "comentários"}`}</p></div>
       </div>
       ${cabecalhoForm()}
       <div class="cmt-lista">
-        ${emArvore(atual.comentarios).map((c) => umComentario(c, 0, null)).join("")}
+        ${emArvore(est.comentarios).map((c) => umComentario(c, 0, null, est)).join("")}
       </div>`;
   }
 
@@ -435,11 +442,12 @@
     p.hidden = false;
   }
 
-  async function recarrega() {
-    const { comentarios, meusVotos } = await window.Community.listarComentarios(atual.kind, atual.id);
-    atual.comentarios = comentarios;
-    atual.meusVotos = meusVotos;
-    desenha();
+  async function recarrega(raiz) {
+    const est = estados.get(raiz);
+    const { comentarios, meusVotos } = await window.Community.listarComentarios(est.kind, est.id);
+    est.comentarios = comentarios;
+    est.meusVotos = meusVotos;
+    desenha(raiz);
   }
 
   function liga(raiz) {
@@ -467,6 +475,7 @@
     });
 
     raiz.addEventListener("submit", async (ev) => {
+      const est = estados.get(raiz);
       const form = ev.target.closest(".cmt-form");
       if (!form) return;
       ev.preventDefault();
@@ -479,10 +488,10 @@
       botao.disabled = true;
       try {
         if (modo === "editar") await window.Community.editarComentario(alvo, texto);
-        else await window.Community.comentar(atual.kind, atual.id, texto, modo === "responder" ? alvo : null);
-        atual.respondendo = null;
-        atual.editando = null;
-        await recarrega();
+        else await window.Community.comentar(est.kind, est.id, texto, modo === "responder" ? alvo : null);
+        est.respondendo = null;
+        est.editando = null;
+        await recarrega(raiz);
       } catch (erro) {
         botao.disabled = false;
         erroNoForm(form, window.Community.mensagemDeErro(erro));
@@ -490,6 +499,7 @@
     });
 
     raiz.addEventListener("click", async (ev) => {
+      const est = estados.get(raiz);
       const alvo = ev.target;
 
       // --- formatacao
@@ -523,26 +533,26 @@
 
       const cancelar = alvo.closest("[data-cancelar]");
       if (cancelar) {
-        atual.respondendo = null;
-        atual.editando = null;
-        return desenha();
+        est.respondendo = null;
+        est.editando = null;
+        return desenha(raiz);
       }
 
       const responder = alvo.closest("[data-responder]");
       if (responder) {
-        atual.respondendo = atual.respondendo === responder.dataset.responder ? null : responder.dataset.responder;
-        atual.editando = null;
-        desenha();
-        raiz.querySelector(`[data-slot="${atual.respondendo}"] textarea`)?.focus();
+        est.respondendo = est.respondendo === responder.dataset.responder ? null : responder.dataset.responder;
+        est.editando = null;
+        desenha(raiz);
+        raiz.querySelector(`[data-slot="${est.respondendo}"] textarea`)?.focus();
         return;
       }
 
       const editar = alvo.closest("[data-editar]");
       if (editar) {
-        atual.editando = atual.editando === editar.dataset.editar ? null : editar.dataset.editar;
-        atual.respondendo = null;
-        desenha();
-        raiz.querySelector(`[data-cmt="${atual.editando}"] textarea`)?.focus();
+        est.editando = est.editando === editar.dataset.editar ? null : editar.dataset.editar;
+        est.respondendo = null;
+        desenha(raiz);
+        raiz.querySelector(`[data-cmt="${est.editando}"] textarea`)?.focus();
         return;
       }
 
@@ -551,24 +561,24 @@
         if (!window.Community.logado()) return window.Auth.abrir("entrar");
         const id = votar.dataset.votar;
         const clicado = Number(votar.dataset.sinal);
-        const atualDoVoto = atual.meusVotos.get(id) || 0;
+        const atualDoVoto = est.meusVotos.get(id) || 0;
         // Clicar de novo na mesma seta TIRA o voto; clicar na outra troca.
         const novoSinal = atualDoVoto === clicado ? 0 : clicado;
 
         // Otimista: o botao responde no clique e a lista so e refeita se o
         // servidor recusar. Esperar a ida e volta faz o voto parecer quebrado
         // numa conexao ruim.
-        const alvoCmt = atual.comentarios.find((c) => c.id === id);
+        const alvoCmt = est.comentarios.find((c) => c.id === id);
         if (alvoCmt) alvoCmt.score += novoSinal - atualDoVoto;
-        if (novoSinal === 0) atual.meusVotos.delete(id);
-        else atual.meusVotos.set(id, novoSinal);
-        desenha();
+        if (novoSinal === 0) est.meusVotos.delete(id);
+        else est.meusVotos.set(id, novoSinal);
+        desenha(raiz);
 
         try {
           await window.Community.votar(id, novoSinal);
         } catch (erro) {
           console.warn("voto recusado:", window.Community.mensagemDeErro(erro));
-          await recarrega();
+          await recarrega(raiz);
         }
         return;
       }
@@ -578,7 +588,7 @@
         if (!window.confirm("Apagar este comentário? O texto não volta.")) return;
         try {
           await window.Community.apagarComentario(apagar.dataset.apagar);
-          await recarrega();
+          await recarrega(raiz);
         } catch (erro) {
           window.alert(window.Community.mensagemDeErro(erro));
         }
@@ -625,6 +635,15 @@
 
   function assuntoDaThread(kind, id) {
     try {
+      // Antes do `state`: a pagina das cartinhas nao tem o banco do site, e o
+      // link precisa sair do mesmo jeito. "2026" e a conversa da colecao;
+      // "2026:<puuid>", a de uma cartinha.
+      if (kind === "card") {
+        const puuid = String(id).split(":")[1];
+        if (!puuid) return { href: "/cartas/", nome: "Cartinhas 2026" };
+        const p = typeof window.playerById === "function" ? window.playerById(puuid) : null;
+        return { href: `/cartas/#jogador-${encodeURIComponent(puuid)}`, nome: p ? `Cartinha de ${p.nick || p.handle}` : "Cartinha" };
+      }
       if (typeof state === "undefined" || !state.db) return null;
       if (kind === "match") {
         // O assunto e a SERIE: `id` aqui e o seriesKey, nao um id de partida.
@@ -657,7 +676,7 @@
     return null;
   }
 
-  const ROTULO_TIPO = { match: "partida", event: "campeonato", team: "equipe", player: "jogador", article: "notícia" };
+  const ROTULO_TIPO = { match: "partida", event: "campeonato", team: "equipe", player: "jogador", article: "notícia", card: "cartinha" };
 
   function linhasDeAtividade(limite) {
     return (window.Community?.atividadeRecente(limite) || [])
@@ -721,13 +740,17 @@
             </section>`;
   }
 
-  async function montar(kind, id) {
-    const raiz = document.querySelector("[data-comentarios]");
+  async function montar(kind, id, raiz = document.querySelector("[data-comentarios]")) {
     if (!raiz) return;
-    atual = { kind, id: String(id), comentarios: [], meusVotos: new Set(), respondendo: null, editando: null };
-    liga(raiz);
+    estados.set(raiz, { kind, id: String(id), comentarios: [], meusVotos: new Set(), respondendo: null, editando: null });
+    // O site recria a raiz a cada render; a pagina das cartinhas remonta a
+    // mesma raiz depois do login. Ligar duas vezes dobraria cada clique.
+    if (!raiz.dataset.cmtLigado) {
+      liga(raiz);
+      raiz.dataset.cmtLigado = "1";
+    }
     try {
-      await recarrega();
+      await recarrega(raiz);
       destacaComentarioDaUrl();
     } catch (erro) {
       raiz.innerHTML = `<div class="section-head"><div><h2>Comentários</h2>

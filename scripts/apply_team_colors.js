@@ -1,18 +1,14 @@
-// Leva as cores de equipe do metadata.json para o database.json e o home.json
-// JÁ COMMITADOS.
+// Reaplica as cores de equipe do metadata.json a artefatos ja gerados.
+// O build_database.js agora copia essas cores durante a geracao normal.
 //
-// Uso: python scripts/apply_team_colors.py   <- primeiro, le a planilha
-//      node scripts/apply_team_colors.js     <- depois, este
+// Uso: node scripts/apply_team_colors.js
+//      (metadata.json precisa conter as cores lidas de teams_infos.xlsx)
 //
-// Por que existe: a planilha e a fonte (cor1/cor2 em teams_infos.xlsx), o
-// scripts/build_metadata.py ja sabe le-las, mas o database.json nao reproduz e
-// o home.json sai dele. Este script so escreve o campo `colors` das equipes,
-// pelo id, sem tocar em mais nada do artefato.
+// Uso de recuperacao: corrige um database.json antigo sem reprocessar partidas.
+// A planilha continua sendo a fonte (cor1/cor2 em teams_infos.xlsx).
 //
-// O que ele substitui: ate aqui `colors` vinha de teamColors()/colorPair() em
-// app.js - uma tabela de seis excecoes escritas a mao e, para o resto, um par
-// derivado do hash do id (dai os `hsl(258 64% 38%)` que aparecem no banco). Era
-// cor decorativa e estavel, nao a cor da equipe.
+// Em artefatos antigos, `colors` vinha de teamColors()/colorPair() em app.js,
+// uma paleta decorativa derivada do id em vez da cor cadastrada da equipe.
 
 const fs = require("fs");
 const path = require("path");

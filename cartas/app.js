@@ -44,34 +44,82 @@ function dataDoJogo(value) {
   return new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit", timeZone: "America/Sao_Paulo" }).format(new Date(value));
 }
 
-// A faixa de posicoes de cada dia sai da ordem do calendario: o dia N comeca
-// onde o anterior parou.
+// A posicao na colecao e o contrario da ordem de revelacao: o calendario vai
+// do menor para o maior overall, entao o primeiro dia revela a #216 e o ultimo
+// termina na #1, a melhor de todas. Cada dia comeca onde o anterior parou.
 function diasComFaixa() {
-  let inicio = 1;
+  let inicio = manifest.total;
   return manifest.days.map((day) => {
-    const faixa = { ...day, primeira: inicio, ultima: inicio + day.count - 1, revelado: Boolean(day.cards?.length) };
-    inicio += day.count;
+    const faixa = { ...day, primeira: inicio, ultima: inicio - day.count + 1, revelado: Boolean(day.cards?.length) };
+    inicio -= day.count;
     return faixa;
   });
 }
 
 // ---------------------------------------------------------------- contagem
 
+// A revelacao e as 21:30 de Brasilia, que e UTC-3 o ano todo (o horario de
+// verao acabou em 2019): 00:30 UTC do dia seguinte. Date.UTC aceita a hora 24
+// e vira o dia sozinho.
+function horaDaRevelacao(iso) {
+  const { ano, mes, dia } = partes(iso);
+  return Date.UTC(ano, mes - 1, dia, 24, 30);
+}
+
 function renderContagem(faixas) {
   const reveladas = cartas.length;
   const proximo = faixas.find((day) => !day.revelado);
-  const ultimo = faixas[faixas.length - 1];
   const fracao = manifest.total ? (reveladas / manifest.total) * 100 : 0;
   contagem.innerHTML = `
     <p class="contagem-numero"><b>${num(reveladas)}</b><span>de ${num(manifest.total)} reveladas</span></p>
     <span class="contagem-barra" aria-hidden="true"><i style="--p:${fracao.toFixed(2)}%"></i></span>
-    <p class="contagem-proxima">${
+    ${
       proximo
-        ? `Próxima: ${esc(dataLonga(proximo.date))}, ${proximo.count} ${proximo.count === 1 ? "cartinha" : "cartinhas"} (${pos(proximo.primeira)} a ${pos(proximo.ultima)})`
-        : "Todas as cartinhas foram reveladas."
-    }</p>
-    <p class="contagem-regra">Entra quem tem pelo menos 200 rounds e 12 mapas na temporada. Última revelação em ${esc(dataLonga(ultimo.date))}.</p>
+        ? `<p class="contagem-timer">Próxima revelação <b id="relogio" data-alvo="${horaDaRevelacao(proximo.date)}"></b></p>
+           <p class="contagem-proxima">${esc(dataLonga(proximo.date))}, às 21:30, ${proximo.count} ${proximo.count === 1 ? "cartinha" : "cartinhas"} (${pos(proximo.primeira)} a ${pos(proximo.ultima)})</p>`
+        : `<p class="contagem-proxima">Todas as cartinhas foram reveladas.</p>`
+    }
   `;
+  pulsaRelogio();
+}
+
+// O relogio conta ate as 21:30 do proximo dia. Quando zera, a edicao do dia
+// vai ao ar com o push (o deploy leva uns dois minutos), entao a pagina busca
+// o manifesto de novo a cada 30s por ate 20 minutos e se refaz quando chega.
+const BUSCA_INTERVALO = 30 * 1000;
+const BUSCA_JANELA = 20 * 60 * 1000;
+let relogio = null;
+let ultimaBusca = 0;
+
+function tempoQueFalta(ms) {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  return `${h ? `${h}h ` : ""}${h || m ? `${String(m).padStart(h ? 2 : 1, "0")}min ` : ""}${String(s).padStart(h || m ? 2 : 1, "0")}s`;
+}
+
+function pulsaRelogio() {
+  clearInterval(relogio);
+  const alvo = document.getElementById("relogio");
+  if (!alvo) return;
+  const quando = Number(alvo.dataset.alvo);
+  const bate = () => {
+    const falta = quando - Date.now();
+    if (falta > 0) {
+      alvo.textContent = `em ${tempoQueFalta(falta)}`;
+      return;
+    }
+    alvo.textContent = Date.now() - quando < BUSCA_JANELA ? "chegando, a página atualiza sozinha" : "em breve";
+    if (Date.now() - quando < BUSCA_JANELA && Date.now() - ultimaBusca >= BUSCA_INTERVALO) {
+      ultimaBusca = Date.now();
+      buscaManifesto().then((data) => {
+        if (data && data.publishedThrough !== manifest.publishedThrough) render(data);
+      });
+    }
+  };
+  bate();
+  relogio = setInterval(bate, 1000);
 }
 
 // ---------------------------------------------------------------- lista

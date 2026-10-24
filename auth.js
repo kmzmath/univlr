@@ -12,6 +12,9 @@
   "use strict";
 
   const esc = (v) => window.Community.esc(v);
+  // Prefixo dos links internos, o mesmo do comments.js: a pagina das
+  // cartinhas fica fora do app e define "/".
+  const RAIZ = window.UNIVLR_RAIZ || "";
 
   // Recuperar senha por e-mail exige SMTP proprio configurado no Supabase, e
   // hoje ele esta desligado - o servidor embutido entrega uns poucos por hora e
@@ -266,7 +269,7 @@
           <button type="submit" class="auth-principal">Salvar</button>
         </form>
         <div class="auth-rodape coluna">
-          <a class="cmt-link" href="#/u/${esc(p.username)}" data-fechar="1">Ver meu perfil público</a>
+          <a class="cmt-link" href="${RAIZ}#/u/${esc(p.username)}" data-fechar="1">Ver meu perfil público</a>
           <button type="button" class="cmt-link" data-ir="avisos">Notificações</button>
           <button type="button" class="cmt-link" data-ir="senha">Trocar senha</button>
           <button type="button" class="cmt-link" data-sair="1">Sair</button>

@@ -191,19 +191,19 @@
       // escreveu, para ela ver que algo ali nao foi aceito.
       if (!href) return dentro;
       const externo = href.startsWith("#") ? "" : ' target="_blank" rel="noopener nofollow ugc"';
-      return `<a class="cmt-url" href="${href}"${externo}>${dentro}</a>`;
+      return `<a class="cmt-url" href="${href.startsWith("#") ? RAIZ + href : href}"${externo}>${dentro}</a>`;
     });
     out = out.replace(/\[url\]([\s\S]*?)\[\/url\]/gi, (todo, dentro) => {
       const href = hrefSeguro(dentro);
       if (!href) return dentro;
       const externo = href.startsWith("#") ? "" : ' target="_blank" rel="noopener nofollow ugc"';
-      return `<a class="cmt-url" href="${href}"${externo}>${href}</a>`;
+      return `<a class="cmt-url" href="${href.startsWith("#") ? RAIZ + href : href}"${externo}>${href}</a>`;
     });
 
     out = out.replace(/\[hr\]/gi, '<hr class="cmt-hr">');
 
     // Mencao a usuario, que ja existia.
-    out = out.replace(/@([A-Za-z0-9_]{3,20})/g, '<a class="cmt-mencao" href="#/u/$1">@$1</a>');
+    out = out.replace(/@([A-Za-z0-9_]{3,20})/g, `<a class="cmt-mencao" href="${RAIZ}#/u/$1">@$1</a>`);
 
     out = out.replace(/\n/g, "<br>");
 
@@ -431,6 +431,9 @@
       <div class="cmt-lista">
         ${emArvore(est.comentarios).map((c) => umComentario(c, 0, null, est)).join("")}
       </div>`;
+    // Quem mostra a contagem fora da conversa (o selo na linha da cartinha)
+    // ouve isto e troca o numero sem esperar outra consulta.
+    raiz.dispatchEvent(new CustomEvent("comentarios:desenhados", { bubbles: true, detail: { kind: est.kind, id: est.id, total: n } }));
   }
 
   // ---------------------------------------------------------------- eventos
@@ -444,7 +447,12 @@
 
   async function recarrega(raiz) {
     const est = estados.get(raiz);
+    const pedido = (est.pedido = (est.pedido || 0) + 1);
     const { comentarios, meusVotos } = await window.Community.listarComentarios(est.kind, est.id);
+    // So a resposta mais nova da montagem atual desenha. Uma remontagem (o
+    // login) ou um segundo envio podem ter saido depois deste pedido e chegado
+    // antes; desenhar este por cima mostraria uma conversa velha.
+    if (estados.get(raiz) !== est || est.pedido !== pedido) return;
     est.comentarios = comentarios;
     est.meusVotos = meusVotos;
     desenha(raiz);
@@ -617,8 +625,10 @@
 
   const BALAO = `<svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M8 2C4.7 2 2 4.2 2 7c0 1.5.8 2.9 2 3.8V14l2.9-1.7c.4.1.7.1 1.1.1 3.3 0 6-2.2 6-5S11.3 2 8 2Z"/></svg>`;
 
-  function selo(kind, id) {
-    const n = window.Community?.contagem(kind, id) || 0;
+  // `total` vem de quem acabou de desenhar a conversa e sabe o numero exato;
+  // sem ele, vale a contagem carregada com a pagina.
+  function selo(kind, id, total) {
+    const n = total ?? (window.Community?.contagem(kind, id) || 0);
     if (!n) return "";
     return `<span class="cmt-selo-contagem" title="${n} ${n === 1 ? "comentário" : "comentários"}">
               ${BALAO}<span>${n}</span>
@@ -639,8 +649,8 @@
       // link precisa sair do mesmo jeito. "2026" e a conversa da colecao;
       // "2026:<puuid>", a de uma cartinha.
       if (kind === "card") {
-        const puuid = String(id).split(":")[1];
-        if (!puuid) return { href: "/cartas/", nome: "Cartinhas 2026" };
+        const [temporada, puuid] = String(id).split(":");
+        if (!puuid) return { href: "/cartas/#comentarios", nome: `Cartinhas ${temporada}` };
         const p = typeof window.playerById === "function" ? window.playerById(puuid) : null;
         return { href: `/cartas/#jogador-${encodeURIComponent(puuid)}`, nome: p ? `Cartinha de ${p.nick || p.handle}` : "Cartinha" };
       }
@@ -742,7 +752,9 @@
 
   async function montar(kind, id, raiz = document.querySelector("[data-comentarios]")) {
     if (!raiz) return;
-    estados.set(raiz, { kind, id: String(id), comentarios: [], meusVotos: new Set(), respondendo: null, editando: null });
+    // Map, como o listarComentarios devolve: o desenho le o sinal do voto com
+    // `.get`, e um Set aqui quebraria qualquer desenho antes da primeira lista.
+    estados.set(raiz, { kind, id: String(id), comentarios: [], meusVotos: new Map(), respondendo: null, editando: null });
     // O site recria a raiz a cada render; a pagina das cartinhas remonta a
     // mesma raiz depois do login. Ligar duas vezes dobraria cada clique.
     if (!raiz.dataset.cmtLigado) {

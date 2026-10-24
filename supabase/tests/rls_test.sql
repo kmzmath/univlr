@@ -38,6 +38,7 @@ declare
   bruno uuid := '22222222-2222-2222-2222-222222222222';
   c_alice uuid;
   n int;
+  restricao text;
 begin
   -- Alice publica um comentario legitimo. Isto roda como superusuario ainda,
   -- mas via RPC, que e o caminho real.
@@ -182,6 +183,26 @@ begin
   exception when others then
     insert into _r (teste, esperado, resultado)
     values ('ler e-mail em auth.users', 'bloqueado', 'ok');
+  end;
+
+  -- ATAQUE 14 - conversa de cartinha com assunto inventado (0007). Como Alice,
+  -- que nao esta banida nem no limite, e conferindo o NOME da restricao: sem a
+  -- 0007 o tipo `card` tambem cairia numa checagem, a do tipo, e o teste
+  -- passaria pelo motivo errado.
+  perform set_config('request.jwt.claims', json_build_object('sub', alice)::text, true);
+  begin
+    perform public.post_comment('card', 'qualquer coisa', 'assunto inventado');
+    insert into _r (teste, esperado, resultado)
+    values ('cartinha com assunto fora do formato', 'bloqueado', 'FALHOU - passou');
+  exception
+    when check_violation then
+      get stacked diagnostics restricao = constraint_name;
+      insert into _r (teste, esperado, resultado)
+      values ('cartinha com assunto fora do formato', 'bloqueado',
+              case when restricao = 'threads_card_subject_format' then 'ok' else 'FALHOU - ' || restricao end);
+    when others then
+      insert into _r (teste, esperado, resultado)
+      values ('cartinha com assunto fora do formato', 'bloqueado', 'FALHOU - ' || SQLERRM);
   end;
 
   -- COMPORTAMENTO - apagar zera o texto mas mantem a linha, senao as respostas

@@ -3,6 +3,36 @@
 Checkpoint de 23/10/2026, preparado após a sessão local atingir o limite.
 Este documento registra contexto e pendências; não declara as funcionalidades concluídas.
 
+## Estado depois da sessão no cloud (24/10/2026)
+
+As pendências das cartinhas foram terminadas e validadas na branch `codex/continuar-cloud-2026-10-23`. Nada foi publicado na `main` nem no site, nenhuma cartinha futura foi adicionada e a migração não foi aplicada no Supabase.
+
+Feito:
+
+1. **Texto único** no topo, o acordado ("É revelado um lote de cartinhas por dia..."). O total e a última data saem do manifesto; o HTML traz o mesmo texto.
+2. **21:30 de Brasília**, com contagem regressiva. O código parcial chamava `buscaManifesto()`, que não existia e quebraria quando o relógio zerasse; a função foi escrita. Como a edição é publicada um pouco antes das 21:30, a página só mostra um dia depois da hora dele (lista, busca, calendário e contagem); com a página aberta, a revelação entra sozinha quando o relógio zera. Se a edição atrasa, a página busca o manifesto a cada 30 s por até 20 min.
+3. **Numeração invertida** conferida: o manifesto tem as dez cartinhas de 23/10, #216 a #207, e o dia 1 do calendário tem 10. A "#206" da mensagem original seria a 11ª; a próxima edição, 24/10, vai da #206 à #197.
+4. **Comentários** na coleção (fim da página) e em cada cartinha (na conversa que aparece ao abrir a linha), com o espaço da conta no topo. Tipo `card` no banco: `2026` e `2026:<puuid>`. `#jogador-<puuid>` abre a cartinha, que é o destino dos links da atividade recente e do perfil público.
+5. **Selo de comentários** com o número, só quando há ao menos um, colado à esquerda do número do overall, entre o nome e o overall. Interpretação adotada para "à esquerda do overall, antes do nome"; é um ajuste de CSS se a intenção era outra posição.
+6. **"Força média de adversário"** no lugar de "Ajustado", com o `nivelAdversarios` do gerador, com sinal (−0,15 = adversários mais fracos que o típico) e explicação no `title`.
+7. **`comments.js`** revisado: estado por raiz no `WeakMap`, resposta atrasada ou fora de ordem não desenha por cima da mais nova (aparecia ao remontar depois do login), `meusVotos` como `Map` desde o início, prefixo `UNIVLR_RAIZ` também nas menções e nos `[url=#/...]` (e no link de perfil do `auth.js`), evento `comentarios:desenhados` para o selo da linha e `selo()` com total opcional. A conta só remonta as conversas quando quem está logado muda; a renovação do token não apaga rascunhos.
+8. **Migração `0007_cartinhas.sql`**: aceita `card` e confere o formato do assunto no banco. `rls_test.sql` e `positive_test.sql` ganharam um caso cada. Conferido num Postgres 16 local com uma imitação do `auth` do Supabase: `0001` a `0007` aplicam, 17 e 20 linhas `ok`; sem a `0007`, os dois casos acusam a falta pelo motivo certo.
+9. **Testes novos**: `node scripts/test_cartinhas.js` (só Node) e `node scripts/test_cartinhas_navegador.cjs` (Playwright, com `scripts/fake_supabase.js` no lugar do Supabase): topo, relógio, liberação às 21:30 adiantada e atrasada, numeração, selo, força de adversário, três conversas abertas ao mesmo tempo (login, envio, resposta, voto, rascunho preservado, saída), links que voltam ao site, celular de 390 px sem rolagem lateral, erro sem a `0007` e a página de jogador do site com o mesmo `comments.js`.
+
+Depende do usuário:
+
+- Rodar `supabase/migrations/0007_cartinhas.sql` no SQL Editor e, em seguida, os dois testes de `supabase/tests/`. Antes disso, publicar comentário nas cartinhas devolve erro de restrição.
+- Aceitar a publicação. O merge na `main` e o push diário das edições continuam manuais e com aceite.
+- Gerar as próximas edições no computador: `scripts/build_card_reveal.py` depende dos dados privados, que continuam fora do repositório.
+
+Observações:
+
+- A janela de convite para criar conta, que o `auth.js` mostra no site para quem não tem conta, também aparece na página das cartinhas, com as mesmas regras de espera.
+- Os selos de time e jogador favorito ao lado do nome de quem comenta não aparecem na página das cartinhas, porque ela não carrega o banco do site.
+- Quando uma edição é liberada com a página aberta, a lista é refeita e as conversas das cartinhas abertas são recarregadas (um rascunho nelas se perde); a conversa da coleção não é tocada.
+- Encontrado no teste e não alterado: no site, logo depois de entrar, a página inteira é refeita mais uma vez. Um texto digitado nesse instante na caixa de comentário se perde. Isso já acontecia antes destas mudanças.
+- A `claude/visual-placar` saiu da `main` antes do commit das cartinhas e tem uma versão anterior de `cartas/` (216 posições com cartinhas bloqueadas). Na integração, manter a versão desta branch para `cartas/`, `scripts/build_card_reveal.py` e `scripts/card_reveal_details.cjs`.
+
 ## Onde está cada trabalho
 
 - Repositório: `kmzmath/univlr`.

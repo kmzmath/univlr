@@ -23,8 +23,10 @@ existe e precisa passar antes de qualquer tela.
 | `migrations/0003_functions.sql` | RPCs de escrita (o caminho único) |
 | `migrations/0004_favorito_unico_e_perfis.sql` | Favorito único e comentário em perfil |
 | `migrations/0005_contagens.sql` | View `thread_counts`, para o selo nas listas |
-| `tests/rls_test.sql` | 16 ataques que precisam falhar |
-| `tests/positive_test.sql` | 19 operações legítimas que precisam passar |
+| `migrations/0006_voto_com_sinal.sql` | Voto para cima e para baixo |
+| `migrations/0007_cartinhas.sql` | Conversas das cartinhas (`card`), com formato conferido |
+| `tests/rls_test.sql` | Ataques que precisam falhar |
+| `tests/positive_test.sql` | Operações legítimas que precisam passar |
 
 ## Setup (o que precisa ser feito no painel)
 
@@ -91,6 +93,15 @@ Migrações aplicadas e os dois testes passando no projeto `univlr`
 (`sa-east-1`), em 30/08/2026: 16 ataques bloqueados, 16 operações legítimas
 funcionando.
 
+A `0007` (cartinhas) foi escrita em 24/10/2026 e **ainda não foi aplicada** no
+projeto: quem administra o banco roda o SQL. Até lá, a página das cartinhas lê
+as conversas normalmente (vazias), mas publicar devolve erro de restrição. Ela
+e os dois testes foram conferidos num Postgres 16 local, com uma imitação do
+`auth` do Supabase: as migrações `0001` a `0007` aplicam sem erro, o
+`rls_test` dá 17 linhas `ok` e o `positive_test` 20. Sem a `0007`, os dois
+casos de cartinha acusam a falta pelo motivo certo. Depois de aplicar no
+projeto, rodar os dois testes de novo.
+
 Cada bloqueio foi conferido pelo motivo, não só pelo fato de falhar:
 `42501` de grant ou RLS, `23505` da chave primária, `P0001` das validações das
 RPCs. Um teste que passa porque o SQL tem erro de digitação não vale nada.
@@ -152,9 +163,15 @@ precisam ser remapeados.
 
 ## Onde se pode comentar
 
-`threads.subject_kind` aceita `match`, `event`, `player`, `team` e `article` -
-as cinco têm tela. `article` é a notícia, e o `subject_id` é o slug do arquivo
-em `noticias/` (ver `noticias/README.md`).
+`threads.subject_kind` aceita `match`, `event`, `player`, `team`, `article` e
+`card` - os seis têm tela. `article` é a notícia, e o `subject_id` é o slug do
+arquivo em `noticias/` (ver `noticias/README.md`).
+
+`card` são as cartinhas, em `/cartas/` (a partir da `0007`): `2026` é a
+conversa da coleção da temporada e `2026:<puuid>` a de uma cartinha. O puuid,
+e não a posição, porque a posição pode mudar se os overalls forem recalculados.
+O banco recusa qualquer outro formato (`threads_card_subject_format`), já que
+`post_comment()` cria a thread com o que receber.
 
 Consequência de o conteúdo da notícia viver no repositório e o comentário no
 banco: apagar o `.docx` **não** apaga a thread. Ela fica órfã e invisível. Se a

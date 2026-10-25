@@ -429,6 +429,20 @@ assert(!/<b>Classificado<\/b>/.test(classificado), "Classificado nao vai na colu
 assert(/<small>[^<]*Classificado/.test(classificado), "Classificado fica pequeno, junto da campanha");
 const primeiro = context.tournamentPodiumCard(rush, { range: "1st", team: equipeDoPodio });
 assert(/<b>1º<\/b>/.test(primeiro) && !primeiro.includes("vp-pod-texto"), "controle: o 1º continua na coluna do numero");
+// Campeonato em andamento com as semis jogadas (UNIVAVA, 24/10): os eliminados
+// nas semis ja sao 3o-4o, e o 1o e o 2o seguem em aberto ate a final.
+const playoffsEmAndamento = { id: "teste-playoffs", name: "Playoffs", status: "Em andamento", placements: [{ range: "3-4", id: "azr", note: "Semifinal" }, { range: "3-4", id: "ceub", note: "Semifinal" }, { range: "5-8", id: "mack", note: "Quartas de final" }] };
+// JSON ida e volta: o array nasce no contexto do vm, com outro prototipo.
+const doVm = (valor) => JSON.parse(JSON.stringify(valor));
+const podioDasSemis = context.tournamentPodiumRows(playoffsEmAndamento, [], []);
+assert.deepStrictEqual(doVm(podioDasSemis.map((row) => [row.range, row.team?.id])), [["3-4", "azr"], ["3-4", "ceub"]], "quem caiu na semi entra no podio como 3o-4o");
+const podioComVagas = context.tournamentPodiumDisplayRows(playoffsEmAndamento, podioDasSemis);
+assert.deepStrictEqual(doVm(podioComVagas.map((row) => [row.range, row.team?.id ?? null])), [["1", null], ["2", null], ["3-4", "azr"], ["3-4", "ceub"]], "1o e 2o ficam em aberto acima dos 3o-4o");
+const semNada = context.tournamentPodiumDisplayRows(playoffsEmAndamento, []);
+assert.deepStrictEqual(doVm(semNada.map((row) => row.range)), ["1", "2", "3"], "controle: sem colocacao nenhuma, as tres vagas de sempre");
+const encerradoComPodio = [{ range: "1", team: { id: "azr" } }, { range: "2", team: { id: "ceub" } }, { range: "3-4", team: { id: "mack" } }];
+assert.deepStrictEqual(doVm(context.tournamentPodiumDisplayRows({ status: "Finalizado" }, encerradoComPodio).map((row) => row.range)), ["1", "2", "3-4"], "controle: campeonato encerrado nao ganha vaga em aberto");
+assert(context.tournamentPodiumCard(playoffsEmAndamento, podioComVagas[2]).includes("vp-pod-dupla"), "o 3o/4o usa o rotulo mais estreito, para caber na coluna do numero");
 assert(context.tournamentPodiumTitle([{ range: "Classificado" }, { range: "Classificado" }]) === "Classificados", "so classificados: o titulo diz isso");
 assert(context.tournamentPodiumTitle([{ range: "1st" }, { range: "2nd" }]) === "Pódio", "controle: com colocacao, continua Pódio");
 

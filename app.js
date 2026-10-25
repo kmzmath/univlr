@@ -9538,7 +9538,7 @@ function tournamentOverviewSection(event, matches, standings) {
   const maps = event.mapPool || event.maps || [];
   const mapRows = tournamentMapPoolRows(maps, matches);
   const campanhas = campanhasDoCampeonato({ ...event, bracket: tournamentBracketDefinition(event, matches) || event.bracket });
-  const linhas = podium.length ? podium : tournamentPodiumPlaceholderRows();
+  const linhas = tournamentPodiumDisplayRows(event, podium);
   // O Resumo (equipes, series e dias) saiu em 24/10: o dono achou pouco
   // relevante, e equipes e datas ja estao no topo do campeonato.
   return `
@@ -9668,6 +9668,22 @@ function tournamentPodiumPlaceholderRows() {
   return ["1", "2", "3"].map((range) => ({ range, team: null }));
 }
 
+// Campeonato em andamento com parte do podio decidida (as semis jogadas e a
+// final por vir): quem ja tem colocacao aparece, e o 1o e o 2o que faltam
+// ficam como vaga em aberto acima. Encerrado, o podio e o que veio.
+function tournamentPodiumDisplayRows(event, rows) {
+  if (!rows.length) return tournamentPodiumPlaceholderRows();
+  if (eventIsDone(event)) return rows;
+  const tem = (classe) => rows.some((row) => tournamentPlacementPodiumClass(row.range) === classe);
+  const abertas = [
+    ["1", "place-1"],
+    ["2", "place-2"],
+  ]
+    .filter(([, classe]) => !tem(classe))
+    .map(([range]) => ({ range, team: null }));
+  return [...abertas, ...rows];
+}
+
 // Classificatoria nao tem 1o, 2o e 3o: as vagas sao todas "Classificado". O
 // rotulo em texto nao cabe na coluna do numero (passava por cima do escudo e
 // do nome), entao ele vai pequeno junto da campanha, e a coluna sai.
@@ -9681,7 +9697,9 @@ function tournamentPodiumCard(event, row, campanhas = new Map()) {
   const miolo = emTexto
     ? `${escudo}<strong>${escapeHtml(team ? team.name : "TBD")}</strong><small>${escapeHtml([label, placar].filter(Boolean).join(", "))}</small>`
     : `<b>${escapeHtml(label.replace(/ lugar$/, ""))}</b>${escudo}<strong>${escapeHtml(team ? team.name : "TBD")}</strong><small>${placar}</small>`;
-  const classes = `vp-pod podium-${escapeHtml(slugify(label))}${emTexto ? " vp-pod-texto" : ""}${team ? "" : " vp-pod-vaga"}`;
+  // "3º/4º" e mais largo que a coluna do numero: vai num corpo menor.
+  const dupla = !emTexto && label.includes("/");
+  const classes = `vp-pod podium-${escapeHtml(slugify(label))}${emTexto ? " vp-pod-texto" : ""}${dupla ? " vp-pod-dupla" : ""}${team ? "" : " vp-pod-vaga"}`;
   const estilo = `--team-line:${team ? teamLineColor(team.id) : TEAM_LINE_SEM_COR}`;
   return team && !team.missing
     ? `<a class="${classes}" href="#/teams/${escapeHtml(team.id)}" style="${estilo}">${miolo}</a>`
@@ -11133,7 +11151,7 @@ function tournamentPlacementPodiumClass(label) {
   const compactLabel = normalizeNameKey(value);
   if (value === "1" || normalizedLabel === "1st" || compactLabel === "1olugar") return "place-1";
   if (value === "2" || normalizedLabel === "2nd" || compactLabel === "2olugar") return "place-2";
-  if (value === "3" || normalizedLabel === "3rd" || compactLabel === "3olugar" || compactLabel.startsWith("3o4") || normalizedLabel.startsWith("3-4") || normalizedLabel.startsWith("3/4")) return "place-3";
+  if (value === "3" || normalizedLabel === "3rd" || compactLabel === "3olugar" || compactLabel.startsWith("3o4") || compactLabel.startsWith("34") || normalizedLabel.startsWith("3-4") || normalizedLabel.startsWith("3/4")) return "place-3";
   return "";
 }
 

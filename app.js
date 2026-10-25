@@ -2186,12 +2186,12 @@ const TOURNAMENT_OVERRIDES = {
     prizePool: "R$15.000",
     tier: "S",
     type: "Online - Final presencial",
-    // Quartas em 17 e 18/10/2026; semifinais e final ainda sem data. Com a
-    // final: status "Finalizado", endAt e as colocacoes do 1o ao 4o.
+    // Quartas em 17 e 18/10/2026, semifinais em 24/10; final ainda sem data.
+    // Com a final: status "Finalizado", endAt e as colocacoes 1 e 2.
     status: "Em andamento",
     startAt: "2026-10-17T00:00:00",
     teamCount: 8,
-    // O pool da fase de grupos: os 5 mapas jogados nas quartas estao nele.
+    // O pool da fase de grupos: as quartas e as semis ja jogaram os 7.
     mapPool: ["Abyss", "Ascent", "Haven", "Lotus", "Split", "Summit", "Sunset"],
     format: {
       summary: "Elimina\u00e7\u00e3o simples",
@@ -2205,8 +2205,10 @@ const TOURNAMENT_OVERRIDES = {
       standings: "Coloca\u00e7\u00e3o oficial do campeonato",
     },
     // Rotulos iguais aos de ranking-weights.json. So os eliminados nas quartas
-    // ja tem colocacao; o campeonato em andamento nao pontua no ranking.
+    // e nas semis ja tem colocacao; o campeonato em andamento nao pontua no ranking.
     placements: [
+      { range: "3-4", id: "ufu_saints", note: "Semifinal" },
+      { range: "3-4", id: "caap_hellhounds", note: "Semifinal" },
       { range: "5-8", id: "macklogic_red", note: "Quartas de final" },
       { range: "5-8", id: "axis_anteaters", note: "Quartas de final" },
       { range: "5-8", id: "ufmt_turuna", note: "Quartas de final" },
@@ -2233,7 +2235,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Final",
               matches: [
-                { code: "Partida 7", bestOf: "MD5", aLabel: "Vencedor da Partida 5", bLabel: "Vencedor da Partida 6" },
+                { code: "Partida 7", bestOf: "MD5", a: "azure_bears_golden", b: "ceub_octopus" },
               ],
             },
           ],
@@ -2254,8 +2256,8 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Semifinais",
               matches: [
-                { code: "Partida 5", bestOf: "MD3", a: "azure_bears_golden", b: "ufu_saints" },
-                { code: "Partida 6", bestOf: "MD3", a: "ceub_octopus", b: "caap_hellhounds" },
+                { code: "Partida 5", bestOf: "MD3", a: "azure_bears_golden", scoreA: 2, b: "ufu_saints", scoreB: 0, winner: "azure_bears_golden" },
+                { code: "Partida 6", bestOf: "MD3", a: "ceub_octopus", scoreA: 2, b: "caap_hellhounds", scoreB: 0, winner: "ceub_octopus" },
               ],
             },
           ],

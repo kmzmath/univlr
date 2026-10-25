@@ -46,7 +46,7 @@
           "lastSeenAt": 1791948368088,
           "matches": 63,
           "source": "auto-json+players-history",
-          "profileConfidence": 1258,
+          "profileConfidence": 1254,
           "players": [
             {
               "slot": 1,
@@ -511,7 +511,7 @@
           "lastSeenAt": 1792264677026,
           "matches": 44,
           "source": "auto-json+players-history",
-          "profileConfidence": 872,
+          "profileConfidence": 838,
           "players": [
             {
               "slot": 1,
@@ -625,8 +625,7 @@
               "matches": 17,
               "rounds": 352,
               "profileMatches": 17,
-              "profileConfidence": 68,
-              "currentTeam": "axis_anteaters",
+              "profileConfidence": 34,
               "teamHistory": [
                 "axis_aura",
                 "axis_anteaters"
@@ -758,7 +757,6 @@
               "rounds": 35,
               "profileMatches": 2,
               "profileConfidence": 4,
-              "currentTeam": "axis_anteaters",
               "teamHistory": [
                 "axis_aura",
                 "axis_anteaters"
@@ -1148,12 +1146,12 @@
       "lineupHistory": [
         {
           "from": "2026-04-04",
-          "to": "2026-10-17",
+          "to": "2026-10-24",
           "firstSeenAt": 1775325877530,
-          "lastSeenAt": 1792272276660,
-          "matches": 73,
+          "lastSeenAt": 1792865600762,
+          "matches": 75,
           "source": "auto-json+players-history",
-          "profileConfidence": 1360,
+          "profileConfidence": 1400,
           "players": [
             {
               "slot": 1,
@@ -1161,11 +1159,11 @@
               "name": "André",
               "handle": "andre#aaa12",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-10-17",
-              "matches": 73,
-              "rounds": 1457,
-              "profileMatches": 73,
-              "profileConfidence": 292,
+              "lastSeenAt": "2026-10-24",
+              "matches": 75,
+              "rounds": 1498,
+              "profileMatches": 75,
+              "profileConfidence": 300,
               "currentTeam": "azure_bears_golden",
               "teamHistory": [
                 "azure_bears",
@@ -1178,11 +1176,11 @@
               "name": "greinzera",
               "handle": "greiN#quel",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-10-17",
-              "matches": 73,
-              "rounds": 1457,
-              "profileMatches": 73,
-              "profileConfidence": 292,
+              "lastSeenAt": "2026-10-24",
+              "matches": 75,
+              "rounds": 1498,
+              "profileMatches": 75,
+              "profileConfidence": 300,
               "currentTeam": "azure_bears_golden",
               "teamHistory": [
                 "azure_bears_golden"
@@ -1194,11 +1192,11 @@
               "name": "piM",
               "handle": "piM#まいさ",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-10-17",
-              "matches": 73,
-              "rounds": 1457,
-              "profileMatches": 73,
-              "profileConfidence": 292,
+              "lastSeenAt": "2026-10-24",
+              "matches": 75,
+              "rounds": 1498,
+              "profileMatches": 75,
+              "profileConfidence": 300,
               "currentTeam": "azure_bears_golden",
               "teamHistory": [
                 "azure_bears_golden"
@@ -1210,11 +1208,11 @@
               "name": "taek",
               "handle": "taek#aim",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-10-17",
-              "matches": 73,
-              "rounds": 1457,
-              "profileMatches": 73,
-              "profileConfidence": 292,
+              "lastSeenAt": "2026-10-24",
+              "matches": 75,
+              "rounds": 1498,
+              "profileMatches": 75,
+              "profileConfidence": 300,
               "currentTeam": "azure_bears_golden",
               "teamHistory": [
                 "azure_bears_golden"
@@ -1226,11 +1224,11 @@
               "name": "Kick",
               "handle": "Kick#SchrB",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-10-17",
-              "matches": 48,
-              "rounds": 948,
-              "profileMatches": 48,
-              "profileConfidence": 192,
+              "lastSeenAt": "2026-10-24",
+              "matches": 50,
+              "rounds": 989,
+              "profileMatches": 50,
+              "profileConfidence": 200,
               "currentTeam": "azure_bears_golden",
               "teamHistory": [
                 "azure_bears_golden"
@@ -1393,7 +1391,7 @@
           "lastSeenAt": 1792267693967,
           "matches": 16,
           "source": "auto-json+players-history",
-          "profileConfidence": 320,
+          "profileConfidence": 318,
           "players": [
             {
               "slot": 1,
@@ -1504,8 +1502,7 @@
               "matches": 1,
               "rounds": 30,
               "profileMatches": 1,
-              "profileConfidence": 4,
-              "currentTeam": "caap_auroras",
+              "profileConfidence": 2,
               "teamHistory": [
                 "caap_auroras"
               ]
@@ -1518,12 +1515,12 @@
       "lineupHistory": [
         {
           "from": "2026-01-10",
-          "to": "2026-10-18",
+          "to": "2026-10-24",
           "firstSeenAt": 1768078374040,
-          "lastSeenAt": 1792353294770,
-          "matches": 73,
+          "lastSeenAt": 1792872040432,
+          "matches": 75,
           "source": "auto-json+players-history",
-          "profileConfidence": 1418,
+          "profileConfidence": 1326,
           "players": [
             {
               "slot": 1,
@@ -1531,11 +1528,11 @@
               "name": "Burrito",
               "handle": "CAAP Burrito42#yuki",
               "firstSeenAt": "2026-01-10",
-              "lastSeenAt": "2026-10-18",
-              "matches": 71,
-              "rounds": 1429,
-              "profileMatches": 71,
-              "profileConfidence": 284,
+              "lastSeenAt": "2026-10-24",
+              "matches": 73,
+              "rounds": 1466,
+              "profileMatches": 73,
+              "profileConfidence": 292,
               "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
@@ -1547,11 +1544,11 @@
               "name": "Metal",
               "handle": "CAAP Metal#iza",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-10-18",
-              "matches": 66,
-              "rounds": 1320,
-              "profileMatches": 66,
-              "profileConfidence": 264,
+              "lastSeenAt": "2026-10-24",
+              "matches": 68,
+              "rounds": 1357,
+              "profileMatches": 68,
+              "profileConfidence": 272,
               "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
@@ -1563,11 +1560,11 @@
               "name": "sobrunin",
               "handle": "CAAP sobrunin#bea",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-10-18",
-              "matches": 66,
-              "rounds": 1320,
-              "profileMatches": 66,
-              "profileConfidence": 264,
+              "lastSeenAt": "2026-10-24",
+              "matches": 68,
+              "rounds": 1357,
+              "profileMatches": 68,
+              "profileConfidence": 272,
               "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
@@ -1579,11 +1576,11 @@
               "name": "Medina",
               "handle": "CAAP medina#ayumi",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-10-18",
-              "matches": 64,
-              "rounds": 1279,
-              "profileMatches": 64,
-              "profileConfidence": 256,
+              "lastSeenAt": "2026-10-24",
+              "matches": 66,
+              "rounds": 1316,
+              "profileMatches": 66,
+              "profileConfidence": 264,
               "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
@@ -1599,8 +1596,7 @@
               "matches": 60,
               "rounds": 1188,
               "profileMatches": 60,
-              "profileConfidence": 240,
-              "currentTeam": "caap_hellhounds",
+              "profileConfidence": 120,
               "teamHistory": [
                 "caap_hellhounds"
               ]
@@ -1611,11 +1607,11 @@
               "name": "SuperPedrin",
               "handle": "CAAP SUPERPDR1N#manu",
               "firstSeenAt": "2026-09-19",
-              "lastSeenAt": "2026-10-18",
-              "matches": 11,
-              "rounds": 231,
-              "profileMatches": 11,
-              "profileConfidence": 44,
+              "lastSeenAt": "2026-10-24",
+              "matches": 13,
+              "rounds": 268,
+              "profileMatches": 13,
+              "profileConfidence": 52,
               "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "axis_anteaters",
@@ -1778,12 +1774,12 @@
       "lineupHistory": [
         {
           "from": "2026-04-04",
-          "to": "2026-10-18",
+          "to": "2026-10-24",
           "firstSeenAt": 1775325466108,
-          "lastSeenAt": 1792345709775,
-          "matches": 48,
+          "lastSeenAt": 1792872040432,
+          "matches": 50,
           "source": "auto-json+players-history",
-          "profileConfidence": 896,
+          "profileConfidence": 946,
           "players": [
             {
               "slot": 1,
@@ -1791,11 +1787,11 @@
               "name": "reyblock",
               "handle": "reyblock#rbck",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-10-18",
-              "matches": 48,
-              "rounds": 917,
-              "profileMatches": 48,
-              "profileConfidence": 192,
+              "lastSeenAt": "2026-10-24",
+              "matches": 50,
+              "rounds": 954,
+              "profileMatches": 50,
+              "profileConfidence": 200,
               "currentTeam": "ceub_octopus",
               "teamHistory": [
                 "ceub_octopus"
@@ -1807,11 +1803,11 @@
               "name": "seki",
               "handle": "seki#hanei",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-10-18",
-              "matches": 46,
-              "rounds": 879,
-              "profileMatches": 46,
-              "profileConfidence": 184,
+              "lastSeenAt": "2026-10-24",
+              "matches": 48,
+              "rounds": 916,
+              "profileMatches": 48,
+              "profileConfidence": 192,
               "currentTeam": "ceub_octopus",
               "teamHistory": [
                 "ceub_octopus"
@@ -1823,11 +1819,11 @@
               "name": "kzr",
               "handle": "kzr#bala",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-10-18",
-              "matches": 46,
-              "rounds": 870,
-              "profileMatches": 46,
-              "profileConfidence": 184,
+              "lastSeenAt": "2026-10-24",
+              "matches": 48,
+              "rounds": 907,
+              "profileMatches": 48,
+              "profileConfidence": 192,
               "currentTeam": "ceub_octopus",
               "teamHistory": [
                 "ceub_octopus"
@@ -1839,11 +1835,11 @@
               "name": "chadu",
               "handle": "chadu#2007",
               "firstSeenAt": "2026-04-04",
-              "lastSeenAt": "2026-10-18",
-              "matches": 37,
-              "rounds": 687,
-              "profileMatches": 37,
-              "profileConfidence": 148,
+              "lastSeenAt": "2026-10-24",
+              "matches": 39,
+              "rounds": 724,
+              "profileMatches": 39,
+              "profileConfidence": 156,
               "currentTeam": "ceub_octopus",
               "teamHistory": [
                 "ceub_octopus"
@@ -1855,11 +1851,11 @@
               "name": "gbzz",
               "handle": "big0d#CEI",
               "firstSeenAt": "2026-04-09",
-              "lastSeenAt": "2026-10-18",
-              "matches": 31,
-              "rounds": 570,
-              "profileMatches": 31,
-              "profileConfidence": 124,
+              "lastSeenAt": "2026-10-24",
+              "matches": 33,
+              "rounds": 607,
+              "profileMatches": 33,
+              "profileConfidence": 132,
               "currentTeam": "ceub_octopus",
               "teamHistory": [
                 "ceub_octopus"
@@ -1927,7 +1923,7 @@
           "lastSeenAt": 1792367834692,
           "matches": 44,
           "source": "auto-json+players-history",
-          "profileConfidence": 868,
+          "profileConfidence": 794,
           "players": [
             {
               "slot": 1,
@@ -1971,8 +1967,7 @@
               "matches": 33,
               "rounds": 642,
               "profileMatches": 33,
-              "profileConfidence": 132,
-              "currentTeam": "ceub_octopus_vulgaris",
+              "profileConfidence": 66,
               "teamHistory": [
                 "ceub_octopus_vulgaris"
               ]
@@ -2052,8 +2047,7 @@
               "matches": 4,
               "rounds": 78,
               "profileMatches": 4,
-              "profileConfidence": 16,
-              "currentTeam": "ceub_octopus_vulgaris",
+              "profileConfidence": 8,
               "teamHistory": [
                 "ceub_octopus_vulgaris"
               ]
@@ -2797,7 +2791,7 @@
           "lastSeenAt": 1789927146284,
           "matches": 28,
           "source": "auto-json+players-history",
-          "profileConfidence": 560,
+          "profileConfidence": 528,
           "players": [
             {
               "slot": 1,
@@ -2873,8 +2867,7 @@
               "matches": 16,
               "rounds": 299,
               "profileMatches": 16,
-              "profileConfidence": 64,
-              "currentTeam": "furia_utfpr",
+              "profileConfidence": 32,
               "teamHistory": [
                 "furia_utfpr"
               ]
@@ -4022,7 +4015,7 @@
           "lastSeenAt": 1792272276660,
           "matches": 53,
           "source": "auto-json+players-history",
-          "profileConfidence": 1056,
+          "profileConfidence": 1022,
           "players": [
             {
               "slot": 1,
@@ -4114,8 +4107,7 @@
               "matches": 17,
               "rounds": 389,
               "profileMatches": 17,
-              "profileConfidence": 68,
-              "currentTeam": "macklogic_red",
+              "profileConfidence": 34,
               "teamHistory": [
                 "macklogic_red"
               ]
@@ -4166,26 +4158,10 @@
           "lastSeenAt": 1782586420586,
           "matches": 4,
           "source": "auto-json+players-history",
-          "profileConfidence": 72,
+          "profileConfidence": 48,
           "players": [
             {
               "slot": 1,
-              "playerId": "9edCRwvelp9Ko7rrbtTbk86da6un1VgQVZ7HFf0x3G8hmQbpGxGkY1D9QBQOYECuAHROjMACZxeW-g",
-              "name": "Finisher",
-              "handle": "neymar 11 goat#NEY",
-              "firstSeenAt": "2026-05-23",
-              "lastSeenAt": "2026-06-27",
-              "matches": 4,
-              "rounds": 88,
-              "profileMatches": 4,
-              "profileConfidence": 16,
-              "currentTeam": "macklogic_white",
-              "teamHistory": [
-                "macklogic_white"
-              ]
-            },
-            {
-              "slot": 2,
               "playerId": "rk5QFvzFve33Nl8dNY6oQMteuzUtjLDl7sbPQTPIyE_w150LS_svc0cmOKwA9WGNDe_DipU3NyRwxQ",
               "name": "Lodon6",
               "handle": "Lodon6#dumb",
@@ -4201,23 +4177,22 @@
               ]
             },
             {
-              "slot": 3,
-              "playerId": "DgRoFzXydtAKcOh2ntoyp6iqGyAOgMG3CWFcXnYTmmoGnijHaKCFS_u8tT47bILJOS8V_0mqSyVw2A",
-              "name": "Rafaelvlr",
-              "handle": "kpoper maldito#jkook",
+              "slot": 2,
+              "playerId": "9edCRwvelp9Ko7rrbtTbk86da6un1VgQVZ7HFf0x3G8hmQbpGxGkY1D9QBQOYECuAHROjMACZxeW-g",
+              "name": "Finisher",
+              "handle": "neymar 11 goat#NEY",
               "firstSeenAt": "2026-05-23",
               "lastSeenAt": "2026-06-27",
               "matches": 4,
               "rounds": 88,
               "profileMatches": 4,
-              "profileConfidence": 16,
-              "currentTeam": "macklogic_white",
+              "profileConfidence": 8,
               "teamHistory": [
                 "macklogic_white"
               ]
             },
             {
-              "slot": 4,
+              "slot": 3,
               "playerId": "BsC0lYtmj_JvKTeWIr7mV68RqqAAOfixbSECcQlgTuQ4Ia7tjFSbxhfMuQFxkmIHwWInshjsIwF61A",
               "name": "Hirama",
               "handle": "hirama#xoxo",
@@ -4234,6 +4209,21 @@
               ]
             },
             {
+              "slot": 4,
+              "playerId": "DgRoFzXydtAKcOh2ntoyp6iqGyAOgMG3CWFcXnYTmmoGnijHaKCFS_u8tT47bILJOS8V_0mqSyVw2A",
+              "name": "Rafaelvlr",
+              "handle": "kpoper maldito#jkook",
+              "firstSeenAt": "2026-05-23",
+              "lastSeenAt": "2026-06-27",
+              "matches": 4,
+              "rounds": 88,
+              "profileMatches": 4,
+              "profileConfidence": 8,
+              "teamHistory": [
+                "macklogic_white"
+              ]
+            },
+            {
               "slot": 5,
               "playerId": "2yslosTvB5-Q9mszSTYnUsHkt8dc2ryhnysRiaa_oUw7t3C45vaUQOWzro4OUYgztuiNKwu9zoaYtA",
               "name": "Untrusted",
@@ -4243,8 +4233,7 @@
               "matches": 3,
               "rounds": 67,
               "profileMatches": 3,
-              "profileConfidence": 12,
-              "currentTeam": "macklogic_white",
+              "profileConfidence": 6,
               "teamHistory": [
                 "macklogic_white"
               ]
@@ -4259,8 +4248,7 @@
               "matches": 1,
               "rounds": 21,
               "profileMatches": 1,
-              "profileConfidence": 4,
-              "currentTeam": "macklogic_white",
+              "profileConfidence": 2,
               "teamHistory": [
                 "macklogic_white"
               ]
@@ -4831,7 +4819,7 @@
           "lastSeenAt": 1791141225632,
           "matches": 53,
           "source": "auto-json+players-history",
-          "profileConfidence": 1030,
+          "profileConfidence": 886,
           "players": [
             {
               "slot": 1,
@@ -4859,8 +4847,7 @@
               "matches": 42,
               "rounds": 882,
               "profileMatches": 42,
-              "profileConfidence": 168,
-              "currentTeam": "pucc_cardinals",
+              "profileConfidence": 84,
               "teamHistory": [
                 "pucc_cardinals"
               ]
@@ -4923,8 +4910,7 @@
               "matches": 24,
               "rounds": 518,
               "profileMatches": 24,
-              "profileConfidence": 96,
-              "currentTeam": "pucc_cardinals",
+              "profileConfidence": 48,
               "teamHistory": [
                 "pucc_cardinals"
               ]
@@ -4974,7 +4960,7 @@
           "lastSeenAt": 1789322437756,
           "matches": 11,
           "source": "auto-json+players-history",
-          "profileConfidence": 208,
+          "profileConfidence": 200,
           "players": [
             {
               "slot": 1,
@@ -5066,8 +5052,7 @@
               "matches": 3,
               "rounds": 62,
               "profileMatches": 3,
-              "profileConfidence": 12,
-              "currentTeam": "pucgo_sistematica",
+              "profileConfidence": 6,
               "teamHistory": [
                 "pucgo_sistematica"
               ]
@@ -5255,7 +5240,6 @@
               "rounds": 43,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "axis_anteaters",
               "teamHistory": [
                 "axis_aura",
                 "axis_anteaters"
@@ -6448,7 +6432,7 @@
           "lastSeenAt": 1792345709775,
           "matches": 60,
           "source": "auto-json+players-history",
-          "profileConfidence": 1200,
+          "profileConfidence": 1188,
           "players": [
             {
               "slot": 1,
@@ -6540,8 +6524,7 @@
               "matches": 6,
               "rounds": 110,
               "profileMatches": 6,
-              "profileConfidence": 24,
-              "currentTeam": "ufmt_turuna",
+              "profileConfidence": 12,
               "teamHistory": [
                 "ufmt_turuna"
               ]
@@ -6657,7 +6640,7 @@
           "lastSeenAt": 1792347132890,
           "matches": 33,
           "source": "auto-json+players-history",
-          "profileConfidence": 660,
+          "profileConfidence": 640,
           "players": [
             {
               "slot": 1,
@@ -6749,8 +6732,7 @@
               "matches": 8,
               "rounds": 169,
               "profileMatches": 8,
-              "profileConfidence": 32,
-              "currentTeam": "ufpr_bbn",
+              "profileConfidence": 16,
               "teamHistory": [
                 "ufpr_bbn"
               ]
@@ -6800,7 +6782,7 @@
           "lastSeenAt": 1792260837902,
           "matches": 28,
           "source": "auto-json+players-history",
-          "profileConfidence": 560,
+          "profileConfidence": 546,
           "players": [
             {
               "slot": 1,
@@ -6925,8 +6907,7 @@
               "matches": 6,
               "rounds": 98,
               "profileMatches": 6,
-              "profileConfidence": 24,
-              "currentTeam": "ufrj_minerva",
+              "profileConfidence": 12,
               "teamHistory": [
                 "ufrj_minerva"
               ]
@@ -7257,12 +7238,12 @@
         },
         {
           "from": "2026-04-21",
-          "to": "2026-10-17",
+          "to": "2026-10-24",
           "firstSeenAt": 1776813319374,
-          "lastSeenAt": 1792264677026,
-          "matches": 60,
+          "lastSeenAt": 1792865600762,
+          "matches": 62,
           "source": "auto-json+players-history",
-          "profileConfidence": 1064,
+          "profileConfidence": 1074,
           "players": [
             {
               "slot": 1,
@@ -7270,11 +7251,11 @@
               "name": "Marelo",
               "handle": "marelo#UFU",
               "firstSeenAt": "2026-04-21",
-              "lastSeenAt": "2026-10-17",
-              "matches": 59,
-              "rounds": 1247,
-              "profileMatches": 59,
-              "profileConfidence": 236,
+              "lastSeenAt": "2026-10-24",
+              "matches": 61,
+              "rounds": 1288,
+              "profileMatches": 61,
+              "profileConfidence": 244,
               "currentTeam": "ufu_saints",
               "teamHistory": [
                 "ufu_saints"
@@ -7286,11 +7267,11 @@
               "name": "cks",
               "handle": "cks ヵ#777",
               "firstSeenAt": "2026-04-21",
-              "lastSeenAt": "2026-10-17",
-              "matches": 58,
-              "rounds": 1232,
-              "profileMatches": 58,
-              "profileConfidence": 232,
+              "lastSeenAt": "2026-10-24",
+              "matches": 60,
+              "rounds": 1273,
+              "profileMatches": 60,
+              "profileConfidence": 240,
               "currentTeam": "ufu_saints",
               "teamHistory": [
                 "ufu_saints"
@@ -7302,11 +7283,11 @@
               "name": "Gutoso",
               "handle": "Gutoso#vlr",
               "firstSeenAt": "2026-04-21",
-              "lastSeenAt": "2026-10-17",
-              "matches": 55,
-              "rounds": 1165,
-              "profileMatches": 55,
-              "profileConfidence": 110,
+              "lastSeenAt": "2026-10-24",
+              "matches": 57,
+              "rounds": 1206,
+              "profileMatches": 57,
+              "profileConfidence": 114,
               "currentTeam": "ufu_saints_onyx",
               "teamHistory": [
                 "ufu_saints",
@@ -7319,11 +7300,11 @@
               "name": "Fijora",
               "handle": "Bellingham 10#bKIND",
               "firstSeenAt": "2026-04-21",
-              "lastSeenAt": "2026-10-17",
-              "matches": 52,
-              "rounds": 1077,
-              "profileMatches": 52,
-              "profileConfidence": 208,
+              "lastSeenAt": "2026-10-24",
+              "matches": 54,
+              "rounds": 1118,
+              "profileMatches": 54,
+              "profileConfidence": 216,
               "currentTeam": "ufu_saints",
               "teamHistory": [
                 "ufu_saints"
@@ -7335,11 +7316,11 @@
               "name": "oBigZe",
               "handle": "oBigZe#god",
               "firstSeenAt": "2026-05-23",
-              "lastSeenAt": "2026-10-17",
-              "matches": 50,
-              "rounds": 1050,
-              "profileMatches": 50,
-              "profileConfidence": 200,
+              "lastSeenAt": "2026-10-24",
+              "matches": 52,
+              "rounds": 1091,
+              "profileMatches": 52,
+              "profileConfidence": 208,
               "currentTeam": "ufu_saints",
               "teamHistory": [
                 "ufu_saints"
@@ -7370,8 +7351,7 @@
               "matches": 7,
               "rounds": 164,
               "profileMatches": 7,
-              "profileConfidence": 28,
-              "currentTeam": "ufu_saints",
+              "profileConfidence": 14,
               "teamHistory": [
                 "ufu_saints"
               ]
@@ -7386,8 +7366,7 @@
               "matches": 4,
               "rounds": 84,
               "profileMatches": 4,
-              "profileConfidence": 16,
-              "currentTeam": "ufu_saints",
+              "profileConfidence": 8,
               "teamHistory": [
                 "ufu_saints"
               ]
@@ -7611,7 +7590,7 @@
           "lastSeenAt": 1790540388948,
           "matches": 27,
           "source": "auto-json+players-history",
-          "profileConfidence": 494,
+          "profileConfidence": 484,
           "players": [
             {
               "slot": 1,
@@ -7731,16 +7710,15 @@
             },
             {
               "slot": 8,
-              "playerId": "88G6xgaAAef5qemLkAbm_UEo1nWCPnK1V7WQBy49e1BS4cCCAVOi16Ml33pCXqu6FrPnfVZu6c--QA",
-              "name": "piva",
-              "handle": "pivA#TTS",
-              "firstSeenAt": "2026-07-25",
-              "lastSeenAt": "2026-08-15",
+              "playerId": "zHSSIy9_cfLOQu-6x44NZP0gyheTKwWprEcHF_nfT60zFSaC9TCFmMiczxiqKvPaImVDPrIpK_u6_A",
+              "name": "dntDan",
+              "handle": "TTS Dan#vice",
+              "firstSeenAt": "2026-04-04",
+              "lastSeenAt": "2026-05-02",
               "matches": 5,
-              "rounds": 97,
+              "rounds": 107,
               "profileMatches": 5,
-              "profileConfidence": 20,
-              "currentTeam": "unicamp_tritons_black",
+              "profileConfidence": 10,
               "teamHistory": [
                 "unicamp_tritons_black"
               ]
@@ -8288,7 +8266,7 @@
           "lastSeenAt": 1790534730490,
           "matches": 16,
           "source": "auto-json+players-history",
-          "profileConfidence": 320,
+          "profileConfidence": 302,
           "players": [
             {
               "slot": 1,
@@ -8364,8 +8342,7 @@
               "matches": 9,
               "rounds": 172,
               "profileMatches": 9,
-              "profileConfidence": 36,
-              "currentTeam": "unirio_krakens",
+              "profileConfidence": 18,
               "teamHistory": [
                 "unirio_krakens"
               ]
@@ -8986,7 +8963,7 @@
           "lastSeenAt": 1790535023714,
           "matches": 18,
           "source": "auto-json+players-history",
-          "profileConfidence": 360,
+          "profileConfidence": 346,
           "players": [
             {
               "slot": 1,
@@ -9094,8 +9071,7 @@
               "matches": 7,
               "rounds": 134,
               "profileMatches": 7,
-              "profileConfidence": 28,
-              "currentTeam": "usp_stars",
+              "profileConfidence": 14,
               "teamHistory": [
                 "usp_stars"
               ]
@@ -9113,7 +9089,7 @@
           "lastSeenAt": 1792353294770,
           "matches": 59,
           "source": "auto-json+players-history",
-          "profileConfidence": 1180,
+          "profileConfidence": 1152,
           "players": [
             {
               "slot": 1,
@@ -9221,8 +9197,7 @@
               "matches": 14,
               "rounds": 263,
               "profileMatches": 14,
-              "profileConfidence": 56,
-              "currentTeam": "wolf_gaming",
+              "profileConfidence": 28,
               "teamHistory": [
                 "wolf_gaming"
               ]
@@ -9380,7 +9355,6 @@
               "rounds": 20,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
               ]
@@ -9475,7 +9449,6 @@
               "rounds": 23,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
               ]
@@ -9758,7 +9731,6 @@
               "rounds": 18,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
               ]
@@ -9853,7 +9825,6 @@
               "rounds": 17,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
               ]
@@ -9948,7 +9919,6 @@
               "rounds": 16,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
               ]
@@ -10043,7 +10013,6 @@
               "rounds": 18,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
               ]
@@ -10534,7 +10503,6 @@
               "rounds": 20,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
               ]
@@ -10629,7 +10597,6 @@
               "rounds": 23,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
               ]
@@ -10724,7 +10691,6 @@
               "rounds": 22,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "caap_hellhounds",
               "teamHistory": [
                 "caap_hellhounds"
               ]
@@ -11013,7 +10979,6 @@
               "rounds": 20,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "pucc_cardinals",
               "teamHistory": [
                 "pucc_cardinals"
               ]
@@ -11029,7 +10994,6 @@
               "rounds": 20,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "pucc_cardinals",
               "teamHistory": [
                 "pucc_cardinals"
               ]
@@ -11108,7 +11072,6 @@
               "rounds": 19,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "pucc_cardinals",
               "teamHistory": [
                 "pucc_cardinals"
               ]
@@ -11124,7 +11087,6 @@
               "rounds": 19,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "pucc_cardinals",
               "teamHistory": [
                 "pucc_cardinals"
               ]
@@ -11583,7 +11545,6 @@
               "rounds": 169,
               "profileMatches": 8,
               "profileConfidence": 16,
-              "currentTeam": "azure_bears_black",
               "teamHistory": [
                 "azure_bears_black",
                 "azure_bears_silver"
@@ -11704,7 +11665,6 @@
               "rounds": 323,
               "profileMatches": 16,
               "profileConfidence": 32,
-              "currentTeam": "caap_malditos",
               "teamHistory": [
                 "caap_hellhounds",
                 "caap_momentum",
@@ -12209,7 +12169,7 @@
           "lastSeenAt": 1792272204444,
           "matches": 13,
           "source": "auto-json+players-history",
-          "profileConfidence": 260,
+          "profileConfidence": 248,
           "players": [
             {
               "slot": 1,
@@ -12317,8 +12277,7 @@
               "matches": 4,
               "rounds": 70,
               "profileMatches": 4,
-              "profileConfidence": 16,
-              "currentTeam": "inatel_gray",
+              "profileConfidence": 8,
               "teamHistory": [
                 "inatel_gray"
               ]
@@ -12333,8 +12292,7 @@
               "matches": 2,
               "rounds": 28,
               "profileMatches": 2,
-              "profileConfidence": 8,
-              "currentTeam": "inatel_gray",
+              "profileConfidence": 4,
               "teamHistory": [
                 "inatel_gray"
               ]
@@ -12352,7 +12310,7 @@
           "lastSeenAt": 1791675103148,
           "matches": 10,
           "source": "auto-json+players-history",
-          "profileConfidence": 160,
+          "profileConfidence": 156,
           "players": [
             {
               "slot": 1,
@@ -12460,8 +12418,7 @@
               "matches": 2,
               "rounds": 33,
               "profileMatches": 2,
-              "profileConfidence": 8,
-              "currentTeam": "macklogic_rainbow",
+              "profileConfidence": 4,
               "teamHistory": [
                 "macklogic_rainbow"
               ]
@@ -13256,7 +13213,7 @@
           "lastSeenAt": 1792353563640,
           "matches": 20,
           "source": "auto-json+players-history",
-          "profileConfidence": 400,
+          "profileConfidence": 378,
           "players": [
             {
               "slot": 1,
@@ -13348,8 +13305,7 @@
               "matches": 6,
               "rounds": 112,
               "profileMatches": 6,
-              "profileConfidence": 24,
-              "currentTeam": "maua_blue",
+              "profileConfidence": 12,
               "teamHistory": [
                 "maua_blue"
               ]
@@ -13364,8 +13320,7 @@
               "matches": 5,
               "rounds": 104,
               "profileMatches": 5,
-              "profileConfidence": 20,
-              "currentTeam": "maua_blue",
+              "profileConfidence": 10,
               "teamHistory": [
                 "maua_blue"
               ]
@@ -13460,7 +13415,6 @@
               "rounds": 53,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "azure_bears_golden",
               "teamHistory": [
                 "azure_bears_golden"
               ]
@@ -14317,7 +14271,6 @@
               "rounds": 205,
               "profileMatches": 11,
               "profileConfidence": 22,
-              "currentTeam": "a2e_uff",
               "teamHistory": [
                 "a2e_uff_shadows",
                 "a2e_uff"
@@ -14382,7 +14335,6 @@
               "rounds": 75,
               "profileMatches": 4,
               "profileConfidence": 8,
-              "currentTeam": "a2e_uff",
               "teamHistory": [
                 "a2e_uff",
                 "a2e_uff_shadows"
@@ -15046,7 +14998,6 @@
               "rounds": 56,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "ceub_octopus_vulgaris",
               "teamHistory": [
                 "ceub_octopus_vulgaris"
               ]
@@ -15074,7 +15025,6 @@
               "rounds": 56,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "ceub_octopus_vulgaris",
               "teamHistory": [
                 "ceub_octopus_vulgaris"
               ]
@@ -15621,7 +15571,6 @@
               "rounds": 29,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "macklogic_white",
               "teamHistory": [
                 "macklogic_white"
               ]
@@ -15681,7 +15630,6 @@
               "rounds": 29,
               "profileMatches": 0,
               "profileConfidence": 0,
-              "currentTeam": "macklogic_white",
               "teamHistory": [
                 "macklogic_white"
               ]

@@ -27,6 +27,21 @@
   // fora do app e define "/", para esses links voltarem ao site.
   const RAIZ = window.UNIVLR_RAIZ || "";
 
+  // A conversa das paginas do site e buscada uma vez por visita. Trocar o
+  // jogador da comparacao, ordenar o scoreboard ou trocar a aba de mapa da
+  // mesma serie redesenha a pagina inteira, raiz nova inclusive, e cada
+  // redesenho ia ao Supabase de novo (pedido do dono em 24/10: buscar so ao
+  // abrir ou recarregar). `assuntoDaRender` e o assunto da ultima casca
+  // desenhada; o roteador chama `novaRender()` a cada navegacao, e uma
+  // navegacao que nao desenhou casca nenhuma (a pessoa foi para outra pagina)
+  // esquece o assunto, para a volta buscar de novo. A pagina das cartinhas nao
+  // usa a casca, entao `continua` fica falso e ela busca como antes.
+  let assuntoDaRender = null;
+  let teveCasca = false;
+  let continua = false;
+  let rascunho = "";
+  let memoria = null; // { assunto, est } da ultima conversa carregada
+
   // ------------------------------------------------------------------ tempo
 
   function quando(iso) {
@@ -455,6 +470,7 @@
     if (estados.get(raiz) !== est || est.pedido !== pedido) return;
     est.comentarios = comentarios;
     est.meusVotos = meusVotos;
+    memoria = { assunto: `${est.kind}:${est.id}`, est };
     desenha(raiz);
   }
 
@@ -744,7 +760,19 @@
   // ------------------------------------------------------------------ saida
 
   // Casca sincrona, para o HTML da partida sair inteiro no primeiro paint.
+  function novaRender() {
+    if (!teveCasca) assuntoDaRender = null;
+    teveCasca = false;
+  }
+
+  // A casca e chamada enquanto o HTML novo e montado, com o DOM antigo ainda na
+  // tela: e a hora de guardar o que a pessoa estava escrevendo.
   function shell(kind, id) {
+    const assunto = `${kind}:${id}`;
+    continua = assuntoDaRender === assunto;
+    assuntoDaRender = assunto;
+    teveCasca = true;
+    rascunho = continua ? document.querySelector("[data-comentarios]")?.querySelector("textarea[name=corpo]")?.value || "" : "";
     return `<section class="match-panel cmt-secao" data-comentarios data-kind="${esc(kind)}" data-id="${esc(id)}">
               <div class="section-head"><div><h2>Comentários</h2><p>Carregando...</p></div></div>
             </section>`;
@@ -752,6 +780,21 @@
 
   async function montar(kind, id, raiz = document.querySelector("[data-comentarios]")) {
     if (!raiz) return;
+    const assunto = `${kind}:${id}`;
+    if (continua && memoria?.assunto === assunto) {
+      continua = false;
+      const { comentarios, meusVotos } = memoria.est;
+      estados.set(raiz, { kind, id: String(id), comentarios, meusVotos, respondendo: null, editando: null });
+      if (!raiz.dataset.cmtLigado) {
+        liga(raiz);
+        raiz.dataset.cmtLigado = "1";
+      }
+      memoria = { assunto, est: estados.get(raiz) };
+      desenha(raiz);
+      const caixa = raiz.querySelector("textarea[name=corpo]");
+      if (caixa && rascunho) caixa.value = rascunho;
+      return;
+    }
     // Map, como o listarComentarios devolve: o desenho le o sinal do voto com
     // `.get`, e um Set aqui quebraria qualquer desenho antes da primeira lista.
     estados.set(raiz, { kind, id: String(id), comentarios: [], meusVotos: new Map(), respondendo: null, editando: null });
@@ -812,5 +855,5 @@
     setTimeout(() => alvo.classList.remove("destacado"), 2600);
   }
 
-  window.Comments = { shell, montar, avatar, quando, corpo, selo, atividadeHome, atividadeFaixa, atividadeLarga, assuntoDaThread };
+  window.Comments = { shell, montar, novaRender, avatar, quando, corpo, selo, atividadeHome, atividadeFaixa, atividadeLarga, assuntoDaThread };
 })();

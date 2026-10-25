@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UNIVLR - equipe, jogador e campeonato</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #040306;
+    --surface: #11131a;
+    --surface-2: #171a23;
+    --ink: #f5f1f2;
+    --muted: #a3a5af;
+    --loss-ink: rgba(245, 241, 242, 0.62);
+    --line: rgba(245, 241, 242, 0.08);
+    --line-strong: rgba(245, 241, 242, 0.14);
+    --brand: #f6132a;
+    --brand-text: #ff5f6d;
+    --on-brand: #040306;
+    --win: #31e981;
+    --danger: #ff6678;
+    --teal: #2ad4c1;
+    --tier-s: #ffb340; --tier-a: #8ab4ff; --tier-b: #9b8ec9; --tier-c: #7f8496;
+    --font-text: "Barlow", system-ui, sans-serif;
+    --font-num: "Barlow Condensed", "Barlow", system-ui, sans-serif;
+    --gutter: clamp(16px, 3cqi, 40px);
+    --rail: 340px;
+  }
+  @property --wash { syntax: "<percentage>"; inherits: true; initial-value: 26%; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #000; color: var(--ink); font: 400 13px/1.4 var(--font-text); }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  h1, h2, h3, h4, p { margin: 0; }
+  button { font: inherit; color: inherit; }
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--brand-text); outline-offset: 2px; }
+  .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+
+  /* ---- moldura do mockup ---- */
+  .toolbar { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 10px 20px; background: #000; border-bottom: 1px solid var(--line-strong); font-size: 13px; color: var(--muted); }
+  .toolbar .seg { display: inline-flex; gap: 4px; }
+  .toolbar button { font: 600 13px/1 var(--font-text); background: transparent; border: 1px solid rgba(245, 241, 242, 0.3); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+  .toolbar button[aria-pressed="true"] { background: var(--ink); color: #000; border-color: var(--ink); }
+  .toolbar strong { color: var(--ink); font-weight: 600; }
+  .frame { container: page / inline-size; margin: 0 auto; background: var(--bg); }
+  body.phone .frame { width: 390px; margin: 24px auto; outline: 1px solid var(--line-strong); }
+
+  /* ---- topo e rodape do site ---- */
+  .site-top { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(200px, 340px) auto; align-items: center; gap: 28px; height: 56px; padding: 0 var(--gutter); border-bottom: 1px solid var(--line); }
+  .site-top .brand img { height: 26px; width: auto; }
+  .nav { display: flex; gap: 22px; height: 100%; }
+  .nav a { position: relative; display: flex; align-items: center; font: 600 14px/1 var(--font-text); color: var(--muted); white-space: nowrap; }
+  .nav a:hover, .nav a[aria-current] { color: var(--ink); }
+  .nav a[aria-current]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand); }
+  .search { position: relative; }
+  .search input { width: 100%; height: 34px; border: 0; border-radius: 3px; background: var(--surface); color: var(--ink); font: 400 13px var(--font-text); padding: 0 34px 0 12px; }
+  .search input::placeholder { color: var(--muted); }
+  .search span { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+  .enter { font: 600 13px/1 var(--font-text); color: var(--on-brand); background: var(--brand); border: 0; border-radius: 3px; padding: 10px 16px; cursor: pointer; }
+  .foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 18px var(--gutter); border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+  .foot img { width: 22px; height: 22px; object-fit: contain; }
+  .foot nav { display: flex; gap: 18px; margin-left: auto; }
+
+  /* ---- pecas comuns ---- */
+  .page { max-width: 1360px; margin: 0 auto; padding: 18px var(--gutter) 48px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .page > * { min-width: 0; }
+  .sec-head { display: flex; align-items: baseline; gap: 12px; margin: 0 0 10px; min-width: 0; flex-wrap: wrap; }
+  .sec-head h2 { font: 600 30px/1 var(--font-num); white-space: nowrap; }
+  .sec-head .aside { color: var(--muted); font-size: 12px; }
+  .sec-head .more { margin-left: auto; color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .sec-head .more:hover { color: var(--ink); }
+  .plate { background: var(--surface); border-radius: 2px; overflow: hidden; }
+  .tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+  .tabs a { position: relative; padding: 12px 0; font: 600 14px/1 var(--font-text); color: var(--muted); white-space: nowrap; }
+  .tabs a:hover, .tabs a[aria-current] { color: var(--ink); }
+  .tabs a[aria-current]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand); }
+  .body2 { display: grid; grid-template-columns: minmax(0, 1fr) var(--rail); gap: 32px; align-items: start; }
+  .col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; align-content: start; min-width: 0; }
+  .fan { display: inline-flex; align-items: center; gap: 6px; font: 600 13px/1 var(--font-text); background: transparent; border: 1px solid rgba(245, 241, 242, 0.3); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
+  .fan:hover { border-color: var(--ink); }
+  .good { color: var(--win); } .bad { color: var(--danger); }
+  .cmt-empty { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; color: var(--muted); }
+  .cmt-empty button { font: 600 13px/1 var(--font-text); color: var(--on-brand); background: var(--brand); border: 0; border-radius: 3px; padding: 10px 16px; cursor: pointer; }
+
+  /* Placar com o mapa de fundo (o mesmo da home) */
+  .day { font: 600 12px/1 var(--font-text); color: var(--muted); margin: 0 0 6px; }
+  .list + .day { margin-top: 16px; }
+  .list { display: grid; grid-template-columns: fit-content(210px) 30px minmax(0, 1fr) 128px; row-gap: 4px; }
+  .list.kd { grid-template-columns: fit-content(210px) 30px minmax(0, 1fr) 128px 66px; }
+  .m { position: relative; isolation: isolate; grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; grid-template-rows: 26px 26px; }
+  .t { --wash: 26%; grid-column: 1 / 3; display: grid; grid-template-columns: subgrid; align-items: center;
+       background: linear-gradient(90deg, color-mix(in srgb, var(--tc) var(--wash), transparent) 0, transparent 100%); box-shadow: inset 3px 0 0 var(--tc); transition: --wash 200ms ease; }
+  .t:not(.win) { --wash: 11%; }
+  .t .who { display: flex; align-items: center; gap: 8px; padding: 0 12px 0 13px; min-width: 0; }
+  .t .who img { width: 18px; height: 18px; object-fit: contain; flex: none; }
+  .t .name { color: var(--loss-ink); font-weight: 500; }
+  .t.win .name { color: var(--ink); font-weight: 600; }
+  .t b { font: 600 19px/1 var(--font-num); font-variant-numeric: tabular-nums; color: var(--loss-ink); text-align: right; padding-right: 8px; }
+  .t.win b { color: var(--ink); }
+  .m:hover .t { --wash: 36%; }
+  .m:hover .t:not(.win) { --wash: 17%; }
+  .maps { position: absolute; grid-column: 2 / -1; grid-row: 1 / -1; inset: 0; z-index: -1; display: flex; opacity: 0.36; --lean: 14px; --seam: 2px;
+          -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%, #000 84%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 22%, #000 84%, transparent 100%); transition: opacity 200ms ease; }
+  .m:hover .maps { opacity: 0.52; }
+  .slice { position: relative; flex: 1 1 0; min-width: 0; clip-path: polygon(calc(var(--lean) / 2 + var(--seam) / 2) 0, calc(100% + var(--lean) / 2 - var(--seam) / 2) 0, calc(100% - var(--lean) / 2 - var(--seam) / 2) 100%, calc(var(--seam) / 2 - var(--lean) / 2) 100%); }
+  .slice img { position: absolute; top: 0; left: calc(var(--lean) / -2); width: calc(100% + var(--lean)); max-width: none; height: 100%; object-fit: cover; object-position: center 42%; }
+  .maplist { grid-column: 3; grid-row: 1 / 3; display: grid; align-content: center; justify-items: center; gap: 2px; text-shadow: 0 1px 2px #000, 0 0 8px #000; min-width: 0; }
+  .maplist span { font: 600 12px/1.15 var(--font-text); white-space: nowrap; }
+  .maplist small { font: 500 11px/1.15 var(--font-text); color: rgba(245, 241, 242, 0.78); font-variant-numeric: tabular-nums; }
+  .evc { grid-column: 4; grid-row: 1 / 3; display: flex; align-items: center; gap: 8px; padding-left: 8px; color: var(--muted); font-size: 12px; line-height: 1.25; min-width: 0; text-shadow: 0 1px 2px #000; }
+  .evc img { width: 18px; height: 18px; object-fit: contain; flex: none; }
+  .evc span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .kdc { grid-column: 5; grid-row: 1 / 3; display: grid; align-content: center; justify-items: end; padding-right: 4px; font-variant-numeric: tabular-nums; }
+  .kdc b { font: 600 15px/1 var(--font-num); }
+  .kdc small { color: var(--muted); font-size: 11px; }
+
+  /* Pintura de equipe no hover (copiada do site) */
+  .pintura-de-equipe { position: relative; isolation: isolate; }
+  .pintura-de-equipe::before { content: ""; position: absolute; inset: 0; z-index: -1; background-color: var(--team-wash); clip-path: ellipse(0% 10% at 4% 88%); transition: clip-path 480ms cubic-bezier(0.5, 0.02, 0.35, 1); pointer-events: none;
+    background-image: linear-gradient(90deg, var(--team-wash-2) 0%, var(--team-wash) 34%, var(--team-wash) 66%, var(--team-wash-2) 100%); }
+  .pintura-de-equipe .paint-ink { transition: color 160ms ease; }
+  @media (hover: hover) and (pointer: fine) {
+    .pintura-de-equipe:hover { box-shadow: inset 0 0 0 2px var(--team-accent-2, var(--teal)); }
+    .pintura-de-equipe:hover::before { clip-path: ellipse(78% 106% at 38% 48%); }
+    .pintura-de-equipe:hover .paint-ink { color: var(--team-ink, var(--ink)); transition: color 220ms ease 210ms; }
+  }
+
+  /* trofeus: medalha solta com o icone do campeonato */
+  .trophies { display: grid; gap: 10px; }
+  .trophy { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: center; gap: 12px; }
+  .trophy .medal { position: relative; width: 44px; height: 52px; }
+  .trophy .medal img:first-child { width: 44px; height: 52px; object-fit: contain; }
+  .trophy .medal img + img { position: absolute; right: -4px; bottom: 2px; width: 18px; height: 18px; object-fit: contain; }
+  .trophy strong { display: block; font-weight: 600; font-size: 13px; }
+  .trophy small { color: var(--muted); font-size: 12px; }
+
+  /* ====================== EQUIPE ====================== */
+  .tm-hero { position: relative; display: grid; grid-template-columns: 112px minmax(0, 1fr) auto minmax(0, 560px); align-items: center; gap: 0 22px; height: 196px; padding: 0 0 0 20px; overflow: hidden;
+             background: linear-gradient(90deg, color-mix(in srgb, var(--tc) 36%, var(--bg)) 0%, color-mix(in srgb, var(--tc) 12%, var(--bg)) 55%, var(--bg) 100%); box-shadow: inset 3px 0 0 var(--tl); }
+  .tm-hero .crest { width: 112px; height: 112px; object-fit: contain; }
+  .tm-id { display: grid; gap: 4px; min-width: 0; }
+  .tm-id .tag { color: var(--tl); font: 700 14px/1 var(--font-text); }
+  .tm-id h1 { font: 700 46px/1 var(--font-num); }
+  .tm-id .where { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+  .tm-id .where img { width: 20px; height: 14px; object-fit: cover; border-radius: 1px; }
+  .tm-id .acts { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+  .tm-id .acts a { color: var(--muted); font-size: 12px; }
+  .tm-rank { display: grid; justify-items: end; align-self: end; padding-bottom: 22px; }
+  .tm-rank b { font: 700 56px/0.9 var(--font-num); }
+  .tm-rank b small { font: 600 16px/1 var(--font-num); color: var(--win); margin-left: 4px; vertical-align: top; }
+  .tm-rank span { color: var(--muted); font-size: 12px; }
+  .tm-squad { align-self: end; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); height: 186px; }
+  .tm-squad figure { position: relative; margin: 0; }
+  .tm-squad img { position: absolute; inset: auto 0 0; width: 100%; height: 176px; object-fit: contain; object-position: bottom; }
+  .tm-squad figcaption { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font: 600 12px/1 var(--font-text); text-shadow: 0 1px 3px #000, 0 0 10px #000; }
+
+  .rk-stats { display: flex; flex-wrap: wrap; gap: 8px 34px; margin-bottom: 6px; }
+  .rk-stats span { display: grid; gap: 2px; }
+  .rk-stats b { font: 600 26px/1 var(--font-num); }
+  .rk-stats small { color: var(--muted); font-size: 12px; }
+  .rk-note { color: var(--muted); font-size: 12px; margin-bottom: 8px; max-width: 80ch; }
+  .rk-chart { width: 100%; height: 170px; display: block; }
+  .rk-chart text { fill: var(--muted); font: 500 11px var(--font-text); }
+
+  .roster { display: grid; grid-template-columns: 4px 34px minmax(0, 1fr) auto auto auto 6px; column-gap: 10px; }
+  .roster .hd { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; height: 28px; align-items: center; color: var(--muted); font-size: 12px; border-bottom: 1px solid var(--line); }
+  .roster .hd span:first-child { grid-column: 3; }
+  .roster .hd span:not(:first-child) { text-align: right; }
+  .rr { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: center; height: 46px; border-top: 1px solid var(--line); overflow: hidden; }
+  .rr:first-of-type { border-top: 0; }
+  .rr .ph { grid-column: 2; align-self: end; width: 34px; height: 42px; object-fit: contain; object-position: bottom; }
+  .rr .nm { display: grid; min-width: 0; }
+  .rr .nm b { font-weight: 600; font-size: 13px; }
+  .rr .nm small { color: var(--muted); font-size: 11px; }
+  .rr .n { font-variant-numeric: tabular-nums; text-align: right; font-size: 13px; }
+  .rr .n.rt { font: 600 16px/1 var(--font-num); }
+  .rail-link { display: inline-block; margin-top: 8px; color: var(--muted); font-size: 12px; }
+  .rail-link:hover { color: var(--ink); }
+
+  /* ====================== JOGADOR ====================== */
+  .pl-hero { position: relative; display: grid; grid-template-columns: 220px minmax(0, 1fr) auto; align-items: center; gap: 0 26px; height: 220px; overflow: hidden;
+             background: linear-gradient(90deg, color-mix(in srgb, var(--tc) 36%, var(--bg)) 0%, color-mix(in srgb, var(--tc) 12%, var(--bg)) 50%, var(--bg) 100%); box-shadow: inset 3px 0 0 var(--tl); }
+  .pl-hero .photo { align-self: end; width: 220px; height: 210px; object-fit: contain; object-position: bottom; }
+  .pl-id { display: grid; gap: 4px; min-width: 0; }
+  .pl-id .role { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; font-weight: 600; }
+  .pl-id .role img { width: 16px; height: 16px; opacity: 0.85; }
+  .pl-id h1 { font: 700 64px/0.95 var(--font-num); }
+  .pl-id .riot { color: var(--muted); font-size: 13px; }
+  .pl-id .riot em { font-style: normal; color: rgba(163, 165, 175, 0.8); }
+  .pl-id .acts { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 8px; }
+  .pl-id .team { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+  .pl-id .team img { width: 22px; height: 22px; object-fit: contain; }
+  .pl-id .team:hover span { text-decoration: underline; text-underline-offset: 3px; }
+  .pl-key { display: grid; grid-template-columns: auto auto; gap: 14px 30px; padding-right: 26px; align-items: end; }
+  .pl-key span { display: grid; gap: 2px; }
+  .pl-key span:first-child { grid-row: span 2; align-self: center; padding-right: 8px; }
+  .pl-key small { color: var(--muted); font-size: 12px; }
+  .pl-key b { font: 600 28px/1 var(--font-num); font-variant-numeric: tabular-nums; }
+  .pl-key span:first-child b { font-size: 64px; line-height: 0.9; }
+
+  .ficha { display: grid; }
+  .ficha .grp { display: grid; grid-template-columns: 118px repeat(9, minmax(0, 1fr)); align-items: center; gap: 0 10px; padding: 11px 14px; border-top: 1px solid var(--line); }
+  .ficha .grp:first-child { border-top: 0; }
+  .ficha .grp > small { color: var(--muted); font-size: 12px; font-weight: 600; }
+  .ficha .st { display: grid; gap: 2px; min-width: 0; }
+  .ficha .grp { align-items: end; }
+  .ficha .grp > small { align-self: center; }
+  .ficha .st small { color: var(--muted); font-size: 11px; line-height: 1.15; }
+  .ficha .st b { font: 600 19px/1 var(--font-num); font-variant-numeric: tabular-nums; }
+  .ficha-note { color: var(--muted); font-size: 12px; margin-top: 8px; }
+
+  .agents { display: grid; grid-template-columns: 30px minmax(0, 1fr) 80px auto; column-gap: 10px; row-gap: 6px; align-items: center; }
+  .agents img { width: 30px; height: 30px; border-radius: 2px; }
+  .agents .nm b { display: block; font-weight: 600; font-size: 13px; }
+  .agents .nm small { color: var(--muted); font-size: 11px; }
+  .agents .bar { height: 5px; background: rgba(245, 241, 242, 0.06); }
+  .agents .bar i { display: block; height: 100%; width: var(--w); background: var(--tl); }
+  .agents .rd { color: var(--muted); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .permap { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto; column-gap: 18px; }
+  .permap .hd, .pm { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: center; padding: 0 14px; }
+  .permap .hd { height: 28px; color: var(--muted); font-size: 12px; border-bottom: 1px solid var(--line); }
+  .permap .hd span:not(:first-child), .pm span:not(:first-child) { text-align: right; }
+  .pm { position: relative; isolation: isolate; height: 34px; border-top: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+  .pm:first-of-type { border-top: 0; }
+  .pm img { position: absolute; inset: 0 auto 0 0; width: 55%; height: 100%; object-fit: cover; object-position: center 42%; opacity: 0.22; z-index: -1;
+            -webkit-mask-image: linear-gradient(90deg, #000 30%, transparent); mask-image: linear-gradient(90deg, #000 30%, transparent); }
+  .pm b { font-weight: 600; }
+  .pm .rt { font-weight: 700; }
+
+  /* ====================== CAMPEONATO ====================== */
+  .ev-hero { position: relative; isolation: isolate; display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; align-items: center; gap: 0 20px; height: 170px; padding: 0 22px; overflow: hidden; }
+  .ev-hero .bn { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; opacity: 0.38;
+                 -webkit-mask-image: linear-gradient(90deg, #000 20%, rgba(0,0,0,0.5) 70%, transparent); mask-image: linear-gradient(90deg, #000 20%, rgba(0,0,0,0.5) 70%, transparent); }
+  .ev-hero .lg { width: 84px; height: 84px; object-fit: contain; }
+  .ev-id { display: grid; gap: 4px; }
+  .ev-id .st { color: var(--muted); font-size: 13px; font-weight: 600; }
+  .ev-id h1 { font: 700 48px/1 var(--font-num); }
+  .ev-id .when { color: var(--muted); font-size: 13px; }
+  .ev-org { display: grid; justify-items: end; gap: 6px; text-align: right; }
+  .ev-org small { color: var(--muted); font-size: 12px; }
+  .ev-org span { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+  .ev-org img { width: 26px; height: 26px; object-fit: contain; }
+  .facts { display: flex; flex-wrap: wrap; gap: 10px 40px; margin-top: -8px; }
+  .facts span { display: grid; gap: 3px; }
+  .facts small { color: var(--muted); font-size: 12px; }
+  .facts b { font-weight: 600; font-size: 15px; }
+  .facts b.tier { font: 700 22px/0.9 var(--font-num); color: var(--tier-a); }
+
+  .ev-top { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.8fr) minmax(0, 1.3fr); gap: 32px; align-items: start; }
+  .podium { display: grid; gap: 4px; }
+  .pod { display: grid; grid-template-columns: 34px 36px minmax(0, 1fr) auto; align-items: center; gap: 10px; height: 48px; padding: 0 12px 0 10px;
+         background: linear-gradient(90deg, color-mix(in srgb, var(--tc) 26%, transparent), transparent 85%); box-shadow: inset 3px 0 0 var(--tl); }
+  .pod b { font: 700 24px/1 var(--font-num); }
+  .pod:nth-child(1) b { color: var(--tier-s); }
+  .pod img { width: 34px; height: 34px; object-fit: contain; }
+  .pod strong { font-weight: 600; font-size: 14px; }
+  .pod small { color: var(--muted); font-size: 12px; }
+  .nums { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 10px 30px; }
+  .nums span { display: grid; gap: 2px; }
+  .nums b { font: 600 34px/1 var(--font-num); }
+  .nums small { color: var(--muted); font-size: 12px; }
+  .pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 14px; }
+  .pool a { position: relative; isolation: isolate; display: flex; align-items: center; justify-content: space-between; height: 34px; padding: 0 10px; overflow: hidden; }
+  .pool a img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; opacity: 0.26; z-index: -1;
+                -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent); mask-image: linear-gradient(90deg, #000 40%, transparent); }
+  .pool a b { font-weight: 600; }
+  .pool a small { color: var(--muted); font-size: 12px; }
+
+  /* Chave: cada rodada e uma coluna de celulas de mesma altura, entao a
+     partida da rodada seguinte cai exatamente no meio das duas que a
+     alimentam. Os fios sao pseudo-elementos; bye nao desenha nada. */
+  .bracket-wrap { overflow-x: auto; scrollbar-width: thin; padding-bottom: 6px; }
+  .bracket { display: flex; gap: 24px; min-width: max-content; }
+  .bracket-title { font: 600 14px/1 var(--font-text); margin: 0 0 8px; }
+  .rnd { display: flex; flex-direction: column; width: 160px; }
+  .rnd > small { height: 22px; color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .cells { flex: 1; display: flex; flex-direction: column; }
+  .cell { position: relative; flex: 1 1 0; display: flex; align-items: center; min-height: 48px; }
+  .bm { position: relative; width: 100%; display: grid; grid-template-rows: 20px 20px; gap: 2px; }
+  .bm .ln { --wash: 22%; display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; align-items: center; gap: 6px; padding: 0 8px 0 9px; height: 20px;
+            background: linear-gradient(90deg, color-mix(in srgb, var(--tc) var(--wash), var(--surface)), var(--surface) 80%); box-shadow: inset 2px 0 0 var(--tc); font-size: 12px; }
+  .bm .ln:not(.win) { --wash: 6%; }
+  .bm .ln img { width: 16px; height: 16px; object-fit: contain; }
+  .bm .ln span { color: var(--loss-ink); }
+  .bm .ln.win span { color: var(--ink); font-weight: 600; }
+  .bm .ln b { font: 600 14px/1 var(--font-num); color: var(--loss-ink); font-variant-numeric: tabular-nums; }
+  .bm .ln.win b { color: var(--ink); }
+  .bm .wo { position: absolute; right: -2px; top: -13px; font-size: 10px; color: var(--muted); }
+  .bm:hover .ln { --wash: 34%; }
+  .bm:hover .ln:not(.win) { --wash: 12%; }
+  /* fios: saida para a direita, chegada pela esquerda, e a junta vertical dos pares */
+  .rnd:not(:last-child) .cell:not(.bye) .bm::after { content: ""; position: absolute; left: 100%; top: 50%; width: 12px; border-top: 1px solid var(--line-strong); }
+  .rnd:not(:first-child) .cell:not(.bye) .bm::before { content: ""; position: absolute; right: 100%; top: 50%; width: 12px; border-top: 1px solid var(--line-strong); }
+  .rnd.pairs .cell:not(.bye)::after { content: ""; position: absolute; right: -12px; border-right: 1px solid var(--line-strong); }
+  .rnd.pairs .cell:not(.bye):nth-child(odd)::after { top: 50%; bottom: 0; }
+  .rnd.pairs .cell:not(.bye):nth-child(even)::after { top: 0; bottom: 50%; }
+  .rnd.feed-bye .cell .bm::before { display: none; }
+  .rnd.gf .bm .ln { height: 24px; }
+  .rnd.gf .bm { grid-template-rows: 24px 24px; }
+
+  .places { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px 28px; }
+  .place { display: grid; grid-template-columns: 52px 22px minmax(0, 1fr) auto; align-items: center; gap: 10px; height: 34px; border-top: 1px solid var(--line); }
+  .place b { font: 600 17px/1 var(--font-num); color: var(--muted); }
+  .place img { width: 22px; height: 22px; object-fit: contain; }
+  .place span { font-weight: 600; font-size: 13px; }
+  .place small { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+  /* ---- tela media ---- */
+  @container page (max-width: 1180px) {
+    .body2 { grid-template-columns: minmax(0, 1fr); }
+    .body2 > .col:last-child { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); column-gap: 32px; }
+    .tm-hero { grid-template-columns: 96px minmax(0, 1fr) auto; }
+    .tm-hero .crest { width: 96px; height: 96px; }
+    .tm-squad { display: none; }
+    .ev-top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .ev-top > :last-child { grid-column: 1 / -1; }
+    .places { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .ficha .grp { grid-template-columns: repeat(5, minmax(0, 1fr)); row-gap: 10px; }
+    .ficha .grp > small { grid-column: 1 / -1; }
+  }
+  /* ---- celular ---- */
+  @container page (max-width: 760px) {
+    .site-top { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: 52px 40px; height: auto; gap: 0 12px; }
+    .nav { grid-column: 1 / -1; grid-row: 2; overflow-x: auto; gap: 18px; scrollbar-width: none; }
+    .page { gap: 22px; padding-top: 14px; }
+    .sec-head h2 { font-size: 26px; }
+    .body2 > .col:last-child { grid-template-columns: minmax(0, 1fr); }
+    .list { grid-template-columns: fit-content(190px) 28px minmax(0, 1fr); }
+    .list.kd { grid-template-columns: fit-content(170px) 28px minmax(0, 1fr) 52px; }
+    .evc { display: none; }
+    .list.kd .kdc { grid-column: 4; }
+    .tm-hero { grid-template-columns: 64px minmax(0, 1fr); height: auto; padding: 16px 14px; gap: 6px 14px; }
+    .tm-hero .crest { width: 64px; height: 64px; }
+    .tm-id h1 { font-size: 30px; }
+    .tm-rank { grid-column: 1 / -1; justify-items: start; padding: 0; grid-auto-flow: column; align-items: baseline; gap: 8px; }
+    .tm-rank b { font-size: 34px; }
+    .pl-hero { grid-template-columns: 130px minmax(0, 1fr); height: auto; gap: 0 12px; }
+    .pl-hero .photo { width: 130px; height: 150px; }
+    .pl-id { padding: 12px 12px 12px 0; }
+    .pl-id h1 { font-size: 38px; }
+    .pl-key { grid-column: 1 / -1; grid-template-columns: repeat(5, auto); justify-content: space-between; gap: 6px; padding: 12px 14px 14px; }
+    .pl-key span:first-child { grid-row: auto; padding: 0; }
+    .pl-key b, .pl-key span:first-child b { font-size: 24px; }
+    .ficha .grp { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .ev-hero { grid-template-columns: 56px minmax(0, 1fr); height: auto; padding: 16px 14px; gap: 6px 14px; }
+    .ev-hero .lg { width: 56px; height: 56px; }
+    .ev-hero .bn { opacity: 0.2; }
+    .ev-id h1 { font-size: 30px; }
+    .ev-org { grid-column: 1 / -1; justify-items: start; text-align: left; }
+    .ev-top { grid-template-columns: minmax(0, 1fr); }
+    .places { grid-template-columns: minmax(0, 1fr); }
+    .facts { gap: 10px 24px; }
+  }
+</style>
+</head>
+<body>
+  <div class="toolbar">
+    <span class="seg" role="group" aria-label="Página">
+      <button type="button" data-p="equipe" aria-pressed="true">Equipe</button>
+      <button type="button" data-p="jogador" aria-pressed="false">Jogador</button>
+      <button type="button" data-p="campeonato" aria-pressed="false">Campeonato</button>
+    </span>
+    <span class="seg" role="group" aria-label="Largura">
+      <button type="button" data-w="full" aria-pressed="true">Computador</button>
+      <button type="button" data-w="phone" aria-pressed="false">Celular (390px)</button>
+    </span>
+    <span data-metric></span>
+  </div>
+
+  <div class="frame">
+    <header class="site-top">
+      <a class="brand" href="#"><img src="/assets/univlr_logo_longa.png" alt="UNIVLR"></a>
+      <nav class="nav" id="nav" aria-label="Principal"></nav>
+      <label class="search"><input type="search" placeholder="Buscar time, jogador, campeonato ou mapa" aria-label="Buscar"><span aria-hidden="true">/</span></label>
+      <button class="enter" type="button">Entrar</button>
+    </header>
+    <main class="page" id="page"></main>
+    <footer class="foot">
+      <img src="/assets/logo_univlr.png" alt="">
+      <span>Estatísticas do cenário universitário brasileiro de VALORANT.</span>
+      <nav aria-label="Rodapé"><a href="#">Partidas</a><a href="#">Eventos</a><a href="#">Ranking</a><a href="#">Notícias</a></nav>
+    </footer>
+  </div>
+
+<script>
+  const SITE = "/";
+  const src = (p) => (p.startsWith("http") ? p : SITE + p);
+  const logoOf = (f) => `${SITE}assets/team-logos/${f}`;
+  function teamColor(colors) {
+    let best = null, bestChroma = -1;
+    for (const hex of colors) {
+      const n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+      const chroma = Math.max(r, g, b) - Math.min(r, g, b);
+      if (chroma > bestChroma) { best = hex; bestChroma = chroma; }
+    }
+    return bestChroma < 40 ? "#6b6e78" : best;
+  }
+  const sec = (title, inner, aside = "", more = "") => `<section><header class="sec-head"><h2>${title}</h2>${aside ? `<span class="aside">${aside}</span>` : ""}${more ? `<a class="more" href="#">${more}</a>` : ""}</header>${inner}</section>`;
+  const tabsHtml = (items) => `<nav class="tabs" aria-label="Seções">${items.map((t, i) => `<a href="#"${i === 0 ? ' aria-current="page"' : ""}>${t}</a>`).join("")}</nav>`;
+  const comments = sec("Comentários", `<div class="cmt-empty"><span>Entre na sua conta para comentar.</span><button type="button">Entrar ou criar conta</button></div>`, "Ninguém comentou ainda");
+
+  // ---------------- times (dados reais) ----------------
+  const T = {
+    azure_bears_black: ["Azure Bears Black", "AZR B", "azure_bears.png", ["#037aff", "#fefeff"]],
+    ceub_octopus_vulgaris: ["CEUB Octopus Vulgaris", "CEUB VLG", "ceub_octopus.png", ["#551d66", "#020103"]],
+    ufrn_tirana: ["UFRN Tirana", "TIR", "tirana.png", ["#f07436", "#282828"]],
+    macklogic_white: ["MackLogic White", "LOGIC", "macklogic_white.png", ["#ffffff", "#ffffff"]],
+    pucc_canaries: ["PUCC Canaries", "PUCCC", "puccCanaries.png", ["#cca900", "#ffffff"]],
+    azure_bears_spotline: ["Azure Bears Spotline", "AZR SP", "azure_bears.png", ["#037aff", "#fefeff"]],
+    ufpr_bbn: ["Burning Bunnies", "BBN", "ufpr_bbn.png", ["#e11e31", "#fefefe"]],
+    azure_bears_silver: ["Azure Bears Silver", "AZR", "azure_bears.png", ["#037aff", "#fefeff"]],
+    macklogic_wine: ["MackLogic Wine", "LOGIC W", "macklogic_wine.png", ["#78061d", "#78061d"]],
+    atletica_sustenta: ["Atlética Sustenta", "STT", "atletica_sustenta.png", ["#6d0407", "#c38d4d"]],
+    inatel_gray: ["INATEL Gray", "INATEL", "inatel.png", ["#040404", "#e6e6e6"]],
+    azure_bears_polaris: ["Azure Bears Polaris", "AZR P", "azure_bears.png", ["#037aff", "#fefeff"]],
+    ufrj_minerva: ["UFRJ Minerva", "MINERVA", "ufrj_minerva.png", ["#131732", "#fdc725"]],
+    maua_blue: ["Mauá Blue", "MAUA", "maua_blue.png", ["#ffffff", "#2d477c"]],
+    fei_capim: ["FEI Capim", "FEI C", "fei_whiteowls.png", ["#242323", "#fdfdfd"]],
+    ufu_saints_onyx: ["UFU Saints Onyx", "UFU O", "ufu_saints.png", ["#fefefe", "#d7ad00"]],
+    incinera_esports: ["Incinera E-Sports", "INC", "incinera.png", ["#e66b12", "#020101"]],
+    ufmt_turuna: ["UFMT Turuna", "TRN", "ufmt_turuna.png", ["#b93b07", "#fbfbf9"]],
+    ufscar_fire: ["UFSCar Fire", "FIRE", "ufscar_fire.png", ["#d22916", "#000000"]],
+    caap_auroras: ["CAAP Auroras", "CAAP A", "caap_hellhounds.png", ["#630002", "#fdfdfd"]],
+    fei_last_dance: ["FEI Last Dance", "FEI LD", "fei_darkowls.png", ["#242323", "#fac60a"]],
+  };
+  const AZR = { tc: "#037aff", tl: "#177ae8" };
+  const RUSH = ["Rush Series 3ª Edição", "assets/tournament-icons/rushSeries.png"];
+  const UNIVAVA_G = ["UNIVAVÁ - Fase de Grupos", "assets/tournament-icons/UNIVAVA.png"];
+
+  function teamLine(id, score, win) {
+    const [name, , logo, colors] = T[id];
+    return `<div class="t${win ? " win" : ""}" style="--tc:${teamColor(colors)}"><span class="who"><img src="${logoOf(logo)}" alt=""><span class="name">${name}</span></span><b>${score}</b></div>`;
+  }
+  function matchRow([a, b, sa, sb, ev, maps, kd]) {
+    const multi = maps.length > 1;
+    return `<a class="m" href="#"><div class="maps">${maps.map(([map]) => `<div class="slice"><img src="${SITE}assets/maps/web/${map.toLowerCase()}.webp" alt=""></div>`).join("")}</div>${teamLine(a, sa, sa > sb)}${teamLine(b, sb, sb > sa)}<span class="maplist">${maps.map(([map, ra, rb]) => `<span>${map}${multi ? ` <small>${ra}-${rb}</small>` : ""}</span>`).join("")}</span><span class="evc"><img src="${src(ev[1])}" alt=""><span>${ev[0]}</span></span>${kd ? `<span class="kdc"><b>${kd[0]} / ${kd[1]}</b><small>K / D</small></span>` : ""}</a>`;
+  }
+  const matchList = (days, kd) => days.map(([d, rows]) => `<p class="day">${d}</p><div class="list${kd ? " kd" : ""}">${rows.map(matchRow).join("")}</div>`).join("");
+
+  const AZR_MATCHES = [
+    ["18 de outubro", [["azure_bears_black", "ceub_octopus_vulgaris", 1, 2, RUSH, [["Bind", 13, 8], ["Abyss", 13, 15], ["Ascent", 7, 13]], [71, 41]]]],
+    ["17 de outubro", [
+      ["macklogic_white", "azure_bears_black", 14, 16, RUSH, [["Lotus", 14, 16]], [24, 19]],
+      ["ufu_saints_onyx", "azure_bears_black", 6, 13, RUSH, [["Ascent", 6, 13]], [15, 13]],
+      ["ufmt_turuna", "azure_bears_black", 10, 13, RUSH, [["Ascent", 10, 13]], [17, 12]],
+      ["fei_last_dance", "azure_bears_black", 5, 13, RUSH, [["Bind", 5, 13]], [9, 9]],
+    ]],
+  ];
+  const strip = (days) => days.map(([d, rows]) => [d, rows.map((r) => r.slice(0, 6))]);
+  const TROPHIES_AZR = `<div class="trophies">
+      <div class="trophy"><span class="medal"><img src="${src("assets/trofeus-campeonatos/vice-generico.png")}" alt=""><img src="${src("assets/tournament-icons/rushSeries.png")}" alt=""></span><span><strong>Vice-campeão</strong><small>Rush Series 3ª Edição, out de 2026</small></span></div>
+      <div class="trophy"><span class="medal"><img src="${src("assets/trofeus-campeonatos/terceiro-generico.png")}" alt=""><img src="${src("assets/tournament-icons/uniAsc.png")}" alt=""></span><span><strong>3º lugar</strong><small>VAL | UNI Ascension | Inters, mai de 2026</small></span></div>
+    </div>`;
+
+  // ====================== EQUIPE ======================
+  function pageEquipe() {
+    const squad = [["Aldeath", "azure_bears/Aldeath.png"], ["Lacerdão", "azure_bears/lacerdao.png"], ["Skydvjj", "azure_bears/skydvjj.png"], ["Droga é o pedro", "azure_bears/droga_e_o_pedro.png"], ["Stockão", "azure_bears/stockao_new.png"]];
+    const hero = `
+      <header class="tm-hero" style="--tc:${AZR.tc};--tl:${AZR.tl}">
+        <img class="crest" src="${logoOf("azure_bears.png")}" alt="">
+        <div class="tm-id">
+          <span class="tag">AZR B</span>
+          <h1>Azure Bears Black</h1>
+          <span class="where"><img src="${src("assets/state-flags/pr.webp")}" alt="">Paraná, Universidade Tecnológica Federal do Paraná</span>
+          <span class="acts"><button class="fan" type="button">Ser fã</button><a href="#">Instagram</a></span>
+        </div>
+        <div class="tm-rank"><b>#10<small>+2</small></b><span>no ranking</span></div>
+        <div class="tm-squad">${squad.map(([n, p]) => `<figure><img src="${src("assets/player-photos/" + p)}" alt=""><figcaption>${n}</figcaption></figure>`).join("")}</div>
+      </header>`;
+    // historico semanal do ranking (teamRankingHistory do site), do mais antigo ao mais novo
+    const RK = [5, 7, 11, 11, 12, 14, 14, 15, 16, 17, 17, 17, 18, 18, 18, 18, 17, 13, 12, 12, 12, 10];
+    const W = 900, H = 170, padL = 30, padR = 10, padT = 10, padB = 22, maxRank = 20;
+    const x = (i) => padL + (i * (W - padL - padR)) / (RK.length - 1);
+    const y = (r) => padT + ((r - 1) * (H - padT - padB)) / (maxRank - 1);
+    const pts = RK.map((r, i) => `${x(i).toFixed(1)},${y(r).toFixed(1)}`).join(" ");
+    const chart = `
+      <svg class="rk-chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Posição semanal no ranking, de #5 em maio a #10 em outubro">
+        ${[1, 10, 20].map((r) => `<line x1="${padL}" x2="${W - padR}" y1="${y(r)}" y2="${y(r)}" stroke="rgba(245,241,242,0.08)" /><text x="0" y="${y(r) + 4}">#${r}</text>`).join("")}
+        <polyline points="${pts}" fill="none" stroke="${AZR.tl}" stroke-width="2" vector-effect="non-scaling-stroke" />
+        ${RK.map((r, i) => `<circle cx="${x(i)}" cy="${y(r)}" r="2.5" fill="${AZR.tl}" vector-effect="non-scaling-stroke"><title>#${r}</title></circle>`).join("")}
+        <text x="${padL}" y="${H - 4}">mai</text><text x="${W / 2}" y="${H - 4}" text-anchor="middle">ago</text><text x="${W - padR}" y="${H - 4}" text-anchor="end">out</text>
+      </svg>`;
+    const rank = sec("Histórico do ranking", `
+      <div class="rk-stats"><span><b>#10</b><small>posição atual</small></span><span><b>#5</b><small>melhor posição</small></span><span><b>22</b><small>semanas válidas</small></span><span><b>55</b><small>equipes no ranking</small></span></div>
+      <p class="rk-note">A nota inclui as partidas e colocações da Azure Bears desde 4 de abril de 2026, que esta equipe sucedeu.</p>
+      ${chart}`, "", "Ver o cálculo da nota");
+    const ROSTER = [["Aldeath", "zeNith#mond", "azure_bears/Aldeath.png", "1.07", 44, 208], ["Lacerdão", "Lacer#Daoo", "azure_bears/lacerdao.png", "0.96", 51, 179], ["Skydvjj", "sky444#jesus", "azure_bears/skydvjj.png", "1.14", 47, 228], ["Droga é o pedro", "droga é o pedro#GOAT", "azure_bears/droga_e_o_pedro.png", "1.01", 44, 189], ["Stockão", "stockão#BAGRE", "azure_bears/stockao_new.png", "1.16", 51, 238]];
+    const vars = "--team-accent:#037aff;--team-accent-2:#fefeff;--team-wash:#0650a4;--team-wash-2:#21364f;--team-ink:#f5f1f2";
+    const roster = sec("Elenco atual", `
+      <div class="plate roster">
+        <div class="hd"><span>Titulares</span><span>rAAting</span><span>Mapas</span><span>ACS</span></div>
+        ${ROSTER.map(([n, riot, ph, r, mp, acs]) => `<a class="rr pintura-de-equipe" href="#" style="${vars}"><img class="ph" src="${src("assets/player-photos/" + ph)}" alt=""><span class="nm"><b class="name paint-ink">${n}</b><small class="name paint-ink">${riot}</small></span><span class="n rt paint-ink">${r}</span><span class="n paint-ink">${mp}</span><span class="n paint-ink">${acs}</span></a>`).join("")}
+      </div>
+      <a class="rail-link" href="#">Ver os 2 reservas e o histórico</a>`);
+    const matches = sec("Últimas partidas", matchList(strip(AZR_MATCHES)), "", "Ver as 40");
+    return `${hero}${tabsHtml(["Resumo", "Ranking", "Elenco", "Partidas", "Campeonatos", "Stats"])}
+      <div class="body2"><div class="col">${rank}${matches}</div><div class="col">${roster}${sec("Troféus", TROPHIES_AZR)}</div></div>${comments}`;
+  }
+
+  // ====================== JOGADOR ======================
+  function pageJogador() {
+    const hero = `
+      <header class="pl-hero" style="--tc:${AZR.tc};--tl:${AZR.tl}">
+        <img class="photo" src="${src("assets/player-photos/azure_bears/Aldeath.png")}" alt="">
+        <div class="pl-id">
+          <span class="role"><img src="${src("assets/roles/DuelistClassSymbol.webp")}" alt="">Duelista</span>
+          <h1>Aldeath</h1>
+          <span class="riot">zeNith#mond<em>, antes Aldeath#mond</em></span>
+          <span class="acts"><a class="team" href="#"><img src="${logoOf("azure_bears.png")}" alt=""><span>Azure Bears Black</span></a><button class="fan" type="button">Ser fã</button></span>
+        </div>
+        <div class="pl-key"><span><small>rAAting 3.0</small><b>1.04</b></span><span><small>ACS</small><b>204</b></span><span><small>ADR</small><b>107</b></span><span><small>K/D</small><b>1.02</b></span><span><small>Mapas</small><b>53</b></span></div>
+      </header>`;
+    const G = (label, stats) => `<div class="grp"><small>${label}</small>${stats.map(([k, v, t]) => `<span class="st"><small>${k}</small><b class="${t || ""}">${v}</b></span>`).join("")}</div>`;
+    const ficha = sec("Dados do jogador", `
+      <div class="plate ficha">
+        ${G("Geral", [["rAAting 3.0", "1.04"], ["Rounds", "1103"], ["Mapas", "53"], ["ACS", "204"], ["K/D", "1.02"], ["K-D", "+17", "good"], ["ADR", "107"], ["KAST", "74%"], ["Swing/R", "-0.1 pp", "bad"]])}
+        ${G("Por round", [["KPR", "0.70"], ["DPR", "0.69"], ["APR", "0.26"], ["FKPR", "0.09"], ["FDPR", "0.09"], ["HS%", "23%"], ["Kills", "774"], ["Deaths", "757"], ["Assists", "292"]])}
+        ${G("Abertura e trades", [["First kills", "99"], ["First deaths", "101"], ["FK-FD", "-2", "bad"], ["Trade kills", "185"], ["Mortes tradadas", "220"], ["Mortes sem trade", "469"], ["Trade denials", "383"], ["Saves em derrota", "23"], ["Sobrev. em vitória", "315"]])}
+      </div>
+      <p class="ficha-note">Composição e métricas da rAAting 3.0 ficam fora enquanto vierem vazias para este jogador.</p>`);
+    const PL_MATCHES = [
+      ...AZR_MATCHES,
+      ["27 de setembro", [["azure_bears_black", "ufmt_turuna", 1, 2, UNIVAVA_G, [["Split", 13, 15], ["Summit", 13, 8], ["Haven", 9, 13]], [35, 55]]]],
+    ];
+    const matches = sec("Últimas partidas", matchList(PL_MATCHES, true), "", "Ver todas");
+    const AG = [["neon", "Neon", "Duelista", 771], ["cypher", "Cypher", "Sentinela", 136], ["waylay", "Waylay", "Duelista", 64], ["omen", "Omen", "Controlador", 48], ["phoenix", "Phoenix", "Duelista", 43]];
+    const agents = sec("Agentes", `<div class="agents" style="--tl:${AZR.tl}">${AG.map(([s, n, c, r]) => `<img src="${src(`assets/agent-icons/${s}.png`)}" alt=""><span class="nm"><b>${n}</b><small>${c}</small></span><span class="bar"><i style="--w:${Math.round((r / 771) * 100)}%"></i></span><span class="rd">${r} rounds</span>`).join("")}</div>`, "", "Ver todos");
+    const PM = [["Abyss", 5, "1.34", 261], ["Lotus", 7, "1.16", 240], ["Bind", 3, "1.14", 221], ["Breeze", 1, "1.12", 219], ["Ascent", 11, "1.08", 206], ["Pearl", 1, "1.07", 190], ["Split", 11, "0.97", 186], ["Sunset", 1, "0.87", 189], ["Haven", 12, "0.84", 171], ["Summit", 1, "0.76", 147]];
+    const tone = (r) => (parseFloat(r) >= 1.1 ? "good" : parseFloat(r) < 0.9 ? "bad" : "");
+    const permap = sec("Por mapa", `<div class="plate permap"><div class="hd"><span>Mapa</span><span>Partidas</span><span>rAAting</span><span>ACS</span></div>${PM.map(([m, n, r, acs]) => `<a class="pm" href="#"><img src="${SITE}assets/maps/web/${m.toLowerCase()}.webp" alt=""><b>${m}</b><span>${n}</span><span class="rt ${tone(r)}">${r}</span><span>${acs}</span></a>`).join("")}</div>`);
+    const trophy = sec("Troféus", `<div class="trophies"><div class="trophy"><span class="medal"><img src="${src("assets/trofeus-campeonatos/vice-generico.png")}" alt=""><img src="${src("assets/tournament-icons/rushSeries.png")}" alt=""></span><span><strong>Vice-campeão</strong><small>Rush Series 3ª Edição, com a Azure Bears Black</small></span></div></div>`);
+    return `${hero}${tabsHtml(["Resumo", "Equipes", "Partidas", "Agentes", "Mapas", "Resultados", "Troféus"])}
+      <div class="body2"><div class="col">${ficha}${matches}</div><div class="col">${agents}${permap}${trophy}</div></div>${comments}`;
+  }
+
+  // ====================== CAMPEONATO ======================
+  // chave real da Rush Series 3: [codigo, a, placarA, b, placarB, vencedor, status] - b nulo e "sem adversario"
+  const UP = [
+    ["Rodada de 32", [["1", "ufrn_tirana", 1, null, 0, "ufrn_tirana"], ["2", "macklogic_white", 13, "pucc_canaries", 6, "macklogic_white"], ["3", "azure_bears_spotline", 1, null, 0, "azure_bears_spotline"], ["4", "ufpr_bbn", 1, null, 0, "ufpr_bbn"], ["5", "azure_bears_silver", 1, null, 0, "azure_bears_silver"], ["6", "macklogic_wine", 2, "atletica_sustenta", 13, "atletica_sustenta"], ["7", "inatel_gray", 1, null, 0, "inatel_gray"], ["8", "azure_bears_polaris", 4, "ufrj_minerva", 13, "ufrj_minerva"], ["9", "ceub_octopus_vulgaris", 1, null, 0, "ceub_octopus_vulgaris"], ["10", "maua_blue", 13, "fei_capim", 7, "maua_blue"], ["11", "ufu_saints_onyx", 1, null, 0, "ufu_saints_onyx"], ["12", "incinera_esports", 1, null, 0, "incinera_esports"], ["13", "ufmt_turuna", 1, null, 0, "ufmt_turuna"], ["14", "ufscar_fire", 13, "caap_auroras", 7, "ufscar_fire"], ["15", "fei_last_dance", 1, null, 0, "fei_last_dance"], ["16", "azure_bears_black", 1, null, 0, "azure_bears_black"]]],
+    ["Rodada de 16", [["17", "ufrn_tirana", 3, "macklogic_white", 13, "macklogic_white"], ["18", "azure_bears_spotline", 4, "ufpr_bbn", 13, "ufpr_bbn"], ["19", "azure_bears_silver", 13, "atletica_sustenta", 10, "azure_bears_silver"], ["20", "inatel_gray", 1, "ufrj_minerva", 0, "inatel_gray", "W.O."], ["21", "ceub_octopus_vulgaris", 12, "maua_blue", 14, "maua_blue"], ["22", "ufu_saints_onyx", 13, "incinera_esports", 9, "ufu_saints_onyx"], ["23", "ufmt_turuna", 13, "ufscar_fire", 0, "ufmt_turuna"], ["24", "fei_last_dance", 5, "azure_bears_black", 13, "azure_bears_black"]]],
+    ["Quartas de final", [["25", "macklogic_white", 13, "ufpr_bbn", 8, "macklogic_white"], ["26", "azure_bears_silver", 13, "inatel_gray", 5, "azure_bears_silver"], ["27", "maua_blue", 10, "ufu_saints_onyx", 13, "ufu_saints_onyx"], ["28", "ufmt_turuna", 10, "azure_bears_black", 13, "azure_bears_black"]]],
+    ["Semifinais", [["29", "macklogic_white", 13, "azure_bears_silver", 8, "macklogic_white"], ["30", "ufu_saints_onyx", 6, "azure_bears_black", 13, "azure_bears_black"]]],
+    ["Final superior", [["31", "macklogic_white", 14, "azure_bears_black", 16, "azure_bears_black"]]],
+    ["Grande final, MD3", [["62", "azure_bears_black", 1, "ceub_octopus_vulgaris", 2, "ceub_octopus_vulgaris"]]],
+  ];
+  const LOW = [
+    ["Rodada de 16", [["40", "ufrn_tirana", 1, null, 0, "ufrn_tirana"], ["41", "azure_bears_spotline", 9, "caap_auroras", 13, "caap_auroras"], ["42", "atletica_sustenta", 1, null, 0, "atletica_sustenta"], ["43", "ufrj_minerva", 0, "fei_capim", 1, "fei_capim", "W.O."], ["44", "ceub_octopus_vulgaris", 13, "azure_bears_polaris", 0, "ceub_octopus_vulgaris"], ["45", "incinera_esports", 13, "macklogic_wine", 1, "incinera_esports"], ["46", "ufscar_fire", 1, null, 0, "ufscar_fire"], ["47", "fei_last_dance", 13, "pucc_canaries", 4, "fei_last_dance"]]],
+    ["Rodada de 8", [["48", "ufrn_tirana", 13, "caap_auroras", 11, "ufrn_tirana"], ["49", "atletica_sustenta", 1, "fei_capim", 0, "atletica_sustenta", "W.O."], ["50", "ceub_octopus_vulgaris", 13, "incinera_esports", 2, "ceub_octopus_vulgaris"], ["51", "ufscar_fire", 5, "fei_last_dance", 13, "fei_last_dance"]]],
+    ["Rodada de 8, 2ª", [["52", "ufmt_turuna", 0, "ufrn_tirana", 1, "ufrn_tirana", "W.O."], ["53", "maua_blue", 13, "atletica_sustenta", 5, "maua_blue"], ["54", "inatel_gray", 1, "ceub_octopus_vulgaris", 13, "ceub_octopus_vulgaris"], ["55", "ufpr_bbn", 13, "fei_last_dance", 8, "ufpr_bbn"]]],
+    ["Rodada de 4", [["56", "ufrn_tirana", 4, "maua_blue", 13, "maua_blue"], ["57", "ceub_octopus_vulgaris", 13, "ufpr_bbn", 4, "ceub_octopus_vulgaris"]]],
+    ["Quartas de final", [["58", "azure_bears_silver", 3, "maua_blue", 13, "maua_blue"], ["59", "ufu_saints_onyx", 8, "ceub_octopus_vulgaris", 13, "ceub_octopus_vulgaris"]]],
+    ["Semifinal", [["60", "maua_blue", 10, "ceub_octopus_vulgaris", 13, "ceub_octopus_vulgaris"]]],
+    ["Final inferior", [["61", "macklogic_white", 6, "ceub_octopus_vulgaris", 13, "ceub_octopus_vulgaris"]]],
+  ];
+  function bline(id, score, win, bye) {
+    const [name, , logo, colors] = T[id];
+    return `<span class="ln${win ? " win" : ""}" style="--tc:${teamColor(colors)}"><img src="${logoOf(logo)}" alt=""><span class="name">${name}</span><b>${bye ? "" : score}</b></span>`;
+  }
+  function bracketHtml(rounds, pairsFrom) {
+    // pairsFrom: indices das rodadas cuja seguinte tem metade das partidas (junta vertical)
+    return `<div class="bracket-wrap"><div class="bracket">${rounds.map(([title, matches], ri) => {
+      const isGf = /Grande/.test(title);
+      const pairs = pairsFrom.includes(ri);
+      return `<div class="rnd${pairs ? " pairs" : ""}${isGf ? " gf" : ""}"><small>${title}</small><div class="cells">${matches.map(([code, a, sa, b, sb, w, st]) => {
+        if (!b) return `<div class="cell bye" title="Partida ${code}: ${T[a][0]} passou direto"></div>`;
+        return `<div class="cell"><a class="bm" href="#" title="Partida ${code}">${bline(a, sa, w === a)}${bline(b, sb, w === b)}${st ? `<span class="wo">${st}</span>` : ""}</a></div>`;
+      }).join("")}</div></div>`;
+    }).join("")}</div></div>`;
+  }
+  // campanha de cada um na chave, sem contar quem passou direto
+  function records() {
+    const rec = {};
+    for (const [, ms] of [...UP, ...LOW]) for (const [, a, , b, , w] of ms) {
+      if (!b) continue;
+      for (const id of [a, b]) rec[id] = rec[id] || [0, 0];
+      rec[w][0]++; rec[w === a ? b : a][1]++;
+    }
+    return rec;
+  }
+  function pageCampeonato() {
+    const hero = `
+      <header class="ev-hero">
+        <img class="bn" src="${src("assets/tournament-banners/banner_rushseries.webp")}" alt="">
+        <img class="lg" src="${src("assets/tournament-icons/rushSeries.png")}" alt="">
+        <div class="ev-id"><span class="st">Finalizado</span><h1>Rush Series 3ª Edição</h1><span class="when">17 e 18 de outubro de 2026, patch 13.08</span></div>
+        <div class="ev-org"><small>Organização</small><span><img src="${src("assets/organizers-logos/logo_AcadArena.png")}" alt="">AcadArena</span></div>
+      </header>
+      <div class="facts"><span><small>Prêmio</small><b>R$1.000</b></span><span><small>Equipes</small><b>21</b></span><span><small>Tier</small><b class="tier">A</b></span><span><small>Tipo</small><b>Online</b></span><span><small>Formato</small><b>Eliminação dupla, MD1, grande final MD3</b></span></div>`;
+    const PODIUM = [["1º", "ceub_octopus_vulgaris"], ["2º", "azure_bears_black"], ["3º", "macklogic_white"]];
+    const rec = records();
+    const podium = sec("Pódio", `<div class="podium">${PODIUM.map(([p, id]) => { const [n, tag, lg, c] = T[id]; const tc = teamColor(c); return `<a class="pod" href="#" style="--tc:${tc};--tl:${tc}"><b>${p}</b><img src="${logoOf(lg)}" alt=""><strong class="name">${n}</strong><small>${rec[id][0]}-${rec[id][1]}</small></a>`; }).join("")}</div>`);
+    const nums = sec("Resumo", `<div class="nums"><span><b>21</b><small>equipes</small></span><span><b>35</b><small>séries</small></span><span><b>2</b><small>dias</small></span></div>`);
+    const POOL = [["Lotus", 13, 262], ["Bind", 11, 207], ["Ascent", 7, 138], ["Split", 2, 33], ["Sunset", 2, 34], ["Abyss", 1, 28], ["Summit", 1, 18]];
+    const pool = sec("Map pool", `<div class="pool">${POOL.map(([m, j, r]) => `<a href="#"><img src="${SITE}assets/maps/web/${m.toLowerCase()}.webp" alt=""><b>${m}</b><small>${j} ${j === 1 ? "jogo" : "jogos"}, ${r} rounds</small></a>`).join("")}</div>`);
+    const chave = sec("Chave", `
+      <p class="bracket-title">Chave superior e grande final</p>
+      ${bracketHtml(UP, [0, 1, 2, 3])}
+      <p class="bracket-title" style="margin-top:22px">Chave inferior</p>
+      ${bracketHtml(LOW, [0, 2, 4])}`, "Eliminação dupla. Quem passou direto aparece só na rodada seguinte.");
+    const PLACES = [["1º", ["ceub_octopus_vulgaris"]], ["2º", ["azure_bears_black"]], ["3º", ["macklogic_white"]], ["4º", ["maua_blue"]], ["5º-6º", ["azure_bears_silver", "ufu_saints_onyx"]], ["7º-8º", ["ufrn_tirana", "ufpr_bbn"]], ["9º-12º", ["ufmt_turuna", "atletica_sustenta", "inatel_gray", "fei_last_dance"]], ["13º-16º", ["caap_auroras", "fei_capim", "incinera_esports", "ufscar_fire"]], ["17º-21º", ["azure_bears_spotline", "ufrj_minerva", "azure_bears_polaris", "macklogic_wine", "pucc_canaries"]]];
+    const flat = PLACES.flatMap(([p, ids]) => ids.map((id) => [p, id]));
+    const places = sec("Classificação final", `<div class="places">${flat.map(([p, id]) => { const [n, , lg] = T[id]; const r = rec[id] || [0, 0]; return `<a class="place" href="#"><b>${p}</b><img src="${logoOf(lg)}" alt=""><span class="name">${n}</span><small>${r[0]}-${r[1]}</small></a>`; }).join("")}</div>`, "Com a campanha de cada equipe na chave");
+    return `${hero}${tabsHtml(["Visão geral", "Jogos", "Estatísticas", "Mapas", "Agentes", "Composições"])}
+      <div class="ev-top">${podium}${nums}${pool}</div>${chave}${places}${comments}`;
+  }
+
+  // ---------------- troca de pagina e medida ----------------
+  const PAGES = { equipe: [pageEquipe, "Ranking"], jogador: [pageJogador, "Players"], campeonato: [pageCampeonato, "Eventos"] };
+  // medido nas paginas de hoje com a mesma base: [1440px, 390px]
+  const ATUAL = { equipe: [2645, 5077], jogador: [2106, 4558], campeonato: [6720, 12780] };
+  let current = "equipe";
+  function render() {
+    const [fn, navItem] = PAGES[current];
+    document.getElementById("nav").innerHTML = ["Início", "Notícias", "Partidas", "Eventos", "Players", "Ranking", "Cartinhas"].map((n) => `<a href="#"${n === navItem ? ' aria-current="page"' : ""}>${n}</a>`).join("");
+    document.getElementById("page").innerHTML = fn();
+    setTimeout(measure, 120);
+  }
+  function measure() {
+    const phone = document.body.classList.contains("phone");
+    const h = Math.round(document.querySelector(".frame").getBoundingClientRect().height);
+    const [full, ph] = ATUAL[current];
+    document.querySelector("[data-metric]").innerHTML = phone
+      ? `A 390px esta página tem <strong>${h}px</strong> de altura (hoje ${ph}px).`
+      : `Nesta largura esta página tem <strong>${h}px</strong> de altura (a 1440px, hoje, são ${full}px).`;
+  }
+  document.querySelectorAll("[data-p]").forEach((b) => b.addEventListener("click", () => {
+    current = b.dataset.p;
+    document.querySelectorAll("[data-p]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    render();
+  }));
+  document.querySelectorAll("[data-w]").forEach((b) => b.addEventListener("click", () => {
+    document.body.classList.toggle("phone", b.dataset.w === "phone");
+    document.querySelectorAll("[data-w]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    setTimeout(measure, 80);
+  }));
+  render();
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(measure, 300));
+</script>
+</body>
+</html>

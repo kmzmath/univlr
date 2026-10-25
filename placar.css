@@ -1,0 +1,4711 @@
+/* Visual "Placar": a versao alternativa descrita em
+   docs/superpowers/specs/2026-10-23-identidade-placar-design.md.
+
+   Esta folha carrega depois do styles.css. Componente novo mora aqui, sempre
+   com prefixo vp- (o prefixo existe porque uma classe curta ja colidiu com a
+   barra do topo no mockup). O que continua com a marcacao de hoje (topo,
+   rodape) recebe aqui as poucas sobrescritas, e a regra que ficar morta no
+   styles.css sai na ultima tarefa do plano.
+
+   Tres jeitos de separar, cada um com o seu uso (secao 4.1 do documento):
+   - Placa: um fundo so por lista, item como linha separada por fio de 1px.
+   - Placar: linha na cor da equipe, quem perdeu apagado.
+   - Mapa de fundo: a arte dos mapas da serie atras de cada partida. */
+
+/* Fundo da pagina totalmente liso, como a HLTV: a malha quadriculada de 44px
+   e o brilho vermelho do topo sairam (pedido do dono em 24/10), e ele
+   preferiu sem luz nenhuma no topo. Quem separa as coisas sao as Placas. */
+body {
+  background: var(--bg);
+}
+
+/* ==========================================================================
+   Base comum: topo, rodape, titulo de secao e abas
+   ========================================================================== */
+
+/* Topo: sem sombra e sem fio vermelho; o vermelho fica so no indicador que
+   anda embaixo da aba ativa (.nav-indicator, inalterado). */
+.topbar {
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  box-shadow: none;
+}
+
+/* So a altura minima: no celular o topo tem tres linhas (logo e Entrar, menu,
+   busca) e uma altura fixa aqui as empilhava por cima da pagina. */
+.topbar-inner {
+  min-height: 56px;
+}
+
+.nav-link,
+.nav-link.active {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--muted);
+  box-shadow: none;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--ink);
+}
+
+.global-search input {
+  background: var(--surface);
+  border: 0;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+
+.global-search input::placeholder {
+  color: var(--muted);
+}
+
+/* O "/" vira texto simples: sem bolinha vermelha em volta de uma letra. */
+.search-token {
+  background: none;
+  border-radius: 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.conta-entrar {
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+
+/* Rodape numa linha so: logo pequeno, a frase e quatro links. */
+.footer {
+  padding: 18px 0;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+}
+
+.footer-inner.vp-rodape {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px 24px;
+  height: auto;
+  min-height: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-rodape .footer-logo-link {
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+.vp-rodape .footer-logo {
+  width: 22px;
+  height: 22px;
+}
+
+.vp-rodape-links {
+  display: flex;
+  gap: 18px;
+  margin-left: auto;
+}
+
+.vp-rodape-links a:hover {
+  color: var(--ink);
+}
+
+/* Titulo de secao: e ele que separa uma secao da outra. Vale tambem para os
+   .section-head e .panel-title que ainda sao escritos direto nos templates,
+   ate cada pagina trocar pela peca nova. */
+.vp-sec,
+.section-head,
+.panel-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  min-width: 0;
+  min-height: 0;
+  margin: 0 0 10px;
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+
+.vp-sec h2,
+.section-head h2,
+.panel-title h2 {
+  margin: 0;
+  font: 600 30px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.section-head h2::before,
+.panel-title h2::before {
+  display: none;
+}
+
+.vp-sec-aside,
+.section-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.vp-sec-more,
+.section-head .subtle-link,
+.panel-title a {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.vp-sec-more:hover,
+.section-head .subtle-link:hover,
+.panel-title a:hover {
+  color: var(--ink);
+}
+
+/* Abas de equipe, jogador e campeonato: o mesmo desenho do menu. */
+.team-tabs,
+.tournament-page-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 24px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.team-tab,
+.tournament-page-tabs a {
+  position: relative;
+  flex: none;
+  min-height: 0;
+  padding: 12px 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font: 600 14px/1 var(--font-text);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+
+.team-tabs .team-tab:hover,
+.team-tabs .team-tab.active,
+.tournament-page-tabs a:hover,
+.tournament-page-tabs a.active {
+  background: none;
+  color: var(--ink);
+}
+
+.team-tabs .team-tab.active,
+.tournament-page-tabs a.active {
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+/* O styles.css desenha as abas de equipe e jogador como botoes com seletor
+   mais forte (.team-page .team-tab) e pinta a ativa de vermelho com
+   !important. Aqui elas voltam ao desenho do menu. Quando nao cabem numa
+   linha, quebram para a segunda, em vez de esconder abas fora da tela. */
+.team-page .team-tabs,
+.player-page .player-tabs {
+  gap: 0 24px;
+  flex-wrap: wrap;
+  overflow: visible;
+  border-bottom: 1px solid var(--line);
+}
+
+.team-page .team-tabs .team-tab,
+.player-page .player-tabs .team-tab {
+  min-width: 0;
+  min-height: 0;
+  justify-content: flex-start;
+  padding: 12px 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.team-page .team-tabs .team-tab:hover,
+.team-page .team-tabs .team-tab.active,
+.player-page .player-tabs .team-tab:hover,
+.player-page .player-tabs .team-tab.active {
+  background: none;
+  color: var(--ink) !important;
+}
+
+.team-page .team-tabs .team-tab.active,
+.player-page .player-tabs .team-tab.active {
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+@media (max-width: 760px) {
+  /* Menu numa linha so, rolando para o lado: em duas linhas o topo, que fica
+     preso na tela, chegava a 215px a 390 de largura. */
+  .nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link {
+    flex: none;
+  }
+
+  .vp-sec h2,
+  .section-head h2,
+  .panel-title h2 {
+    font-size: 26px;
+  }
+}
+
+/* ==========================================================================
+   A linha de partida: o modelo antigo, mais baixo
+   Escudo grande de cada lado, placar grande no meio com o vencedor em verde, e
+   em cima a hora, os nomes dos mapas e o campeonato. Cada dia e uma Placa: um
+   fundo so para o grupo, partida como linha.
+   ========================================================================== */
+
+/* O banho da pintura de equipe no chaveamento (.vp-bm) anima por aqui. */
+@property --vp-wash {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 26%;
+}
+
+.vp-lista {
+  display: grid;
+  min-width: 0;
+  background: var(--surface);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.vp-lista > .empty-state {
+  background: none;
+}
+
+/* --ponta e o espaco da hora e do campeonato nas pontas da linha de cima: os
+   nomes dos mapas ficam no meio e nunca passam por baixo deles. --fim e a
+   coluna do K / D com o vao dela, que fica fora do meio da partida. */
+.vp-pl {
+  --ponta: 150px;
+  --fim: 0px;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-areas:
+    "topo topo topo"
+    "a placar b";
+  align-items: center;
+  column-gap: 14px;
+  row-gap: 4px;
+  min-width: 0;
+  padding: 6px 14px 8px;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.vp-pl + .vp-pl {
+  border-top: 1px solid var(--line);
+}
+
+.vp-pl:hover,
+.vp-pl:focus-visible {
+  background: var(--surface-2);
+}
+
+.vp-pl-kd {
+  --fim: 84px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) 70px;
+  grid-template-areas:
+    "topo topo topo kd"
+    "a placar b kd";
+}
+
+/* O holofote e os nomes dos mapas saem da mesma conta de largura, presos ao
+   mesmo bloco (a linha), e por isso cada nome cai sobre a propria fatia. */
+.vp-pl-artes,
+.vp-pl-mapas {
+  position: absolute;
+  left: calc((100% - var(--fim)) / 2);
+  width: min(calc(200px + var(--maps, 1) * 120px), calc((100% - var(--fim)) * 0.62), calc(100% - var(--fim) - var(--ponta) * 2));
+  transform: translateX(-50%);
+}
+
+.vp-pl-artes {
+  --lean: 22px;
+  --seam: 2px;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  opacity: 0.2;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 76%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 76%, transparent 100%);
+  transition: opacity 200ms ease;
+}
+
+.vp-pl:hover .vp-pl-artes,
+.vp-pl:focus-visible .vp-pl-artes {
+  opacity: 0.32;
+}
+
+.vp-pl-artes i {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  clip-path: polygon(
+    calc(var(--lean) / 2 + var(--seam) / 2) 0,
+    calc(100% + var(--lean) / 2 - var(--seam) / 2) 0,
+    calc(100% - var(--lean) / 2 - var(--seam) / 2) 100%,
+    calc(var(--seam) / 2 - var(--lean) / 2) 100%
+  );
+}
+
+.vp-pl-artes img {
+  position: absolute;
+  top: 0;
+  left: calc(var(--lean) / -2);
+  width: calc(100% + var(--lean));
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+.vp-pl-topo {
+  grid-area: topo;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  height: 16px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.vp-pl-quando {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-pl-mapas {
+  top: 6px;
+  display: flex;
+  height: 16px;
+}
+
+.vp-pl-mapa {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.vp-pl-evento {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+  max-width: calc(var(--ponta) - 12px);
+}
+
+.vp-pl-evento-nome {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.vp-pl-evento .event-logo.tiny {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.vp-pl-lado {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.vp-pl-a {
+  grid-area: a;
+}
+
+.vp-pl-b {
+  grid-area: b;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.vp-pl-lado .team-logo {
+  flex: none;
+  width: 32px;
+  height: 32px;
+}
+
+.vp-pl-lado strong {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.vp-pl-placar {
+  grid-area: placar;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-pl-placar b {
+  min-width: 0.6em;
+  text-align: center;
+  color: var(--loss-ink);
+  font: 800 34px/1 var(--font-display);
+}
+
+.vp-pl-placar b.vp-venceu {
+  color: var(--win);
+}
+
+.vp-pl-placar i {
+  color: var(--muted);
+  font: 600 20px/1 var(--font-display);
+  font-style: normal;
+}
+
+.vp-kd {
+  grid-area: kd;
+  display: grid;
+  align-content: center;
+  justify-items: end;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-kd b {
+  font: 600 16px/1 var(--font-display);
+}
+
+.vp-kd small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* O cabecalho do dia nas listas agrupadas: sem fundo e sem fio, so o dia. */
+.result-day {
+  margin: 14px 0 6px;
+  background: none;
+  border: 0;
+}
+
+.result-day-toggle {
+  padding: 0;
+  color: var(--muted);
+  font: 600 12px/1.2 var(--font-text);
+}
+
+/* Celular: o campeonato vira so o escudo dele e a ponta encolhe, para os nomes
+   dos mapas caberem no meio da linha de cima. */
+@media (max-width: 560px) {
+  .vp-pl {
+    --ponta: 66px;
+    column-gap: 10px;
+    padding: 6px 10px 8px;
+  }
+
+  .vp-pl-kd {
+    --fim: 64px;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) 54px;
+  }
+
+  .vp-pl-evento-nome {
+    display: none;
+  }
+
+  .vp-pl-lado {
+    gap: 8px;
+  }
+
+  .vp-pl-lado .team-logo {
+    width: 26px;
+    height: 26px;
+  }
+
+  .vp-pl-lado strong {
+    font-size: 14px;
+  }
+
+  .vp-pl-placar {
+    gap: 6px;
+  }
+
+  .vp-pl-placar b {
+    font-size: 28px;
+  }
+
+  .vp-pl-placar i {
+    font-size: 17px;
+  }
+
+  .vp-kd b {
+    font-size: 14px;
+  }
+}
+
+/* ==========================================================================
+   Placa: um fundo so para a lista inteira, item como linha
+   A placa e uma grade so e cada linha e uma subgrade dela. As margens sao
+   trilhas vazias nas pontas: padding numa subgrade come a primeira trilha.
+   ========================================================================== */
+
+.vp-placa {
+  background: var(--surface);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+/* Ranking: posicao, variacao, escudo, nome, partidas e nota. O quadro acaba
+   onde a nota acaba. */
+.vp-placa-rk {
+  display: grid;
+  grid-template-columns: 4px 20px 22px 22px fit-content(190px) auto auto 6px;
+  column-gap: 7px;
+  justify-content: start;
+}
+
+.vp-rk {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+  height: 38px;
+  border-top: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-rk:first-child {
+  border-top: 0;
+}
+
+.vp-rk-pos {
+  grid-column: 2;
+  font: 600 16px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.vp-rk:first-child .vp-rk-pos {
+  color: var(--ink);
+}
+
+.vp-rk-delta {
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.vp-rk-delta.up {
+  color: var(--win);
+}
+
+.vp-rk .team-logo {
+  justify-self: center;
+  width: 20px;
+  height: 20px;
+}
+
+.vp-rk-nome {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-rk-partidas {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.vp-rk-nota {
+  padding-left: 4px;
+  text-align: right;
+  font: 600 18px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Campeonatos: logo, nome e quando, letra do tier solta, tamanho. */
+.vp-placa-ev {
+  display: grid;
+  grid-template-columns: 4px 24px minmax(0, 1fr) 18px auto 6px;
+  column-gap: 9px;
+}
+
+.vp-evrow {
+  position: relative;
+  isolation: isolate;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+  height: 54px;
+  border-top: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-evrow:first-child {
+  border-top: 0;
+}
+
+.vp-evrow:hover {
+  background: var(--surface-2);
+}
+
+.vp-evrow > .event-logo {
+  grid-column: 2;
+  width: 24px;
+  height: 24px;
+}
+
+.vp-evrow-txt {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.vp-evrow-nome {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-evrow-quando {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* O vermelho aqui e a marca de "ao vivo", nao um dado. */
+.vp-ao-vivo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+}
+
+.vp-ao-vivo::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.vp-tier {
+  text-align: center;
+  font: 700 24px/1 var(--font-display);
+  border: 0;
+  background: none;
+  padding: 0;
+}
+
+.vp-tier-s { color: var(--tier-s); }
+.vp-tier-a { color: var(--tier-a); }
+.vp-tier-b { color: var(--tier-b); }
+.vp-tier-c { color: var(--tier-c); }
+.vp-tier-other { color: var(--tier-other); }
+
+.vp-evrow-tam {
+  text-align: right;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+/* A pintura de equipe e a capa do campeonato so existem com ponteiro fino. */
+@media (hover: hover) and (pointer: fine) {
+  .vp-rk.pintura-de-equipe:hover,
+  .vp-rk.pintura-de-equipe:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--team-accent-2, var(--teal));
+  }
+
+  .vp-rk.pintura-de-equipe :is(.vp-rk-pos, .vp-rk-delta, .vp-rk-nome, .vp-rk-partidas, .vp-rk-nota) {
+    transition: color 160ms ease;
+  }
+
+  .vp-rk.pintura-de-equipe:hover :is(.vp-rk-pos, .vp-rk-delta, .vp-rk-nome, .vp-rk-partidas, .vp-rk-nota),
+  .vp-rk.pintura-de-equipe:focus-visible :is(.vp-rk-pos, .vp-rk-delta, .vp-rk-nome, .vp-rk-partidas, .vp-rk-nota) {
+    color: var(--team-ink, var(--ink));
+    transition: color 220ms ease 210ms;
+  }
+
+  .vp-evrow.tem-capa::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0;
+    background-image:
+      linear-gradient(180deg, rgba(11, 11, 16, 0.84), rgba(11, 11, 16, 0.72)),
+      var(--event-capa);
+    background-position: center;
+    background-size: cover;
+    transition: opacity 280ms ease;
+    pointer-events: none;
+  }
+
+  .vp-evrow.tem-capa:hover::before,
+  .vp-evrow.tem-capa:focus-visible::before {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   Melhores da semana: um lider por vez
+   ========================================================================== */
+
+/* O fundo e de cada slide; o cartao so recorta o trilho e leva os tracinhos
+   embaixo, fora da foto. */
+.vp-semana-cartao {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.vp-semana-trilho {
+  display: flex;
+  transition: transform 220ms ease;
+  touch-action: pan-y;
+}
+
+.vp-semana-trilho.vp-sem-animacao {
+  transition: none;
+}
+
+/* Fundo na cor da equipe do lider, entao ele muda junto quando passa de uma
+   equipe para outra. */
+.vp-slide {
+  position: relative;
+  flex: 0 0 100%;
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  height: 206px;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  background: linear-gradient(
+    115deg,
+    color-mix(in srgb, var(--team-line) 34%, var(--surface)) 0%,
+    color-mix(in srgb, var(--team-line) 12%, var(--surface)) 46%,
+    var(--surface) 78%
+  );
+}
+
+/* A foto solta, sangrando na base: sem moldura, sem fundo. As fotos sao
+   quadradas, com a pessoa no meio da metade de cima para baixo, entao a caixa
+   e quadrada e quase da altura do cartao: a pessoa ocupa a altura toda e cai
+   inteira na coluna da esquerda. */
+.vp-slide .player-figure {
+  align-self: end;
+  width: 190px;
+  height: 190px;
+  margin-left: -18px;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.vp-slide .player-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+/* Sem foto, a silhueta fica no fundo, e nao como um vulto cinza do tamanho da
+   pessoa. */
+.vp-slide .player-figure.is-silhouette {
+  width: 156px;
+  height: 156px;
+  margin-left: -2px;
+}
+
+.vp-slide .player-figure.is-silhouette img {
+  opacity: 0.38;
+}
+
+.vp-slide-txt {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  min-width: 0;
+  padding: 16px 16px 16px 6px;
+  text-align: right;
+}
+
+.vp-slide-txt > small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-slide-nick {
+  margin-top: 2px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font: 600 24px/1.1 var(--font-text);
+}
+
+.vp-slide-equipe {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-slide-equipe .team-logo {
+  width: 16px;
+  height: 16px;
+}
+
+.vp-slide-valor {
+  align-self: end;
+}
+
+.vp-slide-valor b {
+  display: block;
+  font: 600 56px/0.9 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-slide-valor span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-slide-ctx {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  text-shadow: 0 1px 2px #000;
+}
+
+/* Os tracinhos: o atual enche enquanto conta o tempo. Ficam embaixo do
+   cartao, e nao por cima da foto. A barra tem 3px, a area de clique 18px. */
+.vp-passos {
+  display: flex;
+  gap: 3px;
+}
+
+.vp-passo {
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 0;
+  height: 18px;
+  padding: 7px 0 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.vp-passo i {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 3px;
+  overflow: hidden;
+  background: rgba(245, 241, 242, 0.22);
+}
+
+.vp-passo.vp-feito i {
+  background: rgba(245, 241, 242, 0.55);
+}
+
+.vp-passo[aria-current="true"] i::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform-origin: left;
+  animation: vp-encher var(--vp-passo, 4500ms) linear forwards;
+}
+
+.vp-semana-cartao:hover .vp-passo[aria-current="true"] i::after,
+.vp-semana-cartao:focus-visible .vp-passo[aria-current="true"] i::after,
+.vp-semana-cartao:has(:focus-visible) .vp-passo[aria-current="true"] i::after {
+  animation-play-state: paused;
+}
+
+@keyframes vp-encher {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.vp-semana-nota {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ==========================================================================
+   Home em trilhos: tres colunas desde o topo, como HLTV e vlr.gg
+   ========================================================================== */
+
+.vp-home {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr) 340px;
+  gap: 32px;
+  align-items: start;
+}
+
+/* minmax(0, 1fr) e nao a trilha implicita: a trilha auto cresceria ate o
+   min-content dos nove cartoes do carrossel lado a lado e estouraria o trilho. */
+.vp-trilho {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 30px;
+  align-content: start;
+  min-width: 0;
+}
+
+.vp-trilho > * {
+  min-width: 0;
+}
+
+.vp-dia {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font: 600 12px/1 var(--font-text);
+}
+
+.vp-lista + .vp-dia {
+  margin-top: 16px;
+}
+
+/* "Ranking completo", "Ver todas": link pequeno, sem o botao em caixa. */
+.panel-footer-link {
+  display: inline-block;
+  width: auto;
+  min-height: 0;
+  margin-top: 8px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.panel-footer-link:hover {
+  background: none;
+  color: var(--ink);
+}
+
+/* Atividade recente numa linha so, embaixo das partidas. */
+.vp-trilho .atividade-faixa {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 18px;
+  margin: 0;
+  padding: 14px 0 0;
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.vp-trilho .atividade-faixa .atv-rotulo {
+  margin: 0;
+  color: var(--muted);
+  font: 600 13px/1.2 var(--font-text);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-trilho .atividade-faixa .atv-rotulo::before {
+  display: none;
+}
+
+.vp-trilho .atividade-faixa .atv-lista {
+  display: contents;
+}
+
+.vp-trilho .atividade-faixa .atv-linha {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.vp-trilho .atividade-faixa .atv-tipo {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-trilho .atividade-faixa .atv-nome {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-trilho .atividade-faixa .atv-conta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Noticias no trilho direito: a principal com a capa em cima, as outras duas
+   como lista com miniatura. */
+.vp-noticia-principal {
+  display: grid;
+  gap: 6px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-noticia-principal img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2.3;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.vp-noticia-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-noticia-principal h3 {
+  margin: 0;
+  font: 600 18px/1.25 var(--font-text);
+  text-wrap: balance;
+}
+
+.vp-noticias-lista {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vp-noticias-lista a {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-noticias-lista img,
+.vp-noticia-sem-capa {
+  display: block;
+  width: 88px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 2px;
+  background: var(--surface);
+}
+
+.vp-noticias-lista h4 {
+  margin: 2px 0 0;
+  font: 600 13px/1.3 var(--font-text);
+}
+
+.vp-noticia-principal:hover h3,
+.vp-noticias-lista a:hover h4 {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* Tela media: o trilho da direita desce e vira duas colunas lado a lado. */
+@media (max-width: 1180px) {
+  .vp-home {
+    grid-template-columns: 340px minmax(0, 1fr);
+  }
+
+  .vp-trilho-dir {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 32px;
+  }
+}
+
+/* Celular: uma coluna, na ordem do que mais importa. */
+@media (max-width: 760px) {
+  .vp-home {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .vp-trilho {
+    display: contents;
+  }
+
+  .vp-home .vp-semana { order: 1; }
+  .vp-home .vp-s-partidas { order: 2; }
+  .vp-home .vp-s-ranking { order: 3; }
+  .vp-home .vp-noticias { order: 4; }
+  .vp-home .vp-s-campeonatos { order: 5; }
+  .vp-home .atividade-faixa { order: 6; }
+
+  .vp-placa-rk {
+    grid-template-columns: 4px 20px 22px 22px minmax(0, 1fr) auto auto 6px;
+  }
+}
+
+/* ==========================================================================
+   Partida: placar da serie, abas de mapa, comparativo, scoreboard e lineups
+   ========================================================================== */
+
+.vp-partida {
+  gap: 24px;
+}
+
+.vp-partida > *,
+.vp-partida .match-tab-panel {
+  min-width: 0;
+}
+
+.vp-partida .match-tab-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+
+/* Fatias de mapa do topo e das abas: o mesmo recorte das linhas da home. */
+.vp-hero-artes,
+.vp-abas-mapa {
+  --seam: 2px;
+}
+
+.vp-hero-artes i,
+.vp-aba {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  clip-path: polygon(
+    calc(var(--lean) / 2 + var(--seam) / 2) 0,
+    calc(100% + var(--lean) / 2 - var(--seam) / 2) 0,
+    calc(100% - var(--lean) / 2 - var(--seam) / 2) 100%,
+    calc(var(--seam) / 2 - var(--lean) / 2) 100%
+  );
+}
+
+.vp-hero-artes img,
+.vp-aba-arte {
+  position: absolute;
+  top: 0;
+  left: calc(var(--lean) / -2);
+  width: calc(100% + var(--lean));
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+/* ---- placar da serie ---- */
+.vp-hero-partida {
+  position: relative;
+  isolation: isolate;
+}
+
+.vp-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-hero-meta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.vp-hero-meta img,
+.vp-hero-meta .event-logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.vp-hero-placar {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  height: 104px;
+}
+
+.vp-hero-artes {
+  --lean: 18px;
+  position: absolute;
+  inset: 0 22%;
+  z-index: -1;
+  display: flex;
+  opacity: 0.34;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
+}
+
+.vp-hero-lado {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  height: 100%;
+  padding: 0 20px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-lado-a {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--team-line) 30%, transparent), transparent 75%);
+  box-shadow: inset 3px 0 0 var(--team-line);
+}
+
+.vp-lado-b {
+  flex-direction: row-reverse;
+  text-align: right;
+  background: linear-gradient(270deg, color-mix(in srgb, var(--team-line) 30%, transparent), transparent 75%);
+  box-shadow: inset -3px 0 0 var(--team-line);
+}
+
+.vp-hero-lado .team-logo {
+  flex: none;
+  width: 64px;
+  height: 64px;
+}
+
+.vp-hero-lado > span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.vp-hero-lado strong {
+  font: 600 26px/1.1 var(--font-text);
+}
+
+.vp-hero-lado small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-hero-lado:hover strong {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.vp-hero-score {
+  display: grid;
+  justify-items: center;
+  padding: 0 28px;
+  text-shadow: 0 2px 12px #000;
+}
+
+.vp-hero-numeros {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 700 64px/0.9 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-hero-numeros b {
+  font-weight: 700;
+}
+
+.vp-hero-numeros .vp-perdeu {
+  color: var(--loss-ink);
+}
+
+.vp-hero-numeros .vp-venceu {
+  color: var(--win);
+}
+
+.vp-hero-numeros i {
+  color: var(--muted);
+  font-size: 34px;
+  font-style: normal;
+}
+
+.vp-hero-score small {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ---- abas de mapa ---- */
+/* A arte e o que diz qual aba e qual mapa: ela vem acesa, centrada na fatia,
+   com um veu so embaixo do texto para o nome continuar legivel. */
+.vp-abas-mapa {
+  --lean: 22px;
+  display: flex;
+  height: 52px;
+  background: #000;
+}
+
+.vp-aba {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.vp-aba-serie {
+  background: var(--surface);
+}
+
+.vp-aba-arte {
+  object-position: center;
+  opacity: 0.68;
+  transition: opacity 200ms ease;
+}
+
+.vp-aba::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(ellipse 30% 55% at 50% 50%, rgba(0, 0, 0, 0.5), transparent 100%);
+  pointer-events: none;
+}
+
+.vp-aba-serie::before {
+  display: none;
+}
+
+.vp-aba:hover .vp-aba-arte {
+  opacity: 0.84;
+}
+
+.vp-aba.active .vp-aba-arte {
+  opacity: 1;
+}
+
+.vp-aba.active {
+  color: var(--ink);
+}
+
+.vp-aba.active::after {
+  content: "";
+  position: absolute;
+  right: 18%;
+  bottom: 0;
+  left: 18%;
+  z-index: 2;
+  height: 2px;
+  background: var(--brand);
+}
+
+.vp-aba > span {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 3px #000;
+}
+
+.vp-aba-nome {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--ink);
+  font: 600 15px/1 var(--font-text);
+  white-space: nowrap;
+}
+
+.vp-aba-nome small {
+  color: rgba(245, 241, 242, 0.78);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vp-aba-placar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font: 600 17px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-aba-placar .team-logo {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---- rounds do mapa: um bloco por tempo, lado a lado ---- */
+/* O primeiro bloco traz o escudo e a sigla de cada equipe; os seguintes, so o
+   escudo. Quando os blocos quebram de linha, o escudo continua dizendo quem e
+   quem. O round ganho segue na cor do lado que venceu (--side-attack e
+   --side-defense, do styles.css). */
+.vp-partida .vp-rounds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  width: auto;
+  max-width: 100%;
+  margin: 0;
+  overflow: visible;
+}
+
+.vp-rounds-bloco {
+  --rotulo: 24px;
+  --celula: 25px;
+  display: grid;
+  gap: 4px;
+}
+
+.vp-rounds-bloco:first-child {
+  --rotulo: 84px;
+}
+
+.vp-partida .vp-rounds .round-row {
+  display: grid;
+  grid-template-columns: var(--rotulo) repeat(var(--rounds), var(--celula));
+  justify-content: start;
+  gap: 3px;
+}
+
+.vp-partida .vp-rounds .round-team-label {
+  justify-content: flex-start;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vp-rounds-bloco:not(:first-child) .round-team-label span {
+  display: none;
+}
+
+.vp-partida .vp-rounds .round-cell {
+  width: var(--celula);
+  min-width: 0;
+  height: 25px;
+  border: 0;
+  border-radius: 2px;
+  background: rgba(245, 241, 242, 0.06);
+}
+
+/* ---- barras espelhadas: comparativo e historico ---- */
+.vp-espelho {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: baseline;
+  row-gap: 5px;
+  padding: 6px 0 7px;
+  border-top: 1px solid var(--line);
+}
+
+.vp-espelho-v {
+  color: var(--muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.vp-espelho-v.vp-maior {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.vp-espelho-b {
+  text-align: right;
+}
+
+.vp-espelho-v small {
+  margin: 0 4px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.vp-espelho-rotulo {
+  padding: 0 8px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.vp-espelho-barras {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  height: 5px;
+}
+
+.vp-espelho-barras > span {
+  display: flex;
+  background: rgba(245, 241, 242, 0.06);
+}
+
+.vp-espelho-barras > span:first-child {
+  justify-content: flex-end;
+}
+
+.vp-espelho-barras i {
+  display: block;
+  width: var(--w);
+  height: 100%;
+  background: var(--team-line);
+  opacity: 0.5;
+}
+
+.vp-espelho-barras i.vp-maior {
+  opacity: 1;
+}
+
+.vp-comparativo {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 32px;
+}
+
+.vp-comparativo .vp-espelho {
+  border-top: 0;
+}
+
+/* Padrao e Avancado: duas palavras, a escolhida sublinhada. */
+.vp-partida .vp-sec .vp-modo {
+  min-width: 0;
+  margin-left: auto;
+  display: inline-flex;
+  gap: 14px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.vp-partida .vp-sec .vp-modo::before {
+  display: none;
+}
+
+.vp-partida .vp-sec .vp-modo button {
+  min-height: 0;
+  padding: 4px 0;
+  border-radius: 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-partida .vp-sec .vp-modo button.active {
+  color: var(--ink);
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+/* ---- scoreboard: as duas equipes numa tabela, na largura toda ---- */
+/* Largura fixa por coluna, e nao automatica: jogador e agentes tem o tamanho
+   do que mostram e as colunas de numero dividem o resto em partes iguais, com
+   o numero no meio. Assim nao sobra vao entre os agentes e o rAAting, e o
+   avancado (treze numeros, como o padrao) cabe sem rolar. Abaixo de 1000px a
+   tabela vira um bloco por jogador. */
+.vp-sb-wrap {
+  border-radius: 2px;
+  background: var(--surface);
+}
+
+.vp-partida .vp-sb {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+  margin: 0;
+  border: 0;
+  border-collapse: collapse;
+  background: transparent;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-partida .vp-sb col {
+  width: auto;
+}
+
+.vp-partida .vp-sb col.score-col-player {
+  width: 210px;
+}
+
+.vp-partida .vp-sb col.score-col-agents {
+  width: 112px;
+}
+
+.vp-partida .vp-sb th,
+.vp-partida .vp-sb td {
+  height: 38px;
+  padding: 0 4px;
+  border: 0;
+  background: transparent;
+  font-size: 13px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* O styles.css listra as linhas pares (.match-scoreboard tr:nth-child(even) td),
+   e a listra cobria o destaque do escolhido e o hover. Aqui o fundo e da linha. */
+.vp-partida .vp-sb tr:nth-child(n) > td,
+.vp-partida .vp-sb tr:nth-child(n) > th {
+  background: transparent;
+}
+
+.vp-partida .vp-sb thead th {
+  height: 32px;
+  border-bottom: 1px solid var(--line-dark);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.vp-partida .vp-sb thead .score-sort-button {
+  justify-content: center;
+  width: 100%;
+}
+
+/* A linha de grupos do avancado: o nome da familia sobre as colunas dela. */
+.vp-partida .vp-sb thead tr.vp-sb-grupos th {
+  height: 24px;
+  border-bottom: 0;
+  font-size: 11px;
+  vertical-align: bottom;
+}
+
+.vp-partida .vp-sb thead tr.vp-sb-grupos th[scope="colgroup"] {
+  color: var(--ink);
+  box-shadow: inset 0 -1px var(--line-dark);
+}
+
+.vp-partida .vp-sb th:first-child,
+.vp-partida .vp-sb td:first-child {
+  padding-left: 14px;
+  text-align: left;
+}
+
+.vp-partida .vp-sb th:nth-child(2),
+.vp-partida .vp-sb td:nth-child(2) {
+  text-align: left;
+}
+
+.vp-partida .vp-sb thead tr.vp-sb-grupos th:nth-child(2) {
+  text-align: center;
+}
+
+.vp-partida .vp-sb td:first-child {
+  overflow: hidden;
+}
+
+.vp-partida .vp-sb .score-sort-button {
+  font-weight: 500;
+}
+
+.vp-partida .vp-sb .score-sort-button i {
+  color: var(--ink);
+}
+
+.vp-partida .vp-sb tbody tr {
+  border-top: 1px solid var(--line);
+}
+
+/* A linha da equipe: banho e risco na cor dela, e as medias da equipe. */
+.vp-partida .vp-sb tr.vp-sb-equipe {
+  border-top: 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--team-line) 26%, var(--surface)), var(--surface) 70%);
+}
+
+.vp-partida .vp-sb tbody + tbody tr.vp-sb-equipe {
+  border-top: 6px solid var(--bg);
+}
+
+.vp-partida .vp-sb tr.vp-sb-equipe > * {
+  height: 40px;
+}
+
+.vp-partida .vp-sb tr.vp-sb-equipe th:first-child {
+  box-shadow: inset 3px 0 0 var(--team-line);
+}
+
+.vp-sb-equipe-nome {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  font-weight: 600;
+}
+
+.vp-sb-equipe-nome .team-logo {
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+.vp-sb-equipe-nome strong {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.vp-sb-equipe-nome small {
+  flex: none;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* As medias da equipe: so o numero, o nome da coluna ja esta no cabecalho. */
+.vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric {
+  display: table-cell;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric small {
+  display: none;
+}
+
+.vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric strong {
+  font: inherit;
+  color: inherit;
+}
+
+.vp-sb-jogador {
+  cursor: pointer;
+}
+
+.vp-partida .vp-sb tr.vp-sb-jogador:hover {
+  background: var(--surface-2);
+}
+
+.vp-partida .vp-sb tr.vp-escolhido {
+  background: color-mix(in srgb, var(--team-line) 16%, var(--surface));
+}
+
+.vp-partida .vp-sb tr.vp-escolhido td:first-child {
+  box-shadow: inset 3px 0 0 var(--team-line);
+}
+
+.vp-partida .vp-sb tr.vp-sb-jogador:focus-visible {
+  outline: 2px solid var(--brand-text);
+  outline-offset: -2px;
+}
+
+.vp-partida .vp-sb td:first-child a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.vp-partida .vp-sb td:first-child a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vp-partida .vp-sb td:first-child .tiny {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.vp-partida .vp-sb .agent-stack {
+  gap: 3px;
+  vertical-align: middle;
+}
+
+.vp-partida .vp-sb .agent-mini {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---- embaixo do scoreboard: o melhor da partida e as lineups ---- */
+.vp-partida-baixo {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.vp-partida-baixo > section {
+  min-width: 0;
+}
+
+/* ---- lineups e historico ---- */
+.vp-lineups {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+}
+
+.vp-banda {
+  min-width: 0;
+}
+
+.vp-banda-cab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 12px;
+  font-weight: 600;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--team-line) 26%, transparent), transparent 80%);
+  box-shadow: inset 3px 0 0 var(--team-line);
+}
+
+.vp-banda-cab .team-logo {
+  width: 20px;
+  height: 20px;
+}
+
+.vp-banda-cab strong {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.vp-banda-cab small {
+  flex: none;
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vp-banda-fotos {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.vp-quem {
+  display: grid;
+  grid-template-rows: 96px auto;
+  justify-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 0 0 8px;
+  border: 0;
+  border-radius: 2px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
+.vp-quem:hover {
+  background: var(--surface);
+}
+
+.vp-quem[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--team-line) 16%, transparent);
+  box-shadow: inset 0 -2px var(--team-line);
+}
+
+/* A foto solta, sem moldura: so a pessoa, sentada na base. */
+.vp-quem .player-portrait {
+  width: 100%;
+  height: 96px;
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: none;
+}
+
+.vp-quem .player-portrait img {
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.vp-quem-nome {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 100%;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-quem-nome > span {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.vp-quem-nome img,
+.vp-quem-nome .role-mini {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  opacity: 0.8;
+}
+
+/* O historico logo abaixo das fotos: o nome de cada escolhido na ponta do lado
+   dele, e as barras em quatro colunas, como o comparativo do topo. */
+.vp-historico {
+  margin-top: 14px;
+}
+
+.vp-duelo-cab {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+.vp-duelo-quem {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-duelo-b {
+  justify-content: flex-end;
+}
+
+.vp-duelo-quem strong {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.vp-duelo-quem small {
+  flex: none;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-duelo-b small {
+  order: -1;
+}
+
+.vp-duelo-quem:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vp-duelo-titulo {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.vp-duelo-barras {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 28px;
+}
+
+.vp-duelo-barras .vp-espelho {
+  border-top: 0;
+}
+
+/* ---- melhor da partida ---- */
+.vp-mvp {
+  height: 196px;
+  border-radius: 2px;
+}
+
+.vp-mvp-stats {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.vp-mvp-stats span {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-mvp-stats small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-mvp-stats b {
+  font: 600 20px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+/* O nick e o Riot ID em duas linhas curtas, para a linha ficar em 38px. O
+   link do nick perde a altura minima de toque do celular: quem recebe o toque
+   ali e a linha inteira, que escolhe o jogador do historico. */
+.vp-partida .vp-sb td:first-child {
+  line-height: 1.15;
+}
+
+.vp-partida .vp-sb td:first-child a {
+  display: inline;
+  min-height: 0;
+  padding: 0;
+}
+
+.vp-partida .vp-sb .agent-stack,
+.vp-partida .vp-sb .agent-mini {
+  vertical-align: middle;
+}
+
+.vp-partida .vp-sb tr.vp-sb-equipe th {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ---- tela media: o melhor da partida sobe para cima das lineups ---- */
+@media (max-width: 1180px) {
+  .vp-partida-baixo {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .vp-s-mvp {
+    width: min(100%, 420px);
+  }
+
+  .vp-partida .vp-sb col.score-col-player {
+    width: 170px;
+  }
+
+  .vp-partida .vp-sb col.score-col-agents {
+    width: 104px;
+  }
+
+  /* O nome da coluna pode quebrar em duas linhas ("rAAting" e "3.0") quando a
+     coluna fica estreita, em vez de invadir a vizinha. */
+  .vp-partida .vp-sb thead .score-sort-button {
+    white-space: normal;
+    line-height: 1.1;
+  }
+}
+
+/* ---- scoreboard em blocos: um por jogador, os numeros com rotulo ---- */
+/* A tabela vira grade de --sb-cols colunas: na primeira linha o nick com o
+   Riot ID, os agentes e o rAAting; embaixo os outros doze numeros, cada um com
+   o nome em cima (data-label). A linha da equipe segue o mesmo desenho com as
+   medias. O cabecalho de colunas sai: o rotulo ja esta em cada numero. */
+@media (max-width: 1000px) {
+  .vp-partida .vp-sb,
+  .vp-partida .vp-sb tbody {
+    display: block;
+  }
+
+  .vp-partida .vp-sb colgroup,
+  .vp-partida .vp-sb thead {
+    display: none;
+  }
+
+  .vp-partida .vp-sb tbody {
+    --sb-cols: 12;
+  }
+
+  .vp-partida .vp-sb tbody + tbody {
+    margin-top: 6px;
+  }
+
+  .vp-partida .vp-sb tr {
+    display: grid;
+    grid-template-columns: repeat(var(--sb-cols), minmax(0, 1fr));
+    align-items: center;
+    row-gap: 4px;
+    padding: 7px 10px 8px;
+  }
+
+  .vp-partida .vp-sb tbody + tbody tr.vp-sb-equipe {
+    border-top: 0;
+  }
+
+  .vp-partida .vp-sb th,
+  .vp-partida .vp-sb td,
+  .vp-partida .vp-sb tr.vp-sb-equipe > * {
+    display: block;
+    height: auto;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .vp-partida .vp-sb th:first-child,
+  .vp-partida .vp-sb td:first-child {
+    grid-column: span calc(var(--sb-cols) - 3);
+    padding-left: 0;
+  }
+
+  .vp-partida .vp-sb tr.vp-sb-jogador td:nth-child(2) {
+    grid-column: span 2;
+    text-align: right;
+  }
+
+  .vp-partida .vp-sb tr.vp-sb-equipe th:first-child {
+    grid-column: span calc(var(--sb-cols) - 1);
+    box-shadow: none;
+  }
+
+  .vp-partida .vp-sb tr.vp-sb-equipe {
+    box-shadow: inset 3px 0 0 var(--team-line);
+  }
+
+  .vp-partida .vp-sb tr.vp-escolhido {
+    box-shadow: inset 3px 0 0 var(--team-line);
+  }
+
+  .vp-partida .vp-sb tr.vp-escolhido td:first-child {
+    box-shadow: none;
+  }
+
+  .vp-partida .vp-sb td.numeric,
+  .vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric {
+    display: grid;
+    justify-items: center;
+    gap: 1px;
+    line-height: 15px;
+  }
+
+  .vp-partida .vp-sb td.numeric::before,
+  .vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric::before {
+    content: attr(data-label);
+    max-width: 100%;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 12px;
+    white-space: nowrap;
+  }
+}
+
+/* Celular: uma linha por jogador, como a HLTV. Nick, K, D, A e rAAting; o
+   resto sai. A linha da equipe vira o cabecalho dela, com o nome das colunas
+   no lugar das medias. Tocar no jogador continua escolhendo o historico. */
+@media (max-width: 640px) {
+  .vp-partida .vp-s-sb .vp-modo {
+    display: none;
+  }
+
+  .vp-partida .vp-sb tbody + tbody {
+    margin-top: 10px;
+  }
+
+  .vp-partida .vp-sb tr {
+    grid-template-columns: minmax(0, 1fr) repeat(3, 34px) 56px;
+    column-gap: 6px;
+    min-height: 36px;
+    padding: 0 10px;
+  }
+
+  .vp-partida .vp-sb th:first-child,
+  .vp-partida .vp-sb td:first-child,
+  .vp-partida .vp-sb tr.vp-sb-equipe th:first-child {
+    grid-column: 1;
+    order: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .vp-partida .vp-sb tr.vp-sb-jogador td:nth-child(2),
+  .vp-partida .vp-sb td:first-child br,
+  .vp-partida .vp-sb td:first-child .tiny,
+  .vp-partida .vp-sb .vp-sb-equipe-nome small,
+  .vp-partida .vp-sb td.numeric:not([data-col="rating"], [data-col="kills"], [data-col="deaths"], [data-col="assists"]),
+  .vp-partida .vp-sb td.vlr-board-metric:not([data-col="rating"], [data-col="kills"], [data-col="deaths"], [data-col="assists"]) {
+    display: none;
+  }
+
+  .vp-partida .vp-sb td[data-col="kills"] { order: 1; }
+  .vp-partida .vp-sb td[data-col="deaths"] { order: 2; }
+  .vp-partida .vp-sb td[data-col="assists"] { order: 3; }
+  .vp-partida .vp-sb td[data-col="rating"] { order: 4; }
+
+  .vp-partida .vp-sb td.numeric,
+  .vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric {
+    display: block;
+    text-align: center;
+  }
+
+  .vp-partida .vp-sb td[data-col="rating"] {
+    text-align: right;
+    font-weight: 700;
+  }
+
+  /* So a linha da equipe mostra o nome da coluna; o jogador mostra o numero. */
+  .vp-partida .vp-sb tr.vp-sb-jogador td.numeric::before {
+    content: none;
+  }
+
+  .vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric > * {
+    display: none;
+  }
+
+  .vp-partida .vp-sb .vp-sb-equipe .vlr-board-metric::before {
+    font-size: 11px;
+    line-height: 36px;
+  }
+
+  .vp-partida .vp-sb .vp-sb-equipe td[data-col="rating"]::before {
+    content: "rAAting";
+  }
+
+  .vp-partida .vp-sb .vp-sb-equipe td[data-col="rating"] {
+    text-align: right;
+  }
+
+  .vp-partida .vp-sb tr.vp-sb-equipe > * {
+    height: auto;
+  }
+
+  .vp-partida .vp-sb td:first-child a {
+    font-size: 13px;
+  }
+}
+
+/* ---- celular ---- */
+@media (max-width: 760px) {
+  .vp-partida,
+  .vp-partida .match-tab-panel {
+    gap: 20px;
+  }
+
+  .vp-hero-placar {
+    height: auto;
+  }
+
+  .vp-hero-lado {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 12px 10px;
+  }
+
+  .vp-lado-b {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .vp-hero-lado .team-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .vp-hero-lado strong {
+    font-size: 15px;
+  }
+
+  .vp-hero-score {
+    padding: 0 10px;
+  }
+
+  .vp-hero-numeros {
+    font-size: 44px;
+  }
+
+  .vp-hero-numeros i {
+    font-size: 24px;
+  }
+
+  .vp-hero-artes {
+    inset: 0 10%;
+  }
+
+  /* As abas dividem a largura: numa md3 sao quatro de ~88px, sem rolar. */
+  .vp-abas-mapa {
+    --lean: 12px;
+    height: 54px;
+  }
+
+  .vp-abas-mapa .vp-aba {
+    grid-template-columns: auto;
+    justify-items: center;
+    align-content: center;
+    gap: 3px;
+  }
+
+  .vp-aba-nome {
+    font-size: 12px;
+  }
+
+  .vp-aba-placar {
+    font-size: 15px;
+  }
+
+  .vp-comparativo,
+  .vp-duelo-barras {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+  }
+
+  .vp-rounds-bloco:first-child {
+    --rotulo: 24px;
+  }
+
+  .vp-rounds-bloco .round-team-label span {
+    display: none;
+  }
+
+  .vp-lineups {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .vp-quem {
+    grid-template-rows: 76px auto;
+    gap: 4px;
+  }
+
+  .vp-quem .player-portrait {
+    height: 76px;
+  }
+
+  .vp-quem-nome {
+    font-size: 12px;
+  }
+
+  .vp-espelho {
+    padding: 4px 0 5px;
+  }
+
+  .vp-duelo-titulo {
+    display: none;
+  }
+
+  .vp-duelo-cab {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Comentarios: secao como as outras, sem caixa em volta
+   ========================================================================== */
+
+.cmt-secao.match-panel {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+/* O titulo e o "Ninguem comentou ainda" na mesma linha, como as outras
+   secoes fazem com o aparte. */
+.cmt-secao > .section-head > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
+.cmt-secao > .section-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* O perfil de jogador encolhe todo .section-head h2 (.player-page
+   .section-head h2), e o cabecalho dos comentarios e um deles. */
+.cmt-secao > .section-head h2 {
+  font: 600 30px/1 var(--font-display);
+}
+
+@media (max-width: 760px) {
+  .cmt-secao > .section-head h2 {
+    font-size: 26px;
+  }
+}
+
+.cmt-secao .cmt-convite {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px 20px;
+  text-align: left;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.cmt-secao .cmt-convite p {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Equipe: faixa na cor dela, coluna principal e trilho com elenco e trofeus
+   ========================================================================== */
+
+.team-page.team-page {
+  gap: 24px;
+}
+
+/* O topo: o campo animado de sempre atras, o escudo solto, o nome grande, o
+   ranking solto e as cinco fotos do elenco sangrando na base. */
+.vp-hero-equipe {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) auto minmax(0, 560px);
+  align-items: center;
+  gap: 0 22px;
+  height: 196px;
+  padding: 0 0 0 20px;
+  overflow: hidden;
+  box-shadow: inset 3px 0 0 var(--team-line);
+}
+
+.vp-hero-equipe > :not(.team-field) {
+  position: relative;
+  z-index: 1;
+}
+
+.vp-hero-equipe .team-logo-frame {
+  display: block;
+  width: 112px;
+  height: 112px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-hero-equipe .team-logo-frame .team-logo {
+  width: 100%;
+  height: 100%;
+}
+
+.vp-equipe-id {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.vp-equipe-tag {
+  color: var(--team-line);
+  font: 700 14px/1 var(--font-text);
+}
+
+.vp-equipe-id h1 {
+  margin: 0;
+  font: 700 46px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+.vp-equipe-onde {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.vp-equipe-onde .state-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+
+.vp-equipe-onde .state-flag {
+  width: 20px;
+  height: 14px;
+  border-radius: 1px;
+  object-fit: cover;
+}
+
+.vp-equipe-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-top: 6px;
+}
+
+.vp-equipe-rede {
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.vp-equipe-rede:hover {
+  color: var(--ink);
+}
+
+.vp-equipe-rank {
+  display: grid;
+  justify-items: end;
+  align-self: end;
+  padding-bottom: 22px;
+}
+
+.vp-equipe-rank b {
+  font: 700 56px/0.9 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.vp-equipe-rank small {
+  margin-left: 4px;
+  font: 600 16px/1 var(--font-display);
+  vertical-align: top;
+}
+
+.vp-equipe-rank .vp-mov-up { color: var(--win); }
+.vp-equipe-rank .vp-mov-down { color: var(--danger); }
+.vp-equipe-rank .vp-mov-flat { color: var(--muted); }
+
+.vp-equipe-rank span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-equipe-fotos {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-self: end;
+  height: 186px;
+}
+
+.vp-equipe-foto {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-equipe-foto .player-avatar {
+  position: absolute;
+  inset: auto 0 0;
+  width: 100%;
+  height: 176px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-equipe-foto .player-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.vp-equipe-foto > span:last-child {
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  left: 0;
+  font: 600 12px/1 var(--font-text);
+  text-align: center;
+  text-shadow: 0 1px 3px #000, 0 0 10px #000;
+}
+
+/* ---- corpo do Resumo ---- */
+.vp-equipe-corpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 32px;
+  align-items: start;
+}
+
+.vp-equipe-principal,
+.vp-equipe-trilho {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  min-width: 0;
+}
+
+.vp-equipe-principal > section,
+.vp-equipe-trilho > section {
+  min-width: 0;
+}
+
+/* O grafico do ranking sem a caixa: quatro numeros soltos e a linha na cor da
+   equipe, em 170px. Vale tambem para a aba Ranking. */
+.team-page .ranking-chart-card {
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.team-page .ranking-chart-kpis {
+  gap: 8px 34px;
+}
+
+.team-page .ranking-chart-kpis dd {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.team-page .ranking-chart-kpis dt {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.team-page .ranking-chart-stage {
+  height: 170px;
+}
+
+.team-page .ranking-note {
+  max-width: 80ch;
+  margin: 0 0 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ---- elenco em Placa ---- */
+.vp-elenco {
+  display: grid;
+  grid-template-columns: 4px 34px minmax(0, 1fr) auto auto auto 6px;
+  column-gap: 10px;
+}
+
+.vp-elenco-cab,
+.vp-elenco-linha {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+}
+
+.vp-elenco-cab {
+  height: 28px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-elenco-cab span:first-child { grid-column: 3; }
+.vp-elenco-cab span:not(:first-child) { text-align: right; }
+
+.vp-elenco-linha {
+  height: 46px;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-elenco-linha + .vp-elenco-linha {
+  border-top: 1px solid var(--line);
+}
+
+.vp-elenco-foto {
+  grid-column: 2;
+  align-self: end;
+  width: 34px;
+  height: 42px;
+}
+
+.vp-elenco-foto .player-avatar {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-elenco-foto .player-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.vp-elenco-nome {
+  display: grid;
+  min-width: 0;
+}
+
+.vp-elenco-nome b,
+.vp-elenco-nome small {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-elenco-nome b { font-size: 13px; font-weight: 600; }
+.vp-elenco-nome small { color: var(--muted); font-size: 11px; }
+
+.vp-elenco-n {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-elenco-nota {
+  font: 600 16px/1 var(--font-display);
+}
+
+.vp-elenco-mais {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.vp-elenco-mais:hover { color: var(--ink); }
+
+/* ---- trofeus soltos ---- */
+.vp-trofeus {
+  display: grid;
+  gap: 10px;
+}
+
+.vp-trofeu {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-trofeu .trophy-visual {
+  position: relative;
+  width: 44px;
+  height: 52px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-trofeu .trophy-image {
+  width: 44px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.vp-trofeu .trophy-event-logo {
+  position: absolute;
+  right: -4px;
+  bottom: 2px;
+  width: 18px;
+  height: 18px;
+}
+
+.vp-trofeu strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-trofeu small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-trofeu:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1180px) {
+  .vp-hero-equipe {
+    grid-template-columns: 96px minmax(0, 1fr) auto;
+    padding-right: 20px;
+  }
+
+  .vp-hero-equipe .team-logo-frame {
+    width: 96px;
+    height: 96px;
+  }
+
+  .vp-equipe-fotos {
+    display: none;
+  }
+
+  .vp-equipe-corpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vp-equipe-trilho {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    column-gap: 32px;
+  }
+}
+
+@media (max-width: 760px) {
+  .team-page.team-page {
+    gap: 20px;
+  }
+
+  .vp-hero-equipe {
+    grid-template-columns: 64px minmax(0, 1fr);
+    height: auto;
+    padding: 16px 14px;
+    gap: 6px 14px;
+  }
+
+  .vp-hero-equipe .team-logo-frame {
+    width: 64px;
+    height: 64px;
+  }
+
+  .vp-equipe-id h1 {
+    font-size: 30px;
+  }
+
+  .vp-equipe-rank {
+    grid-column: 1 / -1;
+    grid-auto-flow: column;
+    justify-content: start;
+    align-items: baseline;
+    gap: 8px;
+    padding: 0;
+  }
+
+  .vp-equipe-rank b {
+    font-size: 34px;
+  }
+
+  .vp-equipe-trilho {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Jogador: foto solta no topo, ficha em Placa, agentes e mapas no trilho
+   ========================================================================== */
+
+.vp-bom { color: var(--win); }
+.vp-ruim { color: var(--danger); }
+
+.player-page.player-page {
+  gap: 24px;
+}
+
+.vp-hero-jogador {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0 26px;
+  height: 220px;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--team-line, #6b6e78) 30%, var(--bg)) 0%,
+    color-mix(in srgb, var(--team-line, #6b6e78) 10%, var(--bg)) 50%,
+    var(--bg) 100%
+  );
+  box-shadow: inset 3px 0 0 var(--team-line, #6b6e78);
+}
+
+.vp-jogador-foto {
+  align-self: end;
+  width: 220px;
+  height: 210px;
+}
+
+.vp-jogador-foto .player-avatar,
+.vp-jogador-foto .player-avatar img {
+  width: 100%;
+  height: 100%;
+}
+
+.vp-jogador-foto .player-avatar {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-jogador-foto .player-avatar img {
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.vp-jogador-id {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.vp-jogador-funcao {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-jogador-funcao img,
+.vp-jogador-funcao .role-mini {
+  width: 16px;
+  height: 16px;
+  opacity: 0.85;
+}
+
+.vp-jogador-id h1 {
+  margin: 0;
+  font: 700 64px/0.95 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+.vp-jogador-riot {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.vp-jogador-riot em {
+  color: rgba(163, 165, 175, 0.8);
+  font-style: normal;
+}
+
+.vp-jogador-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-top: 8px;
+}
+
+.vp-jogador-equipe {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.vp-jogador-equipe .team-logo {
+  width: 22px;
+  height: 22px;
+}
+
+.vp-jogador-equipe:hover span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vp-jogador-sem-equipe {
+  color: var(--muted);
+}
+
+.vp-jogador-numeros {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: end;
+  gap: 14px 30px;
+  padding-right: 26px;
+}
+
+.vp-jogador-numeros span {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-jogador-numeros span:first-child {
+  grid-row: span 2;
+  align-self: center;
+  padding-right: 8px;
+}
+
+.vp-jogador-numeros small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-jogador-numeros b {
+  font: 600 28px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-jogador-numeros span:first-child b {
+  font-size: 64px;
+  line-height: 0.9;
+}
+
+/* ---- ficha do jogador ---- */
+.vp-ficha {
+  display: grid;
+}
+
+.vp-ficha-grupo {
+  display: grid;
+  grid-template-columns: 118px repeat(9, minmax(0, 1fr));
+  align-items: end;
+  gap: 0 10px;
+  padding: 11px 14px;
+  border-top: 1px solid var(--line);
+}
+
+.vp-ficha-grupo:first-child {
+  border-top: 0;
+}
+
+.vp-ficha-grupo > small {
+  align-self: center;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vp-ficha-n {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.vp-ficha-n small {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.15;
+}
+
+.vp-ficha-n b {
+  font: 600 19px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- agentes ---- */
+.vp-agentes {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) 80px auto;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+.vp-agentes > img {
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+}
+
+.vp-agente-nome {
+  min-width: 0;
+}
+
+.vp-agente-nome b {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-agente-nome small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.vp-agente-barra {
+  height: 5px;
+  background: rgba(245, 241, 242, 0.06);
+}
+
+.vp-agente-barra i {
+  display: block;
+  width: var(--w);
+  height: 100%;
+  background: var(--team-line, var(--ink));
+}
+
+.vp-agente-rounds {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ---- desempenho por mapa ---- */
+.vp-pormapa {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  column-gap: 18px;
+}
+
+.vp-pm-cab,
+.vp-pm {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+  padding: 0 14px;
+}
+
+.vp-pm-cab {
+  height: 28px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-pm-cab span:not(:first-child),
+.vp-pm span {
+  text-align: right;
+}
+
+.vp-pm {
+  position: relative;
+  isolation: isolate;
+  height: 34px;
+  overflow: hidden;
+  color: inherit;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+}
+
+.vp-pm + .vp-pm {
+  border-top: 1px solid var(--line);
+}
+
+.vp-pm img {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: -1;
+  width: 55%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  opacity: 0.22;
+  -webkit-mask-image: linear-gradient(90deg, #000 30%, transparent);
+  mask-image: linear-gradient(90deg, #000 30%, transparent);
+}
+
+.vp-pm b {
+  font-weight: 600;
+}
+
+.vp-pm .vp-pm-nota {
+  font-weight: 700;
+}
+
+.vp-pm:hover b {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1180px) {
+  .vp-ficha-grupo {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    row-gap: 10px;
+  }
+
+  .vp-ficha-grupo > small {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .player-page.player-page {
+    gap: 20px;
+  }
+
+  .vp-hero-jogador {
+    grid-template-columns: 130px minmax(0, 1fr);
+    height: auto;
+    gap: 0 12px;
+  }
+
+  .vp-jogador-foto {
+    width: 130px;
+    height: 150px;
+  }
+
+  .vp-jogador-id {
+    padding: 12px 12px 12px 0;
+  }
+
+  .vp-jogador-id h1 {
+    font-size: 38px;
+  }
+
+  .vp-jogador-numeros {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(5, auto);
+    justify-content: space-between;
+    gap: 6px;
+    padding: 12px 14px 14px;
+  }
+
+  .vp-jogador-numeros span:first-child {
+    grid-row: auto;
+    padding: 0;
+  }
+
+  .vp-jogador-numeros b,
+  .vp-jogador-numeros span:first-child b {
+    font-size: 24px;
+  }
+
+  .vp-ficha-grupo {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ==========================================================================
+   Campeonato: banner no fundo do topo, dados soltos, podio e map pool, chave
+   em celulas de mesma altura e classificacao final com a campanha
+   ========================================================================== */
+
+.tournament-hub.tournament-hub {
+  gap: 24px;
+}
+
+/* As secoes do campeonato saem da caixa: o titulo fica solto e o conteudo
+   logo embaixo, como no resto do site. */
+.tournament-hub .tournament-section {
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.tournament-hub .tournament-section-head {
+  min-height: 0;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 4px 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.tournament-hub .tournament-section-head h2 {
+  font: 600 30px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.tournament-hub .tournament-section-head span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* As abas do campeonato tinham 150px de largura minima cada, espalhadas como
+   botoes; aqui ficam no desenho do menu, do tamanho do rotulo. */
+.tournament-hub .tournament-page-tabs a {
+  display: block;
+  width: auto;
+  min-width: 0;
+}
+
+/* ---- topo ---- */
+.vp-hero-camp {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0 20px;
+  height: 170px;
+  padding: 0 22px;
+  overflow: hidden;
+}
+
+.vp-camp-banner {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  opacity: 0.38;
+  -webkit-mask-image: linear-gradient(90deg, #000 20%, rgba(0, 0, 0, 0.5) 70%, transparent);
+  mask-image: linear-gradient(90deg, #000 20%, rgba(0, 0, 0, 0.5) 70%, transparent);
+}
+
+.vp-hero-camp > .event-logo {
+  width: 84px;
+  height: 84px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-hero-camp > .event-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vp-camp-id {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.vp-camp-status {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-camp-id h1 {
+  margin: 0;
+  font: 700 48px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+.vp-camp-quando {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.vp-camp-org {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+  text-align: right;
+}
+
+.vp-camp-org small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-camp-org span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.vp-camp-org .organizer-logo {
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.vp-camp-org .organizer-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vp-fatos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 40px;
+  margin-top: -8px;
+}
+
+.vp-fatos > span {
+  display: grid;
+  align-content: start;
+  gap: 3px;
+}
+
+.vp-fatos small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-fatos strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.vp-fatos .vp-tier {
+  font-size: 22px;
+  line-height: 0.9;
+}
+
+/* ---- primeira faixa: podio e map pool ---- */
+.vp-camp-topo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.vp-camp-topo > section {
+  min-width: 0;
+}
+
+.vp-podio {
+  display: grid;
+  gap: 4px;
+}
+
+.vp-pod {
+  display: grid;
+  grid-template-columns: 34px 36px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 12px 0 10px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--team-line) 24%, transparent), transparent 85%);
+  box-shadow: inset 3px 0 0 var(--team-line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-pod b {
+  font: 700 24px/1 var(--font-display);
+}
+
+.vp-pod:first-child b {
+  color: var(--tier-s, #ffb340);
+}
+
+.vp-pod .team-logo {
+  width: 34px;
+  height: 34px;
+}
+
+.vp-pod strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-pod small {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-pod-vaga strong {
+  color: var(--muted);
+}
+
+/* Sem a coluna do numero: escudo, nome e, na ponta, "Classificado, 4-0". */
+.vp-pod.vp-pod-texto {
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+}
+
+.vp-pool {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 14px;
+}
+
+.vp-pool-mapa {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 34px;
+  padding: 0 10px;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-pool-mapa img {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  opacity: 0.26;
+  -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent);
+  mask-image: linear-gradient(90deg, #000 40%, transparent);
+}
+
+.vp-pool-mapa b {
+  font-weight: 600;
+}
+
+.vp-pool-mapa small {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.vp-pool-mapa:hover b {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vp-pool-vazio {
+  color: var(--muted);
+}
+
+/* ---- chave ---- */
+.tournament-curated-bracket.vp-chaves {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: none;
+  gap: 22px;
+  padding: 0;
+  overflow: visible;
+}
+
+.vp-chaves.groups-layout,
+.vp-chaves.has-groups {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.vp-chaves .tournament-bracket-region {
+  grid-area: auto;
+  gap: 8px;
+  width: auto;
+}
+
+.vp-chaves .tournament-bracket-region.gsl-group {
+  grid-column: 1 / -1;
+}
+
+.vp-chaves .tournament-bracket-region > h3 {
+  color: var(--ink);
+  font: 600 14px/1 var(--font-text);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-chave-rolo {
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+
+/* Cada rodada e uma coluna de celulas de mesma altura: a partida da rodada
+   seguinte cai no meio das duas que a alimentam. Os fios sao
+   pseudo-elementos; o bye nao desenha nada. */
+.vp-chave {
+  display: flex;
+  gap: 24px;
+  min-width: max-content;
+}
+
+.vp-rodada {
+  display: flex;
+  flex-direction: column;
+  width: 168px;
+}
+
+.vp-rodada > small {
+  height: 22px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-rodada-corpo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.vp-celula {
+  position: relative;
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+}
+
+.vp-bm {
+  position: relative;
+  display: grid;
+  grid-template-rows: 20px 20px;
+  gap: 2px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.vp-bm-lado {
+  --vp-wash: 22%;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  height: 20px;
+  padding: 0 8px 0 9px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--team-line) var(--vp-wash), var(--surface)), var(--surface) 80%);
+  box-shadow: inset 2px 0 0 var(--team-line);
+  font-size: 12px;
+}
+
+.vp-bm-lado:not(.vp-ganhou) {
+  --vp-wash: 6%;
+}
+
+.vp-bm:hover .vp-bm-lado {
+  --vp-wash: 34%;
+}
+
+.vp-bm:hover .vp-bm-lado:not(.vp-ganhou) {
+  --vp-wash: 12%;
+}
+
+.vp-bm-lado .team-logo {
+  width: 16px;
+  height: 16px;
+}
+
+.vp-bm-nome {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--loss-ink);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-bm-lado.vp-ganhou .vp-bm-nome {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.vp-bm-lado b {
+  color: var(--loss-ink);
+  font: 600 14px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-bm-lado.vp-ganhou b {
+  color: var(--ink);
+}
+
+.vp-bm-wo {
+  position: absolute;
+  top: -13px;
+  right: -2px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.vp-bm:focus-visible {
+  outline: 2px solid var(--brand-text);
+  outline-offset: 2px;
+}
+
+/* fios: saida pela direita, chegada pela esquerda e a junta vertical dos pares */
+.vp-chave:not(.vp-sem-fios) .vp-rodada:not(:last-child) .vp-celula:not(.vp-bye) > :first-child::after,
+.vp-chave:not(.vp-sem-fios) .vp-rodada:not(:first-child) .vp-celula:not(.vp-bye) > :first-child::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  border-top: 1px solid var(--line-dark);
+}
+
+.vp-chave:not(.vp-sem-fios) .vp-rodada:not(:last-child) .vp-celula:not(.vp-bye) > :first-child::after {
+  left: 100%;
+}
+
+.vp-chave:not(.vp-sem-fios) .vp-rodada:not(:first-child) .vp-celula:not(.vp-bye) > :first-child::before {
+  right: 100%;
+}
+
+.vp-chave:not(.vp-sem-fios) .vp-rodada.vp-pares .vp-celula:not(.vp-bye)::after {
+  content: "";
+  position: absolute;
+  right: -12px;
+  border-right: 1px solid var(--line-dark);
+}
+
+.vp-chave:not(.vp-sem-fios) .vp-rodada.vp-pares .vp-celula:not(.vp-bye):nth-child(odd)::after {
+  top: 50%;
+  bottom: 0;
+}
+
+.vp-chave:not(.vp-sem-fios) .vp-rodada.vp-pares .vp-celula:not(.vp-bye):nth-child(even)::after {
+  top: 0;
+  bottom: 50%;
+}
+
+.vp-rodada.vp-gf .vp-bm {
+  grid-template-rows: 24px 24px;
+}
+
+.vp-rodada.vp-gf .vp-bm-lado {
+  height: 24px;
+}
+
+/* O cartao de classificado das classificatorias, no estilo novo. */
+.vp-celula .qualified-card {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-celula .qualified-card .tournament-bracket-meta {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.vp-celula .qualified-card .tournament-bracket-team {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 8px;
+  background: var(--surface);
+  box-shadow: inset 2px 0 0 var(--win);
+  font-size: 12px;
+}
+
+/* ---- classificacao final ---- */
+.vp-classif {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 28px;
+}
+
+.vp-classif-linha {
+  display: grid;
+  grid-template-columns: 52px 22px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  height: 34px;
+  border-top: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-classif-linha b {
+  color: var(--muted);
+  font: 600 17px/1 var(--font-display);
+}
+
+.vp-classif-linha .team-logo {
+  width: 22px;
+  height: 22px;
+}
+
+.vp-classif-linha span {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-classif-linha small {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-classif-linha:hover span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1180px) {
+  .vp-camp-topo {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .vp-classif {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .tournament-hub.tournament-hub {
+    gap: 20px;
+  }
+
+  .tournament-hub .tournament-section-head h2 {
+    font-size: 26px;
+  }
+
+  .vp-hero-camp {
+    grid-template-columns: 56px minmax(0, 1fr);
+    height: auto;
+    gap: 6px 14px;
+    padding: 16px 14px;
+  }
+
+  .vp-hero-camp > .event-logo {
+    width: 56px;
+    height: 56px;
+  }
+
+  .vp-camp-banner {
+    opacity: 0.2;
+  }
+
+  .vp-camp-id h1 {
+    font-size: 30px;
+  }
+
+  .vp-camp-org {
+    grid-column: 1 / -1;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .vp-fatos {
+    gap: 10px 24px;
+  }
+
+  .vp-camp-topo,
+  .vp-classif {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Listas: partidas, eventos, jogadores e ranking completo
+   Um nivel de superficie so: a lista nao fica mais numa caixa, e onde as
+   linhas eram caixas separadas elas viram uma Placa com fios de 1px.
+   ========================================================================== */
+
+.page-header.slim-header {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.page-header .page-title h1 {
+  color: var(--ink);
+  font: 600 44px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.page-header .page-title p {
+  max-width: 90ch;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.page-header .page-count {
+  color: var(--muted);
+  font: 600 28px/1 var(--font-display);
+}
+
+.vp-lista-pagina.vp-lista-pagina {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-lista-pagina .lista-contagem {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* ---- partidas ---- */
+.vp-lista-pagina .result-day-label {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ---- eventos: uma Placa, a linha de cada campeonato separada por fio ---- */
+.vp-lista-pagina .event-table-head {
+  border-radius: 2px 2px 0 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.vp-lista-pagina .event-table-head,
+.vp-lista-pagina .event-table-head * {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-lista-pagina .event-list.large {
+  gap: 0;
+  border-radius: 0 0 2px 2px;
+  background: var(--surface);
+}
+
+.vp-lista-pagina .event-list.large > .event-row.event-row-rich {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-lista-pagina .event-list.large > .event-row.event-row-rich + .event-row.event-row-rich {
+  border-top: 1px solid var(--line);
+}
+
+.vp-lista-pagina .event-list.large > .event-row.event-row-rich:hover {
+  background: rgba(245, 241, 242, 0.03);
+}
+
+/* A situacao em texto: o ponto vermelho so em "Em andamento", como na home. */
+.vp-lista-pagina .event-status {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* O styles.css pinta .event-status.live de vermelho com !important. */
+.vp-lista-pagina .event-status.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink) !important;
+}
+
+.vp-lista-pagina .event-status.live::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+/* ---- ranking completo: uma Placa, a posicao em numero solto ---- */
+.vp-lista-pagina .ranking-accordion-head {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-lista-pagina .ranking-accordion-rows {
+  gap: 0;
+  border-radius: 2px;
+  background: var(--surface);
+}
+
+.vp-lista-pagina .ranking-accordion-item {
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.vp-lista-pagina .ranking-accordion-item + .ranking-accordion-item {
+  border-top: 1px solid var(--line);
+}
+
+.vp-lista-pagina .rank-cell {
+  min-height: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  font: 600 19px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Com "Detalhes da nota" ligado, a nota continua um numero solto: a pilula
+   verde do styles.css era um cartao dentro da linha. */
+.ranking-accordion[data-details-visible="true"] .ranking-score-cell {
+  min-width: 64px;
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+/* "Detalhes da nota" em tela estreita: a grade de onze colunas precisa de
+   ~1190px e, abaixo disso, a nota e os blocos ficavam fora da tela (cortados,
+   nem rolando). Aqui a linha vira duas: em cima posicao, equipe e nota; embaixo
+   os quatro blocos, cada um com o nome em cima (data-label). A lineup em texto
+   sai, porque a lineup inteira esta a um clique, na linha aberta. */
+@media (max-width: 1180px) {
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head,
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-button {
+    grid-template-columns: 30px 20px repeat(4, minmax(0, 1fr)) 56px 20px;
+    column-gap: 8px;
+    row-gap: 6px;
+  }
+
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-team-cell,
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head > :nth-child(3) {
+    grid-column: 3 / 7;
+    grid-row: 1;
+  }
+
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-lineup-inline,
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head > :nth-child(4),
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head .ranking-detail-cell,
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head .ranking-status-cell {
+    display: none;
+  }
+
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-score-cell,
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head > :nth-child(5) {
+    grid-column: 7;
+    grid-row: 1;
+  }
+
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-toggle-mark {
+    grid-column: 8;
+    grid-row: 1;
+  }
+
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-button > :nth-child(6) { grid-column: 3; }
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-button > :nth-child(7) { grid-column: 4; }
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-button > :nth-child(8) { grid-column: 5; }
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-button > :nth-child(9) { grid-column: 6; }
+
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-button .ranking-detail-cell {
+    grid-row: 2;
+    display: grid;
+    justify-items: start;
+    gap: 1px;
+    text-align: left;
+  }
+
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-button .ranking-detail-cell::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-button .ranking-status-cell {
+    grid-column: 7 / 9;
+    grid-row: 2;
+    justify-self: end;
+  }
+}
+
+@media (max-width: 560px) {
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head,
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-button {
+    column-gap: 6px;
+  }
+
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-button .ranking-detail-cell::before {
+    font-size: 9px;
+  }
+}
+
+/* ---- a linha aberta: fotos soltas e duas acoes como links ---- */
+.vp-lista-pagina .ranking-dropdown-inner {
+  background: none;
+}
+
+.vp-lista-pagina .ranking-team-preview {
+  display: grid;
+  gap: 10px;
+  padding: 14px 18px 12px;
+  border: 0;
+  background: none;
+}
+
+.vp-lista-pagina .ranking-lineup {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.vp-lista-pagina .ranking-lineup-card {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  min-width: 0;
+  min-height: 0;
+  padding: 6px 4px 8px;
+  border: 0;
+  border-radius: 2px;
+  background: none;
+  box-shadow: none;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-lista-pagina .ranking-lineup-card:hover {
+  background: var(--surface-2);
+}
+
+/* A foto solta, como nas lineups da partida: a pessoa inteira, sentada na base,
+   e nao um avatar redondo de 64px com o corpo encolhido dentro. */
+.vp-lista-pagina .ranking-lineup-card .player-avatar {
+  width: 100%;
+  height: 92px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-lista-pagina .ranking-lineup-card .player-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+/* O "+" que abre a linha: so o sinal, sem caixa; aberto, ele gira e vira o
+   "x" de fechar, na cor do texto. */
+.vp-lista-pagina .ranking-toggle-mark,
+.vp-lista-pagina .ranking-accordion-item.open .ranking-toggle-mark {
+  width: 20px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--muted);
+  font-size: 18px;
+}
+
+.vp-lista-pagina .ranking-accordion-item.open .ranking-toggle-mark {
+  color: var(--ink);
+}
+
+.vp-lista-pagina .ranking-lineup-card strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.vp-lista-pagina .ranking-lineup-card small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-rk-acoes.vp-rk-acoes {
+  display: flex;
+  justify-content: flex-start;
+  gap: 24px;
+  padding: 8px 0 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: none;
+}
+
+.vp-rk-acao {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 0;
+  padding: 4px 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  font: 600 13px/1.2 var(--font-text);
+  text-decoration: none;
+}
+
+.vp-rk-acao:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vp-rk-acao svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 200ms ease;
+}
+
+.details-open .vp-rk-acao[data-ranking-details] svg {
+  transform: rotate(180deg);
+}
+
+/* A aba Ranking da equipe: as duas secoes saem da caixa de 8px com borda. O
+   grafico fica numa Placa (um fundo so), e o painel de detalhes, solto. */
+.team-ranking-main.data-panel,
+.team-ranking-explainer.data-panel {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.team-ranking-main .ranking-chart-card {
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--surface);
+  box-shadow: none;
+}
+
+.team-ranking-explainer.data-panel {
+  margin-top: 30px;
+}
+
+/* Em tela estreita o balao encolhe com a tela: com 260px ele nao cabia em
+   posicao nenhuma perto do terco do grafico num celular de 360. */
+.ranking-chart-tooltip {
+  max-width: min(260px, calc(100vw - 160px));
+}
+
+.ranking-chart-hotspot.na-esquerda .ranking-chart-tooltip {
+  left: 0;
+  transform: translate(0, 6px);
+}
+
+.ranking-chart-hotspot.na-direita .ranking-chart-tooltip {
+  right: 0;
+  left: auto;
+  transform: translate(0, 6px);
+}
+
+.ranking-chart-hotspot.na-esquerda:hover .ranking-chart-tooltip,
+.ranking-chart-hotspot.na-esquerda:focus .ranking-chart-tooltip,
+.ranking-chart-hotspot.na-direita:hover .ranking-chart-tooltip,
+.ranking-chart-hotspot.na-direita:focus .ranking-chart-tooltip {
+  transform: translate(0, 0);
+}
+
+.team-ranking-explainer .vp-rk-detalhes {
+  padding: 0;
+}
+
+/* ---- Detalhes do ranking: a nota desmontada, sem cartao nenhum ---- */
+.vp-rk-detalhes {
+  display: grid;
+  gap: 22px;
+  padding: 6px 18px 18px;
+}
+
+.vp-lista-pagina .ranking-detail-dropdown,
+.team-ranking-explainer.data-panel {
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-rk-topo {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 28px;
+}
+
+.vp-rk-nota-bloco {
+  display: grid;
+  justify-items: start;
+}
+
+.vp-rk-nota-final {
+  font: 700 56px/0.9 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-rk-nota-bloco small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-rk-formula {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.vp-rk-formula p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* A nota como soma: cada fatia e valor x peso, entao a barra cheia vale 100 e
+   o comprimento pintado e a propria nota. As fatias alternam a forca da cor
+   da equipe para se distinguirem sem trazer uma segunda cor. */
+.vp-rk-soma {
+  display: flex;
+  gap: 2px;
+  height: 10px;
+  background: rgba(245, 241, 242, 0.06);
+}
+
+.vp-rk-soma i {
+  display: block;
+  width: var(--w);
+  height: 100%;
+  background: var(--team-line);
+}
+
+.vp-rk-soma i:nth-child(2),
+.vp-rk-soma-legenda span:nth-child(2) i {
+  opacity: 0.7;
+}
+
+.vp-rk-soma i:nth-child(3),
+.vp-rk-soma-legenda span:nth-child(3) i {
+  opacity: 0.5;
+}
+
+.vp-rk-soma i:nth-child(4),
+.vp-rk-soma-legenda span:nth-child(4) i {
+  opacity: 0.32;
+}
+
+.vp-rk-soma-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-rk-soma-legenda span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vp-rk-soma-legenda i {
+  width: 10px;
+  height: 10px;
+  background: var(--team-line);
+}
+
+.vp-rk-soma-legenda b {
+  color: var(--ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-rk-colunas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 40px;
+  align-items: start;
+}
+
+.vp-rk-secao {
+  display: grid;
+  align-content: start;
+  min-width: 0;
+}
+
+.vp-rk-secao h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 4px;
+  font: 600 20px/1.1 var(--font-display);
+}
+
+.vp-rk-secao h3 small {
+  color: var(--muted);
+  font: 400 12px/1 var(--font-text);
+}
+
+.vp-rk-linha {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  row-gap: 5px;
+  padding: 7px 0 8px;
+  border-top: 1px solid var(--line);
+}
+
+.vp-rk-linha-nome {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-rk-linha-conta {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-rk-barra {
+  grid-column: 1 / -1;
+  display: block;
+  height: 5px;
+  background: rgba(245, 241, 242, 0.06);
+}
+
+.vp-rk-barra i {
+  display: block;
+  width: var(--w);
+  height: 100%;
+  background: var(--team-line);
+}
+
+.vp-rk-dados {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 24px;
+  margin-top: 10px;
+}
+
+.vp-rk-modelos {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 4px;
+}
+
+.vp-rk-dado {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.vp-rk-dado b {
+  font: 600 22px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-rk-dado > span:not(.vp-rk-barra) {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.vp-rk-conquista-lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 40px;
+}
+
+.vp-rk-conquista {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-top: 1px solid var(--line);
+}
+
+.vp-rk-conquista .event-logo {
+  width: 28px;
+  height: 28px;
+}
+
+.vp-rk-conquista-nome {
+  display: grid;
+  min-width: 0;
+}
+
+.vp-rk-conquista-nome strong {
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vp-rk-conquista-nome small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-rk-conquista > b {
+  font: 600 18px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-rk-conquista > b small {
+  margin-left: 3px;
+  color: var(--muted);
+  font: 400 11px/1 var(--font-text);
+}
+
+.vp-rk-vazio {
+  margin: 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.vp-rk-vazio b {
+  margin-right: 6px;
+  color: var(--ink);
+  font: 600 18px/1 var(--font-display);
+}
+
+@media (max-width: 760px) {
+  /* A coluna da nota no celular tem 46px: o minimo de 64px do styles.css
+     empurrava a nota para cima do sinal de abrir. */
+  .vp-lista-pagina .ranking-score-cell,
+  .ranking-accordion[data-details-visible="true"] .ranking-score-cell {
+    min-width: 0;
+  }
+
+  .vp-lista-pagina .ranking-team-preview {
+    padding: 10px 10px 10px;
+  }
+
+  .vp-lista-pagina .ranking-lineup-card .player-avatar {
+    height: 70px;
+  }
+
+  .vp-lista-pagina .ranking-lineup-card strong {
+    font-size: 13px;
+  }
+
+  .vp-lista-pagina .ranking-lineup-card small {
+    display: none;
+  }
+
+  .vp-rk-detalhes {
+    padding: 4px 10px 14px;
+  }
+
+  .vp-rk-topo,
+  .vp-rk-colunas,
+  .vp-rk-conquista-lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vp-rk-topo {
+    gap: 12px;
+  }
+
+  .vp-rk-dados {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px 14px;
+  }
+
+  .vp-rk-modelos {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .vp-rk-dado b {
+    font-size: 20px;
+  }
+
+  .vp-rk-dado > span:not(.vp-rk-barra) {
+    font-size: 11px;
+    line-height: 1.2;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 760px) {
+  .page-header .page-title h1 {
+    font-size: 36px;
+  }
+}

@@ -35,7 +35,10 @@ includes('Number(b.rounds || 0) - Number(a.rounds || 0)', "official player ranki
 includes('formatMaybeSwing(player)', "Swing/R is rendered with positive sign support");
 includes('signed(fkFdDiff)', "FK-FD is rendered with positive sign support");
 
-includes('function playerRatingCompositionPanel', "player page exposes rAAting 3.0 composition");
+// A composicao saiu do painel proprio (playerRatingCompositionPanel, removido
+// em 24/10/2026) e virou um grupo da ficha do jogador, que so aparece quando ha
+// algum valor.
+includes('grupo("Composição da rAAting 3.0", composicao)', "player page exposes rAAting 3.0 composition");
 includes('formatMaybeMetric(player, "kill_rating")', "player composition handles missing subratings safely");
 
 console.log("rAAting 3.0 UI contract tests passed");

@@ -20,6 +20,12 @@ const { chromium } = require("playwright");
 const raiz = path.join(__dirname, "..");
 const capturas = process.argv[2] || null;
 const manifesto = JSON.parse(fs.readFileSync(path.join(raiz, "cartas/manifest.json"), "utf8"));
+// O teste simula a passagem de 23 para 24/10. A publicacao real cresce a cada
+// dia; manter so o primeiro lote evita duplicar a edicao simulada abaixo.
+manifesto.publishedThrough = "2026-10-23";
+manifesto.days.forEach((day, i) => {
+  if (i > 0) delete day.cards;
+});
 const fakeSdk = fs.readFileSync(path.join(__dirname, "fake_supabase.js"), "utf8");
 const reveladas = manifesto.days.flatMap((day) => day.cards || []);
 const cartaA = reveladas.find((card) => card.rank === 216);
@@ -68,7 +74,7 @@ function servidor() {
   });
 }
 
-async function novaPagina(navegador, { largura = 1440, altura = 900, fake = dadosIniciais, manifestoServido = null } = {}) {
+async function novaPagina(navegador, { largura = 1440, altura = 900, fake = dadosIniciais, manifestoServido = () => manifesto } = {}) {
   const contexto = await navegador.newContext({ viewport: { width: largura, height: altura } });
   const pagina = await contexto.newPage();
   const erros = [];

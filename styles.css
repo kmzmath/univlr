@@ -364,13 +364,7 @@ button {
   padding-bottom: 28px;
 }
 
-.hero-copy {
-  min-height: 310px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-}
+
 
 h1,
 h2,
@@ -384,12 +378,7 @@ h1 {
   font-weight: 800;
 }
 
-.hero-copy p {
-  max-width: 760px;
-  color: var(--muted);
-  font-size: var(--text-lg);
-  line-height: 1.65;
-}
+
 
 .quick-stats {
   display: grid;
@@ -498,40 +487,15 @@ h1 {
   height: 70px;
 }
 
-.connector {
-  position: absolute;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.42);
-  transform-origin: left center;
-}
 
-.connector.one {
-  width: 180px;
-  left: 21%;
-  top: 37%;
-  transform: rotate(18deg);
-}
 
-.connector.two {
-  width: 170px;
-  right: 20%;
-  top: 38%;
-  transform: rotate(159deg);
-}
 
-.connector.three {
-  width: 178px;
-  left: 22%;
-  bottom: 35%;
-  transform: rotate(-19deg);
-}
 
-.connector.four {
-  width: 160px;
-  right: 21%;
-  bottom: 34%;
-  transform: rotate(205deg);
-}
+
+
+
+
+
 
 .page-header {
   align-items: end;
@@ -546,8 +510,7 @@ h1 {
 
 .page-title p,
 .section-band .section-head p,
-.team-tab-panel .section-head p,
-.match-main-stack .section-head p {
+.team-tab-panel .section-head p {
   display: none;
 }
 
@@ -791,8 +754,7 @@ h1 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.ranking-list,
-.simple-list {
+.simple-list  {
   display: grid;
   gap: 8px;
 }
@@ -928,16 +890,9 @@ tr:last-child td {
   gap: 8px;
 }
 
-.team-hero {
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
-}
 
-.team-identity {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  min-width: 0;
-}
+
+
 
 .team-logo-frame .logo {
   width: 92px;
@@ -960,11 +915,7 @@ tr:last-child td {
   font-size: var(--text-3xl);
 }
 
-.team-meta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+
 
 .state-badge {
   min-height: 28px;
@@ -1004,40 +955,15 @@ img.state-flag + .state-flag.placeholder {
   display: none;
 }
 
-.team-socials {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
 
-.social-button {
-  width: 38px;
-  height: 38px;
-  display: inline-grid;
-  place-items: center;
-  border-radius: var(--radius-pill);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.11);
-}
 
-.social-button.disabled {
-  opacity: 0.35;
-  pointer-events: none;
-}
 
-.social-button svg {
-  width: 19px;
-  height: 19px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.9;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
 
-.team-trophy-panel,
-.team-mini-stats {
+
+
+
+
+.team-mini-stats  {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   padding: 16px;
@@ -1055,32 +981,11 @@ img.state-flag + .state-flag.placeholder {
   scrollbar-width: thin;
 }
 
-.trophy-item {
-  width: 76px;
-  height: 70px;
-  min-height: 0;
-  display: grid;
-  place-items: center;
-  flex: 0 0 76px;
-  color: inherit;
-  text-decoration: none;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0;
-  background: transparent;
-  padding: 8px;
-  transition: background 0.18s ease, transform 0.18s ease;
-}
 
-.trophy-item:last-child {
-  border-right: 0;
-}
 
-.trophy-item:hover,
-.trophy-item:focus-visible {
-  background: rgba(255, 255, 255, 0.075);
-  transform: translateY(-2px);
-  outline: none;
-}
+
+
+
 
 .trophy-visual {
   position: relative;
@@ -1254,73 +1159,27 @@ img.state-flag + .state-flag.placeholder {
   gap: 16px;
 }
 
-.match-hero {
-  min-height: 315px;
-}
 
-.match-hero > :not(.match-hero-banners) {
-  position: relative;
-  z-index: 2;
-}
 
-.match-hero-banners,
-.match-map-tab-bg {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-auto-columns: minmax(0, 1fr);
-  grid-auto-flow: column;
-}
 
-.match-hero-banner,
-.match-map-tab-bg span {
-  position: relative;
-  min-width: 0;
-  overflow: hidden;
-}
 
-.match-hero-banner img,
-.match-map-tab-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
-.match-hero-banner img {
-  opacity: 0.72;
-  transform: scale(1.02);
-}
 
-.match-hero-meta,
-.match-hero-score {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 16px;
-  align-items: start;
-}
 
-.match-hero-meta {
-  color: rgba(255, 255, 255, 0.74);
-  font-size: var(--text-lg);
-}
 
-.match-series-info {
-  display: grid;
-  gap: 8px;
-  justify-items: start;
-}
 
-.match-series-info > span:not(.event-logo),
-.match-series-info small {
-  font-size: var(--text-md);
-  font-weight: 700;
-}
 
-.match-series-info strong {
-  font-size: clamp(1.15rem, 1.7vw, 1.75rem);
-  font-weight: 800;
-  line-height: 1;
-}
+
+
+
+
+
+
+
+
+
+
+
 
 .match-event-link {
   display: inline-flex;
@@ -1353,82 +1212,31 @@ img.state-flag + .state-flag.placeholder {
   font-weight: 700;
 }
 
-.match-hero-date strong {
-  font-size: clamp(1.08rem, 1.25vw, 1.35rem);
-}
 
-.match-hero-date span {
-  font-size: clamp(0.94rem, 1vw, 1.08rem);
-}
 
-.match-hero-score {
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
-}
 
-.match-team-name {
-  align-items: center;
-  font-size: clamp(1.7rem, 2vw, 2.28rem);
-  font-weight: 800;
-}
 
-.match-team-name .team-logo.large {
-  width: 88px;
-  height: 88px;
-}
 
-.match-team-name.right {
-  justify-content: flex-end;
-  text-align: right;
-}
 
-.match-team-name span {
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
 
-.match-score-core > span,
-.match-score-core em {
-  font-size: var(--text-xs);
-  font-style: normal;
-  font-weight: 700;
-  text-transform: uppercase;
-}
 
-.match-map-tab::after {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  content: "";
-  background:
-    linear-gradient(90deg, rgba(3, 7, 10, 0.86), rgba(3, 7, 10, 0.36), rgba(3, 7, 10, 0.86)),
-    linear-gradient(180deg, rgba(3, 7, 10, 0.18), rgba(3, 7, 10, 0.84));
-}
 
-.match-map-tab-bg {
-  z-index: 0;
-}
 
-.match-map-tab-bg img {
-  opacity: 0.62;
-  transition: opacity 0.18s ease, transform 0.18s ease;
-}
 
-.match-map-tab-label {
-  position: relative;
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.86);
-}
 
-.match-map-tab:hover .match-map-tab-bg img,
-.match-map-tab.active .match-map-tab-bg img {
-  opacity: 0.82;
-  transform: scale(1.04);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .map-score-side {
   display: grid;
@@ -1533,21 +1341,11 @@ img.state-flag + .state-flag.placeholder {
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
 }
 
-.match-main-stack,
-.match-side-stack {
-  display: grid;
-  gap: 16px;
-  min-width: 0;
-}
 
-.match-side-stack {
-  position: sticky;
-  top: 96px;
-}
 
-.match-side-stack > .match-panel:last-child {
-  display: none;
-}
+
+
+
 
 .match-panel {
   border: 1px solid #14222a;
@@ -1556,14 +1354,9 @@ img.state-flag + .state-flag.placeholder {
   min-width: 0;
 }
 
-.match-scoreboard-head {
-  align-items: center;
-  flex-wrap: wrap;
-}
 
-.match-scoreboard-title {
-  min-width: 0;
-}
+
+
 
 .vlr-board {
   --scoreboard-grid: 12fr 15fr 7fr 6fr 5fr 5fr 5fr 5.5fr 6.5fr 6fr 5.5fr 5fr 4.5fr 4.5fr 5.5fr;
@@ -1576,45 +1369,19 @@ img.state-flag + .state-flag.placeholder {
   margin-top: 20px;
 }
 
-.match-scoreboard-summary-wrap {
-  overflow: hidden;
-  border: 1px solid #263640;
-  border-radius: var(--radius-md);
-}
 
-.match-scoreboard-summary {
-  min-width: 950px;
-}
 
-.match-scoreboard-summary td {
-  border-bottom: 0;
-  background: transparent;
-}
 
-.vlr-board-identity-cell {
-  padding: 8px 12px;
-}
 
-.vlr-board-identity {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  min-width: 0;
-}
 
-.vlr-board-identity strong {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
-.vlr-board-identity small {
-  margin-left: auto;
-  font-size: var(--text-xs);
-  font-weight: 700;
-}
+
+
+
+
+
+
+
 
 .vlr-board-metric {
   min-width: 0;
@@ -1640,9 +1407,7 @@ img.state-flag + .state-flag.placeholder {
   text-overflow: ellipsis;
 }
 
-.match-scoreboard-summary .vlr-board-metric {
-  border-left: 1px solid rgba(159, 184, 203, 0.08);
-}
+
 
 .match-scoreboard.scoreboard-advanced {
   min-width: 1320px;
@@ -1754,10 +1519,7 @@ img.state-flag + .state-flag.placeholder {
   white-space: nowrap;
 }
 
-.match-scoreboard.match-scoreboard-summary td {
-  border-bottom: 0;
-  background: transparent;
-}
+
 
 .match-scoreboard .agent-stack {
   max-width: 100%;
@@ -1811,66 +1573,19 @@ img.state-flag + .state-flag.placeholder {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.65));
 }
 
-.lineup-team-panel {
-  border: 1px solid #263640;
-  border-radius: var(--radius-md);
-  background: #121d24;
-  overflow: hidden;
-}
 
-.lineup-team-panel header {
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #273743;
-  padding: 8px 12px;
-}
 
-.lineup-team-panel header span {
-  margin-left: auto;
-  color: rgba(234, 245, 246, 0.58);
-  font-size: var(--text-sm);
-}
 
-.lineup-photo-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 8px;
-  padding: 8px;
-}
 
-.lineup-photo-card {
-  position: relative;
-  display: grid;
-  gap: 4px;
-  justify-items: center;
-  min-width: 0;
-  width: 100%;
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: #2e3d45;
-  padding: 8px 4px 8px;
-  color: var(--ink);
-  cursor: pointer;
-  font: inherit;
-  overflow: hidden;
-}
 
-.lineup-photo-card:hover,
-.lineup-photo-card.active {
-  background: #344959;
-  box-shadow: inset 0 0 0 1px rgba(41, 214, 137, 0.64);
-}
 
-.lineup-photo-card strong {
-  width: 100%;
-  overflow: hidden;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: var(--text-xs);
-}
+
+
+
+
+
+
+
 
 .player-portrait {
   position: relative;
@@ -1891,260 +1606,79 @@ img.state-flag + .state-flag.placeholder {
   object-fit: cover;
 }
 
-.lineup-compare {
-  display: grid;
-  gap: 0;
-  border: 1px solid #243844;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
-  overflow: hidden;
-}
 
-.lineup-compare .lineup-team-panel {
-  border: 0;
-  border-radius: 0;
-}
 
-.lineup-compare-stage {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(170px, 0.85fr) minmax(320px, 0.95fr) minmax(170px, 0.85fr);
-  gap: 24px;
-  align-items: end;
-  min-height: 360px;
-  border-top: 1px solid #263640;
-  border-bottom: 1px solid #263640;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
-  padding: 28px;
-}
 
-.lineup-selected-player {
-  display: grid;
-  justify-items: center;
-  gap: 8px;
-  color: var(--ink);
-  text-align: center;
-}
 
-.lineup-selected-player .player-portrait {
-  width: min(232px, 100%);
-  height: min(290px, 32vw);
-  max-height: none;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-md);
-  background: #030608;
-  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.42);
-}
 
-.lineup-selected-player.left .player-portrait {
-  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(0, 212, 200, 0.22);
-}
 
-.lineup-selected-player.right .player-portrait {
-  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(255, 70, 85, 0.2);
-}
 
-.lineup-selected-player strong {
-  color: #f5fbfd;
-  font-size: var(--text-xl);
-  line-height: 1;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
-}
 
-.lineup-selected-player > span {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: rgba(234, 245, 246, 0.68);
-  font-size: var(--text-xs);
-  font-weight: 800;
-}
 
-.lineup-selected-actions {
-  display: inline-flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-}
 
-.lineup-selected-actions a,
-.lineup-selected-actions span {
-  border: 1px solid rgba(124, 176, 210, 0.42);
-  border-radius: var(--radius-md);
-  background: rgba(17, 31, 41, 0.82);
-  color: var(--ink);
-  padding: 8px 8px;
-  font-size: var(--text-xs);
-  font-weight: 700;
-}
 
-.lineup-selected-actions span {
-  color: rgba(234, 245, 246, 0.7);
-}
 
-.lineup-stat-center {
-  display: grid;
-  align-self: center;
-  justify-items: center;
-  gap: 8px;
-  width: 100%;
-  max-width: 460px;
-  justify-self: center;
-  border: 1px solid rgba(138, 177, 198, 0.18);
-  border-radius: var(--radius-lg);
-  background: rgba(5, 12, 17, 0.72);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 20px 44px rgba(0, 0, 0, 0.24);
-  padding: 16px;
-  text-align: center;
-}
 
-.lineup-stat-center h3 {
-  color: #e9f7fb;
-  font-size: var(--text-xl);
-  line-height: 1.05;
-  letter-spacing: 0;
-}
 
-.lineup-stat-center > small {
-  color: rgba(214, 231, 241, 0.68);
-  font-size: var(--text-xs);
-  font-weight: 700;
-}
 
-.lineup-stat-list {
-  width: 100%;
-  display: grid;
-  gap: 8px;
-  margin-top: 12px;
-}
 
-.lineup-stat-row {
-  grid-template-columns: minmax(78px, 0.92fr) minmax(112px, 0.72fr) minmax(78px, 0.92fr);
-  gap: 8px;
-}
 
-.lineup-stat-label {
-  color: rgba(234, 245, 246, 0.58);
-  font-size: var(--text-xs);
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
 
-.lineup-stat-value-left span {
-  text-align: right;
-}
 
-.lineup-stat-value-right span {
-  text-align: left;
-}
 
-.lineup-stat-value.better {
-  color: var(--win);
-  font-weight: 800;
-}
 
-.mvp-identity {
-  display: grid;
-  grid-template-columns: 112px minmax(0, 1fr);
-  gap: 12px;
-  align-items: center;
-  color: var(--ink);
-}
 
-.mvp-identity .player-portrait {
-  width: 112px;
-}
 
-.mvp-identity strong {
-  display: block;
-  font-size: var(--text-lg);
-}
 
-.mvp-identity small {
-  font-weight: 700;
-}
 
-.mvp-bars {
-  display: grid;
-  gap: 8px;
-  margin-top: 12px;
-}
 
-.mvp-bar {
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr) 64px;
-  gap: 8px;
-  align-items: center;
-  color: rgba(234, 245, 246, 0.72);
-  font-size: var(--text-xs);
-  font-weight: 700;
-}
 
-.mvp-bar div {
-  height: 26px;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
 
-.mvp-bar i {
-  display: block;
-  height: 100%;
-}
 
-.mvp-bar strong {
-  color: var(--ink);
-  text-align: right;
-}
 
-.team-compare-list {
-  display: grid;
-  gap: 12px;
-}
 
-.team-compare-card {
-  display: grid;
-  gap: 8px;
-  border: 1px solid rgba(38, 54, 64, 0.86);
-  border-radius: var(--radius-md);
-  padding: 12px;
-}
 
-.team-compare-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--ink);
-  font-size: var(--text-md);
-  font-weight: 800;
-}
 
-.team-compare-row {
-  display: grid;
-  grid-template-columns: 58px minmax(0, 1fr) 42px;
-  gap: 8px;
-  align-items: center;
-  color: rgba(234, 245, 246, 0.72);
-  font-size: var(--text-xs);
-  font-weight: 700;
-}
 
-.team-compare-track {
-  position: relative;
-  height: 24px;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
 
-.team-compare-track i {
-  display: block;
-  height: 100%;
-}
 
-.team-compare-row em {
-  font-style: normal;
-  text-align: right;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 1180px) {
   .topbar-inner {
@@ -2163,22 +1697,14 @@ img.state-flag + .state-flag.placeholder {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .team-hero,
   .team-summary-grid,
-  .team-tab-grid,
-  .match-detail-grid {
+.team-tab-grid {
     grid-template-columns: 1fr;
   }
 
-  .lineup-compare-stage {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: center;
-  }
 
-  .lineup-selected-player .player-portrait {
-    width: min(220px, 72vw);
-    height: min(280px, 84vw);
-  }
+
+
 
   .roster-grid,
   .trophy-list {
@@ -2212,9 +1738,7 @@ img.state-flag + .state-flag.placeholder {
     grid-template-columns: 1fr;
   }
 
-  .team-identity {
-    align-items: flex-start;
-  }
+
 
   .team-logo-frame {
     width: 86px;
@@ -2249,22 +1773,13 @@ img.state-flag + .state-flag.placeholder {
     justify-content: flex-start;
   }
 
-  .match-hero {
-    min-height: auto;
-    gap: 28px;
-  }
 
-  .match-hero-meta,
-  .match-hero-score,
-  .match-map-overview {
-    grid-template-columns: 1fr;
-  }
+
+
 
   .match-date,
-  .match-team-name,
-  .match-team-name.right,
-  .map-score-side,
-  .map-score-side.right {
+.map-score-side,
+.map-score-side.right  {
     justify-content: center;
     justify-items: center;
     text-align: center;
@@ -2304,47 +1819,27 @@ img.state-flag + .state-flag.placeholder {
     font-size: var(--text-sm);
   }
 
-  .hero-copy {
-    min-height: auto;
-  }
 
-  .hero-copy p {
-    font-size: var(--text-lg);
-  }
+
+
 
   .bar-row {
     grid-template-columns: 86px 1fr 42px;
   }
 
-  .match-team-name {
-    font-size: var(--text-xl);
-  }
 
-  .lineup-photo-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 
-  .lineup-compare-stage {
-    padding: 16px;
-  }
 
-  .lineup-stat-center {
-    padding: 16px;
-  }
 
-  .lineup-stat-row {
-    grid-template-columns: minmax(54px, 0.7fr) minmax(90px, 1fr) minmax(54px, 0.7fr);
-    gap: 8px;
-  }
 
-  .mvp-identity {
-    grid-template-columns: 1fr;
-  }
 
-  .mvp-identity .player-portrait {
-    width: 100%;
-    max-width: 180px;
-  }
+
+
+
+
+
+
+
 }
 
 /* Competitive portal revamp */
@@ -2378,40 +1873,31 @@ h1 {
   letter-spacing: 0;
 }
 
-.home-board {
-  display: grid;
-  grid-template-columns: 230px minmax(0, 1fr) 245px;
-  gap: 8px;
-  align-items: start;
-}
 
-.hub-panel,
+
 .entity-card,
 .match-card,
 .data-panel,
 .table-wrap,
-.profile-header {
+.profile-header  {
   border: 1px solid var(--line);
 }
 
-.panel-title a,
-.subtle-link {
+.subtle-link  {
   font-size: var(--text-xs);
   font-weight: 700;
 }
 
-.ranking-list,
 .result-list,
-.event-list {
+.event-list  {
   display: grid;
   gap: 0;
 }
 
-.compact-ranking-row,
 .result-row,
 .event-row,
 .ranking-row,
-.simple-row {
+.simple-row  {
   display: grid;
   align-items: center;
   min-height: 38px;
@@ -2419,11 +1905,10 @@ h1 {
   padding: 8px 8px;
 }
 
-.compact-ranking-row:last-child,
 .result-row:last-child,
 .event-row:last-child,
 .ranking-row:last-child,
-.simple-row:last-child {
+.simple-row:last-child  {
   border-bottom: 0;
 }
 
@@ -2578,33 +2063,11 @@ tr:hover td {
   background: #0b1016;
 }
 
-.team-hero {
-  display: grid;
-  gap: 20px;
-  align-items: stretch;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  position: relative;
-  overflow: hidden;
-  padding: clamp(18px, 2.2vw, 30px);
-}
 
-.team-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0.24;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.26) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.26) 1px, transparent 1px);
-  background-size: 46px 46px;
-  mask-image: linear-gradient(90deg, #000, transparent 82%);
-}
 
-.team-hero > * {
-  position: relative;
-  z-index: 1;
-}
+
+
+
 
 .team-logo-frame {
   display: grid;
@@ -2626,11 +2089,10 @@ tr:hover td {
   text-shadow: 0 8px 24px rgba(0, 0, 0, 0.36);
 }
 
-.team-trophy-panel,
 .team-mini-stats,
 .team-ranking-main,
 .team-ranking-explainer,
-.team-roster-stack .section-band {
+.team-roster-stack .section-band  {
   border-color: var(--line-dark);
   background: #121a24;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
@@ -3528,12 +2990,6 @@ tr:hover td {
   background: transparent;
 }
 
-@media (max-width: 1180px) {
-  .home-board {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 940px) {
   .topbar-inner {
     grid-template-columns: 1fr;
@@ -3598,44 +3054,23 @@ tr:hover td {
 
 /* UNIVLR identity pass */
 
-.hub-panel,
 .page-header,
 .letter-filter,
 .table-wrap,
 .entity-card,
 .match-card,
 .data-panel,
-.profile-header {
+.profile-header  {
   border-radius: var(--radius-md);
 }
 
-.panel-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  border-bottom: 1px solid var(--line);
-  min-height: 28px;
-  border: 0;
-  background: transparent;
-  padding: 0 0 8px;
-}
 
-.home-board.univlr-home > .hub-panel {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
 
-.home-board.univlr-home .ranking-panel {
-  cursor: pointer;
-}
 
-.home-board.univlr-home .ranking-list,
-.home-board.univlr-home .result-list,
-.home-board.univlr-home .event-list {
-  flex: 1 1 auto;
-}
+
+
+
+
 
 .panel-footer-link {
   min-height: 42px;
@@ -3649,20 +3084,9 @@ tr:hover td {
   text-align: center;
 }
 
-.rank-position {
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  min-width: 24px;
-  min-height: 24px;
-  display: grid;
-  place-items: center;
-  border-radius: var(--radius-md);
-  font-size: var(--text-xs);
-}
 
-.compact-ranking-row .rank-delta {
-  justify-self: center;
-}
+
+
 
 .row-main strong {
   display: block;
@@ -3674,11 +3098,7 @@ tr:hover td {
   display: block;
 }
 
-.row-score {
-  font-weight: 800;
-  font-size: var(--text-lg);
-  text-align: right;
-}
+
 
 /* Grade de tres trilhas e nao flex com space-between: no space-between a
    posicao do meio e resultado da largura das pontas, entao o botao viajava ~250px
@@ -4033,8 +3453,7 @@ tr:hover td {
   min-width: 0;
 }
 
-.rank-change-cell,
-.rank-delta {
+.rank-change-cell {
   min-width: 0;
   color: #7d8da1;
   font-size: var(--text-xs);
@@ -4045,17 +3464,14 @@ tr:hover td {
   white-space: nowrap;
 }
 
-.rank-change-cell.new,
-.rank-delta.new {
+.rank-change-cell.new {
   color: #f2f6fb;
   font-size: var(--text-2xs);
   letter-spacing: 0.02em;
 }
 
 .rank-change-cell.even,
-.rank-change-cell.muted,
-.rank-delta.even,
-.rank-delta.muted {
+.rank-change-cell.muted {
   color: #8492a5;
 }
 
@@ -4640,9 +4056,7 @@ tr:hover td {
     min-width: 0;
   }
 
-  .match-scoreboard-head {
-    align-items: stretch;
-  }
+
 
   .ranking-accordion-head,
   .ranking-accordion-button {
@@ -4786,40 +4200,28 @@ body {
   gap: 16px;
 }
 
-.hub-panel,
 .full-list-panel,
 .data-panel,
 .table-wrap,
 .directory-table,
 .entity-card,
 .match-card,
-.profile-header {
+.profile-header  {
   min-width: 0;
 }
 
-.hub-panel:not(.ranking-panel):not(.matches-panel):not(.events-panel),
 .data-panel,
 .table-wrap,
-.directory-table {
+.directory-table  {
   background: rgba(16, 24, 39, 0.82);
 }
 
-.ranking-list,
 .result-list,
-.event-list {
+.event-list  {
   min-width: 0;
 }
 
-.compact-ranking-row {
-  min-height: 46px;
-  margin-bottom: 8px;
-  border: 1px solid rgba(83, 104, 135, 0.18);
-  border-radius: var(--radius-md);
-  padding: 8px 12px;
-  grid-template-columns: 44px 34px 42px minmax(0, 1fr) 58px;
-  justify-content: stretch;
-  gap: 12px;
-}
+
 
 .result-score {
   display: grid;
@@ -5334,13 +4736,9 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-.result-map-tile.left-win {
-  border-left-color: rgba(31, 193, 111, 0.68);
-}
 
-.result-map-tile.right-win {
-  border-right-color: rgba(31, 193, 111, 0.68);
-}
+
+
 
 .result-map-extra {
   display: grid;
@@ -5360,12 +4758,9 @@ body {
   text-align: right;
 }
 
-.compact-ranking-row .row-score {
-  justify-self: end;
-}
 
-.compact-ranking-row .row-main strong,
-.result-team strong {
+
+.result-team strong  {
   line-height: 1.15;
 }
 
@@ -5379,8 +4774,7 @@ body {
   line-height: 1.15;
 }
 
-.compact-ranking-row .row-main strong,
-.result-team strong {
+.result-team strong  {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -5500,9 +4894,8 @@ body {
 
 .letter-filter,
 .team-tabs,
-.match-map-tabs,
 .round-timeline,
-.table-wrap {
+.table-wrap  {
   overflow: visible;
 }
 
@@ -5559,24 +4952,9 @@ td {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.match-map-tabs {
-  display: grid;
-  gap: 16px;
-  border: 1px solid #071116;
-  border-radius: var(--radius-md);
-  padding: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-}
 
-.match-map-overview {
-  display: grid;
-  gap: 12px;
-  align-items: center;
-  border: 1px solid #071116;
-  border-radius: var(--radius-md);
-  padding: 20px 24px;
-  grid-template-columns: minmax(190px, 0.4fr) minmax(0, 1fr) minmax(190px, 0.4fr);
-}
+
+
 
 .round-timeline {
   grid-column: 1 / -1;
@@ -5600,9 +4978,7 @@ td {
   min-width: 0;
 }
 
-.match-scoreboard-wrap {
-  overflow: visible;
-}
+
 
 .match-scoreboard {
   table-layout: fixed;
@@ -5641,137 +5017,40 @@ td {
   gap: 12px;
 }
 
-.tournament-hero {
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
-  min-height: 280px;
-  border: 1px solid #21324a;
-  border-radius: var(--radius-sm);
-  padding: 28px;
-}
 
-.tournament-hero::before {
-  position: absolute;
-  inset: -2px;
-  z-index: 0;
-  background:
-    linear-gradient(90deg, rgba(3, 8, 15, 0.92) 0%, rgba(3, 8, 15, 0.78) 36%, rgba(3, 8, 15, 0.5) 62%, rgba(3, 8, 15, 0.78) 100%),
-    linear-gradient(180deg, rgba(3, 8, 15, 0.54) 0%, rgba(3, 8, 15, 0.18) 48%, rgba(3, 8, 15, 0.74) 100%);
-  border-radius: inherit;
-  content: "";
-  pointer-events: none;
-}
 
-.tournament-hero-copy,
-.tournament-hero-card,
-.tournament-organizer-card {
+
+
+.tournament-hero-card {
   position: relative;
   z-index: 1;
 }
 
-.tournament-hero-copy {
-  display: grid;
-  gap: 24px;
-  align-content: end;
-  min-width: 0;
-}
 
-.tournament-title-row {
-  display: flex;
-  gap: 24px;
-  align-items: center;
-  min-width: 0;
-}
 
-.tournament-title-row > div {
-  min-width: 0;
-}
 
-.tournament-title-row h1 {
-  margin: 0;
-  max-width: 100%;
-  overflow: hidden;
-  font-size: clamp(2.2rem, 4.5vw, 4.2rem);
-  line-height: 1.04;
-  text-overflow: ellipsis;
-  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.45);
-  white-space: nowrap;
-}
 
-.tournament-hero .event-logo.hero {
-  width: clamp(112px, 11vw, 168px);
-  height: clamp(112px, 11vw, 168px);
-  filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.42));
-}
 
-.tournament-hero-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
-}
 
-.tournament-hero-meta span {
-  border: 1px solid rgba(199, 214, 234, 0.18);
-  background: rgba(6, 14, 25, 0.72);
-  color: #d9e5f3;
-  font-size: var(--text-sm);
-  font-weight: 700;
-  padding: 8px 12px;
-}
 
-.tournament-status-flag {
-  width: fit-content;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  min-height: 30px;
-  background: #2ed28f;
-  color: #06101a;
-  font-size: var(--text-xs);
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  padding: 0 20px 0 12px;
-  text-transform: uppercase;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
-}
 
-.tournament-status-flag::after {
-  position: absolute;
-  top: 0;
-  right: -14px;
-  width: 0;
-  height: 0;
-  border-top: 15px solid transparent;
-  border-bottom: 15px solid transparent;
-  border-left: 14px solid #2ed28f;
-  content: "";
-}
 
-.tournament-status-flag.live {
-  background: #f0b341;
-}
 
-.tournament-status-flag.live::after {
-  border-left-color: #f0b341;
-}
 
-.tournament-organizer-card {
-  display: grid;
-  justify-items: start;
-  gap: 12px;
-  border: 1px solid rgba(199, 214, 234, 0.18);
-  background: rgba(6, 14, 25, 0.76);
-  backdrop-filter: blur(14px);
-  padding: 20px;
-}
 
-.tournament-organizer-main {
-  display: grid;
-  grid-template-columns: 62px minmax(0, 1fr);
-  gap: 12px;
-  align-items: center;
-  min-width: 0;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .organizer-logo {
   width: 40px;
@@ -5790,21 +5069,11 @@ td {
   height: 62px;
 }
 
-.tournament-organizer-card strong {
-  overflow: hidden;
-  color: #fff;
-  font-size: var(--text-lg);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
-.tournament-organizer-card small {
-  color: #aebbd0;
-  font-weight: 700;
-}
 
-.tournament-card-kicker,
-.tournament-section-head span {
+
+
+.tournament-section-head span  {
   color: var(--muted);
   font-size: var(--text-2xs);
   font-weight: 800;
@@ -5845,55 +5114,21 @@ td {
   overflow-wrap: anywhere;
 }
 
-.tournament-overview-grid {
-  display: grid;
-  grid-template-columns: minmax(420px, 0.85fr) minmax(520px, 1.15fr);
-  gap: 12px;
-}
 
-.tournament-overview-card {
-  display: grid;
-  align-content: start;
-  gap: 12px;
-  min-width: 0;
-  min-height: 138px;
-  border: 1px solid rgba(142, 162, 193, 0.16);
-  padding: 16px;
-}
 
-.tournament-overview-card strong {
-  min-width: 0;
-  color: var(--ink);
-  font-size: var(--text-lg);
-}
 
-.tournament-overview-card small {
-  color: #9fb0c5;
-  font-size: var(--text-xs);
-  font-weight: 700;
-  line-height: 1.45;
-}
 
-.overview-card-featured {
-  border-color: rgba(65, 212, 155, 0.22);
-  background:
-    radial-gradient(circle at 12% 0%, rgba(65, 212, 155, 0.18), transparent 34%),
-    linear-gradient(180deg, rgba(24, 45, 65, 0.98), rgba(15, 27, 43, 0.98));
-}
 
-.tournament-summary-card {
-  gap: 12px;
-}
 
-.tournament-map-pool-card {
-  min-height: 0;
-}
 
-.tournament-map-banner-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
+
+
+
+
+
+
+
+
 
 .tournament-map-banner {
   min-height: 70px;
@@ -5946,91 +5181,29 @@ td {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.58);
 }
 
-.tournament-mini-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
 
-.tournament-mini-stats span {
-  display: grid;
-  gap: 2px;
-  border: 1px solid rgba(142, 162, 193, 0.13);
-  background: rgba(7, 14, 24, 0.25);
-  padding: 8px;
-}
 
-.tournament-mini-stats strong {
-  font-size: var(--text-lg);
-}
 
-.tournament-mini-stats small {
-  color: #7f8ea3;
-  font-size: var(--text-2xs);
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
 
-.tournament-podium-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
 
-.tournament-podium-card {
-  display: grid;
-  justify-items: center;
-  align-content: center;
-  gap: 8px;
-  min-width: 0;
-  min-height: 108px;
-  border: 1px solid rgba(142, 162, 193, 0.14);
-  background: rgba(7, 14, 24, 0.28);
-  color: #dce7f5;
-  font-size: var(--text-xs);
-  font-weight: 800;
-  padding: 12px;
-  text-align: center;
-}
 
-/* Vaga de podio ainda em aberto (TBD). */
-.tournament-podium-card.podium-pending {
-  border-style: dashed;
-  border-color: rgba(142, 162, 193, 0.22);
-  background: rgba(7, 14, 24, 0.16);
-  color: var(--muted);
-}
 
-.tournament-podium-card.podium-pending .logo-empty {
-  border-radius: 50%;
-  background: rgba(142, 162, 193, 0.08);
-}
 
-.tournament-podium-card b {
-  color: var(--muted);
-  font-size: var(--text-2xs);
-  text-transform: uppercase;
-}
 
-.tournament-podium-card .team-logo.tiny {
-  width: 54px;
-  height: 54px;
-}
 
-.tournament-podium-card strong {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
-.tournament-podium-card small {
-  display: -webkit-box;
-  max-width: 100%;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 .tournament-tabs {
   display: grid;
@@ -6349,28 +5522,11 @@ td {
   padding: 0;
 }
 
-.tournament-bracket-col {
-  display: grid;
-  grid-template-rows: 28px auto;
-  gap: 12px;
-  min-width: 0;
-  position: relative;
-}
 
-.tournament-bracket-col h3 {
-  margin: 0;
-  color: var(--muted);
-  font-size: var(--text-xs);
-  font-weight: 800;
-  text-transform: uppercase;
-}
 
-.tournament-bracket-stack {
-  display: grid;
-  grid-template-rows: repeat(var(--bracket-rows, 2), var(--bracket-row-height));
-  min-height: calc(var(--bracket-rows, 2) * var(--bracket-row-height));
-  position: relative;
-}
+
+
+
 
 .tournament-bracket-match {
   display: grid;
@@ -6408,26 +5564,13 @@ td {
   pointer-events: none;
 }
 
-.tournament-bracket-match.curated-match.connector-merge:not(.terminal)::before {
-  position: absolute;
-  right: calc(-1 * var(--bracket-column-gap));
-  height: calc(var(--connector-span-rows, 1) * var(--bracket-row-height));
-  border-right: 2px solid #2d3c4d;
-  content: "";
-  pointer-events: none;
-}
 
-.tournament-bracket-match.curated-match.connector-straight::before {
-  display: none;
-}
 
-.tournament-bracket-match.curated-match.connector-merge.branch-top:not(.terminal)::before {
-  top: 50%;
-}
 
-.tournament-bracket-match.curated-match.connector-merge.branch-bottom:not(.terminal)::before {
-  bottom: 50%;
-}
+
+
+
+
 
 .tournament-bracket-match.curated-match:focus-visible {
   border-color: #41d49b;
@@ -9053,8 +8196,7 @@ a.tournament-bracket-match:hover {
 }
 
 @media (max-width: 1180px) {
-  .tournament-hero,
-  .tournament-layout {
+  .tournament-layout  {
     grid-template-columns: 1fr;
   }
 
@@ -9073,9 +8215,7 @@ a.tournament-bracket-match:hover {
     --bracket-row-height: 70px;
   }
 
-  .tournament-overview-grid {
-    grid-template-columns: 1fr;
-  }
+
 
   .tournament-stats-top-grid {
     grid-template-columns: 1fr;
@@ -9098,28 +8238,15 @@ a.tournament-bracket-match:hover {
 }
 
 @media (max-width: 760px) {
-  .tournament-hero {
-    min-height: 0;
-    padding: 20px;
-  }
 
-  .tournament-title-row {
-    display: grid;
-    align-items: flex-start;
-  }
 
-  .tournament-title-row h1 {
-    font-size: var(--text-3xl);
-  }
 
-  .tournament-hero .event-logo.hero {
-    width: 112px;
-    height: 112px;
-  }
 
-  .tournament-organizer-main {
-    grid-template-columns: 52px minmax(0, 1fr);
-  }
+
+
+
+
+
 
   .organizer-logo.large {
     width: 52px;
@@ -9127,9 +8254,8 @@ a.tournament-bracket-match:hover {
   }
 
   .tournament-tabs,
-  .tournament-facts,
-  .tournament-overview-grid,
-  .tournament-placement-grid {
+.tournament-facts,
+.tournament-placement-grid  {
     grid-template-columns: 1fr;
   }
 
@@ -9179,12 +8305,9 @@ a.tournament-bracket-match:hover {
   }
 
   .preview-scoreboard,
-  .preview-summary-grid,
-  .preview-map-list,
-  .tournament-mini-stats,
-  .tournament-podium-grid,
-  .tournament-map-banner-grid,
-  .tournament-lineup-player {
+.preview-summary-grid,
+.preview-map-list,
+.tournament-lineup-player  {
     grid-template-columns: 1fr;
   }
 
@@ -9210,7 +8333,6 @@ a.tournament-bracket-match:hover {
   color: var(--univlr-white);
 }
 
-.hub-panel,
 .page-header,
 .letter-filter,
 .table-wrap,
@@ -9219,60 +8341,44 @@ a.tournament-bracket-match:hover {
 .data-panel,
 .profile-header,
 .ranking-accordion-item,
-.tournament-hero,
-.tournament-overview-card,
 .tournament-bracket-card,
 .tournament-placement-card,
-.team-hero,
-.team-trophy-panel,
 .team-mini-stats,
 .team-tab-panel,
 .team-ranking-main,
 .team-ranking-explainer,
 .ranking-chart-card,
 .roster-player-card,
-.team-tournament-card,
-.stats-panel {
+.team-tournament-card {
   box-shadow: none;
 }
 
-.hub-panel {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-}
 
-.panel-title,
+
 .section-head,
-.page-title {
+.page-title  {
   color: var(--univlr-white);
 }
 
-.panel-title h2,
-.section-head h2 {
+.section-head h2  {
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
-.panel-title h2 {
-  font-size: var(--text-sm);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
 
-.panel-title h2::before,
-.section-head h2::before {
+
+.section-head h2::before  {
   content: "";
   width: 5px;
   height: 16px;
   display: inline-block;
 }
 
-.panel-title a,
 .panel-footer-link,
 .subtle-link,
 .action-link,
-.ranking-action-button {
+.ranking-action-button  {
   color: var(--univlr-white);
 }
 
@@ -9299,7 +8405,6 @@ a.tournament-bracket-match:hover {
   color: var(--univlr-white);
 }
 
-.compact-ranking-row:hover,
 .result-row:hover,
 .event-row:hover,
 .ranking-row:hover,
@@ -9307,7 +8412,7 @@ a.tournament-bracket-match:hover {
 .entity-card:hover,
 .match-card:hover,
 .ranking-accordion-button:hover,
-.ranking-accordion-item.open .ranking-accordion-button {
+.ranking-accordion-item.open .ranking-accordion-button  {
   border-color: rgba(246, 19, 42, 0.45);
   background: #15151d;
 }
@@ -9315,10 +8420,8 @@ a.tournament-bracket-match:hover {
 .chip.red,
 .event-status.live,
 .event-chip.live,
-.score-win,
 .rank-change-cell.up,
-.rank-delta.up,
-.trend.up {
+.trend.up  {
   color: var(--win);
 }
 
@@ -9328,20 +8431,15 @@ a.tournament-bracket-match:hover {
 }
 
 .rank-change-cell.down,
-.rank-delta.down,
-.trend.down {
+.trend.down  {
   text-shadow: none;
 }
 
-.row-score,
-.result-score strong,
-.match-score-core strong {
+.result-score strong {
   color: var(--univlr-white);
 }
 
-.result-score span,
-.match-score-core span,
-.match-score-core em {
+.result-score span {
   color: rgba(245, 241, 242, 0.64);
 }
 
@@ -9383,21 +8481,14 @@ a.tournament-bracket-match:hover {
   background: var(--univlr-graphite);
 }
 
-.ranking-score-hero,
-.team-hero,
-.tournament-hero,
-.match-hero {
+.ranking-score-hero {
   background:
     linear-gradient(120deg, rgba(246, 19, 42, 0.22), transparent 34%),
     linear-gradient(180deg, rgba(245, 241, 242, 0.05), rgba(245, 241, 242, 0.01)),
     var(--univlr-graphite);
 }
 
-.match-hero::after,
-.tournament-hero::after,
-.team-hero::after {
-  border-color: rgba(246, 19, 42, 0.24);
-}
+
 
 .match-event-link,
 .team-tab.active,
@@ -9535,82 +8626,31 @@ input::placeholder {
   background: rgba(246, 19, 42, 0.12);
 }
 
-/* UNIVLR match detail polish */
-.match-hero {
-  position: relative;
-  display: grid;
-  align-content: space-between;
-  isolation: isolate;
-  overflow: hidden;
-  border: 1px solid #0b1419;
-  border-radius: var(--radius-md);
-  color: #effcff;
-  padding: 28px 28px 32px;
-  border-color: rgba(246, 19, 42, 0.28);
-  background:
-    linear-gradient(120deg, rgba(246, 19, 42, 0.16), transparent 36%),
-    #050508;
-}
 
-.match-hero::after {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  content: "";
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(4, 3, 6, 0.94), rgba(4, 3, 6, 0.58) 34%, rgba(4, 3, 6, 0.58) 66%, rgba(4, 3, 6, 0.94)),
-    linear-gradient(180deg, rgba(4, 3, 6, 0.8), rgba(4, 3, 6, 0.28) 42%, rgba(4, 3, 6, 0.88));
-}
+
+
 
 .match-event-link,
 .match-event-link:hover {
   color: var(--brand-text);
 }
 
-.match-series-info > span:not(.event-logo),
-.match-series-info small,
-.match-date span {
+.match-date span  {
   color: rgba(245, 241, 242, 0.68);
 }
 
-.match-series-info strong,
-.match-date strong,
-.match-team-name,
-.match-team-name span {
+.match-date strong {
   color: var(--univlr-white);
 }
 
-.match-team-name {
-  display: flex;
-  gap: 20px;
-  min-width: 0;
-}
 
-.match-score-core > span,
-.match-score-core em {
-  color: rgba(245, 241, 242, 0.68);
-}
 
-.match-score-core strong {
-  display: flex;
-  gap: 12px;
-  align-items: baseline;
-  font-size: clamp(2.9rem, 4vw, 4.25rem);
-  line-height: 1;
-  color: var(--univlr-white);
-}
 
-.match-map-tabs,
-.match-map-overview,
+
+
+
 .match-panel,
-.lineup-compare,
-.lineup-compare-stage,
-.match-scoreboard-summary-wrap,
-.vlr-board-team,
-.match-scoreboard-wrap,
-.mvp-card,
-.team-compare-card {
+.vlr-board-team {
   border-color: rgba(245, 241, 242, 0.12);
   background:
     linear-gradient(180deg, rgba(245, 241, 242, 0.03), rgba(245, 241, 242, 0.01)),
@@ -9618,40 +8658,16 @@ input::placeholder {
   color: var(--univlr-white);
 }
 
-.match-map-tab {
-  position: relative;
-  min-height: 54px;
-  display: inline-grid;
-  place-items: center;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border: 1px solid #071116;
-  border-radius: var(--radius-sm);
-  color: #f1f3e8;
-  font-weight: 700;
-  isolation: isolate;
-  padding: 0 12px;
-  text-align: center;
-  border-color: rgba(245, 241, 242, 0.1);
-  background: #09090d;
-}
 
-.match-map-tab.active {
-  border-color: rgba(246, 19, 42, 0.56);
-  background: rgba(246, 19, 42, 0.12);
-  box-shadow: inset 0 0 0 1px rgba(246, 19, 42, 0.14);
-}
+
+
 
 .map-center h2,
 .map-score-side strong,
 .match-panel .section-head h2,
 .match-panel .section-head h3,
-.vlr-board-identity strong,
 .vlr-board-metric strong,
-.match-scoreboard td,
-.mvp-identity strong,
-.team-compare-head strong {
+.match-scoreboard td {
   color: var(--univlr-white);
 }
 
@@ -9660,20 +8676,14 @@ input::placeholder {
 .match-panel .section-head p,
 .match-panel .tiny,
 .match-panel .muted,
-.vlr-board-identity small,
-.vlr-board-metric small,
-.mvp-identity small,
-.team-compare-row span,
-.team-compare-row em {
+.vlr-board-metric small {
   color: rgba(245, 241, 242, 0.58);
 }
 
 .map-mini-list a,
 .round-cell,
 .match-scoreboard th,
-.match-scoreboard td,
-.team-compare-track,
-.mvp-bar div {
+.match-scoreboard td {
   border-color: rgba(245, 241, 242, 0.11);
 }
 
@@ -9719,27 +8729,11 @@ input::placeholder {
   color: rgba(245, 241, 242, 0.7);
 }
 
-.mvp-card {
-  background:
-    linear-gradient(135deg, rgba(246, 19, 42, 0.18), transparent 38%),
-    var(--univlr-graphite);
-}
 
-.mvp-bar div,
-.team-compare-track {
-  background: #191a22;
-}
 
-.team-compare-track strong {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  font-size: var(--text-2xs);
-  font-weight: 800;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.74);
-  color: var(--univlr-white);
-}
+
+
+
 
 /* UNIVLR color-only layout reset */
 
@@ -9827,7 +8821,6 @@ body {
   gap: clamp(20px, 2vw, 36px);
 }
 
-.hub-panel,
 .full-list-panel,
 .page-header,
 .letter-filter,
@@ -9837,20 +8830,15 @@ body {
 .data-panel,
 .profile-header,
 .ranking-accordion-item,
-.tournament-hero,
-.tournament-overview-card,
 .tournament-bracket-card,
 .tournament-placement-card,
-.team-hero,
-.team-trophy-panel,
 .team-mini-stats,
 .team-tab-panel,
 .team-ranking-main,
 .team-ranking-explainer,
 .ranking-chart-card,
 .roster-player-card,
-.team-tournament-card,
-.stats-panel {
+.team-tournament-card {
   border-color: var(--line);
   background:
     linear-gradient(180deg, rgba(245, 241, 242, 0.035), rgba(245, 241, 242, 0.01)),
@@ -9858,12 +8846,10 @@ body {
   color: var(--ink);
 }
 
-.panel-title h2::before,
-.section-head h2::before {
+.section-head h2::before  {
   background: var(--red);
 }
 
-.compact-ranking-row,
 .result-row,
 .event-row,
 .ranking-row,
@@ -9873,7 +8859,7 @@ body {
 .ranking-mini-card,
 .ranking-fallback-card,
 .ranking-achievement-card,
-.lineup-match-list .result-row {
+.lineup-match-list .result-row  {
   border-color: rgba(245, 241, 242, 0.1);
   background: #0b0b10;
   color: var(--ink);
@@ -9885,12 +8871,10 @@ body {
 .event-row strong,
 .simple-row strong,
 .entity-main strong,
-.panel-title h2,
 .section-head h2,
 .page-title h1,
 .profile-header h1,
-.team-title-block h1,
-.tournament-title-row h1 {
+.team-title-block h1 {
   color: var(--ink);
 }
 
@@ -9904,40 +8888,35 @@ body {
 .section-head p,
 .page-title p,
 .profile-header p,
-.tournament-hero-meta,
-.ranking-page-toolbar [data-ranking-count] {
+.ranking-page-toolbar [data-ranking-count]  {
   color: rgba(245, 241, 242, 0.74);
 }
 
-.rank-position,
 .rank-cell,
 .rank-number,
 .event-status,
 .chip,
-.score-chip {
+.score-chip  {
   background: rgba(246, 19, 42, 0.16);
   color: var(--ink);
 }
 
-.chip.red,
 /* Antes, esta era uma regra so: tudo que era positivo (.up, .good, .score-win)
    virava vermelho da marca com !important, e tudo que era negativo virava cinza.
    Subir uma posicao no ranking tinha a mesma cor de um alerta. Separado por
    significado: estado positivo, estado negativo e acento de interface. */
-.score-win,
+.chip.red,
 .rank-change-cell.up,
-.rank-delta.up,
 .trend.up,
 .rating-cell.good,
-.numeric.good {
+.numeric.good  {
   color: var(--win) !important;
 }
 
 .rank-change-cell.down,
-.rank-delta.down,
 .trend.down,
 .numeric.bad,
-.rating-cell.bad {
+.rating-cell.bad  {
   color: var(--danger) !important;
 }
 
@@ -9972,10 +8951,8 @@ body {
 .match-scoreboard-mode-switch::before,
 .ranking-bar-track i,
 .ranking-score-ring,
-.mvp-bar i,
-.team-compare-track i,
 .bar-fill,
-.lineup-timeline-bar.current {
+.lineup-timeline-bar.current  {
   background: linear-gradient(135deg, var(--brand), #ff3d4e);
 }
 
@@ -10016,11 +8993,7 @@ select {
   }
 }
 
-/* UNIVLR desktop-first layout restore */
 
-.home-board.univlr-home .result-row {
-  grid-template-columns: minmax(145px, 1fr) 78px minmax(145px, 1fr) 120px;
-}
 
 @media (max-width: 1180px) {
   .topbar-inner,
@@ -10043,23 +9016,19 @@ select {
     width: min(100% - 22px, 1440px);
   }
 
-  .home-board.univlr-home,
-  .results-layout,
-  .match-detail-grid {
+  .results-layout {
     grid-template-columns: 1fr;
   }
 
-  .home-board.univlr-home .result-row,
   .result-row,
-  .full-list-panel .result-row {
+.full-list-panel .result-row  {
     grid-template-columns: minmax(0, 1fr) 68px minmax(0, 1fr);
   }
 
   .result-meta,
-  .result-maps,
-  .home-board.univlr-home .result-meta,
-  .full-list-panel .result-meta,
-  .full-list-panel .result-maps {
+.result-maps,
+.full-list-panel .result-meta,
+.full-list-panel .result-maps  {
     display: none;
   }
 }
@@ -10125,32 +9094,9 @@ select {
   padding: clamp(20px, 2vw, 34px) 0 56px;
 }
 
-/* O ranking tem teto de conteudo: colunas fixas somam 200px e a linha mais
-   larga que sobra ("34 partidas - CEUB OCT") pede ~125px, entao acima de ~370px
-   a coluna so cria vao entre a tag e a nota. Por isso ela e a unica com maximo
-   em px em vez de fr - o que passa disso vai para as partidas, que e a coluna
-   onde nome de universidade brasileira ainda trunca. */
-.home-board.univlr-home {
-  display: grid;
-  /* Campeonatos ganhou largura de Ranking e de Partidas por uma razao medida:
-     a 306px o nome do evento quebrava em TRES linhas e a linha ia a 170px,
-     contra 53px do ranking. Era a coluna mais estreita e a mais alta ao mesmo
-     tempo. Com ~400px o nome cabe em duas e a linha cai para ~112px.
-     O piso de 380px no Ranking tambem e medido: abaixo disso a trilha do nome
-     (o minmax(0,1fr) da linha) cai de 121px para 93px e cinco das quatorze
-     equipes passam a truncar. */
-  grid-template-columns: minmax(300px, 380px) minmax(400px, 1.2fr) minmax(320px, 1fr);
-  gap: clamp(18px, 2vw, 32px);
-  /* start e nao stretch: cada painel termina onde o conteudo termina, em vez
-     de as tres colunas serem esticadas ate a mesma altura. O equilibrio vem de
-     calibrar QUANTOS itens cada painel mostra (ver os HOME_*_LIMIT no app.js),
-     e nao de esticar as colunas - esticar so criaria vazio dentro do painel. */
-  align-items: start;
-}
 
-.hub-panel {
-  padding: 0;
-}
+
+
 
 .results-layout {
   display: grid;
@@ -10159,12 +9105,7 @@ select {
   gap: 16px;
 }
 
-.match-detail-grid {
-  display: grid;
-  align-items: start;
-  gap: clamp(18px, 2vw, 34px);
-  grid-template-columns: minmax(0, 1fr) var(--compact-rail);
-}
+
 
 .result-row {
   min-height: 38px;
@@ -10174,14 +9115,9 @@ select {
   grid-template-columns: minmax(120px, 1fr) 76px minmax(120px, 1fr) 128px;
 }
 
-.home-board.univlr-home .result-maps {
-  display: none;
-}
 
-.home-board.univlr-home .result-meta {
-  grid-template-columns: minmax(0, 1fr);
-  display: grid;
-}
+
+
 
 /* A coluna de equipe era minmax(180px, 300px) e depois minmax(120px, 210px). Os
    210px vinham de caber o pior nome do banco inteiro sem cortar ("PUCGO
@@ -10227,16 +9163,7 @@ select {
   display: grid;
 }
 
-.match-score-core {
-  min-width: 160px;
-  display: grid;
-  place-items: center;
-  gap: 4px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  padding: 0;
-}
+
 
 @media (max-width: 1180px) {
   .topbar-inner {
@@ -10247,12 +9174,10 @@ select {
     grid-column: 1 / -1;
   }
 
-  .home-board.univlr-home,
   .layout-grid,
-  .results-layout,
-  .team-summary-grid,
-  .team-tab-grid,
-  .match-detail-grid {
+.results-layout,
+.team-summary-grid,
+.team-tab-grid {
     grid-template-columns: 1fr;
   }
 
@@ -10260,24 +9185,19 @@ select {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .match-side-stack {
-    position: static;
-  }
+
 }
 
 @media (max-width: 760px) {
   .topbar-inner,
-  .page-header.slim-header,
-  .page-header,
-  .home-recuts,
-  .result-row,
-  .full-list-panel .result-row,
-  .event-row,
-  .match-hero-meta,
-  .match-hero-score,
-  .match-map-overview,
-  .split,
-  .match-lineups {
+.page-header.slim-header,
+.page-header,
+.home-recuts,
+.result-row,
+.full-list-panel .result-row,
+.event-row,
+.split,
+.match-lineups  {
     grid-template-columns: 1fr;
   }
 
@@ -10309,9 +9229,8 @@ select {
   }
 
   .result-team.right,
-  .match-team-name.right,
-  .map-score-side.right,
-  .match-date {
+.map-score-side.right,
+.match-date  {
     justify-content: flex-start;
     justify-items: start;
     text-align: left;
@@ -10587,20 +9506,7 @@ select {
   transition: transform 0.18s ease;
 }
 
-.tournament-hero {
-  position: relative;
-  display: grid;
-  gap: 20px;
-  align-items: center;
-  isolation: isolate;
-  overflow: hidden;
-  background: var(--event-banner, linear-gradient(135deg, var(--event-a), var(--event-b)));
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-color: rgba(3, 8, 15, 0.92);
-  box-shadow: inset 0 0 0 1px rgba(245, 241, 242, 0.035);
-}
+
 
 @media (max-width: 1180px) {
   .brand {
@@ -10693,191 +9599,49 @@ select {
   font-weight: 800;
 }
 
-.lineup-stat-row {
-  display: grid;
-  align-items: center;
-  min-height: 36px;
-  border: 1px solid rgba(138, 177, 198, 0.11);
-  border-radius: var(--radius-md);
-  padding: 4px 8px;
-  border-color: rgba(245, 241, 242, 0.18);
-  background:
-    linear-gradient(180deg, rgba(245, 241, 242, 0.045), rgba(245, 241, 242, 0.015)),
-    #090b10;
-  box-shadow: inset 0 0 0 1px rgba(245, 241, 242, 0.035);
-}
 
-.lineup-stat-value {
-  position: relative;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  border-radius: var(--radius-sm);
-  color: #cfdde3;
-  font-size: var(--text-lg);
-  font-weight: 800;
-  line-height: 1;
-  min-height: 30px;
-  background:
-    linear-gradient(180deg, rgba(245, 241, 242, 0.075), rgba(245, 241, 242, 0.035)),
-    #191c23;
-  box-shadow:
-    inset 0 0 0 1px rgba(245, 241, 242, 0.16),
-    inset 0 1px 0 rgba(245, 241, 242, 0.06);
-}
 
-.lineup-stat-value::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  opacity: 0.9;
-  border-radius: var(--radius-sm);
-  box-shadow: 0 0 16px rgba(246, 19, 42, 0.28);
-}
 
-.lineup-stat-value-left::before {
-  right: 0;
-  width: var(--left-level, 8%);
-  background: linear-gradient(90deg, #821326, #f6132a);
-}
 
-.lineup-stat-value-right::before {
-  left: 0;
-  width: var(--right-level, 8%);
-  background: linear-gradient(90deg, #f6132a, #821326);
-}
 
-.lineup-stat-value span {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  box-sizing: border-box;
-  color: #f5f1f2;
-  padding: 0 12px;
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.72);
-}
 
-.lineup-stat-value.better span {
-  color: var(--win);
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.78);
-}
 
-/* O melhor valor da comparacao e destaque de dado, nao de marca: contorno
-   verde solido em vez de trio de halos vermelhos e verdes. */
-.lineup-stat-value.best {
-  box-shadow: inset 0 0 0 1px var(--win-line);
-  background: var(--win-soft);
-}
 
-.lineup-stat-value.best::before {
-  opacity: 1;
-}
 
-.lineup-stat-value.best span {
-  color: var(--win);
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.78);
-}
 
-.player-hero {
-  position: relative;
-  display: grid;
-  grid-template-columns: 210px minmax(0, 1fr) minmax(260px, 340px);
-  gap: 20px;
-  align-items: stretch;
-  overflow: hidden;
-  min-height: 260px;
-  border: 1px solid rgba(245, 241, 242, 0.12);
-  border-radius: var(--radius-lg);
-  background:
-    radial-gradient(circle at 22% 12%, color-mix(in srgb, var(--team-accent, #f6132a) 28%, transparent), transparent 32%),
-    linear-gradient(135deg, #080b11, #111822 54%, #080b11);
-  color: #f5f1f2;
-  padding: 20px;
-}
 
-.player-hero > * {
-  position: relative;
-  z-index: 1;
-}
 
-.player-hero-team-bg {
-  position: absolute;
-  inset: -54px -52px auto auto;
-  z-index: 0;
-  width: min(520px, 56vw);
-  height: min(520px, 56vw);
-  display: grid;
-  place-items: center;
-  opacity: 0.13;
-  pointer-events: none;
-}
 
-.player-hero-team-bg .team-logo {
-  width: 100%;
-  height: 100%;
-}
 
-.player-hero-team-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: grayscale(0.15) drop-shadow(0 24px 42px rgba(0, 0, 0, 0.52));
-}
 
-.player-hero-portrait {
-  display: grid;
-  align-items: end;
-  justify-items: center;
-  overflow: hidden;
-  border: 1px solid rgba(245, 241, 242, 0.12);
-  border-radius: var(--radius-lg);
-  background:
-    linear-gradient(180deg, rgba(245, 241, 242, 0.06), rgba(245, 241, 242, 0.015)),
-    #0b1118;
-}
 
-.logo.player-avatar.player-hero-photo,
-.player-hero-photo {
-  width: 190px;
-  height: 230px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
 
-.logo.player-avatar.player-hero-photo img {
-  object-fit: contain;
-  object-position: bottom center;
-  background: transparent;
-  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.46));
-}
 
-.player-hero-copy {
-  display: grid;
-  align-content: center;
-  gap: 12px;
-  min-width: 0;
-}
 
-.player-hero-copy h1 {
-  overflow-wrap: anywhere;
-  color: #fff;
-  font-size: clamp(2rem, 4vw, 4.3rem);
-  line-height: 0.98;
-  text-shadow: 0 14px 32px rgba(0, 0, 0, 0.42);
-}
 
-.player-hero-copy p {
-  overflow-wrap: anywhere;
-  color: rgba(245, 241, 242, 0.7);
-  font-size: var(--text-lg);
-  font-weight: 700;
-}
 
-.player-hero-chips,
-.player-nick-history .chip-row {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.player-hero-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -10890,77 +9654,25 @@ select {
   height: 24px;
 }
 
-.player-nick-history {
-  display: grid;
-  gap: 8px;
-}
 
-.player-nick-history > span {
-  color: rgba(245, 241, 242, 0.56);
-  font-size: var(--text-xs);
-  font-weight: 800;
-  text-transform: uppercase;
-}
 
-.hero-nicks .chip {
-  border-color: rgba(245, 241, 242, 0.14);
-  background: rgba(245, 241, 242, 0.07);
-  color: rgba(245, 241, 242, 0.78);
-}
 
-.player-quick-panel {
-  display: grid;
-  gap: 12px;
-  align-content: center;
-  min-width: 0;
-}
 
-.player-current-team-card {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 4px 12px;
-  align-items: center;
-  min-height: 86px;
-  border: 1px solid rgba(245, 241, 242, 0.14);
-  border-radius: var(--radius-lg);
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--team-accent, #f6132a) 22%, transparent), rgba(245, 241, 242, 0.03)),
-    rgba(245, 241, 242, 0.07);
-  color: #f5f1f2;
-  padding: 12px;
-}
 
-.player-current-team-card small,
-.player-current-team-card em {
-  color: rgba(245, 241, 242, 0.62);
-  font-size: var(--text-xs);
-  font-style: normal;
-  font-weight: 800;
-  text-transform: uppercase;
-}
 
-.player-current-team-card small {
-  grid-column: 1 / -1;
-}
 
-.player-current-team-card strong {
-  overflow: hidden;
-  color: #fff;
-  font-size: var(--text-lg);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
-.player-current-team-card em {
-  grid-column: 2;
-  text-transform: none;
-}
 
-.player-current-team-card .team-logo {
-  width: 46px;
-  height: 46px;
-  grid-row: 2 / span 2;
-}
+
+
+
+
+
+
+
+
+
+
 
 .player-hero-stat-grid,
 .player-team-kpis {
@@ -10970,8 +9682,7 @@ select {
 }
 
 .player-hero-stat-grid .stat-card,
-.player-team-kpis .stat-card,
-.player-stats-panel .stat-card {
+.player-team-kpis .stat-card {
   border: 1px solid rgba(245, 241, 242, 0.12);
   border-radius: var(--radius-md);
   background:
@@ -10979,17 +9690,9 @@ select {
     var(--surface);
 }
 
-.player-summary-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 390px);
-  gap: 16px;
-  align-items: start;
-}
 
-.player-recent-matches,
-.player-tab-panel > .data-panel,
-.player-tab-panel > .team-trophy-panel,
-.player-summary-layout .data-panel {
+
+.player-tab-panel > .data-panel {
   border-color: var(--line-dark);
   background: #121a24;
 }
@@ -11205,18 +9908,11 @@ select {
 }
 
 @media (max-width: 1180px) {
-  .player-hero {
-    grid-template-columns: 176px minmax(0, 1fr);
-  }
 
-  .player-quick-panel {
-    grid-column: 1 / -1;
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
-  }
 
-  .player-summary-layout {
-    grid-template-columns: 1fr;
-  }
+
+
+
 
   .player-team-kpis {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -11224,37 +9920,19 @@ select {
 }
 
 @media (max-width: 760px) {
-  .player-hero {
-    grid-template-columns: 122px minmax(0, 1fr);
-    min-height: 0;
-    gap: 12px;
-    padding: 16px;
-  }
 
-  .player-hero-portrait {
-    min-height: 184px;
-  }
 
-  .logo.player-avatar.player-hero-photo,
-  .player-hero-photo {
-    width: 118px;
-    height: 180px;
-  }
 
-  .player-hero-copy {
-    align-content: center;
-  }
 
-  .player-hero-copy h1 {
-    font-size: var(--text-3xl);
-  }
 
-  .player-hero-copy p {
-    font-size: var(--text-sm);
-  }
 
-  .player-quick-panel,
-  .player-team-kpis {
+
+
+
+
+
+
+  .player-team-kpis  {
     grid-column: 1 / -1;
     grid-template-columns: 1fr;
   }
@@ -11488,158 +10166,39 @@ select {
   gap: 12px;
 }
 
-.player-page .player-hero {
-  position: relative;
-  grid-template-columns: minmax(220px, 270px) minmax(0, 1fr) minmax(280px, 320px);
-  align-items: stretch;
-  gap: clamp(16px, 1.8vw, 24px);
-  min-height: 0;
-  border-color: rgba(246, 19, 42, 0.26);
-  background:
-    linear-gradient(118deg, rgba(246, 19, 42, 0.14), transparent 38%),
-    linear-gradient(180deg, rgba(245, 241, 242, 0.04), rgba(245, 241, 242, 0.01)),
-    #08080c;
-  box-shadow:
-    inset 0 1px 0 rgba(245, 241, 242, 0.07),
-    0 18px 64px rgba(0, 0, 0, 0.24);
-  padding: clamp(12px, 1.35vw, 18px);
-}
 
-.player-page .player-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background:
-    linear-gradient(90deg, rgba(4, 3, 6, 0.9), rgba(4, 3, 6, 0.38) 42%, rgba(4, 3, 6, 0.72)),
-    linear-gradient(180deg, rgba(245, 241, 242, 0.03), transparent 42%);
-  pointer-events: none;
-}
 
-.player-page .player-hero > * {
-  position: relative;
-  z-index: 1;
-}
 
-.player-page .player-hero-team-bg {
-  position: absolute;
-  top: 50%;
-  right: clamp(260px, 28vw, 430px);
-  z-index: 0;
-  width: min(470px, 38vw);
-  height: min(470px, 38vw);
-  opacity: 0.24;
-  transform: translateY(-50%);
-}
 
-.player-page .player-hero-team-bg img {
-  filter: grayscale(0.08) drop-shadow(0 22px 42px rgba(0, 0, 0, 0.58));
-}
 
-.player-page .player-hero-portrait {
-  display: grid;
-  align-items: end;
-  justify-items: center;
-  min-height: 270px;
-  aspect-ratio: auto;
-  overflow: visible;
-  margin-bottom: calc(clamp(12px, 1.35vw, 18px) * -1);
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
 
-.player-page .logo.player-avatar.player-hero-photo,
-.player-page .player-hero-photo {
-  align-self: end;
-  width: min(100%, 260px);
-  height: 100%;
-  overflow: visible;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
 
-.player-page .logo.player-avatar.player-hero-photo img {
-  object-fit: contain;
-  object-position: bottom center;
-  transform: none;
-  transform-origin: bottom center;
-  filter: brightness(1.16) contrast(1.04) drop-shadow(0 16px 24px rgba(0, 0, 0, 0.48));
-}
 
-.player-page .player-hero-copy {
-  display: flex;
-  flex-direction: column;
-  align-content: normal;
-  justify-content: flex-start;
-  gap: 12px;
-  height: 100%;
-  min-width: 0;
-  padding: 2px 0;
-}
 
-.player-page .player-hero-copy .eyebrow {
-  font-size: var(--text-xs);
-  letter-spacing: 0.07em;
-}
 
-.player-page .player-hero-copy h1 {
-  margin: 0;
-  max-width: 13ch;
-  color: var(--univlr-white, #f5f1f2);
-  font-size: clamp(3.55rem, 6.7vw, 6.45rem);
-  line-height: 0.86;
-  text-shadow: 0 18px 36px rgba(0, 0, 0, 0.36);
-}
 
-.player-page .player-hero-title-row {
-  display: flex;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 12px clamp(22px, 2.2vw, 34px);
-  margin-top: auto;
-  min-width: 0;
-}
 
-.player-page .player-role-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 0;
-  max-width: 100%;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  padding: 0;
-  box-shadow: none;
-}
 
-.player-page .player-role-badge .role-mini {
-  flex: 0 0 auto;
-  width: 46px;
-  height: 46px;
-}
 
-.player-page .player-role-badge strong {
-  color: var(--univlr-white, #f5f1f2);
-  font-size: clamp(1.08rem, 1.35vw, 1.32rem);
-  font-weight: 800;
-  line-height: 1.08;
-}
 
-.player-page .player-hero-copy p {
-  margin: clamp(8px, 0.75vw, 14px) 0 0;
-  color: var(--player-muted);
-  font-size: var(--text-lg);
-  font-weight: 700;
-  line-height: 1.22;
-}
 
-.player-page .player-hero-chips,
-.player-page .player-nick-history .chip-row {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.player-page .player-hero-chips {
   gap: 8px;
 }
 
@@ -11660,172 +10219,58 @@ select {
   color: var(--univlr-white, #f5f1f2);
 }
 
-.player-page .player-nick-history {
-  gap: 4px;
-}
 
-.player-page .player-nick-history.hero-nicks {
-  margin-top: auto;
-  padding-bottom: clamp(2px, 0.45vw, 7px);
-}
 
-.player-page .player-nick-history > span {
-  color: rgba(245, 241, 242, 0.48);
-  font-size: var(--text-2xs);
-  letter-spacing: 0.06em;
-}
 
-.player-page .player-quick-panel {
-  align-content: stretch;
-  gap: 12px;
-}
 
-.player-page .player-current-team-card {
-  grid-template-columns: 64px minmax(0, 1fr);
-  gap: 8px 16px;
-  min-height: 88px;
-  border-color: var(--player-border);
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--team-accent, #f6132a) 14%, transparent), transparent 46%),
-    var(--player-panel-strong);
-  padding: 12px 16px;
-}
 
-.player-page .player-current-team-card:hover {
-  border-color: rgba(246, 19, 42, 0.42);
-}
 
-.player-page .player-current-team-card small,
-.player-page .player-current-team-card em {
-  color: rgba(245, 241, 242, 0.56);
-  letter-spacing: 0.05em;
-}
 
-.player-page .player-current-team-card small {
-  grid-column: 1 / -1;
-  margin-bottom: 2px;
-}
 
-.player-page .player-current-team-card .player-current-team-copy {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 8px 12px;
-  min-width: 0;
-}
 
-.player-page .player-current-team-card strong {
-  overflow: visible;
-  color: var(--univlr-white, #f5f1f2);
-  font-size: var(--text-lg);
-  line-height: 1.08;
-  text-overflow: clip;
-  white-space: normal;
-}
 
-.player-page .player-current-team-card em {
-  justify-self: end;
-  border-left: 1px solid rgba(245, 241, 242, 0.13);
-  padding-left: 12px;
-  font-size: var(--text-xs);
-  font-style: normal;
-  font-weight: 800;
-  text-transform: uppercase;
-}
 
-.player-page .player-current-team-card .team-logo {
-  width: 64px;
-  height: 64px;
-  grid-row: 2;
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 .player-page .player-hero-stat-grid,
 .player-page .player-team-kpis {
   gap: 8px;
 }
 
-.player-page .player-metric-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
-  overflow: hidden;
-  margin: 0;
-  border-top: 1px solid rgba(245, 241, 242, 0.1);
-  border-bottom: 1px solid rgba(245, 241, 242, 0.1);
-  gap: 12px 24px;
-  padding: 12px 12px;
-}
 
-.player-page .player-metric-line {
-  display: grid;
-  gap: 4px;
-  min-width: 0;
-  padding: 0;
-}
 
-.player-page .player-metric-line dt,
-.player-page .player-metric-line dd {
-  margin: 0;
-  min-width: 0;
-}
 
-.player-page .player-metric-line dt {
-  color: var(--player-muted);
-  font-size: var(--text-2xs);
-  font-weight: 700;
-  line-height: 1.2;
-  overflow-wrap: anywhere;
-}
 
-.player-page .player-metric-line dd {
-  color: var(--univlr-white, #f5f1f2);
-  font-size: clamp(1.02rem, 1.55vw, 1.34rem);
-  font-weight: 800;
-  line-height: 1.12;
-  padding-bottom: 2px;
-  overflow-wrap: anywhere;
-}
 
-.player-page .player-metric-line:first-child dd {
-  color: var(--univlr-white, #f5f1f2);
-}
 
-.player-page .player-hero-metrics {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  border-color: rgba(245, 241, 242, 0.13);
-  background: rgba(5, 5, 8, 0.2);
-  gap: 12px 20px;
-  padding: 12px 12px;
-}
 
-.player-page .player-primary-metrics {
-  grid-template-columns: repeat(9, minmax(0, 1fr));
-}
 
-.player-page .player-rating-metrics-list {
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-}
 
-.player-page .player-rating-panel .player-rating-metrics-list {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
 
-.player-page .player-primary-metrics .player-metric-line:first-child,
-.player-page .player-rating-metrics-list .player-metric-line:first-child {
-  position: relative;
-}
 
-.player-page .player-primary-metrics .player-metric-line:first-child::before,
-.player-page .player-rating-metrics-list .player-metric-line:first-child::before {
-  content: "";
-  position: absolute;
-  left: -10px;
-  top: 2px;
-  bottom: 2px;
-  width: 3px;
-  border-radius: var(--radius-pill);
-  background: var(--univlr-red, #f6132a);
-  box-shadow: 0 0 16px rgba(246, 19, 42, 0.24);
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 .player-page .stat-card {
   min-height: 0;
@@ -11883,20 +10328,12 @@ select {
   padding: 0;
 }
 
-.player-page .player-summary-layout {
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
-  gap: 12px;
-}
 
-.player-page .player-summary-layout .stack {
-  gap: 12px;
-}
 
-.player-page .player-summary-layout .data-panel,
+
+
 .player-page .player-tab-panel > .data-panel,
-.player-page .player-tab-panel > .team-trophy-panel,
-.player-page .player-recent-matches,
-.player-page .player-matches-section {
+.player-page .player-matches-section  {
   border: 1px solid var(--player-border);
   border-radius: var(--radius-lg);
   background:
@@ -11906,45 +10343,24 @@ select {
   padding: 12px;
 }
 
-.player-page .player-summary-layout > .stack:first-child {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
+
 
 .player-page .player-matches-section .team-results-summary {
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
-.player-page .player-summary-layout > .stack:first-child > .player-summary-trophy-panel,
-.player-page .player-summary-layout > .stack:first-child > .player-stats-panel,
-.player-page .player-summary-layout > .stack:first-child > .player-rating-trades-panel {
-  grid-column: 1 / -1;
-}
 
-.player-page .player-summary-trophy-panel {
-  padding-bottom: 12px;
-}
 
-.player-page .player-summary-trophy-panel .section-head {
-  margin-bottom: 8px;
-}
 
-.player-page .player-summary-trophy-panel .trophy-list {
-  min-height: 70px;
-  border-color: rgba(245, 241, 242, 0.1);
-  background:
-    linear-gradient(90deg, rgba(246, 19, 42, 0.08), transparent 28%),
-    var(--player-panel-strong);
-}
 
-.player-page .player-summary-trophy-panel .trophy-item {
-  width: 72px;
-  height: 66px;
-  flex-basis: 72px;
-}
+
+
+
+
+
 
 .player-page .player-tab-panel > .data-panel + .data-panel,
-.player-page .player-tab-panel > .team-trophy-panel + .player-team-kpis,
-.player-page .player-team-kpis + .data-panel {
+.player-page .player-team-kpis + .data-panel  {
   margin-top: 12px;
 }
 
@@ -11967,9 +10383,7 @@ select {
   font-size: var(--text-xs);
 }
 
-.player-page .player-summary-layout aside .data-panel {
-  padding: 12px;
-}
+
 
 .player-page .bars {
   gap: 8px;
@@ -12063,8 +10477,7 @@ select {
   background: #121520;
 }
 
-.player-page .player-recent-matches .match-list,
-.player-page .player-matches-section .result-list {
+.player-page .player-matches-section .result-list  {
   gap: 8px;
 }
 
@@ -12194,23 +10607,13 @@ select {
 }
 
 @media (max-width: 1180px) {
-  .player-page .player-hero {
-    grid-template-columns: minmax(200px, 250px) minmax(0, 1fr);
-  }
 
-  .player-page .player-quick-panel {
-    grid-column: 1 / -1;
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.86fr);
-  }
 
-  .player-page .player-summary-layout {
-    grid-template-columns: 1fr;
-  }
 
-  .player-page .player-primary-metrics,
-  .player-page .player-rating-metrics-list {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+
+
+
+
 
   .player-page .player-team-kpis {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -12229,81 +10632,35 @@ select {
     gap: 12px;
   }
 
-  .player-page .player-hero {
-    grid-template-columns: minmax(118px, 0.5fr) minmax(0, 1fr);
-    gap: 12px;
-    padding: 12px;
-  }
 
-  .player-page .player-hero-team-bg {
-    right: -48px;
-    width: 300px;
-    height: 300px;
-    opacity: 0.1;
-  }
 
-  .player-page .player-hero-portrait {
-    min-height: 220px;
-    aspect-ratio: auto;
-    margin-bottom: -12px;
-  }
 
-  .player-page .logo.player-avatar.player-hero-photo,
-  .player-page .player-hero-photo {
-    width: min(100%, 180px);
-    height: 100%;
-  }
 
-  .player-page .player-hero-copy {
-    gap: 8px;
-  }
 
-  .player-page .player-hero-copy h1 {
-    max-width: 100%;
-    font-size: clamp(2.55rem, 13.5vw, 3.55rem);
-    line-height: 0.9;
-  }
 
-  .player-page .player-hero-title-row {
-    gap: 8px 16px;
-  }
 
-  .player-page .player-role-badge {
-    gap: 8px;
-  }
 
-  .player-page .player-role-badge .role-mini {
-    width: 34px;
-    height: 34px;
-  }
 
-  .player-page .player-role-badge strong {
-    font-size: var(--text-md);
-  }
 
-  .player-page .player-hero-copy p {
-    font-size: var(--text-sm);
-  }
 
-  .player-page .player-quick-panel {
-    grid-column: 1 / -1;
-    grid-template-columns: 1fr;
-  }
 
-  .player-page .player-current-team-card {
-    grid-template-columns: 56px minmax(0, 1fr);
-    min-height: 82px;
-    padding: 12px 12px;
-  }
 
-  .player-page .player-current-team-card .team-logo {
-    width: 56px;
-    height: 56px;
-  }
 
-  .player-page .player-current-team-card strong {
-    font-size: var(--text-lg);
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   .player-page .player-hero-stat-grid,
   .player-page .player-team-kpis,
@@ -12334,30 +10691,18 @@ select {
     padding: 0 12px;
   }
 
-  .player-page .player-summary-layout .data-panel,
   .player-page .player-tab-panel > .data-panel,
-  .player-page .player-tab-panel > .team-trophy-panel,
-  .player-page .player-recent-matches,
-  .player-page .player-matches-section {
+.player-page .player-matches-section  {
     padding: 12px;
   }
 
-  .player-page .player-summary-layout > .stack:first-child {
-    grid-template-columns: 1fr;
-  }
 
-  .player-page .player-primary-metrics,
-  .player-page .player-rating-metrics-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 
-  .player-page .player-hero-metrics {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 
-  .player-page .player-metric-line {
-    padding: 0;
-  }
+
+
+
+
 
   .player-page .player-team-history-row,
   .player-page .player-trophy-row {
@@ -13186,50 +11531,15 @@ img.search-state-flag + .search-state-flag.placeholder {
   gap: 12px;
 }
 
-/* A capa da equipe e um CAMPO, nao uma caixa com textura por cima. O fundo
-   chapado sai da cor1 da planilha (--team-field-bg) e a cor entra em duas
-   camadas de luz que derivam devagar em ritmos diferentes, semeados no id da
-   equipe: as 97 equipes usam o mesmo sistema e nenhuma tem o mesmo movimento.
-   A malha de 46px que ficava aqui saiu - era o unico elemento da capa que nao
-   vinha de dado nenhum. */
-/* A parede de jogadores ocupa o banner INTEIRO e a identidade fica por cima
-   dela, sobre um veu. A conta que forcou isso: cinco recortes quadrados lado a
-   lado so cabem em altura cheia se cada um tiver ~0,58 da altura em largura
-   (e a fracao opaca medida nos PNGs). Com a parede em 676px de coluna e o
-   heroi em 430px, a sobreposicao entre os corpos passava de 43%. Na largura
-   inteira (1208px) cada fatia fica com 242px para um corpo de 220px: os
-   jogadores enchem a altura e nao se encostam. */
-.team-page .team-hero {
-  position: relative;
-  display: block;
-  min-height: 330px;
-  overflow: hidden;
-  border: 1px solid rgba(245, 241, 242, 0.1);
-  border-radius: var(--radius-lg);
-  background: var(--team-field-bg, #11131a);
-  color: var(--univlr-white, #f5f1f2);
-  box-shadow:
-    inset 0 1px 0 rgba(245, 241, 242, 0.08),
-    0 22px 70px rgba(0, 0, 0, 0.28);
-  padding: 0 24px;
-}
 
-.team-page .team-hero::before {
-  content: none;
-}
 
-.team-page .team-hero > * {
-  position: relative;
-  z-index: 1;
-}
 
-.team-page .team-hero-cover {
-  z-index: 1;
-}
 
-.team-page .team-hero-main {
-  z-index: 2;
-}
+
+
+
+
+
 
 .team-page .team-field {
   position: absolute;
@@ -13319,101 +11629,31 @@ img.search-state-flag + .search-state-flag.placeholder {
   }
 }
 
-/* A identidade tem a propria faixa a esquerda e a parede comeca depois dela:
-   nenhum texto cai em cima de jogador nenhum. A largura desta faixa e o unico
-   parametro que decide o tamanho dos jogadores - o resto da largura vira as
-   cinco fatias, e a altura das fotos e a altura do banner. */
-.team-page .team-hero-main {
-  position: relative;
-  width: 420px;
-  max-width: 100%;
-  min-height: 330px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 16px;
-  min-width: 0;
-  padding: 22px 0 30px;
-}
 
-.team-page .team-identity {
-  gap: 22px;
-  align-items: flex-start;
-}
 
-/* O recorde entra no vazio embaixo do nome. Numeral condensado grande, rotulo
-   pequeno: e a escala do resto do site, so aplicada onde antes havia padding. */
-.team-page .team-hero-record {
-  display: flex;
-  gap: 10px 18px;
-  align-items: flex-end;
-  margin: 0;
-}
 
-.team-page .team-hero-record div {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
 
-.team-page .team-hero-record dt {
-  color: rgba(245, 241, 242, 0.64);
-  font-size: var(--text-2xs);
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
 
-.team-page .team-hero-record dd {
-  margin: 0;
-  color: var(--univlr-white, #f5f1f2);
-  font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-variant-numeric: tabular-nums;
-  font-weight: 800;
-  line-height: 0.9;
-}
 
-.team-page .team-hero-record .lead dd {
-  font-size: var(--text-5xl);
-  letter-spacing: -0.02em;
-}
 
-.team-page .team-hero-record .lead dt {
-  color: rgba(245, 241, 242, 0.78);
-}
 
-/* A variacao da semana anda colada no numero, em corpo pequeno. Solta no
-   rotulo ela virava uma frase de 24 caracteres embaixo de um numero de 56px. */
-.team-page .team-hero-record .lead em {
-  margin-left: 6px;
-  font-family: var(--font-text);
-  font-size: var(--text-sm);
-  font-style: normal;
-  font-weight: 800;
-  vertical-align: 0.9em;
-}
 
-.team-page .team-hero-record .lead em.up {
-  color: var(--win);
-}
 
-.team-page .team-hero-record .lead em.down {
-  color: var(--danger);
-}
 
-.team-page .team-hero-record .lead em.flat {
-  color: rgba(245, 241, 242, 0.5);
-}
 
-/* Um fio separando o ranking do resto da barra: e a unica hierarquia que a
-   linha precisa, e nao e moldura - nao envolve nada. */
-.team-page .team-hero-record .lead {
-  margin-right: 0;
-  border-right: 0;
-  padding-right: 0;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .team-page .team-logo-frame {
   width: 190px;
@@ -13487,13 +11727,9 @@ img.search-state-flag + .search-state-flag.placeholder {
   text-shadow: 0 18px 34px rgba(0, 0, 0, 0.4);
 }
 
-.team-page .team-meta-row {
-  gap: 16px 20px;
-  align-items: center;
-}
 
-.team-page .state-badge,
-.team-page .team-meta-text {
+
+.team-page .state-badge {
   min-height: 0;
   display: inline-flex;
   align-items: center;
@@ -13514,202 +11750,39 @@ img.search-state-flag + .search-state-flag.placeholder {
   border-radius: var(--radius-sm);
 }
 
-/* A parede de jogadores fica SOLTA no campo: sem caixa, sem brilho proprio,
-   sem retangulo por tras. O que existia aqui era um ::before com
-   `inset: 10px -34px 0` - um retangulo de luz com aresta visivel a esquerda e
-   a direita, que era exatamente o "fundo do espaco dos jogadores" que nao
-   conversava com a capa. O assentamento agora e do campo inteiro
-   (.team-field::after), entao a base escurece uma vez so, para tudo. */
-/* A parede sangra ate a borda direita e comeca onde a faixa da identidade
-   termina. Medido a 1280px: 784px para cinco fatias de 157px, com o corpo do
-   jogador (0,58 da altura de 326px = 189px) sobrepondo o vizinho em 17%. E a
-   sobreposicao de foto de equipe - ombro atras de ombro - e nao empilhamento:
-   os cinco aparecem inteiros e nenhum fica atras de texto. */
-.team-page .team-hero-cover {
-  --figura-jogador: min(80%, 296px);
-  position: absolute;
-  inset: 0 0 0 440px;
-  min-width: 0;
-  display: grid;
-  grid-auto-flow: column;
-  /* Teto de 245px por fatia, com o grupo centrado na propria faixa. Sem o teto
-     as colunas eram 1fr puro e a 1920px os cinco ficavam esparramados. O
-     minimo continua 0, entao abaixo de ~1500px as fatias encolhem junto com a
-     capa e nada estoura.
-     A faixa da identidade encolheu de 440 para 420px para dar esses 20px a
-     parede: a palavra mais larga entre os 97 nomes e "Naotemclutch" (202px na
-     tipografia do h1), e a caixa do titulo continua com 208px. */
-  grid-auto-columns: minmax(0, 245px);
-  justify-content: center;
-  gap: 0;
-  align-items: stretch;
-  overflow: hidden;
-  background: transparent;
-  mask-image: linear-gradient(90deg, transparent 0%, #000 13%, #000 96%, transparent 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 13%, #000 96%, transparent 100%);
-}
 
-/* Profundidade de foto de equipe: o do meio na frente, os das pontas atras.
-   Sem isso a sobreposicao ficava em ordem de DOM (o ultimo sempre por cima) e
-   lia como erro de empilhamento em vez de composicao. */
-.team-page .team-hero-cover-player {
-  position: relative;
-  z-index: 1;
-  min-width: 0;
-  display: grid;
-  align-items: end;
-  justify-items: center;
-  color: var(--univlr-white, #f5f1f2);
-  text-decoration: none;
-}
 
-.team-page .team-hero-cover-player:nth-child(2),
-.team-page .team-hero-cover-player:nth-last-child(2) {
-  z-index: 2;
-}
 
-.team-page .team-hero-cover-player:nth-child(3):nth-last-child(3) {
-  z-index: 3;
-}
 
-.team-page a.team-hero-cover-player:hover {
-  z-index: 4;
-}
 
-/* A foto passa a ser dimensionada pela ALTURA e transborda a coluna na
-   horizontal. Com `object-fit: contain` numa caixa 194x304, o PNG quadrado
-   renderizava a 194x194 e os outros 110px de altura eram desperdicio - era por
-   isso que o jogador nunca preenchia o banner.
-   Transbordar e seguro porque o recorte tem margem transparente: medido nos
-   cinco PNGs do CEUB, o jogador ocupa 57,9% da largura do arquivo (65,3% no
-   mais largo), entao ~21% de cada lado e vazio e as caixas se sobrepoem sem os
-   corpos encostarem. */
-.team-page .team-hero-cover-photo,
-.team-page .logo.player-avatar.team-hero-cover-photo {
-  align-self: end;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
 
-.team-page .team-hero-cover-photo img,
-.team-page .logo.player-avatar.team-hero-cover-photo img {
-  position: absolute;
-  left: 50%;
-  /* `top: auto` e obrigatorio: `.image-logo img` define `inset: 0`, e com top,
-     bottom e uma altura explicita ao mesmo tempo a caixa fica sobre-restrita -
-     o navegador descarta o `bottom` e ancora no topo. Enquanto a foto tinha
-     `height: 100%` isso nao aparecia porque as duas ancoras coincidiam. */
-  top: auto;
-  bottom: 0;
-  width: auto;
-  /* 70% e um teto de nitidez, nao de gosto: os 83 recortes sao PNG 320x320 e
-     nao ha original maior no repositorio. A 100% da capa o jogador era
-     desenhado a 390px - 1,22x acima do nativo, e num monitor a 1,25 de DPR
-     isso pedia 488px de um arquivo de 320. Em 80% ele volta para dentro do
-     tamanho do arquivo.
-     O teto de 320px e a garantia dura: a altura da capa varia por equipe (358
-     a 459px, conforme o nome e a faculdade quebram linha), e sem ele a UCB
-     Dogs ja batia exatamente no limite do nativo. */
-  height: var(--figura-jogador);
-  max-width: none;
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: bottom center;
-  padding: 0;
-  background: transparent;
-  /* Nenhum halo. O `drop-shadow` colorido pintava um brilho da cor da equipe
-     em volta do recorte e o escuro deixava uma mancha atras dele - os dois
-     liam como fundo, e o PNG ja e 100% transparente fora do jogador. Sobrou
-     so o ajuste de tom, que age no pixel da foto e nao ao redor dela. */
-  filter: brightness(1.04) contrast(1.04) saturate(1.04);
-  transform: translateX(-50%);
-  transform-origin: bottom center;
-  mask-image: linear-gradient(180deg, #000 88%, rgba(0, 0, 0, 0.5) 97%, transparent 100%);
-  -webkit-mask-image: linear-gradient(180deg, #000 88%, rgba(0, 0, 0, 0.5) 97%, transparent 100%);
-  transition: transform 0.25s ease;
-}
 
-.team-page a.team-hero-cover-player:hover img {
-  transform: translateX(-50%) scale(1.05);
-}
 
-/* Silhueta recua. Ela e placeholder, nao retrato: com o mesmo realce das fotos
-   reais, cinco silhuetas viravam o assunto da capa.
-   E ela encolhe. Medido nos arquivos: o desenho ocupa 79,1% da largura do PNG,
-   contra 66,8% de media nas 83 fotos reais - escalada pela mesma altura, a
-   silhueta saia 1,18x mais larga que um jogador e roubava a fatia do vizinho.
-   0,845 = 66,8 / 79,1 iguala as duas larguras.
-   O `bottom` negativo desce o desenho ate a linha de base: a silhueta tem
-   10,3% de vazio embaixo do ombro (as fotos tem 0%), entao sem isso ela
-   flutuava 30px acima do chao dos outros quatro. */
-.team-page .team-hero-cover-photo.no-photo img,
-.team-page .logo.player-avatar.team-hero-cover-photo.no-photo img {
-  height: calc(var(--figura-jogador) * 0.845);
-  bottom: calc(var(--figura-jogador) * -0.087);
-  opacity: 0.34;
-  filter: none;
-}
 
-.team-page a.team-hero-cover-player:hover .no-photo img {
-  opacity: 0.5;
-}
 
-.team-page .team-hero-cover-player > span:last-child {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 6px;
-  z-index: 2;
-  overflow: hidden;
-  color: var(--univlr-white, #f5f1f2);
-  font-size: var(--text-xs);
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-align: center;
-  text-overflow: ellipsis;
-  text-shadow: 0 2px 10px rgba(4, 3, 6, 0.92);
-  text-transform: uppercase;
-  white-space: nowrap;
-}
 
-.team-page .team-socials {
-  display: inline-flex;
-  gap: 6px;
-  align-items: center;
-}
 
-.team-page .social-button {
-  border-color: rgba(245, 241, 242, 0.14);
-  background: rgba(4, 3, 6, 0.34);
-}
 
-.team-page .team-trophy-panel {
-  border: 1px solid var(--team-border);
-  border-radius: var(--radius-lg);
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--team-accent, var(--brand)) 10%, transparent), transparent 34%),
-    var(--team-panel);
-  color: var(--univlr-white, #f5f1f2);
-  padding: 12px;
-}
 
-.team-page .team-trophy-panel .section-head {
-  margin-bottom: 8px;
-}
 
-.team-page .team-trophy-panel .section-head h2 {
-  color: var(--univlr-white, #f5f1f2);
-}
 
-.team-page .team-trophy-panel .trophy-list {
-  min-height: 72px;
-  border-color: rgba(245, 241, 242, 0.1);
-  background: var(--team-panel-strong);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Rotulo de coluna nao quebra. Com a coluna de agentes, "Rounds" e "KAST"
    passaram a cair em duas linhas e o cabecalho dobrou de altura (52px) sem
@@ -13845,86 +11918,27 @@ img.search-state-flag + .search-state-flag.placeholder {
   }
 }
 
-/* A prateleira. Sem borda por celula e sem fundo por item: o trofeu, o nome
-   do campeonato e a data ficam soltos, e a separacao e o espaco. */
-.team-page .trophy-shelf {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 34px;
-  align-items: flex-start;
-  overflow-x: auto;
-  padding-top: 4px;
-  scrollbar-width: thin;
-}
 
-.team-page .trophy-shelf-item {
-  display: grid;
-  gap: 8px;
-  justify-items: center;
-  min-width: 128px;
-  max-width: 190px;
-  color: inherit;
-  text-align: center;
-  text-decoration: none;
-  transition: transform 0.18s ease;
-}
 
-.team-page .trophy-shelf-item:hover,
-.team-page .trophy-shelf-item:focus-visible {
-  transform: translateY(-3px);
-}
 
-.team-page .trophy-shelf-item .trophy-visual {
-  width: 108px;
-  height: 104px;
-}
 
-.team-page .trophy-shelf-item .trophy-image {
-  width: 104px;
-  height: 100px;
-}
 
-.team-page .trophy-shelf-copy {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
 
-/* A colocacao vem primeiro e em maiuscula pequena: e o que a arte ja diz, e
-   confirma-la em texto e o que faltava. */
-.team-page .trophy-shelf-copy em {
-  color: rgba(245, 241, 242, 0.62);
-  font-size: var(--text-2xs);
-  font-style: normal;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
 
-.team-page .trophy-shelf-item.place-1 .trophy-shelf-copy em {
-  color: var(--tier-s, #f2b21c);
-}
 
-.team-page .trophy-shelf-copy strong {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  color: var(--univlr-white, #f5f1f2);
-  font-size: var(--text-sm);
-  font-weight: 800;
-  line-height: 1.2;
-}
 
-.team-page .trophy-shelf-item:hover .trophy-shelf-copy strong {
-  color: var(--team-line, var(--brand-text));
-}
 
-.team-page .trophy-shelf-copy small {
-  color: var(--team-muted);
-  font-size: var(--text-2xs);
-  font-weight: 700;
-}
+
+
+
+
+
+
+
+
+
+
+
 
 .team-page .team-tabs {
   gap: 8px;
@@ -14376,15 +12390,10 @@ img.search-state-flag + .search-state-flag.placeholder {
 
 
 @media (max-width: 1180px) {
-  /* Abaixo de 1180px a faixa da identidade encolhe junto, senao ela come a
-     largura das cinco fatias e a sobreposicao dispara. */
-  .team-page .team-hero-main {
-    width: 366px;
-  }
 
-  .team-page .team-hero-cover {
-    inset: 0 0 0 386px;
-  }
+
+
+
 
   .team-page .team-logo-frame {
     width: 150px;
@@ -14395,9 +12404,7 @@ img.search-state-flag + .search-state-flag.placeholder {
     font-size: var(--text-4xl);
   }
 
-  .team-page .team-hero-record .lead dd {
-    font-size: var(--text-4xl);
-  }
+
 
   .team-page .team-tournament-card {
     grid-template-columns: minmax(240px, 1fr) minmax(140px, 0.5fr);
@@ -14409,37 +12416,14 @@ img.search-state-flag + .search-state-flag.placeholder {
 }
 
 @media (max-width: 760px) {
-  /* No celular a parede volta para o fluxo, embaixo da identidade: nao ha
-     largura para os dois lado a lado, e sobrepor texto e foto num telefone
-     nao tem escapatoria de contraste. */
-  .team-page .team-hero {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 14px;
-    min-height: 0;
-    padding: 12px 12px 0;
-  }
 
-  .team-page .team-hero-main {
-    width: auto;
-    min-height: 0;
-    padding: 0;
-  }
 
-  /* 230px de faixa dao 161px de foto (70%). Num telefone a 2x de DPR isso pede
-     322px de um arquivo de 320: o limite exato do nativo. */
-  .team-page .team-hero-cover {
-    position: relative;
-    inset: auto;
-    height: 230px;
-    mask-image: none;
-    -webkit-mask-image: none;
-  }
 
-  .team-page .team-identity {
-    align-items: center;
-    gap: 16px;
-  }
+
+
+
+
+
 
   .team-page .team-logo-frame {
     width: 108px;
@@ -14450,23 +12434,13 @@ img.search-state-flag + .search-state-flag.placeholder {
     font-size: var(--text-3xl);
   }
 
-  .team-page .team-hero-cover-player > span:last-child {
-    font-size: var(--text-2xs);
-    padding: 0 4px 6px;
-  }
 
-  .team-page .team-hero-record {
-    gap: 10px 18px;
-  }
 
-  .team-page .team-hero-record .lead {
-    margin-right: 0;
-    padding-right: 18px;
-  }
 
-  .team-page .team-hero-record .lead dd {
-    font-size: var(--text-3xl);
-  }
+
+
+
+
 
   .team-page .ranking-chart-stage {
     height: 150px;
@@ -14579,32 +12553,23 @@ img.search-state-flag + .search-state-flag.placeholder {
 
 /* Numerais tabulares em tudo que alinha em coluna ou muda sozinho na tela. */
 .score-number,
-.score-win,
 .result-score,
 .result-score i,
 .map-score-side strong,
-.match-score-core,
-.match-hero-score,
 .preview-score,
 .ranking-score-ring strong,
 .ranking-mini-card strong,
 .ranking-fallback-card strong,
 .ranking-accordion-button .numeric,
 .ranking-accordion-button .rank-change-cell,
-.compact-ranking-row .row-score,
-.compact-ranking-row .rank-delta,
 .player-week-value strong,
-.player-metric-line dd,
 .vlr-board-metric strong,
-.lineup-stat-value span,
-.team-compare-track strong,
-.mvp-bar strong,
 .round-row span,
 .event-numbers,
 td.numeric,
 .match-scoreboard td,
 .data-panel td,
-.table-wrap td {
+.table-wrap td  {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
 }
@@ -14612,19 +12577,13 @@ td.numeric,
 /* Voz de display: numero grande usa a Condensed, que aguenta mais digito na
    mesma largura e da personalidade ao placar. */
 .score-number,
-.score-win,
 .map-score-side strong,
-.match-score-core,
-.match-hero-score,
 .preview-score,
 .ranking-score-ring strong,
 .ranking-mini-card strong,
 .ranking-fallback-card strong,
 .ranking-accordion-button .numeric,
-.compact-ranking-row .row-score,
-.player-week-value strong,
-.player-metric-line dd,
-.lineup-stat-value span {
+.player-week-value strong {
   font-family: var(--font-display);
   letter-spacing: 0.01em;
 }
@@ -14632,8 +12591,7 @@ td.numeric,
 /* Texto claro sobre fundo quase preto precisa de um respiro a mais: o detector
    acusou entrelinha de 1.20 em texto corrido de apoio. */
 .player-week-note,
-.empty-state,
-.lineup-stat-center > small {
+.empty-state {
   line-height: 1.5;
 }
 
@@ -14668,312 +12626,63 @@ small,
   margin-bottom: clamp(18px, 2vw, 32px);
 }
 
-.week-board-head {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  flex-wrap: wrap;
-}
 
-.week-board-head h2 {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0;
-  color: var(--ink);
-  font-size: var(--text-sm);
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
 
-.week-board-head h2::before {
-  content: "";
-  width: 5px;
-  height: 16px;
-  border-radius: var(--radius-sm);
-  background: var(--brand);
-}
 
-.week-board-range {
-  color: var(--muted);
-  font-size: var(--text-xs);
-  font-weight: 700;
-}
 
-.week-board-note {
-  margin-left: auto;
-  color: var(--muted);
-  font-size: var(--text-2xs);
-  letter-spacing: 0.012em;
-}
 
-.week-board-body {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.85fr) minmax(0, 2fr);
-  gap: 1px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--line);
-  /* O recorte existe para arredondar os cantos das celulas de ponta contra a
-     borda do quadro. Em repouso ele fica; no hover ele sai, senao o cartao que
-     cresce seria cortado justamente nas bordas do quadro - onde ficam quatro
-     das nove celulas. Trocar so enquanto ha hover preserva os cantos nos 99%
-     do tempo em que ninguem esta com o mouse ali. */
-  overflow: hidden;
-}
 
-.week-board-body:has(.week-tile:hover, .week-lead:hover, .week-tile:focus-visible, .week-lead:focus-visible) {
-  overflow: visible;
-}
 
-/* --- lider --- */
 
-.week-lead {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  grid-template-areas:
-    "figure copy    value"
-    "figure context context";
-  align-items: center;
-  gap: 2px 16px;
-  overflow: hidden;
-  background: var(--surface-2);
-  /* impeccable-disable-line cramped-padding -- mesma razao da celula: a foto
-     do lider apoia na base. .week-lead-context repoe o recuo do texto. */
-  padding: 16px 16px 0;
-}
 
-/* O lider recebe o mesmo recorte das oito celulas, so que maior: a foto ocupa
-   a altura inteira do cartao e apoia na base, sem caixa em volta. */
-.week-lead-figure {
-  grid-area: figure;
-  align-self: stretch;
-  width: clamp(104px, 8vw, 148px);
-  height: 100%;
-}
 
-.week-lead-copy {
-  grid-area: copy;
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
 
-.week-lead-category {
-  color: var(--brand-text);
-  font-size: var(--text-2xs);
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
 
-.week-lead-nick {
-  color: var(--ink);
-  font-size: var(--text-2xl);
-  font-weight: 800;
-  line-height: 1.1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
-.week-lead-team {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--muted);
-  font-size: var(--text-md);
-  font-weight: 700;
-}
 
-.week-lead-team .clean-logo {
-  width: clamp(34px, 2.6vw, 44px);
-  height: clamp(34px, 2.6vw, 44px);
-}
 
-.week-lead-team em {
-  font-style: normal;
-}
 
-.week-lead-value {
-  grid-area: value;
-  display: grid;
-  justify-items: end;
-  gap: 0;
-}
 
-/* O cartao do lider tem 540px de largura contra os 317px de uma celula, mas o
-   numero era do mesmo tamanho nos dois - por isso sobrava tanto vazio aqui. A
-   proporcao agora acompanha a largura: ~1,7x a celula, que e a mesma razao
-   entre os dois cartoes. */
-.week-lead-value strong {
-  font-family: var(--font-display);
-  font-size: clamp(var(--text-4xl), 4vw, 4.5rem);
-  font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: 0.01em;
-  font-variant-numeric: tabular-nums;
-}
 
-.week-lead-value small {
-  color: var(--muted);
-  font-size: var(--text-2xs);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
 
-/* O cartao perdeu o padding de baixo para a foto encostar na base, entao quem
-   fecha a coluna de texto devolve o respiro. */
-.week-lead-context {
-  grid-area: context;
-  align-self: start;
-  padding-bottom: 16px;
-  color: var(--muted);
-  font-size: var(--text-2xs);
-  letter-spacing: 0.012em;
-}
 
-/* --- trilho das outras oito --- */
 
-.week-rail {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  margin: 0;
-  padding: 0;
-  background: var(--line);
-  list-style: none;
-}
 
-/* Tres zonas: rosto recortado, identidade (escudo sobre apelido) e o dado a
-   direita. O escudo ja teve coluna propria entre o apelido e o numero, e a
-   conta nao fechava: a 1920px as quatro zonas pediam 218px de conteudo numa
-   celula com 213px uteis, entao a coluna do escudo colapsava para 12px e o
-   escudo de 52px vazava dela - passando por cima do numero (medido: -12px de
-   folga entre escudo e placar). Empilhado sobre o apelido ele ocupa a mesma
-   coluna que o nome, some um vao da linha e nada mais atravessa o numero.
-   Empilhar tambem casa com a leitura: escudo e apelido sao a mesma informacao
-   ("quem"), e agora sao um bloco so.
-   overflow: hidden e o que deixa a foto sangrar na base sem vazar da celula. */
-/* A linha "detail" ocupa o vao que ja estava vazio acima do apelido, entao
-   reservar espaco para ela nao muda a altura da celula - so o que aparece ali
-   muda no hover. Se a linha fosse criada no hover, as oito celulas pulariam. */
-.week-tile {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  grid-template-areas:
-    "figure crest stat"
-    "figure nick  stat";
-  align-items: end;
-  align-content: end;
-  gap: 0 clamp(8px, 0.8vw, 14px);
-  height: 100%;
-  min-height: 112px;
-  overflow: hidden;
-  background: var(--surface);
-  /* impeccable-disable-line cramped-padding -- a base sem recuo e o efeito
-     pedido: a foto apoia na borda de baixo em vez de flutuar num quadrado. O
-     texto ao lado devolve o recuo por conta propria (padding-bottom: 12px). */
-  padding: 10px 12px 0;
-}
 
-/* ==========================================================================
-   Hover da faixa: o cartao acende em ambar
-   Nao ha guard de prefers-reduced-motion aqui, e e de proposito: o Windows com
-   efeitos desligados faz o Chrome reportar `reduce`, e o resto do site (slide
-   de 220ms, hovers) nunca respeitou essa preferencia. Se um dia respeitar,
-   tem de ser o site inteiro de uma vez, nao so esta faixa.
-   ========================================================================== */
 
-.week-tile,
-.week-lead {
-  position: relative;
-  isolation: isolate;
-  transition:
-    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 280ms ease;
-}
 
-/* O banho de ambar e uma camada propria porque cor chapada nao transiciona
-   para gradiente - so a opacidade dela anima. */
-.week-tile::before,
-.week-lead::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  opacity: 0;
-  background:
-    radial-gradient(120% 90% at 50% 100%, color-mix(in srgb, var(--amber) 26%, transparent), transparent 70%),
-    linear-gradient(180deg, transparent, color-mix(in srgb, var(--amber) 10%, transparent));
-  transition: opacity 280ms ease;
-  pointer-events: none;
-}
 
-/* O fio de baixo cresce do centro para os lados: e o detalhe que faz a coisa
-   parecer acesa em vez de so pintada. */
-.week-tile::after,
-.week-lead::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0;
-  z-index: -1;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--amber), transparent);
-  transform: scaleX(0);
-  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-}
 
-/* O hover NAO pode mexer em layout. Essa e a regra, e ela custou caro:
-   primeiro um translateY(-3px) deixava a base 1,6px acima de onde estava em
-   repouso e o ponteiro parado ali entrava e saia do cartao sem parar; depois a
-   expansao em largura (width + left + height: auto) trouxe o mesmo sintoma de
-   volta pela esquerda, e ainda fazia a linha inteira do grid crescer de 112px
-   para 121px quando o detalhe quebrava - hover que reflui a grade onde o
-   proprio ponteiro esta e um gerador de piscar.
-   Agora so o transform muda, e transform nao participa do layout: a caixa do
-   cartao continua exatamente a celula, o ponteiro nunca fica orfao, e nada em
-   volta se move. O crescimento visual vem da escala, que so cresce a partir do
-   centro - todo ponto coberto em repouso continua coberto. */
-.week-tile:hover,
-.week-tile:focus-visible,
-.week-lead:hover,
-.week-lead:focus-visible {
-  z-index: 3;
-  /* Só transform. Nada aqui pode mexer em layout - ver o comentario acima. */
-  transform: scale(1.05);
-  box-shadow:
-    0 22px 44px rgba(0, 0, 0, 0.55),
-    0 0 0 1px color-mix(in srgb, var(--amber) 34%, transparent);
-}
 
-.week-tile:hover::before,
-.week-tile:focus-visible::before,
-.week-lead:hover::before,
-.week-lead:focus-visible::before {
-  opacity: 1;
-}
 
-.week-tile:hover::after,
-.week-tile:focus-visible::after,
-.week-lead:hover::after,
-.week-lead:focus-visible::after {
-  transform: scaleX(1);
-}
 
-/* O rosto sai da penumbra junto com o resto. */
-.week-tile:hover .player-figure img,
-.week-lead:hover .player-figure img {
-  transform: scale(1.05);
-}
 
-.week-tile:hover .player-figure.is-silhouette img,
-.week-lead:hover .player-figure.is-silhouette img {
-  opacity: 0.6;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .player-figure img {
   transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 280ms ease;
@@ -14983,194 +12692,43 @@ small,
   transform-origin: bottom center;
 }
 
-/* O numero e o rotulo viram ouro. */
-.week-tile-value,
-.week-lead-value strong,
-.week-tile-category,
-.week-lead-category {
-  transition: color 240ms ease, text-shadow 240ms ease;
-}
 
-.week-tile:hover .week-tile-value,
-.week-tile:focus-visible .week-tile-value,
-.week-lead:hover .week-lead-value strong,
-.week-lead:focus-visible .week-lead-value strong {
-  color: var(--amber);
-  text-shadow: 0 0 28px color-mix(in srgb, var(--amber) 45%, transparent);
-}
 
-.week-tile:hover .week-tile-category,
-.week-tile:focus-visible .week-tile-category,
-.week-lead:hover .week-lead-category,
-.week-lead:focus-visible .week-lead-category {
-  color: color-mix(in srgb, var(--amber) 78%, var(--ink));
-}
 
-/* --- os numeros de apoio que so aparecem no hover --- */
 
-/* Fora do fluxo. Em grade, o bloco reservava a altura de duas linhas mesmo
-   invisivel - a faixa inteira subia de 112px para 128px por algo que so
-   aparece no hover. Absoluto, ele nao ocupa altura nenhuma em repouso e nao
-   pode refluir nada ao aparecer.
-   Ocupa a largura inteira do cartao, e nao so a coluna a direita da foto: sao
-   293px em vez de 183px a 1920px, o que faz os tres numeros caberem numa linha
-   so. O topo da foto e a parte menos informativa dela (na silhueta e vazio). */
-.week-detail {
-  position: absolute;
-  top: 10px;
-  left: 12px;
-  right: 12px;
-  justify-content: flex-end;
-  display: flex;
-  align-items: baseline;
-  /* Vao apertado de proposito: o cartao so alcanca os 372px cheios acima de
-     ~1700px, e abaixo disso cada pixel de vao sai do numero. */
-  gap: clamp(8px, 0.7vw, 14px);
-  row-gap: 2px;
-  /* wrap sempre, inclusive em repouso: e assim que a altura da celula ja conta
-     com as duas linhas e o hover nao precisa refluir nada para mostra-las.
-     Custa alguns pixels de faixa em telas estreitas; paga com um hover que nao
-     mexe em layout. */
-  flex-wrap: wrap;
-  opacity: 0;
-  pointer-events: none;
-}
 
-.week-lead-detail {
-  top: 16px;
-  left: 16px;
-  right: 16px;
-}
 
-.week-detail-stat {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 4px;
-  white-space: nowrap;
-  transform: translateY(6px);
-  opacity: 0;
-  transition:
-    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 260ms ease;
-}
 
-.week-detail-stat small {
-  color: color-mix(in srgb, var(--amber) 62%, var(--muted));
-  font-size: var(--text-2xs);
-  font-weight: 800;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
 
-.week-detail-stat b {
-  color: var(--ink);
-  font-size: var(--text-sm);
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-}
 
-.week-tile:hover .week-detail,
-.week-tile:focus-visible .week-detail,
-.week-lead:hover .week-detail,
-.week-lead:focus-visible .week-detail {
-  opacity: 1;
-}
 
-/* Escalonado: os tres numeros entram em sequencia, nao em bloco. E o que
-   separa "apareceu" de "foi revelado". */
-.week-tile:hover .week-detail-stat,
-.week-tile:focus-visible .week-detail-stat,
-.week-lead:hover .week-detail-stat,
-.week-lead:focus-visible .week-detail-stat {
-  transform: translateY(0);
-  opacity: 1;
-}
 
-.week-detail-stat:nth-child(1) {
-  transition-delay: 40ms;
-}
 
-.week-detail-stat:nth-child(2) {
-  transition-delay: 90ms;
-}
 
-.week-detail-stat:nth-child(3) {
-  transition-delay: 140ms;
-}
 
-/* O rosto cede 12px de largura (era clamp(62px, 5.4vw, 96px)) para a coluna de
-   identidade. Nao e ajuste de gosto: cada pixel que sai daqui entra no apelido,
-   e e o que faz "Queijo Coallho" (81px) caber inteiro no lugar de virar
-   "Queijo...". Continua sendo a maior peca da celula. */
-.week-tile-figure {
-  grid-area: figure;
-  width: clamp(58px, 4.6vw, 84px);
-  /* a altura vem do proprio bloco: a foto vai do topo do padding ate a base */
-  height: calc(100% - 4px);
-  margin-bottom: 0;
-}
 
-/* line-height em px, e nao em fator: a fonte deste apelido e ajustada pelo JS
-   (.nome-encolhe) para caber na coluna, e com entrelinha proporcional a altura
-   da caixa mudaria junto - o ResizeObserver que dispara a medida veria o
-   proprio trabalho como mudanca de tamanho e se realimentaria. Com a linha
-   fixa, encolher a fonte nao mexe em nenhuma geometria.
-   O apelido que nem no piso de 10px couber (5 dos 643 do banco) nao corta: o
-   texto mora num .nome-rolante e o que sobrar de fora vira percurso. Encolher
-   primeiro, rolar depois - ver ajustarTextosVariaveis. */
-.week-tile-nick {
-  grid-area: nick;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-bottom: 12px;
-  color: var(--ink);
-  font-size: var(--text-sm);
-  line-height: 19px;
-  font-weight: 700;
-  text-align: center;
-}
 
-/* Centrado sobre o apelido, na mesma coluna: os dois sao "quem e", e agora
-   leem como um bloco. align-self: end encosta o escudo na base da propria
-   linha, a 4px do nome - antes ele boiava no meio de um vao que nao era dele. */
-.week-tile-crest.clean-logo,
-.week-tile-crest {
-  grid-area: crest;
-  width: clamp(34px, 2.9vw, 52px);
-  height: clamp(34px, 2.9vw, 52px);
-  max-width: 100%;
-  justify-self: center;
-  align-self: end;
-  margin-bottom: 4px;
-}
 
-.week-tile-stat {
-  grid-area: stat;
-  display: grid;
-  justify-items: end;
-  gap: 2px;
-  text-align: right;
-  padding-bottom: 12px;
-}
 
-.week-tile-category {
-  color: var(--muted);
-  font-size: var(--text-2xs);
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
 
-.week-tile-value {
-  font-family: var(--font-display);
-  font-size: clamp(var(--text-2xl), 2.3vw, var(--text-4xl));
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: 0.01em;
-  font-variant-numeric: tabular-nums;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* --- foto solta, com fallback de silhueta ---
    Sem moldura: nem borda, nem fundo, nem raio. O retrato fica recortado,
@@ -15205,358 +12763,51 @@ small,
   opacity: 0.42;
 }
 
-/* O trilho cai para tres colunas ja em 1180px, e nao em 940px. Abaixo de
-   1180px o quadro da home vira uma coluna e a faixa passa a dividir a largura
-   so entre lider e trilho: em quatro colunas a celula fica com 191px, e as
-   tres zonas precisam de ~150px so de rosto, escudo e numero - sobrariam 18px
-   para o apelido, ou seja, so a reticencia. */
-@media (max-width: 1180px) {
-  .week-rail {
-    /* Duas colunas, e nao tres: sao dez estatisticas, e 2x5 fecha cinco
-       linhas cheias. Com tres, a ultima linha ficava com um item e dois
-       buracos. */
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
 
-@media (max-width: 940px) {
-  .week-board-body {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
 
-@media (max-width: 560px) {
-  .week-board-note {
-    margin-left: 0;
-  }
 
-  .week-lead {
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-areas:
-      "figure copy"
-      "figure value"
-      "context context";
-    gap: 6px 12px;
-  }
 
-  .week-lead-figure {
-    width: 96px;
-  }
 
-  .week-lead-value {
-    justify-items: start;
-  }
 
-  .week-rail {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 
-  /* Em duas colunas a celula cai para ~172px, e 150px de conteudo nao comportam
-     as tres zonas lado a lado. Elas viram duas: o rosto continua recortado na
-     esquerda e a direita empilha o dado em cima de quem e - a mesma ordem de
-     leitura, so que vertical. Manter duas colunas no trilho e deliberado:
-     passar para uma coluna resolveria o aperto mas somaria ~230px de rolagem
-     numa faixa que ja e a primeira coisa da pagina. */
-  .week-tile {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    grid-template-areas:
-      "figure stat  stat"
-      "figure nick  crest";
-    align-content: end;
-    gap: 0 8px;
-    min-height: 96px;
-    padding: 10px 10px 0;
-  }
 
-  .week-tile-figure {
-    grid-area: figure;
-    width: 56px;
-  }
 
-  .week-tile-stat {
-    grid-area: stat;
-    justify-items: start;
-    text-align: left;
-    padding-bottom: 2px;
-  }
 
-  /* No celular a grade e outra: o escudo fica AO LADO do apelido, na mesma
-     linha, e nao acima dele - nao ha numero na altura deles para atravessar.
-     Entao o apelido volta a ser alinhado a esquerda, como o resto da coluna. */
-  .week-tile-nick {
-    text-align: left;
-  }
 
-  /* Sem hover no toque, e a grade daqui so tem duas areas: deixar o bloco no
-     fluxo fazia o grid criar uma terceira linha implicita - a celula subia de
-     96px para 117px e o apelido ficava com largura zero. */
-  /* Vale para os dois: a grade do celular nao tem a area "detail" (a da celula
-     tem duas areas, a do lider tem tres), entao o bloco caia numa linha
-     implicita. Na celula isso quebrava o apelido; no lider somava 25px
-     invisiveis no fim do cartao. */
-  .week-tile-detail,
-  .week-lead-detail {
-    display: none;
-  }
 
-  /* No celular a animacao inteira sai e volta o realce simples de antes. Num
-     trilho de duas colunas com 172px, um cartao que cresce para 372px cobriria
-     o vizinho inteiro - e nao ha ponteiro para justificar isso. */
-  .week-tile,
-  .week-lead {
-    transition: background-color 160ms ease;
-  }
 
-  .week-tile:hover,
-  .week-tile:focus-visible,
-  .week-lead:hover,
-  .week-lead:focus-visible {
-    left: auto;
-    width: auto;
-    z-index: auto;
-    transform: none;
-    box-shadow: none;
-  }
 
-  .week-tile:hover::before,
-  .week-tile:focus-visible::before,
-  .week-lead:hover::before,
-  .week-lead:focus-visible::before {
-    opacity: 0;
-  }
 
-  .week-tile:hover::after,
-  .week-tile:focus-visible::after,
-  .week-lead:hover::after,
-  .week-lead:focus-visible::after {
-    transform: scaleX(0);
-  }
 
-  .week-tile:hover {
-    background: var(--surface-2);
-  }
 
-  .week-lead:hover {
-    background: var(--univlr-graphite-3);
-  }
 
-  .week-tile:hover .week-tile-value,
-  .week-tile:focus-visible .week-tile-value,
-  .week-lead:hover .week-lead-value strong,
-  .week-lead:focus-visible .week-lead-value strong {
-    color: var(--ink);
-    text-shadow: none;
-  }
 
-  .week-tile:hover .week-tile-category,
-  .week-tile:focus-visible .week-tile-category,
-  .week-lead:hover .week-lead-category {
-    color: var(--muted);
-  }
 
-  .week-lead:hover .week-lead-category {
-    color: var(--brand-text);
-  }
 
-  .week-tile:hover .player-figure img,
-  .week-lead:hover .player-figure img {
-    transform: none;
-  }
 
-  .week-tile:hover .player-figure.is-silhouette img,
-  .week-lead:hover .player-figure.is-silhouette img {
-    opacity: 0.42;
-    transform: scale(1.14) translateY(5%);
-  }
 
-  .week-tile-nick {
-    grid-area: nick;
-    align-self: center;
-    padding-bottom: 10px;
-  }
 
-  .week-tile-crest.clean-logo,
-  .week-tile-crest {
-    grid-area: crest;
-    width: 26px;
-    height: 26px;
-    justify-self: end;
-    margin-bottom: 10px;
-  }
 
-  /* A reticencia e a resposta certa onde ela corta um nome longo entre muitos
-     que cabem. A 375px a coluna da equipe tem 103px e TODO nome estoura -
-     "Inatel Legacy" inclusive - entao cortar todos esconderia a lista inteira.
-     Aqui o nome quebra, com teto de duas linhas para a altura nao disparar. */
-  .home-board.univlr-home .result-team strong {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    line-height: 1.2;
-  }
-}
 
-/* ==========================================================================
-   Ajustes de layout da home (passo 4)
-   ========================================================================== */
 
-/* Frase corrida a 11px e apertada demais; 11px e piso de rotulo, nao de prosa. */
-.week-board-note {
-  font-size: var(--text-xs);
-}
 
-/* Os paineis tinham padding 0: as linhas encostavam na borda do cartao dos dois
-   lados. Um respiro lateral separa o conteudo do contorno. */
-.home-board.univlr-home > .hub-panel {
-  padding: 0 10px 10px;
-}
 
-.home-board.univlr-home > .hub-panel > .panel-title {
-  padding: 10px 2px 8px;
-}
 
-.home-board.univlr-home .panel-footer-link {
-  padding: 10px 2px;
-}
 
-/* A coluna de partidas tem 521px. Com data e campeonato ocupando 120px na
-   mesma linha, sobravam 105px para o nome do time - e nome de universidade
-   brasileira ("PUCGO Sistematica Academy") nao cabe em 105px. A meta desce
-   para a segunda linha e os nomes ficam com ~180px cada. */
-/* A data e o campeonato sobem para uma faixa propria no topo, separada por um
-   fio: eles dizem "onde e quando", que se le antes do confronto, e embaixo
-   sobra a linha inteira para escudo, nome e placar crescerem. Antes essa
-   informacao ficava embaixo, disputando altura com o resultado. */
-.home-board.univlr-home .result-row {
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  grid-template-areas:
-    "meta meta meta"
-    "teamA score teamB";
-  row-gap: 10px;
-  padding: 8px 12px 12px;
-}
 
-.home-board.univlr-home .result-team.left {
-  grid-area: teamA;
-}
 
-.home-board.univlr-home .result-score {
-  grid-area: score;
-}
 
-.home-board.univlr-home .result-team.right {
-  grid-area: teamB;
-}
 
-/* A data ancora a esquerda e o campeonato a direita, entao a faixa ocupa a
-   largura toda em vez de virar um bloco centralizado com vao dos dois lados -
-   que era a queixa de "nao aproveitar o espaco". position: relative existe
-   NAO leva position: relative. Os mapas sao absolutos e precisam resolver
-   `left: 50%` e a largura contra a linha inteira - a mesma caixa que o
-   holofote usa. Com a faixa posicionada, os dois mediam contra caixas
-   diferentes (835px contra 811px) e cada nome saia ate 5px da sua fatia.
-   Sem `top`, a posicao vertical continua sendo a do fluxo, dentro da faixa. */
-.home-board.univlr-home .result-meta {
-  grid-area: meta;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--line);
-  text-align: left;
-}
 
-.home-board.univlr-home .result-meta br {
-  display: none;
-}
 
-.home-board.univlr-home .result-meta > span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
-/* O logo tinha encolhido para 26px para comprar os ~8px que faltavam aos nomes
-   mais longos. Com a largura devolvida pelo ranking a coluna passou de 284px
-   para ~390px por equipe, entao o aperto acabou e a equipe volta a ser o
-   elemento mais forte da linha - que e o que a lista existe para mostrar.
-   Com a faixa de data fora da linha do confronto, escudo e nome ficam com a
-   altura toda da linha e podem crescer de verdade. O clamp acompanha a largura
-   em vez de virar um quinto breakpoint neste arquivo, que tem quatro de
-   proposito, e o teto e o degrau --text-xl da escala, nao um numero solto. */
-.home-board.univlr-home .result-team .clean-logo {
-  width: clamp(30px, 3vw, 52px);
-  height: clamp(30px, 3vw, 52px);
-}
 
-.home-board.univlr-home .result-team strong {
-  font-size: clamp(var(--text-sm), 1.25vw, var(--text-xl));
-}
 
-.home-board.univlr-home .result-team {
-  gap: clamp(8px, 0.9vw, 14px);
-}
 
-/* O placar ocupa a linha inteira, no mesmo porte do escudo (52px), e perde a
-   caixa: a cor vai no proprio algarismo - vencedor aceso, perdedor recuado.
-   O fundo verde chapado era a ultima moldura que restava na linha.
-   A Condensed e a voz dos numeros grandes deste site e e o que segura tres
-   digitos sem alargar a coluna. */
-.home-board.univlr-home .result-score {
-  grid-template-columns: auto auto auto;
-  gap: clamp(6px, 0.5vw, 12px);
-  min-height: 0;
-}
 
-.home-board.univlr-home .result-score .score-number {
-  min-width: 0;
-  font-size: clamp(var(--text-2xl), 3vw, var(--text-5xl));
-  font-weight: 800;
-}
 
-.home-board.univlr-home .result-score i {
-  font-family: var(--font-display);
-  font-size: clamp(var(--text-lg), 1.8vw, var(--text-3xl));
-  line-height: 1;
-  color: var(--muted);
-}
 
-/* O nome do mapa subiu para a faixa de cima, junto com os outros da serie. */
-.home-board.univlr-home .result-score small {
-  display: none;
-}
 
-/* Cartao dentro de cartao: .lineup-stat-row tinha borda, raio, fundo proprio e
-   sombra interna, tudo dentro de .lineup-stat-center, que ja e um cartao.
-   Vira linha separada por fio - que e o que uma tabela de comparacao e. */
-.lineup-stat-list {
-  gap: 0;
-}
-
-.lineup-stat-row {
-  border: 0;
-  border-bottom: 1px solid var(--line);
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  padding: 6px 0;
-}
-
-.lineup-stat-row:last-child {
-  border-bottom: 0;
-}
-
-.lineup-stat-center {
-  border-color: var(--line);
-}
-
-/* Conteudo encostado na borda do contorno da tabela. */
-.table-wrap.match-scoreboard-wrap {
-  padding: 2px;
-}
 
 /* Fatos de campeonato ("Online - Classificatória", "5x Monitores AGON CS24A/P")
    estavam em 5 colunas fixas de 103px com nowrap, entao truncavam. Sao texto
@@ -15571,19 +12822,9 @@ small,
   line-height: 1.25;
 }
 
-/* Rodape do painel encostava nas laterais. */
-.home-board.univlr-home .panel-footer-link {
-  padding: 10px 12px;
-}
 
-/* A coluna do nome no ranking sobrava com 105px porque as colunas fixas e os
-   vaos comiam 226px dos 382px disponiveis. Menos vao e badge de rank mais
-   justo devolvem ~22px ao nome. A borda azulada era residuo da camada antiga. */
-.compact-ranking-row {
-  border-color: var(--line);
-  grid-template-columns: 38px 30px 42px minmax(0, 1fr) 58px;
-  gap: 8px;
-}
+
+
 
 /* ==========================================================================
    Hover da linha do ranking na home: a cor da equipe preenche a linha
@@ -15693,12 +12934,7 @@ small,
 .ranking-accordion-button .ranking-detail-cell,
 .ranking-accordion-button .ranking-status-cell,
 .ranking-accordion-button .chip,
-.ranking-accordion-button .ranking-toggle-mark,
-.ranking-panel .compact-ranking-row .row-main strong,
-.ranking-panel .compact-ranking-row .row-main small,
-.ranking-panel .compact-ranking-row .row-score,
-.ranking-panel .compact-ranking-row .rank-position,
-.ranking-panel .compact-ranking-row .rank-delta {
+.ranking-accordion-button .ranking-toggle-mark {
   transition: color 160ms ease;
 }
 
@@ -15857,12 +13093,7 @@ small,
    para tras manteria uma linha pintada depois do toque. Mesmo guard da capa
    do campeonato. */
 @media (hover: hover) and (pointer: fine) {
-  .ranking-panel .compact-ranking-row:hover,
-  .ranking-panel .compact-ranking-row:focus-visible {
-    border-color: var(--team-accent-2, var(--teal));
-    box-shadow: inset 0 0 0 2px var(--team-accent-2, var(--teal));
-    background: #0b0b10;
-  }
+
 
   /* O escudo e feito da propria cor da equipe, entao sobre a trama ele some:
      medido nas 10 da home, 42% dos pixels do escudo ficavam abaixo de 1,5:1
@@ -15899,30 +13130,7 @@ small,
     clip-path: ellipse(78% 106% at 38% 48%);
   }
 
-  /* Todo o texto passa para a tinta calculada. A hierarquia continua existindo
-     pelo corpo e pelo peso (14/700 no nome, 12/400 no subtitulo), nao por
-     opacidade: baixar a opacidade em cima do banho derrubaria o contraste que a
-     conta de --team-ink acabou de garantir. */
-  .ranking-panel .compact-ranking-row:hover,
-  .ranking-panel .compact-ranking-row:focus-visible,
-  .ranking-panel .compact-ranking-row:hover .row-main strong,
-  .ranking-panel .compact-ranking-row:hover .row-main small,
-  .ranking-panel .compact-ranking-row:hover .row-score,
-  .ranking-panel .compact-ranking-row:hover .rank-position,
-  .ranking-panel .compact-ranking-row:hover .rank-delta,
-  .ranking-panel .compact-ranking-row:hover .rank-delta.up,
-  .ranking-panel .compact-ranking-row:hover .rank-delta.down,
-  .ranking-panel .compact-ranking-row:focus-visible .row-main strong,
-  .ranking-panel .compact-ranking-row:focus-visible .row-main small,
-  .ranking-panel .compact-ranking-row:focus-visible .row-score,
-  .ranking-panel .compact-ranking-row:focus-visible .rank-position,
-  .ranking-panel .compact-ranking-row:focus-visible .rank-delta {
-    color: var(--team-ink, var(--ink));
-    /* A tinta espera a varredura chegar. Sem esse atraso o texto da direita
-       virava antes de a cor passar por baixo dele. Na saida nao ha atraso: a
-       regra de repouso volta na hora. */
-    transition: color 220ms ease 210ms;
-  }
+
 
   /* --- a mesma pintura na pagina do ranking completo ---
      A linha ali e o <button> do acordeao, dentro de um <article> que e o
@@ -15989,31 +13197,7 @@ small,
   }
 }
 
-/* Em outras listas o nome longo quebra em duas linhas, que ali e o certo. Aqui
-   nao: o ranking e uma lista de altura fixa lida de relance, e uma linha que
-   quebra deixa a #1 com 70px enquanto as outras nove tem 53px - o degrau
-   aparece como se a primeira colocada fosse um bloco diferente. Reticencia
-   custa uma palavra; a quebra custa o ritmo da coluna inteira. */
-.compact-ranking-row .row-main strong,
-.compact-ranking-row .row-main small {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow-wrap: normal;
-}
 
-/* Abaixo de 1180px o quadro vira uma coluna so e a linha do ranking passa a
-   ter 99px de nome contra os 137px do quadro de tres colunas. Ali a troca se
-   inverte: nao ha ritmo de coluna para proteger, e cortar "Azure Bears Golden"
-   em "Azure Bears Gol..." esconde justamente o dado da linha. Volta a quebrar. */
-@media (max-width: 1180px) {
-  .compact-ranking-row .row-main strong,
-  .compact-ranking-row .row-main small {
-    overflow: visible;
-    text-overflow: clip;
-    white-space: normal;
-  }
-}
 
 /* ==========================================================================
    Tier de campeonato na home
@@ -16123,13 +13307,9 @@ small,
   padding: 10px 12px;
 }
 
-.hub-panel.ranking-full-panel {
-  padding: 0 10px 10px;
-}
 
-.hub-panel.ranking-full-panel > .panel-title {
-  padding: 10px 2px 8px;
-}
+
+
 
 /* Line-up inline em 1.2 de entrelinha; texto claro sobre fundo quase preto
    precisa de um respiro a mais. */
@@ -16202,36 +13382,11 @@ small,
   white-space: nowrap;
 }
 
-/* Data a esquerda, campeonato a direita. As duas encolhem ate o proprio texto
-   em vez de dividirem a linha em duas metades: os mapas sao absolutos e ja se
-   centram sozinhos contra a linha, entao pontas de meia-largura so serviriam
-   para as caixas delas passarem por baixo dos nomes dos mapas - o que fazia o
-   detector acusar texto encoberto onde, na medida, sobravam 111px de folga. */
-.home-board.univlr-home .result-meta-when,
-.home-board.univlr-home .result-meta-where {
-  display: inline;
-}
 
-.home-board.univlr-home .result-meta-when {
-  flex: 0 1 auto;
-  min-width: 0;
-}
 
-/* O teto e o que a ponta direita realmente tem: 138px de --ponta-da-faixa,
-   menos os 12px de padding da linha, os 24px do escudo do campeonato, os 10px
-   de gap entre os dois e 8px de respiro ate o ultimo nome de mapa. Da 84px.
-   Sem esse teto o nome nao encolhia: como a faixa de mapas e absoluta, ela sai
-   do fluxo do flex e o nome nunca era espremido por ela - so passava por baixo.
-   Medido a 1280px: "JUBS Goias 2026 - Etapa Presencial" ocupava 174,6px e
-   invadia 82,6px do ultimo nome de mapa, que e o que se ve como texto
-   sobreposto na home. O que nao couber vai e volta (.tem-rolagem, abaixo). */
-.home-board.univlr-home .result-meta-where {
-  flex: 0 1 auto;
-  min-width: 0;
-  max-width: calc(var(--ponta-da-faixa) - 12px - 24px - 10px - 8px);
-  margin-left: auto;
-  text-align: right;
-}
+
+
+
 
 /* O texto ganha uma caixa propria dentro da .result-meta-where porque a
    animacao precisa de duas: a de fora e a janela que corta, a de dentro e o que
@@ -16286,177 +13441,23 @@ small,
   display: none;
 }
 
-/* Centrado contra a linha, e nao contra o espaco que sobra entre a data e o
-   campeonato: o escudo do campeonato fica fora das duas pontas flexiveis e
-   puxava o meio 18px para a esquerda, desalinhando o mapa do placar que ele
-   descreve. Absoluto dentro da faixa, que ocupa a largura inteira da linha,
-   cai exatamente sobre o eixo do placar. */
-.home-board.univlr-home .result-meta-maps {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  white-space: nowrap;
-  color: var(--ink);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
 
-/* ==========================================================================
-   Arte do mapa atras do placar
-   Um holofote no meio da linha, e nao fundo na linha inteira: nas pontas
-   ficam escudo, nome, data e campeonato, que precisam de fundo limpo. A arte
-   entra exatamente onde o mapa ja esta escrito, e some para os lados por
-   mascara em vez de terminar numa borda.
-   Numa md3 o holofote se divide em uma fatia por mapa, separadas por fio -
-   e a mesma largura e a mesma contagem dos nomes acima, entao cada nome cai
-   centrado sobre a propria arte.
-   A opacidade de 18% nao e gosto: a 30% o placar do perdedor caia para 2,87:1
-   sobre o ponto mais claro da arte, abaixo do piso de 3:1 de texto grande.
-   A 18% o pior caso dos treze mapas e 4,23:1.
 
-   A largura tem tres tetos e vale o menor:
-   - 280px + 140px por mapa, para a md3 ganhar mais espaco que a md1;
-   - 66% da linha, para o holofote nunca virar a linha inteira;
-   - largura menos duas --ponta-da-faixa (138px cada), que e o espaco que a
-     data e o campeonato precisam nas pontas. Sem esse terceiro teto, a 1280px
-     uma md3 chegava a 4px do texto da data - passava por pouco hoje e
-     encostaria no primeiro nome mais longo.
-   ========================================================================== */
 
-/* --ponta-da-faixa: quanto o holofote devolve para CADA ponta da linha. A
-   faixa e centrada no eixo do placar, entao as duas pontas sao iguais por
-   construcao - a folga que sobra a esquerda da data nao tem como ir para o
-   campeonato do lado direito. O numero vira variavel porque agora ele governa
-   duas coisas que precisam concordar: a largura maxima do holofote e a do nome
-   do campeonato. Mudou aqui, os dois se ajustam juntos. */
-.home-board.univlr-home .result-row {
-  position: relative;
-  isolation: isolate;
-  --ponta-da-faixa: 138px;
-}
 
 .result-banner {
   display: none;
 }
 
-.home-board.univlr-home .result-banner {
-  position: absolute;
-  z-index: -1;
-  inset: 0 auto 0 50%;
-  width: min(calc(280px + var(--maps, 1) * 140px), 66%, calc(100% - var(--ponta-da-faixa) * 2));
-  transform: translateX(-50%);
-  display: flex;
-  gap: 0;
-  overflow: hidden;
-  opacity: 0.18;
-  pointer-events: none;
-  /* --lean: quanto o corte anda na horizontal do topo ate a base.
-     --seam: a largura do fio diagonal que separa um mapa do outro.
-     Os dois sao independentes de proposito: quero a inclinacao bem visivel e
-     o fio fino. Um `gap` de flex daria a inclinacao e a espessura juntas. */
-  --lean: 26px;
-  --seam: 2px;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 26%, #000 74%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 26%, #000 74%, transparent);
-}
 
-/* Paralelogramo por recorte, e nao por skew: o skew inclinaria tambem a
-   imagem dentro da fatia, e ai o mapa apareceria torto. Aqui so a moldura de
-   corte se inclina - a arte continua em pe.
-   O recorte passa das bordas da fatia (o -12px e o 100%+12px), entao a imagem
-   precisa transbordar o mesmo tanto para os cantos nao ficarem vazios. */
-.home-board.univlr-home .result-banner i {
-  position: relative;
-  flex: 1 1 0;
-  min-width: 0;
-  overflow: visible;
-  clip-path: polygon(
-    calc(var(--lean) / 2 + var(--seam) / 2) 0,
-    calc(100% + var(--lean) / 2 - var(--seam) / 2) 0,
-    calc(100% - var(--lean) / 2 - var(--seam) / 2) 100%,
-    calc(var(--seam) / 2 - var(--lean) / 2) 100%
-  );
-}
 
-.home-board.univlr-home .result-banner img {
-  position: absolute;
-  top: 0;
-  /* largura explicita, e nao left+right com width:auto: <img> e elemento
-     substituido, entao `auto` resolve para o tamanho intrinseco em vez de
-     esticar entre as duas bordas - a arte ficava 77px curta na direita. */
-  left: calc(var(--lean) / -2);
-  width: calc(100% + var(--lean));
-  /* o reset global `img { max-width: 100% }` cortava o transbordo de volta
-     para a largura da fatia, e os cantos do recorte ficavam vazios. */
-  max-width: none;
-  height: 100%;
-  /* 42% e nao 50%: o terco de cima das artes do Valorant e quase sempre ceu,
-     que num recorte baixo e largo vira uma faixa lisa sem informacao. */
-  object-fit: cover;
-  object-position: center 42%;
-}
 
-/* Mesma largura e mesma contagem do holofote: cada nome sobre a sua fatia. */
-.home-board.univlr-home .result-meta-maps {
-  width: min(calc(280px + var(--maps, 1) * 140px), 66%, calc(100% - var(--ponta-da-faixa) * 2));
-  gap: 1px;
-}
 
-.home-board.univlr-home .result-meta-map {
-  flex: 1 1 0;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
-}
 
-/* Precisa vir depois da regra de cima, e nao junto das outras regras de
-   celular la em cima: as duas tem a mesma especificidade, entao quem estiver
-   por ultimo no arquivo vence, media query ou nao.
-   A 375px a data (110px), o campeonato (180px) e o escudo (28px) ja somam a
-   faixa inteira - um bloco centrado por cima cairia em cima dos dois. Aqui os
-   mapas saem do absoluto e descem para uma linha propria, centrados nela. */
-@media (max-width: 560px) {
-  .home-board.univlr-home .result-meta {
-    flex-wrap: wrap;
-  }
 
-  .home-board.univlr-home .result-meta-maps {
-    position: static;
-    transform: none;
-    order: 3;
-    flex: 1 0 100%;
-    width: auto;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 4px;
-  }
 
-  /* Na linha propria os nomes nao ficam mais sobre as fatias, entao voltam a
-     ser texto corrido: sem esticar cada um para a largura de uma fatia. */
-  .home-board.univlr-home .result-meta-map {
-    flex: 0 1 auto;
-  }
 
-  /* Sem os nomes na mesma linha, nao ha o que reservar nas pontas: o teto de
-     duas --ponta-da-faixa sobrava numa linha de 325px e deixava o holofote com
-     49px, uma tira que parecia defeito. Aqui ele volta a ser proporcional. */
-  .home-board.univlr-home .result-banner {
-    width: 62%;
-  }
 
-  /* Pelo mesmo motivo o nome do campeonato perde o teto: com os mapas em linha
-     propria, a ponta direita e tudo o que sobra depois da data e do escudo -
-     a 375px sao 195px, e o nome mais longo de hoje cabe em 174,6px. Sem esta
-     linha, um nome que cabe folgado no celular rolaria a toa. */
-  .home-board.univlr-home .result-meta-where {
-    max-width: none;
-  }
-}
 
 /* Residuo azul-naval no tooltip do ranking. */
 .has-ranking-tooltip::after {
@@ -16480,13 +13481,12 @@ select:focus-visible,
 textarea:focus-visible,
 summary:focus-visible,
 [tabindex]:focus-visible,
-.trophy-item:focus-visible,
 .swiss-flow-nav:focus-visible,
 .swiss-flow-match:focus-visible,
 .swiss-match-card:focus-visible,
 .filter-control:focus-visible,
 .global-search input:focus-visible,
-.tournament-bracket-match.curated-match:focus-visible {
+.tournament-bracket-match.curated-match:focus-visible  {
   outline: 2px solid var(--brand-text);
   outline-offset: 2px;
 }
@@ -16657,39 +13657,19 @@ input[type="radio"] {
   padding: 4px;
 }
 
-.table-wrap.match-scoreboard-wrap {
-  padding: 6px;
-}
+
 
 /* Frase corrida a 11px: 11px e piso de rotulo curto, nao de texto descritivo. */
-.player-metric-line dt,
 .event-fact small,
-.event-row-facts small {
+.event-row-facts small  {
   font-size: var(--text-xs);
 }
 
-/* .lineup-stat-center ainda era cartao dentro de cartao. As linhas de dentro ja
-   viraram fio no passo 4, entao o contorno proprio virou moldura sobre moldura. */
-.lineup-stat-center {
-  border: 0;
-  background: transparent;
-}
 
-/* Titulo de campeonato truncava em 64.8px em vez de quebrar linha. */
-.tournament-hero h1,
-.tournament-title-row h1 {
-  overflow: visible;
-  white-space: normal;
-  text-overflow: clip;
-  overflow-wrap: break-word;
-  text-wrap: balance;
-}
 
-/* Rotulos descritivos que ainda estavam no piso de 11px. */
-.player-page .player-metric-line dt,
-.tournament-organizer-card small {
-  font-size: var(--text-xs);
-}
+
+
+
 
 /* ==========================================================================
    Corte horizontal na página de partida (P0)
@@ -16720,10 +13700,8 @@ img {
 /* O que e largo por natureza rola na propria caixa, nunca na pagina:
    linha do tempo de rounds, placar completo e tabelas. */
 .round-timeline,
-.match-map-overview,
-.match-scoreboard-wrap,
 .table-wrap,
-.lineup-timeline-wrap {
+.lineup-timeline-wrap  {
   overflow-x: auto;
   overscroll-behavior-x: contain;
 }
@@ -16733,38 +13711,30 @@ img {
    cortado. Nestes containers a barra volta, fina e na cor do sistema - ela
    aparece so quando ha o que rolar e mostra a posicao. */
 .round-timeline,
-.match-map-overview,
-.match-scoreboard-wrap,
 .table-wrap,
-.lineup-timeline-wrap {
+.lineup-timeline-wrap  {
   scrollbar-width: thin;
   scrollbar-color: var(--line-dark) transparent;
 }
 
 .round-timeline::-webkit-scrollbar,
-.match-map-overview::-webkit-scrollbar,
-.match-scoreboard-wrap::-webkit-scrollbar,
 .table-wrap::-webkit-scrollbar,
-.lineup-timeline-wrap::-webkit-scrollbar {
+.lineup-timeline-wrap::-webkit-scrollbar  {
   display: block;
   width: 8px;
   height: 8px;
 }
 
 .round-timeline::-webkit-scrollbar-thumb,
-.match-map-overview::-webkit-scrollbar-thumb,
-.match-scoreboard-wrap::-webkit-scrollbar-thumb,
 .table-wrap::-webkit-scrollbar-thumb,
-.lineup-timeline-wrap::-webkit-scrollbar-thumb {
+.lineup-timeline-wrap::-webkit-scrollbar-thumb  {
   border-radius: var(--radius-pill);
   background: var(--line-dark);
 }
 
 .round-timeline::-webkit-scrollbar-track,
-.match-map-overview::-webkit-scrollbar-track,
-.match-scoreboard-wrap::-webkit-scrollbar-track,
 .table-wrap::-webkit-scrollbar-track,
-.lineup-timeline-wrap::-webkit-scrollbar-track {
+.lineup-timeline-wrap::-webkit-scrollbar-track  {
   background: transparent;
 }
 
@@ -17502,16 +14472,7 @@ img {
     scrollbar-color: var(--line-dark) transparent;
   }
 
-    /* As caixas internas param de rolar por conta propria para nao competir com o
-     scroller de cima nem dessincronizar as duas tabelas. O padding tem de ser
-     igual nas duas: .match-scoreboard-wrap tinha 6px e o agregado nao, e isso
-     deslocava a linha de cima 6px a esquerda da de baixo - as colunas tinham a
-     MESMA largura e mesmo assim nao batiam. */
-  .match-scoreboard-summary-wrap,
-  .table-wrap.match-scoreboard-wrap {
-    overflow-x: visible;
-    padding: 6px;
-  }
+
 
   /* Piso em PIXEL, nao em max-content. As colunas do colgroup sao definidas em
      porcentagem (.score-col-player 12%, .score-col-rating 7%, .score-col-swing
@@ -17634,8 +14595,7 @@ img {
     min-width: 44px;
   }
 
-  .match-event-link,
-  .lineup-selected-actions a {
+  .match-event-link {
     min-height: 44px;
   }
 
@@ -17655,10 +14615,7 @@ img {
     min-height: 44px;
   }
 
-  .social-button {
-    width: 44px;
-    height: 44px;
-  }
+
 }
 
 /* ==========================================================================
@@ -18336,7 +15293,7 @@ img {
 
 .fav-botao svg { flex-shrink: 0; }
 
-.player-hero-title-row .fav-botao { align-self: center; }
+
 
 @media (max-width: 560px) {
   .fav-botao span { display: none; }
@@ -18656,9 +15613,6 @@ img {
 
 .news-artigo .cmt-secao { margin-top: var(--space-8); }
 
-@media (max-width: 940px) {
-}
-
 @media (max-width: 560px) {
   .news-item { flex-direction: column; align-items: stretch; gap: var(--space-4); }
   .news-capa.media { width: 100%; }
@@ -18697,142 +15651,40 @@ img {
 .event-row .cmt-selo-contagem { margin-left: var(--space-2); }
 
 
-/* O assunto e o que faz a linha valer: e ele que diz para onde o clique leva.
-   Por isso ganha a cor de texto normal, e nao o cinza do resto do cabecalho. */
 
 
-@media (max-width: 560px) {
-}
 
-/* ==========================================================================
-   TOPO DA HOME - noticia principal, titulos menores, atividade recente
-   ==========================================================================
-   Metade da largura para a materia principal, metade para o resto. As duas
-   colunas sao 1fr exatos: a assimetria aqui viria do PESO do conteudo (uma
-   imagem grande contra texto miudo), nao da medida - dar 1,6fr para o heroi
-   somaria as duas coisas e a direita viraria uma tira. */
 
-.home-topo {
-  display: grid;
-  /* Colunas desiguais de proposito. Com duas metades iguais e a mesma
-     proporcao de capa, as duas materias teriam a MESMA altura - e a segunda
-     precisa ser menor. A diferenca de largura e o que a torna menor sem mudar
-     o formato da capa, e e ela que abre a sobra onde a atividade entra. */
-  grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
-  gap: var(--space-5);
-  align-items: start;
-  margin-bottom: var(--space-6);
-}
 
-/* O cabecalho cobre as duas colunas: dentro da esquerda, ele empurraria o
-   heroi para baixo e as duas colunas deixariam de comecar na mesma altura. */
-.home-topo-head { grid-column: 1 / -1; }
 
-.home-topo-lado {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-5);
-  min-width: 0;
-}
 
-/* --------------------------------------------------------------- o heroi */
 
-.news-heroi {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--line);
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 160ms ease;
-}
 
-.news-heroi:hover { border-color: var(--line-dark); }
 
-/* A mesma proporcao da capa na pagina da materia - ver a nota la em cima. */
-.news-heroi-capa {
-  display: block;
-  width: 100%;
-  aspect-ratio: 2 / 1;
-  object-fit: cover;
-}
 
-/* Com capa o texto deita SOBRE ela, sob um veu que sobe do rodape. Sem capa
-   nao ha veu nem posicionamento absoluto: o cartao vira um bloco de texto na
-   superficie normal, com altura minima para nao ficar raquitico ao lado da
-   coluna da direita. */
-.news-heroi.com-capa .news-heroi-texto {
-  position: absolute;
-  inset: auto 0 0 0;
-  padding: var(--space-7) var(--space-6) var(--space-5);
-  background: linear-gradient(to top, rgba(4, 3, 6, 0.94) 34%, rgba(4, 3, 6, 0.72) 62%, transparent);
-}
 
-.news-heroi.sem-capa {
-  background: linear-gradient(155deg, var(--surface-2), var(--surface-3));
-  display: flex;
-  align-items: flex-end;
-  min-height: 260px;
-}
 
-.news-heroi.sem-capa .news-heroi-texto { padding: var(--space-6); }
 
-.news-heroi-meta {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-3);
-}
 
-.news-heroi-meta time {
-  font: 600 var(--text-2xs) / 1 var(--font-text);
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-}
 
-/* A barra vermelha e o marcador de secao que o site ja usa em todo titulo de
-   painel. Trazer o MESMO motivo para o heroi liga o bloco novo ao vocabulario
-   existente, em vez de importar um estilo de overlay generico. */
-.news-heroi-texto h3 {
-  position: relative;
-  padding-left: var(--space-5);
-  font: 800 var(--text-3xl) / 1.1 var(--font-display);
-  color: var(--univlr-white);
-  text-wrap: balance;
-}
 
-.news-heroi-texto h3::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.14em;
-  bottom: 0.14em;
-  width: 5px;
-  background: var(--red);
-}
 
-.news-heroi:hover .news-heroi-texto h3 { color: var(--brand-text); }
 
-/* ------------------------------------------------- a segunda materia
-   Mesmo cartao, mesma capa, mesmo veu - so menor. Repetir a forma e o que faz
-   as duas lerem como "a mesma coisa em dois tamanhos", que e a hierarquia que
-   a linha precisa comunicar. Uma segunda materia sem capa, ou com outro
-   tratamento, viraria uma peca de outra especie. */
 
-.news-heroi.menor.com-capa .news-heroi-texto {
-  padding: var(--space-6) var(--space-5) var(--space-4);
-}
 
-.news-heroi.menor .news-heroi-texto h3 {
-  padding-left: var(--space-4);
-  font-size: var(--text-xl);
-}
 
-.news-heroi.menor .news-heroi-texto h3::before { width: 4px; }
 
-.news-heroi.menor.sem-capa { min-height: 170px; }
+
+
+
+
+
+
+
+
+
+
+
 
 /* ------------------------------------------------------ atividade recente
    Formato do Recent Activity da HLTV: linha curta, o assunto carregando o
@@ -18880,42 +15732,6 @@ img {
   font: 700 var(--text-xs) / 1.4 var(--font-text);
   color: var(--teal);
   font-variant-numeric: tabular-nums;
-}
-
-/* ------------------------------------------- tres materias no topo (.trio)
-
-   Com duas secundarias empilhadas a coluna da direita e so delas. A razao das
-   colunas nao e gosto, e conta: para dois cartoes 2:1 empilhados terminarem na
-   MESMA altura do heroi 2:1, `a/2 = b + vao`. Com o vao de 16px do site isso
-   da 2,07 : 1, e a 1440px o erro e de menos de 1px.
-
-   O vao e fixo e as colunas sao proporcionais, entao a igualdade so seria
-   exata numa largura. Por isso a linha estica: a altura sai do heroi, os dois
-   cartoes dividem o que sobra, e a diferenca (fracao de grau na proporcao da
-   capa) e absorvida pelo `object-fit` em vez de virar degrau entre as colunas. */
-
-/* Tudo isto vale so no layout de duas colunas. Escopado por `min-width` de
-   proposito: empilhado, o heroi deixa de mandar na altura, e uma regra .trio
-   mais especifica vazando para o celular atropelaria a capa 21:9 que os
-   secundarios usam la embaixo. */
-@media (min-width: 941px) {
-  .home-topo.trio {
-    grid-template-columns: minmax(0, 2.07fr) minmax(0, 1fr);
-    align-items: stretch;
-  }
-
-  .home-topo.trio .home-topo-lado { height: 100%; }
-
-  .home-topo.trio .home-topo-lado .news-heroi.menor {
-    flex: 1 1 0;
-    min-height: 0;
-  }
-
-  /* Sem `aspect-ratio`: a altura vem do heroi ao lado, nao da propria capa. */
-  .home-topo.trio .news-heroi.menor .news-heroi-capa {
-    aspect-ratio: auto;
-    height: 100%;
-  }
 }
 
 /* --------------------------------------------------- atividade em faixa
@@ -18987,19 +15803,12 @@ img {
   column-gap: var(--space-6);
 }
 
-@media (max-width: 940px) {
-  .home-topo { grid-template-columns: 1fr; gap: var(--space-6); }
-  .news-heroi-texto h3 { font-size: var(--text-2xl); }
-}
-
 @media (max-width: 560px) {
-  .news-heroi-texto h3 { font-size: var(--text-xl); }
-  .news-heroi.com-capa .news-heroi-texto { padding: var(--space-6) var(--space-5) var(--space-4); }
-  /* Empilhadas e da mesma largura, as duas materias ficariam identicas e a
-     hierarquia sumiria - so a ordem diria qual e a principal. A capa mais
-     baixa e o titulo menor seguram a diferenca no unico eixo que sobra. */
-  .news-heroi.menor .news-heroi-capa { aspect-ratio: 21 / 9; }
-  .news-heroi.menor .news-heroi-texto h3 { font-size: var(--text-lg); }
+
+
+
+
+
   .atv-linha { grid-template-columns: minmax(0, 1fr) auto; }
   .atv-tipo { display: none; }
 }
@@ -19023,17 +15832,11 @@ img {
   font-size: var(--text-lg);
 }
 
-/* Uma materia so e nenhuma conversa: a linha vira de uma coluna. Ai a capa
-   ganha um teto de altura - numa largura de 1300px, 2:1 daria 650px de imagem,
-   e isso empurraria todo o resto da home para fora da primeira tela. O teto
-   corta em cima e embaixo, entao a largura da arte continua inteira. */
-.home-topo.sozinho { grid-template-columns: minmax(0, 1fr); }
 
-.home-topo.sozinho .news-heroi-capa {
-  max-height: 420px;
-}
 
-.home-topo.sozinho .news-heroi.sem-capa { min-height: 200px; }
+
+
+
 
 /* ------------------------------------------------ mencoes dentro da materia
    Um link para equipe, jogador, partida ou campeonato vira uma mencao rica:
@@ -20428,27 +17231,5 @@ a.news-elenco-card:hover { background: var(--surface-2); }
      escudo e nome para a base da caixa. */
   .full-list-panel .result-team.left {
     justify-content: flex-start;
-  }
-}
-
-/* ==========================================================================
-   Nome de equipe no celular, no painel da home
-   A caixa do nome cai para 113px na faixa de "Ultimas partidas" a 393px, e
-   quase toda equipe passa disso: doze nomes rolando ao mesmo tempo numa tela
-   de celular - com os oito campeonatos ja rolando logo acima - viram ruido, e
-   em repouso o nome fica cortado no meio da letra, porque a rolagem desliga a
-   reticencia. Aqui a saida e a mesma do /partidas no celular: quebra em duas
-   linhas e mostra o nome inteiro, sem movimento nenhum.
-   Precisa vir depois de .nome-rolante e de .tem-rolagem la em cima: com o texto
-   quebrando, a medida do JS nao encontra transbordo e a classe nem chega a ser
-   ligada.
-   ========================================================================== */
-@media (max-width: 560px) {
-  .home-board.univlr-home .result-team strong,
-  .home-board.univlr-home .result-team strong > .nome-rolante {
-    overflow: visible;
-    text-overflow: clip;
-    white-space: normal;
-    overflow-wrap: anywhere;
   }
 }

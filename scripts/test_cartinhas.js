@@ -129,7 +129,15 @@ assert.strictEqual(cx.comSinal(0.051), "+0,05");
 assert.strictEqual(cx.comSinal(-0.001), "0,00");
 assert.strictEqual(cx.comSinal(undefined), "-");
 
-cx.aplicar(manifesto);
+// O comportamento da pagina e conferido num retrato fixo de 23/10 (so o
+// primeiro lote revelado): o manifesto publicado cresce um dia por vez, e as
+// contas abaixo (10 reveladas, a proxima e a #206) valem para aquele dia.
+const de23 = JSON.parse(JSON.stringify(manifesto));
+de23.publishedThrough = "2026-10-23";
+de23.days.forEach((day, i) => {
+  if (i > 0) delete day.cards;
+});
+cx.aplicar(de23);
 assert.strictEqual(el("regra").textContent, TEXTO, "o texto sai igual do manifesto");
 assert.match(el("contagem").innerHTML, /<b>10<\/b><span>de 216 reveladas/);
 assert(el("contagem").innerHTML.includes(`data-alvo="${Date.parse("2026-10-24T21:30:00-03:00")}"`), "o relogio aponta para 24/10 21:30");
@@ -142,8 +150,8 @@ assert(!lista.includes("cmt-carta") && el("comentarios").hidden, "sem os scripts
 assert.match(el("calendario").innerHTML, /24 de outubro: 10 cartinhas, #206 a #197/);
 
 // Edicao do dia seguinte que chegou antes da hora: fica fora ate as 21:30.
-const comDia24 = JSON.parse(JSON.stringify(manifesto));
-comDia24.days[1].cards = cartas.map((card, i) => ({ ...card, rank: 206 - i, name: `Teste ${206 - i}`, thread: `2026:teste${i}` }));
+const comDia24 = JSON.parse(JSON.stringify(de23));
+comDia24.days[1].cards = de23.days[0].cards.map((card, i) => ({ ...card, rank: 206 - i, name: `Teste ${206 - i}`, thread: `2026:teste${i}` }));
 comDia24.publishedThrough = "2026-10-24";
 agora.valor = Date.parse("2026-10-24T21:29:59-03:00");
 cx.aplicar(comDia24);

@@ -34,7 +34,7 @@ Depois de revisar o calendário e as imagens exportadas (o Python precisa do Pil
 python scripts/build_card_reveal.py --ate 2026-10-24
 ```
 
-Troque a data a cada publicação. O comando recusa datas futuras. `--preview` prepara a edição em `outputs/cartinhas/preview-cartas/`, fora do site publicado. A página pública está revelada até 23/10.
+Troque a data a cada publicação. O comando recusa datas futuras. `--preview` prepara a edição em `outputs/cartinhas/preview-cartas/`, fora do site publicado. A página pública está revelada até 24/10.
 
 Depois dos jogos restantes, recalcule os overalls, atualize o CSV do calendário e reexporte as cartinhas afetadas antes de gerar a próxima edição. O publicador lê o banco atualizado para os perfis dos jogadores liberados e confere 216 entradas, ordem crescente, no máximo 10 por dia e o top 20 depois de 14/11. Se a elegibilidade final alterar o total, refaça o calendário e ajuste essas validações conscientemente.
 

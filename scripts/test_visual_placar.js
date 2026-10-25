@@ -306,6 +306,10 @@ assert(posLineups > -1 && posHistorico > posLineups, "o historico vem logo abaix
 assert(secaoLineups.includes(">Aldeath<") && secaoLineups.includes(">bada<"), "o historico diz quem esta sendo comparado");
 
 const appFonte = ler("app.js");
+// As abas de mapa vem antes da capa (pedido de 24/10): assim o print da capa
+// ate o scoreboard sai inteiro, sem as abas no meio.
+const corpoDaPartida = appFonte.split("function renderMatchDetail(")[1].split("\nfunction ")[0];
+assert(corpoDaPartida.indexOf("${matchMapTabs(match, series, aggregateMode)}") > -1 && corpoDaPartida.indexOf("${matchMapTabs(match, series, aggregateMode)}") < corpoDaPartida.indexOf('<header class="vp-hero-partida">'), "as abas de mapa ficam acima da capa com o placar");
 assert(!appFonte.includes('sectionHead("Fonte")'), "a partida nao tem mais a secao Fonte");
 assert(!/escapeHtml\(item\.(fileName|sourcePath)\)/.test(appFonte), "nenhum nome ou caminho de arquivo vai para a pagina");
 
@@ -414,6 +418,19 @@ const encerrado = visaoGeral(rush);
 assert(!encerrado.includes("Equipes Participantes"), "campeonato encerrado troca os participantes pela classificacao");
 assert(encerrado.includes("Classificação final") && encerrado.includes("vp-classif"), "campeonato encerrado tem a classificacao final");
 assert(/vp-classif-linha[\s\S]*?CEUB[\s\S]*?8-1/.test(encerrado) || encerrado.includes(">8-1<"), "a classificacao traz a campanha de cada equipe");
+
+// Rodada de 24/10: o Resumo (equipes, series, dias) saiu de todo campeonato,
+// e o podio das classificatorias nao poe "Classificado" na coluna do numero.
+assert(!encerrado.includes("vp-resumo-camp") && !encerrado.includes(">Resumo<"), "o campeonato nao tem mais o Resumo");
+const equipeDoPodio = { id: "azr", name: "Azure Bears Black" };
+const classificado = context.tournamentPodiumCard(rush, { range: "Classificado", team: equipeDoPodio });
+assert(classificado.includes("vp-pod-texto"), "rotulo em texto usa o podio sem a coluna do numero");
+assert(!/<b>Classificado<\/b>/.test(classificado), "Classificado nao vai na coluna do numero");
+assert(/<small>[^<]*Classificado/.test(classificado), "Classificado fica pequeno, junto da campanha");
+const primeiro = context.tournamentPodiumCard(rush, { range: "1st", team: equipeDoPodio });
+assert(/<b>1º<\/b>/.test(primeiro) && !primeiro.includes("vp-pod-texto"), "controle: o 1º continua na coluna do numero");
+assert(context.tournamentPodiumTitle([{ range: "Classificado" }, { range: "Classificado" }]) === "Classificados", "so classificados: o titulo diz isso");
+assert(context.tournamentPodiumTitle([{ range: "1st" }, { range: "2nd" }]) === "Pódio", "controle: com colocacao, continua Pódio");
 
 const luce = { id: "copa-luce-inters", name: "Copa LUCE Inters", status: "Finalizado", ...overrides["copa-luce-inters"] };
 assert(context.tournamentSwissStandingsSection(luce).includes("<table"), "o suico continua mostrando a tabela");

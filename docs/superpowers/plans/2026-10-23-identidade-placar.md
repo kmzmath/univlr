@@ -298,3 +298,7 @@ Alturas (scrollHeight, main x branch):
 ### Retorno de 24/10, segunda rodada
 
 Home aprovada com dois ajustes: a nota do ranking da home tinha herdado 56px de uma classe com o mesmo nome no painel novo de detalhes (`vp-rk-nota`, renomeada para `vp-rk-nota-final`) e a foto do destaque da semana ficou na altura do cartao, com os tracinhos embaixo dele. Ranking aprovado. Na partida, a conversa e buscada uma vez por visita (antes cada clique buscava de novo; medido: abrir 1, quatro cliques 0, aba de mapa 0, sair e voltar 1; na main os mesmos cliques fazem uma busca cada), e o celular (ate 640px) mostra uma linha por jogador com K, D, A e rAAting, sempre no modo padrao. O `comments.js` da branch passou a ser o da main mais a memoria, para nao conflitar na integracao. Partida a 390: 3152 para 2246.
+
+### Retorno de 24/10, terceira rodada
+
+Partida: as abas de mapa subiram para cima da capa, para o print da capa ate o scoreboard sair inteiro. Campeonato: o Resumo saiu de todos, e o podio das classificatorias deixou de por "Classificado" na coluna do numero (o titulo vira "Classificados" e o rotulo vai pequeno junto da campanha). Site: o fundo quadriculado de 44px e o brilho vermelho do topo sairam; fica o fundo liso com uma luz neutra nos primeiros 520px.

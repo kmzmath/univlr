@@ -8247,8 +8247,10 @@ function renderMatchDetail(id) {
   const selection = ensureLineupCompareSelection(compareKey, escolhiveisA, escolhiveisB);
   Shell(`
     <section class="match-page vp-partida">
+      <h1 class="sr-only">${escapeHtml(match.teamA.name)} ${score.a} x ${score.b} ${escapeHtml(match.teamB.name)}</h1>
+      ${matchMapTabs(match, series, aggregateMode)}
+
       <header class="vp-hero-partida">
-        <h1 class="sr-only">${escapeHtml(match.teamA.name)} ${score.a} x ${score.b} ${escapeHtml(match.teamB.name)}</h1>
         ${matchHeroMeta(match, event, score, aggregateMode)}
         <div class="vp-hero-placar">
           ${matchHeroBanners(selectedMatches)}
@@ -8260,8 +8262,6 @@ function renderMatchDetail(id) {
           ${placarHeroLado(match.teamB, "b")}
         </div>
       </header>
-
-      ${matchMapTabs(match, series, aggregateMode)}
 
       <div class="match-tab-panel">
         ${aggregateMode ? "" : `<section class="vp-s-rounds">${sectionHead("Rounds", `${match.mapName}, ${formatDuration(match.durationMillis)}`)}${roundTimeline(match)}</section>`}
@@ -9535,22 +9535,15 @@ function tournamentOverviewSection(event, matches, standings) {
   const podium = tournamentPodiumRows(event, standings, matches);
   const maps = event.mapPool || event.maps || [];
   const mapRows = tournamentMapPoolRows(maps, matches);
-  const seriesCount = event.swiss?.seriesCount || matches.length;
   const campanhas = campanhasDoCampeonato({ ...event, bracket: tournamentBracketDefinition(event, matches) || event.bracket });
-  const [dias, unidade] = /^(\d+) (dias?)$/.exec(tournamentDurationLabel(event))?.slice(1) || ["-", "dias"];
+  const linhas = podium.length ? podium : tournamentPodiumPlaceholderRows();
+  // O Resumo (equipes, series e dias) saiu em 24/10: o dono achou pouco
+  // relevante, e equipes e datas ja estao no topo do campeonato.
   return `
     <div class="vp-camp-topo">
       <section class="vp-s-podio">
-        ${sectionHead("Pódio")}
-        <div class="vp-podio">${(podium.length ? podium : tournamentPodiumPlaceholderRows()).map((row) => tournamentPodiumCard(event, row, campanhas)).join("")}</div>
-      </section>
-      <section class="vp-s-resumo">
-        ${sectionHead("Resumo")}
-        <div class="vp-resumo-camp">
-          <span><b>${escapeHtml(String(event.teamCount || event.teams.length))}</b><small>equipes</small></span>
-          <span><b>${escapeHtml(String(seriesCount))}</b><small>séries</small></span>
-          <span><b>${escapeHtml(dias)}</b><small>${escapeHtml(unidade)}</small></span>
-        </div>
+        ${sectionHead(tournamentPodiumTitle(linhas))}
+        <div class="vp-podio">${linhas.map((row) => tournamentPodiumCard(event, row, campanhas)).join("")}</div>
       </section>
       <section class="vp-s-pool">
         ${sectionHead("Map pool")}
@@ -9673,16 +9666,30 @@ function tournamentPodiumPlaceholderRows() {
   return ["1", "2", "3"].map((range) => ({ range, team: null }));
 }
 
+// Classificatoria nao tem 1o, 2o e 3o: as vagas sao todas "Classificado". O
+// rotulo em texto nao cabe na coluna do numero (passava por cima do escudo e
+// do nome), entao ele vai pequeno junto da campanha, e a coluna sai.
 function tournamentPodiumCard(event, row, campanhas = new Map()) {
   const label = tournamentPodiumLabel(row.range);
   const team = row.team;
   const campanha = team ? campanhas.get(team.id) : null;
-  const miolo = `<b>${escapeHtml(label.replace(/ lugar$/, ""))}</b>${team ? teamLogo(team.id) : `<span class="team-logo clean-logo logo-empty"></span>`}<strong>${escapeHtml(team ? team.name : "TBD")}</strong><small>${campanha ? `${campanha[0]}-${campanha[1]}` : ""}</small>`;
-  const classes = `vp-pod podium-${escapeHtml(slugify(label))}${team ? "" : " vp-pod-vaga"}`;
+  const placar = campanha ? `${campanha[0]}-${campanha[1]}` : "";
+  const emTexto = !/^\d/.test(label);
+  const escudo = team ? teamLogo(team.id) : `<span class="team-logo clean-logo logo-empty"></span>`;
+  const miolo = emTexto
+    ? `${escudo}<strong>${escapeHtml(team ? team.name : "TBD")}</strong><small>${escapeHtml([label, placar].filter(Boolean).join(", "))}</small>`
+    : `<b>${escapeHtml(label.replace(/ lugar$/, ""))}</b>${escudo}<strong>${escapeHtml(team ? team.name : "TBD")}</strong><small>${placar}</small>`;
+  const classes = `vp-pod podium-${escapeHtml(slugify(label))}${emTexto ? " vp-pod-texto" : ""}${team ? "" : " vp-pod-vaga"}`;
   const estilo = `--team-line:${team ? teamLineColor(team.id) : TEAM_LINE_SEM_COR}`;
   return team && !team.missing
     ? `<a class="${classes}" href="#/teams/${escapeHtml(team.id)}" style="${estilo}">${miolo}</a>`
     : `<span class="${classes}" style="${estilo}">${miolo}</span>`;
+}
+
+// "Classificados" quando nenhuma vaga tem colocacao (as classificatorias).
+function tournamentPodiumTitle(rows) {
+  const comColocacao = (rows || []).some((row) => /^\d/.test(tournamentPodiumLabel(row.range)));
+  return rows?.length && !comColocacao ? "Classificados" : "Pódio";
 }
 
 function tournamentPodiumLabel(range) {

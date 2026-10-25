@@ -12,6 +12,16 @@
    - Placar: linha na cor da equipe, quem perdeu apagado.
    - Mapa de fundo: a arte dos mapas da serie atras de cada partida. */
 
+/* Fundo da pagina liso, como HLTV, rib.gg e vlr.gg: a malha quadriculada de
+   44px saiu (pedido do dono em 24/10), e tambem o brilho vermelho do topo,
+   porque vermelho e marca. Fica so uma luz neutra que some nos primeiros
+   520px, para o topo nao ser um preto chapado. */
+body {
+  background:
+    linear-gradient(180deg, rgba(245, 241, 242, 0.045) 0, transparent 520px) no-repeat,
+    var(--bg);
+}
+
 /* ==========================================================================
    Base comum: topo, rodape, titulo de secao e abas
    ========================================================================== */
@@ -1746,13 +1756,9 @@
   letter-spacing: 0;
 }
 
-/* O nome da coluna pode quebrar em duas linhas ("rAAting" e "3.0") quando a
-   coluna fica estreita, em vez de invadir a vizinha. */
 .vp-partida .vp-sb thead .score-sort-button {
   justify-content: center;
   width: 100%;
-  white-space: normal;
-  line-height: 1.1;
 }
 
 /* A linha de grupos do avancado: o nome da familia sobre as colunas dela. */
@@ -2163,6 +2169,13 @@
 
   .vp-partida .vp-sb col.score-col-agents {
     width: 104px;
+  }
+
+  /* O nome da coluna pode quebrar em duas linhas ("rAAting" e "3.0") quando a
+     coluna fica estreita, em vez de invadir a vizinha. */
+  .vp-partida .vp-sb thead .score-sort-button {
+    white-space: normal;
+    line-height: 1.1;
   }
 }
 
@@ -3518,10 +3531,10 @@
   line-height: 0.9;
 }
 
-/* ---- primeira faixa: podio, resumo e map pool ---- */
+/* ---- primeira faixa: podio e map pool ---- */
 .vp-camp-topo {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.8fr) minmax(0, 1.3fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   gap: 32px;
   align-items: start;
 }
@@ -3580,26 +3593,9 @@
   color: var(--muted);
 }
 
-.vp-resumo-camp {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: start;
-  gap: 10px 30px;
-}
-
-.vp-resumo-camp span {
-  display: grid;
-  gap: 2px;
-}
-
-.vp-resumo-camp b {
-  font: 600 34px/1 var(--font-display);
-  font-variant-numeric: tabular-nums;
-}
-
-.vp-resumo-camp small {
-  color: var(--muted);
-  font-size: 12px;
+/* Sem a coluna do numero: escudo, nome e, na ponta, "Classificado, 4-0". */
+.vp-pod.vp-pod-texto {
+  grid-template-columns: 36px minmax(0, 1fr) auto;
 }
 
 .vp-pool {
@@ -3934,10 +3930,6 @@
 @media (max-width: 1180px) {
   .vp-camp-topo {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-
-  .vp-camp-topo > :last-child {
-    grid-column: 1 / -1;
   }
 
   .vp-classif {

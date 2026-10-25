@@ -12,14 +12,11 @@
    - Placar: linha na cor da equipe, quem perdeu apagado.
    - Mapa de fundo: a arte dos mapas da serie atras de cada partida. */
 
-/* Fundo da pagina liso, como HLTV, rib.gg e vlr.gg: a malha quadriculada de
-   44px saiu (pedido do dono em 24/10), e tambem o brilho vermelho do topo,
-   porque vermelho e marca. Fica so uma luz neutra que some nos primeiros
-   520px, para o topo nao ser um preto chapado. */
+/* Fundo da pagina totalmente liso, como a HLTV: a malha quadriculada de 44px
+   e o brilho vermelho do topo sairam (pedido do dono em 24/10), e ele
+   preferiu sem luz nenhuma no topo. Quem separa as coisas sao as Placas. */
 body {
-  background:
-    linear-gradient(180deg, rgba(245, 241, 242, 0.045) 0, transparent 520px) no-repeat,
-    var(--bg);
+  background: var(--bg);
 }
 
 /* ==========================================================================

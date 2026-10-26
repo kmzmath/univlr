@@ -5,7 +5,6 @@ const { decode } = require("../db-codec.js");
 const requested = JSON.parse(fs.readFileSync(0, "utf8"));
 const db = decode(JSON.parse(fs.readFileSync("database.json", "utf8")));
 const playerById = new Map(db.players.map((player) => [player.puuid, player]));
-const matchById = new Map(db.matches.map((match) => [match.id, match]));
 const eventById = new Map(db.tournaments.map((event) => [event.id, event]));
 const teamById = new Map((db.metadata.teams || []).map((team) => [team.id, team]));
 
@@ -61,17 +60,22 @@ function teamLineColor(team) {
   return "#f5f1f2";
 }
 
+// Os 5 mapas mais recentes do jogador, do mais novo para o mais velho. Saem das
+// partidas, e nao do player.recent: o banco traz as partidas da mais nova para
+// a mais velha, e o recent guarda as 6 mais antigas.
+const startedAt = (match) => new Date(match.startedAt || match.date).getTime();
+const matchesNewestFirst = [...db.matches].sort((a, b) => startedAt(b) - startedAt(a));
+
 function recentMatches(player) {
-  return (player.recent || []).slice(-5).reverse().flatMap((recent) => {
-    const match = matchById.get(recent.matchId);
-    if (!match) return [];
+  return matchesNewestFirst.flatMap((match) => {
     const appearance = (match.players || []).find((row) => row.puuid === player.puuid || row.id === player.id);
-    if (!appearance) return [];
+    return appearance ? [{ match, appearance }] : [];
+  }).slice(0, 5).map(({ match, appearance }) => {
     const isA = appearance.currentTeam === match.teamA.id
       || (appearance.currentTeam !== match.teamB.id && appearance.teamColor === match.teamA.color);
     const own = isA ? match.teamA : match.teamB;
     const opponent = isA ? match.teamB : match.teamA;
-    return [{
+    return {
       date: new Date(match.startedAt || match.date).toISOString(),
       event: eventById.get(match.eventId)?.name || match.eventId,
       map: match.mapName,
@@ -79,14 +83,14 @@ function recentMatches(player) {
       opponentLogo: publicAsset(teamById.get(opponent.id)?.logo),
       score: `${own.score}-${opponent.score}`,
       result: own.score > opponent.score ? "V" : own.score < opponent.score ? "D" : "E",
-      rating: Number(recent.rating),
+      rating: Number(appearance.rating),
       kills: appearance.kills,
       deaths: appearance.deaths,
       assists: appearance.assists,
       agent: appearance.agent,
       agentIcon: publicAsset(appearance.agentIcon),
       href: `/#/matches/${match.id}`,
-    }];
+    };
   });
 }
 

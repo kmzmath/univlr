@@ -205,4 +205,25 @@ assert.strictEqual(naCartinha.assuntoDaThread("card", "2026:abc_1-2").href, "/ca
 const noSite = carregaComentarios(undefined);
 assert(noSite.corpo("oi @bruno_teste").includes('href="#/u/bruno_teste"'), "no site o link continua relativo");
 
+// ------------------------------------------------------------- perfis
+
+// Os ultimos jogos do perfil sao os 5 mapas mais recentes do jogador no banco,
+// do mais novo para o mais velho. O player.recent do banco guarda os 6 mais
+// antigos, e a cartinha mostrava junho para quem jogou em outubro.
+const { decode } = require("../db-codec.js");
+const banco = decode(JSON.parse(ler("database.json")));
+const puuids = cartas.map((card) => card.thread.slice(`${manifesto.season}:`.length));
+const perfis = JSON.parse(require("child_process").execFileSync("node", [path.join(raiz, "scripts/card_reveal_details.cjs")], {
+  cwd: raiz, input: JSON.stringify(puuids), encoding: "utf8", maxBuffer: 64 * 1024 * 1024,
+}));
+const quando = (match) => new Date(match.startedAt || match.date).getTime();
+for (const puuid of puuids) {
+  const jogador = banco.players.find((player) => player.puuid === puuid);
+  const dele = banco.matches
+    .filter((match) => (match.players || []).some((row) => row.puuid === puuid || row.id === jogador.id))
+    .sort((a, b) => quando(b) - quando(a));
+  assert.deepStrictEqual(perfis[puuid].recentMatches.map((match) => match.href), dele.slice(0, 5).map((match) => `/#/matches/${match.id}`),
+    `${jogador.nick}: os ultimos jogos sao os 5 mapas mais recentes`);
+}
+
 console.log("cartinhas: contrato da pagina, do manifesto e dos comentarios ok");

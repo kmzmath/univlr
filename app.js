@@ -11655,7 +11655,7 @@ const state = {
   rankingRefreshTimer: 0,
   tournamentStatsSort: {
     players: { key: "rating", direction: "desc" },
-    teams: { key: "seriesWins", direction: "desc" },
+    teams: { key: "lugar", direction: "asc" },
     agents: { key: "picks", direction: "desc" },
     compositions: { key: "picks", direction: "desc" },
   },
@@ -15560,11 +15560,11 @@ function paginasVisiveis(pagina, total) {
   });
 }
 
-function paginacaoDaLista(section, pagina, total, params) {
+function paginacaoDaLista(section, pagina, total, params, chave = "pagina") {
   if (total <= 1) return "";
   const href = (n) => {
     const proxima = new URLSearchParams(params);
-    if (n > 1) proxima.set("pagina", String(n));
+    if (n > 1) proxima.set(chave, String(n));
     const texto = proxima.toString();
     return `#/${section}${texto ? `?${texto}` : ""}`;
   };
@@ -18314,6 +18314,7 @@ function renderTournamentDetail(id) {
     bindJogosDoCampeonato();
   } else if (activeTab === "estatisticas" || activeTab === "agentes" || activeTab === "composicoes") {
     bindTournamentStatsControls(event.id);
+    bindEstatisticasDoCampeonato();
   }
   playPanelSlide(tabTransition);
 }
@@ -20375,31 +20376,221 @@ function bindJogosDoCampeonato() {
   }));
 }
 
-function tournamentStatsSection(event, matches, standings) {
-  const mapMatches = tournamentStatMapMatches(matches);
-  const players = aggregateMatchPlayers(mapMatches)
-    .filter((player) => Number(player.rounds || 0) > 0)
-    .sort(tournamentPlayerStatSort);
-  const officialPlayers = players.filter(isOfficialRatingSample);
-  const teams = tournamentTeamStatRows(event, matches, standings, players);
+function tournamentEstFiltro() {
+  const query = routeQuery();
+  return { equipe: query.get("equipe") || "", mapa: query.get("mapa") || "", rounds: Number.parseInt(query.get("rounds") || "0", 10) || 0 };
+}
+
+// Com um mapa so nao existe serie: cada mapa filtrado conta como uma partida isolada.
+function tournamentSerieDoMapa(match) {
+  const venceuA = match.winnerId === match.teamA.id;
+  return { teamA: match.teamA, teamB: match.teamB, scoreA: venceuA ? 1 : 0, scoreB: venceuA ? 0 : 1, roundScoreA: match.teamA.score, roundScoreB: match.teamB.score, winnerId: match.winnerId };
+}
+
+function tournamentEstDados(event, matches, standings, filtro) {
+  const mapMatches = filtro.mapa ? tournamentFilteredMapMatches(matches, filtro.mapa) : tournamentStatMapMatches(matches);
+  const todos = aggregateMatchPlayers(mapMatches).filter((player) => Number(player.rounds || 0) > 0).sort(tournamentPlayerStatSort);
+  const daEquipe = filtro.equipe ? todos.filter((player) => player.teamId === filtro.equipe) : todos;
+  // Trocar de equipe ou mapa pode baixar o teto: o minimo acompanha para a lista nunca zerar.
+  const maximo = daEquipe.reduce((maior, player) => Math.max(maior, Number(player.rounds || 0)), 0);
+  const minimo = Math.min(Math.max(filtro.rounds, 0), maximo);
+  const players = daEquipe.filter((player) => Number(player.rounds || 0) >= minimo);
+  const series = filtro.mapa ? mapMatches.map(tournamentSerieDoMapa) : matches;
+  const teams = tournamentTeamStatRows(event, series, standings, todos)
+    .filter((row) => (!filtro.equipe || row.id === filtro.equipe) && (!filtro.mapa || row.seriesPlayed));
+  return { players, teams, maximo, minimo };
+}
+
+function tournamentEstCategorias() {
+  const fkFd = (player) => Number(player.firstKills || 0) - Number(player.firstDeaths || 0);
+  return [
+    { rotulo: "rAAting", valor: (player) => Number(officialRatingValue(player) || 0), texto: (player) => playerRating(player) },
+    { rotulo: "ACS", valor: (player) => Number(player.acs || 0), texto: (player) => fmt(player.acs, 0) },
+    { rotulo: "K/D", valor: (player) => Number(player.kd || 0), texto: (player) => fmt(player.kd) },
+    { rotulo: "KAST", valor: (player) => Number(player.kast || 0), texto: (player) => pct(player.kast) },
+    { rotulo: "ADR", valor: (player) => Number(player.adr || 0), texto: (player) => fmt(player.adr, 0) },
+    { rotulo: "FK-FD", valor: fkFd, texto: (player) => signed(fkFd(player)) },
+    { rotulo: "HS%", valor: (player) => Number(player.hs || 0), texto: (player) => pct(player.hs) },
+  ];
+}
+
+function tournamentEstCamisa(player, categoria, ativa) {
+  const team = teamById(player.teamId);
+  const mapas = Number(player.matches || player.maps || 0);
+  return plateCard({
+    classe: "vp-slide",
+    team,
+    href: playerHref(player),
+    nome: player.nick,
+    figura: playerFigure(playerById(player.id) || player, team, "vp-slide-foto"),
+    rotulo: `Melhor ${categoria.rotulo}`,
+    tag: team?.sourceTag || team?.tag || player.teamTag || "",
+    valor: categoria.texto(player),
+    apoio: `${mapas} ${mapas === 1 ? "mapa" : "mapas"}`,
+    atributos: ativa ? "" : " inert",
+  });
+}
+
+// O melhor em cada numero, com um cartao por categoria lado a lado num trilho: clicar
+// na linha desliza ate o cartao dela, no mesmo tempo das trocas de conteudo do site.
+// Empate fica com o melhor rAAting, porque a lista ja vem nessa ordem.
+function tournamentEstLideres(players) {
+  const lideres = tournamentEstCategorias().map((categoria) => ({
+    categoria,
+    jogador: players.reduce((melhor, player) => (categoria.valor(player) > categoria.valor(melhor) ? player : melhor), players[0]),
+  }));
+  const atual = state.tournamentEstLider || 0;
   return `
-    <section class="tournament-section tournament-stats-section">
-      <div class="tournament-section-head">
-        <h2>Estatísticas</h2>
-        <span>${officialPlayers.length} jogadores no ranking oficial · ${teams.length} equipes</span>
-      </div>
-      <div class="tournament-stats-shell">
-        <div class="tournament-stats-top-grid">
-          ${tournamentStatsTopList("Top jogadores", `rAAting 3.0, mínimo ${RaaRatingCore.SAMPLE_MIN_ROUNDS} rounds`, officialPlayers.slice(0, 8).map(tournamentTopPlayerRow), "Nenhum jogador com amostra oficial disponível.")}
-          ${tournamentStatsTopList("Top equipes", "Campanha agregada das séries registradas", teams.filter((row) => row.seriesPlayed || row.playerRounds).slice(0, 8).map(tournamentTopTeamRow), "Nenhuma equipe com estatísticas disponíveis.")}
-        </div>
-        <div class="tournament-stat-tables">
-          ${tournamentPlayerStatsTable(event.id, officialPlayers)}
-          ${tournamentTeamStatsTable(event.id, teams)}
+    <aside class="vp-resumo" aria-label="Líderes do campeonato">
+      <div class="vp-est-cartas">
+        <div class="vp-est-trilho" style="--atual:${atual}">
+          ${lideres.map(({ categoria, jogador }, indice) => tournamentEstCamisa(jogador, categoria, indice === atual)).join("")}
         </div>
       </div>
+      <div class="vp-lideres">
+        ${lideres.map(({ categoria, jogador }, indice) => `
+          <button type="button" class="vp-lider" data-est-lider="${indice}" aria-pressed="${indice === atual}">
+            <small>${escapeHtml(categoria.rotulo)}</small>
+            <span>${jogador.teamId ? teamLogo(jogador.teamId, "tiny") : ""}<strong title="${escapeHtml(jogador.nick)}">${escapeHtml(jogador.nick)}</strong></span>
+            <b>${escapeHtml(categoria.texto(jogador))}</b>
+          </button>
+        `).join("")}
+      </div>
+    </aside>
+  `;
+}
+
+function tournamentEstFiltros(event, matches, filtro, maximo, minimo) {
+  const ids = [...new Set(matches.flatMap((series) => [series.teamA?.id, series.teamB?.id]).filter(Boolean))];
+  const equipes = ids.map((id) => tournamentTeamById(event, id)).filter(Boolean).sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
+  const mapas = tournamentFilterMapOptions(matches);
+  return `
+    <div class="vp-est-filtros">
+      <select data-est-equipe aria-label="Filtrar por equipe">
+        <option value="">Todas as equipes</option>
+        ${equipes.map((team) => `<option value="${escapeHtml(team.id)}"${team.id === filtro.equipe ? " selected" : ""}>${escapeHtml(team.name)}</option>`).join("")}
+      </select>
+      <select data-est-mapa aria-label="Filtrar por mapa">
+        <option value="">Todos os mapas</option>
+        ${mapas.map((map) => `<option value="${escapeHtml(map.id)}"${map.id === filtro.mapa ? " selected" : ""}>${escapeHtml(map.name)} (${map.count})</option>`).join("")}
+      </select>
+      <label class="vp-est-rounds" style="--cheio:${maximo ? (minimo / maximo) * 100 : 0}%">
+        <span>Rounds mínimos</span>
+        <input type="range" min="0" max="${maximo}" step="1" value="${minimo}" data-est-rounds>
+        <b data-est-rounds-valor>${minimo}</b>
+      </label>
+      ${filtro.equipe || filtro.mapa || filtro.rounds ? `<button type="button" class="vp-filtros-limpar" data-est-limpar>Limpar filtros</button>` : ""}
+    </div>
+  `;
+}
+
+// Uma pagina da lista, com o proprio paginador: cada tabela guarda a sua na URL.
+function tournamentEstPagina(event, rows, chave, porPagina) {
+  const query = routeQuery();
+  const total = Math.max(1, Math.ceil(rows.length / porPagina));
+  const pagina = Math.min(total, Math.max(1, Number.parseInt(query.get(chave) || "1", 10) || 1));
+  query.delete(chave);
+  const inicio = (pagina - 1) * porPagina;
+  return {
+    linhas: rows.slice(inicio, inicio + porPagina),
+    paginador: paginacaoDaLista(`events/${event.id}/estatisticas`, pagina, total, query, chave),
+  };
+}
+
+function tournamentEstTabela(event, { table, titulo, descricao, rows, columns, fallback, chave, porPagina, detalhe = false }) {
+  if (!rows.length) return "";
+  const ordenadas = tournamentSortedStatRows(table, rows, columns, fallback);
+  const { linhas, paginador } = tournamentEstPagina(event, ordenadas, chave, porPagina);
+  const visiveis = detalhe ? columns.filter((column) => column.curta) : columns;
+  return `
+    <article class="vp-est-bloco">
+      <h3>${escapeHtml(titulo)}<span>${escapeHtml(descricao)}</span></h3>
+      ${tabelaComRotulos(`<div class="table-wrap tournament-stats-table-wrap">
+        <table class="tournament-stats-table">
+          <thead><tr>${visiveis.map((column) => tournamentStatsHeaderCell(table, column)).join("")}${detalhe ? `<th aria-label="Mais números"></th>` : ""}</tr></thead>
+          <tbody>
+            ${linhas.map((row) => tournamentEstLinha(row, visiveis, detalhe, columns)).join("")}
+          </tbody>
+        </table>
+      </div>`)}
+      ${paginador}
+    </article>
+  `;
+}
+
+// O que nao coube na tabela abre numa linha logo abaixo do jogador.
+function tournamentEstLinha(row, columns, detalhe, todas) {
+  const celulas = columns.map((column) => column.celula(row)).join("");
+  if (!detalhe) return `<tr>${celulas}</tr>`;
+  const resto = todas.filter((column) => !column.curta && !["kills", "deaths", "assists"].includes(column.key));
+  return `
+    <tr>${celulas}<td class="vp-est-abre"><button type="button" data-est-detalhe aria-expanded="false" aria-label="${escapeHtml(`Mais números de ${row.nick || "jogador"}`)}"><i></i></button></td></tr>
+    <tr class="vp-est-detalhe" hidden><td colspan="${columns.length + 1}"><dl>${resto.map((column) => `<div><dt>${escapeHtml(column.label)}</dt><dd>${escapeHtml(column.texto(row))}</dd></div>`).join("")}</dl></td></tr>
+  `;
+}
+
+function tournamentStatsSection(event, matches, standings) {
+  const filtro = tournamentEstFiltro();
+  const { players, teams, maximo, minimo } = tournamentEstDados(event, matches, standings, filtro);
+  const colunasDeEquipe = tournamentTeamStatColumns().filter((column) => !filtro.mapa || column.key !== "seriesWins");
+  const contagem = `${players.length} ${players.length === 1 ? "jogador" : "jogadores"}, ${teams.length} ${teams.length === 1 ? "equipe" : "equipes"}`;
+  return `
+    <section class="tournament-section tournament-stats-section vp-est">
+      <div class="vp-est-lista">
+        ${sectionHead("Estatísticas", contagem)}
+        ${tournamentEstFiltros(event, matches, filtro, maximo, minimo)}
+        ${players.length || teams.length ? "" : `<div class="empty-state">Nenhuma estatística com esses filtros. Tire um filtro para ver mais.</div>`}
+        ${tournamentEstTabela(event, { table: "players", titulo: "Jogadores", descricao: "Ordene pelo título de cada coluna", rows: players, columns: tournamentPlayerStatColumns(), fallback: tournamentPlayerStatSort, chave: "pagina", porPagina: 10, detalhe: true })}
+        ${tournamentEstTabela(event, { table: "teams", titulo: "Equipes", descricao: filtro.mapa ? "Só neste mapa, com as médias dos jogadores" : "Séries, mapas, rounds e médias dos jogadores", rows: teams, columns: colunasDeEquipe, fallback: tournamentTeamStatSort, chave: "pagina-equipes", porPagina: 20 })}
+      </div>
+      ${players.length ? tournamentEstLideres(players) : ""}
     </section>
   `;
+}
+
+function bindEstatisticasDoCampeonato() {
+  const pagina = document.querySelector(".vp-est");
+  if (!pagina) return;
+  const resumo = pagina.querySelector(".vp-resumo");
+  resumo?.style.setProperty("--resumo-altura", `${resumo.offsetHeight}px`);
+  const aplica = (mudanca, foco) => {
+    const query = routeQuery();
+    mudanca(query);
+    ["pagina", "pagina-equipes"].forEach((chave) => query.delete(chave));
+    pushFilterState(routePath().slice(2), query, foco);
+  };
+  [["data-est-equipe", "equipe"], ["data-est-mapa", "mapa"], ["data-est-rounds", "rounds"]].forEach(([atributo, chave]) => {
+    pagina.querySelector(`[${atributo}]`)?.addEventListener("change", (event) => {
+      aplica((query) => {
+        if (event.target.value && event.target.value !== "0") query.set(chave, event.target.value);
+        else query.delete(chave);
+      }, `[${atributo}]`);
+    });
+  });
+  // A lista so refaz ao soltar: refazer durante o arraste trocaria o controle na mao.
+  pagina.querySelector("[data-est-rounds]")?.addEventListener("input", (event) => {
+    const { value, max } = event.target;
+    event.target.parentElement.style.setProperty("--cheio", `${Number(max) ? (Number(value) / Number(max)) * 100 : 0}%`);
+    pagina.querySelector("[data-est-rounds-valor]").textContent = value;
+  });
+  pagina.addEventListener("click", (event) => {
+    if (event.target.closest("[data-est-limpar]")) aplica((query) => ["equipe", "mapa", "rounds"].forEach((chave) => query.delete(chave)), "[data-est-equipe]");
+    const lider = event.target.closest("[data-est-lider]");
+    if (lider) {
+      const indice = Number(lider.dataset.estLider);
+      state.tournamentEstLider = indice;
+      pagina.querySelector(".vp-est-trilho").style.setProperty("--atual", indice);
+      pagina.querySelectorAll(".vp-est-trilho > a").forEach((cartao, posicao) => {
+        cartao.inert = posicao !== indice;
+      });
+      pagina.querySelectorAll("[data-est-lider]").forEach((botao) => botao.setAttribute("aria-pressed", String(botao === lider)));
+    }
+    const botao = event.target.closest("[data-est-detalhe]");
+    if (!botao) return;
+    const aberto = botao.getAttribute("aria-expanded") !== "true";
+    botao.setAttribute("aria-expanded", String(aberto));
+    botao.closest("tr").nextElementSibling.hidden = !aberto;
+  });
 }
 
 function tournamentMapsSection(event, matches) {
@@ -20725,40 +20916,6 @@ function tournamentStatsTopList(title, subtitle, rows, emptyLabel) {
   `;
 }
 
-function tournamentTopPlayerRow(player, index) {
-  const team = teamById(player.teamId);
-  const teamLabel = team?.sourceTag || team?.tag || player.teamTag || player.teamId || "Sem equipe";
-  return `
-    <a class="tournament-stat-list-row" href="${playerHref(player)}">
-      <span class="stat-rank">${index + 1}</span>
-      ${playerLogo(player.id, "tournament-stat-avatar")}
-      <span class="stat-row-main">
-        <strong>${escapeHtml(player.nick || player.handle || "Jogador")}</strong>
-        <small>${escapeHtml(teamLabel)}</small>
-      </span>
-      <span class="stat-row-metric"><strong>${escapeHtml(playerRating(player))}</strong><small>rAAting 3.0</small></span>
-      <span class="stat-row-metric"><strong>${escapeHtml(String(player.maps || player.matches || 0))}</strong><small>Mapas</small></span>
-    </a>
-  `;
-}
-
-function tournamentTopTeamRow(row, index) {
-  const tag = row.team?.missing ? "article" : "a";
-  const href = row.team?.missing ? "" : ` href="#/teams/${escapeHtml(row.id)}"`;
-  return `
-    <${tag} class="tournament-stat-list-row"${href}>
-      <span class="stat-rank">${index + 1}</span>
-      ${teamLogo(row.id, "tournament-stat-logo")}
-      <span class="stat-row-main">
-        <strong>${escapeHtml(row.team?.name || displayTeamName(row.id))}</strong>
-        <small>${escapeHtml(`${row.seriesWins}-${row.seriesLosses} séries · ${row.mapWins}-${row.mapLosses} mapas`)}</small>
-      </span>
-      <span class="stat-row-metric"><strong>${escapeHtml(tournamentTeamRatingLabel(row))}</strong><small>rAAting 3.0</small></span>
-      <span class="stat-row-metric"><strong>${escapeHtml(signed(row.roundDiff))}</strong><small>Saldo</small></span>
-    </${tag}>
-  `;
-}
-
 function tournamentTeamStatRows(event, matches, standings, players = []) {
   const rows = new Map();
   const ensure = (teamId) => {
@@ -20854,46 +21011,62 @@ function tournamentTeamRatingLabel(row) {
 }
 
 function tournamentPlayerStatColumns() {
+  const numero = (texto) => (row) => `<td class="numeric">${escapeHtml(texto(row))}</td>`;
+  const fkFd = (player) => Number(player.firstKills || 0) - Number(player.firstDeaths || 0);
+  const coluna = (key, label, value, texto, opcoes = {}) => ({ key, label, value, texto, celula: numero(texto), ...opcoes });
   return [
-    { key: "player", label: "Player", value: (player) => player.nick || player.handle || "", type: "text", direction: "asc" },
-    { key: "agents", label: "Agentes", value: (player) => player.agentList?.[0]?.name || player.agent || "", type: "text", direction: "asc" },
-    { key: "rounds", label: "RND", value: (player) => Number(player.rounds || 0) },
-    { key: "maps", label: "Mapas", value: (player) => Number(player.matches || player.maps || 0) },
-    { key: "rating", label: "rAAting 3.0", value: (player) => Number(officialRatingValue(player) || 0) },
-    { key: "acs", label: "ACS", value: (player) => Number(player.acs || 0) },
-    { key: "kd", label: "K:D", value: (player) => Number(player.kd || 0) },
-    { key: "kast", label: "KAST", value: (player) => Number(player.kast || 0) },
-    { key: "adr", label: "ADR", value: (player) => Number(player.adr || 0) },
-    { key: "swing", label: "Swing/R", value: (player) => Number(playerSwingPerRound(player) || 0) },
-    { key: "fkFdDiff", label: "FK-FD", value: (player) => Number(player.firstKills || 0) - Number(player.firstDeaths || 0) },
-    { key: "kpr", label: "KPR", value: (player) => Number(player.kpr || 0) },
-    { key: "apr", label: "APR", value: (player) => Number(player.apr || 0) },
-    { key: "fkpr", label: "FKPR", value: (player) => (player.rounds ? player.firstKills / player.rounds : 0) },
-    { key: "fdpr", label: "FDPR", value: (player) => (player.rounds ? player.firstDeaths / player.rounds : 0) },
-    { key: "hs", label: "HS%", value: (player) => Number(player.hs || 0) },
-    { key: "kills", label: "K", value: (player) => Number(player.kills || 0) },
-    { key: "deaths", label: "D", value: (player) => Number(player.deaths || 0) },
-    { key: "assists", label: "A", value: (player) => Number(player.assists || 0) },
-    { key: "firstKills", label: "FK", value: (player) => Number(player.firstKills || 0) },
+    {
+      key: "player", label: "Jogador", value: (player) => player.nick || player.handle || "", type: "text", direction: "asc", curta: true,
+      celula: (player) => `<td><a class="tournament-stats-player-cell" href="${playerHref(player)}"><span class="tournament-player-logo-pair">${playerLogo(player.id, "tournament-stat-avatar")}${player.teamId ? teamLogo(player.teamId, "tournament-player-team-logo") : ""}</span><span><strong>${escapeHtml(player.nick || player.handle || "Jogador")}</strong><small>${escapeHtml(tournamentPlayerTeamLabel(player))}</small></span></a></td>`,
+    },
+    { key: "agents", label: "Agentes", value: (player) => player.agentList?.[0]?.name || player.agent || "", type: "text", direction: "asc", curta: true, celula: (player) => `<td>${agentStack(player)}</td>` },
+    coluna("rounds", "Rnd", (player) => Number(player.rounds || 0), (player) => String(player.rounds || 0), { curta: true }),
+    coluna("maps", "Mapas", (player) => Number(player.matches || player.maps || 0), (player) => String(player.matches || player.maps || 0), { curta: true }),
+    coluna("rating", "rAAting", (player) => Number(officialRatingValue(player) || 0), (player) => playerRating(player), { curta: true }),
+    coluna("acs", "ACS", (player) => Number(player.acs || 0), (player) => fmt(player.acs, 0), { curta: true }),
+    coluna("kd", "K:D", (player) => Number(player.kd || 0), (player) => fmt(player.kd), { curta: true }),
+    coluna("kast", "KAST", (player) => Number(player.kast || 0), (player) => pct(player.kast), { curta: true }),
+    coluna("adr", "ADR", (player) => Number(player.adr || 0), (player) => fmt(player.adr, 0), { curta: true }),
+    coluna("swing", "Swing/R", (player) => Number(playerSwingPerRound(player) || 0), (player) => formatMaybeSwing(player), { curta: true, celula: (player) => `<td class="numeric ${escapeHtml(directionalTone(playerSwingPerRound(player)))}">${escapeHtml(formatMaybeSwing(player))}</td>` }),
+    coluna("kpr", "KPR", (player) => Number(player.kpr || 0), (player) => fmt(player.kpr)),
+    coluna("apr", "APR", (player) => Number(player.apr || 0), (player) => fmt(player.apr)),
+    coluna("hs", "HS%", (player) => Number(player.hs || 0), (player) => pct(player.hs), { curta: true }),
+    coluna("kills", "K", (player) => Number(player.kills || 0), (player) => String(player.kills || 0)),
+    coluna("deaths", "D", (player) => Number(player.deaths || 0), (player) => String(player.deaths || 0)),
+    coluna("assists", "A", (player) => Number(player.assists || 0), (player) => String(player.assists || 0)),
+    coluna("kda", "K/D/A", (player) => Number(player.kills || 0), (player) => `${player.kills || 0}/${player.deaths || 0}/${player.assists || 0}`, { curta: true }),
+    coluna("fkFdDiff", "FK-FD", fkFd, (player) => signed(fkFd(player)), { curta: true, celula: (player) => `<td class="numeric ${escapeHtml(signedTone(fkFd(player)))}">${escapeHtml(signed(fkFd(player)))}</td>` }),
+    coluna("firstKills", "FK", (player) => Number(player.firstKills || 0), (player) => String(player.firstKills || 0)),
+    coluna("fkpr", "FKPR", (player) => (player.rounds ? player.firstKills / player.rounds : 0), (player) => fmt(player.rounds ? player.firstKills / player.rounds : 0)),
+    coluna("fdpr", "FDPR", (player) => (player.rounds ? player.firstDeaths / player.rounds : 0), (player) => fmt(player.rounds ? player.firstDeaths / player.rounds : 0)),
   ];
 }
 
 function tournamentTeamStatColumns() {
+  const numero = (texto) => (row) => `<td class="numeric">${escapeHtml(texto(row))}</td>`;
   return [
-    { key: "team", label: "Equipe", value: (row) => row.team?.name || displayTeamName(row.id), type: "text", direction: "asc" },
-    { key: "seriesWins", label: "Séries", value: (row) => Number(row.seriesWins || 0) - Number(row.seriesLosses || 0) / 100 },
-    { key: "mapWins", label: "Mapas", value: (row) => Number(row.mapWins || 0) - Number(row.mapLosses || 0) / 100 },
-    { key: "roundsFor", label: "Rounds", value: (row) => Number(row.roundsFor || 0) - Number(row.roundsAgainst || 0) / 1000 },
-    { key: "roundDiff", label: "+/-", value: (row) => Number(row.roundDiff || 0) },
-    { key: "winrate", label: "Win%", value: (row) => (row.seriesPlayed ? pctValue(row.seriesWins, row.seriesPlayed) : 0) },
-    { key: "rating", label: "rAAting 3.0", value: (row) => Number(row.rating || 0) },
-    { key: "acs", label: "ACS", value: (row) => Number(row.acs || 0) },
-    { key: "adr", label: "ADR", value: (row) => Number(row.adr || 0) },
+    { key: "lugar", label: "Lugar", value: (row) => Math.min(row.standingIndex, 9999), direction: "asc", celula: (row) => `<td class="vp-est-lugar">${escapeHtml(String(row.placement || "-").replace(/ lugar$/, ""))}</td>` },
+    {
+      key: "team", label: "Equipe", value: (row) => row.team?.name || displayTeamName(row.id), type: "text", direction: "asc",
+      celula: (row) => {
+        const tag = row.team?.missing ? "span" : "a";
+        const href = row.team?.missing ? "" : ` href="#/teams/${escapeHtml(row.id)}"`;
+        return `<td><${tag} class="tournament-stats-team-cell"${href}>${teamLogo(row.id, "tournament-stat-logo")}<span><strong>${escapeHtml(row.team?.name || displayTeamName(row.id))}</strong></span></${tag}></td>`;
+      },
+    },
+    { key: "seriesWins", label: "Séries", value: (row) => Number(row.seriesWins || 0) - Number(row.seriesLosses || 0) / 100, celula: numero((row) => `${row.seriesWins}-${row.seriesLosses}`) },
+    { key: "mapWins", label: "Mapas", value: (row) => Number(row.mapWins || 0) - Number(row.mapLosses || 0) / 100, celula: numero((row) => `${row.mapWins}-${row.mapLosses}`) },
+    { key: "roundsFor", label: "Rounds", value: (row) => Number(row.roundsFor || 0) - Number(row.roundsAgainst || 0) / 1000, celula: numero((row) => `${row.roundsFor}-${row.roundsAgainst}`) },
+    { key: "roundDiff", label: "Saldo", value: (row) => Number(row.roundDiff || 0), celula: numero((row) => signed(row.roundDiff)) },
+    { key: "winrate", label: "Win%", value: (row) => (row.seriesPlayed ? pctValue(row.seriesWins, row.seriesPlayed) : 0), celula: numero((row) => pct(row.seriesPlayed ? pctValue(row.seriesWins, row.seriesPlayed) : 0)) },
+    { key: "rating", label: "rAAting", value: (row) => Number(row.rating || 0), celula: numero(tournamentTeamRatingLabel) },
+    { key: "acs", label: "ACS", value: (row) => Number(row.acs || 0), celula: numero((row) => (row.playerRounds ? fmt(row.acs, 0) : "-")) },
+    { key: "adr", label: "ADR", value: (row) => Number(row.adr || 0), celula: numero((row) => (row.playerRounds ? fmt(row.adr, 0) : "-")) },
   ];
 }
 
 function tournamentStatsSortState(table) {
-  const fallback = table === "teams" ? { key: "seriesWins", direction: "desc" } : table === "agents" ? { key: "picks", direction: "desc" } : { key: "rating", direction: "desc" };
+  const fallback = table === "teams" ? { key: "lugar", direction: "asc" } : table === "agents" ? { key: "picks", direction: "desc" } : { key: "rating", direction: "desc" };
   return state.tournamentStatsSort?.[table] || fallback;
 }
 
@@ -20982,131 +21155,9 @@ function tournamentStatValueCell(display) {
   return `<td class="numeric tournament-stat-value">${escapeHtml(display)}</td>`;
 }
 
-function tournamentPlayerStatsTable(eventId, players) {
-  const columns = tournamentPlayerStatColumns();
-  const sortedRows = tournamentSortedStatRows("players", players, columns, tournamentPlayerStatSort);
-  const expanded = tournamentStatsTableExpanded(eventId, "players");
-  const visibleRows = expanded ? sortedRows : sortedRows.slice(0, 10);
-  return `
-    <article class="tournament-stat-card tournament-stat-table-card">
-      <div class="tournament-stat-card-head">
-        <span>
-          <strong>Tabela de jogadores</strong>
-          <small>Ranking oficial por rAAting 3.0, mínimo ${RaaRatingCore.SAMPLE_MIN_ROUNDS} rounds</small>
-        </span>
-        ${tournamentStatsExpandButton("players", sortedRows.length, expanded)}
-      </div>
-      ${tabelaComRotulos(`<div class="table-wrap tournament-stats-table-wrap">
-        <table class="tournament-stats-table">
-          <thead>
-            <tr>
-              ${columns.map((column) => tournamentStatsHeaderCell("players", column)).join("")}
-            </tr>
-          </thead>
-          <tbody>
-            ${visibleRows.length ? visibleRows.map(tournamentPlayerStatsRow).join("") : `<tr><td colspan="${columns.length}"><div class="empty-state compact-empty">Nenhuma estatística de jogador disponível.</div></td></tr>`}
-          </tbody>
-        </table>
-      </div>`)}
-    </article>
-  `;
-}
-
-function tournamentPlayerStatsRow(player) {
-  const fkpr = player.rounds ? player.firstKills / player.rounds : 0;
-  const fdpr = player.rounds ? player.firstDeaths / player.rounds : 0;
-  const fkFdDiff = Number(player.firstKills || 0) - Number(player.firstDeaths || 0);
-  return `
-    <tr>
-      <td>
-        <a class="tournament-stats-player-cell" href="${playerHref(player)}">
-          <span class="tournament-player-logo-pair">
-            ${playerLogo(player.id, "tournament-stat-avatar")}
-            ${player.teamId ? teamLogo(player.teamId, "tournament-player-team-logo") : ""}
-          </span>
-          <span><strong>${escapeHtml(player.nick || player.handle || "Jogador")}</strong><small>${escapeHtml(tournamentPlayerTeamLabel(player))}</small></span>
-        </a>
-      </td>
-      <td>${agentStack(player)}</td>
-      <td class="numeric">${escapeHtml(String(player.rounds || 0))}</td>
-      <td class="numeric">${escapeHtml(String(player.matches || player.maps || 0))}</td>
-      ${tournamentStatValueCell(playerRating(player))}
-      ${tournamentStatValueCell(fmt(player.acs, 0))}
-      ${tournamentStatValueCell(fmt(player.kd))}
-      ${tournamentStatValueCell(pct(player.kast))}
-      ${tournamentStatValueCell(fmt(player.adr, 0))}
-      <td class="numeric ${escapeHtml(directionalTone(playerSwingPerRound(player)))}">${escapeHtml(formatMaybeSwing(player))}</td>
-      <td class="numeric ${escapeHtml(signedTone(fkFdDiff))}">${escapeHtml(signed(fkFdDiff))}</td>
-      ${tournamentStatValueCell(fmt(player.kpr))}
-      ${tournamentStatValueCell(fmt(player.apr))}
-      ${tournamentStatValueCell(fmt(fkpr))}
-      ${tournamentStatValueCell(fmt(fdpr))}
-      ${tournamentStatValueCell(pct(player.hs))}
-      <td class="numeric">${escapeHtml(String(player.kills || 0))}</td>
-      <td class="numeric">${escapeHtml(String(player.deaths || 0))}</td>
-      <td class="numeric">${escapeHtml(String(player.assists || 0))}</td>
-      <td class="numeric">${escapeHtml(String(player.firstKills || 0))}</td>
-    </tr>
-  `;
-}
-
 function tournamentPlayerTeamLabel(player) {
   const team = teamById(player.teamId);
   return team?.sourceTag || team?.tag || player.teamTag || player.teamId || "Sem equipe";
-}
-
-function tournamentTeamStatsTable(eventId, teams) {
-  const columns = tournamentTeamStatColumns();
-  const sortedRows = tournamentSortedStatRows("teams", teams, columns, tournamentTeamStatSort);
-  const expanded = tournamentStatsTableExpanded(eventId, "teams");
-  const visibleRows = expanded ? sortedRows : sortedRows.slice(0, 10);
-  return `
-    <article class="tournament-stat-card tournament-stat-table-card">
-      <div class="tournament-stat-card-head">
-        <span>
-          <strong>Tabela de equipes</strong>
-          <small>Séries, mapas, rounds e médias dos jogadores</small>
-        </span>
-        ${tournamentStatsExpandButton("teams", sortedRows.length, expanded)}
-      </div>
-      ${tabelaComRotulos(`<div class="table-wrap tournament-stats-table-wrap">
-        <table class="tournament-stats-table tournament-team-stats-table">
-          <thead>
-            <tr>
-              ${columns.map((column) => tournamentStatsHeaderCell("teams", column)).join("")}
-            </tr>
-          </thead>
-          <tbody>
-            ${visibleRows.length ? visibleRows.map(tournamentTeamStatsRow).join("") : `<tr><td colspan="${columns.length}"><div class="empty-state compact-empty">Nenhuma estatística de equipe disponível.</div></td></tr>`}
-          </tbody>
-        </table>
-      </div>`)}
-    </article>
-  `;
-}
-
-function tournamentTeamStatsRow(row) {
-  const winRate = row.seriesPlayed ? pctValue(row.seriesWins, row.seriesPlayed) : 0;
-  const tag = row.team?.missing ? "span" : "a";
-  const href = row.team?.missing ? "" : ` href="#/teams/${escapeHtml(row.id)}"`;
-  return `
-    <tr>
-      <td>
-        <${tag} class="tournament-stats-team-cell"${href}>
-          ${teamLogo(row.id, "tournament-stat-logo")}
-          <span><strong>${escapeHtml(row.team?.name || displayTeamName(row.id))}</strong><small>${escapeHtml(row.placement || "Campanha")}</small></span>
-        </${tag}>
-      </td>
-      <td class="numeric">${escapeHtml(`${row.seriesWins}-${row.seriesLosses}`)}</td>
-      <td class="numeric">${escapeHtml(`${row.mapWins}-${row.mapLosses}`)}</td>
-      <td class="numeric">${escapeHtml(`${row.roundsFor}-${row.roundsAgainst}`)}</td>
-      <td class="numeric">${escapeHtml(signed(row.roundDiff))}</td>
-      ${tournamentStatValueCell(pct(winRate))}
-      ${tournamentStatValueCell(tournamentTeamRatingLabel(row))}
-      ${tournamentStatValueCell(row.playerRounds ? fmt(row.acs, 0) : "-")}
-      ${tournamentStatValueCell(row.playerRounds ? fmt(row.adr, 0) : "-")}
-    </tr>
-  `;
 }
 
 function tournamentAgentsSection(event, matches) {

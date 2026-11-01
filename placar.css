@@ -5227,6 +5227,546 @@ a.vp-tabela-linha:hover strong {
   .vp-jogos-dias { order: 5; }
 }
 
+/* ---- aba Estatisticas ---- */
+.vp-est-lista {
+  min-width: 0;
+}
+
+.tournament-hub .tournament-section.vp-est {
+  display: grid;
+  grid-template-columns: minmax(0, 922px) 340px;
+  justify-content: center;
+  align-items: start;
+  gap: 32px;
+}
+
+.vp-est .vp-resumo {
+  align-content: start;
+  gap: 12px;
+}
+
+.vp-est-cartas {
+  overflow: hidden;
+}
+
+.vp-est-trilho {
+  display: flex;
+  transform: translateX(calc(var(--atual) * -100%));
+  transition: transform 220ms ease;
+}
+
+.vp-est-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 12px;
+}
+
+.vp-est-filtros select {
+  flex: 0 1 240px;
+  min-width: 0;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 0;
+  background: var(--surface);
+  color: var(--ink);
+  color-scheme: dark;
+  font: 600 13px/1 var(--font-text);
+}
+
+.vp-est-filtros option {
+  background: var(--surface-2);
+}
+
+.vp-est-rounds {
+  display: grid;
+  flex: 1 1 280px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 40px;
+  padding: 0 12px;
+  background: var(--surface);
+}
+
+.vp-est-rounds span {
+  color: var(--muted);
+  font: 600 13px/1 var(--font-text);
+  white-space: nowrap;
+}
+
+.vp-est-rounds b {
+  min-width: 3ch;
+  font: 600 20px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-est-rounds input {
+  width: 100%;
+  height: 24px;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.vp-est-rounds input:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.vp-est-rounds input::-webkit-slider-runnable-track {
+  height: 4px;
+  background: linear-gradient(to right, var(--brand) var(--cheio), var(--line) var(--cheio));
+}
+
+.vp-est-rounds input::-moz-range-track {
+  height: 4px;
+  background: linear-gradient(to right, var(--brand) var(--cheio), var(--line) var(--cheio));
+}
+
+.vp-est-rounds input::-webkit-slider-thumb {
+  width: 10px;
+  height: 20px;
+  margin-top: -8px;
+  border: 0;
+  border-radius: 0;
+  background: var(--ink);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.vp-est-rounds input::-moz-range-thumb {
+  width: 10px;
+  height: 20px;
+  border: 0;
+  border-radius: 0;
+  background: var(--ink);
+}
+
+.vp-lideres {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-lider {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  width: 100%;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 0;
+  background: var(--surface);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.vp-lider:hover,
+.vp-lider[aria-pressed="true"] {
+  background: var(--surface-2);
+}
+
+.vp-lider[aria-pressed="true"] {
+  box-shadow: inset 2px 0 0 var(--brand);
+}
+
+.vp-lider[aria-pressed="true"] small {
+  color: var(--ink);
+}
+
+.vp-lider small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-lider span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.vp-lider .team-logo {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.vp-lider strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-lider b {
+  font: 600 20px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-est-bloco + .vp-est-bloco {
+  margin-top: 20px;
+}
+
+.vp-est-bloco h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 10px;
+  margin: 0 0 6px;
+  color: var(--ink);
+  font: 600 20px/1.1 var(--font-display);
+}
+
+.vp-est-bloco h3 span {
+  color: var(--muted);
+  font: 400 12px/1.2 var(--font-text);
+}
+
+.vp-est .tournament-stats-table-wrap {
+  overflow: visible;
+  border: 0;
+  background: var(--surface);
+}
+
+.vp-est .tournament-stats-table {
+  width: 100%;
+  min-width: 0;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.vp-est .tournament-stats-table th,
+.vp-est .tournament-stats-table td {
+  height: auto;
+  padding: 0 5px;
+  border: 0;
+  background: none;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.vp-est .tournament-stats-table th {
+  position: static;
+  height: 32px;
+  color: var(--muted);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-est .tournament-stats-table th.numeric {
+  text-align: right;
+}
+
+.vp-est th.numeric .tournament-stat-sort {
+  justify-content: flex-end;
+}
+
+.vp-est th:first-child.numeric {
+  text-align: left;
+}
+
+.vp-est th:first-child.numeric .tournament-stat-sort {
+  justify-content: flex-start;
+}
+
+.vp-est .tournament-stats-table td {
+  height: 38px;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-est .tournament-stats-table th:first-child,
+.vp-est .tournament-stats-table td:first-child {
+  padding-left: 12px;
+}
+
+.vp-est .tournament-stats-table th:last-child,
+.vp-est .tournament-stats-table td:last-child {
+  padding-right: 12px;
+}
+
+.vp-est .tournament-stats-table tbody tr:nth-child(n) td {
+  background: none;
+}
+
+.vp-est .tournament-stats-table tbody tr:hover td {
+  background: var(--surface-2);
+}
+
+.vp-est .tournament-stat-sort {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font: 600 12px/1 var(--font-text);
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.vp-est .tournament-stat-sort.active {
+  color: var(--ink);
+}
+
+.vp-est .tournament-stat-sort i {
+  font-size: 8px;
+  font-style: normal;
+}
+
+/* O !important e porque a regra antiga do styles.css tambem tem. */
+.vp-est .numeric.perf-positive {
+  color: var(--win) !important;
+  font-weight: 600;
+}
+
+/* Vermelho e marca, nunca dado: o negativo so apaga. */
+.vp-est .numeric.perf-negative {
+  color: var(--loss-ink) !important;
+  font-weight: 600;
+}
+
+.vp-est .tournament-stats-player-cell,
+.vp-est .tournament-stats-team-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-est .tournament-player-logo-pair {
+  flex: none;
+  gap: 2px;
+}
+
+.vp-est .tournament-stats-player-cell span:last-child {
+  display: grid;
+  min-width: 0;
+}
+
+.vp-est .tournament-stats-player-cell strong,
+.vp-est .tournament-stats-team-cell strong {
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+}
+
+.vp-est .tournament-stats-player-cell small {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-est .agent-stack {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2px;
+}
+
+.vp-est .agent-mini {
+  width: 20px;
+  height: 20px;
+}
+
+.vp-est-lugar {
+  color: var(--muted);
+  font: 600 15px/1 var(--font-display);
+}
+
+.vp-est-abre button {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.vp-est-abre i {
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-1px) rotate(45deg);
+}
+
+.vp-est-abre button[aria-expanded="true"] i {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.vp-est .tournament-stats-table tr.vp-est-detalhe[hidden] {
+  display: none;
+}
+
+.vp-est-detalhe dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  margin: 0;
+  padding: 2px 0;
+}
+
+.vp-est-detalhe dl div {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.vp-est-detalhe dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-est-detalhe dd {
+  margin: 0;
+  font: 600 15px/1 var(--font-display);
+}
+
+/* Numa coluna so: titulo e filtros, os lideres e as tabelas, que viram blocos
+   com o rotulo em cada numero. */
+@media (max-width: 1180px) {
+  .tournament-hub .tournament-section.vp-est {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .vp-est-lista {
+    display: contents;
+  }
+
+  .vp-est .vp-resumo {
+    display: grid;
+    order: 1;
+  }
+
+  .vp-est-bloco,
+  .vp-est .empty-state {
+    order: 2;
+  }
+
+  .vp-est .tournament-stats-table td {
+    height: auto;
+    border-top: 0;
+  }
+
+  .vp-est .tournament-stats-table th {
+    height: auto;
+  }
+
+  /* Em bloco o realce vai na linha inteira, nao em cada numero. */
+  .vp-est .tournament-stats-table tbody tr:hover {
+    background: var(--surface-2);
+  }
+
+  .vp-est .tournament-stats-table tbody tr:nth-child(n):hover td {
+    background: none;
+  }
+
+  /* Nome e agentes na mesma fila e todos os numeros na de baixo: dez jogadores
+     precisam caber sem empurrar a lista de equipes para longe. */
+  .vp-est .tournament-stats-table tbody tr:has(.vp-est-abre) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: center;
+  }
+
+  .vp-est .tournament-stats-table tr:has(.vp-est-abre) td:first-child {
+    grid-column: 1 / span 5;
+  }
+
+  .vp-est .tournament-stats-table tr:has(.vp-est-abre) td:has(.agent-stack) {
+    grid-column: 6 / span 4;
+  }
+
+  .vp-est .tournament-stats-table tbody td[data-label]:has(.agent-stack)::before {
+    content: none;
+  }
+
+  .vp-est .tournament-stats-table tr:has(.vp-est-abre) td[data-label="K/D/A"] {
+    grid-column: span 2;
+  }
+
+  .vp-est .tournament-stats-table td.vp-est-abre {
+    display: grid;
+    grid-row: 1;
+    grid-column: 12;
+    justify-items: end;
+  }
+
+  .vp-est .tournament-stats-table tr.vp-est-detalhe {
+    display: block;
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .vp-est-filtros select,
+  .vp-est-rounds {
+    flex: 1 1 100%;
+  }
+
+  .vp-est .tournament-stats-table tbody tr:has(.vp-est-abre) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .vp-est .tournament-stats-table tr:has(.vp-est-abre) td:first-child {
+    grid-column: span 2;
+  }
+
+  .vp-est .tournament-stats-table tr:has(.vp-est-abre) td:has(.agent-stack) {
+    grid-column: span 2;
+  }
+
+  .vp-est .tournament-stats-table tr:has(.vp-est-abre) td:has(.agent-stack) .agent-stack {
+    justify-content: flex-end;
+  }
+
+  .vp-est .tournament-stats-table tr:has(.vp-est-abre) td[data-label="K/D/A"] {
+    grid-column: auto;
+  }
+
+  .vp-est .tournament-stats-table td.vp-est-abre {
+    grid-row: auto;
+    grid-column: auto;
+    justify-items: center;
+  }
+}
+
+/* Em quatro colunas o K/D/A de tres casas nao cabe. */
+@media (max-width: 360px) {
+  .vp-est .tournament-stats-table tbody tr:has(.vp-est-abre) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .vp-est .tournament-stats-table tr:has(.vp-est-abre) td:first-child,
+  .vp-est .tournament-stats-table tr:has(.vp-est-abre) td:has(.agent-stack) {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 1180px) {
   .vp-camp-topo {
     grid-template-columns: minmax(0, 1fr);
@@ -6553,10 +7093,15 @@ a.vp-tabela-linha:hover strong {
   padding: 0;
   background: none;
   border: 0;
+  color: var(--muted);
   cursor: pointer;
   font: inherit;
   font-size: 12px;
   font-weight: 500;
+}
+
+.vp-filtros-limpar:hover {
+  color: var(--ink);
 }
 
 /* Os filtros numa placa so, como o ranking: sem caixa em volta de cada um e sem

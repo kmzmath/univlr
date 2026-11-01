@@ -12,9 +12,8 @@
    - Placar: linha na cor da equipe, quem perdeu apagado.
    - Mapa de fundo: a arte dos mapas da serie atras de cada partida. */
 
-/* Fundo da pagina totalmente liso, como a HLTV: a malha quadriculada de 44px
-   e o brilho vermelho do topo sairam (pedido do dono em 24/10), e ele
-   preferiu sem luz nenhuma no topo. Quem separa as coisas sao as Placas. */
+/* Fundo da pagina sem luz nenhuma no topo: quem separa as coisas sao as Placas.
+   Os escudos ficam por cima desta cor, em .vp-fundo. */
 body {
   background: var(--bg);
 }
@@ -7192,5 +7191,139 @@ body {
 
   .news-artigo-titulo h1 {
     font-size: 30px;
+  }
+}
+
+/* Fundo do site: escudos apagados descendo em diagonal para a esquerda. Fica
+   fora do #app porque o Shell recria a pagina inteira. A camada sobra 1728px,
+   o lado da trama, para cima e para a direita: andar esse lado nos dois eixos
+   devolve a imagem ao ponto de partida, sem salto. Anima so transform. */
+.vp-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.vp-fundo i {
+  position: absolute;
+  top: -1728px;
+  right: -1728px;
+  bottom: 0;
+  left: 0;
+  opacity: 0.24;
+  background: url("assets/fundo/escudos.webp") 0 0 / 1728px 1728px;
+  will-change: transform;
+  animation: vp-fundo-desce 220s linear infinite;
+}
+
+@keyframes vp-fundo-desce {
+  to { transform: translate(-1728px, 1728px); }
+}
+
+/* Paginas de detalhe e materia sao fechadas: tem dado do comeco ao fim, e tapar
+   bloco por bloco sempre deixava algum para tras. Os escudos ficam nas margens.
+   A sombra e a folga em volta, sem mexer no layout. */
+.match-page,
+.tournament-hub,
+.team-page,
+.player-page,
+.news-artigo,
+.main:has(> .profile-header) {
+  background-color: var(--bg);
+  box-shadow: 0 0 0 16px var(--bg);
+}
+
+/* Na home e nas listas os escudos aparecem entre os blocos, entao todo bloco de
+   informacao precisa de fundo proprio: as artes destes tinham transparencia e
+   deixavam os escudos passar. Os topos usam o preto de sempre, para a arte ficar
+   igual; os demais viram Placas. */
+.vp-hero-partida,
+.vp-abas-mapa,
+.vp-hero-equipe,
+.vp-hero-camp,
+.vp-hero-jogador {
+  background-color: var(--bg);
+}
+
+.vp-comparativo,
+.vp-duelo,
+.vp-banda,
+.vp-historico,
+.vp-mvp-stats,
+.vp-fatos,
+.vp-pod,
+.vp-pool-mapa,
+.vp-agentes,
+.vp-trofeus,
+.vp-rk-detalhes,
+.vp-s-ranking-equipe .ranking-chart-card,
+.ranking-chart-card,
+.player-team-kpis .stat-card,
+.swiss-flow-shell,
+.tournament-stats-table-wrap,
+.tournament-stats-shell,
+.vp-resumo-bloco:has(.vp-rt-eixo),
+.vp-trilho .atividade-faixa,
+.vp-noticia-principal,
+.vp-noticias-lista,
+.result-day-group,
+.vp-dia,
+.team-tabs,
+.tournament-page-tabs,
+.vp-jg-cabeca,
+.ranking-accordion-head {
+  background-color: var(--surface);
+}
+
+.vp-hero-meta {
+  padding: 8px 14px;
+}
+
+.vp-comparativo,
+.vp-historico,
+.vp-mvp-stats,
+.vp-fatos,
+.vp-agentes,
+.vp-trofeus,
+.vp-duelo,
+.vp-rk-detalhes,
+.vp-resumo-bloco:has(.vp-rt-eixo),
+.vp-s-ranking-equipe .ranking-chart-card,
+.ranking-chart-card {
+  padding: 12px 14px;
+}
+
+.vp-dia,
+.result-day-toggle {
+  padding: 6px 14px;
+}
+
+.vp-trilho .atividade-faixa {
+  padding: 10px 14px;
+  border-top: 0;
+}
+
+.vp-noticia-principal {
+  padding-bottom: 10px;
+}
+
+.vp-noticia-principal :is(.vp-noticia-meta, h3) {
+  padding-inline: 12px;
+}
+
+.vp-noticias-lista {
+  padding: 4px 12px;
+}
+
+.team-tabs,
+.tournament-page-tabs {
+  padding-inline: 14px;
+}
+
+@media (max-width: 560px) {
+  .vp-comparativo {
+    padding-inline: 4px;
   }
 }

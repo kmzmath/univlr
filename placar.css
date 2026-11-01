@@ -6713,6 +6713,26 @@ body {
   text-align: right;
 }
 
+/* A busca fica parada no topo e so as opcoes rolam. */
+.vp-jg-filtros .player-team-options {
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.vp-jg-filtros .team-filter-search {
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  margin: 0;
+}
+
+.player-team-lista {
+  display: grid;
+  gap: 8px;
+  min-height: 0;
+  overflow-y: auto;
+}
+
 .vp-jg-toggle {
   min-height: 44px;
   padding: 0 14px;

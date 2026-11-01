@@ -15479,7 +15479,7 @@ function teamFilterButton(team) {
 
 function renderEventsPage(id) {
   if (id) return renderTournamentDetail(id);
-  if (!state.skipFilterHydration) applyEventFiltersFromQuery(routeQuery());
+  applyEventFiltersFromQuery(routeQuery());
   const events = eventsFiltrados();
   const total = visibleTournaments().length;
   Shell(`
@@ -15495,30 +15495,49 @@ function renderEventsPage(id) {
 }
 
 function renderPlayersCompact(id) {
-  // Texto digitado vive local ate o campo perder o foco: hidratar a cada tecla
-  // apagaria o que a pessoa esta escrevendo, e escrever no hash a cada tecla
-  // encheria o historico.
-  if (!id && !state.skipFilterHydration) applyPlayerFiltersFromQuery(routeQuery());
-  state.skipFilterHydration = false;
   if (id) return renderPlayerDetail(id);
+  applyPlayerFiltersFromQuery(routeQuery());
+  const { contagem, lista } = resultadoDosJogadores();
+  Shell(`
+    <section class="vp-lista-pagina vp-jogadores">
+      <header class="vp-sec">
+        <h1>Jogadores</h1>
+        <p class="lista-contagem" role="status" aria-live="polite">${contagem}</p>
+      </header>
+      <div class="vp-jg-filtros">${filtrosDosJogadores()}</div>
+      <div data-jogador-resultado>${lista}</div>
+    </section>
+  `);
+  bindPlayerFilters();
+  bindListaDeJogadores();
+}
+
+function resultadoDosJogadores() {
   const players = filteredPlayers();
   const totalDePaginas = Math.max(1, Math.ceil(players.length / LISTA_PAGINA));
   const pagina = Math.min(paginaDaLista(routeQuery()), totalDePaginas);
   const inicio = (pagina - 1) * LISTA_PAGINA;
   const visiveis = players.slice(inicio, inicio + LISTA_PAGINA);
-  Shell(`
-    <section class="vp-lista-pagina vp-jogadores">
-      <header class="vp-sec">
-        <h1>Jogadores</h1>
-        <p class="lista-contagem" role="status" aria-live="polite">${visiveis.length ? `Mostrando ${inicio + 1} a ${inicio + visiveis.length} de ${players.length} jogadores.` : "Nenhum jogador."}</p>
-      </header>
-      <div class="vp-jg-filtros">${filtrosDosJogadores()}</div>
+  return {
+    contagem: visiveis.length ? `Mostrando ${inicio + 1} a ${inicio + visiveis.length} de ${players.length} jogadores.` : "Nenhum jogador.",
+    lista: `
       ${visiveis.length ? `${cabecalhoDosJogadores()}<div class="vp-jg-lista">${visiveis.map(linhaDoJogador).join("")}</div>` : `<p class="empty-state">Nenhum jogador com esses filtros. Tire um filtro para ver mais.</p>`}
       ${paginacaoDaLista("players", pagina, totalDePaginas, playerFiltersToQuery())}
-    </section>
-  `);
-  bindPlayerFilters();
-  bindListaDeJogadores();
+    `,
+  };
+}
+
+// A busca troca so o resultado: recriar a pagina a cada tecla destruiria o campo
+// em que a pessoa esta digitando. O replaceState nao dispara hashchange e nao
+// enche o historico, e tirar `pagina` do hash devolve a lista para a primeira.
+function atualizarBuscaDeJogadores() {
+  const q = playerFiltersToQuery().toString();
+  window.history.replaceState(null, "", `#/players${q ? `?${q}` : ""}`);
+  const { contagem, lista } = resultadoDosJogadores();
+  document.querySelector(".vp-jogadores .lista-contagem").textContent = contagem;
+  document.querySelector("[data-jogador-resultado]").innerHTML = lista;
+  document.querySelector("[data-jogador-limpar]").hidden = !filtrosDosJogadoresAtivos();
+  bindResultadoDosJogadores();
 }
 
 function paginaDaLista(p) {
@@ -15554,8 +15573,11 @@ function paginacaoDaLista(section, pagina, total, params) {
   `;
 }
 
+function filtrosDosJogadoresAtivos() {
+  return Boolean(state.playerQuery || state.playerTeam !== "all" || state.playerComEquipe);
+}
+
 function filtrosDosJogadores() {
-  const filtrado = state.playerQuery || state.playerTeam !== "all" || state.playerComEquipe;
   return `
     <input id="player-query" class="vp-jg-busca" type="search" placeholder="Buscar jogador" aria-label="Buscar jogador" value="${escapeHtml(state.playerQuery)}" />
     ${playerTeamDropdown()}
@@ -15563,7 +15585,7 @@ function filtrosDosJogadores() {
       <input type="checkbox" data-jogador-atual ${state.playerComEquipe ? "checked" : ""} />
       <span>Com equipe atual</span>
     </label>
-    ${filtrado ? `<button type="button" class="vp-jg-toggle" data-jogador-limpar>Limpar filtros</button>` : ""}
+    <button type="button" class="vp-jg-toggle" data-jogador-limpar ${filtrosDosJogadoresAtivos() ? "" : "hidden"}>Limpar filtros</button>
   `;
 }
 
@@ -15605,7 +15627,7 @@ function linhaDoJogador(player) {
   `;
 }
 
-function bindListaDeJogadores() {
+function bindResultadoDosJogadores() {
   document.querySelectorAll("[data-jogador-ordem]").forEach((botao) => {
     botao.addEventListener("click", () => {
       const chave = botao.dataset.jogadorOrdem;
@@ -15614,6 +15636,14 @@ function bindListaDeJogadores() {
       pushFilterState("players", playerFiltersToQuery(), `[data-jogador-ordem="${chave}"]`);
     });
   });
+  // Trocar de pagina nao troca de rota, entao a rolagem nao volta sozinha.
+  document.querySelectorAll(".vp-paginas a").forEach((link) => {
+    link.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "instant" }));
+  });
+}
+
+function bindListaDeJogadores() {
+  bindResultadoDosJogadores();
   document.querySelector("[data-jogador-atual]")?.addEventListener("change", (event) => {
     state.playerComEquipe = event.currentTarget.checked;
     pushFilterState("players", playerFiltersToQuery(), "[data-jogador-atual]");
@@ -15624,25 +15654,28 @@ function bindListaDeJogadores() {
     state.playerComEquipe = false;
     pushFilterState("players", playerFiltersToQuery());
   });
-  // Trocar de pagina nao troca de rota, entao a rolagem nao volta sozinha.
-  document.querySelectorAll(".vp-paginas a").forEach((link) => {
-    link.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "instant" }));
-  });
 }
 
 function playerTeamDropdown() {
-  const teams = sortedTeamsByName(state.db.teams);
   return `
     <details class="filter-dropdown player-team-dropdown">
       <summary>${filterIcon()}<span>Equipe</span><strong>${playerTeamFilterSummary()}</strong>${chevronIcon()}</summary>
       <div class="filter-dropdown-body">
         <div class="filter-option-stack player-team-options">
-          ${playerTeamOptionButton(null)}
-          ${teams.map(playerTeamOptionButton).join("")}
+          <input id="player-team-query" class="filter-control team-filter-search" type="search" placeholder="Buscar equipe" aria-label="Buscar equipe" autocomplete="off" />
+          <div class="player-team-lista" data-player-team-options>${playerTeamOptionsHtml()}</div>
         </div>
       </div>
     </details>
   `;
+}
+
+function playerTeamOptionsHtml(busca = "") {
+  const query = normalize(busca);
+  const teams = sortedTeamsByName(state.db.teams)
+    .filter((team) => !query || normalize(`${team.name} ${team.sourceTag || team.tag} ${team.org || ""}`).includes(query));
+  if (!query) return [null, ...teams].map(playerTeamOptionButton).join("");
+  return teams.length ? teams.map(playerTeamOptionButton).join("") : `<div class="empty-state compact-empty">Nenhuma equipe encontrada.</div>`;
 }
 
 function playerTeamFilterSummary() {
@@ -24741,14 +24774,29 @@ function resetResultFilters() {
   };
 }
 
+function nomesDaBusca(player) {
+  return [player.nick, player.handle, ...(player.nickHistory || [])].filter(Boolean);
+}
+
+function temTextoInteiro(player, busca) {
+  return nomesDaBusca(player).some((nome) => normalize(nome).includes(busca));
+}
+
+// As letras na ordem, mesmo com outras no meio: "kmz" acha "kmyzth". Nick e tag
+// sao testados separados, senao o z de um e o m do outro somariam um falso acerto.
+function temLetrasEmOrdem(player, busca) {
+  return nomesDaBusca(player).flatMap((nome) => nome.split("#")).some((parte) => {
+    let achadas = 0;
+    for (const letra of normalize(parte)) if (letra === busca[achadas]) achadas += 1;
+    return achadas === busca.length;
+  });
+}
+
 function filteredPlayers() {
   const nameQuery = normalize(state.playerQuery);
   const rows = state.db.players
     .filter(playerTemPerfil)
-    .filter((player) => {
-      const nick = normalize(`${player.nick} ${player.handle} ${(player.nickHistory || []).join(" ")}`);
-      return !nameQuery || nick.includes(nameQuery);
-    })
+    .filter((player) => !nameQuery || temTextoInteiro(player, nameQuery) || temLetrasEmOrdem(player, nameQuery))
     .filter((player) => state.playerTeam === "all" || player.teamId === state.playerTeam || player.observedTeamId === state.playerTeam)
     .filter((player) => !state.playerComEquipe || playerPrimaryTeam(player));
   const porNome = (a, b) => String(a.nick || "").localeCompare(String(b.nick || ""), "pt-BR", { numeric: true, sensitivity: "base" }) || String(a.handle || "").localeCompare(String(b.handle || ""), "pt-BR", { numeric: true, sensitivity: "base" });
@@ -24759,36 +24807,31 @@ function filteredPlayers() {
     mapas: (a, b) => sinal * (Number(b.matches || 0) - Number(a.matches || 0)) || porNome(a, b),
     eventos: (a, b) => sinal * ((b.eventStats || []).length - (a.eventStats || []).length) || porNome(a, b),
   };
-  return rows.sort(comparar[state.playerOrdem] || comparar.mapas);
+  const ordenados = rows.sort(comparar[state.playerOrdem] || comparar.mapas);
+  if (!nameQuery) return ordenados;
+  // Quem tem o texto inteiro vem antes de quem so tem as letras espalhadas.
+  return [...ordenados.filter((player) => temTextoInteiro(player, nameQuery)), ...ordenados.filter((player) => !temTextoInteiro(player, nameQuery))];
 }
 
 function bindPlayerFilters() {
   document.getElementById("player-query")?.addEventListener("input", (event) => {
     state.playerQuery = event.target.value;
-    refreshPlayersKeepingFocus("player-query", event.target.selectionStart);
+    atualizarBuscaDeJogadores();
   });
-  document.getElementById("player-query")?.addEventListener("change", () => {
-    pushFilterState("players", playerFiltersToQuery(), "#player-query");
+  document.getElementById("player-team-query")?.addEventListener("input", (event) => {
+    document.querySelector("[data-player-team-options]").innerHTML = playerTeamOptionsHtml(event.target.value);
   });
-  document.querySelectorAll("[data-player-team-filter]").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.playerTeam = button.dataset.playerTeamFilter || "all";
-      pushFilterState("players", playerFiltersToQuery(), `[data-player-team-filter="${button.dataset.playerTeamFilter || "all"}"]`);
-    });
+  // A busca redesenha as opcoes, entao o clique fica no conteiner.
+  document.querySelector("[data-player-team-options]")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-player-team-filter]");
+    if (!button) return;
+    state.playerTeam = button.dataset.playerTeamFilter || "all";
+    pushFilterState("players", playerFiltersToQuery(), `[data-player-team-filter="${state.playerTeam}"]`);
   });
   document.getElementById("player-team")?.addEventListener("change", (event) => {
     state.playerTeam = event.target.value;
     pushFilterState("players", playerFiltersToQuery(), "#player-team");
   });
-}
-
-function refreshPlayersKeepingFocus(inputId, caret) {
-  state.skipFilterHydration = true;
-  renderPlayersCompact();
-  const input = document.getElementById(inputId);
-  if (!input) return;
-  input.focus();
-  if (Number.isFinite(caret)) input.setSelectionRange(caret, caret);
 }
 
 function playerFigure(player, team, extra = "") {

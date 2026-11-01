@@ -335,7 +335,7 @@
           "seriesCodeMin": 120
         }
       ],
-      "name": "UNIVAVÁ - Classificatórias 1",
+      "name": "UNIVAVÁ - Classificatória 1",
       "logo": "assets/tournament-icons/UNIVAVA.png",
       "teams": 36,
       "endAt": "2026-06-29T02:00:00.000Z",
@@ -406,7 +406,7 @@
       "name": "Uni Kick-OFF Inters",
       "logo": "assets/tournament-icons/unikickoff.png",
       "teams": 24,
-      "endAt": "2026-04-06T02:00:00.000Z",
+      "endAt": "2026-04-17T02:00:00.000Z",
       "placementPoints": {
         "1": 30,
         "2": 25,
@@ -575,6 +575,346 @@
     "jubs-pre-jubs": {
       "name": "Pré-JUBS",
       "weight": 0.3
+    },
+    "copa-alianca-2025-classificatoria-1": {
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 57,
+          "seriesCodeMax": 62
+        },
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 119,
+          "seriesCodeMax": 122
+        }
+      ],
+      "name": "Copa Aliança 2025 - Classificatória 1",
+      "teams": 33,
+      "endAt": "2025-05-26T02:00:00.000Z",
+      "bestOfGroup": "copa-alianca-2025-classificatorias",
+      "placementPoints": {
+        "33": 0,
+        "Classificado": 35,
+        "5-6": 30,
+        "7-8": 20,
+        "9-12": 15,
+        "13-16": 10,
+        "17-24": 5,
+        "25-32": 0
+      }
+    },
+    "copa-alianca-2025-classificatoria-2": {
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 57,
+          "seriesCodeMax": 62
+        },
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 119,
+          "seriesCodeMax": 122
+        }
+      ],
+      "name": "Copa Aliança 2025 - Classificatória 2",
+      "teams": 37,
+      "endAt": "2025-06-09T02:00:00.000Z",
+      "bestOfGroup": "copa-alianca-2025-classificatorias",
+      "placementPoints": {
+        "Classificado": 25,
+        "5-6": 20,
+        "7-8": 15,
+        "9-12": 10,
+        "13-16": 5,
+        "17-24": 3,
+        "25-32": 0,
+        "33-37": 0
+      }
+    },
+    "copa-alianca-2025-classificatoria-3": {
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 25,
+          "seriesCodeMax": 30
+        },
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 55,
+          "seriesCodeMax": 58
+        }
+      ],
+      "name": "Copa Aliança 2025 - Classificatória 3",
+      "teams": 31,
+      "endAt": "2025-06-30T02:00:00.000Z",
+      "bestOfGroup": "copa-alianca-2025-classificatorias",
+      "placementPoints": {
+        "Classificado": 20,
+        "5-6": 15,
+        "7-8": 10,
+        "9-12": 8,
+        "13-16": 4,
+        "17-24": 2,
+        "25-31": 0
+      }
+    },
+    "copa-alianca-2025-classificatoria-4": {
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 25,
+          "seriesCodeMax": 30
+        },
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 55,
+          "seriesCodeMax": 58
+        }
+      ],
+      "name": "Copa Aliança 2025 - Classificatória 4",
+      "teams": 29,
+      "endAt": "2025-07-14T02:00:00.000Z",
+      "bestOfGroup": "copa-alianca-2025-classificatorias",
+      "placementPoints": {
+        "Classificado": 15,
+        "5-6": 10,
+        "7-8": 8,
+        "9-12": 5,
+        "13-16": 3,
+        "17-24": 1,
+        "25-29": 0
+      }
+    },
+    "copa-alianca-2025-fase-de-grupos": {
+      "defaultPhase": "regular",
+      "name": "Copa Aliança 2025 - Fase de Grupos",
+      "teams": 16,
+      "endAt": "2025-08-03T02:00:00.000Z",
+      "placementPoints": {
+        "Classificado": 0,
+        "9-11": 25,
+        "12-14": 20,
+        "15-16": 15
+      },
+      "qualifiesTo": "copa-alianca-2025-playoffs"
+    },
+    "lbeu-2025-2-split-fase-suica": {
+      "defaultPhase": "regular",
+      "name": "LBEU 2025 - 2º Split - Fase Suíça",
+      "teams": 25,
+      "endAt": "2025-10-29T02:00:00.000Z",
+      "placementPoints": {
+        "Classificado": 0,
+        "Off Season": 0,
+        "Practice": 0
+      },
+      "qualifiesTo": "lbeu-2025-2-split-championship"
+    },
+    "lbeu-2025-2-split-championship": {
+      "defaultPhase": "playoffs",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 130
+        }
+      ],
+      "name": "LBEU 2025 - 2º Split - Championship",
+      "teams": 8,
+      "endAt": "2025-12-01T02:00:00.000Z",
+      "placementPoints": {
+        "1": 35,
+        "2": 30,
+        "3": 25,
+        "4": 20,
+        "5-6": 15,
+        "7-8": 10
+      }
+    },
+    "lbeu-2025-2-split-off-season": {
+      "defaultPhase": "playoffs",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 134
+        }
+      ],
+      "name": "LBEU 2025 - 2º Split - Off Season",
+      "teams": 7,
+      "endAt": "2025-12-06T02:00:00.000Z",
+      "placementPoints": {
+        "1": 15,
+        "2": 12,
+        "3": 9,
+        "4": 7,
+        "7": 3,
+        "5-6": 5
+      }
+    },
+    "lbeu-2025-2-split-practice": {
+      "defaultPhase": "playoffs",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 137
+        }
+      ],
+      "name": "LBEU 2025 - 2º Split - Practice",
+      "teams": 5,
+      "endAt": "2025-12-07T02:00:00.000Z",
+      "placementPoints": {
+        "1": 8,
+        "2": 6,
+        "3": 4,
+        "4": 2,
+        "5": 2
+      }
+    },
+    "lbeu-2025-1-split-fase-suica": {
+      "defaultPhase": "regular",
+      "name": "LBEU 2025 - 1º Split - Fase Suíça",
+      "teams": 28,
+      "endAt": "2025-07-18T00:23:28+00:00",
+      "placementPoints": {
+        "Classificado": 0,
+        "Off Season": 0,
+        "Practice": 0
+      },
+      "qualifiesTo": "lbeu-2025-1-split-championship"
+    },
+    "lbeu-2025-1-split-championship": {
+      "defaultPhase": "playoffs",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 136
+        }
+      ],
+      "name": "LBEU 2025 - 1º Split - Championship",
+      "teams": 8,
+      "endAt": "2025-08-17T22:24:40+00:00",
+      "placementPoints": {
+        "1": 35,
+        "2": 30,
+        "3": 25,
+        "4": 20,
+        "5-6": 15,
+        "7-8": 10
+      }
+    },
+    "lbeu-2025-1-split-off-season": {
+      "defaultPhase": "playoffs",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 137
+        }
+      ],
+      "name": "LBEU 2025 - 1º Split - Off Season",
+      "teams": 5,
+      "endAt": "2025-08-11T23:52:15+00:00",
+      "placementPoints": {
+        "1": 15,
+        "2": 12,
+        "3": 9,
+        "4": 7,
+        "7": 3,
+        "5-6": 5
+      }
+    },
+    "lbeu-2025-1-split-practice": {
+      "defaultPhase": "playoffs",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 138
+        }
+      ],
+      "name": "LBEU 2025 - 1º Split - Practice",
+      "teams": 4,
+      "endAt": "2025-08-09T18:59:53+00:00",
+      "placementPoints": {
+        "1": 8,
+        "2": 6,
+        "3": 4,
+        "4": 2,
+        "5": 2
+      }
+    },
+    "jubs-2025-fase-inicial": {
+      "name": "JUBS RN 2025 - Fase inicial",
+      "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+      "teams": 45,
+      "endAt": "2025-08-19T02:57:58.027Z",
+      "qualifiesTo": "jubs-2025-etapa-presencial",
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "qualifier",
+          "seriesCodeMin": 113,
+          "seriesCodeMax": 120
+        }
+      ],
+      "placementPoints": {
+        "Classificado": 0,
+        "9-16": 20,
+        "17-20": 15,
+        "21-28": 10,
+        "29-35": 5,
+        "36-45": 0
+      }
+    },
+    "jubs-2025-etapa-presencial": {
+      "name": "JUBS RN 2025 - Etapa Presencial",
+      "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+      "teams": 8,
+      "endAt": "2025-10-10T22:33:23.713Z",
+      "defaultPhase": "groups",
+      "phaseRules": [
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 11,
+          "seriesCodeMax": 13
+        },
+        {
+          "phase": "final",
+          "seriesCodeMin": 14,
+          "seriesCodeMax": 14
+        }
+      ],
+      "placementPoints": {
+        "1": 100,
+        "2": 80,
+        "3": 50,
+        "4": 40,
+        "5": 35,
+        "6": 35,
+        "7": 30,
+        "8": 30
+      }
+    },
+    "copa-alianca-2025-playoffs": {
+      "defaultPhase": "playoffs",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 7,
+          "seriesCodeMax": 7
+        }
+      ],
+      "name": "Copa Aliança 2025 - Playoffs",
+      "teams": 8,
+      "endAt": "2025-10-05T02:59:59Z",
+      "placementPoints": {
+        "1": 100,
+        "2": 80,
+        "3-4": 45,
+        "5-8": 35
+      }
     }
   }
 }

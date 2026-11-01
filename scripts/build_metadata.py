@@ -1,4 +1,5 @@
 import json
+import time
 import unicodedata
 from pathlib import Path
 
@@ -18,6 +19,7 @@ KNOWN_BAD_TEAM_LOGOS = {
 }
 
 PHOTO_ALIASES = {
+    "cbadarkk": ["pulga"],
     "fillip1n": ["filip1n"],
     "pagode": ["pagod"],
     "gbzz": ["gbz"],
@@ -424,15 +426,18 @@ def build_data_sources():
             )
             if parent_tournament:
                 break
+        # logo e sourceId declarados no campeonato.json valem mesmo vazios: a
+        # busca no tournaments.xlsx também casa pelo nome da pasta, e uma
+        # "Classificatória 2" de outro campeonato herdaria ícone e id da Univavá.
         event_item = {
             "id": event_id,
             "name": clean(meta.get("name")) or tournament.get("name") or event_name,
             "organizer": clean(meta.get("organizer")) or tournament.get("organizer") or "UNIVLR",
             "source": clean(meta.get("source")) or "Histórico",
-            "sourceId": clean(meta.get("sourceId")) or tournament.get("sourceId", ""),
+            "sourceId": clean(meta.get("sourceId")) if "sourceId" in meta else tournament.get("sourceId", ""),
             "startAt": clean(meta.get("startAt")) or clean(meta.get("start_date")) or tournament.get("startAt", ""),
             "endAt": clean(meta.get("endAt")) or clean(meta.get("end_date")) or tournament.get("endAt", ""),
-            "logo": public_asset(meta.get("logo", "")) or tournament.get("logo", "") or parent_tournament.get("logo", ""),
+            "logo": public_asset(meta.get("logo", "")) if "logo" in meta else (tournament.get("logo", "") or parent_tournament.get("logo", "")),
             "folder": normalize_public_path(folder.relative_to(ROOT).as_posix()),
             "files": files,
         }
@@ -443,9 +448,19 @@ def build_data_sources():
 # Grava com fim de linha LF explicito: no Windows o write_text traduz para
 # CRLF, e os artefatos commitados estao em LF - sem isto o rebuild trocaria as
 # 13 mil linhas do metadata.json so por fim de linha.
+# A abertura pode falhar por uma fração de segundo logo depois de o arquivo ser
+# lido (Errno 22 no Windows): ver scripts/write_with_retry.js.
 def escreve_json(caminho, dados):
-    with open(caminho, "w", encoding="utf-8", newline="\n") as arquivo:
-        arquivo.write(json.dumps(dados, ensure_ascii=False, indent=2) + "\n")
+    conteudo = json.dumps(dados, ensure_ascii=False, indent=2) + "\n"
+    for tentativa in range(15):
+        try:
+            with open(caminho, "w", encoding="utf-8", newline="\n") as arquivo:
+                arquivo.write(conteudo)
+            return
+        except OSError:
+            if tentativa == 14:
+                raise
+            time.sleep(0.2)
 
 
 def read_states():

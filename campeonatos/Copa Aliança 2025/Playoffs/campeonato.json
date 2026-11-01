@@ -1,0 +1,10 @@
+{
+  "id": "copa-alianca-2025-playoffs",
+  "name": "Copa Aliança 2025 - Playoffs",
+  "organizer": "AcadArena",
+  "source": "Histórico",
+  "sourceId": "",
+  "logo": "assets/tournament-icons/copa_alianca.png",
+  "startAt": "2025-08-23T00:00:00-03:00",
+  "endAt": "2025-10-04T23:59:59-03:00"
+}

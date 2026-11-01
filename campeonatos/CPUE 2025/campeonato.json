@@ -1,0 +1,10 @@
+{
+  "id": "cpue-2025",
+  "name": "CPUE 2025",
+  "organizer": "FUPE-SP",
+  "source": "FACEIT / histórico",
+  "sourceId": "76",
+  "logo": "assets/tournament-icons/CPUE.png",
+  "startAt": "2025-09-06T13:00:00-03:00",
+  "endAt": "2025-09-28T23:59:59-03:00"
+}

@@ -63,6 +63,10 @@ function checkTeamSuccessions(matches, teams) {
   const earlyCores = new Map([...byTeam].map(([id, maps]) => [id, coreOf(maps.slice(0, CORE_WINDOW))]));
   const undeclared = [];
   for (const [oldId, oldMaps] of byTeam) {
+    // Uma origem já destinada por decisão explícita não deve gerar sugestões
+    // concorrentes apenas porque alguns jogadores também passaram por outra line.
+    if (teamsById.get(oldId)?.profile?.continuity === "none") continue;
+    if ((teams || []).some((team) => [...team.profile?.performancePredecessors || [], ...team.profile?.historyPredecessors || []].some((rule) => rule.id === oldId))) continue;
     const lateCore = coreOf(oldMaps.slice(-CORE_WINDOW));
     for (const [newId, newMaps] of byTeam) {
       if (oldId === newId || newMaps[0].startedAt <= oldMaps[0].startedAt) continue;
@@ -85,7 +89,9 @@ function checkTeamSuccessions(matches, teams) {
     const newMaps = byTeam.get(team.id) || [];
     const oldMaps = byTeam.get(from) || [];
     if (!newMaps.length || !oldMaps.length) continue;
-    const debut = newMaps[0].startedAt;
+    const since = team.profile?.successionSince ? Date.parse(team.profile.successionSince) : -Infinity;
+    const debut = newMaps.find((map) => map.startedAt >= since)?.startedAt;
+    if (!debut) continue;
     const later = oldMaps.filter((map) => map.startedAt >= debut);
     const headToHead = later.filter((map) => map.opponentId === team.id).length;
     if (later.length > MAX_LATER_MAPS || headToHead) contradicted.push({ from, to: team.id, debut, laterMaps: later.length, headToHead });

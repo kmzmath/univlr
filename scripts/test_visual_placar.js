@@ -459,6 +459,109 @@ assert.deepStrictEqual(Array.from(campanhas.get("ceub_octopus_vulgaris")), [8, 1
 assert.deepStrictEqual(Array.from(campanhas.get("azure_bears_black")), [4, 1], "a Azure Bears Black fez 4-1");
 assert.deepStrictEqual(Array.from(campanhas.get("inatel_gray")), [1, 2], "o W.O. sobre a UFRJ conta para a INATEL");
 
+// Suico sem chave curada: a pagina monta uma chave estimada com as ultimas
+// series, que ja estao nas rodadas. A campanha contava essas partidas duas
+// vezes (UFMT 4-3 num suico em que 3 derrotas eliminam). A chave estimada
+// escreve o codigo com zeros ("Partida 045"), como o nome do arquivo.
+const fdg = { id: "univava-fase-de-grupos", name: "UNIVAVÁ - Fase de Grupos", ...overrides["univava-fase-de-grupos"] };
+const ultimas = fdg.swiss.rounds.flatMap((round) => round.matches).slice(-7)
+  .map((match) => ({ ...match, code: `Partida ${String(context.tournamentMatchCodeNumber(match.code)).padStart(3, "0")}` }));
+const comEstimada = context.campanhasDoCampeonato({ ...fdg, bracket: { regions: [{ columns: [{ matches: ultimas }] }] } });
+const soSuico = context.campanhasDoCampeonato({ ...fdg, bracket: null });
+assert.deepStrictEqual(Array.from(comEstimada.get("ufmt_turuna")), [3, 2], "a UFMT fez 3-2 no suico");
+for (const [id, campanha] of soSuico) {
+  assert.deepStrictEqual(Array.from(comEstimada.get(id)), Array.from(campanha), `a chave estimada nao soma de novo as series do suico (${id})`);
+}
+// Sem suico, a chave estimada conta inteira, mesmo com series sem numero (LPE).
+const semNumero = context.campanhasDoCampeonato({ id: "lpe", bracket: { regions: [{ columns: [{ matches: [
+  { code: "Partida LPE", a: "caap_hellhounds", b: "unifacens_fodens", scoreA: 1, scoreB: 0, winner: "caap_hellhounds" },
+  { code: "Partida LPE", a: "axis_aura", b: "caap_hellhounds", scoreA: 0, scoreB: 1, winner: "caap_hellhounds" },
+] }] }] } });
+assert.deepStrictEqual(Array.from(semNumero.get("caap_hellhounds")), [2, 0], "as duas series sem numero contam");
+
+// Serie sem placar com vencedor declarado (inferida pela chave na Off Season da
+// LBEU 2): conta na campanha, e o card marca o vencedor e mostra o status.
+const off = { id: "lbeu-2025-2-split-off-season", name: "Off Season", ...overrides["lbeu-2025-2-split-off-season"] };
+const campOff = context.campanhasDoCampeonato(off);
+assert.deepStrictEqual(Array.from(campOff.get("azure_bears_red")), [4, 2], "a Red fez 4-2, contando a serie sem placar contra a Overbite");
+assert.deepStrictEqual(Array.from(campOff.get("fei_darkowls")), [2, 2], "a FEI fez 2-2, contando a semifinal sem placar");
+const inferida = off.bracket.regions.flatMap((region) => region.columns.flatMap((column) => column.matches)).find((match) => match.code === "Partida 131");
+const celulaInferida = context.tournamentChaveCelula(off, inferida, 1, 1);
+const [, ladoA, ladoB] = celulaInferida.split('class="vp-bm-lado');
+assert(ladoA.startsWith(" vp-ganhou") && !ladoB.startsWith(" vp-ganhou"), "o vencedor declarado aparece como vencedor");
+assert(celulaInferida.includes("Placar não registrado"), "o card diz que o placar nao foi registrado");
+
+// O resumo da mesma serie diz quem venceu e nao chama a reconstrucao de oficial.
+const regiaoInferida = off.bracket.regions.find((region) => region.columns.some((column) => column.matches.includes(inferida)));
+const colunaInferida = regiaoInferida.columns.find((column) => column.matches.includes(inferida));
+const resumoInferido = context.tournamentMatchPreviewHtml({ event: off, region: regiaoInferida, column: colunaInferida, match: inferida, series: null });
+assert(resumoInferido.includes("Vitória") && resumoInferido.includes("Derrota"), "o resumo marca vencedor e perdedor sem placar");
+assert(!resumoInferido.includes("A definir"), "serie com vencedor conhecido nao fica a definir");
+assert(/<small>Vencedor<\/small><strong>[^<]/.test(resumoInferido), "o resumo mostra o vencedor");
+assert(!/oficial/i.test(resumoInferido), "reconstrucao nao e chamada de oficial");
+assert(resumoInferido.includes("Placar não registrado"), "o resumo diz que o placar nao foi registrado");
+
+// Serie sem mapas com estatistica mostra a data do jogo, nao a janela do campeonato.
+const jubsInicial = { id: "jubs-fase-inicial", name: "JUBS", ...overrides["jubs-fase-inicial"] };
+const serie18 = jubsInicial.swiss.rounds.flatMap((rodada) => rodada.matches).find((match) => match.code === "Partida 18");
+const resumo18 = context.tournamentMatchPreviewHtml({ event: jubsInicial, region: { name: "Bracket" }, column: { title: "Rodada 1" }, match: serie18, series: null });
+assert(resumo18.includes("06 de jun de 2026"), "o resumo mostra o dia em que a serie foi jogada");
+
+// Quando so se sabe o dia do jogo, o resumo mostra o dia, sem inventar horario.
+const finalAlianca = overrides["copa-alianca-2025-playoffs"].bracket.regions.flatMap((region) => region.columns.flatMap((column) => column.matches)).find((match) => match.code === "Partida 7");
+const resumoFinal = context.tournamentMatchPreviewHtml({ event: { id: "copa-alianca-2025-playoffs", ...overrides["copa-alianca-2025-playoffs"] }, region: { name: "Playoffs" }, column: { title: "Final" }, match: finalAlianca, series: null });
+assert(/<small>Data<\/small><strong>04 de out de 2025<\/strong>/.test(resumoFinal), "a final mostra so o dia em que foi jogada");
+
+// Serie com mapa sem estatistica mostra o placar da chave, nao so os mapas que sobraram.
+for (const [eventId, seriesCode, vencedor, perdedor, esperado] of [
+  ["jubs-fase-inicial", "045", "milionaria_ufam", "ufcg_pensaopet", [2, 1]],
+  ["jubs-fase-inicial", "099", "furia_utfpr", "unisc_ladaiada", [2, 0]],
+  ["copa-luce-inters", "006", "sheriff_iff", "minerva_artemis", [2, 0]],
+  ["univava-fase-de-grupos", "024", "usp_stars", "furia_utfpr", [2, 0]],
+]) {
+  const placar = context.seriesMapScore([{ eventId, seriesCode, winnerId: vencedor }], vencedor, perdedor);
+  assert.deepStrictEqual([placar.a, placar.b], esperado, `a pagina da serie ${seriesCode} de ${eventId} usa o placar da chave`);
+}
+
+// Card sem serie nao pode divergir do arquivo do mapa.
+const kickoff = overrides["uni-kickoff-inters"].bracket.regions.flatMap((region) => region.columns.flatMap((column) => column.matches)).find((match) => match.code === "Partida 40");
+assert.deepStrictEqual([kickoff.scoreA, kickoff.scoreB], [13, 6], "a Partida 40 do Kick-Off tem o placar do arquivo");
+
+// Gravacao com repeticao: a falha passageira do Windows nao derruba o build.
+const { writeFileWithRetry } = require("./write_with_retry.js");
+const arquivoTeste = path.join(require("os").tmpdir(), `univlr-gravacao-${process.pid}.txt`);
+const gravacaoReal = fs.writeFileSync;
+let tentativasGravacao = 0;
+fs.writeFileSync = (...args) => {
+  tentativasGravacao += 1;
+  if (tentativasGravacao < 3) throw Object.assign(new Error("UNKNOWN: unknown error, open"), { code: "UNKNOWN" });
+  return gravacaoReal(...args);
+};
+try {
+  writeFileWithRetry(arquivoTeste, "ok");
+  assert.strictEqual(tentativasGravacao, 3, "tenta de novo depois da falha passageira");
+  fs.writeFileSync = () => {
+    throw Object.assign(new Error("ENOSPC"), { code: "ENOSPC" });
+  };
+  assert.throws(() => writeFileWithRetry(arquivoTeste, "ok"), /ENOSPC/, "erro de verdade nao fica repetindo");
+} finally {
+  fs.writeFileSync = gravacaoReal;
+  fs.rmSync(arquivoTeste, { force: true });
+}
+
+// Texto publico nao cita arquivo, fonte ou bastidor (regra do dono, 24/10/2026).
+const notasPublicas = [];
+(function coletarNotas(valor, chaveDoPai) {
+  if (!valor || typeof valor !== "object") return;
+  for (const [chave, item] of Object.entries(valor)) {
+    if (typeof item === "string" && (["previewNote", "note", "status"].includes(chave) || chaveDoPai === "details")) notasPublicas.push(item);
+    else coletarNotas(item, chave);
+  }
+})(overrides);
+assert(notasPublicas.length > 0, "a varredura encontrou notas");
+const notasDeBastidor = notasPublicas.filter((nota) => /arquivo|respons[aá]vel|\bfonte\b|mapa\(s\)|excluído\(s\)|excel|planilha|tracker|challengermode|faceit|battlefy/i.test(nota));
+assert.deepStrictEqual(notasDeBastidor, [], "as notas falam de partida, nao de bastidor");
+
 const superior = rush.bracket.regions.find((region) => region.className === "upper-bracket");
 const chave = context.tournamentCuratedBracketRegion(rush, superior);
 const rodada32 = chave.split(/<div class="vp-rodada(?=["\s])/)[1] || "";
@@ -559,6 +662,42 @@ for (const rotulo of ["Desempenho", "Conquistas", "Forma", "rAAting 3.0"]) {
   assert(ler("app.js").includes(`<span class="numeric optional ranking-detail-cell" data-label="${rotulo}">`), `a celula de ${rotulo} leva o rotulo`);
 }
 assert(/@media \(max-width: 1180px\)\s*\{[^@]*data-details-visible="true"\][^{]*\.ranking-detail-cell::before/.test(estiloDoRanking), "o rotulo aparece na segunda linha em tela estreita");
+
+// Conta emprestada entra nas contas de quem jogou nela, mas o perfil do dono da
+// conta continua dele: o id exato vem antes da busca por conta.
+vm.runInContext(
+  `state.db.players = ${JSON.stringify([
+    { id: "pega-emprestado", puuid: "pega-emprestado", nick: "JV", routeSlug: "jv", accounts: [{ puuid: "pega-emprestado" }, { puuid: "dono-da-conta" }, { puuid: "conta-paralela" }] },
+    { id: "dono-da-conta", puuid: "dono-da-conta", nick: "aham", routeSlug: "aham", accounts: [{ puuid: "dono-da-conta" }] },
+  ])};`,
+  context
+);
+assert.strictEqual(context.playerById("dono-da-conta").nick, "aham", "o id do dono abre o perfil do dono");
+assert.strictEqual(context.playerHref("dono-da-conta"), "#/players/aham", "o link do dono nao vai para quem pegou a conta");
+assert.strictEqual(context.playerById("aham").nick, "aham", "a rota pelo nome continua abrindo o perfil");
+assert.strictEqual(context.playerById("conta-paralela").nick, "JV", "a conta alternativa continua levando ao jogador");
+
+// Formato compacto do banco: mesmas chaves viram uma forma so, e referencia
+// compartilhada, undefined e numero sem JSON voltam iguais. O formato anterior
+// continua legivel.
+const codec = require("../db-codec.js");
+const compartilhado = { nome: "x" };
+const grafo = { a: compartilhado, b: compartilhado, lista: [[1], []], vazio: undefined, nan: NaN, data: new Date(5), mapa: new Map([[1, compartilhado]]), conjunto: new Set([2]) };
+grafo.ciclo = grafo;
+const codificado = JSON.parse(JSON.stringify(codec.encode({ c: [{ x: 1, y: 2 }, { x: 3, y: 4 }], grafo })));
+assert.strictEqual(codificado.shapes.filter((chaves) => chaves.join() === "x,y").length, 1, "objetos iguais dividem a mesma forma");
+const decodificado = codec.decode(codificado);
+assert.deepStrictEqual(decodificado.c, [{ x: 1, y: 2 }, { x: 3, y: 4 }], "os valores voltam nas chaves certas");
+assert.strictEqual(decodificado.grafo.a, decodificado.grafo.b, "a referencia compartilhada continua uma so");
+assert.strictEqual(decodificado.grafo.ciclo, decodificado.grafo, "ciclo sobrevive");
+assert(Number.isNaN(decodificado.grafo.nan) && "vazio" in decodificado.grafo && decodificado.grafo.vazio === undefined, "valores sem JSON voltam");
+assert.deepStrictEqual(decodificado.grafo.lista, [[1], []], "array de dado nao vira marcador");
+assert.strictEqual(decodificado.grafo.mapa.get(1), decodificado.grafo.a, "Map guarda a referencia");
+assert.strictEqual(codec.decode({ format: "univlr-db@1", root: { $: "r", i: 0 }, nodes: [{ $: "o", v: { a: 1 } }] }).a, 1, "formato anterior continua legivel");
+
+// Texto publico sem acento e tabela de estatisticas sem rolagem lateral.
+assert(!/["`>]Concluida|Sistema suico|Estado nao informado/.test(fs.readFileSync(path.join(__dirname, "..", "app.js"), "utf8")), "texto publico com acento");
+assert(/@media \(max-width: 1180px\)[\s\S]*\.tournament-stats-table[\s\S]*attr\(data-label\)/.test(fs.readFileSync(path.join(__dirname, "..", "placar.css"), "utf8")), "tabela de estatisticas vira blocos na tela estreita");
 
 void vp;
 console.log("Visual Placar contract tests passed");

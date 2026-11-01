@@ -138,7 +138,8 @@
         dominance,
       },
     );
-    const achievements = calculateAchievements(teamIds, input.matchSeries || [], tournaments, weights, now);
+    // A herança de desempenho pode unir formações sem transferir campanhas.
+    const achievements = calculateAchievements(teamIds, input.achievementMatchSeries || input.matchSeries || [], tournaments, weights, now);
     const recentForm = calculateRecentForm(teamIds, observations, modelScores, competitive, weights, now);
     const rosterStrength = calculateRosterStrength(teamIds, teamsById, input.matches || [], modelScores, weights, now);
     const finalScores = weightedBlock(
@@ -1037,8 +1038,8 @@
       if (!series.teamA?.id || !series.teamB?.id) continue;
       const a = ensure(series.teamA);
       const b = ensure(series.teamB);
-      const scoreA = finiteNumber(series.scoreA, series.maps?.filter((match) => match.winnerId === series.teamA.id).length || 0);
-      const scoreB = finiteNumber(series.scoreB, series.maps?.filter((match) => match.winnerId === series.teamB.id).length || 0);
+      const scoreA = finiteNumber(series.statisticalScoreA, finiteNumber(series.scoreA, series.maps?.filter((match) => match.winnerId === series.teamA.id).length || 0));
+      const scoreB = finiteNumber(series.statisticalScoreB, finiteNumber(series.scoreB, series.maps?.filter((match) => match.winnerId === series.teamB.id).length || 0));
       const roundA = finiteNumber(series.roundScoreA, series.maps?.reduce((sum, match) => sum + scoreForTeamInMatch(match, series.teamA.id), 0) || 0);
       const roundB = finiteNumber(series.roundScoreB, series.maps?.reduce((sum, match) => sum + scoreForTeamInMatch(match, series.teamB.id), 0) || 0);
       const aWon = (series.winnerId || (scoreA > scoreB ? series.teamA.id : series.teamB.id)) === series.teamA.id;

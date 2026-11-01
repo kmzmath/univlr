@@ -175,4 +175,57 @@ assert.equal(checkTeamSuccessions(matches, outraFaculdade).undeclared.length, 0,
 const errada = teamsWith(undefined).map((team) => (team.id === "nova" ? { ...team, succeeds: "r1" } : team));
 assert.deepEqual(checkTeamSuccessions(matches, errada).contradicted.map((row) => `${row.from}>${row.to}`), ["r1>nova"], "a predecessor that keeps playing is reported");
 
+// Herança parcial: mapas acompanham a formação, conquistas não.
+const partialTeams = teamsWith(undefined).map((team) => team.id === "nova" ? {
+  ...team, profile: { performancePredecessors: [{ id: "velha", since: new Date(at(30)).toISOString() }] },
+} : team);
+const beforePartial = rank(partialTeams, at(29));
+assert.equal(beforePartial.byTeamId.velha.matches, 6, "a regra não antecipa a fusão para a estreia antiga do destino");
+assert.equal(beforePartial.byTeamId.nova.matches, 2);
+const afterPartial = rank(partialTeams, at(35));
+assert.equal(afterPartial.byTeamId.nova.matches, 9);
+assert.equal(afterPartial.byTeamId.velha.succeededAt, at(30), "herança começa no primeiro mapa do destino após o marco confirmado");
+assert(afterPartial.byTeamId.velha.performanceOnly);
+assert(!checkTeamSuccessions(matches, partialTeams).undeclared.some((row) => row.from === "velha"), "a decisão parcial não gera sugestão de sucessão integral concorrente");
+assert.deepEqual(afterPartial.byTeamId.nova.performanceInherits, ["velha"]);
+assert(!afterPartial.byTeamId.nova.achievements.some((a) => a.eventId === "copa"), "a conquista da antiga não acompanha a herança parcial");
+assert.equal(tournaments[0].placements[0].id, "velha");
+
+// Uma fusão pode ter duas origens, mas não duas destinações para a mesma origem.
+const mergeTeams = [...teamsWith(undefined), { id: "outra", name: "Outra" }].map((t) => t.id === "nova" ? {
+  ...t, profile: { performancePredecessors: ["velha", "outra"].map((id) => ({ id, since: new Date(at(27)).toISOString() })) },
+} : t);
+const mergeAliases = rankingPerformanceAliases(mergeTeams, matches, at(35));
+assert.equal(mergeAliases.get("velha").to, "nova");
+assert.equal(mergeAliases.get("outra").to, "nova");
+const oldDerby = mapa("derby", 5, "velha", 13, "outra", 9, VELHA, roster("o"));
+const mergerInput = { teams: mergeTeams, matches: [oldDerby], matchSeries: [serie(oldDerby)], tournaments, rankingWeights: weights };
+const mergerOutput = applyRankingSuccessions(mergerInput, mergeAliases);
+assert.equal(mergerOutput.matches.length, 0, "um confronto entre as origens não vira jogo da sucessora contra ela mesma");
+assert.equal(oldDerby.teamA.id, "velha", "o arquivo/campanha original não é alterado");
+const loop = [
+  { id: "velha", profile: { performancePredecessors: [{ id: "nova", since: new Date(at(1)).toISOString() }] } },
+  { id: "nova", profile: { performancePredecessors: [{ id: "velha", since: new Date(at(1)).toISOString() }] } },
+];
+assert.throws(() => rankingPerformanceAliases(loop, matches, at(35)), /Ciclo/);
+const conflict = [...mergeTeams, { id: "r1", profile: { performancePredecessors: [{ id: "velha", since: new Date(at(1)).toISOString() }] } }];
+assert.throws(() => rankingPerformanceAliases(conflict, matches, at(35)), /duplicada/);
+const noContinuity = mergeTeams.map((t) => t.id === "velha" ? { ...t, profile: { continuity: "none" } } : t);
+assert.throws(() => rankingPerformanceAliases(noContinuity, matches, at(35)), /sem continuidade/);
+const dissolved = { currentLineup: lineup(VELHA), profile: { competitiveStatus: "dissolved" } };
+assert.equal(teamActiveRoster(dissolved).length, 0, "uma dissolvida não se torna ativa por elenco residual");
+assert.equal(teamActiveRoster({ currentLineup: lineup(VELHA) }).length, 5);
+// Fusões integrais levam a melhor colocação uma vez, sem duplicar campanhas.
+const fullMerge = mergeTeams.map((t) => t.id === "nova" ? { ...t, profile: {
+  historyPredecessors: ["velha", "outra"].map((id) => ({ id, since: new Date(at(27)).toISOString(), relation: "merger" })),
+} } : t);
+const fullMergeAliases = rankingSuccessionAliases(fullMerge, matches, at(35));
+assert.equal(fullMergeAliases.get("velha").to, "nova");
+assert.equal(fullMergeAliases.get("outra").to, "nova");
+const mergedCampaigns = applyRankingSuccessions({ teams: fullMerge, matches, matchSeries: matches.map(serie), tournaments: [{ id: "copa", placements: [{ id: "velha", range: "1" }, { id: "outra", range: "2" }, { id: "nova", range: "5-6" }] }], rankingWeights: {} }, fullMergeAliases);
+assert.deepEqual(mergedCampaigns.tournaments[0].placements, [{ id: "nova", range: "1" }]);
+const datedLegacy = teamsWith("velha").map((t) => t.id === "nova" ? { ...t, profile: { successionSince: new Date(at(30)).toISOString() } } : t);
+assert.equal(rankingSuccessionAliases(datedLegacy, matches, at(29)).size, 0, "uma estreia antiga não antecipa a sucessão datada");
+assert.equal(rankingSuccessionAliases(datedLegacy, matches, at(35)).get("velha").since, at(30));
+assert(rank(fullMerge, at(35)).byTeamId.nova.achievements.some((a) => a.eventId === "copa"), "fusão integral inclui conquistas");
 console.log("team succession tests passed");

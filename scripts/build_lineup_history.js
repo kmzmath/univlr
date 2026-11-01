@@ -1,5 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const vm = require("node:vm");
+const { writeFileWithRetry } = require("./write_with_retry.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_SOURCES = path.join(ROOT, "data-sources.json");
@@ -26,7 +28,7 @@ function readJson(file) {
 }
 
 function writeJson(file, value) {
-  fs.writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+  writeFileWithRetry(file, `${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
 
 function normalizeNameKey(value) {
@@ -46,8 +48,10 @@ function parseFileName(sourcePath) {
 
   const beforeScore = tokens.slice(0, scoreIndex);
   const codeIndex = beforeScore.findIndex((token) => /^\d+[a-z]?$/i.test(token));
-  let teamAStart = codeIndex >= 0 ? codeIndex + 1 : 1;
-  if (/^\d{2}-\d{2}-\d{2,4}$/.test(beforeScore[teamAStart] || "") || /^\d{4}-\d{2}-\d{2}$/.test(beforeScore[teamAStart] || "")) teamAStart += 1;
+  // A equipe vem logo depois da data. Só o código não basta: PREJUBS_SP_FINALa
+  // não tem código só de número e a equipe sairia com o prefixo inteiro.
+  const dateIndex = beforeScore.findIndex((token) => /^\d{2}-\d{2}-\d{2,4}$/.test(token) || /^\d{4}-\d{2}-\d{2}$/.test(token));
+  const teamAStart = dateIndex >= 0 ? dateIndex + 1 : codeIndex >= 0 ? codeIndex + 1 : 1;
 
   const teamAId = beforeScore.slice(teamAStart).join("_");
   const teamBId = tokens.slice(scoreIndex + 3, -1).join("_");
@@ -93,7 +97,35 @@ function buildPlayerLookups(metadata) {
       if (key && !byName.has(key)) byName.set(key, player);
     }
   }
+  // Mesma regra do prepareMetadata no app.js: conta alternativa aponta para a
+  // pessoa, sem sobrescrever quem tem aquele puuid como conta principal.
+  for (const player of metadata.players || []) {
+    for (const account of player.accounts || []) {
+      if (account && !byPuuid.has(account)) byPuuid.set(account, player);
+    }
+  }
   return { byPuuid, byName };
+}
+
+// As regras de conta emprestada moram no app.js e valem aqui também: sem elas o
+// histórico do elenco credita ao dono da conta quem jogou emprestado nela.
+function readSharedAccountRules() {
+  const source = fs.readFileSync(path.join(ROOT, "app.js"), "utf8");
+  const declaration = source.indexOf("const SHARED_ACCOUNT_RULES = [");
+  if (declaration < 0) throw new Error("SHARED_ACCOUNT_RULES não encontrado no app.js");
+  const start = source.indexOf("[", declaration);
+  return vm.runInNewContext(`(${source.slice(start, source.indexOf("\n];", start) + 2)})`);
+}
+
+function sharedAccountOverrides(rules, matchPuuids, matchId) {
+  const overrides = new Map();
+  for (const rule of rules) {
+    if (rule.matchIds && !rule.matchIds.includes(matchId)) continue;
+    const accounts = Object.keys(rule.accounts);
+    if (!accounts.every((account) => matchPuuids.has(account))) continue;
+    for (const account of accounts) overrides.set(account, rule.accounts[account]);
+  }
+  return overrides;
 }
 
 function registeredPlayerForRaw(rawPlayer, lookups) {
@@ -116,8 +148,8 @@ function playerTeamConfidence(registered, teamId) {
   return 0;
 }
 
-function resolvePlayer(rawPlayer, lookups, teamId) {
-  const registered = registeredPlayerForRaw(rawPlayer, lookups);
+function resolvePlayer(rawPlayer, lookups, teamId, personOverride = null) {
+  const registered = personOverride || registeredPlayerForRaw(rawPlayer, lookups);
   const profileConfidence = Math.max(0, playerTeamConfidence(registered, teamId));
   const id = registered?.puuid || rawPlayer.puuid || normalizeNameKey(rawPlayer.gameName);
   const name = registered?.name || rawPlayer.gameName || id;
@@ -173,6 +205,7 @@ function colorTeamMap(raw, meta, lookups) {
 
 function collectTeamAppearances(dataSources, metadata) {
   const lookups = buildPlayerLookups(metadata);
+  const sharedAccountRules = readSharedAccountRules();
   const appearances = new Map();
   const failures = [];
 
@@ -198,13 +231,19 @@ function collectTeamAppearances(dataSources, metadata) {
       }
       const startedAt = Number(raw.matchInfo?.gameStartMillis || 0);
       if (!startedAt) continue;
+      const accountOverrides = sharedAccountOverrides(
+        sharedAccountRules,
+        new Set((raw.players || []).map((player) => player.puuid).filter(Boolean)),
+        raw.matchInfo?.matchId,
+      );
       const perTeam = new Map();
       for (const rawPlayer of raw.players || []) {
         if (rawPlayer.isObserver) continue;
         const teamId = byColor[rawPlayer.teamId];
         if (!teamId) continue;
         if (!perTeam.has(teamId)) perTeam.set(teamId, []);
-        perTeam.get(teamId).push(resolvePlayer(rawPlayer, lookups, teamId));
+        const personOverride = accountOverrides.has(rawPlayer.puuid) ? lookups.byPuuid.get(accountOverrides.get(rawPlayer.puuid)) : null;
+        perTeam.get(teamId).push(resolvePlayer(rawPlayer, lookups, teamId, personOverride));
       }
       for (const [teamId, players] of perTeam) {
         if (!appearances.has(teamId)) appearances.set(teamId, []);
@@ -372,6 +411,12 @@ function updateTeamProfiles(histories, metadata) {
     if (!history.length && !profiles.teams[teamId]) continue;
     profiles.teams[teamId] = profiles.teams[teamId] || {};
     profiles.teams[teamId].lineupHistory = history;
+  }
+
+  // Id antigo ou nome de arquivo mal lido não pode ficar para trás: chave que só
+  // tem histórico e saiu do cadastro e das partidas é sobra de build anterior.
+  for (const teamId of Object.keys(profiles.teams)) {
+    if (!teamIds.has(teamId) && Object.keys(profiles.teams[teamId]).every((key) => key === "lineupHistory")) delete profiles.teams[teamId];
   }
 
   writeJson(TEAM_PROFILES, profiles);

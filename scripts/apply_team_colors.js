@@ -13,6 +13,7 @@
 const fs = require("fs");
 const path = require("path");
 const zlib = require("zlib");
+const { writeFileWithRetry } = require("./write_with_retry.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DB = path.join(ROOT, "database.json");
@@ -93,8 +94,8 @@ function pinta(equipes, mapa) {
     // pucc_canaries partilhavam o mesmo caminho antes do rename, o Cardinals
     // saiu com o escudo do Canaries.
     if (campos.logo) {
-      if (equipe.logo && equipe.logo !== campos.logo) { equipe.logo = campos.logo; logos += 1; }
-      if (equipe.profile && equipe.profile.logo && equipe.profile.logo !== campos.logo) {
+      if (equipe.logo !== campos.logo) { equipe.logo = campos.logo; logos += 1; }
+      if (equipe.profile && equipe.profile.logo !== campos.logo) {
         equipe.profile.logo = campos.logo;
         logos += 1;
       }
@@ -130,7 +131,7 @@ function passaDatabase(mapa) {
     return false;
   }
 
-  fs.writeFileSync(DB, depois);
+  writeFileWithRetry(DB, depois);
   console.log("database.json");
   console.log(`  equipes pintadas: ${pintadas}/${db.teams.length} | logos sincronizados: ${logos} | cores hsl->hex: ${normalizadas}`);
   if (semCor.length) console.log(`  sem linha na planilha: ${semCor.join(", ")}`);
@@ -168,7 +169,7 @@ function passaHome(mapa) {
     return false;
   }
 
-  fs.writeFileSync(HOME, depois);
+  writeFileWithRetry(HOME, depois);
   console.log("home.json");
   console.log(`  equipes pintadas: ${pintadas}/${controle.equipes} | logos sincronizados: ${logos} | cores hsl->hex: ${normalizadas}`);
   if (semCor.length) console.log(`  sem linha na planilha: ${semCor.join(", ")}`);

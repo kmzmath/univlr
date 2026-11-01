@@ -264,6 +264,3626 @@ const FILENAME_TEAM_ALIASES = {
 };
 
 const TOURNAMENT_OVERRIDES = {
+  "cpue-2025": {
+    "name": "CPUE 2025",
+    "organizer": "FUPE-SP",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 10,
+    "teams": [
+      "caap_hellhounds",
+      "axis_anteaters",
+      "macklogic_white",
+      "ifsp_midas",
+      "macklogic_red",
+      "fei_darkowls",
+      "pucc_canaries",
+      "maua_b",
+      "maua_blue",
+      "tec_barao"
+    ],
+    "teamNames": {
+      "axis_anteaters": "AXIS Anteaters",
+      "maua_b": "Mauá Blue",
+      "maua_blue": "Mauá White",
+      "macklogic_white": "MackLogic WHITE",
+      "macklogic_red": "Mack Logic RED",
+      "caap_hellhounds": "CAAP Hell",
+      "tec_barao": "TEC BARAO",
+      "ifsp_midas": "MIDAS"
+    },
+    "placements": [
+      {
+        "id": "macklogic_red",
+        "range": "1"
+      },
+      {
+        "id": "maua_b",
+        "range": "2"
+      },
+      {
+        "id": "axis_anteaters",
+        "range": "3"
+      },
+      {
+        "id": "caap_hellhounds",
+        "range": "4"
+      },
+      {
+        "id": "fei_darkowls",
+        "range": "5-6"
+      },
+      {
+        "id": "maua_blue",
+        "range": "5-6"
+      },
+      {
+        "id": "macklogic_white",
+        "range": "7-8"
+      },
+      {
+        "id": "ifsp_midas",
+        "range": "7-8"
+      },
+      {
+        "id": "tec_barao",
+        "range": "9-10"
+      },
+      {
+        "id": "pucc_canaries",
+        "range": "9-10"
+      }
+    ],
+    "format": {
+      "summary": "Eliminação dupla",
+      "details": [
+        "Dez equipes, com byes na chave inicial.",
+        "MD1 até as finais das chaves; finais upper/lower e grande final em MD3.",
+        "Nomes de Mauá Blue e Mauá White como usados neste campeonato."
+      ],
+      "standings": "Classificação final"
+    },
+    "bracket": {
+      "title": "Eliminação dupla",
+      "regions": [
+        {
+          "name": "Upper",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Rodada inicial",
+              "matches": [
+                {
+                  "code": "Bye UB 1",
+                  "a": "macklogic_red",
+                  "b": null,
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "macklogic_red",
+                  "status": "Bye",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Partida 1",
+                  "a": "axis_anteaters",
+                  "b": "caap_hellhounds",
+                  "scoreA": 4,
+                  "scoreB": 13,
+                  "winner": "caap_hellhounds",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Bye UB 3",
+                  "a": "pucc_canaries",
+                  "b": null,
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "pucc_canaries",
+                  "status": "Bye",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Bye UB 4",
+                  "a": "fei_darkowls",
+                  "b": null,
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "fei_darkowls",
+                  "status": "Bye",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Bye UB 5",
+                  "a": "maua_b",
+                  "b": null,
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "maua_b",
+                  "status": "Bye",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Partida 2",
+                  "a": "ifsp_midas",
+                  "b": "macklogic_white",
+                  "scoreA": 3,
+                  "scoreB": 13,
+                  "winner": "macklogic_white",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Bye UB 7",
+                  "a": "maua_blue",
+                  "b": null,
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "maua_blue",
+                  "status": "Bye",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Bye UB 8",
+                  "a": "tec_barao",
+                  "b": null,
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "tec_barao",
+                  "status": "Bye",
+                  "bestOf": "MD1"
+                }
+              ]
+            },
+            {
+              "title": "Quartas upper",
+              "matches": [
+                {
+                  "code": "Partida 3",
+                  "a": "macklogic_red",
+                  "b": "caap_hellhounds",
+                  "scoreA": 13,
+                  "scoreB": 7,
+                  "winner": "macklogic_red",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Partida 4",
+                  "a": "pucc_canaries",
+                  "b": "fei_darkowls",
+                  "scoreA": 3,
+                  "scoreB": 13,
+                  "winner": "fei_darkowls",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Partida 5",
+                  "a": "maua_b",
+                  "b": "macklogic_white",
+                  "scoreA": 13,
+                  "scoreB": 5,
+                  "winner": "maua_b",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Partida 6",
+                  "a": "maua_blue",
+                  "b": "tec_barao",
+                  "scoreA": 13,
+                  "scoreB": 9,
+                  "winner": "maua_blue",
+                  "bestOf": "MD1"
+                }
+              ]
+            },
+            {
+              "title": "Semifinais upper",
+              "matches": [
+                {
+                  "code": "Partida 9",
+                  "a": "macklogic_red",
+                  "b": "fei_darkowls",
+                  "scoreA": 13,
+                  "scoreB": 2,
+                  "winner": "macklogic_red",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Partida 10",
+                  "a": "maua_b",
+                  "b": "maua_blue",
+                  "scoreA": 13,
+                  "scoreB": 8,
+                  "winner": "maua_b",
+                  "bestOf": "MD1"
+                }
+              ]
+            },
+            {
+              "title": "Final upper",
+              "matches": [
+                {
+                  "code": "Partida 13",
+                  "a": "macklogic_red",
+                  "b": "maua_b",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "macklogic_red",
+                  "bestOf": "MD3"
+                }
+              ]
+            }
+          ],
+          "terminalColumn": false
+        },
+        {
+          "name": "Lower",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Rodada 2",
+              "matches": [
+                {
+                  "code": "Partida 7",
+                  "a": "tec_barao",
+                  "b": "axis_anteaters",
+                  "scoreA": 7,
+                  "scoreB": 13,
+                  "winner": "axis_anteaters",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Bye LB 6",
+                  "a": "macklogic_white",
+                  "b": null,
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "macklogic_white",
+                  "status": "Bye",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Partida 8",
+                  "a": "pucc_canaries",
+                  "b": "ifsp_midas",
+                  "scoreA": 4,
+                  "scoreB": 13,
+                  "winner": "ifsp_midas",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Bye LB 8",
+                  "a": "caap_hellhounds",
+                  "b": null,
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds",
+                  "status": "Bye",
+                  "bestOf": "MD1"
+                }
+              ]
+            },
+            {
+              "title": "Rodada 3",
+              "matches": [
+                {
+                  "code": "Partida 11",
+                  "a": "axis_anteaters",
+                  "b": "macklogic_white",
+                  "scoreA": 13,
+                  "scoreB": 9,
+                  "winner": "axis_anteaters",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Partida 12",
+                  "a": "ifsp_midas",
+                  "b": "caap_hellhounds",
+                  "scoreA": 5,
+                  "scoreB": 13,
+                  "winner": "caap_hellhounds",
+                  "bestOf": "MD1"
+                }
+              ]
+            },
+            {
+              "title": "Rodada 4",
+              "matches": [
+                {
+                  "code": "Partida 14",
+                  "a": "fei_darkowls",
+                  "b": "axis_anteaters",
+                  "scoreA": 7,
+                  "scoreB": 13,
+                  "winner": "axis_anteaters",
+                  "bestOf": "MD1"
+                },
+                {
+                  "code": "Partida 15",
+                  "a": "maua_blue",
+                  "b": "caap_hellhounds",
+                  "scoreA": 7,
+                  "scoreB": 13,
+                  "winner": "caap_hellhounds",
+                  "bestOf": "MD1"
+                }
+              ]
+            },
+            {
+              "title": "Rodada 5",
+              "matches": [
+                {
+                  "code": "Partida 16",
+                  "a": "axis_anteaters",
+                  "b": "caap_hellhounds",
+                  "scoreA": 13,
+                  "scoreB": 11,
+                  "winner": "axis_anteaters",
+                  "bestOf": "MD1"
+                }
+              ]
+            },
+            {
+              "title": "Final lower",
+              "matches": [
+                {
+                  "code": "Partida 17",
+                  "a": "maua_b",
+                  "b": "axis_anteaters",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "maua_b",
+                  "bestOf": "MD3"
+                }
+              ]
+            }
+          ],
+          "terminalColumn": false
+        },
+        {
+          "name": "Grande final",
+          "columns": [
+            {
+              "title": "Final",
+              "matches": [
+                {
+                  "code": "Partida 18",
+                  "a": "macklogic_red",
+                  "b": "maua_b",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "macklogic_red",
+                  "bestOf": "MD3",
+                  "previewNote": "A sala foi cancelada na plataforma, mas a final foi disputada e o resultado foi confirmado."
+                }
+              ]
+            }
+          ],
+          "terminalColumn": false
+        }
+      ]
+    }
+  },
+  "copa-alianca-2025-playoffs": {
+    "name": "Copa Aliança 2025 - Playoffs",
+    "organizer": "AcadArena",
+    "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
+    "prizePool": "-",
+    "tier": "S",
+    "type": "Online - Playoffs",
+    "status": "Finalizado",
+    "teamCount": 8,
+    "teams": [
+      "ufu_saints",
+      "ufrj_canis_b",
+      "unicamp_tritons_black",
+      "ufg_eagles",
+      "maua_b",
+      "caap_hellhounds",
+      "azure_bears_golden",
+      "macklogic_red"
+    ],
+    "mapPool": [
+      "Ascent",
+      "Bind",
+      "Haven",
+      "Icebox",
+      "Lotus",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Eliminação simples",
+      "details": [
+        "Oito equipes, quartas de final, semifinais e final em MD3.",
+        "Final em contas de torneio, com placar registrado e sem estatísticas."
+      ],
+      "standings": "Classificação final"
+    },
+    "placements": [
+      {
+        "id": "ufg_eagles",
+        "range": "1"
+      },
+      {
+        "id": "azure_bears_golden",
+        "range": "2"
+      },
+      {
+        "id": "ufu_saints",
+        "range": "3-4"
+      },
+      {
+        "id": "caap_hellhounds",
+        "range": "3-4"
+      },
+      {
+        "id": "ufrj_canis_b",
+        "range": "5-8"
+      },
+      {
+        "id": "unicamp_tritons_black",
+        "range": "5-8"
+      },
+      {
+        "id": "maua_b",
+        "range": "5-8"
+      },
+      {
+        "id": "macklogic_red",
+        "range": "5-8"
+      }
+    ],
+    "bracket": {
+      "title": "Eliminação simples",
+      "regions": [
+        {
+          "name": "Playoffs",
+          "className": "playoff-bracket",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Quartas de final",
+              "matches": [
+                {
+                  "code": "Partida 1",
+                  "a": "ufu_saints",
+                  "b": "ufrj_canis_b",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "ufu_saints",
+                  "bestOf": "MD3",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Placar registrado, sem estatísticas. Não há confirmação de W.O."
+                },
+                {
+                  "code": "Partida 2",
+                  "a": "unicamp_tritons_black",
+                  "b": "ufg_eagles",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufg_eagles",
+                  "bestOf": "MD3"
+                },
+                {
+                  "code": "Partida 3",
+                  "a": "maua_b",
+                  "b": "caap_hellhounds",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "caap_hellhounds",
+                  "bestOf": "MD3"
+                },
+                {
+                  "code": "Partida 4",
+                  "a": "azure_bears_golden",
+                  "b": "macklogic_red",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden",
+                  "bestOf": "MD3"
+                }
+              ]
+            },
+            {
+              "title": "Semifinais",
+              "matches": [
+                {
+                  "code": "Partida 5",
+                  "a": "ufu_saints",
+                  "b": "ufg_eagles",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufg_eagles",
+                  "bestOf": "MD3",
+                  "from": [
+                    "Partida 1",
+                    "Partida 2"
+                  ]
+                },
+                {
+                  "code": "Partida 6",
+                  "a": "caap_hellhounds",
+                  "b": "azure_bears_golden",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "azure_bears_golden",
+                  "bestOf": "MD3",
+                  "from": [
+                    "Partida 3",
+                    "Partida 4"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Final",
+              "matches": [
+                {
+                  "code": "Partida 7",
+                  "a": "ufg_eagles",
+                  "b": "azure_bears_golden",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "ufg_eagles",
+                  "bestOf": "MD3",
+                  "status": "Sem estatísticas",
+                  "playedOn": "2025-10-04T12:00:00",
+                  "previewNote": "UFG Eagles venceu por 2x1 em 04/10/2025. Lotus: Azure 14x12 UFG; Abyss: UFG 13x4 Azure; Sunset: UFG 13x8 Azure. Disputada em contas de torneio, sem estatísticas.",
+                  "from": [
+                    "Partida 5",
+                    "Partida 6"
+                  ]
+                }
+              ]
+            }
+          ],
+          "terminalColumn": false
+        }
+      ]
+    }
+  },
+  "jubs-2025-fase-inicial": {
+    "name": "JUBS RN 2025 - Fase inicial",
+    "organizer": "CBDU",
+    "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
+    "banner": "assets/tournament-banners/banner_jubs.png",
+    "prizePool": "-",
+    "tier": "A",
+    "status": "Finalizado",
+    "teamCount": 45,
+    "type": "Online",
+    "mapPool": [
+      "Ascent",
+      "Bind",
+      "Corrode",
+      "Haven",
+      "Icebox",
+      "Lotus",
+      "Pearl",
+      "Split",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Sistema suíço + classificatório",
+      "details": [
+        "45 equipes, seis rodadas suíças e séries MD3.",
+        "16 equipes disputam uma série classificatória MD3 para definir oito vagas presenciais.",
+        "Máximo de duas equipes do mesmo estado no classificatório; equipes do mesmo estado se enfrentam para garantir uma representante por estado no presencial.",
+        "Canis B venceu o classificatório, mas não pôde comparecer ao presencial; Wolf Gaming assumiu sua vaga."
+      ],
+      "standings": "Classificação da fase on-line"
+    },
+    "teams": [
+      "unicamp_tritons_red",
+      "sem_totem",
+      "ufu_saints",
+      "unicamp_tritons_black",
+      "black_cyber",
+      "rahnag",
+      "azure_bears_golden",
+      "beyond",
+      "unifor",
+      "limpezinha",
+      "ufrj_canis_b",
+      "uninassau_griffins",
+      "crotalus_ufersa",
+      "nassau",
+      "ggg_sports",
+      "ufrj_canis",
+      "aufa_faesa",
+      "wolf_gaming",
+      "nexus",
+      "ufma_abscissa",
+      "castor_vai",
+      "if_academy",
+      "green_owls_pulsatrix",
+      "usp_stars",
+      "unifacs_sting",
+      "ufmt_turuna",
+      "grifos_unisales",
+      "ufpr_bbn",
+      "univasf",
+      "anhangueros",
+      "compressora_cangaceiros",
+      "ceuma",
+      "notapixel",
+      "undbala",
+      "ufrn_carcaras",
+      "ufg_eagles",
+      "unirv_rushone",
+      "ufs_warriowls",
+      "inatel_white",
+      "undb_turing",
+      "caap_hellhounds",
+      "team_nyx_ufersa",
+      "unit_troianos_trojan",
+      "unir_sentinelas",
+      "unesa_cyborgs"
+    ],
+    "placements": [
+      {
+        "id": "uninassau_griffins",
+        "range": "Classificado",
+        "note": "Vaga conquistada no classificatório"
+      },
+      {
+        "id": "ufg_eagles",
+        "range": "Classificado",
+        "note": "Vaga conquistada no classificatório"
+      },
+      {
+        "id": "ufrj_canis_b",
+        "range": "Classificado",
+        "note": "Vaga conquistada no classificatório"
+      },
+      {
+        "id": "ufu_saints",
+        "range": "Classificado",
+        "note": "Vaga conquistada no classificatório"
+      },
+      {
+        "id": "azure_bears_golden",
+        "range": "Classificado",
+        "note": "Vaga conquistada no classificatório"
+      },
+      {
+        "id": "usp_stars",
+        "range": "Classificado",
+        "note": "Vaga conquistada no classificatório"
+      },
+      {
+        "id": "ufmt_turuna",
+        "range": "Classificado",
+        "note": "Vaga conquistada no classificatório"
+      },
+      {
+        "id": "castor_vai",
+        "range": "Classificado",
+        "note": "Vaga conquistada no classificatório"
+      },
+      {
+        "id": "unicamp_tritons_black",
+        "range": "9-16",
+        "note": "9º na classificação on-line"
+      },
+      {
+        "id": "wolf_gaming",
+        "range": "9-16",
+        "note": "10º na classificação on-line",
+        "reason": "Convocada para o presencial no lugar da Canis B"
+      },
+      {
+        "id": "unifacs_sting",
+        "range": "9-16",
+        "note": "11º na classificação on-line"
+      },
+      {
+        "id": "unirv_rushone",
+        "range": "9-16",
+        "note": "12º na classificação on-line"
+      },
+      {
+        "id": "unifor",
+        "range": "9-16",
+        "note": "13º na classificação on-line"
+      },
+      {
+        "id": "black_cyber",
+        "range": "9-16",
+        "note": "14º na classificação on-line"
+      },
+      {
+        "id": "inatel_white",
+        "range": "9-16",
+        "note": "15º na classificação on-line"
+      },
+      {
+        "id": "aufa_faesa",
+        "range": "9-16",
+        "note": "16º na classificação on-line"
+      },
+      {
+        "id": "caap_hellhounds",
+        "range": "17-20",
+        "note": "17º na classificação on-line"
+      },
+      {
+        "id": "ufrj_canis",
+        "range": "17-20",
+        "note": "18º na classificação on-line"
+      },
+      {
+        "id": "rahnag",
+        "range": "17-20",
+        "note": "19º na classificação on-line"
+      },
+      {
+        "id": "ufs_warriowls",
+        "range": "17-20",
+        "note": "20º na classificação on-line"
+      },
+      {
+        "id": "ggg_sports",
+        "range": "21-28",
+        "note": "21º na classificação on-line"
+      },
+      {
+        "id": "undbala",
+        "range": "21-28",
+        "note": "22º na classificação on-line"
+      },
+      {
+        "id": "ufrn_carcaras",
+        "range": "21-28",
+        "note": "23º na classificação on-line"
+      },
+      {
+        "id": "ufpr_bbn",
+        "range": "21-28",
+        "note": "24º na classificação on-line"
+      },
+      {
+        "id": "ceuma",
+        "range": "21-28",
+        "note": "25º na classificação on-line"
+      },
+      {
+        "id": "green_owls_pulsatrix",
+        "range": "21-28",
+        "note": "26º na classificação on-line"
+      },
+      {
+        "id": "notapixel",
+        "range": "21-28",
+        "note": "27º na classificação on-line"
+      },
+      {
+        "id": "compressora_cangaceiros",
+        "range": "21-28",
+        "note": "28º na classificação on-line"
+      },
+      {
+        "id": "nexus",
+        "range": "29-35",
+        "note": "29º na classificação on-line"
+      },
+      {
+        "id": "grifos_unisales",
+        "range": "29-35",
+        "note": "30º na classificação on-line"
+      },
+      {
+        "id": "team_nyx_ufersa",
+        "range": "29-35",
+        "note": "31º na classificação on-line"
+      },
+      {
+        "id": "nassau",
+        "range": "29-35",
+        "note": "32º na classificação on-line"
+      },
+      {
+        "id": "sem_totem",
+        "range": "29-35",
+        "note": "33º na classificação on-line"
+      },
+      {
+        "id": "unit_troianos_trojan",
+        "range": "29-35",
+        "note": "34º na classificação on-line"
+      },
+      {
+        "id": "limpezinha",
+        "range": "29-35",
+        "note": "35º na classificação on-line"
+      },
+      {
+        "id": "undb_turing",
+        "range": "36-45",
+        "note": "36º na classificação on-line"
+      },
+      {
+        "id": "unir_sentinelas",
+        "range": "36-45",
+        "note": "37º na classificação on-line"
+      },
+      {
+        "id": "beyond",
+        "range": "36-45",
+        "note": "38º na classificação on-line"
+      },
+      {
+        "id": "anhangueros",
+        "range": "36-45",
+        "note": "39º na classificação on-line"
+      },
+      {
+        "id": "if_academy",
+        "range": "36-45",
+        "note": "40º na classificação on-line"
+      },
+      {
+        "id": "unesa_cyborgs",
+        "range": "36-45",
+        "note": "41º na classificação on-line"
+      },
+      {
+        "id": "crotalus_ufersa",
+        "range": "36-45",
+        "note": "42º na classificação on-line"
+      },
+      {
+        "id": "ufma_abscissa",
+        "range": "36-45",
+        "note": "43º na classificação on-line"
+      },
+      {
+        "id": "univasf",
+        "range": "36-45",
+        "note": "44º na classificação on-line"
+      },
+      {
+        "id": "unicamp_tritons_red",
+        "range": "36-45",
+        "note": "45º na classificação on-line"
+      }
+    ],
+    "swiss": {
+      "seriesCount": 120,
+      "stateTables": true,
+      "standingsLabel": "Tabela suíça - 16 vagas no classificatório",
+      "finalStandings": true,
+      "rounds": [
+        {
+          "title": "Rodada 1",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 1",
+              "bestOf": "MD3",
+              "a": "azure_bears_golden",
+              "bLabel": "Sem adversário",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "azure_bears_golden",
+              "status": "Bye",
+              "previewNote": "Avanço direto registrado no boletim."
+            },
+            {
+              "code": "Partida 2",
+              "bestOf": "MD3",
+              "a": "nexus",
+              "b": "compressora_cangaceiros",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "compressora_cangaceiros",
+              "previewNote": "Placar oficial. 1 dos 3 mapas teve menos de dez jogadores e fica fora das estatísticas."
+            },
+            {
+              "code": "Partida 3",
+              "bestOf": "MD3",
+              "a": "unifor",
+              "b": "nassau",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unifor"
+            },
+            {
+              "code": "Partida 4",
+              "bestOf": "MD3",
+              "a": "unicamp_tritons_red",
+              "b": "green_owls_pulsatrix",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "green_owls_pulsatrix",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 5",
+              "bestOf": "MD3",
+              "a": "unifacs_sting",
+              "b": "notapixel",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unifacs_sting"
+            },
+            {
+              "code": "Partida 6",
+              "bestOf": "MD3",
+              "a": "ufrj_canis_b",
+              "b": "grifos_unisales",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufrj_canis_b"
+            },
+            {
+              "code": "Partida 7",
+              "bestOf": "MD3",
+              "a": "unesa_cyborgs",
+              "b": "unir_sentinelas",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "unir_sentinelas",
+              "playedAt": "2025-07-05T17:13:26Z",
+              "previewNote": "Placar oficial. Os 3 mapas tiveram menos de dez jogadores e ficam fora das estatísticas.",
+              "status": "Sem estatísticas"
+            },
+            {
+              "code": "Partida 8",
+              "bestOf": "MD3",
+              "a": "ceuma",
+              "b": "undbala",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ceuma",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 9",
+              "bestOf": "MD3",
+              "a": "ufs_warriowls",
+              "b": "black_cyber",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "black_cyber"
+            },
+            {
+              "code": "Partida 10",
+              "bestOf": "MD3",
+              "a": "ufpr_bbn",
+              "b": "if_academy",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufpr_bbn"
+            },
+            {
+              "code": "Partida 11",
+              "bestOf": "MD3",
+              "a": "ggg_sports",
+              "b": "ufrj_canis",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufrj_canis"
+            },
+            {
+              "code": "Partida 12",
+              "bestOf": "MD3",
+              "a": "inatel_white",
+              "b": "univasf",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "inatel_white",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 13",
+              "bestOf": "MD3",
+              "a": "ufma_abscissa",
+              "b": "aufa_faesa",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "aufa_faesa",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 14",
+              "bestOf": "MD3",
+              "a": "ufrn_carcaras",
+              "b": "castor_vai",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "castor_vai"
+            },
+            {
+              "code": "Partida 15",
+              "bestOf": "MD3",
+              "a": "sem_totem",
+              "b": "rahnag",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "rahnag"
+            },
+            {
+              "code": "Partida 16",
+              "bestOf": "MD3",
+              "a": "ufmt_turuna",
+              "b": "limpezinha",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufmt_turuna"
+            },
+            {
+              "code": "Partida 17",
+              "bestOf": "MD3",
+              "a": "unirv_rushone",
+              "b": "unit_troianos_trojan",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unirv_rushone"
+            },
+            {
+              "code": "Partida 18",
+              "bestOf": "MD3",
+              "a": "undb_turing",
+              "b": "ufg_eagles",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 19",
+              "bestOf": "MD3",
+              "a": "anhangueros",
+              "b": "ufu_saints",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufu_saints",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 20",
+              "bestOf": "MD3",
+              "a": "uninassau_griffins",
+              "b": "crotalus_ufersa",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "uninassau_griffins",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 21",
+              "bestOf": "MD3",
+              "a": "beyond",
+              "b": "usp_stars",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "usp_stars"
+            },
+            {
+              "code": "Partida 22",
+              "bestOf": "MD3",
+              "a": "caap_hellhounds",
+              "b": "unicamp_tritons_black",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unicamp_tritons_black"
+            },
+            {
+              "code": "Partida 23",
+              "bestOf": "MD3",
+              "a": "wolf_gaming",
+              "b": "team_nyx_ufersa",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "wolf_gaming",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            }
+          ]
+        },
+        {
+          "title": "Rodada 2",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 24",
+              "bestOf": "MD3",
+              "a": "undbala",
+              "bLabel": "Sem adversário",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "undbala",
+              "status": "Bye",
+              "previewNote": "Avanço direto registrado no boletim."
+            },
+            {
+              "code": "Partida 25",
+              "bestOf": "MD3",
+              "a": "ufma_abscissa",
+              "b": "crotalus_ufersa",
+              "scoreA": 0,
+              "scoreB": 0,
+              "status": "Duplo W.O.",
+              "previewNote": "Derrota das duas equipes registrada nas fontes oficiais."
+            },
+            {
+              "code": "Partida 26",
+              "bestOf": "MD3",
+              "a": "grifos_unisales",
+              "b": "ufs_warriowls",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufs_warriowls",
+              "status": "Provável W.O.",
+              "previewNote": "Provável W.O. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 27",
+              "bestOf": "MD3",
+              "a": "azure_bears_golden",
+              "b": "ceuma",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 28",
+              "bestOf": "MD3",
+              "a": "unit_troianos_trojan",
+              "b": "univasf",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unit_troianos_trojan",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 29",
+              "bestOf": "MD3",
+              "a": "unesa_cyborgs",
+              "b": "unicamp_tritons_red",
+              "scoreA": 0,
+              "scoreB": 0,
+              "status": "Duplo W.O.",
+              "previewNote": "Derrota das duas equipes registrada nas fontes oficiais."
+            },
+            {
+              "code": "Partida 30",
+              "bestOf": "MD3",
+              "a": "compressora_cangaceiros",
+              "b": "unifacs_sting",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unifacs_sting"
+            },
+            {
+              "code": "Partida 31",
+              "bestOf": "MD3",
+              "a": "castor_vai",
+              "b": "black_cyber",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "black_cyber"
+            },
+            {
+              "code": "Partida 32",
+              "bestOf": "MD3",
+              "a": "ufmt_turuna",
+              "b": "green_owls_pulsatrix",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufmt_turuna"
+            },
+            {
+              "code": "Partida 33",
+              "bestOf": "MD3",
+              "a": "inatel_white",
+              "b": "uninassau_griffins",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 34",
+              "bestOf": "MD3",
+              "a": "ufrj_canis",
+              "b": "team_nyx_ufersa",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufrj_canis",
+              "playedAt": "2025-07-12T17:10:52Z",
+              "previewNote": "Placar oficial. Os 2 mapas tiveram menos de dez jogadores e ficam fora das estatísticas.",
+              "status": "Sem estatísticas"
+            },
+            {
+              "code": "Partida 35",
+              "bestOf": "MD3",
+              "a": "sem_totem",
+              "b": "anhangueros",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "sem_totem",
+              "status": "Provável W.O.",
+              "previewNote": "Provável W.O. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 36",
+              "bestOf": "MD3",
+              "a": "ufpr_bbn",
+              "b": "ufrj_canis_b",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "ufrj_canis_b",
+              "previewNote": "Placar oficial. 1 dos 3 mapas teve menos de dez jogadores e fica fora das estatísticas."
+            },
+            {
+              "code": "Partida 37",
+              "bestOf": "MD3",
+              "a": "caap_hellhounds",
+              "b": "nassau",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 38",
+              "bestOf": "MD3",
+              "a": "ufg_eagles",
+              "b": "aufa_faesa",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 39",
+              "bestOf": "MD3",
+              "a": "ufu_saints",
+              "b": "unirv_rushone",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufu_saints"
+            },
+            {
+              "code": "Partida 40",
+              "bestOf": "MD3",
+              "a": "rahnag",
+              "b": "usp_stars",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "usp_stars"
+            },
+            {
+              "code": "Partida 41",
+              "bestOf": "MD3",
+              "a": "limpezinha",
+              "b": "nexus",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "nexus"
+            },
+            {
+              "code": "Partida 42",
+              "bestOf": "MD3",
+              "a": "ggg_sports",
+              "b": "ufrn_carcaras",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufrn_carcaras"
+            },
+            {
+              "code": "Partida 43",
+              "bestOf": "MD3",
+              "a": "notapixel",
+              "b": "beyond",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "notapixel",
+              "playedAt": "2025-07-12T17:24:24Z",
+              "previewNote": "Placar oficial. Os 2 mapas tiveram menos de dez jogadores e ficam fora das estatísticas.",
+              "status": "Sem estatísticas"
+            },
+            {
+              "code": "Partida 44",
+              "bestOf": "MD3",
+              "a": "unir_sentinelas",
+              "b": "unicamp_tritons_black",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unicamp_tritons_black"
+            },
+            {
+              "code": "Partida 45",
+              "bestOf": "MD3",
+              "a": "unifor",
+              "b": "wolf_gaming",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "wolf_gaming"
+            },
+            {
+              "code": "Partida 46",
+              "bestOf": "MD3",
+              "a": "undb_turing",
+              "b": "if_academy",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "undb_turing",
+              "previewNote": "Placar oficial. 1 dos 2 mapas teve menos de dez jogadores e fica fora das estatísticas."
+            }
+          ]
+        },
+        {
+          "title": "Rodada 3",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 47",
+              "bestOf": "MD3",
+              "a": "grifos_unisales",
+              "bLabel": "Sem adversário",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "grifos_unisales",
+              "status": "Bye",
+              "previewNote": "Avanço direto registrado no boletim."
+            },
+            {
+              "code": "Partida 48",
+              "bestOf": "MD3",
+              "a": "unicamp_tritons_black",
+              "b": "unifacs_sting",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unicamp_tritons_black"
+            },
+            {
+              "code": "Partida 49",
+              "bestOf": "MD3",
+              "a": "if_academy",
+              "b": "ggg_sports",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ggg_sports",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 50",
+              "bestOf": "MD3",
+              "a": "compressora_cangaceiros",
+              "b": "ufpr_bbn",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufpr_bbn"
+            },
+            {
+              "code": "Partida 51",
+              "bestOf": "MD3",
+              "a": "nexus",
+              "b": "ufs_warriowls",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufs_warriowls"
+            },
+            {
+              "code": "Partida 52",
+              "bestOf": "MD3",
+              "a": "ufrj_canis_b",
+              "b": "uninassau_griffins",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 53",
+              "bestOf": "MD3",
+              "a": "usp_stars",
+              "b": "azure_bears_golden",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "usp_stars"
+            },
+            {
+              "code": "Partida 54",
+              "bestOf": "MD3",
+              "a": "nassau",
+              "b": "beyond",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "nassau",
+              "status": "W.O.",
+              "playedAt": "2025-07-19T17:07:22Z",
+              "previewNote": "Placar registrado. Os 2 mapas tiveram menos de dez jogadores e ficam fora das estatísticas."
+            },
+            {
+              "code": "Partida 55",
+              "bestOf": "MD3",
+              "a": "unesa_cyborgs",
+              "b": "limpezinha",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "limpezinha",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 56",
+              "bestOf": "MD3",
+              "a": "black_cyber",
+              "b": "ufu_saints",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "black_cyber"
+            },
+            {
+              "code": "Partida 57",
+              "bestOf": "MD3",
+              "a": "caap_hellhounds",
+              "b": "rahnag",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 58",
+              "bestOf": "MD3",
+              "a": "unit_troianos_trojan",
+              "b": "inatel_white",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "inatel_white"
+            },
+            {
+              "code": "Partida 59",
+              "bestOf": "MD3",
+              "a": "unirv_rushone",
+              "b": "sem_totem",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unirv_rushone"
+            },
+            {
+              "code": "Partida 60",
+              "bestOf": "MD3",
+              "a": "unifor",
+              "b": "ufrn_carcaras",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unifor"
+            },
+            {
+              "code": "Partida 61",
+              "bestOf": "MD3",
+              "a": "ufg_eagles",
+              "b": "ufrj_canis",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 62",
+              "bestOf": "MD3",
+              "a": "ceuma",
+              "b": "unir_sentinelas",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ceuma"
+            },
+            {
+              "code": "Partida 63",
+              "bestOf": "MD3",
+              "a": "undb_turing",
+              "b": "notapixel",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "notapixel"
+            },
+            {
+              "code": "Partida 64",
+              "bestOf": "MD3",
+              "a": "team_nyx_ufersa",
+              "b": "anhangueros",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "team_nyx_ufersa",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 65",
+              "bestOf": "MD3",
+              "a": "wolf_gaming",
+              "b": "ufmt_turuna",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufmt_turuna"
+            },
+            {
+              "code": "Partida 66",
+              "bestOf": "MD3",
+              "a": "green_owls_pulsatrix",
+              "b": "undbala",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "green_owls_pulsatrix"
+            },
+            {
+              "code": "Partida 67",
+              "bestOf": "MD3",
+              "a": "castor_vai",
+              "b": "aufa_faesa",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "castor_vai"
+            }
+          ]
+        },
+        {
+          "title": "Rodada 4",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 68",
+              "bestOf": "MD3",
+              "a": "ufrn_carcaras",
+              "bLabel": "Sem adversário",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufrn_carcaras",
+              "status": "Bye",
+              "previewNote": "Avanço direto registrado no boletim."
+            },
+            {
+              "code": "Partida 69",
+              "bestOf": "MD3",
+              "a": "unicamp_tritons_black",
+              "b": "uninassau_griffins",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 70",
+              "bestOf": "MD3",
+              "a": "castor_vai",
+              "b": "caap_hellhounds",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 71",
+              "bestOf": "MD3",
+              "a": "rahnag",
+              "b": "grifos_unisales",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "rahnag",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 72",
+              "bestOf": "MD3",
+              "a": "ggg_sports",
+              "b": "limpezinha",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ggg_sports",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 73",
+              "bestOf": "MD3",
+              "a": "unir_sentinelas",
+              "b": "undb_turing",
+              "scoreA": 0,
+              "scoreB": 0,
+              "status": "Duplo W.O.",
+              "previewNote": "Derrota das duas equipes registrada nas fontes oficiais."
+            },
+            {
+              "code": "Partida 74",
+              "bestOf": "MD3",
+              "a": "ufs_warriowls",
+              "b": "inatel_white",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "inatel_white"
+            },
+            {
+              "code": "Partida 75",
+              "bestOf": "MD3",
+              "a": "unirv_rushone",
+              "b": "unifacs_sting",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unifacs_sting"
+            },
+            {
+              "code": "Partida 76",
+              "bestOf": "MD3",
+              "a": "aufa_faesa",
+              "b": "sem_totem",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "aufa_faesa"
+            },
+            {
+              "code": "Partida 77",
+              "bestOf": "MD3",
+              "a": "black_cyber",
+              "b": "ufmt_turuna",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufmt_turuna"
+            },
+            {
+              "code": "Partida 78",
+              "bestOf": "MD3",
+              "a": "nassau",
+              "b": "nexus",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "nexus"
+            },
+            {
+              "code": "Partida 79",
+              "bestOf": "MD3",
+              "a": "unifor",
+              "b": "green_owls_pulsatrix",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "unifor"
+            },
+            {
+              "code": "Partida 80",
+              "bestOf": "MD3",
+              "a": "ceuma",
+              "b": "ufrj_canis_b",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "ufrj_canis_b",
+              "previewNote": "Placar oficial. 1 dos 3 mapas teve menos de dez jogadores e fica fora das estatísticas."
+            },
+            {
+              "code": "Partida 81",
+              "bestOf": "MD3",
+              "a": "notapixel",
+              "b": "azure_bears_golden",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "azure_bears_golden",
+              "playedAt": "2025-07-26T16:12:59Z",
+              "previewNote": "Placar oficial. Os 2 mapas tiveram menos de dez jogadores e ficam fora das estatísticas.",
+              "status": "Sem estatísticas"
+            },
+            {
+              "code": "Partida 82",
+              "bestOf": "MD3",
+              "a": "team_nyx_ufersa",
+              "b": "compressora_cangaceiros",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "compressora_cangaceiros",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 83",
+              "bestOf": "MD3",
+              "a": "unit_troianos_trojan",
+              "b": "undbala",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "undbala",
+              "status": "W.O.",
+              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+            },
+            {
+              "code": "Partida 84",
+              "bestOf": "MD3",
+              "a": "usp_stars",
+              "b": "ufg_eagles",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 85",
+              "bestOf": "MD3",
+              "a": "wolf_gaming",
+              "b": "ufrj_canis",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "wolf_gaming"
+            },
+            {
+              "code": "Partida 86",
+              "bestOf": "MD3",
+              "a": "ufu_saints",
+              "b": "ufpr_bbn",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufu_saints",
+              "previewNote": "Placar oficial. 1 dos 2 mapas teve menos de dez jogadores e fica fora das estatísticas."
+            }
+          ]
+        },
+        {
+          "title": "Rodada 5",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 87",
+              "bestOf": "MD3",
+              "a": "rahnag",
+              "bLabel": "Sem adversário",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "rahnag",
+              "status": "Bye",
+              "previewNote": "Avanço direto registrado no boletim."
+            },
+            {
+              "code": "Partida 88",
+              "bestOf": "MD3",
+              "a": "ceuma",
+              "b": "aufa_faesa",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "aufa_faesa"
+            },
+            {
+              "code": "Partida 89",
+              "bestOf": "MD3",
+              "a": "ufpr_bbn",
+              "b": "castor_vai",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "castor_vai"
+            },
+            {
+              "code": "Partida 90",
+              "bestOf": "MD3",
+              "a": "wolf_gaming",
+              "b": "unicamp_tritons_black",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unicamp_tritons_black"
+            },
+            {
+              "code": "Partida 91",
+              "bestOf": "MD3",
+              "a": "black_cyber",
+              "b": "azure_bears_golden",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 92",
+              "bestOf": "MD3",
+              "a": "ufu_saints",
+              "b": "usp_stars",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "ufu_saints",
+              "previewNote": "Placar oficial. O terceiro mapa, 13x10 para a Ravens, não tem estatísticas."
+            },
+            {
+              "code": "Partida 93",
+              "bestOf": "MD3",
+              "a": "ufrj_canis_b",
+              "b": "unifacs_sting",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "ufrj_canis_b"
+            },
+            {
+              "code": "Partida 94",
+              "bestOf": "MD3",
+              "a": "notapixel",
+              "b": "ggg_sports",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ggg_sports"
+            },
+            {
+              "code": "Partida 95",
+              "bestOf": "MD3",
+              "a": "uninassau_griffins",
+              "b": "ufmt_turuna",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 96",
+              "bestOf": "MD3",
+              "a": "compressora_cangaceiros",
+              "b": "ufrj_canis",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufrj_canis"
+            },
+            {
+              "code": "Partida 97",
+              "bestOf": "MD3",
+              "a": "green_owls_pulsatrix",
+              "b": "ufs_warriowls",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufs_warriowls"
+            },
+            {
+              "code": "Partida 98",
+              "bestOf": "MD3",
+              "a": "nexus",
+              "b": "undbala",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "undbala"
+            },
+            {
+              "code": "Partida 99",
+              "bestOf": "MD3",
+              "a": "ufg_eagles",
+              "b": "inatel_white",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 100",
+              "bestOf": "MD3",
+              "a": "unifor",
+              "b": "caap_hellhounds",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 101",
+              "bestOf": "MD3",
+              "a": "unirv_rushone",
+              "b": "ufrn_carcaras",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unirv_rushone",
+              "previewNote": "Placar oficial. 1 dos 2 mapas teve menos de dez jogadores e fica fora das estatísticas."
+            }
+          ]
+        },
+        {
+          "title": "Rodada 6",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 102",
+              "bestOf": "MD3",
+              "a": "caap_hellhounds",
+              "b": "azure_bears_golden",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 103",
+              "bestOf": "MD3",
+              "a": "ufg_eagles",
+              "b": "uninassau_griffins",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 104",
+              "bestOf": "MD3",
+              "a": "inatel_white",
+              "b": "unirv_rushone",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unirv_rushone"
+            },
+            {
+              "code": "Partida 105",
+              "bestOf": "MD3",
+              "a": "unicamp_tritons_black",
+              "b": "ufrj_canis_b",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufrj_canis_b"
+            },
+            {
+              "code": "Partida 106",
+              "bestOf": "MD3",
+              "a": "ggg_sports",
+              "b": "unifacs_sting",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unifacs_sting"
+            },
+            {
+              "code": "Partida 107",
+              "bestOf": "MD3",
+              "a": "ufmt_turuna",
+              "b": "ufu_saints",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufu_saints"
+            },
+            {
+              "code": "Partida 108",
+              "bestOf": "MD3",
+              "a": "ufs_warriowls",
+              "b": "ufrj_canis",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufrj_canis"
+            },
+            {
+              "code": "Partida 109",
+              "bestOf": "MD3",
+              "a": "rahnag",
+              "b": "castor_vai",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "castor_vai"
+            },
+            {
+              "code": "Partida 110",
+              "bestOf": "MD3",
+              "a": "unifor",
+              "b": "undbala",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unifor"
+            },
+            {
+              "code": "Partida 111",
+              "bestOf": "MD3",
+              "a": "black_cyber",
+              "b": "wolf_gaming",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "wolf_gaming"
+            },
+            {
+              "code": "Partida 112",
+              "bestOf": "MD3",
+              "a": "aufa_faesa",
+              "b": "usp_stars",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "usp_stars"
+            }
+          ]
+        },
+        {
+          "title": "Playoff classificatório",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 113",
+              "bestOf": "MD3",
+              "a": "uninassau_griffins",
+              "b": "black_cyber",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 114",
+              "bestOf": "MD3",
+              "a": "ufg_eagles",
+              "b": "unirv_rushone",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 115",
+              "bestOf": "MD3",
+              "a": "ufu_saints",
+              "b": "inatel_white",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufu_saints"
+            },
+            {
+              "code": "Partida 116",
+              "bestOf": "MD3",
+              "a": "azure_bears_golden",
+              "b": "unifor",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 117",
+              "bestOf": "MD3",
+              "a": "castor_vai",
+              "b": "aufa_faesa",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "castor_vai"
+            },
+            {
+              "code": "Partida 118",
+              "bestOf": "MD3",
+              "a": "ufrj_canis_b",
+              "b": "wolf_gaming",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "ufrj_canis_b"
+            },
+            {
+              "code": "Partida 119",
+              "bestOf": "MD3",
+              "a": "ufmt_turuna",
+              "b": "unifacs_sting",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufmt_turuna"
+            },
+            {
+              "code": "Partida 120",
+              "bestOf": "MD3",
+              "a": "unicamp_tritons_black",
+              "b": "usp_stars",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "usp_stars"
+            }
+          ]
+        }
+      ],
+      "standings": [
+        {
+          "id": "uninassau_griffins",
+          "wins": 6,
+          "losses": 0,
+          "points": 18,
+          "range": "1",
+          "status": "Classificatório"
+        },
+        {
+          "id": "ufg_eagles",
+          "wins": 5,
+          "losses": 1,
+          "points": 15,
+          "range": "2",
+          "status": "Classificatório"
+        },
+        {
+          "id": "ufrj_canis_b",
+          "wins": 5,
+          "losses": 1,
+          "points": 15,
+          "range": "3",
+          "status": "Classificatório"
+        },
+        {
+          "id": "ufu_saints",
+          "wins": 5,
+          "losses": 1,
+          "points": 15,
+          "range": "4",
+          "status": "Classificatório"
+        },
+        {
+          "id": "azure_bears_golden",
+          "wins": 5,
+          "losses": 1,
+          "points": 15,
+          "range": "5",
+          "status": "Classificatório"
+        },
+        {
+          "id": "unicamp_tritons_black",
+          "wins": 4,
+          "losses": 2,
+          "points": 12,
+          "range": "6",
+          "status": "Classificatório"
+        },
+        {
+          "id": "usp_stars",
+          "wins": 4,
+          "losses": 2,
+          "points": 12,
+          "range": "7",
+          "status": "Classificatório"
+        },
+        {
+          "id": "ufmt_turuna",
+          "wins": 4,
+          "losses": 2,
+          "points": 12,
+          "range": "8",
+          "status": "Classificatório"
+        },
+        {
+          "id": "caap_hellhounds",
+          "wins": 4,
+          "losses": 2,
+          "points": 12,
+          "range": "9",
+          "status": "Limite de equipes por estado"
+        },
+        {
+          "id": "wolf_gaming",
+          "wins": 4,
+          "losses": 2,
+          "points": 12,
+          "range": "10",
+          "status": "Classificatório"
+        },
+        {
+          "id": "unifacs_sting",
+          "wins": 4,
+          "losses": 2,
+          "points": 12,
+          "range": "11",
+          "status": "Classificatório"
+        },
+        {
+          "id": "ufrj_canis",
+          "wins": 4,
+          "losses": 2,
+          "points": 12,
+          "range": "12",
+          "status": "Limite de equipes por estado"
+        },
+        {
+          "id": "unirv_rushone",
+          "wins": 4,
+          "losses": 2,
+          "points": 12,
+          "range": "13",
+          "status": "Classificatório"
+        },
+        {
+          "id": "castor_vai",
+          "wins": 4,
+          "losses": 2,
+          "points": 12,
+          "range": "14",
+          "status": "Classificatório"
+        },
+        {
+          "id": "unifor",
+          "wins": 4,
+          "losses": 2,
+          "points": 12,
+          "range": "15",
+          "status": "Classificatório"
+        },
+        {
+          "id": "black_cyber",
+          "wins": 3,
+          "losses": 3,
+          "points": 9,
+          "range": "16",
+          "status": "Classificatório"
+        },
+        {
+          "id": "inatel_white",
+          "wins": 3,
+          "losses": 3,
+          "points": 9,
+          "range": "17",
+          "status": "Classificatório"
+        },
+        {
+          "id": "aufa_faesa",
+          "wins": 3,
+          "losses": 3,
+          "points": 9,
+          "range": "18",
+          "status": "Classificatório"
+        },
+        {
+          "id": "rahnag",
+          "wins": 3,
+          "losses": 3,
+          "points": 9,
+          "range": "19",
+          "status": "Eliminado"
+        },
+        {
+          "id": "ufs_warriowls",
+          "wins": 3,
+          "losses": 3,
+          "points": 9,
+          "range": "20",
+          "status": "Eliminado"
+        },
+        {
+          "id": "ggg_sports",
+          "wins": 3,
+          "losses": 3,
+          "points": 9,
+          "range": "21",
+          "status": "Eliminado"
+        },
+        {
+          "id": "undbala",
+          "wins": 3,
+          "losses": 3,
+          "points": 9,
+          "range": "22",
+          "status": "Eliminado"
+        },
+        {
+          "id": "ufrn_carcaras",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "23",
+          "status": "Eliminado"
+        },
+        {
+          "id": "ufpr_bbn",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "24",
+          "status": "Eliminado"
+        },
+        {
+          "id": "ceuma",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "25",
+          "status": "Eliminado"
+        },
+        {
+          "id": "green_owls_pulsatrix",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "26",
+          "status": "Eliminado"
+        },
+        {
+          "id": "notapixel",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "27",
+          "status": "Eliminado"
+        },
+        {
+          "id": "compressora_cangaceiros",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "28",
+          "status": "Eliminado"
+        },
+        {
+          "id": "nexus",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "29",
+          "status": "Eliminado"
+        },
+        {
+          "id": "grifos_unisales",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "30",
+          "status": "Eliminado"
+        },
+        {
+          "id": "team_nyx_ufersa",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "31",
+          "status": "Eliminado"
+        },
+        {
+          "id": "nassau",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "32",
+          "status": "Eliminado"
+        },
+        {
+          "id": "sem_totem",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "33",
+          "status": "Eliminado"
+        },
+        {
+          "id": "unit_troianos_trojan",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "34",
+          "status": "Eliminado"
+        },
+        {
+          "id": "limpezinha",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "35",
+          "status": "Eliminado"
+        },
+        {
+          "id": "undb_turing",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "36",
+          "status": "Eliminado"
+        },
+        {
+          "id": "unir_sentinelas",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "37",
+          "status": "Eliminado"
+        },
+        {
+          "id": "beyond",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "38",
+          "status": "Eliminado"
+        },
+        {
+          "id": "anhangueros",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "39",
+          "status": "Eliminado"
+        },
+        {
+          "id": "if_academy",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "40",
+          "status": "Eliminado"
+        },
+        {
+          "id": "unesa_cyborgs",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "41",
+          "status": "Eliminado"
+        },
+        {
+          "id": "crotalus_ufersa",
+          "wins": 0,
+          "losses": 2,
+          "points": 0,
+          "range": "42",
+          "status": "Eliminado"
+        },
+        {
+          "id": "ufma_abscissa",
+          "wins": 0,
+          "losses": 2,
+          "points": 0,
+          "range": "43",
+          "status": "Eliminado"
+        },
+        {
+          "id": "univasf",
+          "wins": 0,
+          "losses": 2,
+          "points": 0,
+          "range": "44",
+          "status": "Eliminado"
+        },
+        {
+          "id": "unicamp_tritons_red",
+          "wins": 0,
+          "losses": 2,
+          "points": 0,
+          "range": "45",
+          "status": "Eliminado"
+        }
+      ]
+    },
+    "teamNames": {
+      "unicamp_tritons_red": "UNICAMP Tritons Red",
+      "sem_totem": "Sem Totem UFRR",
+      "ufu_saints": "UFU Saints Ravens",
+      "unicamp_tritons_black": "UNICAMP TRITONS BLUE",
+      "black_cyber": "Black Cyber CEUB",
+      "rahnag": "RAHNAG UDF",
+      "azure_bears_golden": "Azure Bears UTFPR",
+      "beyond": "BEYOND UEPB",
+      "unifor": "UNIFOR",
+      "limpezinha": "Limpezinha  Team´s UFCG",
+      "ufrj_canis_b": "UFRJ Canis X",
+      "uninassau_griffins": "UNINASSAU",
+      "crotalus_ufersa": "Crotalus UFERSA",
+      "nassau": "NASSAU UNIVERSITY E-SPORTS",
+      "ggg_sports": "GGG Sports IFBA",
+      "ufrj_canis": "UFRJ Canis A",
+      "aufa_faesa": "AUFA FAESA",
+      "wolf_gaming": "Wolf Gaming CEFET",
+      "nexus": "Nexus UERR",
+      "ufma_abscissa": "UFMA - Abscissa",
+      "castor_vai": "Vai que tá Cego UFES",
+      "if_academy": "IF ACADEMY IFPB",
+      "green_owls_pulsatrix": "Green Owls UNB",
+      "usp_stars": "USP Stars",
+      "unifacs_sting": "UNIFACS STING UNIFACS",
+      "ufmt_turuna": "UFMT TURUNA",
+      "grifos_unisales": "GRIFOS UNISALES",
+      "ufpr_bbn": "UFPR Burning Bunnies",
+      "univasf": "TIME UNIVSF",
+      "anhangueros": "Anhangueros",
+      "compressora_cangaceiros": "UPE CANGACEIROS",
+      "ceuma": "CEUMA E-sports",
+      "notapixel": "NOTaPixel.py UFCG",
+      "undbala": "UNDB Reapers",
+      "ufrn_carcaras": "UFRN Carcarás",
+      "ufg_eagles": "UFG Eagles",
+      "unirv_rushone": "UNIRV RUSH ONE",
+      "ufs_warriowls": "UFS Warriowls",
+      "inatel_white": "Inatel",
+      "undb_turing": "UNDB Turing",
+      "caap_hellhounds": "UFABC CAAP Hellhounds",
+      "team_nyx_ufersa": "Team Nyx UFERSA",
+      "unit_troianos_trojan": "UNIT Troianos Trojan",
+      "unir_sentinelas": "Sentinelas do Norte UNIR",
+      "unesa_cyborgs": "CYBORGS ESTÁCIO"
+    },
+    "bracket": {
+      "title": "Suíça e playoff classificatório"
+    },
+    "seriesResults": {
+      "2": {
+        "a": "nexus",
+        "b": "compressora_cangaceiros",
+        "scoreA": 1,
+        "scoreB": 2,
+        "bestOf": "MD3",
+        "note": "Placar oficial. Estatísticas de 2 de 3 mapas."
+      },
+      "5": {
+        "a": "unifacs_sting",
+        "b": "notapixel",
+        "scoreA": 2,
+        "scoreB": 0,
+        "bestOf": "MD3",
+        "note": "Placar oficial. Estatísticas de 1 de 2 mapas."
+      },
+      "36": {
+        "a": "ufpr_bbn",
+        "b": "ufrj_canis_b",
+        "scoreA": 1,
+        "scoreB": 2,
+        "bestOf": "MD3",
+        "note": "Placar oficial. Estatísticas de 2 de 3 mapas."
+      },
+      "46": {
+        "a": "undb_turing",
+        "b": "if_academy",
+        "scoreA": 2,
+        "scoreB": 0,
+        "bestOf": "MD3",
+        "note": "Placar oficial. Estatísticas de 1 de 2 mapas."
+      },
+      "80": {
+        "a": "ceuma",
+        "b": "ufrj_canis_b",
+        "scoreA": 1,
+        "scoreB": 2,
+        "bestOf": "MD3",
+        "note": "Placar oficial. Estatísticas de 2 de 3 mapas."
+      },
+      "86": {
+        "a": "ufu_saints",
+        "b": "ufpr_bbn",
+        "scoreA": 2,
+        "scoreB": 0,
+        "bestOf": "MD3",
+        "note": "Placar oficial. Estatísticas de 1 de 2 mapas."
+      },
+      "92": {
+        "a": "ufu_saints",
+        "b": "usp_stars",
+        "scoreA": 2,
+        "scoreB": 1,
+        "bestOf": "MD3",
+        "note": "Placar oficial. Estatísticas de 2 de 3 mapas."
+      },
+      "101": {
+        "a": "unirv_rushone",
+        "b": "ufrn_carcaras",
+        "scoreA": 2,
+        "scoreB": 0,
+        "bestOf": "MD3",
+        "note": "Placar oficial. Estatísticas de 1 de 2 mapas."
+      }
+    },
+    "startAt": "2025-07-05T15:12:10.966Z",
+    "endAt": "2025-08-19T02:57:58.027Z"
+  },
+  "jubs-2025-etapa-presencial": {
+    "name": "JUBS RN 2025 - Etapa Presencial",
+    "organizer": "CBDU",
+    "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
+    "banner": "assets/tournament-banners/banner_jubs.png",
+    "prizePool": "-",
+    "tier": "S",
+    "type": "Presencial",
+    "teamCount": 8,
+    "format": {
+      "summary": "Grupos + playoffs",
+      "details": [
+        "Dois grupos de quatro em eliminação dupla (GSL), todos os jogos dos grupos em MD1.",
+        "Os dois primeiros de cada grupo avançam aos playoffs.",
+        "Semifinais, final e disputa de terceiro lugar em MD3."
+      ],
+      "standings": "Classificação oficial do presencial"
+    },
+    "teams": [
+      "uninassau_griffins",
+      "wolf_gaming",
+      "azure_bears_golden",
+      "usp_stars",
+      "ufg_eagles",
+      "castor_vai",
+      "ufu_saints",
+      "ufmt_turuna"
+    ],
+    "placements": [
+      {
+        "id": "uninassau_griffins",
+        "range": "1",
+        "note": "Campeão"
+      },
+      {
+        "id": "azure_bears_golden",
+        "range": "2",
+        "note": "Vice"
+      },
+      {
+        "id": "ufg_eagles",
+        "range": "3",
+        "note": "3º lugar"
+      },
+      {
+        "id": "ufmt_turuna",
+        "range": "4",
+        "note": "4º lugar"
+      },
+      {
+        "id": "ufu_saints",
+        "range": "5",
+        "note": "5º lugar"
+      },
+      {
+        "id": "wolf_gaming",
+        "range": "6",
+        "note": "6º lugar"
+      },
+      {
+        "id": "usp_stars",
+        "range": "7",
+        "note": "7º lugar"
+      },
+      {
+        "id": "castor_vai",
+        "range": "8",
+        "note": "8º lugar"
+      }
+    ],
+    "bracket": {
+      "title": "Grupos + Playoffs",
+      "regions": [
+        {
+          "name": "Grupo A",
+          "stage": "groups",
+          "className": "group-stage gsl-group",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Opening",
+              "matches": [
+                {
+                  "code": "Partida 1",
+                  "bestOf": "MD1",
+                  "band": 0,
+                  "a": "uninassau_griffins",
+                  "scoreA": 1,
+                  "b": "wolf_gaming",
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 2",
+                  "bestOf": "MD1",
+                  "band": 1,
+                  "a": "azure_bears_golden",
+                  "scoreA": 1,
+                  "b": "usp_stars",
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden"
+                }
+              ]
+            },
+            {
+              "title": "Winner's / Elimination",
+              "matches": [
+                {
+                  "code": "Partida 3",
+                  "label": "Winner's",
+                  "bestOf": "MD1",
+                  "band": 0,
+                  "from": [
+                    "Partida 1",
+                    "Partida 2"
+                  ],
+                  "a": "uninassau_griffins",
+                  "scoreA": 1,
+                  "b": "azure_bears_golden",
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 7",
+                  "label": "Elimination",
+                  "bestOf": "MD1",
+                  "band": 1,
+                  "from": [
+                    "Partida 1",
+                    "Partida 2"
+                  ],
+                  "a": "usp_stars",
+                  "scoreA": 0,
+                  "b": "wolf_gaming",
+                  "scoreB": 1,
+                  "winner": "wolf_gaming"
+                }
+              ]
+            },
+            {
+              "title": "Decider",
+              "matches": [
+                {
+                  "code": "Partida 8",
+                  "label": "Decider",
+                  "bestOf": "MD1",
+                  "band": 1,
+                  "from": [
+                    "Partida 3",
+                    "Partida 7"
+                  ],
+                  "a": "azure_bears_golden",
+                  "scoreA": 1,
+                  "b": "wolf_gaming",
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden"
+                }
+              ]
+            }
+          ],
+          "terminalColumn": {
+            "title": "Classificados",
+            "cards": [
+              {
+                "id": "uninassau_griffins",
+                "note": "1º do grupo",
+                "band": 0,
+                "from": [
+                  "Partida 3"
+                ]
+              },
+              {
+                "id": "azure_bears_golden",
+                "note": "2º do grupo",
+                "band": 1,
+                "from": [
+                  "Partida 8"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "Grupo B",
+          "stage": "groups",
+          "className": "group-stage gsl-group",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Opening",
+              "matches": [
+                {
+                  "code": "Partida 4",
+                  "bestOf": "MD1",
+                  "band": 0,
+                  "a": "ufg_eagles",
+                  "scoreA": 1,
+                  "b": "castor_vai",
+                  "scoreB": 0,
+                  "winner": "ufg_eagles"
+                },
+                {
+                  "code": "Partida 5",
+                  "bestOf": "MD1",
+                  "band": 1,
+                  "a": "ufu_saints",
+                  "scoreA": 1,
+                  "b": "ufmt_turuna",
+                  "scoreB": 0,
+                  "winner": "ufu_saints"
+                }
+              ]
+            },
+            {
+              "title": "Winner's / Elimination",
+              "matches": [
+                {
+                  "code": "Partida 6",
+                  "label": "Winner's",
+                  "bestOf": "MD1",
+                  "band": 0,
+                  "from": [
+                    "Partida 4",
+                    "Partida 5"
+                  ],
+                  "a": "ufg_eagles",
+                  "scoreA": 1,
+                  "b": "ufu_saints",
+                  "scoreB": 0,
+                  "winner": "ufg_eagles"
+                },
+                {
+                  "code": "Partida 9",
+                  "label": "Elimination",
+                  "bestOf": "MD1",
+                  "band": 1,
+                  "from": [
+                    "Partida 4",
+                    "Partida 5"
+                  ],
+                  "a": "ufmt_turuna",
+                  "scoreA": 1,
+                  "b": "castor_vai",
+                  "scoreB": 0,
+                  "winner": "ufmt_turuna"
+                }
+              ]
+            },
+            {
+              "title": "Decider",
+              "matches": [
+                {
+                  "code": "Partida 10",
+                  "label": "Decider",
+                  "bestOf": "MD1",
+                  "band": 1,
+                  "from": [
+                    "Partida 6",
+                    "Partida 9"
+                  ],
+                  "a": "ufu_saints",
+                  "scoreA": 0,
+                  "b": "ufmt_turuna",
+                  "scoreB": 1,
+                  "winner": "ufmt_turuna"
+                }
+              ]
+            }
+          ],
+          "terminalColumn": {
+            "title": "Classificados",
+            "cards": [
+              {
+                "id": "ufg_eagles",
+                "note": "1º do grupo",
+                "band": 0,
+                "from": [
+                  "Partida 6"
+                ]
+              },
+              {
+                "id": "ufmt_turuna",
+                "note": "2º do grupo",
+                "band": 1,
+                "from": [
+                  "Partida 10"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "Chave principal",
+          "stage": "playoffs",
+          "className": "playoff-bracket",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Semifinais",
+              "matches": [
+                {
+                  "code": "Partida 11",
+                  "label": "Semifinal",
+                  "bestOf": "MD3",
+                  "band": 0,
+                  "a": "uninassau_griffins",
+                  "scoreA": 2,
+                  "b": "ufmt_turuna",
+                  "scoreB": 1,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 12",
+                  "label": "Semifinal",
+                  "bestOf": "MD3",
+                  "band": 1,
+                  "a": "ufg_eagles",
+                  "scoreA": 1,
+                  "b": "azure_bears_golden",
+                  "scoreB": 2,
+                  "winner": "azure_bears_golden"
+                }
+              ]
+            },
+            {
+              "title": "Final",
+              "matches": [
+                {
+                  "code": "Partida 14",
+                  "label": "Final",
+                  "bestOf": "MD3",
+                  "band": 0.5,
+                  "from": [
+                    "Partida 11",
+                    "Partida 12"
+                  ],
+                  "a": "uninassau_griffins",
+                  "scoreA": 2,
+                  "b": "azure_bears_golden",
+                  "scoreB": 1,
+                  "winner": "uninassau_griffins"
+                }
+              ]
+            }
+          ],
+          "terminalColumn": false
+        },
+        {
+          "name": "Disputa de 3º lugar",
+          "stage": "playoffs",
+          "className": "third-place",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Disputa de 3º lugar",
+              "matches": [
+                {
+                  "code": "Partida 13",
+                  "bestOf": "MD3",
+                  "a": "ufmt_turuna",
+                  "scoreA": 0,
+                  "b": "ufg_eagles",
+                  "scoreB": 2,
+                  "winner": "ufg_eagles"
+                }
+              ]
+            }
+          ],
+          "terminalColumn": false
+        }
+      ]
+    },
+    "teamNames": {
+      "unicamp_tritons_red": "UNICAMP Tritons Red",
+      "sem_totem": "Sem Totem UFRR",
+      "ufu_saints": "UFU Saints Ravens",
+      "unicamp_tritons_black": "UNICAMP TRITONS BLUE",
+      "black_cyber": "Black Cyber CEUB",
+      "rahnag": "RAHNAG UDF",
+      "azure_bears_golden": "Azure Bears UTFPR",
+      "beyond": "BEYOND UEPB",
+      "unifor": "UNIFOR",
+      "limpezinha": "Limpezinha  Team´s UFCG",
+      "ufrj_canis_b": "UFRJ Canis X",
+      "uninassau_griffins": "UNINASSAU",
+      "crotalus_ufersa": "Crotalus UFERSA",
+      "nassau": "NASSAU UNIVERSITY E-SPORTS",
+      "ggg_sports": "GGG Sports IFBA",
+      "ufrj_canis": "UFRJ Canis A",
+      "aufa_faesa": "AUFA FAESA",
+      "wolf_gaming": "Wolf Gaming CEFET",
+      "nexus": "Nexus UERR",
+      "ufma_abscissa": "UFMA - Abscissa",
+      "castor_vai": "Vai que tá Cego UFES",
+      "if_academy": "IF ACADEMY IFPB",
+      "green_owls_pulsatrix": "Green Owls UNB",
+      "usp_stars": "USP Stars",
+      "unifacs_sting": "UNIFACS STING UNIFACS",
+      "ufmt_turuna": "UFMT TURUNA",
+      "grifos_unisales": "GRIFOS UNISALES",
+      "ufpr_bbn": "UFPR Burning Bunnies",
+      "univasf": "TIME UNIVSF",
+      "anhangueros": "Anhangueros",
+      "compressora_cangaceiros": "UPE CANGACEIROS",
+      "ceuma": "CEUMA E-sports",
+      "notapixel": "NOTaPixel.py UFCG",
+      "undbala": "UNDB Reapers",
+      "ufrn_carcaras": "UFRN Carcarás",
+      "ufg_eagles": "UFG Eagles",
+      "unirv_rushone": "UNIRV RUSH ONE",
+      "ufs_warriowls": "UFS Warriowls",
+      "inatel_white": "Inatel",
+      "undb_turing": "UNDB Turing",
+      "caap_hellhounds": "UFABC CAAP Hellhounds",
+      "team_nyx_ufersa": "Team Nyx UFERSA",
+      "unit_troianos_trojan": "UNIT Troianos Trojan",
+      "unir_sentinelas": "Sentinelas do Norte UNIR",
+      "unesa_cyborgs": "CYBORGS ESTÁCIO"
+    },
+    "mapPool": [
+      "Abyss",
+      "Ascent",
+      "Bind",
+      "Corrode",
+      "Haven",
+      "Lotus",
+      "Sunset"
+    ],
+    "startAt": "2025-10-07T18:44:55.810Z",
+    "endAt": "2025-10-10T22:33:23.713Z"
+  },
+  "lbeu-2025-1-split-fase-suica": {
+    name: "LBEU 2025 - 1\u00ba Split - Fase Su\u00ed\u00e7a",
+    organizer: "LigaGG",
+    prizePool: "-",
+    tier: "A",
+    type: "Online - Fase su\u00ed\u00e7a",
+    status: "Finalizado",
+    teamCount: 28,
+    teams: [
+      "axis_anteaters_shadow",
+      "axis_blossom",
+      "azure_bears_black",
+      "azure_bears_golden",
+      "black_cyber",
+      "caap_hellhounds",
+      "fei_darkowls",
+      "fm_alligators",
+      "furia_utfpr",
+      "hunter_esports",
+      "ifsp_midas",
+      "inatel_white",
+      "macklogic_red",
+      "macklogic_white",
+      "pato",
+      "puc_clerigos",
+      "puc_priests",
+      "stings_yellow",
+      "totale_umc",
+      "ufpr_bbn",
+      "ufrj_canis",
+      "ufu_insane",
+      "ufu_saints",
+      "unb_black",
+      "unesa_cyborgs",
+      "unicamp_tritons_black",
+      "white_cyber",
+      "wolf_gaming",
+    ],
+    mapPool: ["Ascent", "Bind", "Corrode", "Haven", "Icebox", "Lotus", "Split", "Sunset"],
+    bracket: { title: "Confrontos registrados" },
+    format: {
+      summary: "Fase su\u00ed\u00e7a",
+      details: [
+        "10 rodadas com participa\u00e7\u00e3o opcional e jogos MD1; desempate registrado em MD3.",
+        "Os confrontos registrados levaram equipes ao Championship, \u00e0 Off Season e \u00e0 Practice.",
+        "A ordem final por Elo n\u00e3o est\u00e1 dispon\u00edvel. Em LB_016, o advers\u00e1rio da FM n\u00e3o foi confirmado; a vit\u00f3ria n\u00e3o foi atribu\u00edda a uma equipe.",
+      ],
+      standings: "Campanha registrada e divis\u00e3o dos playoffs",
+    },
+    placements: [
+      { id: "axis_anteaters_shadow", range: "Classificado", note: "3-3" },
+      { id: "azure_bears_black", range: "Classificado", note: "6-2" },
+      { id: "azure_bears_golden", range: "Classificado", note: "7-1" },
+      { id: "inatel_white", range: "Classificado", note: "5-4" },
+      { id: "macklogic_red", range: "Classificado", note: "8-2" },
+      { id: "ufu_insane", range: "Classificado", note: "6-3" },
+      { id: "ufu_saints", range: "Classificado", note: "8-1" },
+      { id: "unicamp_tritons_black", range: "Classificado", note: "6-3" },
+    ],
+    swiss: {
+      seriesCount: 110,
+      standingsLabel: "Campanha registrada, sem ordem oficial por Elo",
+      finalStandings: false,
+      rounds: [
+        {
+          title: "Rodada 1",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 1", a: "macklogic_red", scoreA: 13, b: "unesa_cyborgs", scoreB: 5, winner: "macklogic_red", bestOf: "MD1" },
+            { code: "Partida 2", a: "ufu_saints", scoreA: 13, b: "macklogic_white", scoreB: 4, winner: "ufu_saints", bestOf: "MD1" },
+            { code: "Partida 3", a: "hunter_esports", scoreA: 13, b: "fm_alligators", scoreB: 2, winner: "hunter_esports", bestOf: "MD1" },
+            { code: "Partida 4", a: "unicamp_tritons_black", scoreA: 13, b: "ifsp_midas", scoreB: 4, winner: "unicamp_tritons_black", bestOf: "MD1" },
+            { code: "Partida 5", a: "caap_hellhounds", scoreA: 14, b: "axis_blossom", scoreB: 12, winner: "caap_hellhounds", bestOf: "MD1" },
+            { code: "Partida 6", a: "ufrj_canis", scoreA: 16, b: "azure_bears_black", scoreB: 14, winner: "ufrj_canis", bestOf: "MD1" },
+            { code: "Partida 7", a: "inatel_white", scoreA: 13, b: "wolf_gaming", scoreB: 8, winner: "inatel_white", bestOf: "MD1" },
+            { code: "Partida 8", a: "pato", scoreA: 13, b: "ufpr_bbn", scoreB: 11, winner: "pato", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Placar registrado em 2025, sem estatísticas." },
+            { code: "Partida 9", a: "fei_darkowls", scoreA: 13, b: "white_cyber", scoreB: 4, winner: "fei_darkowls", bestOf: "MD1" },
+            { code: "Partida 10", a: "ufu_insane", scoreA: 13, b: "furia_utfpr", scoreB: 4, winner: "ufu_insane", bestOf: "MD1" },
+            { code: "Partida 11", a: "black_cyber", scoreA: 13, b: "puc_clerigos", scoreB: 4, winner: "black_cyber", bestOf: "MD1" },
+            { code: "Partida 12", a: "puc_priests", scoreA: 13, b: "stings_yellow", scoreB: 5, winner: "puc_priests", bestOf: "MD1" },
+            { code: "Partida 13", a: "azure_bears_golden", scoreA: 13, b: "unb_black", scoreB: 5, winner: "azure_bears_golden", bestOf: "MD1" },
+          ],
+        },
+        {
+          title: "Rodada 2",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 14", a: "hunter_esports", scoreA: 13, b: "macklogic_red", scoreB: 11, winner: "hunter_esports", bestOf: "MD1" },
+            { code: "Partida 15", a: "caap_hellhounds", scoreA: 13, b: "totale_umc", scoreB: 4, winner: "caap_hellhounds", bestOf: "MD1" },
+            { code: "Partida 16", scoreA: 13, b: "fm_alligators", scoreB: 9, bestOf: "MD1", status: "Sem estatísticas", previewNote: "Placar registrado em 2025: 13x9 contra a FM Alligators. Adversário não confirmado, sem estatísticas.", aLabel: "Equipe n\u00e3o confirmada" },
+            { code: "Partida 17", a: "ufu_saints", scoreA: 13, b: "axis_blossom", scoreB: 5, winner: "ufu_saints", bestOf: "MD1" },
+            { code: "Partida 18", a: "unesa_cyborgs", scoreA: 13, b: "macklogic_white", scoreB: 6, winner: "unesa_cyborgs", bestOf: "MD1" },
+            { code: "Partida 19", a: "unicamp_tritons_black", scoreA: 13, b: "inatel_white", scoreB: 4, winner: "unicamp_tritons_black", bestOf: "MD1" },
+            { code: "Partida 20", a: "unb_black", scoreA: 13, b: "azure_bears_black", scoreB: 4, winner: "unb_black", bestOf: "MD1" },
+            { code: "Partida 21", a: "wolf_gaming", scoreA: 13, b: "ifsp_midas", scoreB: 5, winner: "wolf_gaming", bestOf: "MD1" },
+            { code: "Partida 22", a: "azure_bears_golden", scoreA: 13, b: "ufrj_canis", scoreB: 9, winner: "azure_bears_golden", bestOf: "MD1" },
+            { code: "Partida 23", a: "ufu_insane", scoreA: 13, b: "puc_priests", scoreB: 9, winner: "ufu_insane", bestOf: "MD1" },
+            { code: "Partida 24", a: "stings_yellow", scoreA: 13, b: "white_cyber", scoreB: 5, winner: "stings_yellow", bestOf: "MD1" },
+            { code: "Partida 25", a: "furia_utfpr", scoreA: 13, b: "ufpr_bbn", scoreB: 5, winner: "furia_utfpr", bestOf: "MD1" },
+            { code: "Partida 26", a: "black_cyber", scoreA: 13, b: "fei_darkowls", scoreB: 4, winner: "black_cyber", bestOf: "MD1" },
+          ],
+        },
+        {
+          title: "Rodada 3",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 27", a: "stings_yellow", scoreA: 13, b: "pato", scoreB: 5, winner: "stings_yellow", bestOf: "MD1" },
+            { code: "Partida 28", a: "macklogic_red", scoreA: 13, b: "puc_clerigos", scoreB: 7, winner: "macklogic_red", bestOf: "MD1" },
+            { code: "Partida 29", a: "unesa_cyborgs", scoreA: 13, b: "axis_blossom", scoreB: 6, winner: "unesa_cyborgs", bestOf: "MD1" },
+            { code: "Partida 30", a: "macklogic_white", scoreA: 13, b: "fm_alligators", scoreB: 6, winner: "macklogic_white", bestOf: "MD1" },
+            { code: "Partida 31", a: "ufu_saints", scoreA: 13, b: "unicamp_tritons_black", scoreB: 6, winner: "ufu_saints", bestOf: "MD1" },
+            { code: "Partida 32", a: "wolf_gaming", scoreA: 13, b: "axis_anteaters_shadow", scoreB: 10, winner: "wolf_gaming", bestOf: "MD1" },
+            { code: "Partida 33", a: "ufrj_canis", scoreA: 13, b: "inatel_white", scoreB: 5, winner: "ufrj_canis", bestOf: "MD1" },
+            { code: "Partida 34", a: "azure_bears_black", scoreA: 13, b: "ifsp_midas", scoreB: 4, winner: "azure_bears_black", bestOf: "MD1" },
+            { code: "Partida 35", a: "ufpr_bbn", scoreA: 13, b: "white_cyber", scoreB: 7, winner: "ufpr_bbn", bestOf: "MD1" },
+            { code: "Partida 36", a: "fei_darkowls", scoreA: 13, b: "puc_priests", scoreB: 9, winner: "fei_darkowls", bestOf: "MD1" },
+            { code: "Partida 37", a: "azure_bears_golden", scoreA: 13, b: "ufu_insane", scoreB: 8, winner: "azure_bears_golden", bestOf: "MD1" },
+            { code: "Partida 38", a: "caap_hellhounds", scoreA: 14, b: "black_cyber", scoreB: 12, winner: "caap_hellhounds", bestOf: "MD1" },
+          ],
+        },
+        {
+          title: "Rodada 4",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 39", a: "azure_bears_black", scoreA: 13, b: "pato", scoreB: 6, winner: "azure_bears_black", bestOf: "MD1" },
+            { code: "Partida 40", a: "unb_black", scoreA: 13, b: "furia_utfpr", scoreB: 7, winner: "unb_black", bestOf: "MD1" },
+            { code: "Partida 41", a: "puc_priests", scoreA: 13, b: "totale_umc", scoreB: 2, winner: "puc_priests", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Placar registrado em 2025, sem estatísticas." },
+            { code: "Partida 42", a: "macklogic_white", scoreA: 14, b: "axis_anteaters_shadow", scoreB: 12, winner: "macklogic_white", bestOf: "MD1" },
+            { code: "Partida 43", a: "azure_bears_golden", scoreA: 13, b: "caap_hellhounds", scoreB: 8, winner: "azure_bears_golden", bestOf: "MD1" },
+            { code: "Partida 44", a: "white_cyber", scoreA: 18, b: "fm_alligators", scoreB: 16, winner: "white_cyber", bestOf: "MD1" },
+            { code: "Partida 45", a: "unicamp_tritons_black", scoreA: 13, b: "unesa_cyborgs", scoreB: 6, winner: "unicamp_tritons_black", bestOf: "MD1" },
+            { code: "Partida 46", a: "ufrj_canis", scoreA: 13, b: "wolf_gaming", scoreB: 10, winner: "ufrj_canis", bestOf: "MD1" },
+            { code: "Partida 47", a: "inatel_white", scoreA: 13, b: "axis_blossom", scoreB: 11, winner: "inatel_white", bestOf: "MD1" },
+            { code: "Partida 48", a: "ufu_insane", scoreA: 13, b: "fei_darkowls", scoreB: 10, winner: "ufu_insane", bestOf: "MD1" },
+            { code: "Partida 49", a: "macklogic_red", scoreA: 13, b: "black_cyber", scoreB: 7, winner: "macklogic_red", bestOf: "MD1" },
+            { code: "Partida 50", a: "ufpr_bbn", scoreA: 13, b: "stings_yellow", scoreB: 3, winner: "ufpr_bbn", bestOf: "MD1" },
+          ],
+        },
+        {
+          title: "Rodada 5",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 51", a: "totale_umc", scoreA: 13, b: "white_cyber", scoreB: 4, winner: "totale_umc", bestOf: "MD1" },
+            { code: "Partida 52", a: "hunter_esports", scoreA: 13, b: "ufu_insane", scoreB: 7, winner: "hunter_esports", bestOf: "MD1" },
+            { code: "Partida 53", a: "unb_black", scoreA: 13, b: "caap_hellhounds", scoreB: 10, winner: "unb_black", bestOf: "MD1" },
+            { code: "Partida 54", a: "unesa_cyborgs", scoreA: 13, b: "wolf_gaming", scoreB: 8, winner: "unesa_cyborgs", bestOf: "MD1" },
+            { code: "Partida 55", a: "furia_utfpr", scoreA: 13, b: "pato", scoreB: 7, winner: "furia_utfpr", bestOf: "MD1" },
+            { code: "Partida 56", a: "axis_anteaters_shadow", scoreA: 13, b: "ifsp_midas", scoreB: 5, winner: "axis_anteaters_shadow", bestOf: "MD1" },
+            { code: "Partida 57", a: "ufu_saints", scoreA: 13, b: "azure_bears_golden", scoreB: 11, winner: "ufu_saints", bestOf: "MD1" },
+            { code: "Partida 58", a: "unicamp_tritons_black", scoreA: 13, b: "ufrj_canis", scoreB: 11, winner: "unicamp_tritons_black", bestOf: "MD1" },
+            { code: "Partida 59", a: "inatel_white", scoreA: 13, b: "macklogic_white", scoreB: 10, winner: "inatel_white", bestOf: "MD1" },
+            { code: "Partida 60", a: "azure_bears_black", scoreA: 13, b: "puc_priests", scoreB: 8, winner: "azure_bears_black", bestOf: "MD1" },
+            { code: "Partida 61", a: "macklogic_red", scoreA: 13, b: "fm_alligators", scoreB: 1, winner: "macklogic_red", bestOf: "MD1" },
+            { code: "Partida 62", a: "fei_darkowls", scoreA: 13, b: "ufpr_bbn", scoreB: 3, winner: "fei_darkowls", bestOf: "MD1" },
+            { code: "Partida 63", a: "black_cyber", scoreA: 13, b: "stings_yellow", scoreB: 6, winner: "black_cyber", bestOf: "MD1" },
+          ],
+        },
+        {
+          title: "Rodada 6",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 64", a: "wolf_gaming", scoreA: 13, b: "totale_umc", scoreB: 4, winner: "wolf_gaming", bestOf: "MD1" },
+            { code: "Partida 65", a: "caap_hellhounds", scoreA: 13, b: "furia_utfpr", scoreB: 10, winner: "caap_hellhounds", bestOf: "MD1" },
+            { code: "Partida 66", a: "axis_blossom", scoreA: 13, b: "stings_yellow", scoreB: 10, winner: "axis_blossom", bestOf: "MD1" },
+            { code: "Partida 68", a: "ifsp_midas", scoreA: 13, b: "fm_alligators", scoreB: 2, winner: "ifsp_midas", bestOf: "MD1" },
+            { code: "Partida 69", a: "inatel_white", scoreA: 13, b: "unb_black", scoreB: 9, winner: "inatel_white", bestOf: "MD1" },
+            { code: "Partida 70", a: "macklogic_red", scoreA: 13, b: "ufu_saints", scoreB: 9, winner: "macklogic_red", bestOf: "MD1" },
+            { code: "Partida 71", a: "azure_bears_black", scoreA: 13, b: "unesa_cyborgs", scoreB: 7, winner: "azure_bears_black", bestOf: "MD1" },
+            { code: "Partida 72", a: "ufu_insane", scoreA: 13, b: "ufrj_canis", scoreB: 9, winner: "ufu_insane", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Placar registrado em 2025, sem estatísticas." },
+            { code: "Partida 73", a: "black_cyber", scoreA: 13, b: "ufpr_bbn", scoreB: 4, winner: "black_cyber", bestOf: "MD1" },
+            { code: "Partida 74", a: "unicamp_tritons_black", scoreA: 13, b: "fei_darkowls", scoreB: 10, winner: "unicamp_tritons_black", bestOf: "MD1" },
+            { code: "Partida 75", a: "axis_anteaters_shadow", scoreA: 13, b: "puc_priests", scoreB: 11, winner: "axis_anteaters_shadow", bestOf: "MD1" },
+          ],
+        },
+        {
+          title: "Rodada 7",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 76", a: "macklogic_white", scoreA: 13, b: "furia_utfpr", scoreB: 10, winner: "macklogic_white", bestOf: "MD1" },
+            { code: "Partida 77", a: "totale_umc", scoreA: 13, b: "stings_yellow", scoreB: 11, winner: "totale_umc", bestOf: "MD1" },
+            { code: "Partida 79", a: "unesa_cyborgs", scoreA: 13, b: "axis_blossom", scoreB: 10, winner: "unesa_cyborgs", bestOf: "MD1" },
+            { code: "Partida 80", a: "ufu_saints", scoreA: 13, b: "inatel_white", scoreB: 1, winner: "ufu_saints", bestOf: "MD1" },
+            { code: "Partida 81", a: "caap_hellhounds", scoreA: 13, b: "ufu_insane", scoreB: 7, winner: "caap_hellhounds", bestOf: "MD1" },
+            { code: "Partida 82", a: "azure_bears_golden", scoreA: 13, b: "macklogic_red", scoreB: 4, winner: "azure_bears_golden", bestOf: "MD1" },
+            { code: "Partida 83", a: "ifsp_midas", scoreA: 13, b: "white_cyber", scoreB: 9, winner: "ifsp_midas", bestOf: "MD1" },
+            { code: "Partida 84", a: "axis_anteaters_shadow", scoreA: 13, b: "wolf_gaming", scoreB: 11, winner: "axis_anteaters_shadow", bestOf: "MD1" },
+            { code: "Partida 85", a: "ufpr_bbn", scoreA: 13, b: "fm_alligators", scoreB: 1, winner: "ufpr_bbn", bestOf: "MD1" },
+          ],
+        },
+        {
+          title: "Rodada 8",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 86", a: "ufpr_bbn", scoreA: 13, b: "totale_umc", scoreB: 10, winner: "ufpr_bbn", bestOf: "MD1" },
+            { code: "Partida 87", a: "ufrj_canis", scoreA: 13, b: "macklogic_white", scoreB: 5, winner: "ufrj_canis", bestOf: "MD1" },
+            { code: "Partida 88", a: "ufu_saints", scoreA: 13, b: "black_cyber", scoreB: 6, winner: "ufu_saints", bestOf: "MD1" },
+            { code: "Partida 89", a: "azure_bears_golden", scoreA: 13, b: "unicamp_tritons_black", scoreB: 6, winner: "azure_bears_golden", bestOf: "MD1" },
+            { code: "Partida 90", a: "azure_bears_black", scoreA: 20, b: "caap_hellhounds", scoreB: 18, winner: "azure_bears_black", bestOf: "MD1" },
+            { code: "Partida 91", a: "axis_blossom", scoreA: 17, b: "ifsp_midas", scoreB: 15, winner: "axis_blossom", bestOf: "MD1" },
+            { code: "Partida 92", a: "wolf_gaming", scoreA: 13, b: "stings_yellow", scoreB: 5, winner: "wolf_gaming", bestOf: "MD1" },
+            { code: "Partida 93", a: "ufu_insane", scoreA: 13, b: "axis_anteaters_shadow", scoreB: 5, winner: "ufu_insane", bestOf: "MD1" },
+            { code: "Partida 94", a: "macklogic_red", scoreA: 13, b: "white_cyber", scoreB: 5, winner: "macklogic_red", bestOf: "MD1" },
+            { code: "Partida 95", a: "unesa_cyborgs", scoreA: 13, b: "fm_alligators", scoreB: 2, winner: "unesa_cyborgs", bestOf: "MD1" },
+          ],
+        },
+        {
+          title: "Rodada 9",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 96", a: "azure_bears_black", scoreA: 13, b: "hunter_esports", scoreB: 6, winner: "azure_bears_black", bestOf: "MD1" },
+            { code: "Partida 97", a: "ufu_saints", scoreA: 13, b: "ufrj_canis", scoreB: 6, winner: "ufu_saints", bestOf: "MD1" },
+            { code: "Partida 98", a: "inatel_white", scoreA: 13, b: "unesa_cyborgs", scoreB: 8, winner: "inatel_white", bestOf: "MD1" },
+            { code: "Partida 99", a: "caap_hellhounds", scoreA: 13, b: "fei_darkowls", scoreB: 10, winner: "caap_hellhounds", bestOf: "MD1" },
+            { code: "Partida 100", a: "axis_blossom", scoreA: 13, b: "ufpr_bbn", scoreB: 7, winner: "axis_blossom", bestOf: "MD1" },
+            { code: "Partida 101", a: "macklogic_white", scoreA: 13, b: "ifsp_midas", scoreB: 3, winner: "macklogic_white", bestOf: "MD1" },
+            { code: "Partida 102", a: "macklogic_red", scoreA: 13, b: "unicamp_tritons_black", scoreB: 9, winner: "macklogic_red", bestOf: "MD1" },
+            { code: "Partida 103", a: "wolf_gaming", scoreA: 13, b: "fm_alligators", scoreB: 5, winner: "wolf_gaming", bestOf: "MD1" },
+          ],
+        },
+        {
+          title: "Rodada 10",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 104", a: "ifsp_midas", scoreA: 13, b: "totale_umc", scoreB: 8, winner: "ifsp_midas", bestOf: "MD1" },
+            { code: "Partida 105", a: "unicamp_tritons_black", scoreA: 16, b: "hunter_esports", scoreB: 14, winner: "unicamp_tritons_black", bestOf: "MD1" },
+            { code: "Partida 106", a: "axis_blossom", scoreA: 14, b: "black_cyber", scoreB: 12, winner: "axis_blossom", bestOf: "MD1" },
+            { code: "Partida 107", a: "ufu_saints", scoreA: 13, b: "caap_hellhounds", scoreB: 4, winner: "ufu_saints", bestOf: "MD1" },
+            { code: "Partida 108", a: "ufu_insane", scoreA: 13, b: "inatel_white", scoreB: 4, winner: "ufu_insane", bestOf: "MD1" },
+            { code: "Partida 109", a: "wolf_gaming", scoreA: 13, b: "macklogic_white", scoreB: 9, winner: "wolf_gaming", bestOf: "MD1" },
+            { code: "Partida 111", a: "macklogic_red", scoreA: 13, b: "ufpr_bbn", scoreB: 7, winner: "macklogic_red", bestOf: "MD1" },
+            { code: "Partida 112", a: "azure_bears_golden", scoreA: 13, b: "fm_alligators", scoreB: 4, winner: "azure_bears_golden", bestOf: "MD1" },
+          ],
+        },
+        {
+          title: "Desempate",
+          status: "Conclu\u00edda",
+          bestOf: "MD3",
+          matches: [
+            { code: "Partida 113", a: "axis_blossom", scoreA: 1, b: "inatel_white", scoreB: 2, winner: "inatel_white", bestOf: "MD3" },
+          ],
+        },
+      ],
+      standings: [
+        { id: "axis_anteaters_shadow", wins: 3, losses: 3, range: "-", status: "Championship" },
+        { id: "axis_blossom", wins: 4, losses: 5, range: "-", status: "Off Season" },
+        { id: "azure_bears_black", wins: 6, losses: 2, range: "-", status: "Championship" },
+        { id: "azure_bears_golden", wins: 7, losses: 1, range: "-", status: "Championship" },
+        { id: "black_cyber", wins: 4, losses: 4, range: "-", status: "Off Season" },
+        { id: "caap_hellhounds", wins: 6, losses: 4, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "fei_darkowls", wins: 3, losses: 4, range: "-", status: "Off Season" },
+        { id: "fm_alligators", wins: 0, losses: 10, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "furia_utfpr", wins: 2, losses: 4, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "hunter_esports", wins: 3, losses: 2, range: "-", status: "Off Season" },
+        { id: "ifsp_midas", wins: 3, losses: 6, range: "-", status: "Practice" },
+        { id: "inatel_white", wins: 5, losses: 4, range: "-", status: "Championship" },
+        { id: "macklogic_red", wins: 8, losses: 2, range: "-", status: "Championship" },
+        { id: "macklogic_white", wins: 4, losses: 5, range: "-", status: "Practice" },
+        { id: "pato", wins: 1, losses: 3, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "puc_clerigos", wins: 0, losses: 2, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "puc_priests", wins: 2, losses: 4, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "stings_yellow", wins: 2, losses: 6, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "totale_umc", wins: 2, losses: 5, range: "-", status: "Practice" },
+        { id: "ufpr_bbn", wins: 4, losses: 6, range: "-", status: "Practice" },
+        { id: "ufrj_canis", wins: 4, losses: 4, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "ufu_insane", wins: 6, losses: 3, range: "-", status: "Championship" },
+        { id: "ufu_saints", wins: 8, losses: 1, range: "-", status: "Championship" },
+        { id: "unb_black", wins: 3, losses: 2, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "unesa_cyborgs", wins: 5, losses: 4, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "unicamp_tritons_black", wins: 6, losses: 3, range: "-", status: "Championship" },
+        { id: "white_cyber", wins: 1, losses: 6, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "wolf_gaming", wins: 6, losses: 4, range: "-", status: "Off Season" },
+      ],
+    },
+  },
+  "lbeu-2025-1-split-championship": {
+    name: "LBEU 2025 - 1\u00ba Split - Championship",
+    organizer: "LigaGG",
+    prizePool: "-",
+    tier: "A",
+    type: "Online - Playoffs",
+    status: "Finalizado",
+    teamCount: 8,
+    teams: [
+      "axis_anteaters_shadow",
+      "azure_bears_black",
+      "azure_bears_golden",
+      "inatel_white",
+      "macklogic_red",
+      "ufu_insane",
+      "ufu_saints",
+      "unicamp_tritons_black",
+    ],
+    mapPool: ["Ascent", "Bind", "Corrode", "Haven", "Icebox", "Lotus", "Sunset"],
+    format: {
+      summary: "Elimina\u00e7\u00e3o dupla",
+      details: [
+        "8 equipes, s\u00e9ries MD3 e grande final MD5.",
+        "Chave reconstru\u00edda pelos confrontos registrados.",
+      ],
+      standings: "Coloca\u00e7\u00e3o final",
+    },
+    placements: [
+      { range: "1", id: "macklogic_red" },
+      { range: "2", id: "ufu_saints" },
+      { range: "3", id: "azure_bears_golden" },
+      { range: "4", id: "unicamp_tritons_black" },
+      { range: "5-6", id: "azure_bears_black" },
+      { range: "5-6", id: "ufu_insane" },
+      { range: "7-8", id: "inatel_white" },
+      { range: "7-8", id: "axis_anteaters_shadow" },
+    ],
+    bracket: {
+      title: "Elimina\u00e7\u00e3o dupla",
+      regions: [
+        {
+          name: "Grande final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Grande final",
+              matches: [
+                { code: "Partida 136", a: "macklogic_red", scoreA: 3, b: "ufu_saints", scoreB: 1, winner: "macklogic_red", bestOf: "MD5" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Quartas de final superior",
+              matches: [
+                { code: "Partida 115", a: "inatel_white", scoreA: 1, b: "ufu_saints", scoreB: 2, winner: "ufu_saints", bestOf: "MD3" },
+                { code: "Partida 116", a: "azure_bears_black", scoreA: 2, b: "ufu_insane", scoreB: 0, winner: "azure_bears_black", bestOf: "MD3" },
+                { code: "Partida 117", a: "azure_bears_golden", scoreA: 2, b: "axis_anteaters_shadow", scoreB: 0, winner: "azure_bears_golden", bestOf: "MD3" },
+                { code: "Partida 118", a: "unicamp_tritons_black", scoreA: 2, b: "macklogic_red", scoreB: 0, winner: "unicamp_tritons_black", bestOf: "MD3" },
+              ],
+            },
+            {
+              title: "Semifinais superior",
+              matches: [
+                { code: "Partida 123", a: "ufu_saints", scoreA: 2, b: "azure_bears_black", scoreB: 0, winner: "ufu_saints", bestOf: "MD3" },
+                { code: "Partida 124", a: "azure_bears_golden", scoreA: 2, b: "unicamp_tritons_black", scoreB: 1, winner: "azure_bears_golden", bestOf: "MD3" },
+              ],
+            },
+            {
+              title: "Final superior",
+              matches: [
+                { code: "Partida 128", a: "ufu_saints", scoreA: 2, b: "azure_bears_golden", scoreB: 0, winner: "ufu_saints", bestOf: "MD3" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada de 4 inferior",
+              matches: [
+                { code: "Partida 119", a: "ufu_insane", scoreA: 2, b: "inatel_white", scoreB: 0, winner: "ufu_insane", bestOf: "MD3" },
+                { code: "Partida 122", a: "macklogic_red", scoreA: 2, b: "axis_anteaters_shadow", scoreB: 0, winner: "macklogic_red", bestOf: "MD3" },
+              ],
+            },
+            {
+              title: "Quartas de final inferior",
+              matches: [
+                { code: "Partida 126", a: "unicamp_tritons_black", scoreA: 2, b: "ufu_insane", scoreB: 0, winner: "unicamp_tritons_black", bestOf: "MD3" },
+                { code: "Partida 127", a: "macklogic_red", scoreA: 2, b: "azure_bears_black", scoreB: 0, winner: "macklogic_red", bestOf: "MD3" },
+              ],
+            },
+            {
+              title: "Semifinal inferior",
+              matches: [
+                { code: "Partida 129", a: "unicamp_tritons_black", scoreA: 1, b: "macklogic_red", scoreB: 2, winner: "macklogic_red", bestOf: "MD3" },
+              ],
+            },
+            {
+              title: "Final inferior",
+              matches: [
+                { code: "Partida 133", a: "macklogic_red", scoreA: 2, b: "azure_bears_golden", scoreB: 0, winner: "macklogic_red", bestOf: "MD3" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "lbeu-2025-1-split-off-season": {
+    name: "LBEU 2025 - 1\u00ba Split - Off Season",
+    organizer: "LigaGG",
+    prizePool: "-",
+    tier: "B",
+    type: "Online - Playoffs",
+    status: "Finalizado",
+    teamCount: 5,
+    teams: ["axis_blossom", "black_cyber", "fei_darkowls", "hunter_esports", "wolf_gaming"],
+    mapPool: ["Ascent", "Bind", "Corrode", "Haven", "Icebox", "Lotus", "Sunset"],
+    seriesResults: {
+      "114": { a: "black_cyber", b: "wolf_gaming", scoreA: 1, scoreB: 2, note: "Placar registrado. 1 dos 3 mapas fica fora das estatísticas porque os dados da partida estão incompletos." },
+    },
+    format: {
+      summary: "Elimina\u00e7\u00e3o dupla - registros parciais",
+      details: [
+        "S\u00e9ries MD3 e grande final registrada em MD5.",
+        "A chave mostra os confrontos encontrados. A liga\u00e7\u00e3o de algumas etapas n\u00e3o foi confirmada.",
+      ],
+      standings: "Coloca\u00e7\u00f5es confirmadas pela final",
+    },
+    placements: [
+      { range: "1", id: "wolf_gaming" },
+      { range: "2", id: "hunter_esports" },
+    ],
+    bracket: {
+      title: "Confrontos registrados",
+      regions: [
+        {
+          name: "Grande final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Grande final",
+              matches: [
+                { code: "Partida 137", a: "wolf_gaming", scoreA: 3, b: "hunter_esports", scoreB: 0, winner: "wolf_gaming", bestOf: "MD5" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Confrontos registrados",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Primeiros confrontos",
+              matches: [
+                { code: "Partida 114", a: "black_cyber", scoreA: 1, b: "wolf_gaming", scoreB: 2, winner: "wolf_gaming", bestOf: "MD3", playedAt: "2025-07-18T01:15:51Z", previewNote: "Placar registrado. 1 dos 3 mapas fica fora das estatísticas porque os dados da partida estão incompletos." },
+                { code: "Partida 120", a: "axis_blossom", scoreA: 2, b: "hunter_esports", scoreB: 0, winner: "axis_blossom", bestOf: "MD3" },
+              ],
+            },
+            {
+              title: "Etapa seguinte",
+              matches: [
+                { code: "Partida 121", a: "wolf_gaming", scoreA: 2, b: "fei_darkowls", scoreB: 0, winner: "wolf_gaming", bestOf: "MD3" },
+              ],
+            },
+            {
+              title: "Confronto seguinte",
+              matches: [
+                { code: "Partida 125", a: "wolf_gaming", scoreA: 2, b: "axis_blossom", scoreB: 0, winner: "wolf_gaming", bestOf: "MD3" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Confrontos posteriores",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Confronto de 30/07",
+              matches: [
+                { code: "Partida 132", a: "fei_darkowls", scoreA: 1, b: "hunter_esports", scoreB: 2, winner: "hunter_esports", bestOf: "MD3" },
+              ],
+            },
+            {
+              title: "Confronto de 05/08",
+              matches: [
+                { code: "Partida 135", a: "hunter_esports", scoreA: 2, b: "axis_blossom", scoreB: 0, winner: "hunter_esports", bestOf: "MD3" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "lbeu-2025-1-split-practice": {
+    name: "LBEU 2025 - 1\u00ba Split - Practice",
+    organizer: "LigaGG",
+    prizePool: "-",
+    tier: "B",
+    type: "Online - Playoffs",
+    status: "Finalizado",
+    teamCount: 4,
+    teams: ["ifsp_midas", "macklogic_white", "totale_umc", "ufpr_bbn"],
+    mapPool: ["Ascent", "Bind", "Haven", "Icebox", "Sunset"],
+    format: {
+      summary: "Elimina\u00e7\u00e3o dupla - registros parciais",
+      details: [
+        "Quatro equipes nos registros encontrados, com s\u00e9ries MD3 e grande final MD5.",
+        "A chave mostra os confrontos encontrados. As demais s\u00e9ries n\u00e3o foram confirmadas.",
+      ],
+      standings: "Coloca\u00e7\u00f5es confirmadas pela final",
+    },
+    placements: [
+      { range: "1", id: "ufpr_bbn" },
+      { range: "2", id: "macklogic_white" },
+    ],
+    bracket: {
+      title: "Confrontos registrados",
+      regions: [
+        {
+          name: "Grande final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Grande final",
+              matches: [
+                { code: "Partida 138", a: "ufpr_bbn", scoreA: 3, b: "macklogic_white", scoreB: 2, winner: "ufpr_bbn", bestOf: "MD5" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Confrontos registrados",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Primeiros confrontos",
+              matches: [
+                { code: "Partida 130", a: "ufpr_bbn", scoreA: 2, b: "totale_umc", scoreB: 0, winner: "ufpr_bbn", bestOf: "MD3" },
+                { code: "Partida 131", a: "macklogic_white", scoreA: 2, b: "ifsp_midas", scoreB: 0, winner: "macklogic_white", bestOf: "MD3" },
+              ],
+            },
+            {
+              title: "Confronto de 05/08",
+              matches: [
+                { code: "Partida 134", a: "macklogic_white", scoreA: 2, b: "totale_umc", scoreB: 0, winner: "macklogic_white", bestOf: "MD3" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "copa-xv-6-2025": {
+    name: "Copa XV - 6ª edição (2025)",
+    organizer: "XV Buzzards",
+    status: "Finalizado",
+    teamCount: 4,
+    teams: ["axis_anteaters", "azure_bears_black", "azure_bears_red", "unicamp_tritons_red"],
+    teamNames: {
+      axis_anteaters: "AXIS Anteaters",
+      unicamp_tritons_red: "Unicamp Tritons",
+    },
+    placements: [
+      { range: "1", id: "axis_anteaters" },
+      { range: "2", id: "azure_bears_black" },
+      { range: "3", id: "azure_bears_red" },
+      { range: "4", id: "unicamp_tritons_red" },
+    ],
+    format: {
+      summary: "Eliminação dupla",
+      details: ["4 equipes", "Primeiras rodadas e final superior MD1", "Final inferior e grande final MD3"],
+      standings: "Classificação final",
+    },
+    bracket: {
+      title: "Eliminação dupla",
+      regions: [
+        {
+          name: "Grande final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Grande final",
+              matches: [
+                { code: "Partida 6", bestOf: "MD3", a: "axis_anteaters", scoreA: 2, b: "azure_bears_black", scoreB: 0, winner: "axis_anteaters" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Semifinais superiores",
+              matches: [
+                { code: "Partida 1", bestOf: "MD1", a: "axis_anteaters", scoreA: 13, b: "azure_bears_red", scoreB: 7, winner: "axis_anteaters" },
+                { code: "Partida 2", bestOf: "MD1", a: "azure_bears_black", scoreA: 13, b: "unicamp_tritons_red", scoreB: 4, winner: "azure_bears_black" },
+              ],
+            },
+            {
+              title: "Final superior",
+              matches: [
+                { code: "Partida 4", bestOf: "MD1", a: "axis_anteaters", scoreA: 11, b: "azure_bears_black", scoreB: 13, winner: "azure_bears_black" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Semifinal inferior",
+              matches: [
+                { code: "Partida 3", bestOf: "MD1", a: "azure_bears_red", scoreA: 17, b: "unicamp_tritons_red", scoreB: 15, winner: "azure_bears_red" },
+              ],
+            },
+            {
+              title: "Final inferior",
+              matches: [
+                { code: "Partida 5", bestOf: "MD3", a: "axis_anteaters", scoreA: 2, b: "azure_bears_red", scoreB: 0, winner: "axis_anteaters" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
   aoc: {
     organizerLogo: "assets/organizers-logos/logo_aoc.png",
     prizePool: "5x Monitores AGON CS24A/P",
@@ -407,7 +4027,7 @@ const TOURNAMENT_OVERRIDES = {
       rounds: [
         {
           title: "Rodada 1",
-          status: "Concluida - 10/10",
+          status: "Concluída - 10/10",
           bestOf: "MD1",
           matches: [
             { code: "Partida 1", a: "usp_stars_gc", scoreA: 13, b: "inatel_gray", scoreB: 3, winner: "usp_stars_gc" },
@@ -416,7 +4036,7 @@ const TOURNAMENT_OVERRIDES = {
         },
         {
           title: "Rodada 2",
-          status: "Concluida - 10/10",
+          status: "Concluída - 10/10",
           bestOf: "MD1",
           matches: [
             { code: "Partida 3", a: "pucc_canaries", scoreA: 13, b: "inatel_gray", scoreB: 3, winner: "pucc_canaries" },
@@ -425,7 +4045,7 @@ const TOURNAMENT_OVERRIDES = {
         },
         {
           title: "Rodada 3",
-          status: "Concluida - 10/10",
+          status: "Concluída - 10/10",
           bestOf: "MD1",
           matches: [
             { code: "Partida 5", a: "macklogic_rainbow", scoreA: 13, b: "inatel_gray", scoreB: 1, winner: "macklogic_rainbow" },
@@ -515,6 +4135,9 @@ const TOURNAMENT_OVERRIDES = {
   },
   "copa-luce-inters": {
     name: "Copa LUCE Inters",
+    seriesResults: {
+      "6": { a: "sheriff_iff", b: "minerva_artemis", scoreA: 2, scoreB: 0, note: "Placar oficial. O mapa 2, 13x1 para a Sheriff, foi jogado em sala privada e não tem estatísticas." },
+    },
     organizer: "AcadArena",
     organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
     banner: "assets/tournament-banners/copa_luce.webp",
@@ -527,12 +4150,12 @@ const TOURNAMENT_OVERRIDES = {
     format: {
       summary: "Pontos corridos + playoffs",
       details: [
-        "Etapa 1: turno unico, as 8 equipes se enfrentam uma vez (7 rodadas, 28 partidas)",
-        "Etapa 2: eliminacao simples com as 4 primeiras da Etapa 1",
+        "Etapa 1: turno único, as 8 equipes se enfrentam uma vez (7 rodadas, 28 partidas)",
+        "Etapa 2: eliminação simples com as 4 primeiras da Etapa 1",
         "Etapa 1 em MD3",
         "Semifinais em 01/11: Wolf Gaming x UFRJ Minerva e A2E UFF x Minerva Thunders. Final em 07/11",
       ],
-      standings: "Classificacao da Etapa 1",
+      standings: "Classificação da Etapa 1",
     },
     teams: [
       "ufrj_minerva",
@@ -547,16 +4170,16 @@ const TOURNAMENT_OVERRIDES = {
     swiss: {
       roundRobin: true,
       seriesCount: 28,
-      standingsLabel: "Etapa 1 - as 4 primeiras vao aos playoffs",
+      standingsLabel: "Etapa 1 - as 4 primeiras vão aos playoffs",
       rounds: [
         {
           title: "Rodada 1",
-          status: "Concluida - 08/09",
+          status: "Concluída - 08/09",
           bestOf: "MD3",
           matches: [
             // 08/09, sala configurada como privada: a Riot nao entrega o arquivo. Krakens
             // venceu 13-9 e 13-6 (informado pelo dono em 22/09; nao entra no ranking).
-            { code: "Partida 1", a: "minerva_artemis", scoreA: 0, b: "unirio_krakens", scoreB: 2, winner: "unirio_krakens", status: "Concluida - partida privada" },
+            { code: "Partida 1", a: "minerva_artemis", scoreA: 0, b: "unirio_krakens", scoreB: 2, winner: "unirio_krakens", status: "Concluída - partida privada" },
             { code: "Partida 2", a: "a2e_uff", scoreA: 2, b: "minerva_thunders", scoreB: 1, winner: "a2e_uff" },
             { code: "Partida 3", a: "sheriff_iff", scoreA: 0, b: "ufrj_minerva", scoreB: 2, winner: "ufrj_minerva" },
             { code: "Partida 4", a: "a2e_uff_shadows", scoreA: 0, b: "wolf_gaming", scoreB: 2, winner: "wolf_gaming" },
@@ -564,21 +4187,21 @@ const TOURNAMENT_OVERRIDES = {
         },
         {
           title: "Rodada 2",
-          status: "Concluida",
+          status: "Concluída",
           bestOf: "MD3",
           // Resultados do site da plataforma (21/09).
           matches: [
             { code: "Partida 5", a: "a2e_uff", scoreA: 2, b: "unirio_krakens", scoreB: 0, winner: "a2e_uff" },
             // 13/09: mapa 1 13-4 Sheriff (LUCE_006a); mapa 2 13-1 Sheriff em sala privada,
             // sem arquivo (informado pelo dono em 22/09; nao entra no ranking).
-            { code: "Partida 6", a: "sheriff_iff", scoreA: 2, b: "minerva_artemis", scoreB: 0, winner: "sheriff_iff", status: "Concluida - mapa 2 privado" },
+            { code: "Partida 6", a: "sheriff_iff", scoreA: 2, b: "minerva_artemis", scoreB: 0, winner: "sheriff_iff", status: "Concluída - mapa 2 privado" },
             { code: "Partida 7", a: "a2e_uff_shadows", scoreA: 0, b: "minerva_thunders", scoreB: 2, winner: "minerva_thunders" },
             { code: "Partida 8", a: "wolf_gaming", scoreA: 2, b: "ufrj_minerva", scoreB: 0, winner: "wolf_gaming" },
           ],
         },
         {
           title: "Rodada 3",
-          status: "Concluida",
+          status: "Concluída",
           bestOf: "MD3",
           matches: [
             // W.O. da Krakens, confirmado pelo dono em 22/09.
@@ -591,7 +4214,7 @@ const TOURNAMENT_OVERRIDES = {
         {
           title: "Rodada 4",
           // Resultados confirmados pelo dono em 30/09.
-          status: "Concluida",
+          status: "Concluída",
           bestOf: "MD3",
           matches: [
             { code: "Partida 13", a: "a2e_uff_shadows", scoreA: 2, b: "unirio_krakens", scoreB: 0, winner: "a2e_uff_shadows" },
@@ -606,7 +4229,7 @@ const TOURNAMENT_OVERRIDES = {
         // dois mapas e nenhuma partida entre as duas equipes nas matchlists dos inscritos.
         {
           title: "Rodada 5",
-          status: "Concluida",
+          status: "Concluída",
           bestOf: "MD3",
           matches: [
             { code: "Partida 17", a: "wolf_gaming", scoreA: 2, b: "unirio_krakens", scoreB: 0, winner: "wolf_gaming", status: "W.O." },
@@ -617,7 +4240,7 @@ const TOURNAMENT_OVERRIDES = {
         },
         {
           title: "Rodada 6",
-          status: "Concluida",
+          status: "Concluída",
           bestOf: "MD3",
           matches: [
             { code: "Partida 21", a: "ufrj_minerva", scoreA: 2, b: "unirio_krakens", scoreB: 0, winner: "ufrj_minerva", status: "W.O." },
@@ -628,7 +4251,7 @@ const TOURNAMENT_OVERRIDES = {
         },
         {
           title: "Rodada 7",
-          status: "Concluida",
+          status: "Concluída",
           bestOf: "MD3",
           matches: [
             { code: "Partida 25", a: "minerva_thunders", scoreA: 2, b: "unirio_krakens", scoreB: 0, winner: "minerva_thunders", status: "W.O." },
@@ -760,27 +4383,36 @@ const TOURNAMENT_OVERRIDES = {
     hidden: true,
   },
   "jubs-fase-inicial": {
-    name: "JUBS Goiás 2026 - Fase inicial",
-    organizer: "CBDU",
-    organizerLogo: "assets/organizers-logos/logo_CBDU.png",
-    banner: "assets/tournament-banners/banner_jubs.png",
-    prizePool: "-",
-    tier: "A",
-    status: "Finalizado",
-    teamCount: 40,
-    type: "Online",
-    mapPool: ["Ascent", "Lotus", "Haven", "Split", "Breeze", "Pearl", "Fracture", "Sunset"],
-    format: {
-      summary: "Sistema Su\u00ed\u00e7o",
-      details: [
+    "name": "JUBS Goiás 2026 - Fase inicial",
+    "organizer": "CBDU",
+    "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
+    "banner": "assets/tournament-banners/banner_jubs.png",
+    "prizePool": "-",
+    "tier": "A",
+    "status": "Finalizado",
+    "teamCount": 40,
+    "type": "Online",
+    "mapPool": [
+      "Ascent",
+      "Lotus",
+      "Haven",
+      "Split",
+      "Breeze",
+      "Pearl",
+      "Fracture",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Sistema Suíço",
+      "details": [
         "Todos os jogos MD3",
-        "Equipes com 3 derrotas sao eliminadas",
-        "M\u00e1ximo de 2 equipes por estado ap\u00f3s a Rodada 6",
-        "Rodada 7 decisiva: quem vence classifica, quem perde est\u00e1 eliminado",
+        "Equipes com 3 derrotas são eliminadas",
+        "Máximo de 2 equipes por estado após a Rodada 6",
+        "Rodada 7 decisiva: quem vence classifica, quem perde está eliminado"
       ],
-      standings: "Classifica\u00e7\u00e3o su\u00ed\u00e7a atual",
+      "standings": "Classificação suíça atual"
     },
-    teams: [
+    "teams": [
       "ceub_octopus",
       "macklogic_red",
       "green_owls_noctua",
@@ -820,260 +4452,1483 @@ const TOURNAMENT_OVERRIDES = {
       "ufg_gc_eagles",
       "lunatica_ufms",
       "limpezinha",
-      "carrascos_fd8j",
+      "carrascos_fd8j"
     ],
-    placements: [
-      { range: "Classificado", id: "ceub_octopus", note: "7-0" },
-      { range: "Classificado", id: "azure_bears_golden", note: "6-1" },
-      { range: "Classificado", id: "uninassau_griffins", note: "6-1" },
-      { range: "Classificado", id: "a2e_uff", note: "5-2" },
-      { range: "Classificado", id: "ufu_saints", note: "5-2" },
-      { range: "Classificado", id: "ufmt_turuna", note: "5-2" },
-      { range: "Classificado", id: "macklogic_red", note: "5-2" },
-      { range: "Classificado", id: "fametro_berserkers", note: "4-3" },
-      { range: "9-16", id: "caap_hellhounds", note: "5-2", reason: "Perdeu a decisiva da Rodada 7" },
-      { range: "9-16", id: "ucb_dogs", note: "4-3", reason: "Perdeu a decisiva da Rodada 7" },
-      { range: "9-16", id: "inatel", note: "4-3", reason: "Perdeu a decisiva da Rodada 7" },
-      { range: "9-16", id: "ufrj_minerva", note: "4-3", reason: "Perdeu a decisiva da Rodada 7" },
-      { range: "9-16", id: "furia_utfpr", note: "4-3", reason: "Perdeu a decisiva da Rodada 7" },
-      { range: "9-16", id: "ufpe_virtus", note: "3-4", reason: "Perdeu a decisiva da Rodada 7" },
-      { range: "9-16", id: "ufs_bugados", note: "3-4", reason: "Perdeu a decisiva da Rodada 7" },
-      { range: "9-16", id: "unisc_ladaiada", note: "3-4", reason: "Perdeu a decisiva da Rodada 7" },
-      { range: "17-20", id: "axis_anteaters", note: "4-2", reason: "Limite de 2 equipes por estado (SP)" },
-      { range: "17-20", id: "pucc_cardinals", note: "4-2", reason: "Limite de 2 equipes por estado (SP)" },
-      { range: "17-20", id: "wolf_gaming", note: "3-3", reason: "Limite de 2 equipes por estado (RJ)" },
-      { range: "17-20", id: "green_owls_noctua", note: "3-3", reason: "Limite de 2 equipes por estado (DF)" },
-      { range: "21-28", id: "univasf", note: "2-3" },
-      { range: "21-28", id: "milionaria_ufam", note: "2-3" },
-      { range: "21-28", id: "uepa_imperadores", note: "2-3" },
-      { range: "21-28", id: "ufg_eagles", note: "2-3" },
-      { range: "21-28", id: "rahnag", note: "2-3" },
-      { range: "21-28", id: "ufrn_carcaras", note: "2-3" },
-      { range: "21-28", id: "acucarados", note: "2-3" },
-      { range: "21-28", id: "ufpr_bbn", note: "2-3" },
-      { range: "29-35", id: "uema_turbulencia", note: "1-3" },
-      { range: "29-35", id: "ufma_naotemclutch", note: "1-3" },
-      { range: "29-35", id: "unifor", note: "1-3" },
-      { range: "29-35", id: "unirio_krakens", note: "1-3" },
-      { range: "29-35", id: "ueg_hipertensa", note: "1-3" },
-      { range: "29-35", id: "unit_troianos", note: "1-3" },
-      { range: "29-35", id: "undbala", note: "1-3" },
-      { range: "36-40", id: "ufcg_pensaopet", note: "0-3" },
-      { range: "36-40", id: "ufg_gc_eagles", note: "0-3" },
-      { range: "36-40", id: "lunatica_ufms", note: "0-3" },
-      { range: "36-40", id: "limpezinha", note: "0-3" },
-      { range: "36-40", id: "carrascos_fd8j", note: "0-3" },
+    "placements": [
+      {
+        "range": "Classificado",
+        "id": "ceub_octopus",
+        "note": "7-0"
+      },
+      {
+        "range": "Classificado",
+        "id": "azure_bears_golden",
+        "note": "6-1"
+      },
+      {
+        "range": "Classificado",
+        "id": "uninassau_griffins",
+        "note": "6-1"
+      },
+      {
+        "range": "Classificado",
+        "id": "a2e_uff",
+        "note": "5-2"
+      },
+      {
+        "range": "Classificado",
+        "id": "ufu_saints",
+        "note": "5-2"
+      },
+      {
+        "range": "Classificado",
+        "id": "ufmt_turuna",
+        "note": "5-2"
+      },
+      {
+        "range": "Classificado",
+        "id": "macklogic_red",
+        "note": "5-2"
+      },
+      {
+        "range": "Classificado",
+        "id": "fametro_berserkers",
+        "note": "4-3"
+      },
+      {
+        "range": "9-16",
+        "id": "caap_hellhounds",
+        "note": "5-2",
+        "reason": "Perdeu a decisiva da Rodada 7"
+      },
+      {
+        "range": "9-16",
+        "id": "ucb_dogs",
+        "note": "4-3",
+        "reason": "Perdeu a decisiva da Rodada 7"
+      },
+      {
+        "range": "9-16",
+        "id": "inatel",
+        "note": "4-3",
+        "reason": "Perdeu a decisiva da Rodada 7"
+      },
+      {
+        "range": "9-16",
+        "id": "ufrj_minerva",
+        "note": "4-3",
+        "reason": "Perdeu a decisiva da Rodada 7"
+      },
+      {
+        "range": "9-16",
+        "id": "furia_utfpr",
+        "note": "4-3",
+        "reason": "Perdeu a decisiva da Rodada 7"
+      },
+      {
+        "range": "9-16",
+        "id": "ufpe_virtus",
+        "note": "3-4",
+        "reason": "Perdeu a decisiva da Rodada 7"
+      },
+      {
+        "range": "9-16",
+        "id": "ufs_bugados",
+        "note": "3-4",
+        "reason": "Perdeu a decisiva da Rodada 7"
+      },
+      {
+        "range": "9-16",
+        "id": "unisc_ladaiada",
+        "note": "3-4",
+        "reason": "Perdeu a decisiva da Rodada 7"
+      },
+      {
+        "range": "17-20",
+        "id": "axis_anteaters",
+        "note": "4-2",
+        "reason": "Limite de 2 equipes por estado (SP)"
+      },
+      {
+        "range": "17-20",
+        "id": "pucc_cardinals",
+        "note": "4-2",
+        "reason": "Limite de 2 equipes por estado (SP)"
+      },
+      {
+        "range": "17-20",
+        "id": "wolf_gaming",
+        "note": "3-3",
+        "reason": "Limite de 2 equipes por estado (RJ)"
+      },
+      {
+        "range": "17-20",
+        "id": "green_owls_noctua",
+        "note": "3-3",
+        "reason": "Limite de 2 equipes por estado (DF)"
+      },
+      {
+        "range": "21-28",
+        "id": "univasf",
+        "note": "2-3"
+      },
+      {
+        "range": "21-28",
+        "id": "milionaria_ufam",
+        "note": "2-3"
+      },
+      {
+        "range": "21-28",
+        "id": "uepa_imperadores",
+        "note": "2-3"
+      },
+      {
+        "range": "21-28",
+        "id": "ufg_eagles",
+        "note": "2-3"
+      },
+      {
+        "range": "21-28",
+        "id": "rahnag",
+        "note": "2-3"
+      },
+      {
+        "range": "21-28",
+        "id": "ufrn_carcaras",
+        "note": "2-3"
+      },
+      {
+        "range": "21-28",
+        "id": "acucarados",
+        "note": "2-3"
+      },
+      {
+        "range": "21-28",
+        "id": "ufpr_bbn",
+        "note": "2-3"
+      },
+      {
+        "range": "29-35",
+        "id": "uema_turbulencia",
+        "note": "1-3"
+      },
+      {
+        "range": "29-35",
+        "id": "ufma_naotemclutch",
+        "note": "1-3"
+      },
+      {
+        "range": "29-35",
+        "id": "unifor",
+        "note": "1-3"
+      },
+      {
+        "range": "29-35",
+        "id": "unirio_krakens",
+        "note": "1-3"
+      },
+      {
+        "range": "29-35",
+        "id": "ueg_hipertensa",
+        "note": "1-3"
+      },
+      {
+        "range": "29-35",
+        "id": "unit_troianos",
+        "note": "1-3"
+      },
+      {
+        "range": "29-35",
+        "id": "undbala",
+        "note": "1-3"
+      },
+      {
+        "range": "36-40",
+        "id": "ufcg_pensaopet",
+        "note": "0-3"
+      },
+      {
+        "range": "36-40",
+        "id": "ufg_gc_eagles",
+        "note": "0-3"
+      },
+      {
+        "range": "36-40",
+        "id": "lunatica_ufms",
+        "note": "0-3"
+      },
+      {
+        "range": "36-40",
+        "id": "limpezinha",
+        "note": "0-3"
+      },
+      {
+        "range": "36-40",
+        "id": "carrascos_fd8j",
+        "note": "0-3"
+      }
     ],
-    swiss: {
-      seriesCount: 110,
-      stateTables: true,
-      standingsLabel: "Tabela final - 8 equipes classificadas",
-      rounds: [
+    "swiss": {
+      "seriesCount": 110,
+      "stateTables": true,
+      "standingsLabel": "Tabela final - 8 equipes classificadas",
+      "rounds": [
         {
-          title: "Rodada 1",
-          status: "Concluida",
-          bestOf: "MD3",
-          matches: [
-            { code: "Partida 1", a: "furia_utfpr", scoreA: 2, b: "limpezinha", scoreB: 0, winner: "furia_utfpr" },
-            { code: "Partida 2", a: "uninassau_griffins", scoreA: 2, b: "ufg_gc_eagles", scoreB: 0, winner: "uninassau_griffins" },
-            { code: "Partida 3", a: "ufu_saints", scoreA: 0, b: "ceub_octopus", scoreB: 2, winner: "ceub_octopus" },
-            { code: "Partida 4", a: "ufcg_pensaopet", scoreA: 0, b: "ufg_eagles", scoreB: 2, winner: "ufg_eagles" },
-            { code: "Partida 5", a: "unit_troianos", scoreA: 0, b: "azure_bears_golden", scoreB: 2, winner: "azure_bears_golden" },
-            { code: "Partida 6", a: "ufrn_carcaras", scoreA: 2, b: "ufma_naotemclutch", scoreB: 0, winner: "ufrn_carcaras" },
-            { code: "Partida 7", a: "ufrj_minerva", scoreA: 0, b: "wolf_gaming", scoreB: 2, winner: "wolf_gaming" },
-            { code: "Partida 8", a: "unirio_krakens", scoreA: 2, b: "unifor", scoreB: 0, winner: "unirio_krakens" },
-            { code: "Partida 9", a: "pucc_cardinals", scoreA: 2, b: "ufpe_virtus", scoreB: 0, winner: "pucc_cardinals" },
-            { code: "Partida 10", a: "caap_hellhounds", scoreA: 2, b: "undbala", scoreB: 0, winner: "caap_hellhounds" },
-            { code: "Partida 11", a: "fametro_berserkers", scoreA: 2, b: "ufpr_bbn", scoreB: 0, winner: "fametro_berserkers" },
-            { code: "Partida 12", a: "carrascos_fd8j", scoreA: 0, b: "uepa_imperadores", scoreB: 2, winner: "uepa_imperadores" },
-            { code: "Partida 13", a: "ufmt_turuna", scoreA: 2, b: "uema_turbulencia", scoreB: 0, winner: "ufmt_turuna" },
-            { code: "Partida 14", a: "a2e_uff", scoreA: 0, b: "green_owls_noctua", scoreB: 2, winner: "green_owls_noctua" },
-            { code: "Partida 15", a: "ufs_bugados", scoreA: 1, b: "macklogic_red", scoreB: 2, winner: "macklogic_red" },
-            { code: "Partida 16", a: "milionaria_ufam", scoreA: 0, b: "univasf", scoreB: 2, winner: "univasf" },
-            { code: "Partida 17", a: "lunatica_ufms", scoreA: 0, b: "inatel", scoreB: 2, winner: "inatel" },
-            { code: "Partida 18", a: "unisc_ladaiada", scoreA: 1, b: "acucarados", scoreB: 2, winner: "acucarados" },
-            { code: "Partida 19", a: "rahnag", scoreA: 2, b: "ueg_hipertensa", scoreB: 0, winner: "rahnag" },
-            { code: "Partida 20", a: "axis_anteaters", scoreA: 2, b: "ucb_dogs", scoreB: 0, winner: "axis_anteaters" },
-          ],
+          "title": "Rodada 1",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 1",
+              "a": "furia_utfpr",
+              "scoreA": 2,
+              "b": "limpezinha",
+              "scoreB": 0,
+              "winner": "furia_utfpr"
+            },
+            {
+              "code": "Partida 2",
+              "a": "uninassau_griffins",
+              "scoreA": 2,
+              "b": "ufg_gc_eagles",
+              "scoreB": 0,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 3",
+              "a": "ufu_saints",
+              "scoreA": 0,
+              "b": "ceub_octopus",
+              "scoreB": 2,
+              "winner": "ceub_octopus"
+            },
+            {
+              "code": "Partida 4",
+              "a": "ufcg_pensaopet",
+              "scoreA": 0,
+              "b": "ufg_eagles",
+              "scoreB": 2,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 5",
+              "a": "unit_troianos",
+              "scoreA": 0,
+              "b": "azure_bears_golden",
+              "scoreB": 2,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 6",
+              "a": "ufrn_carcaras",
+              "scoreA": 2,
+              "b": "ufma_naotemclutch",
+              "scoreB": 0,
+              "winner": "ufrn_carcaras"
+            },
+            {
+              "code": "Partida 7",
+              "a": "ufrj_minerva",
+              "scoreA": 0,
+              "b": "wolf_gaming",
+              "scoreB": 2,
+              "winner": "wolf_gaming"
+            },
+            {
+              "code": "Partida 8",
+              "a": "unirio_krakens",
+              "scoreA": 2,
+              "b": "unifor",
+              "scoreB": 0,
+              "winner": "unirio_krakens"
+            },
+            {
+              "code": "Partida 9",
+              "a": "pucc_cardinals",
+              "scoreA": 2,
+              "b": "ufpe_virtus",
+              "scoreB": 0,
+              "winner": "pucc_cardinals"
+            },
+            {
+              "code": "Partida 10",
+              "a": "caap_hellhounds",
+              "scoreA": 2,
+              "b": "undbala",
+              "scoreB": 0,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 11",
+              "a": "fametro_berserkers",
+              "scoreA": 2,
+              "b": "ufpr_bbn",
+              "scoreB": 0,
+              "winner": "fametro_berserkers"
+            },
+            {
+              "code": "Partida 12",
+              "a": "carrascos_fd8j",
+              "scoreA": 0,
+              "b": "uepa_imperadores",
+              "scoreB": 2,
+              "winner": "uepa_imperadores"
+            },
+            {
+              "code": "Partida 13",
+              "a": "ufmt_turuna",
+              "scoreA": 2,
+              "b": "uema_turbulencia",
+              "scoreB": 0,
+              "winner": "ufmt_turuna"
+            },
+            {
+              "code": "Partida 14",
+              "a": "a2e_uff",
+              "scoreA": 0,
+              "b": "green_owls_noctua",
+              "scoreB": 2,
+              "winner": "green_owls_noctua"
+            },
+            {
+              "code": "Partida 15",
+              "a": "ufs_bugados",
+              "scoreA": 1,
+              "b": "macklogic_red",
+              "scoreB": 2,
+              "winner": "macklogic_red"
+            },
+            {
+              "code": "Partida 16",
+              "a": "milionaria_ufam",
+              "scoreA": 0,
+              "b": "univasf",
+              "scoreB": 2,
+              "winner": "univasf"
+            },
+            {
+              "code": "Partida 17",
+              "a": "lunatica_ufms",
+              "scoreA": 0,
+              "b": "inatel",
+              "scoreB": 2,
+              "winner": "inatel"
+            },
+            {
+              "code": "Partida 18",
+              "a": "unisc_ladaiada",
+              "scoreA": 1,
+              "b": "acucarados",
+              "scoreB": 2,
+              "winner": "acucarados",
+              "playedAt": "2026-06-06T17:06:45Z",
+              "previewNote": "Série autorizada com elenco reduzido. Placar oficial. Os 3 mapas ficam fora das estatísticas.",
+              "status": "Sem estatísticas"
+            },
+            {
+              "code": "Partida 19",
+              "a": "rahnag",
+              "scoreA": 2,
+              "b": "ueg_hipertensa",
+              "scoreB": 0,
+              "winner": "rahnag"
+            },
+            {
+              "code": "Partida 20",
+              "a": "axis_anteaters",
+              "scoreA": 2,
+              "b": "ucb_dogs",
+              "scoreB": 0,
+              "winner": "axis_anteaters"
+            }
+          ]
         },
         {
-          title: "Rodada 2",
-          status: "Concluida",
-          bestOf: "MD3",
-          matches: [
-            { code: "Partida 21", a: "pucc_cardinals", scoreA: 2, b: "ufg_eagles", scoreB: 0, winner: "pucc_cardinals" },
-            { code: "Partida 22", a: "ufmt_turuna", scoreA: 1, b: "uninassau_griffins", scoreB: 2, winner: "uninassau_griffins" },
-            { code: "Partida 23", a: "ucb_dogs", scoreA: 2, b: "milionaria_ufam", scoreB: 0, winner: "ucb_dogs" },
-            { code: "Partida 24", a: "ufcg_pensaopet", scoreA: 0, b: "ufpr_bbn", scoreB: 2, winner: "ufpr_bbn" },
-            { code: "Partida 25", a: "wolf_gaming", scoreA: 2, b: "rahnag", scoreB: 0, winner: "wolf_gaming" },
-            { code: "Partida 26", a: "ueg_hipertensa", scoreA: 2, b: "ufg_gc_eagles", scoreB: 1, winner: "ueg_hipertensa" },
-            { code: "Partida 27", a: "uema_turbulencia", scoreA: 0, b: "ufrj_minerva", scoreB: 2, winner: "ufrj_minerva" },
-            { code: "Partida 28", a: "ufs_bugados", scoreA: 2, b: "unit_troianos", scoreB: 0, winner: "ufs_bugados" },
-            { code: "Partida 29", a: "green_owls_noctua", scoreA: 2, b: "ufrn_carcaras", scoreB: 0, winner: "green_owls_noctua" },
-            { code: "Partida 30", a: "macklogic_red", scoreA: 2, b: "acucarados", scoreB: 0, winner: "macklogic_red" },
-            { code: "Partida 31", a: "a2e_uff", scoreA: 2, b: "limpezinha", scoreB: 0, winner: "a2e_uff" },
-            { code: "Partida 32", a: "carrascos_fd8j", scoreA: 0, b: "ufpe_virtus", scoreB: 2, winner: "ufpe_virtus" },
-            { code: "Partida 33", a: "unirio_krakens", scoreA: 0, b: "fametro_berserkers", scoreB: 2, winner: "fametro_berserkers" },
-            { code: "Partida 34", a: "azure_bears_golden", scoreA: 2, b: "caap_hellhounds", scoreB: 1, winner: "azure_bears_golden" },
-            { code: "Partida 35", a: "uepa_imperadores", scoreA: 0, b: "univasf", scoreB: 2, winner: "univasf" },
-            { code: "Partida 36", a: "ceub_octopus", scoreA: 2, b: "axis_anteaters", scoreB: 0, winner: "ceub_octopus" },
-            { code: "Partida 37", a: "unisc_ladaiada", scoreA: 0, b: "unifor", scoreB: 2, winner: "unifor" },
-            { code: "Partida 38", a: "inatel", scoreA: 2, b: "furia_utfpr", scoreB: 1, winner: "inatel" },
-            { code: "Partida 39", a: "undbala", scoreA: 2, b: "ufma_naotemclutch", scoreB: 1, winner: "undbala" },
-            { code: "Partida 40", a: "ufu_saints", scoreA: 2, b: "lunatica_ufms", scoreB: 0, winner: "ufu_saints" },
-          ],
+          "title": "Rodada 2",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 21",
+              "a": "pucc_cardinals",
+              "scoreA": 2,
+              "b": "ufg_eagles",
+              "scoreB": 0,
+              "winner": "pucc_cardinals"
+            },
+            {
+              "code": "Partida 22",
+              "a": "ufmt_turuna",
+              "scoreA": 1,
+              "b": "uninassau_griffins",
+              "scoreB": 2,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 23",
+              "a": "ucb_dogs",
+              "scoreA": 2,
+              "b": "milionaria_ufam",
+              "scoreB": 0,
+              "winner": "ucb_dogs"
+            },
+            {
+              "code": "Partida 24",
+              "a": "ufcg_pensaopet",
+              "scoreA": 0,
+              "b": "ufpr_bbn",
+              "scoreB": 2,
+              "winner": "ufpr_bbn"
+            },
+            {
+              "code": "Partida 25",
+              "a": "wolf_gaming",
+              "scoreA": 2,
+              "b": "rahnag",
+              "scoreB": 0,
+              "winner": "wolf_gaming"
+            },
+            {
+              "code": "Partida 26",
+              "a": "ueg_hipertensa",
+              "scoreA": 2,
+              "b": "ufg_gc_eagles",
+              "scoreB": 1,
+              "winner": "ueg_hipertensa"
+            },
+            {
+              "code": "Partida 27",
+              "a": "uema_turbulencia",
+              "scoreA": 0,
+              "b": "ufrj_minerva",
+              "scoreB": 2,
+              "winner": "ufrj_minerva"
+            },
+            {
+              "code": "Partida 28",
+              "a": "ufs_bugados",
+              "scoreA": 2,
+              "b": "unit_troianos",
+              "scoreB": 0,
+              "winner": "ufs_bugados"
+            },
+            {
+              "code": "Partida 29",
+              "a": "green_owls_noctua",
+              "scoreA": 2,
+              "b": "ufrn_carcaras",
+              "scoreB": 0,
+              "winner": "green_owls_noctua"
+            },
+            {
+              "code": "Partida 30",
+              "a": "macklogic_red",
+              "scoreA": 2,
+              "b": "acucarados",
+              "scoreB": 0,
+              "winner": "macklogic_red",
+              "previewNote": "Série autorizada com elenco reduzido. Placar oficial. 1 dos 2 mapas fica fora das estatísticas."
+            },
+            {
+              "code": "Partida 31",
+              "a": "a2e_uff",
+              "scoreA": 2,
+              "b": "limpezinha",
+              "scoreB": 0,
+              "winner": "a2e_uff"
+            },
+            {
+              "code": "Partida 32",
+              "a": "carrascos_fd8j",
+              "scoreA": 0,
+              "b": "ufpe_virtus",
+              "scoreB": 2,
+              "winner": "ufpe_virtus"
+            },
+            {
+              "code": "Partida 33",
+              "a": "unirio_krakens",
+              "scoreA": 0,
+              "b": "fametro_berserkers",
+              "scoreB": 2,
+              "winner": "fametro_berserkers"
+            },
+            {
+              "code": "Partida 34",
+              "a": "azure_bears_golden",
+              "scoreA": 2,
+              "b": "caap_hellhounds",
+              "scoreB": 1,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 35",
+              "a": "uepa_imperadores",
+              "scoreA": 0,
+              "b": "univasf",
+              "scoreB": 2,
+              "winner": "univasf"
+            },
+            {
+              "code": "Partida 36",
+              "a": "ceub_octopus",
+              "scoreA": 2,
+              "b": "axis_anteaters",
+              "scoreB": 0,
+              "winner": "ceub_octopus"
+            },
+            {
+              "code": "Partida 37",
+              "a": "unisc_ladaiada",
+              "scoreA": 0,
+              "b": "unifor",
+              "scoreB": 2,
+              "winner": "unifor"
+            },
+            {
+              "code": "Partida 38",
+              "a": "inatel",
+              "scoreA": 2,
+              "b": "furia_utfpr",
+              "scoreB": 1,
+              "winner": "inatel"
+            },
+            {
+              "code": "Partida 39",
+              "a": "undbala",
+              "scoreA": 2,
+              "b": "ufma_naotemclutch",
+              "scoreB": 1,
+              "winner": "undbala"
+            },
+            {
+              "code": "Partida 40",
+              "a": "ufu_saints",
+              "scoreA": 2,
+              "b": "lunatica_ufms",
+              "scoreB": 0,
+              "winner": "ufu_saints"
+            }
+          ]
         },
         {
-          title: "Rodada 3",
-          status: "Concluida",
-          bestOf: "MD3",
-          matches: [
-            { code: "Partida 41", a: "lunatica_ufms", scoreA: 0, b: "unit_troianos", scoreB: 2, winner: "unit_troianos" },
-            { code: "Partida 42", a: "ueg_hipertensa", scoreA: 0, b: "ufu_saints", scoreB: 2, winner: "ufu_saints" },
-            { code: "Partida 43", a: "ucb_dogs", scoreA: 2, b: "unifor", scoreB: 0, winner: "ucb_dogs" },
-            { code: "Partida 44", a: "ufpr_bbn", scoreA: 2, b: "ufpe_virtus", scoreB: 0, winner: "ufpr_bbn" },
-            { code: "Partida 45", a: "ufcg_pensaopet", scoreA: 1, b: "milionaria_ufam", scoreB: 2, winner: "milionaria_ufam" },
-            { code: "Partida 46", a: "axis_anteaters", scoreA: 2, b: "uepa_imperadores", scoreB: 0, winner: "axis_anteaters" },
-            { code: "Partida 47", a: "fametro_berserkers", scoreA: 1, b: "green_owls_noctua", scoreB: 2, winner: "green_owls_noctua" },
-            { code: "Partida 48", a: "macklogic_red", scoreA: 2, b: "pucc_cardinals", scoreB: 0, winner: "macklogic_red" },
-            { code: "Partida 49", a: "furia_utfpr", scoreA: 2, b: "unirio_krakens", scoreB: 0, winner: "furia_utfpr" },
-            { code: "Partida 50", a: "inatel", scoreA: 0, b: "uninassau_griffins", scoreB: 2, winner: "uninassau_griffins" },
-            { code: "Partida 51", a: "acucarados", scoreA: 0, b: "ufg_eagles", scoreB: 2, winner: "ufg_eagles" },
-            { code: "Partida 52", a: "a2e_uff", scoreA: 2, b: "rahnag", scoreB: 0, winner: "a2e_uff" },
-            { code: "Partida 53", a: "caap_hellhounds", scoreA: 2, b: "ufrn_carcaras", scoreB: 0, winner: "caap_hellhounds" },
-            { code: "Partida 54", a: "limpezinha", scoreA: 0, b: "ufma_naotemclutch", scoreB: 2, winner: "ufma_naotemclutch" },
-            { code: "Partida 55", a: "ceub_octopus", scoreA: 2, b: "univasf", scoreB: 0, winner: "ceub_octopus" },
-            { code: "Partida 56", a: "unisc_ladaiada", scoreA: 2, b: "ufg_gc_eagles", scoreB: 0, winner: "unisc_ladaiada" },
-            { code: "Partida 57", a: "azure_bears_golden", scoreA: 2, b: "wolf_gaming", scoreB: 1, winner: "azure_bears_golden" },
-            { code: "Partida 58", a: "ufs_bugados", scoreA: 2, b: "undbala", scoreB: 0, winner: "ufs_bugados" },
-            { code: "Partida 59", a: "ufmt_turuna", scoreA: 2, b: "ufrj_minerva", scoreB: 0, winner: "ufmt_turuna" },
-            { code: "Partida 60", a: "carrascos_fd8j", scoreA: 0, b: "uema_turbulencia", scoreB: 2, winner: "uema_turbulencia" },
-          ],
+          "title": "Rodada 3",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 41",
+              "a": "lunatica_ufms",
+              "scoreA": 0,
+              "b": "unit_troianos",
+              "scoreB": 2,
+              "winner": "unit_troianos"
+            },
+            {
+              "code": "Partida 42",
+              "a": "ueg_hipertensa",
+              "scoreA": 0,
+              "b": "ufu_saints",
+              "scoreB": 2,
+              "winner": "ufu_saints"
+            },
+            {
+              "code": "Partida 43",
+              "a": "ucb_dogs",
+              "scoreA": 2,
+              "b": "unifor",
+              "scoreB": 0,
+              "winner": "ucb_dogs"
+            },
+            {
+              "code": "Partida 44",
+              "a": "ufpr_bbn",
+              "scoreA": 2,
+              "b": "ufpe_virtus",
+              "scoreB": 0,
+              "winner": "ufpr_bbn"
+            },
+            {
+              "code": "Partida 45",
+              "a": "ufcg_pensaopet",
+              "scoreA": 1,
+              "b": "milionaria_ufam",
+              "scoreB": 2,
+              "winner": "milionaria_ufam"
+            },
+            {
+              "code": "Partida 46",
+              "a": "axis_anteaters",
+              "scoreA": 2,
+              "b": "uepa_imperadores",
+              "scoreB": 0,
+              "winner": "axis_anteaters"
+            },
+            {
+              "code": "Partida 47",
+              "a": "fametro_berserkers",
+              "scoreA": 1,
+              "b": "green_owls_noctua",
+              "scoreB": 2,
+              "winner": "green_owls_noctua"
+            },
+            {
+              "code": "Partida 48",
+              "a": "macklogic_red",
+              "scoreA": 2,
+              "b": "pucc_cardinals",
+              "scoreB": 0,
+              "winner": "macklogic_red"
+            },
+            {
+              "code": "Partida 49",
+              "a": "furia_utfpr",
+              "scoreA": 2,
+              "b": "unirio_krakens",
+              "scoreB": 0,
+              "winner": "furia_utfpr"
+            },
+            {
+              "code": "Partida 50",
+              "a": "inatel",
+              "scoreA": 0,
+              "b": "uninassau_griffins",
+              "scoreB": 2,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 51",
+              "a": "acucarados",
+              "scoreA": 0,
+              "b": "ufg_eagles",
+              "scoreB": 2,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 52",
+              "a": "a2e_uff",
+              "scoreA": 2,
+              "b": "rahnag",
+              "scoreB": 0,
+              "winner": "a2e_uff"
+            },
+            {
+              "code": "Partida 53",
+              "a": "caap_hellhounds",
+              "scoreA": 2,
+              "b": "ufrn_carcaras",
+              "scoreB": 0,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 54",
+              "a": "limpezinha",
+              "scoreA": 0,
+              "b": "ufma_naotemclutch",
+              "scoreB": 2,
+              "winner": "ufma_naotemclutch"
+            },
+            {
+              "code": "Partida 55",
+              "a": "ceub_octopus",
+              "scoreA": 2,
+              "b": "univasf",
+              "scoreB": 0,
+              "winner": "ceub_octopus"
+            },
+            {
+              "code": "Partida 56",
+              "a": "unisc_ladaiada",
+              "scoreA": 2,
+              "b": "ufg_gc_eagles",
+              "scoreB": 0,
+              "winner": "unisc_ladaiada"
+            },
+            {
+              "code": "Partida 57",
+              "a": "azure_bears_golden",
+              "scoreA": 2,
+              "b": "wolf_gaming",
+              "scoreB": 1,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 58",
+              "a": "ufs_bugados",
+              "scoreA": 2,
+              "b": "undbala",
+              "scoreB": 0,
+              "winner": "ufs_bugados"
+            },
+            {
+              "code": "Partida 59",
+              "a": "ufmt_turuna",
+              "scoreA": 2,
+              "b": "ufrj_minerva",
+              "scoreB": 0,
+              "winner": "ufmt_turuna"
+            },
+            {
+              "code": "Partida 60",
+              "a": "carrascos_fd8j",
+              "scoreA": 0,
+              "b": "uema_turbulencia",
+              "scoreB": 2,
+              "winner": "uema_turbulencia"
+            }
+          ]
         },
         {
-          title: "Rodada 4",
-          status: "Concluida",
-          bestOf: "MD3",
-          matches: [
-            { code: "Partida 61", a: "ufpe_virtus", scoreA: 1, bLabel: "BYE", scoreB: 0, winner: "ufpe_virtus" },
-            { code: "Partida 62", a: "ucb_dogs", scoreA: 2, b: "ufpr_bbn", scoreB: 0, winner: "ucb_dogs" },
-            { code: "Partida 63", a: "ufu_saints", scoreA: 1, b: "inatel", scoreB: 2, winner: "inatel" },
-            { code: "Partida 64", a: "wolf_gaming", scoreA: 2, b: "furia_utfpr", scoreB: 1, winner: "wolf_gaming" },
-            { code: "Partida 65", a: "uninassau_griffins", scoreA: 2, b: "axis_anteaters", scoreB: 1, winner: "uninassau_griffins" },
-            { code: "Partida 66", a: "ufg_eagles", scoreA: 1, b: "a2e_uff", scoreB: 2, winner: "a2e_uff" },
-            { code: "Partida 67", a: "acucarados", scoreA: 3, b: "uema_turbulencia", scoreB: 0, winner: "acucarados" },
-            { code: "Partida 68", a: "green_owls_noctua", scoreA: 0, b: "ceub_octopus", scoreB: 2, winner: "ceub_octopus" },
-            { code: "Partida 69", a: "ufma_naotemclutch", scoreA: 0, b: "rahnag", scoreB: 2, winner: "rahnag" },
-            { code: "Partida 70", a: "univasf", scoreA: 0, b: "ufs_bugados", scoreB: 2, winner: "ufs_bugados" },
-            { code: "Partida 71", a: "uepa_imperadores", scoreA: 2, b: "unifor", scoreB: 0, winner: "uepa_imperadores" },
-            { code: "Partida 72", a: "caap_hellhounds", scoreA: 2, b: "fametro_berserkers", scoreB: 0, winner: "caap_hellhounds" },
-            { code: "Partida 73", a: "ufrn_carcaras", scoreA: 2, b: "unirio_krakens", scoreB: 1, winner: "ufrn_carcaras" },
-            { code: "Partida 74", a: "ueg_hipertensa", scoreA: 0, b: "ufrj_minerva", scoreB: 2, winner: "ufrj_minerva" },
-            { code: "Partida 75", a: "macklogic_red", scoreA: 1, b: "azure_bears_golden", scoreB: 2, winner: "azure_bears_golden" },
-            { code: "Partida 76", a: "pucc_cardinals", scoreA: 2, b: "ufmt_turuna", scoreB: 1, winner: "pucc_cardinals" },
-            { code: "Partida 77", a: "milionaria_ufam", scoreA: 2, b: "unit_troianos", scoreB: 0, winner: "milionaria_ufam" },
-            { code: "Partida 78", a: "undbala", scoreA: 0, b: "unisc_ladaiada", scoreB: 2, winner: "unisc_ladaiada" },
-          ],
+          "title": "Rodada 4",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 61",
+              "a": "ufpe_virtus",
+              "scoreA": 1,
+              "bLabel": "BYE",
+              "scoreB": 0,
+              "winner": "ufpe_virtus"
+            },
+            {
+              "code": "Partida 62",
+              "a": "ucb_dogs",
+              "scoreA": 2,
+              "b": "ufpr_bbn",
+              "scoreB": 0,
+              "winner": "ucb_dogs"
+            },
+            {
+              "code": "Partida 63",
+              "a": "ufu_saints",
+              "scoreA": 1,
+              "b": "inatel",
+              "scoreB": 2,
+              "winner": "inatel"
+            },
+            {
+              "code": "Partida 64",
+              "a": "wolf_gaming",
+              "scoreA": 2,
+              "b": "furia_utfpr",
+              "scoreB": 1,
+              "winner": "wolf_gaming"
+            },
+            {
+              "code": "Partida 65",
+              "a": "uninassau_griffins",
+              "scoreA": 2,
+              "b": "axis_anteaters",
+              "scoreB": 1,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 66",
+              "a": "ufg_eagles",
+              "scoreA": 1,
+              "b": "a2e_uff",
+              "scoreB": 2,
+              "winner": "a2e_uff"
+            },
+            {
+              "code": "Partida 67",
+              "a": "acucarados",
+              "scoreA": 3,
+              "b": "uema_turbulencia",
+              "scoreB": 0,
+              "winner": "acucarados",
+              "previewNote": "Série autorizada com elenco reduzido. Placar oficial. 2 dos 3 mapas ficam fora das estatísticas."
+            },
+            {
+              "code": "Partida 68",
+              "a": "green_owls_noctua",
+              "scoreA": 0,
+              "b": "ceub_octopus",
+              "scoreB": 2,
+              "winner": "ceub_octopus"
+            },
+            {
+              "code": "Partida 69",
+              "a": "ufma_naotemclutch",
+              "scoreA": 0,
+              "b": "rahnag",
+              "scoreB": 2,
+              "winner": "rahnag"
+            },
+            {
+              "code": "Partida 70",
+              "a": "univasf",
+              "scoreA": 0,
+              "b": "ufs_bugados",
+              "scoreB": 2,
+              "winner": "ufs_bugados"
+            },
+            {
+              "code": "Partida 71",
+              "a": "uepa_imperadores",
+              "scoreA": 2,
+              "b": "unifor",
+              "scoreB": 0,
+              "winner": "uepa_imperadores"
+            },
+            {
+              "code": "Partida 72",
+              "a": "caap_hellhounds",
+              "scoreA": 2,
+              "b": "fametro_berserkers",
+              "scoreB": 0,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 73",
+              "a": "ufrn_carcaras",
+              "scoreA": 2,
+              "b": "unirio_krakens",
+              "scoreB": 1,
+              "winner": "ufrn_carcaras"
+            },
+            {
+              "code": "Partida 74",
+              "a": "ueg_hipertensa",
+              "scoreA": 0,
+              "b": "ufrj_minerva",
+              "scoreB": 2,
+              "winner": "ufrj_minerva"
+            },
+            {
+              "code": "Partida 75",
+              "a": "macklogic_red",
+              "scoreA": 1,
+              "b": "azure_bears_golden",
+              "scoreB": 2,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 76",
+              "a": "pucc_cardinals",
+              "scoreA": 2,
+              "b": "ufmt_turuna",
+              "scoreB": 1,
+              "winner": "pucc_cardinals"
+            },
+            {
+              "code": "Partida 77",
+              "a": "milionaria_ufam",
+              "scoreA": 2,
+              "b": "unit_troianos",
+              "scoreB": 0,
+              "winner": "milionaria_ufam"
+            },
+            {
+              "code": "Partida 78",
+              "a": "undbala",
+              "scoreA": 0,
+              "b": "unisc_ladaiada",
+              "scoreB": 2,
+              "winner": "unisc_ladaiada"
+            }
+          ]
         },
         {
-          title: "Rodada 5",
-          status: "Concluida",
-          bestOf: "MD3",
-          matches: [
-            { code: "Partida 79", a: "univasf", scoreA: 0, b: "unisc_ladaiada", scoreB: 2, winner: "unisc_ladaiada", status: "W.O." },
-            { code: "Partida 80", a: "uninassau_griffins", scoreA: 2, b: "azure_bears_golden", scoreB: 0, winner: "uninassau_griffins", status: "W.O." },
-            { code: "Partida 81", a: "macklogic_red", scoreA: 2, b: "a2e_uff", scoreB: 0, winner: "macklogic_red" },
-            { code: "Partida 82", a: "milionaria_ufam", scoreA: 0, b: "fametro_berserkers", scoreB: 2, winner: "fametro_berserkers" },
-            { code: "Partida 83", a: "ufs_bugados", scoreA: 0, b: "ucb_dogs", scoreB: 2, winner: "ucb_dogs" },
-            { code: "Partida 84", a: "pucc_cardinals", scoreA: 2, b: "green_owls_noctua", scoreB: 1, winner: "pucc_cardinals" },
-            { code: "Partida 85", a: "ufrj_minerva", scoreA: 2, b: "uepa_imperadores", scoreB: 0, winner: "ufrj_minerva" },
-            { code: "Partida 86", a: "ufu_saints", scoreA: 2, b: "ufg_eagles", scoreB: 0, winner: "ufu_saints", status: "W.O." },
-            { code: "Partida 87", a: "furia_utfpr", scoreA: 2, b: "rahnag", scoreB: 1, winner: "furia_utfpr" },
-            { code: "Partida 88", a: "ufrn_carcaras", scoreA: 0, b: "ufpe_virtus", scoreB: 2, winner: "ufpe_virtus" },
-            { code: "Partida 89", a: "axis_anteaters", scoreA: 2, b: "acucarados", scoreB: 0, winner: "axis_anteaters" },
-            { code: "Partida 90", a: "ufpr_bbn", scoreA: 0, b: "ufmt_turuna", scoreB: 2, winner: "ufmt_turuna" },
-            { code: "Partida 91", a: "caap_hellhounds", scoreA: 2, b: "inatel", scoreB: 1, winner: "caap_hellhounds" },
-            { code: "Partida 92", a: "ceub_octopus", scoreA: 2, b: "wolf_gaming", scoreB: 0, winner: "ceub_octopus" },
-          ],
+          "title": "Rodada 5",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 79",
+              "a": "univasf",
+              "scoreA": 0,
+              "b": "unisc_ladaiada",
+              "scoreB": 2,
+              "winner": "unisc_ladaiada",
+              "status": "W.O."
+            },
+            {
+              "code": "Partida 80",
+              "a": "uninassau_griffins",
+              "scoreA": 2,
+              "b": "azure_bears_golden",
+              "scoreB": 0,
+              "winner": "uninassau_griffins",
+              "status": "W.O."
+            },
+            {
+              "code": "Partida 81",
+              "a": "macklogic_red",
+              "scoreA": 2,
+              "b": "a2e_uff",
+              "scoreB": 0,
+              "winner": "macklogic_red"
+            },
+            {
+              "code": "Partida 82",
+              "a": "milionaria_ufam",
+              "scoreA": 0,
+              "b": "fametro_berserkers",
+              "scoreB": 2,
+              "winner": "fametro_berserkers"
+            },
+            {
+              "code": "Partida 83",
+              "a": "ufs_bugados",
+              "scoreA": 0,
+              "b": "ucb_dogs",
+              "scoreB": 2,
+              "winner": "ucb_dogs"
+            },
+            {
+              "code": "Partida 84",
+              "a": "pucc_cardinals",
+              "scoreA": 2,
+              "b": "green_owls_noctua",
+              "scoreB": 1,
+              "winner": "pucc_cardinals"
+            },
+            {
+              "code": "Partida 85",
+              "a": "ufrj_minerva",
+              "scoreA": 2,
+              "b": "uepa_imperadores",
+              "scoreB": 0,
+              "winner": "ufrj_minerva"
+            },
+            {
+              "code": "Partida 86",
+              "a": "ufu_saints",
+              "scoreA": 2,
+              "b": "ufg_eagles",
+              "scoreB": 0,
+              "winner": "ufu_saints",
+              "status": "W.O."
+            },
+            {
+              "code": "Partida 87",
+              "a": "furia_utfpr",
+              "scoreA": 2,
+              "b": "rahnag",
+              "scoreB": 1,
+              "winner": "furia_utfpr"
+            },
+            {
+              "code": "Partida 88",
+              "a": "ufrn_carcaras",
+              "scoreA": 0,
+              "b": "ufpe_virtus",
+              "scoreB": 2,
+              "winner": "ufpe_virtus"
+            },
+            {
+              "code": "Partida 89",
+              "a": "axis_anteaters",
+              "scoreA": 2,
+              "b": "acucarados",
+              "scoreB": 0,
+              "winner": "axis_anteaters"
+            },
+            {
+              "code": "Partida 90",
+              "a": "ufpr_bbn",
+              "scoreA": 0,
+              "b": "ufmt_turuna",
+              "scoreB": 2,
+              "winner": "ufmt_turuna"
+            },
+            {
+              "code": "Partida 91",
+              "a": "caap_hellhounds",
+              "scoreA": 2,
+              "b": "inatel",
+              "scoreB": 1,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 92",
+              "a": "ceub_octopus",
+              "scoreA": 2,
+              "b": "wolf_gaming",
+              "scoreB": 0,
+              "winner": "ceub_octopus"
+            }
+          ]
         },
         {
-          title: "Rodada 6",
-          status: "Concluida",
-          bestOf: "MD3",
-          matches: [
-            { code: "Partida 93", a: "axis_anteaters", scoreA: 2, b: "wolf_gaming", scoreB: 0, winner: "axis_anteaters" },
-            { code: "Partida 94", a: "ufmt_turuna", scoreA: 2, b: "green_owls_noctua", scoreB: 0, winner: "ufmt_turuna" },
-            { code: "Partida 95", a: "ufpe_virtus", scoreA: 0, b: "ufrj_minerva", scoreB: 2, winner: "ufrj_minerva", status: "W.O." },
-            { code: "Partida 96", a: "ucb_dogs", scoreA: 0, b: "azure_bears_golden", scoreB: 2, winner: "azure_bears_golden" },
-            { code: "Partida 97", a: "uninassau_griffins", scoreA: 0, b: "ceub_octopus", scoreB: 2, winner: "ceub_octopus" },
-            { code: "Partida 98", a: "pucc_cardinals", scoreA: 0, b: "a2e_uff", scoreB: 2, winner: "a2e_uff" },
-            { code: "Partida 99", a: "unisc_ladaiada", scoreA: 0, b: "furia_utfpr", scoreB: 2, winner: "furia_utfpr" },
-            { code: "Partida 100", a: "ufs_bugados", scoreA: 0, b: "ufu_saints", scoreB: 2, winner: "ufu_saints" },
-            { code: "Partida 101", a: "caap_hellhounds", scoreA: 2, b: "macklogic_red", scoreB: 0, winner: "caap_hellhounds" },
-            { code: "Partida 102", a: "inatel", scoreA: 2, b: "fametro_berserkers", scoreB: 0, winner: "inatel" },
-          ],
+          "title": "Rodada 6",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 93",
+              "a": "axis_anteaters",
+              "scoreA": 2,
+              "b": "wolf_gaming",
+              "scoreB": 0,
+              "winner": "axis_anteaters"
+            },
+            {
+              "code": "Partida 94",
+              "a": "ufmt_turuna",
+              "scoreA": 2,
+              "b": "green_owls_noctua",
+              "scoreB": 0,
+              "winner": "ufmt_turuna"
+            },
+            {
+              "code": "Partida 95",
+              "a": "ufpe_virtus",
+              "scoreA": 0,
+              "b": "ufrj_minerva",
+              "scoreB": 2,
+              "winner": "ufrj_minerva",
+              "status": "W.O."
+            },
+            {
+              "code": "Partida 96",
+              "a": "ucb_dogs",
+              "scoreA": 0,
+              "b": "azure_bears_golden",
+              "scoreB": 2,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 97",
+              "a": "uninassau_griffins",
+              "scoreA": 0,
+              "b": "ceub_octopus",
+              "scoreB": 2,
+              "winner": "ceub_octopus"
+            },
+            {
+              "code": "Partida 98",
+              "a": "pucc_cardinals",
+              "scoreA": 0,
+              "b": "a2e_uff",
+              "scoreB": 2,
+              "winner": "a2e_uff"
+            },
+            {
+              "code": "Partida 99",
+              "a": "unisc_ladaiada",
+              "scoreA": 0,
+              "b": "furia_utfpr",
+              "scoreB": 2,
+              "winner": "furia_utfpr"
+            },
+            {
+              "code": "Partida 100",
+              "a": "ufs_bugados",
+              "scoreA": 0,
+              "b": "ufu_saints",
+              "scoreB": 2,
+              "winner": "ufu_saints"
+            },
+            {
+              "code": "Partida 101",
+              "a": "caap_hellhounds",
+              "scoreA": 2,
+              "b": "macklogic_red",
+              "scoreB": 0,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 102",
+              "a": "inatel",
+              "scoreA": 2,
+              "b": "fametro_berserkers",
+              "scoreB": 0,
+              "winner": "inatel"
+            }
+          ]
         },
         {
-          title: "Rodada 7",
-          status: "Concluida",
-          bestOf: "MD3",
-          matches: [
-            { code: "Partida 103", a: "ceub_octopus", scoreA: 2, b: "ucb_dogs", scoreB: 0, winner: "ceub_octopus" },
-            { code: "Partida 104", a: "fametro_berserkers", scoreA: 2, b: "ufs_bugados", scoreB: 0, winner: "fametro_berserkers" },
-            { code: "Partida 105", a: "caap_hellhounds", scoreA: 1, b: "macklogic_red", scoreB: 2, winner: "macklogic_red" },
-            { code: "Partida 106", a: "ufu_saints", scoreA: 2, b: "inatel", scoreB: 0, winner: "ufu_saints" },
-            { code: "Partida 107", a: "uninassau_griffins", scoreA: 2, b: "ufpe_virtus", scoreB: 0, winner: "uninassau_griffins", status: "W.O." },
-            { code: "Partida 108", a: "a2e_uff", scoreA: 2, b: "ufrj_minerva", scoreB: 0, winner: "a2e_uff" },
-            { code: "Partida 109", a: "azure_bears_golden", scoreA: 2, b: "furia_utfpr", scoreB: 0, winner: "azure_bears_golden" },
-            { code: "Partida 110", a: "ufmt_turuna", scoreA: 2, b: "unisc_ladaiada", scoreB: 0, winner: "ufmt_turuna", status: "W.O." },
-          ],
-        },
+          "title": "Rodada 7",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 103",
+              "a": "ceub_octopus",
+              "scoreA": 2,
+              "b": "ucb_dogs",
+              "scoreB": 0,
+              "winner": "ceub_octopus"
+            },
+            {
+              "code": "Partida 104",
+              "a": "fametro_berserkers",
+              "scoreA": 2,
+              "b": "ufs_bugados",
+              "scoreB": 0,
+              "winner": "fametro_berserkers"
+            },
+            {
+              "code": "Partida 105",
+              "a": "caap_hellhounds",
+              "scoreA": 1,
+              "b": "macklogic_red",
+              "scoreB": 2,
+              "winner": "macklogic_red"
+            },
+            {
+              "code": "Partida 106",
+              "a": "ufu_saints",
+              "scoreA": 2,
+              "b": "inatel",
+              "scoreB": 0,
+              "winner": "ufu_saints"
+            },
+            {
+              "code": "Partida 107",
+              "a": "uninassau_griffins",
+              "scoreA": 2,
+              "b": "ufpe_virtus",
+              "scoreB": 0,
+              "winner": "uninassau_griffins",
+              "status": "W.O."
+            },
+            {
+              "code": "Partida 108",
+              "a": "a2e_uff",
+              "scoreA": 2,
+              "b": "ufrj_minerva",
+              "scoreB": 0,
+              "winner": "a2e_uff"
+            },
+            {
+              "code": "Partida 109",
+              "a": "azure_bears_golden",
+              "scoreA": 2,
+              "b": "furia_utfpr",
+              "scoreB": 0,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 110",
+              "a": "ufmt_turuna",
+              "scoreA": 2,
+              "b": "unisc_ladaiada",
+              "scoreB": 0,
+              "winner": "ufmt_turuna",
+              "status": "W.O."
+            }
+          ]
+        }
       ],
-      standings: [
-        { id: "ceub_octopus", wins: 7, losses: 0, points: 21, status: "Classificado" },
-        { id: "azure_bears_golden", wins: 6, losses: 1, points: 18, status: "Classificado" },
-        { id: "uninassau_griffins", wins: 6, losses: 1, points: 18, status: "Classificado" },
-        { id: "a2e_uff", wins: 5, losses: 2, points: 15, status: "Classificado" },
-        { id: "ufu_saints", wins: 5, losses: 2, points: 15, status: "Classificado" },
-        { id: "ufmt_turuna", wins: 5, losses: 2, points: 15, status: "Classificado" },
-        { id: "macklogic_red", wins: 5, losses: 2, points: 15, status: "Classificado" },
-        { id: "fametro_berserkers", wins: 4, losses: 3, points: 12, status: "Classificado" },
+      "standings": [
+        {
+          "id": "ceub_octopus",
+          "wins": 7,
+          "losses": 0,
+          "points": 21,
+          "status": "Classificado"
+        },
+        {
+          "id": "azure_bears_golden",
+          "wins": 6,
+          "losses": 1,
+          "points": 18,
+          "status": "Classificado"
+        },
+        {
+          "id": "uninassau_griffins",
+          "wins": 6,
+          "losses": 1,
+          "points": 18,
+          "status": "Classificado"
+        },
+        {
+          "id": "a2e_uff",
+          "wins": 5,
+          "losses": 2,
+          "points": 15,
+          "status": "Classificado"
+        },
+        {
+          "id": "ufu_saints",
+          "wins": 5,
+          "losses": 2,
+          "points": 15,
+          "status": "Classificado"
+        },
+        {
+          "id": "ufmt_turuna",
+          "wins": 5,
+          "losses": 2,
+          "points": 15,
+          "status": "Classificado"
+        },
+        {
+          "id": "macklogic_red",
+          "wins": 5,
+          "losses": 2,
+          "points": 15,
+          "status": "Classificado"
+        },
+        {
+          "id": "fametro_berserkers",
+          "wins": 4,
+          "losses": 3,
+          "points": 12,
+          "status": "Classificado"
+        }
       ],
-      eliminated: [
-        { id: "caap_hellhounds", wins: 5, losses: 2, points: 15, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
-        { id: "ucb_dogs", wins: 4, losses: 3, points: 12, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
-        { id: "inatel", wins: 4, losses: 3, points: 12, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
-        { id: "ufrj_minerva", wins: 4, losses: 3, points: 12, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
-        { id: "furia_utfpr", wins: 4, losses: 3, points: 12, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
-        { id: "ufpe_virtus", wins: 3, losses: 4, points: 9, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
-        { id: "ufs_bugados", wins: 3, losses: 4, points: 9, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
-        { id: "unisc_ladaiada", wins: 3, losses: 4, points: 9, range: "9º - 16º lugar", note: "Perdeu a decisiva da Rodada 7" },
-        { id: "axis_anteaters", wins: 4, losses: 2, points: 12, range: "17º - 20º lugar", note: "Limite de 2 equipes por estado (SP)" },
-        { id: "pucc_cardinals", wins: 4, losses: 2, points: 12, range: "17º - 20º lugar", note: "Limite de 2 equipes por estado (SP)" },
-        { id: "wolf_gaming", wins: 3, losses: 3, points: 9, range: "17º - 20º lugar", note: "Limite de 2 equipes por estado (RJ)" },
-        { id: "green_owls_noctua", wins: 3, losses: 3, points: 9, range: "17º - 20º lugar", note: "Limite de 2 equipes por estado (DF)" },
-        { id: "univasf", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
-        { id: "milionaria_ufam", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
-        { id: "uepa_imperadores", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
-        { id: "ufg_eagles", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
-        { id: "rahnag", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
-        { id: "ufrn_carcaras", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
-        { id: "acucarados", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
-        { id: "ufpr_bbn", wins: 2, losses: 3, points: 6, range: "21\u00ba - 28\u00ba lugar" },
-        { id: "uema_turbulencia", wins: 1, losses: 3, points: 3, range: "29\u00ba - 35\u00ba lugar" },
-        { id: "ufma_naotemclutch", wins: 1, losses: 3, points: 3, range: "29\u00ba - 35\u00ba lugar" },
-        { id: "unifor", wins: 1, losses: 3, points: 3, range: "29\u00ba - 35\u00ba lugar" },
-        { id: "unirio_krakens", wins: 1, losses: 3, points: 3, range: "29\u00ba - 35\u00ba lugar" },
-        { id: "ueg_hipertensa", wins: 1, losses: 3, points: 3, range: "29\u00ba - 35\u00ba lugar" },
-        { id: "unit_troianos", wins: 1, losses: 3, points: 3, range: "29\u00ba - 35\u00ba lugar" },
-        { id: "undbala", wins: 1, losses: 3, points: 3, range: "29\u00ba - 35\u00ba lugar" },
-        { id: "ufcg_pensaopet", wins: 0, losses: 3, points: 0, range: "36\u00ba - 40\u00ba lugar" },
-        { id: "ufg_gc_eagles", wins: 0, losses: 3, points: 0, range: "36\u00ba - 40\u00ba lugar" },
-        { id: "lunatica_ufms", wins: 0, losses: 3, points: 0, range: "36\u00ba - 40\u00ba lugar" },
-        { id: "limpezinha", wins: 0, losses: 3, points: 0, range: "36\u00ba - 40\u00ba lugar" },
-        { id: "carrascos_fd8j", wins: 0, losses: 3, points: 0, range: "36\u00ba - 40\u00ba lugar" },
-      ],
+      "eliminated": [
+        {
+          "id": "caap_hellhounds",
+          "wins": 5,
+          "losses": 2,
+          "points": 15,
+          "range": "9º - 16º lugar",
+          "note": "Perdeu a decisiva da Rodada 7"
+        },
+        {
+          "id": "ucb_dogs",
+          "wins": 4,
+          "losses": 3,
+          "points": 12,
+          "range": "9º - 16º lugar",
+          "note": "Perdeu a decisiva da Rodada 7"
+        },
+        {
+          "id": "inatel",
+          "wins": 4,
+          "losses": 3,
+          "points": 12,
+          "range": "9º - 16º lugar",
+          "note": "Perdeu a decisiva da Rodada 7"
+        },
+        {
+          "id": "ufrj_minerva",
+          "wins": 4,
+          "losses": 3,
+          "points": 12,
+          "range": "9º - 16º lugar",
+          "note": "Perdeu a decisiva da Rodada 7"
+        },
+        {
+          "id": "furia_utfpr",
+          "wins": 4,
+          "losses": 3,
+          "points": 12,
+          "range": "9º - 16º lugar",
+          "note": "Perdeu a decisiva da Rodada 7"
+        },
+        {
+          "id": "ufpe_virtus",
+          "wins": 3,
+          "losses": 4,
+          "points": 9,
+          "range": "9º - 16º lugar",
+          "note": "Perdeu a decisiva da Rodada 7"
+        },
+        {
+          "id": "ufs_bugados",
+          "wins": 3,
+          "losses": 4,
+          "points": 9,
+          "range": "9º - 16º lugar",
+          "note": "Perdeu a decisiva da Rodada 7"
+        },
+        {
+          "id": "unisc_ladaiada",
+          "wins": 3,
+          "losses": 4,
+          "points": 9,
+          "range": "9º - 16º lugar",
+          "note": "Perdeu a decisiva da Rodada 7"
+        },
+        {
+          "id": "axis_anteaters",
+          "wins": 4,
+          "losses": 2,
+          "points": 12,
+          "range": "17º - 20º lugar",
+          "note": "Limite de 2 equipes por estado (SP)"
+        },
+        {
+          "id": "pucc_cardinals",
+          "wins": 4,
+          "losses": 2,
+          "points": 12,
+          "range": "17º - 20º lugar",
+          "note": "Limite de 2 equipes por estado (SP)"
+        },
+        {
+          "id": "wolf_gaming",
+          "wins": 3,
+          "losses": 3,
+          "points": 9,
+          "range": "17º - 20º lugar",
+          "note": "Limite de 2 equipes por estado (RJ)"
+        },
+        {
+          "id": "green_owls_noctua",
+          "wins": 3,
+          "losses": 3,
+          "points": 9,
+          "range": "17º - 20º lugar",
+          "note": "Limite de 2 equipes por estado (DF)"
+        },
+        {
+          "id": "univasf",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "21º - 28º lugar"
+        },
+        {
+          "id": "milionaria_ufam",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "21º - 28º lugar"
+        },
+        {
+          "id": "uepa_imperadores",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "21º - 28º lugar"
+        },
+        {
+          "id": "ufg_eagles",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "21º - 28º lugar"
+        },
+        {
+          "id": "rahnag",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "21º - 28º lugar"
+        },
+        {
+          "id": "ufrn_carcaras",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "21º - 28º lugar"
+        },
+        {
+          "id": "acucarados",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "21º - 28º lugar"
+        },
+        {
+          "id": "ufpr_bbn",
+          "wins": 2,
+          "losses": 3,
+          "points": 6,
+          "range": "21º - 28º lugar"
+        },
+        {
+          "id": "uema_turbulencia",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "29º - 35º lugar"
+        },
+        {
+          "id": "ufma_naotemclutch",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "29º - 35º lugar"
+        },
+        {
+          "id": "unifor",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "29º - 35º lugar"
+        },
+        {
+          "id": "unirio_krakens",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "29º - 35º lugar"
+        },
+        {
+          "id": "ueg_hipertensa",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "29º - 35º lugar"
+        },
+        {
+          "id": "unit_troianos",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "29º - 35º lugar"
+        },
+        {
+          "id": "undbala",
+          "wins": 1,
+          "losses": 3,
+          "points": 3,
+          "range": "29º - 35º lugar"
+        },
+        {
+          "id": "ufcg_pensaopet",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "36º - 40º lugar"
+        },
+        {
+          "id": "ufg_gc_eagles",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "36º - 40º lugar"
+        },
+        {
+          "id": "lunatica_ufms",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "36º - 40º lugar"
+        },
+        {
+          "id": "limpezinha",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "36º - 40º lugar"
+        },
+        {
+          "id": "carrascos_fd8j",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "36º - 40º lugar"
+        }
+      ]
     },
+    "seriesResults": {
+      "45": { "a": "ufcg_pensaopet", "b": "milionaria_ufam", "scoreA": 1, "scoreB": 2, "note": "Placar oficial. Estatísticas de 2 de 3 mapas." },
+      "99": { "a": "unisc_ladaiada", "b": "furia_utfpr", "scoreA": 0, "scoreB": 2, "note": "Placar oficial. Estatísticas de 1 de 2 mapas." },
+      "30": {
+        "a": "macklogic_red",
+        "b": "acucarados",
+        "scoreA": 2,
+        "scoreB": 0,
+        "note": "Série autorizada com elenco reduzido. Placar oficial. 1 dos 2 mapas fica fora das estatísticas."
+      },
+      "67": {
+        "a": "acucarados",
+        "b": "uema_turbulencia",
+        "scoreA": 3,
+        "scoreB": 0,
+        "note": "Série autorizada com elenco reduzido. Placar oficial. 2 dos 3 mapas ficam fora das estatísticas."
+      }
+    }
   },
   "jubs-etapa-presencial": {
     name: "JUBS Goiás 2026 - Etapa Presencial",
@@ -1350,6 +6205,16 @@ const TOURNAMENT_OVERRIDES = {
       summary: "Elimina\u00e7\u00e3o simples",
       details: ["Todos os jogos MD3"],
     },
+    placements: [
+      { range: "1", id: "usp_stars" },
+      { range: "2", id: "caap_hellhounds" },
+      { range: "3", id: "axis_anteaters" },
+      { range: "4", id: "pucc_cardinals" },
+      { range: "5", id: "azure_bears" },
+      { range: "6", id: "macklogic_red" },
+      { range: "7", id: "fei_darkowls" },
+      { range: "8", id: "unicamp_tritons_red" },
+    ],
   },
   "rush-series-esquenta": {
     organizer: "AcadArena",
@@ -1689,11 +6554,11 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 16 superior",
               matches: [
-                { code: "Partida 1", a: "ufmt_turuna", scoreA: 1, bLabel: "Sem adversario", scoreB: 0, winner: "ufmt_turuna" },
+                { code: "Partida 1", a: "ufmt_turuna", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "ufmt_turuna" },
                 { code: "Partida 2", a: "panterao_gaming", scoreA: 13, b: "fatec_pg", scoreB: 10, winner: "panterao_gaming" },
                 { code: "Partida 3", a: "macklogic_rainbow", scoreA: 5, b: "octacore_python", scoreB: 13, winner: "octacore_python" },
                 { code: "Partida 4", a: "inatel", scoreA: 13, b: "azure_bears_golden", scoreB: 9, winner: "inatel" },
-                { code: "Partida 5", a: "inatel_gray", scoreA: 1, bLabel: "Sem adversario", scoreB: 0, winner: "inatel_gray" },
+                { code: "Partida 5", a: "inatel_gray", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "inatel_gray" },
                 { code: "Partida 6", a: "totale_umc", scoreA: 13, b: "uscs_hawks", scoreB: 7, winner: "totale_umc" },
                 { code: "Partida 7", a: "ibmec_sharks", scoreA: 13, b: "unicamp_tritons_red", scoreB: 5, winner: "ibmec_sharks" },
                 { code: "Partida 8", a: "azure_bears_black", scoreA: 13, b: "octacore_javascript", scoreB: 6, winner: "azure_bears_black" },
@@ -1730,9 +6595,9 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 8 inferior",
               matches: [
-                { code: "Partida 16", aLabel: "Sem adversario", scoreA: 0, b: "fatec_pg", scoreB: 1, winner: "fatec_pg" },
+                { code: "Partida 16", aLabel: "Sem adversário", scoreA: 0, b: "fatec_pg", scoreB: 1, winner: "fatec_pg" },
                 { code: "Partida 17", a: "macklogic_rainbow", scoreA: 2, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
-                { code: "Partida 18", aLabel: "Sem adversario", scoreA: 0, b: "uscs_hawks", scoreB: 1, winner: "uscs_hawks" },
+                { code: "Partida 18", aLabel: "Sem adversário", scoreA: 0, b: "uscs_hawks", scoreB: 1, winner: "uscs_hawks" },
                 { code: "Partida 19", a: "unicamp_tritons_red", scoreA: 13, b: "octacore_javascript", scoreB: 9, winner: "unicamp_tritons_red" },
               ],
             },
@@ -2240,6 +7105,9 @@ const TOURNAMENT_OVERRIDES = {
   },
   "univava-fase-de-grupos": {
     name: "UNIVAV\u00c1 - Fase de Grupos",
+    seriesResults: {
+      "24": { a: "furia_utfpr", b: "usp_stars", scoreA: 0, scoreB: 2, note: "Placar oficial. W.O. no mapa 2." },
+    },
     organizer: "AcadArena",
     organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
     banner: "assets/tournament-banners/univava_fase_de_grupos.webp",
@@ -2308,7 +7176,7 @@ const TOURNAMENT_OVERRIDES = {
       rounds: [
         {
           title: "Rodada 1",
-          status: "Concluida",
+          status: "Concluída",
           bestOf: "MD3",
           matches: [
             { code: "Partida 1", a: "azure_bears_golden", scoreA: 0, b: "green_owls_jacurutu", scoreB: 2, winner: "green_owls_jacurutu" },
@@ -2325,7 +7193,7 @@ const TOURNAMENT_OVERRIDES = {
         },
         {
           title: "Rodada 2",
-          status: "Concluida",
+          status: "Concluída",
           bestOf: "MD3",
           matches: [
             { code: "Partida 9", a: "ceub_octopus", scoreA: 2, b: "green_owls_jacurutu", scoreB: 0, winner: "ceub_octopus" },
@@ -2340,7 +7208,7 @@ const TOURNAMENT_OVERRIDES = {
         },
         {
           title: "Rodada 3",
-          status: "Concluida",
+          status: "Concluída",
           bestOf: "MD3",
           matches: [
             { code: "Partida 17", a: "ceub_octopus", scoreA: 2, b: "caap_hellhounds", scoreB: 0, winner: "ceub_octopus" },
@@ -2355,7 +7223,7 @@ const TOURNAMENT_OVERRIDES = {
         },
         {
           title: "Rodada 4",
-          status: "Concluida",
+          status: "Concluída",
           bestOf: "MD3",
           matches: [
             { code: "Partida 25", a: "azure_bears_golden", scoreA: 0, b: "axis_anteaters", scoreB: 2, winner: "axis_anteaters" },
@@ -2368,7 +7236,7 @@ const TOURNAMENT_OVERRIDES = {
         },
         {
           title: "Rodada 5",
-          status: "Concluida",
+          status: "Concluída",
           bestOf: "MD3",
           matches: [
             { code: "Partida 31", a: "azure_bears_golden", scoreA: 2, b: "usp_stars", scoreB: 1, winner: "azure_bears_golden" },
@@ -2402,18 +7270,25 @@ const TOURNAMENT_OVERRIDES = {
     },
   },
   "univava-classificatoria-4": {
-    name: "UNIVAV\u00c1 - Classificat\u00f3ria 4",
-    organizer: "AcadArena",
-    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
-    banner: "assets/tournament-banners/banner_univava_c4.webp",
-    logo: "assets/tournament-icons/UNIVAVA.png",
-    prizePool: "-",
-    tier: "A",
-    type: "Online - Classificat\u00f3ria",
-    status: "Finalizado",
-    teamCount: 36,
-    mapPool: ["Abyss", "Ascent", "Haven", "Lotus", "Split", "Sunset"],
-    teams: [
+    "name": "UNIVAVÁ - Classificatória 4",
+    "organizer": "AcadArena",
+    "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
+    "banner": "assets/tournament-banners/banner_univava_c4.webp",
+    "logo": "assets/tournament-icons/UNIVAVA.png",
+    "prizePool": "-",
+    "tier": "A",
+    "type": "Online - Classificatória",
+    "status": "Finalizado",
+    "teamCount": 36,
+    "mapPool": [
+      "Abyss",
+      "Ascent",
+      "Haven",
+      "Lotus",
+      "Split",
+      "Sunset"
+    ],
+    "teams": [
       "pucgo_sistematica",
       "pucgo_sistematica_academy",
       "fatec_pg",
@@ -2449,194 +7324,820 @@ const TOURNAMENT_OVERRIDES = {
       "maua_blue",
       "sheriff_iff",
       "ceub_octopus_vulgaris",
-      "nox_unievangelica",
+      "nox_unievangelica"
     ],
-    placements: [
-      { range: "Classificado", id: "azure_bears_black", note: "Chave superior" },
-      { range: "Classificado", id: "usp_stars", note: "Chave superior" },
-      { range: "Classificado", id: "green_owls_jacurutu", note: "Chave inferior" },
-      { range: "Classificado", id: "ceub_octopus_vulgaris", note: "Chave inferior" },
-      { range: "5-6", id: "caap_malditos", note: "Decis\u00e3o de vaga inferior" },
-      { range: "5-6", id: "fei_darkowls", note: "Decis\u00e3o de vaga inferior" },
-      { range: "7-8", id: "a2e_uff", note: "Rodada de 4 inferior" },
-      { range: "7-8", id: "pucgo_sistematica", note: "Rodada de 4 inferior" },
-      { range: "9-12", id: "fametro_berserkers", note: "Rodada de 8 inferior" },
-      { range: "9-12", id: "brutal_esports", note: "Rodada de 8 inferior" },
-      { range: "9-12", id: "ufpr_bbn", note: "Rodada de 8 inferior" },
-      { range: "9-12", id: "maua_blue", note: "Rodada de 8 inferior" },
-      { range: "13-16", id: "uscs_hawks", note: "Rodada de 8 inferior" },
-      { range: "13-16", id: "inatel", note: "Rodada de 8 inferior" },
-      { range: "13-16", id: "macklogic_white", note: "Rodada de 8 inferior" },
-      { range: "13-16", id: "pucc_cardinals", note: "Rodada de 8 inferior" },
-      { range: "17-24", id: "pucgo_sistematica_academy", note: "Rodada de 16 inferior" },
-      { range: "17-24", id: "gambiarra_ufg", note: "Rodada de 16 inferior" },
-      { range: "17-24", id: "ufmg_fenix_b", note: "Rodada de 16 inferior" },
-      { range: "17-24", id: "ufu_saints_trigons", note: "Rodada de 16 inferior" },
-      { range: "17-24", id: "unicamp_tritons_black", note: "Rodada de 16 inferior" },
-      { range: "17-24", id: "azure_bears_silver", note: "Rodada de 16 inferior" },
-      { range: "17-24", id: "fei_whiteowls", note: "Rodada de 16 inferior" },
-      { range: "17-24", id: "fatec_pg", note: "Rodada de 16 inferior" },
-      { range: "25-32", id: "sheriff_iff", note: "Rodada de 16 inferior" },
-      { range: "25-32", id: "poli_plague", note: "Rodada de 16 inferior" },
-      { range: "25-32", id: "inatel_gray", note: "Rodada de 16 inferior" },
-      { range: "25-32", id: "liga_vulkanica", note: "Rodada de 16 inferior" },
-      { range: "25-32", id: "unirio_krakens", note: "Rodada de 16 inferior" },
-      { range: "25-32", id: "inatel_dois", note: "Rodada de 16 inferior" },
-      { range: "25-32", id: "ufrj_minerva", note: "Rodada de 16 inferior" },
-      { range: "25-32", id: "caap_auroras", note: "Rodada de 16 inferior" },
-      { range: "33-36", id: "nox_unievangelica", note: "Rodada de 32 inferior" },
-      { range: "33-36", id: "sistematica_unievangelica", note: "Rodada de 32 inferior" },
-      { range: "33-36", id: "unifesp_erex", note: "Rodada de 32 inferior" },
-      { range: "33-36", id: "panterao_gaming", note: "Rodada de 32 inferior" },
+    "placements": [
+      {
+        "range": "Classificado",
+        "id": "azure_bears_black",
+        "note": "Chave superior"
+      },
+      {
+        "range": "Classificado",
+        "id": "usp_stars",
+        "note": "Chave superior"
+      },
+      {
+        "range": "Classificado",
+        "id": "green_owls_jacurutu",
+        "note": "Chave inferior"
+      },
+      {
+        "range": "Classificado",
+        "id": "ceub_octopus_vulgaris",
+        "note": "Chave inferior"
+      },
+      {
+        "range": "5-6",
+        "id": "caap_malditos",
+        "note": "Decisão de vaga inferior"
+      },
+      {
+        "range": "5-6",
+        "id": "fei_darkowls",
+        "note": "Decisão de vaga inferior"
+      },
+      {
+        "range": "7-8",
+        "id": "a2e_uff",
+        "note": "Rodada de 4 inferior"
+      },
+      {
+        "range": "7-8",
+        "id": "pucgo_sistematica",
+        "note": "Rodada de 4 inferior"
+      },
+      {
+        "range": "9-12",
+        "id": "fametro_berserkers",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "9-12",
+        "id": "brutal_esports",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "9-12",
+        "id": "ufpr_bbn",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "9-12",
+        "id": "maua_blue",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "13-16",
+        "id": "uscs_hawks",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "13-16",
+        "id": "inatel",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "13-16",
+        "id": "macklogic_white",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "13-16",
+        "id": "pucc_cardinals",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "pucgo_sistematica_academy",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "gambiarra_ufg",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "ufmg_fenix_b",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "ufu_saints_trigons",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "unicamp_tritons_black",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "azure_bears_silver",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "fei_whiteowls",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "fatec_pg",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-32",
+        "id": "sheriff_iff",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-32",
+        "id": "poli_plague",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-32",
+        "id": "inatel_gray",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-32",
+        "id": "liga_vulkanica",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-32",
+        "id": "unirio_krakens",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-32",
+        "id": "inatel_dois",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-32",
+        "id": "ufrj_minerva",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-32",
+        "id": "caap_auroras",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "33-36",
+        "id": "nox_unievangelica",
+        "note": "Rodada de 32 inferior"
+      },
+      {
+        "range": "33-36",
+        "id": "sistematica_unievangelica",
+        "note": "Rodada de 32 inferior"
+      },
+      {
+        "range": "33-36",
+        "id": "unifesp_erex",
+        "note": "Rodada de 32 inferior"
+      },
+      {
+        "range": "33-36",
+        "id": "panterao_gaming",
+        "note": "Rodada de 32 inferior"
+      }
     ],
-    format: {
-      summary: "Elimina\u00e7\u00e3o dupla",
-      details: ["Classificat\u00f3ria com 4 vagas", "2 vagas pela chave superior", "2 vagas pela chave inferior", "Jogos MD1"],
-      standings: "Classificados oficiais",
-    },
-    bracket: {
-      title: "Elimina\u00e7\u00e3o dupla",
-      regions: [
-        {
-          name: "Chave superior",
-          className: "upper-bracket",
-          columns: [
-            {
-              title: "Rodada de 64 superior",
-              matches: [
-                { code: "Partida 2", slot: 0, a: "pucgo_sistematica_academy", scoreA: 17, b: "fatec_pg", scoreB: 19, winner: "fatec_pg" },
-                { code: "Partida 10", slot: 4, a: "inatel_dois", scoreA: 13, b: "ufmg_fenix_b", scoreB: 2, winner: "inatel_dois" },
-                { code: "Partida 18", slot: 8, a: "unifesp_erex", scoreA: 8, b: "liga_vulkanica", scoreB: 13, winner: "liga_vulkanica" },
-                { code: "Partida 26", slot: 12, a: "ufrj_minerva", scoreA: 11, b: "gambiarra_ufg", scoreB: 13, winner: "gambiarra_ufg" },
-              ],
-            },
-            {
-              title: "Rodada de 32 superior",
-              matches: [
-                { code: "Partida 33", a: "pucgo_sistematica", scoreA: 15, b: "fatec_pg", scoreB: 13, winner: "pucgo_sistematica" },
-                { code: "Partida 34", a: "fametro_berserkers", scoreA: 13, b: "caap_auroras", scoreB: 0, winner: "fametro_berserkers" },
-                { code: "Partida 35", a: "azure_bears_black", scoreA: 13, b: "pucc_cardinals", scoreB: 3, winner: "azure_bears_black" },
-                { code: "Partida 36", a: "uscs_hawks", scoreA: 13, b: "panterao_gaming", scoreB: 6, winner: "uscs_hawks" },
-                { code: "Partida 37", a: "green_owls_jacurutu", scoreA: 13, b: "inatel_dois", scoreB: 3, winner: "green_owls_jacurutu" },
-                { code: "Partida 38", a: "inatel", scoreA: 13, b: "azure_bears_silver", scoreB: 8, winner: "inatel" },
-                { code: "Partida 39", a: "a2e_uff", scoreA: 13, b: "unirio_krakens", scoreB: 4, winner: "a2e_uff" },
-                { code: "Partida 40", a: "unicamp_tritons_black", scoreA: 8, b: "ufpr_bbn", scoreB: 13, winner: "ufpr_bbn" },
-                { code: "Partida 41", a: "usp_stars", scoreA: 13, b: "liga_vulkanica", scoreB: 2, winner: "usp_stars" },
-                { code: "Partida 42", a: "macklogic_white", scoreA: 13, b: "ufu_saints_trigons", scoreB: 5, winner: "macklogic_white" },
-                { code: "Partida 43", a: "fei_darkowls", scoreA: 13, b: "inatel_gray", scoreB: 1, winner: "fei_darkowls" },
-                { code: "Partida 44", a: "brutal_esports", scoreA: 13, b: "sistematica_unievangelica", scoreB: 8, winner: "brutal_esports" },
-                { code: "Partida 45", a: "caap_malditos", scoreA: 13, b: "gambiarra_ufg", scoreB: 7, winner: "caap_malditos" },
-                { code: "Partida 46", a: "poli_plague", scoreA: 6, b: "fei_whiteowls", scoreB: 13, winner: "fei_whiteowls" },
-                { code: "Partida 47", a: "maua_blue", scoreA: 13, b: "sheriff_iff", scoreB: 3, winner: "maua_blue" },
-                { code: "Partida 48", a: "ceub_octopus_vulgaris", scoreA: 13, b: "nox_unievangelica", scoreB: 1, winner: "ceub_octopus_vulgaris" },
-              ],
-            },
-            {
-              title: "Rodada de 16 superior",
-              matches: [
-                { code: "Partida 49", a: "pucgo_sistematica", scoreA: 13, b: "fametro_berserkers", scoreB: 8, winner: "pucgo_sistematica" },
-                { code: "Partida 50", a: "azure_bears_black", scoreA: 13, b: "uscs_hawks", scoreB: 10, winner: "azure_bears_black" },
-                { code: "Partida 51", a: "green_owls_jacurutu", scoreA: 13, b: "inatel", scoreB: 9, winner: "green_owls_jacurutu" },
-                { code: "Partida 52", a: "a2e_uff", scoreA: 9, b: "ufpr_bbn", scoreB: 13, winner: "ufpr_bbn" },
-                { code: "Partida 53", a: "usp_stars", scoreA: 13, b: "macklogic_white", scoreB: 7, winner: "usp_stars" },
-                { code: "Partida 54", a: "fei_darkowls", scoreA: 8, b: "brutal_esports", scoreB: 13, winner: "brutal_esports" },
-                { code: "Partida 55", a: "caap_malditos", scoreA: 13, b: "fei_whiteowls", scoreB: 6, winner: "caap_malditos" },
-                { code: "Partida 56", a: "maua_blue", scoreA: 6, b: "ceub_octopus_vulgaris", scoreB: 13, winner: "ceub_octopus_vulgaris" },
-              ],
-            },
-            {
-              title: "Quartas de final superior",
-              matches: [
-                { code: "Partida 57", a: "pucgo_sistematica", scoreA: 3, b: "azure_bears_black", scoreB: 13, winner: "azure_bears_black" },
-                { code: "Partida 58", a: "green_owls_jacurutu", scoreA: 13, b: "ufpr_bbn", scoreB: 0, winner: "green_owls_jacurutu" },
-                { code: "Partida 59", a: "usp_stars", scoreA: 13, b: "brutal_esports", scoreB: 6, winner: "usp_stars" },
-                { code: "Partida 60", a: "caap_malditos", scoreA: 7, b: "ceub_octopus_vulgaris", scoreB: 13, winner: "ceub_octopus_vulgaris" },
-              ],
-            },
-            {
-              title: "Semifinais superior",
-              matches: [
-                { code: "Partida 61", a: "azure_bears_black", scoreA: 1, b: "green_owls_jacurutu", scoreB: 0, winner: "azure_bears_black", status: "W.O." },
-                { code: "Partida 62", a: "usp_stars", scoreA: 13, b: "ceub_octopus_vulgaris", scoreB: 5, winner: "usp_stars" },
-              ],
-            },
-          ],
-        },
-        {
-          name: "Chave inferior",
-          className: "lower-bracket",
-          columns: [
-            {
-              title: "Rodada de 32 inferior",
-              matches: [
-                { code: "Partida 80", slot: 0, a: "nox_unievangelica", scoreA: 0, b: "pucgo_sistematica_academy", scoreB: 1, winner: "pucgo_sistematica_academy", status: "W.O." },
-                { code: "Partida 84", slot: 2, a: "sistematica_unievangelica", scoreA: 0, b: "ufmg_fenix_b", scoreB: 1, winner: "ufmg_fenix_b", status: "W.O." },
-                { code: "Partida 88", slot: 4, a: "unicamp_tritons_black", scoreA: 13, b: "unifesp_erex", scoreB: 8, winner: "unicamp_tritons_black" },
-                { code: "Partida 92", slot: 6, a: "panterao_gaming", scoreA: 4, b: "ufrj_minerva", scoreB: 13, winner: "ufrj_minerva" },
-              ],
-            },
-            {
-              title: "Rodada de 16 inferior",
-              matches: [
-                { code: "Partida 96", a: "pucgo_sistematica_academy", scoreA: 1, b: "sheriff_iff", scoreB: 0, winner: "pucgo_sistematica_academy", status: "W.O." },
-                { code: "Partida 97", a: "poli_plague", scoreA: 5, b: "gambiarra_ufg", scoreB: 13, winner: "gambiarra_ufg" },
-                { code: "Partida 98", a: "ufmg_fenix_b", scoreA: 13, b: "inatel_gray", scoreB: 8, winner: "ufmg_fenix_b" },
-                { code: "Partida 99", a: "ufu_saints_trigons", scoreA: 13, b: "liga_vulkanica", scoreB: 10, winner: "ufu_saints_trigons" },
-                { code: "Partida 100", a: "unicamp_tritons_black", scoreA: 13, b: "unirio_krakens", scoreB: 3, winner: "unicamp_tritons_black" },
-                { code: "Partida 101", a: "azure_bears_silver", scoreA: 13, b: "inatel_dois", scoreB: 11, winner: "azure_bears_silver" },
-                { code: "Partida 102", a: "ufrj_minerva", scoreA: 6, b: "pucc_cardinals", scoreB: 13, winner: "pucc_cardinals" },
-                { code: "Partida 103", a: "caap_auroras", scoreA: 1, b: "fatec_pg", scoreB: 13, winner: "fatec_pg" },
-              ],
-            },
-            {
-              title: "Rodada de 16 inferior",
-              matches: [
-                { code: "Partida 104", a: "fametro_berserkers", scoreA: 13, b: "pucgo_sistematica_academy", scoreB: 6, winner: "fametro_berserkers" },
-                { code: "Partida 105", a: "uscs_hawks", scoreA: 13, b: "gambiarra_ufg", scoreB: 5, winner: "uscs_hawks" },
-                { code: "Partida 106", a: "inatel", scoreA: 13, b: "ufmg_fenix_b", scoreB: 3, winner: "inatel" },
-                { code: "Partida 107", a: "a2e_uff", scoreA: 13, b: "ufu_saints_trigons", scoreB: 5, winner: "a2e_uff" },
-                { code: "Partida 108", a: "macklogic_white", scoreA: 13, b: "unicamp_tritons_black", scoreB: 11, winner: "macklogic_white" },
-                { code: "Partida 109", a: "fei_darkowls", scoreA: 13, b: "azure_bears_silver", scoreB: 3, winner: "fei_darkowls" },
-                { code: "Partida 110", a: "fei_whiteowls", scoreA: 4, b: "pucc_cardinals", scoreB: 13, winner: "pucc_cardinals" },
-                { code: "Partida 111", a: "maua_blue", scoreA: 16, b: "fatec_pg", scoreB: 14, winner: "maua_blue" },
-              ],
-            },
-            {
-              title: "Rodada de 8 inferior",
-              matches: [
-                { code: "Partida 112", a: "fametro_berserkers", scoreA: 13, b: "uscs_hawks", scoreB: 8, winner: "fametro_berserkers" },
-                { code: "Partida 113", a: "inatel", scoreA: 5, b: "a2e_uff", scoreB: 13, winner: "a2e_uff" },
-                { code: "Partida 114", a: "macklogic_white", scoreA: 11, b: "fei_darkowls", scoreB: 13, winner: "fei_darkowls" },
-                { code: "Partida 115", a: "pucc_cardinals", scoreA: 2, b: "maua_blue", scoreB: 13, winner: "maua_blue" },
-              ],
-            },
-            {
-              title: "Rodada de 8 inferior",
-              matches: [
-                { code: "Partida 116", a: "caap_malditos", scoreA: 13, b: "fametro_berserkers", scoreB: 11, winner: "caap_malditos" },
-                { code: "Partida 117", a: "brutal_esports", scoreA: 6, b: "a2e_uff", scoreB: 13, winner: "a2e_uff" },
-                { code: "Partida 118", a: "ufpr_bbn", scoreA: 3, b: "fei_darkowls", scoreB: 13, winner: "fei_darkowls" },
-                { code: "Partida 119", a: "pucgo_sistematica", scoreA: 13, b: "maua_blue", scoreB: 9, winner: "pucgo_sistematica" },
-              ],
-            },
-            {
-              title: "Rodada de 4 inferior",
-              matches: [
-                { code: "Partida 120", a: "caap_malditos", scoreA: 13, b: "a2e_uff", scoreB: 5, winner: "caap_malditos" },
-                { code: "Partida 121", a: "fei_darkowls", scoreA: 13, b: "pucgo_sistematica", scoreB: 6, winner: "fei_darkowls" },
-              ],
-            },
-            {
-              title: "Quartas de final inferior",
-              matches: [
-                { code: "Partida 122", a: "green_owls_jacurutu", scoreA: 13, b: "caap_malditos", scoreB: 7, winner: "green_owls_jacurutu" },
-                { code: "Partida 123", a: "ceub_octopus_vulgaris", scoreA: 13, b: "fei_darkowls", scoreB: 5, winner: "ceub_octopus_vulgaris" },
-              ],
-            },
-          ],
-        },
+    "format": {
+      "summary": "Eliminação dupla",
+      "details": [
+        "Classificatória com 4 vagas",
+        "2 vagas pela chave superior",
+        "2 vagas pela chave inferior",
+        "Jogos MD1"
       ],
+      "standings": "Classificados oficiais"
     },
+    "bracket": {
+      "title": "Eliminação dupla",
+      "regions": [
+        {
+          "name": "Chave superior",
+          "className": "upper-bracket",
+          "columns": [
+            {
+              "title": "Rodada de 64 superior",
+              "matches": [
+                {
+                  "code": "Partida 2",
+                  "slot": 0,
+                  "a": "pucgo_sistematica_academy",
+                  "scoreA": 17,
+                  "b": "fatec_pg",
+                  "scoreB": 19,
+                  "winner": "fatec_pg"
+                },
+                {
+                  "code": "Partida 10",
+                  "slot": 4,
+                  "a": "inatel_dois",
+                  "scoreA": 13,
+                  "b": "ufmg_fenix_b",
+                  "scoreB": 2,
+                  "winner": "inatel_dois"
+                },
+                {
+                  "code": "Partida 18",
+                  "slot": 8,
+                  "a": "unifesp_erex",
+                  "scoreA": 8,
+                  "b": "liga_vulkanica",
+                  "scoreB": 13,
+                  "winner": "liga_vulkanica"
+                },
+                {
+                  "code": "Partida 26",
+                  "slot": 12,
+                  "a": "ufrj_minerva",
+                  "scoreA": 11,
+                  "b": "gambiarra_ufg",
+                  "scoreB": 13,
+                  "winner": "gambiarra_ufg"
+                }
+              ]
+            },
+            {
+              "title": "Rodada de 32 superior",
+              "matches": [
+                {
+                  "code": "Partida 33",
+                  "a": "pucgo_sistematica",
+                  "scoreA": 15,
+                  "b": "fatec_pg",
+                  "scoreB": 13,
+                  "winner": "pucgo_sistematica"
+                },
+                {
+                  "code": "Partida 34",
+                  "a": "fametro_berserkers",
+                  "scoreA": 13,
+                  "b": "caap_auroras",
+                  "scoreB": 0,
+                  "winner": "fametro_berserkers"
+                },
+                {
+                  "code": "Partida 35",
+                  "a": "azure_bears_black",
+                  "scoreA": 13,
+                  "b": "pucc_cardinals",
+                  "scoreB": 3,
+                  "winner": "azure_bears_black"
+                },
+                {
+                  "code": "Partida 36",
+                  "a": "uscs_hawks",
+                  "scoreA": 13,
+                  "b": "panterao_gaming",
+                  "scoreB": 6,
+                  "winner": "uscs_hawks"
+                },
+                {
+                  "code": "Partida 37",
+                  "a": "green_owls_jacurutu",
+                  "scoreA": 13,
+                  "b": "inatel_dois",
+                  "scoreB": 3,
+                  "winner": "green_owls_jacurutu"
+                },
+                {
+                  "code": "Partida 38",
+                  "a": "inatel",
+                  "scoreA": 13,
+                  "b": "azure_bears_silver",
+                  "scoreB": 8,
+                  "winner": "inatel"
+                },
+                {
+                  "code": "Partida 39",
+                  "a": "a2e_uff",
+                  "scoreA": 13,
+                  "b": "unirio_krakens",
+                  "scoreB": 4,
+                  "winner": "a2e_uff"
+                },
+                {
+                  "code": "Partida 40",
+                  "a": "unicamp_tritons_black",
+                  "scoreA": 8,
+                  "b": "ufpr_bbn",
+                  "scoreB": 13,
+                  "winner": "ufpr_bbn"
+                },
+                {
+                  "code": "Partida 41",
+                  "a": "usp_stars",
+                  "scoreA": 13,
+                  "b": "liga_vulkanica",
+                  "scoreB": 2,
+                  "winner": "usp_stars"
+                },
+                {
+                  "code": "Partida 42",
+                  "a": "macklogic_white",
+                  "scoreA": 13,
+                  "b": "ufu_saints_trigons",
+                  "scoreB": 5,
+                  "winner": "macklogic_white"
+                },
+                {
+                  "code": "Partida 43",
+                  "a": "fei_darkowls",
+                  "scoreA": 13,
+                  "b": "inatel_gray",
+                  "scoreB": 1,
+                  "winner": "fei_darkowls"
+                },
+                {
+                  "code": "Partida 44",
+                  "a": "brutal_esports",
+                  "scoreA": 13,
+                  "b": "sistematica_unievangelica",
+                  "scoreB": 8,
+                  "winner": "brutal_esports"
+                },
+                {
+                  "code": "Partida 45",
+                  "a": "caap_malditos",
+                  "scoreA": 13,
+                  "b": "gambiarra_ufg",
+                  "scoreB": 7,
+                  "winner": "caap_malditos"
+                },
+                {
+                  "code": "Partida 46",
+                  "a": "poli_plague",
+                  "scoreA": 6,
+                  "b": "fei_whiteowls",
+                  "scoreB": 13,
+                  "winner": "fei_whiteowls"
+                },
+                {
+                  "code": "Partida 47",
+                  "a": "maua_blue",
+                  "scoreA": 13,
+                  "b": "sheriff_iff",
+                  "scoreB": 3,
+                  "winner": "maua_blue"
+                },
+                {
+                  "code": "Partida 48",
+                  "a": "ceub_octopus_vulgaris",
+                  "scoreA": 13,
+                  "b": "nox_unievangelica",
+                  "scoreB": 1,
+                  "winner": "ceub_octopus_vulgaris"
+                }
+              ]
+            },
+            {
+              "title": "Rodada de 16 superior",
+              "matches": [
+                {
+                  "code": "Partida 49",
+                  "a": "pucgo_sistematica",
+                  "scoreA": 13,
+                  "b": "fametro_berserkers",
+                  "scoreB": 8,
+                  "winner": "pucgo_sistematica"
+                },
+                {
+                  "code": "Partida 50",
+                  "a": "azure_bears_black",
+                  "scoreA": 13,
+                  "b": "uscs_hawks",
+                  "scoreB": 10,
+                  "winner": "azure_bears_black"
+                },
+                {
+                  "code": "Partida 51",
+                  "a": "green_owls_jacurutu",
+                  "scoreA": 13,
+                  "b": "inatel",
+                  "scoreB": 9,
+                  "winner": "green_owls_jacurutu"
+                },
+                {
+                  "code": "Partida 52",
+                  "a": "a2e_uff",
+                  "scoreA": 9,
+                  "b": "ufpr_bbn",
+                  "scoreB": 13,
+                  "winner": "ufpr_bbn"
+                },
+                {
+                  "code": "Partida 53",
+                  "a": "usp_stars",
+                  "scoreA": 13,
+                  "b": "macklogic_white",
+                  "scoreB": 7,
+                  "winner": "usp_stars"
+                },
+                {
+                  "code": "Partida 54",
+                  "a": "fei_darkowls",
+                  "scoreA": 8,
+                  "b": "brutal_esports",
+                  "scoreB": 13,
+                  "winner": "brutal_esports"
+                },
+                {
+                  "code": "Partida 55",
+                  "a": "caap_malditos",
+                  "scoreA": 13,
+                  "b": "fei_whiteowls",
+                  "scoreB": 6,
+                  "winner": "caap_malditos"
+                },
+                {
+                  "code": "Partida 56",
+                  "a": "maua_blue",
+                  "scoreA": 6,
+                  "b": "ceub_octopus_vulgaris",
+                  "scoreB": 13,
+                  "winner": "ceub_octopus_vulgaris"
+                }
+              ]
+            },
+            {
+              "title": "Quartas de final superior",
+              "matches": [
+                {
+                  "code": "Partida 57",
+                  "a": "pucgo_sistematica",
+                  "scoreA": 3,
+                  "b": "azure_bears_black",
+                  "scoreB": 13,
+                  "winner": "azure_bears_black"
+                },
+                {
+                  "code": "Partida 58",
+                  "a": "green_owls_jacurutu",
+                  "scoreA": 13,
+                  "b": "ufpr_bbn",
+                  "scoreB": 0,
+                  "winner": "green_owls_jacurutu"
+                },
+                {
+                  "code": "Partida 59",
+                  "a": "usp_stars",
+                  "scoreA": 13,
+                  "b": "brutal_esports",
+                  "scoreB": 6,
+                  "winner": "usp_stars"
+                },
+                {
+                  "code": "Partida 60",
+                  "a": "caap_malditos",
+                  "scoreA": 7,
+                  "b": "ceub_octopus_vulgaris",
+                  "scoreB": 13,
+                  "winner": "ceub_octopus_vulgaris"
+                }
+              ]
+            },
+            {
+              "title": "Semifinais superior",
+              "matches": [
+                {
+                  "code": "Partida 61",
+                  "a": "azure_bears_black",
+                  "scoreA": 1,
+                  "b": "green_owls_jacurutu",
+                  "scoreB": 0,
+                  "winner": "azure_bears_black",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 62",
+                  "a": "usp_stars",
+                  "scoreA": 13,
+                  "b": "ceub_octopus_vulgaris",
+                  "scoreB": 5,
+                  "winner": "usp_stars"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Chave inferior",
+          "className": "lower-bracket",
+          "columns": [
+            {
+              "title": "Rodada de 32 inferior",
+              "matches": [
+                {
+                  "code": "Partida 80",
+                  "slot": 0,
+                  "a": "nox_unievangelica",
+                  "scoreA": 0,
+                  "b": "pucgo_sistematica_academy",
+                  "scoreB": 1,
+                  "winner": "pucgo_sistematica_academy",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 84",
+                  "slot": 2,
+                  "a": "sistematica_unievangelica",
+                  "scoreA": 0,
+                  "b": "ufmg_fenix_b",
+                  "scoreB": 1,
+                  "winner": "ufmg_fenix_b",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 88",
+                  "slot": 4,
+                  "a": "unicamp_tritons_black",
+                  "scoreA": 13,
+                  "b": "unifesp_erex",
+                  "scoreB": 8,
+                  "winner": "unicamp_tritons_black"
+                },
+                {
+                  "code": "Partida 92",
+                  "slot": 6,
+                  "a": "panterao_gaming",
+                  "scoreA": 4,
+                  "b": "ufrj_minerva",
+                  "scoreB": 13,
+                  "winner": "ufrj_minerva"
+                }
+              ]
+            },
+            {
+              "title": "Rodada de 16 inferior",
+              "matches": [
+                {
+                  "code": "Partida 96",
+                  "a": "pucgo_sistematica_academy",
+                  "scoreA": 1,
+                  "b": "sheriff_iff",
+                  "scoreB": 0,
+                  "winner": "pucgo_sistematica_academy",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 97",
+                  "a": "poli_plague",
+                  "scoreA": 5,
+                  "b": "gambiarra_ufg",
+                  "scoreB": 13,
+                  "winner": "gambiarra_ufg"
+                },
+                {
+                  "code": "Partida 98",
+                  "a": "ufmg_fenix_b",
+                  "scoreA": 13,
+                  "b": "inatel_gray",
+                  "scoreB": 8,
+                  "winner": "ufmg_fenix_b"
+                },
+                {
+                  "code": "Partida 99",
+                  "a": "ufu_saints_trigons",
+                  "scoreA": 13,
+                  "b": "liga_vulkanica",
+                  "scoreB": 10,
+                  "winner": "ufu_saints_trigons"
+                },
+                {
+                  "code": "Partida 100",
+                  "a": "unicamp_tritons_black",
+                  "scoreA": 13,
+                  "b": "unirio_krakens",
+                  "scoreB": 3,
+                  "winner": "unicamp_tritons_black"
+                },
+                {
+                  "code": "Partida 101",
+                  "a": "azure_bears_silver",
+                  "scoreA": 13,
+                  "b": "inatel_dois",
+                  "scoreB": 11,
+                  "winner": "azure_bears_silver"
+                },
+                {
+                  "code": "Partida 102",
+                  "a": "ufrj_minerva",
+                  "scoreA": 6,
+                  "b": "pucc_cardinals",
+                  "scoreB": 13,
+                  "winner": "pucc_cardinals"
+                },
+                {
+                  "code": "Partida 103",
+                  "a": "caap_auroras",
+                  "scoreA": 1,
+                  "b": "fatec_pg",
+                  "scoreB": 13,
+                  "winner": "fatec_pg"
+                }
+              ]
+            },
+            {
+              "title": "Rodada de 16 inferior",
+              "matches": [
+                {
+                  "code": "Partida 104",
+                  "a": "fametro_berserkers",
+                  "scoreA": 13,
+                  "b": "pucgo_sistematica_academy",
+                  "scoreB": 6,
+                  "winner": "fametro_berserkers"
+                },
+                {
+                  "code": "Partida 105",
+                  "a": "uscs_hawks",
+                  "scoreA": 13,
+                  "b": "gambiarra_ufg",
+                  "scoreB": 5,
+                  "winner": "uscs_hawks"
+                },
+                {
+                  "code": "Partida 106",
+                  "a": "inatel",
+                  "scoreA": 13,
+                  "b": "ufmg_fenix_b",
+                  "scoreB": 3,
+                  "winner": "inatel"
+                },
+                {
+                  "code": "Partida 107",
+                  "a": "a2e_uff",
+                  "scoreA": 13,
+                  "b": "ufu_saints_trigons",
+                  "scoreB": 5,
+                  "winner": "a2e_uff"
+                },
+                {
+                  "code": "Partida 108",
+                  "a": "macklogic_white",
+                  "scoreA": 13,
+                  "b": "unicamp_tritons_black",
+                  "scoreB": 11,
+                  "winner": "macklogic_white"
+                },
+                {
+                  "code": "Partida 109",
+                  "a": "fei_darkowls",
+                  "scoreA": 13,
+                  "b": "azure_bears_silver",
+                  "scoreB": 3,
+                  "winner": "fei_darkowls"
+                },
+                {
+                  "code": "Partida 110",
+                  "a": "fei_whiteowls",
+                  "scoreA": 4,
+                  "b": "pucc_cardinals",
+                  "scoreB": 13,
+                  "winner": "pucc_cardinals"
+                },
+                {
+                  "code": "Partida 111",
+                  "a": "maua_blue",
+                  "scoreA": 16,
+                  "b": "fatec_pg",
+                  "scoreB": 14,
+                  "winner": "maua_blue",
+                  "status": "Sem estatísticas",
+                  "playedAt": "2026-09-12T21:34:41Z",
+                  "previewNote": "Placar oficial: Mauá Blue 16x14 FATEC PG, Haven. Mapa fora das estatísticas porque os dados da partida estão incompletos."
+                }
+              ]
+            },
+            {
+              "title": "Rodada de 8 inferior",
+              "matches": [
+                {
+                  "code": "Partida 112",
+                  "a": "fametro_berserkers",
+                  "scoreA": 13,
+                  "b": "uscs_hawks",
+                  "scoreB": 8,
+                  "winner": "fametro_berserkers"
+                },
+                {
+                  "code": "Partida 113",
+                  "a": "inatel",
+                  "scoreA": 5,
+                  "b": "a2e_uff",
+                  "scoreB": 13,
+                  "winner": "a2e_uff"
+                },
+                {
+                  "code": "Partida 114",
+                  "a": "macklogic_white",
+                  "scoreA": 11,
+                  "b": "fei_darkowls",
+                  "scoreB": 13,
+                  "winner": "fei_darkowls"
+                },
+                {
+                  "code": "Partida 115",
+                  "a": "pucc_cardinals",
+                  "scoreA": 2,
+                  "b": "maua_blue",
+                  "scoreB": 13,
+                  "winner": "maua_blue"
+                }
+              ]
+            },
+            {
+              "title": "Rodada de 8 inferior",
+              "matches": [
+                {
+                  "code": "Partida 116",
+                  "a": "caap_malditos",
+                  "scoreA": 13,
+                  "b": "fametro_berserkers",
+                  "scoreB": 11,
+                  "winner": "caap_malditos"
+                },
+                {
+                  "code": "Partida 117",
+                  "a": "brutal_esports",
+                  "scoreA": 6,
+                  "b": "a2e_uff",
+                  "scoreB": 13,
+                  "winner": "a2e_uff"
+                },
+                {
+                  "code": "Partida 118",
+                  "a": "ufpr_bbn",
+                  "scoreA": 3,
+                  "b": "fei_darkowls",
+                  "scoreB": 13,
+                  "winner": "fei_darkowls"
+                },
+                {
+                  "code": "Partida 119",
+                  "a": "pucgo_sistematica",
+                  "scoreA": 13,
+                  "b": "maua_blue",
+                  "scoreB": 9,
+                  "winner": "pucgo_sistematica"
+                }
+              ]
+            },
+            {
+              "title": "Rodada de 4 inferior",
+              "matches": [
+                {
+                  "code": "Partida 120",
+                  "a": "caap_malditos",
+                  "scoreA": 13,
+                  "b": "a2e_uff",
+                  "scoreB": 5,
+                  "winner": "caap_malditos"
+                },
+                {
+                  "code": "Partida 121",
+                  "a": "fei_darkowls",
+                  "scoreA": 13,
+                  "b": "pucgo_sistematica",
+                  "scoreB": 6,
+                  "winner": "fei_darkowls"
+                }
+              ]
+            },
+            {
+              "title": "Quartas de final inferior",
+              "matches": [
+                {
+                  "code": "Partida 122",
+                  "a": "green_owls_jacurutu",
+                  "scoreA": 13,
+                  "b": "caap_malditos",
+                  "scoreB": 7,
+                  "winner": "green_owls_jacurutu"
+                },
+                {
+                  "code": "Partida 123",
+                  "a": "ceub_octopus_vulgaris",
+                  "scoreA": 13,
+                  "b": "fei_darkowls",
+                  "scoreB": 5,
+                  "winner": "ceub_octopus_vulgaris"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
   },
   "univava-classificatoria-3": {
     name: "UNIVAV\u00c1 - Classificat\u00f3ria 3",
@@ -3035,7 +8536,7 @@ const TOURNAMENT_OVERRIDES = {
     },
   },
   "univava-classificatoria-1": {
-    name: "UNIVAV\u00c1 - Classificat\u00f3rias 1",
+    name: "UNIVAV\u00c1 - Classificat\u00f3ria 1",
     organizer: "AcadArena",
     organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
     banner: "assets/tournament-banners/banner_univava_c1.webp",
@@ -3270,6 +8771,2361 @@ const TOURNAMENT_OVERRIDES = {
       ],
     },
   },
+  "copa-alianca-2025-classificatoria-1": {
+    name: "Copa Alian\u00e7a 2025 - Classificat\u00f3ria 1",
+    organizer: "AcadArena",
+    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
+    prizePool: "-",
+    tier: "A",
+    type: "Online - Classificat\u00f3ria",
+    status: "Finalizado",
+    teamCount: 33,
+    mapPool: ["Ascent", "Haven", "Icebox", "Lotus", "Split", "Sunset"],
+    teams: [
+      "caap_hellhounds",
+      "uninassau_griffins",
+      "usp_stars",
+      "azure_bears_golden",
+      "macklogic_red",
+      "azure_bears_black",
+      "acca_e_sports",
+      "unit_troianos",
+      "hunter_esports",
+      "ufrj_canis_b",
+      "pucc_cardinals",
+      "overbite_espm",
+      "ufg_eagles",
+      "unirv_rushone",
+      "ufgd_duendes",
+      "ufu_saints",
+      "ufpr_bbn_academy",
+      "ufmt_turuna",
+      "ufpr_bbn",
+      "puc_priests",
+      "atletica_unifei",
+      "univap_carrascos",
+      "furia_utfpr",
+      "ifsp_midas",
+      "maua_blue",
+      "brutal_esports",
+      "inatel_white",
+      "unicamp_tritons_black",
+      "maua_b",
+      "raposa_e_sports",
+      "espm_overbite_misto",
+      "ibmec_sharks",
+      "univap_carrascos_academy",
+    ],
+    placements: [
+      { range: "Classificado", id: "azure_bears_golden", note: "Chave superior" },
+      { range: "Classificado", id: "usp_stars", note: "Chave superior" },
+      { range: "Classificado", id: "ufu_saints", note: "Chave inferior" },
+      { range: "Classificado", id: "macklogic_red", note: "Chave inferior" },
+      { range: "5-6", id: "azure_bears_black", note: "Decis\u00e3o de vaga inferior" },
+      { range: "5-6", id: "ufmt_turuna", note: "Decis\u00e3o de vaga inferior" },
+      { range: "7-8", id: "hunter_esports", note: "Rodada de 4 inferior" },
+      { range: "7-8", id: "brutal_esports", note: "Rodada de 4 inferior" },
+      { range: "9-12", id: "pucc_cardinals", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "atletica_unifei", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "inatel_white", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "unicamp_tritons_black", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "unit_troianos", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "ufg_eagles", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "maua_blue", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "maua_b", note: "Rodada de 8 inferior" },
+      { range: "17-24", id: "caap_hellhounds", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "uninassau_griffins", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "ufrj_canis_b", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "unirv_rushone", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "ufpr_bbn_academy", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "ufpr_bbn", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "furia_utfpr", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "espm_overbite_misto", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "acca_e_sports", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "overbite_espm", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "ufgd_duendes", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "puc_priests", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "univap_carrascos", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "ifsp_midas", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "raposa_e_sports", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "univap_carrascos_academy", note: "Rodada de 16 inferior" },
+      { range: "33", id: "ibmec_sharks", note: "Rodada de 32 inferior" },
+    ],
+    format: {
+      summary: "Elimina\u00e7\u00e3o dupla",
+      details: [
+        "Classificat\u00f3ria com 4 vagas",
+        "2 vagas pela chave superior",
+        "2 vagas pela chave inferior",
+        "Jogos MD1",
+      ],
+      standings: "Classificados oficiais",
+    },
+    bracket: {
+      title: "Elimina\u00e7\u00e3o dupla",
+      regions: [
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Rodada de 64 superior",
+              matches: [
+                { code: "Partida 2", slot: 0, a: "ibmec_sharks", scoreA: 0, b: "univap_carrascos_academy", scoreB: 1, winner: "univap_carrascos_academy", status: "W.O." },
+              ],
+            },
+            {
+              title: "Rodada de 32 superior",
+              matches: [
+                { code: "Partida 33", a: "caap_hellhounds", scoreA: 13, b: "univap_carrascos_academy", scoreB: 1, winner: "caap_hellhounds" },
+                { code: "Partida 34", a: "ufu_saints", scoreA: 13, b: "ufpr_bbn_academy", scoreB: 2, winner: "ufu_saints" },
+                { code: "Partida 35", a: "unit_troianos", scoreA: 1, b: "maua_blue", scoreB: 13, winner: "maua_blue" },
+                { code: "Partida 36", a: "hunter_esports", scoreA: 13, b: "ifsp_midas", scoreB: 2, winner: "hunter_esports" },
+                { code: "Partida 37", a: "azure_bears_golden", scoreA: 13, b: "maua_b", scoreB: 5, winner: "azure_bears_golden" },
+                { code: "Partida 38", a: "ufg_eagles", scoreA: 13, b: "puc_priests", scoreB: 10, winner: "ufg_eagles" },
+                { code: "Partida 39", a: "macklogic_red", scoreA: 4, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
+                { code: "Partida 40", a: "overbite_espm", scoreA: 7, b: "atletica_unifei", scoreB: 13, winner: "atletica_unifei" },
+                { code: "Partida 41", a: "uninassau_griffins", scoreA: 13, b: "espm_overbite_misto", scoreB: 2, winner: "uninassau_griffins" },
+                { code: "Partida 42", a: "ufgd_duendes", scoreA: 0, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
+                { code: "Partida 43", a: "acca_e_sports", scoreA: 2, b: "brutal_esports", scoreB: 13, winner: "brutal_esports" },
+                { code: "Partida 44", a: "ufrj_canis_b", scoreA: 9, b: "furia_utfpr", scoreB: 13, winner: "furia_utfpr" },
+                { code: "Partida 45", a: "usp_stars", scoreA: 13, b: "raposa_e_sports", scoreB: 2, winner: "usp_stars" },
+                { code: "Partida 46", a: "unirv_rushone", scoreA: 0, b: "ufpr_bbn", scoreB: 1, winner: "ufpr_bbn", status: "W.O." },
+                { code: "Partida 47", a: "azure_bears_black", scoreA: 13, b: "inatel_white", scoreB: 8, winner: "azure_bears_black" },
+                { code: "Partida 48", a: "pucc_cardinals", scoreA: 13, b: "univap_carrascos", scoreB: 10, winner: "pucc_cardinals" },
+              ],
+            },
+            {
+              title: "Rodada de 16 superior",
+              matches: [
+                { code: "Partida 49", a: "caap_hellhounds", scoreA: 8, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
+                { code: "Partida 50", a: "maua_blue", scoreA: 5, b: "hunter_esports", scoreB: 13, winner: "hunter_esports" },
+                { code: "Partida 51", a: "azure_bears_golden", scoreA: 13, b: "ufg_eagles", scoreB: 11, winner: "azure_bears_golden" },
+                { code: "Partida 52", a: "unicamp_tritons_black", scoreA: 13, b: "atletica_unifei", scoreB: 6, winner: "unicamp_tritons_black" },
+                { code: "Partida 53", a: "uninassau_griffins", scoreA: 6, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
+                { code: "Partida 54", a: "brutal_esports", scoreA: 13, b: "furia_utfpr", scoreB: 8, winner: "brutal_esports" },
+                { code: "Partida 55", a: "usp_stars", scoreA: 13, b: "ufpr_bbn", scoreB: 4, winner: "usp_stars" },
+                { code: "Partida 56", a: "azure_bears_black", scoreA: 13, b: "pucc_cardinals", scoreB: 5, winner: "azure_bears_black" },
+              ],
+            },
+            {
+              title: "Quartas de final superior",
+              matches: [
+                { code: "Partida 57", a: "ufu_saints", scoreA: 13, b: "hunter_esports", scoreB: 4, winner: "ufu_saints" },
+                { code: "Partida 58", a: "azure_bears_golden", scoreA: 13, b: "unicamp_tritons_black", scoreB: 9, winner: "azure_bears_golden" },
+                { code: "Partida 59", a: "ufmt_turuna", scoreA: 13, b: "brutal_esports", scoreB: 10, winner: "ufmt_turuna" },
+                { code: "Partida 60", a: "usp_stars", scoreA: 13, b: "azure_bears_black", scoreB: 6, winner: "usp_stars" },
+              ],
+            },
+            {
+              title: "Semifinais superior",
+              matches: [
+                { code: "Partida 61", a: "ufu_saints", scoreA: 9, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
+                { code: "Partida 62", a: "ufmt_turuna", scoreA: 12, b: "usp_stars", scoreB: 14, winner: "usp_stars" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada de 32 inferior",
+              matches: [
+                { code: "Partida 79", slot: 0, a: "univap_carrascos", scoreA: 1, b: "ibmec_sharks", scoreB: 0, winner: "univap_carrascos", status: "W.O." },
+              ],
+            },
+            {
+              title: "Rodada de 16 inferior",
+              matches: [
+                { code: "Partida 95", a: "univap_carrascos", scoreA: 10, b: "inatel_white", scoreB: 13, winner: "inatel_white" },
+                { code: "Partida 96", a: "unirv_rushone", scoreA: 13, b: "raposa_e_sports", scoreB: 2, winner: "unirv_rushone" },
+                { code: "Partida 97", a: "ufrj_canis_b", scoreA: 13, b: "acca_e_sports", scoreB: 3, winner: "ufrj_canis_b" },
+                { code: "Partida 98", a: "ufgd_duendes", scoreA: 6, b: "espm_overbite_misto", scoreB: 13, winner: "espm_overbite_misto" },
+                { code: "Partida 99", a: "overbite_espm", scoreA: 1, b: "macklogic_red", scoreB: 13, winner: "macklogic_red" },
+                { code: "Partida 100", a: "puc_priests", scoreA: 5, b: "maua_b", scoreB: 13, winner: "maua_b" },
+                { code: "Partida 101", a: "ifsp_midas", scoreA: 0, b: "unit_troianos", scoreB: 1, winner: "unit_troianos", status: "W.O." },
+                { code: "Partida 102", a: "ufpr_bbn_academy", scoreA: 13, b: "univap_carrascos_academy", scoreB: 10, winner: "ufpr_bbn_academy" },
+              ],
+            },
+            {
+              title: "Rodada de 16 inferior",
+              matches: [
+                { code: "Partida 103", a: "caap_hellhounds", scoreA: 11, b: "inatel_white", scoreB: 13, winner: "inatel_white" },
+                { code: "Partida 104", a: "maua_blue", scoreA: 14, b: "unirv_rushone", scoreB: 12, winner: "maua_blue" },
+                { code: "Partida 105", a: "ufg_eagles", scoreA: 13, b: "ufrj_canis_b", scoreB: 4, winner: "ufg_eagles" },
+                { code: "Partida 106", a: "atletica_unifei", scoreA: 13, b: "espm_overbite_misto", scoreB: 6, winner: "atletica_unifei" },
+                { code: "Partida 107", a: "uninassau_griffins", scoreA: 12, b: "macklogic_red", scoreB: 14, winner: "macklogic_red" },
+                { code: "Partida 108", a: "furia_utfpr", scoreA: 9, b: "maua_b", scoreB: 13, winner: "maua_b" },
+                { code: "Partida 109", a: "ufpr_bbn", scoreA: 11, b: "unit_troianos", scoreB: 13, winner: "unit_troianos" },
+                { code: "Partida 110", a: "pucc_cardinals", scoreA: 13, b: "ufpr_bbn_academy", scoreB: 1, winner: "pucc_cardinals" },
+              ],
+            },
+            {
+              title: "Rodada de 8 inferior",
+              matches: [
+                { code: "Partida 111", a: "inatel_white", scoreA: 13, b: "maua_blue", scoreB: 9, winner: "inatel_white" },
+                { code: "Partida 112", a: "ufg_eagles", scoreA: 0, b: "atletica_unifei", scoreB: 1, winner: "atletica_unifei", status: "W.O." },
+                { code: "Partida 113", a: "macklogic_red", scoreA: 13, b: "maua_b", scoreB: 9, winner: "macklogic_red" },
+                { code: "Partida 114", a: "unit_troianos", scoreA: 9, b: "pucc_cardinals", scoreB: 13, winner: "pucc_cardinals" },
+              ],
+            },
+            {
+              title: "Rodada de 8 inferior",
+              matches: [
+                { code: "Partida 115", a: "azure_bears_black", scoreA: 13, b: "inatel_white", scoreB: 7, winner: "azure_bears_black" },
+                { code: "Partida 116", a: "brutal_esports", scoreA: 16, b: "atletica_unifei", scoreB: 14, winner: "brutal_esports" },
+                { code: "Partida 117", a: "unicamp_tritons_black", scoreA: 11, b: "macklogic_red", scoreB: 13, winner: "macklogic_red" },
+                { code: "Partida 118", a: "hunter_esports", scoreA: 13, b: "pucc_cardinals", scoreB: 5, winner: "hunter_esports" },
+              ],
+            },
+            {
+              title: "Rodada de 4 inferior",
+              matches: [
+                { code: "Partida 119", a: "azure_bears_black", scoreA: 13, b: "brutal_esports", scoreB: 11, winner: "azure_bears_black" },
+                { code: "Partida 120", a: "macklogic_red", scoreA: 13, b: "hunter_esports", scoreB: 1, winner: "macklogic_red" },
+              ],
+            },
+            {
+              title: "Quartas de final inferior",
+              matches: [
+                { code: "Partida 121", a: "ufu_saints", scoreA: 13, b: "azure_bears_black", scoreB: 4, winner: "ufu_saints" },
+                { code: "Partida 122", a: "ufmt_turuna", scoreA: 0, b: "macklogic_red", scoreB: 13, winner: "macklogic_red" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "copa-alianca-2025-classificatoria-2": {
+    name: "Copa Alian\u00e7a 2025 - Classificat\u00f3ria 2",
+    organizer: "AcadArena",
+    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
+    prizePool: "-",
+    tier: "A",
+    type: "Online - Classificat\u00f3ria",
+    status: "Finalizado",
+    teamCount: 37,
+    mapPool: ["Ascent", "Haven", "Icebox", "Lotus", "Pearl", "Split", "Sunset"],
+    teams: [
+      "ufg_eagles",
+      "azure_bears_black",
+      "ufmt_turuna",
+      "brutal_esports",
+      "hunter_esports",
+      "agronomia_ufg",
+      "macklogic_white",
+      "ufpr_bbn_academy",
+      "fei_darkowls",
+      "unicamp_tritons_red",
+      "a2e_uff",
+      "maua_b",
+      "ufu_insane",
+      "unicamp_tritons_black",
+      "ufpr_bbn",
+      "axis_anteaters_shadow",
+      "unit_troianos",
+      "axis_blossom",
+      "maua_blue",
+      "pucc_cardinals",
+      "univap_carrascos",
+      "wolf_gaming",
+      "raposa_e_sports",
+      "unit_troianos_trojan",
+      "uninassau_griffins",
+      "ufrj_canis",
+      "ufgd_duendes",
+      "univap_carrascos_academy",
+      "ufs_warriowls",
+      "ufmg_fenix_b",
+      "cyberkongs",
+      "acca_e_sports",
+      "furia_utfpr",
+      "puc_priests",
+      "fsa_hopshots",
+      "caap_hellhounds",
+      "aaicei_pinguins",
+    ],
+    placements: [
+      { range: "Classificado", id: "uninassau_griffins", note: "Chave superior" },
+      { range: "Classificado", id: "azure_bears_black", note: "Chave superior" },
+      { range: "Classificado", id: "maua_b", note: "Chave inferior" },
+      { range: "Classificado", id: "ufg_eagles", note: "Chave inferior" },
+      { range: "5-6", id: "unicamp_tritons_black", note: "Decis\u00e3o de vaga inferior" },
+      { range: "5-6", id: "puc_priests", note: "Decis\u00e3o de vaga inferior" },
+      { range: "7-8", id: "ufu_insane", note: "Rodada de 4 inferior" },
+      { range: "7-8", id: "wolf_gaming", note: "Rodada de 4 inferior" },
+      { range: "9-12", id: "macklogic_white", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "pucc_cardinals", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "ufmg_fenix_b", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "furia_utfpr", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "ufmt_turuna", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "brutal_esports", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "a2e_uff", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "aaicei_pinguins", note: "Rodada de 8 inferior" },
+      { range: "17-24", id: "hunter_esports", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "agronomia_ufg", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "fei_darkowls", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "unicamp_tritons_red", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "axis_anteaters_shadow", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "axis_blossom", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "unit_troianos_trojan", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "ufrj_canis", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "ufpr_bbn_academy", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "ufpr_bbn", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "unit_troianos", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "maua_blue", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "raposa_e_sports", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "ufgd_duendes", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "cyberkongs", note: "Rodada de 16 inferior" },
+      { range: "25-32", id: "caap_hellhounds", note: "Rodada de 16 inferior" },
+      { range: "33-37", id: "univap_carrascos", note: "Rodada de 32 inferior" },
+      { range: "33-37", id: "univap_carrascos_academy", note: "Rodada de 32 inferior" },
+      { range: "33-37", id: "ufs_warriowls", note: "Rodada de 32 inferior" },
+      { range: "33-37", id: "acca_e_sports", note: "Rodada de 32 inferior" },
+      { range: "33-37", id: "fsa_hopshots", note: "Rodada de 32 inferior" },
+    ],
+    format: {
+      summary: "Elimina\u00e7\u00e3o dupla",
+      details: [
+        "Classificat\u00f3ria com 4 vagas",
+        "2 vagas pela chave superior",
+        "2 vagas pela chave inferior",
+        "Jogos MD1",
+      ],
+      standings: "Classificados oficiais",
+    },
+    bracket: {
+      title: "Elimina\u00e7\u00e3o dupla",
+      regions: [
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Rodada de 64 superior",
+              matches: [
+                { code: "Partida 2", slot: 0, a: "acca_e_sports", scoreA: 5, b: "furia_utfpr", scoreB: 13, winner: "furia_utfpr" },
+                { code: "Partida 10", slot: 4, a: "ufs_warriowls", scoreA: 0, b: "caap_hellhounds", scoreB: 1, winner: "caap_hellhounds", status: "W.O." },
+                { code: "Partida 14", slot: 6, a: "univap_carrascos_academy", scoreA: 0, b: "aaicei_pinguins", scoreB: 1, winner: "aaicei_pinguins", status: "W.O." },
+                { code: "Partida 18", slot: 8, a: "cyberkongs", scoreA: 11, b: "puc_priests", scoreB: 13, winner: "puc_priests" },
+                { code: "Partida 26", slot: 12, a: "ufmg_fenix_b", scoreA: 13, b: "fsa_hopshots", scoreB: 3, winner: "ufmg_fenix_b" },
+              ],
+            },
+            {
+              title: "Rodada de 32 superior",
+              matches: [
+                { code: "Partida 33", a: "ufg_eagles", scoreA: 5, b: "furia_utfpr", scoreB: 13, winner: "furia_utfpr" },
+                { code: "Partida 34", a: "axis_anteaters_shadow", scoreA: 13, b: "unit_troianos", scoreB: 2, winner: "axis_anteaters_shadow" },
+                { code: "Partida 35", a: "ufpr_bbn_academy", scoreA: 0, b: "uninassau_griffins", scoreB: 13, winner: "uninassau_griffins" },
+                { code: "Partida 36", a: "fei_darkowls", scoreA: 12, b: "unit_troianos_trojan", scoreB: 14, winner: "unit_troianos_trojan" },
+                { code: "Partida 37", a: "brutal_esports", scoreA: 13, b: "caap_hellhounds", scoreB: 9, winner: "brutal_esports" },
+                { code: "Partida 38", a: "ufu_insane", scoreA: 13, b: "pucc_cardinals", scoreB: 5, winner: "ufu_insane" },
+                { code: "Partida 39", a: "hunter_esports", scoreA: 13, b: "aaicei_pinguins", scoreB: 10, winner: "hunter_esports" },
+                { code: "Partida 40", a: "maua_b", scoreA: 13, b: "univap_carrascos", scoreB: 7, winner: "maua_b" },
+                { code: "Partida 41", a: "azure_bears_black", scoreA: 13, b: "puc_priests", scoreB: 11, winner: "azure_bears_black" },
+                { code: "Partida 42", a: "ufpr_bbn", scoreA: 9, b: "axis_blossom", scoreB: 13, winner: "axis_blossom" },
+                { code: "Partida 43", a: "macklogic_white", scoreA: 13, b: "ufrj_canis", scoreB: 9, winner: "macklogic_white" },
+                { code: "Partida 44", a: "unicamp_tritons_red", scoreA: 13, b: "raposa_e_sports", scoreB: 2, winner: "unicamp_tritons_red" },
+                { code: "Partida 45", a: "ufmt_turuna", scoreA: 13, b: "ufmg_fenix_b", scoreB: 4, winner: "ufmt_turuna" },
+                { code: "Partida 46", a: "unicamp_tritons_black", scoreA: 13, b: "maua_blue", scoreB: 7, winner: "unicamp_tritons_black" },
+                { code: "Partida 47", a: "agronomia_ufg", scoreA: 13, b: "ufgd_duendes", scoreB: 3, winner: "agronomia_ufg" },
+                { code: "Partida 48", a: "a2e_uff", scoreA: 2, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
+              ],
+            },
+            {
+              title: "Rodada de 16 superior",
+              matches: [
+                { code: "Partida 49", a: "furia_utfpr", scoreA: 13, b: "axis_anteaters_shadow", scoreB: 10, winner: "furia_utfpr" },
+                { code: "Partida 50", a: "uninassau_griffins", scoreA: 13, b: "unit_troianos_trojan", scoreB: 3, winner: "uninassau_griffins" },
+                { code: "Partida 51", a: "brutal_esports", scoreA: 8, b: "ufu_insane", scoreB: 13, winner: "ufu_insane" },
+                { code: "Partida 52", a: "hunter_esports", scoreA: 11, b: "maua_b", scoreB: 13, winner: "maua_b" },
+                { code: "Partida 53", a: "azure_bears_black", scoreA: 13, b: "axis_blossom", scoreB: 4, winner: "azure_bears_black" },
+                { code: "Partida 54", a: "macklogic_white", scoreA: 13, b: "unicamp_tritons_red", scoreB: 5, winner: "macklogic_white" },
+                { code: "Partida 55", a: "ufmt_turuna", scoreA: 7, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
+                { code: "Partida 56", a: "agronomia_ufg", scoreA: 7, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
+              ],
+            },
+            {
+              title: "Quartas de final superior",
+              matches: [
+                { code: "Partida 57", a: "furia_utfpr", scoreA: 9, b: "uninassau_griffins", scoreB: 13, winner: "uninassau_griffins" },
+                { code: "Partida 58", a: "ufu_insane", scoreA: 8, b: "maua_b", scoreB: 13, winner: "maua_b" },
+                { code: "Partida 59", a: "azure_bears_black", scoreA: 13, b: "macklogic_white", scoreB: 11, winner: "azure_bears_black" },
+                { code: "Partida 60", a: "unicamp_tritons_black", scoreA: 13, b: "wolf_gaming", scoreB: 8, winner: "unicamp_tritons_black" },
+              ],
+            },
+            {
+              title: "Semifinais superior",
+              matches: [
+                { code: "Partida 61", a: "uninassau_griffins", scoreA: 13, b: "maua_b", scoreB: 6, winner: "uninassau_griffins" },
+                { code: "Partida 62", a: "azure_bears_black", scoreA: 13, b: "unicamp_tritons_black", scoreB: 9, winner: "azure_bears_black" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada de 32 inferior",
+              matches: [
+                { code: "Partida 79", slot: 0, a: "a2e_uff", scoreA: 13, b: "acca_e_sports", scoreB: 5, winner: "a2e_uff" },
+                { code: "Partida 83", slot: 2, a: "raposa_e_sports", scoreA: 1, b: "ufs_warriowls", scoreB: 0, winner: "raposa_e_sports", status: "W.O." },
+                { code: "Partida 85", slot: 3, a: "ufpr_bbn", scoreA: 1, b: "univap_carrascos_academy", scoreB: 0, winner: "ufpr_bbn", status: "W.O." },
+                { code: "Partida 87", slot: 4, a: "univap_carrascos", scoreA: 10, b: "cyberkongs", scoreB: 13, winner: "cyberkongs" },
+                { code: "Partida 91", slot: 6, a: "fei_darkowls", scoreA: 13, b: "fsa_hopshots", scoreB: 5, winner: "fei_darkowls" },
+              ],
+            },
+            {
+              title: "Rodada de 16 inferior",
+              matches: [
+                { code: "Partida 95", a: "a2e_uff", scoreA: 13, b: "ufgd_duendes", scoreB: 11, winner: "a2e_uff" },
+                { code: "Partida 96", a: "maua_blue", scoreA: 5, b: "ufmg_fenix_b", scoreB: 13, winner: "ufmg_fenix_b" },
+                { code: "Partida 97", a: "raposa_e_sports", scoreA: 1, b: "ufrj_canis", scoreB: 13, winner: "ufrj_canis" },
+                { code: "Partida 98", a: "ufpr_bbn", scoreA: 6, b: "puc_priests", scoreB: 13, winner: "puc_priests" },
+                { code: "Partida 99", a: "cyberkongs", scoreA: 5, b: "aaicei_pinguins", scoreB: 13, winner: "aaicei_pinguins" },
+                { code: "Partida 100", a: "pucc_cardinals", scoreA: 14, b: "caap_hellhounds", scoreB: 12, winner: "pucc_cardinals" },
+                { code: "Partida 101", a: "fei_darkowls", scoreA: 1, b: "ufpr_bbn_academy", scoreB: 0, winner: "fei_darkowls", status: "W.O." },
+                { code: "Partida 102", a: "unit_troianos", scoreA: 4, b: "ufg_eagles", scoreB: 13, winner: "ufg_eagles" },
+              ],
+            },
+            {
+              title: "Rodada de 16 inferior",
+              matches: [
+                { code: "Partida 103", a: "axis_anteaters_shadow", scoreA: 5, b: "a2e_uff", scoreB: 13, winner: "a2e_uff" },
+                { code: "Partida 104", a: "unit_troianos_trojan", scoreA: 9, b: "ufmg_fenix_b", scoreB: 13, winner: "ufmg_fenix_b" },
+                { code: "Partida 105", a: "brutal_esports", scoreA: 18, b: "ufrj_canis", scoreB: 16, winner: "brutal_esports" },
+                { code: "Partida 106", a: "hunter_esports", scoreA: 7, b: "puc_priests", scoreB: 13, winner: "puc_priests" },
+                { code: "Partida 107", a: "axis_blossom", scoreA: 10, b: "aaicei_pinguins", scoreB: 13, winner: "aaicei_pinguins" },
+                { code: "Partida 108", a: "unicamp_tritons_red", scoreA: 7, b: "pucc_cardinals", scoreB: 13, winner: "pucc_cardinals" },
+                { code: "Partida 109", a: "ufmt_turuna", scoreA: 13, b: "fei_darkowls", scoreB: 6, winner: "ufmt_turuna" },
+                { code: "Partida 110", a: "agronomia_ufg", scoreA: 8, b: "ufg_eagles", scoreB: 13, winner: "ufg_eagles" },
+              ],
+            },
+            {
+              title: "Rodada de 8 inferior",
+              matches: [
+                { code: "Partida 111", a: "a2e_uff", scoreA: 14, b: "ufmg_fenix_b", scoreB: 16, winner: "ufmg_fenix_b" },
+                { code: "Partida 112", a: "brutal_esports", scoreA: 5, b: "puc_priests", scoreB: 13, winner: "puc_priests" },
+                { code: "Partida 113", a: "aaicei_pinguins", scoreA: 4, b: "pucc_cardinals", scoreB: 13, winner: "pucc_cardinals" },
+                { code: "Partida 114", a: "ufmt_turuna", scoreA: 12, b: "ufg_eagles", scoreB: 14, winner: "ufg_eagles" },
+              ],
+            },
+            {
+              title: "Rodada de 8 inferior",
+              matches: [
+                { code: "Partida 115", a: "wolf_gaming", scoreA: 15, b: "ufmg_fenix_b", scoreB: 13, winner: "wolf_gaming" },
+                { code: "Partida 116", a: "macklogic_white", scoreA: 3, b: "puc_priests", scoreB: 13, winner: "puc_priests" },
+                { code: "Partida 117", a: "ufu_insane", scoreA: 17, b: "pucc_cardinals", scoreB: 15, winner: "ufu_insane" },
+                { code: "Partida 118", a: "furia_utfpr", scoreA: 15, b: "ufg_eagles", scoreB: 17, winner: "ufg_eagles" },
+              ],
+            },
+            {
+              title: "Rodada de 4 inferior",
+              matches: [
+                { code: "Partida 119", a: "wolf_gaming", scoreA: 7, b: "puc_priests", scoreB: 13, winner: "puc_priests" },
+                { code: "Partida 120", a: "ufu_insane", scoreA: 14, b: "ufg_eagles", scoreB: 16, winner: "ufg_eagles" },
+              ],
+            },
+            {
+              title: "Quartas de final inferior",
+              matches: [
+                { code: "Partida 121", a: "maua_b", scoreA: 13, b: "puc_priests", scoreB: 8, winner: "maua_b" },
+                { code: "Partida 122", a: "unicamp_tritons_black", scoreA: 12, b: "ufg_eagles", scoreB: 14, winner: "ufg_eagles" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "copa-alianca-2025-classificatoria-3": {
+    "name": "Copa Aliança 2025 - Classificatória 3",
+    "organizer": "AcadArena",
+    "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
+    "prizePool": "-",
+    "tier": "A",
+    "type": "Online - Classificatória",
+    "status": "Finalizado",
+    "teamCount": 31,
+    "mapPool": [
+      "Ascent",
+      "Haven",
+      "Icebox",
+      "Lotus",
+      "Pearl",
+      "Split",
+      "Sunset"
+    ],
+    "teams": [
+      "puc_priests",
+      "unicamp_tritons_black",
+      "wolf_gaming",
+      "ufu_insane",
+      "ufpr_bbn",
+      "atletica_unifei",
+      "ufmt_turuna",
+      "hunter_esports",
+      "unirv_rushone",
+      "caap_hellhounds",
+      "furia_utfpr",
+      "unicamp_tritons_red",
+      "ufmg_fenix_b",
+      "fei_darkowls",
+      "brutal_esports",
+      "pucc_cardinals",
+      "maua_blue",
+      "macklogic_white",
+      "green_owls_noctua",
+      "axis_anteaters_shadow",
+      "ufs_warriowls",
+      "inatel_white",
+      "a2e_uff",
+      "ufrj_canis",
+      "univap_carrascos",
+      "cyberkongs",
+      "fsa_hopshots",
+      "aaicei_pinguins",
+      "raposa_e_sports",
+      "agronomia_ufg",
+      "ufgd_duendes"
+    ],
+    "placements": [
+      {
+        "range": "Classificado",
+        "id": "ufrj_canis",
+        "note": "Chave superior"
+      },
+      {
+        "range": "Classificado",
+        "id": "unicamp_tritons_black",
+        "note": "Chave superior"
+      },
+      {
+        "range": "Classificado",
+        "id": "ufu_insane",
+        "note": "Chave inferior"
+      },
+      {
+        "range": "Classificado",
+        "id": "ufmt_turuna",
+        "note": "Chave inferior"
+      },
+      {
+        "range": "5-6",
+        "id": "furia_utfpr",
+        "note": "Decisão de vaga inferior"
+      },
+      {
+        "range": "5-6",
+        "id": "axis_anteaters_shadow",
+        "note": "Decisão de vaga inferior"
+      },
+      {
+        "range": "7-8",
+        "id": "unirv_rushone",
+        "note": "Rodada de 4 inferior"
+      },
+      {
+        "range": "7-8",
+        "id": "fei_darkowls",
+        "note": "Rodada de 4 inferior"
+      },
+      {
+        "range": "9-12",
+        "id": "puc_priests",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "9-12",
+        "id": "hunter_esports",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "9-12",
+        "id": "caap_hellhounds",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "9-12",
+        "id": "ufs_warriowls",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "13-16",
+        "id": "atletica_unifei",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "13-16",
+        "id": "brutal_esports",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "13-16",
+        "id": "maua_blue",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "13-16",
+        "id": "macklogic_white",
+        "note": "Rodada de 8 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "wolf_gaming",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "ufpr_bbn",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "unicamp_tritons_red",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "ufmg_fenix_b",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "pucc_cardinals",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "green_owls_noctua",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "inatel_white",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "17-24",
+        "id": "a2e_uff",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-31",
+        "id": "univap_carrascos",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-31",
+        "id": "cyberkongs",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-31",
+        "id": "fsa_hopshots",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-31",
+        "id": "aaicei_pinguins",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-31",
+        "id": "raposa_e_sports",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-31",
+        "id": "agronomia_ufg",
+        "note": "Rodada de 16 inferior"
+      },
+      {
+        "range": "25-31",
+        "id": "ufgd_duendes",
+        "note": "Rodada de 16 inferior"
+      }
+    ],
+    "format": {
+      "summary": "Eliminação dupla",
+      "details": [
+        "Classificatória com 4 vagas",
+        "2 vagas pela chave superior",
+        "2 vagas pela chave inferior",
+        "Jogos MD1"
+      ],
+      "standings": "Classificados oficiais"
+    },
+    "bracket": {
+      "title": "Eliminação dupla",
+      "regions": [
+        {
+          "name": "Chave superior",
+          "className": "upper-bracket",
+          "columns": [
+            {
+              "title": "Rodada de 32 superior",
+              "matches": [
+                {
+                  "code": "Partida 1",
+                  "a": "puc_priests",
+                  "scoreA": 1,
+                  "bLabel": "Sem adversário",
+                  "scoreB": 0,
+                  "winner": "puc_priests"
+                },
+                {
+                  "code": "Partida 2",
+                  "a": "pucc_cardinals",
+                  "scoreA": 5,
+                  "b": "maua_blue",
+                  "scoreB": 13,
+                  "winner": "maua_blue"
+                },
+                {
+                  "code": "Partida 3",
+                  "a": "hunter_esports",
+                  "scoreA": 13,
+                  "b": "univap_carrascos",
+                  "scoreB": 2,
+                  "winner": "hunter_esports"
+                },
+                {
+                  "code": "Partida 4",
+                  "a": "unirv_rushone",
+                  "scoreA": 5,
+                  "b": "ufrj_canis",
+                  "scoreB": 13,
+                  "winner": "ufrj_canis"
+                },
+                {
+                  "code": "Partida 5",
+                  "a": "ufu_insane",
+                  "scoreA": 1,
+                  "b": "raposa_e_sports",
+                  "scoreB": 0,
+                  "winner": "ufu_insane",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 6",
+                  "a": "ufmg_fenix_b",
+                  "scoreA": 11,
+                  "b": "axis_anteaters_shadow",
+                  "scoreB": 13,
+                  "winner": "axis_anteaters_shadow"
+                },
+                {
+                  "code": "Partida 7",
+                  "a": "ufpr_bbn",
+                  "scoreA": 1,
+                  "b": "aaicei_pinguins",
+                  "scoreB": 0,
+                  "winner": "ufpr_bbn",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 8",
+                  "a": "unicamp_tritons_red",
+                  "scoreA": 5,
+                  "b": "ufs_warriowls",
+                  "scoreB": 13,
+                  "winner": "ufs_warriowls"
+                },
+                {
+                  "code": "Partida 9",
+                  "a": "unicamp_tritons_black",
+                  "scoreA": 1,
+                  "b": "ufgd_duendes",
+                  "scoreB": 0,
+                  "winner": "unicamp_tritons_black",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 10",
+                  "a": "brutal_esports",
+                  "scoreA": 13,
+                  "b": "macklogic_white",
+                  "scoreB": 4,
+                  "winner": "brutal_esports"
+                },
+                {
+                  "code": "Partida 11",
+                  "a": "ufmt_turuna",
+                  "scoreA": 1,
+                  "b": "cyberkongs",
+                  "scoreB": 0,
+                  "winner": "ufmt_turuna",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 12",
+                  "a": "caap_hellhounds",
+                  "scoreA": 13,
+                  "b": "a2e_uff",
+                  "scoreB": 4,
+                  "winner": "caap_hellhounds"
+                },
+                {
+                  "code": "Partida 13",
+                  "a": "wolf_gaming",
+                  "scoreA": 1,
+                  "b": "agronomia_ufg",
+                  "scoreB": 0,
+                  "winner": "wolf_gaming",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 14",
+                  "a": "fei_darkowls",
+                  "scoreA": 1,
+                  "b": "green_owls_noctua",
+                  "scoreB": 0,
+                  "winner": "fei_darkowls",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 15",
+                  "a": "atletica_unifei",
+                  "scoreA": 1,
+                  "b": "fsa_hopshots",
+                  "scoreB": 0,
+                  "winner": "atletica_unifei",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 16",
+                  "a": "furia_utfpr",
+                  "scoreA": 13,
+                  "b": "inatel_white",
+                  "scoreB": 10,
+                  "winner": "furia_utfpr"
+                }
+              ]
+            },
+            {
+              "title": "Rodada de 16 superior",
+              "matches": [
+                {
+                  "code": "Partida 17",
+                  "a": "puc_priests",
+                  "scoreA": 13,
+                  "b": "maua_blue",
+                  "scoreB": 11,
+                  "winner": "puc_priests"
+                },
+                {
+                  "code": "Partida 18",
+                  "a": "hunter_esports",
+                  "scoreA": 8,
+                  "b": "ufrj_canis",
+                  "scoreB": 13,
+                  "winner": "ufrj_canis"
+                },
+                {
+                  "code": "Partida 19",
+                  "a": "ufu_insane",
+                  "scoreA": 9,
+                  "b": "axis_anteaters_shadow",
+                  "scoreB": 13,
+                  "winner": "axis_anteaters_shadow"
+                },
+                {
+                  "code": "Partida 20",
+                  "a": "ufpr_bbn",
+                  "scoreA": 4,
+                  "b": "ufs_warriowls",
+                  "scoreB": 13,
+                  "winner": "ufs_warriowls"
+                },
+                {
+                  "code": "Partida 21",
+                  "a": "unicamp_tritons_black",
+                  "scoreA": 13,
+                  "b": "brutal_esports",
+                  "scoreB": 9,
+                  "winner": "unicamp_tritons_black"
+                },
+                {
+                  "code": "Partida 22",
+                  "a": "ufmt_turuna",
+                  "scoreA": 12,
+                  "b": "caap_hellhounds",
+                  "scoreB": 14,
+                  "winner": "caap_hellhounds"
+                },
+                {
+                  "code": "Partida 23",
+                  "a": "wolf_gaming",
+                  "scoreA": 9,
+                  "b": "fei_darkowls",
+                  "scoreB": 13,
+                  "winner": "fei_darkowls"
+                },
+                {
+                  "code": "Partida 24",
+                  "a": "atletica_unifei",
+                  "scoreA": 6,
+                  "b": "furia_utfpr",
+                  "scoreB": 13,
+                  "winner": "furia_utfpr"
+                }
+              ]
+            },
+            {
+              "title": "Quartas de final superior",
+              "matches": [
+                {
+                  "code": "Partida 25",
+                  "a": "puc_priests",
+                  "scoreA": 6,
+                  "b": "ufrj_canis",
+                  "scoreB": 13,
+                  "winner": "ufrj_canis"
+                },
+                {
+                  "code": "Partida 26",
+                  "a": "axis_anteaters_shadow",
+                  "scoreA": 13,
+                  "b": "ufs_warriowls",
+                  "scoreB": 7,
+                  "winner": "axis_anteaters_shadow"
+                },
+                {
+                  "code": "Partida 27",
+                  "a": "unicamp_tritons_black",
+                  "scoreA": 13,
+                  "b": "caap_hellhounds",
+                  "scoreB": 11,
+                  "winner": "unicamp_tritons_black"
+                },
+                {
+                  "code": "Partida 28",
+                  "a": "fei_darkowls",
+                  "scoreA": 12,
+                  "b": "furia_utfpr",
+                  "scoreB": 14,
+                  "winner": "furia_utfpr"
+                }
+              ]
+            },
+            {
+              "title": "Semifinais superior",
+              "matches": [
+                {
+                  "code": "Partida 29",
+                  "a": "ufrj_canis",
+                  "scoreA": 13,
+                  "b": "axis_anteaters_shadow",
+                  "scoreB": 9,
+                  "winner": "ufrj_canis"
+                },
+                {
+                  "code": "Partida 30",
+                  "a": "unicamp_tritons_black",
+                  "scoreA": 13,
+                  "b": "furia_utfpr",
+                  "scoreB": 6,
+                  "winner": "unicamp_tritons_black"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Chave inferior",
+          "className": "lower-bracket",
+          "columns": [
+            {
+              "title": "Rodada de 16 inferior",
+              "matches": [
+                {
+                  "code": "Partida 31",
+                  "a": "fsa_hopshots",
+                  "scoreA": 0,
+                  "b": "inatel_white",
+                  "scoreB": 1,
+                  "winner": "inatel_white",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 32",
+                  "a": "agronomia_ufg",
+                  "scoreA": 0,
+                  "b": "green_owls_noctua",
+                  "scoreB": 1,
+                  "winner": "green_owls_noctua",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 33",
+                  "a": "cyberkongs",
+                  "scoreA": 0,
+                  "b": "a2e_uff",
+                  "scoreB": 1,
+                  "winner": "a2e_uff",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 34",
+                  "a": "ufgd_duendes",
+                  "scoreA": 0,
+                  "b": "macklogic_white",
+                  "scoreB": 1,
+                  "winner": "macklogic_white",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 35",
+                  "a": "aaicei_pinguins",
+                  "scoreA": 0,
+                  "b": "unicamp_tritons_red",
+                  "scoreB": 1,
+                  "winner": "unicamp_tritons_red",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 36",
+                  "a": "raposa_e_sports",
+                  "scoreA": 0,
+                  "b": "ufmg_fenix_b",
+                  "scoreB": 1,
+                  "winner": "ufmg_fenix_b",
+                  "status": "W.O."
+                },
+                {
+                  "code": "Partida 37",
+                  "a": "univap_carrascos",
+                  "scoreA": 6,
+                  "b": "unirv_rushone",
+                  "scoreB": 13,
+                  "winner": "unirv_rushone"
+                },
+                {
+                  "code": "Partida 38",
+                  "aLabel": "Sem adversário",
+                  "scoreA": 0,
+                  "b": "pucc_cardinals",
+                  "scoreB": 1,
+                  "winner": "pucc_cardinals"
+                }
+              ]
+            },
+            {
+              "title": "Rodada de 16 inferior",
+              "matches": [
+                {
+                  "code": "Partida 39",
+                  "a": "maua_blue",
+                  "scoreA": 15,
+                  "b": "inatel_white",
+                  "scoreB": 13,
+                  "winner": "maua_blue"
+                },
+                {
+                  "code": "Partida 40",
+                  "a": "hunter_esports",
+                  "scoreA": 13,
+                  "b": "green_owls_noctua",
+                  "scoreB": 9,
+                  "winner": "hunter_esports"
+                },
+                {
+                  "code": "Partida 41",
+                  "a": "ufu_insane",
+                  "scoreA": 13,
+                  "b": "a2e_uff",
+                  "scoreB": 3,
+                  "winner": "ufu_insane"
+                },
+                {
+                  "code": "Partida 42",
+                  "a": "ufpr_bbn",
+                  "scoreA": 6,
+                  "b": "macklogic_white",
+                  "scoreB": 13,
+                  "winner": "macklogic_white"
+                },
+                {
+                  "code": "Partida 43",
+                  "a": "brutal_esports",
+                  "scoreA": 13,
+                  "b": "unicamp_tritons_red",
+                  "scoreB": 6,
+                  "winner": "brutal_esports"
+                },
+                {
+                  "code": "Partida 44",
+                  "a": "ufmt_turuna",
+                  "scoreA": 13,
+                  "b": "ufmg_fenix_b",
+                  "scoreB": 2,
+                  "winner": "ufmt_turuna"
+                },
+                {
+                  "code": "Partida 45",
+                  "a": "wolf_gaming",
+                  "scoreA": 13,
+                  "b": "unirv_rushone",
+                  "scoreB": 15,
+                  "winner": "unirv_rushone"
+                },
+                {
+                  "code": "Partida 46",
+                  "a": "atletica_unifei",
+                  "scoreA": 13,
+                  "b": "pucc_cardinals",
+                  "scoreB": 11,
+                  "winner": "atletica_unifei"
+                }
+              ]
+            },
+            {
+              "title": "Rodada de 8 inferior",
+              "matches": [
+                {
+                  "code": "Partida 47",
+                  "a": "maua_blue",
+                  "scoreA": 7,
+                  "b": "hunter_esports",
+                  "scoreB": 13,
+                  "winner": "hunter_esports"
+                },
+                {
+                  "code": "Partida 48",
+                  "a": "ufu_insane",
+                  "scoreA": 14,
+                  "b": "macklogic_white",
+                  "scoreB": 12,
+                  "winner": "ufu_insane"
+                },
+                {
+                  "code": "Partida 49",
+                  "a": "brutal_esports",
+                  "scoreA": 4,
+                  "b": "ufmt_turuna",
+                  "scoreB": 13,
+                  "winner": "ufmt_turuna"
+                },
+                {
+                  "code": "Partida 50",
+                  "a": "unirv_rushone",
+                  "scoreA": 13,
+                  "b": "atletica_unifei",
+                  "scoreB": 3,
+                  "winner": "unirv_rushone"
+                }
+              ]
+            },
+            {
+              "title": "Rodada de 8 inferior",
+              "matches": [
+                {
+                  "code": "Partida 51",
+                  "a": "fei_darkowls",
+                  "scoreA": 14,
+                  "b": "hunter_esports",
+                  "scoreB": 12,
+                  "winner": "fei_darkowls"
+                },
+                {
+                  "code": "Partida 52",
+                  "a": "caap_hellhounds",
+                  "scoreA": 9,
+                  "b": "ufu_insane",
+                  "scoreB": 13,
+                  "winner": "ufu_insane"
+                },
+                {
+                  "code": "Partida 53",
+                  "a": "ufs_warriowls",
+                  "scoreA": 2,
+                  "b": "ufmt_turuna",
+                  "scoreB": 13,
+                  "winner": "ufmt_turuna"
+                },
+                {
+                  "code": "Partida 54",
+                  "a": "puc_priests",
+                  "scoreA": 0,
+                  "b": "unirv_rushone",
+                  "scoreB": 1,
+                  "winner": "unirv_rushone",
+                  "status": "W.O."
+                }
+              ]
+            },
+            {
+              "title": "Rodada de 4 inferior",
+              "matches": [
+                {
+                  "code": "Partida 55",
+                  "a": "fei_darkowls",
+                  "scoreA": 11,
+                  "b": "ufu_insane",
+                  "scoreB": 13,
+                  "winner": "ufu_insane"
+                },
+                {
+                  "code": "Partida 56",
+                  "a": "ufmt_turuna",
+                  "scoreA": 13,
+                  "b": "unirv_rushone",
+                  "scoreB": 5,
+                  "winner": "ufmt_turuna"
+                }
+              ]
+            },
+            {
+              "title": "Quartas de final inferior",
+              "matches": [
+                {
+                  "code": "Partida 57",
+                  "a": "axis_anteaters_shadow",
+                  "scoreA": 9,
+                  "b": "ufu_insane",
+                  "scoreB": 13,
+                  "winner": "ufu_insane"
+                },
+                {
+                  "code": "Partida 58",
+                  "a": "furia_utfpr",
+                  "scoreA": 7,
+                  "b": "ufmt_turuna",
+                  "scoreB": 13,
+                  "winner": "ufmt_turuna",
+                  "status": "Sem estatísticas",
+                  "playedAt": "2025-06-29T18:54:57Z",
+                  "previewNote": "Placar oficial: FURIA 7x13 UFMT, Haven. Mapa fora das estatísticas porque os dados da partida estão incompletos."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "copa-alianca-2025-classificatoria-4": {
+    name: "Copa Alian\u00e7a 2025 - Classificat\u00f3ria 4",
+    organizer: "AcadArena",
+    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
+    prizePool: "-",
+    tier: "A",
+    type: "Online - Classificat\u00f3ria",
+    status: "Finalizado",
+    teamCount: 29,
+    mapPool: ["Ascent", "Bind", "Haven", "Icebox", "Lotus", "Sunset"],
+    teams: [
+      "axis_anteaters_shadow",
+      "fei_darkowls",
+      "unirv_rushone",
+      "furia_utfpr",
+      "ufrj_canis_b",
+      "ufu_blossom",
+      "ufpr_bbn",
+      "aaicei_pinguins",
+      "a2e_uff",
+      "fsa_hopshots",
+      "hunter_esports",
+      "brutal_esports",
+      "macklogic_white",
+      "axis_blossom",
+      "agronomia_ufg",
+      "green_owls_pulsatrix",
+      "ufmg_fenix_b",
+      "maua_blue",
+      "green_owls_noctua",
+      "black_cyber",
+      "univap_carrascos",
+      "cyberkongs",
+      "pucc_cardinals",
+      "wolf_gaming",
+      "caap_hellhounds",
+      "inatel_white",
+      "ifsp_icare",
+      "raposa_e_sports",
+      "ufgd_duendes",
+    ],
+    placements: [
+      { range: "Classificado", id: "ufrj_canis_b", note: "Chave superior" },
+      { range: "Classificado", id: "hunter_esports", note: "Chave superior" },
+      { range: "Classificado", id: "caap_hellhounds", note: "Chave inferior" },
+      { range: "Classificado", id: "aaicei_pinguins", note: "Chave inferior" },
+      { range: "5-6", id: "fei_darkowls", note: "Decis\u00e3o de vaga inferior" },
+      { range: "5-6", id: "wolf_gaming", note: "Decis\u00e3o de vaga inferior" },
+      { range: "7-8", id: "brutal_esports", note: "Rodada de 4 inferior" },
+      { range: "7-8", id: "black_cyber", note: "Rodada de 4 inferior" },
+      { range: "9-12", id: "axis_anteaters_shadow", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "macklogic_white", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "green_owls_noctua", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "pucc_cardinals", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "furia_utfpr", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "agronomia_ufg", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "green_owls_pulsatrix", note: "Rodada de 8 inferior" },
+      { range: "13-16", id: "cyberkongs", note: "Rodada de 8 inferior" },
+      { range: "17-24", id: "unirv_rushone", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "ufu_blossom", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "ufpr_bbn", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "fsa_hopshots", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "axis_blossom", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "ufmg_fenix_b", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "maua_blue", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "univap_carrascos", note: "Rodada de 16 inferior" },
+      { range: "25-29", id: "a2e_uff", note: "Rodada de 16 inferior" },
+      { range: "25-29", id: "inatel_white", note: "Rodada de 16 inferior" },
+      { range: "25-29", id: "ifsp_icare", note: "Rodada de 16 inferior" },
+      { range: "25-29", id: "raposa_e_sports", note: "Rodada de 16 inferior" },
+      { range: "25-29", id: "ufgd_duendes", note: "Rodada de 16 inferior" },
+    ],
+    format: {
+      summary: "Elimina\u00e7\u00e3o dupla",
+      details: [
+        "Classificat\u00f3ria com 4 vagas",
+        "2 vagas pela chave superior",
+        "2 vagas pela chave inferior",
+        "Jogos MD1",
+      ],
+      standings: "Classificados oficiais",
+    },
+    bracket: {
+      title: "Elimina\u00e7\u00e3o dupla",
+      regions: [
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Rodada de 32 superior",
+              matches: [
+                { code: "Partida 1", a: "axis_anteaters_shadow", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "axis_anteaters_shadow" },
+                { code: "Partida 2", a: "green_owls_pulsatrix", scoreA: 7, b: "ufmg_fenix_b", scoreB: 13, winner: "ufmg_fenix_b" },
+                { code: "Partida 3", a: "aaicei_pinguins", scoreA: 9, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
+                { code: "Partida 4", a: "a2e_uff", scoreA: 8, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
+                { code: "Partida 5", a: "furia_utfpr", scoreA: 1, b: "ufgd_duendes", scoreB: 0, winner: "furia_utfpr", status: "W.O." },
+                { code: "Partida 6", a: "macklogic_white", scoreA: 5, b: "black_cyber", scoreB: 13, winner: "black_cyber" },
+                { code: "Partida 7", a: "ufrj_canis_b", scoreA: 1, b: "raposa_e_sports", scoreB: 0, winner: "ufrj_canis_b", status: "W.O." },
+                { code: "Partida 8", a: "brutal_esports", scoreA: 15, b: "univap_carrascos", scoreB: 13, winner: "brutal_esports" },
+                { code: "Partida 9", a: "fei_darkowls", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "fei_darkowls" },
+                { code: "Partida 10", a: "agronomia_ufg", scoreA: 13, b: "maua_blue", scoreB: 2, winner: "agronomia_ufg" },
+                { code: "Partida 11", a: "ufpr_bbn", scoreA: 1, b: "inatel_white", scoreB: 0, winner: "ufpr_bbn", status: "W.O." },
+                { code: "Partida 12", a: "fsa_hopshots", scoreA: 7, b: "pucc_cardinals", scoreB: 13, winner: "pucc_cardinals" },
+                { code: "Partida 13", a: "unirv_rushone", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "unirv_rushone" },
+                { code: "Partida 14", a: "axis_blossom", scoreA: 10, b: "green_owls_noctua", scoreB: 13, winner: "green_owls_noctua" },
+                { code: "Partida 15", a: "ufu_blossom", scoreA: 1, b: "ifsp_icare", scoreB: 0, winner: "ufu_blossom", status: "W.O." },
+                { code: "Partida 16", a: "hunter_esports", scoreA: 13, b: "cyberkongs", scoreB: 6, winner: "hunter_esports" },
+              ],
+            },
+            {
+              title: "Rodada de 16 superior",
+              matches: [
+                { code: "Partida 17", a: "axis_anteaters_shadow", scoreA: 13, b: "ufmg_fenix_b", scoreB: 2, winner: "axis_anteaters_shadow" },
+                { code: "Partida 18", a: "caap_hellhounds", scoreA: 13, b: "wolf_gaming", scoreB: 8, winner: "caap_hellhounds" },
+                { code: "Partida 19", a: "furia_utfpr", scoreA: 7, b: "black_cyber", scoreB: 13, winner: "black_cyber" },
+                { code: "Partida 20", a: "ufrj_canis_b", scoreA: 13, b: "brutal_esports", scoreB: 7, winner: "ufrj_canis_b" },
+                { code: "Partida 21", a: "fei_darkowls", scoreA: 13, b: "agronomia_ufg", scoreB: 10, winner: "fei_darkowls" },
+                { code: "Partida 22", a: "ufpr_bbn", scoreA: 15, b: "pucc_cardinals", scoreB: 17, winner: "pucc_cardinals" },
+                { code: "Partida 23", a: "unirv_rushone", scoreA: 0, b: "green_owls_noctua", scoreB: 1, winner: "green_owls_noctua", status: "W.O." },
+                { code: "Partida 24", a: "ufu_blossom", scoreA: 3, b: "hunter_esports", scoreB: 13, winner: "hunter_esports" },
+              ],
+            },
+            {
+              title: "Quartas de final superior",
+              matches: [
+                { code: "Partida 25", a: "axis_anteaters_shadow", scoreA: 8, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
+                { code: "Partida 26", a: "black_cyber", scoreA: 8, b: "ufrj_canis_b", scoreB: 13, winner: "ufrj_canis_b" },
+                { code: "Partida 27", a: "fei_darkowls", scoreA: 13, b: "pucc_cardinals", scoreB: 8, winner: "fei_darkowls" },
+                { code: "Partida 28", a: "green_owls_noctua", scoreA: 8, b: "hunter_esports", scoreB: 13, winner: "hunter_esports" },
+              ],
+            },
+            {
+              title: "Semifinais superior",
+              matches: [
+                { code: "Partida 29", a: "caap_hellhounds", scoreA: 0, b: "ufrj_canis_b", scoreB: 1, winner: "ufrj_canis_b", status: "W.O." },
+                { code: "Partida 30", a: "fei_darkowls", scoreA: 7, b: "hunter_esports", scoreB: 13, winner: "hunter_esports" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada de 16 inferior",
+              matches: [
+                { code: "Partida 31", a: "ifsp_icare", scoreA: 0, b: "cyberkongs", scoreB: 1, winner: "cyberkongs", status: "W.O." },
+                { code: "Partida 32", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "axis_blossom", scoreB: 1, winner: "axis_blossom" },
+                { code: "Partida 33", a: "inatel_white", scoreA: 0, b: "fsa_hopshots", scoreB: 1, winner: "fsa_hopshots", status: "W.O." },
+                { code: "Partida 34", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "maua_blue", scoreB: 1, winner: "maua_blue" },
+                { code: "Partida 35", a: "raposa_e_sports", scoreA: 0, b: "univap_carrascos", scoreB: 1, winner: "univap_carrascos", status: "W.O." },
+                { code: "Partida 36", a: "ufgd_duendes", scoreA: 0, b: "macklogic_white", scoreB: 1, winner: "macklogic_white", status: "W.O." },
+                { code: "Partida 37", a: "aaicei_pinguins", scoreA: 13, b: "a2e_uff", scoreB: 11, winner: "aaicei_pinguins" },
+                { code: "Partida 38", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "green_owls_pulsatrix", scoreB: 1, winner: "green_owls_pulsatrix" },
+              ],
+            },
+            {
+              title: "Rodada de 16 inferior",
+              matches: [
+                { code: "Partida 39", a: "ufmg_fenix_b", scoreA: 6, b: "cyberkongs", scoreB: 13, winner: "cyberkongs" },
+                { code: "Partida 40", a: "wolf_gaming", scoreA: 13, b: "axis_blossom", scoreB: 8, winner: "wolf_gaming" },
+                { code: "Partida 41", a: "furia_utfpr", scoreA: 13, b: "fsa_hopshots", scoreB: 10, winner: "furia_utfpr" },
+                { code: "Partida 42", a: "brutal_esports", scoreA: 13, b: "maua_blue", scoreB: 6, winner: "brutal_esports" },
+                { code: "Partida 43", a: "agronomia_ufg", scoreA: 13, b: "univap_carrascos", scoreB: 5, winner: "agronomia_ufg" },
+                { code: "Partida 44", a: "ufpr_bbn", scoreA: 12, b: "macklogic_white", scoreB: 14, winner: "macklogic_white" },
+                { code: "Partida 45", a: "unirv_rushone", scoreA: 0, b: "aaicei_pinguins", scoreB: 1, winner: "aaicei_pinguins", status: "W.O." },
+                { code: "Partida 46", a: "ufu_blossom", scoreA: 5, b: "green_owls_pulsatrix", scoreB: 13, winner: "green_owls_pulsatrix" },
+              ],
+            },
+            {
+              title: "Rodada de 8 inferior",
+              matches: [
+                { code: "Partida 47", a: "cyberkongs", scoreA: 5, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
+                { code: "Partida 48", a: "furia_utfpr", scoreA: 5, b: "brutal_esports", scoreB: 13, winner: "brutal_esports" },
+                { code: "Partida 49", a: "agronomia_ufg", scoreA: 9, b: "macklogic_white", scoreB: 13, winner: "macklogic_white" },
+                { code: "Partida 50", a: "aaicei_pinguins", scoreA: 1, b: "green_owls_pulsatrix", scoreB: 0, winner: "aaicei_pinguins", status: "W.O." },
+              ],
+            },
+            {
+              title: "Rodada de 8 inferior",
+              matches: [
+                { code: "Partida 51", a: "green_owls_noctua", scoreA: 9, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
+                { code: "Partida 52", a: "pucc_cardinals", scoreA: 8, b: "brutal_esports", scoreB: 13, winner: "brutal_esports" },
+                { code: "Partida 53", a: "black_cyber", scoreA: 13, b: "macklogic_white", scoreB: 3, winner: "black_cyber" },
+                { code: "Partida 54", a: "axis_anteaters_shadow", scoreA: 5, b: "aaicei_pinguins", scoreB: 13, winner: "aaicei_pinguins" },
+              ],
+            },
+            {
+              title: "Rodada de 4 inferior",
+              matches: [
+                { code: "Partida 55", a: "wolf_gaming", scoreA: 13, b: "brutal_esports", scoreB: 10, winner: "wolf_gaming" },
+                { code: "Partida 56", a: "black_cyber", scoreA: 13, b: "aaicei_pinguins", scoreB: 15, winner: "aaicei_pinguins" },
+              ],
+            },
+            {
+              title: "Quartas de final inferior",
+              matches: [
+                { code: "Partida 57", a: "caap_hellhounds", scoreA: 13, b: "wolf_gaming", scoreB: 4, winner: "caap_hellhounds" },
+                { code: "Partida 58", a: "fei_darkowls", scoreA: 7, b: "aaicei_pinguins", scoreB: 13, winner: "aaicei_pinguins" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "copa-alianca-2025-fase-de-grupos": {
+    name: "Copa Alian\u00e7a 2025 - Fase de Grupos",
+    organizer: "AcadArena",
+    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
+    prizePool: "-",
+    tier: "S",
+    type: "Online - Fase de grupos",
+    status: "Finalizado",
+    teamCount: 16,
+    mapPool: ["Ascent", "Bind", "Corrode", "Haven", "Icebox", "Lotus", "Sunset"],
+    format: {
+      summary: "Pontos corridos",
+      details: [
+        "16 equipes: as 4 classificadas de cada classificat\u00f3ria",
+        "Turno \u00fanico: as 16 equipes se enfrentam uma vez (15 rodadas, 120 partidas)",
+        "Jogos MD1",
+        "8 equipes avan\u00e7am aos playoffs",
+      ],
+      standings: "Classifica\u00e7\u00e3o final",
+    },
+    teams: [
+      "azure_bears_golden",
+      "usp_stars",
+      "ufu_saints",
+      "macklogic_red",
+      "uninassau_griffins",
+      "azure_bears_black",
+      "ufg_eagles",
+      "maua_b",
+      "ufrj_canis",
+      "unicamp_tritons_black",
+      "ufu_insane",
+      "ufmt_turuna",
+      "hunter_esports",
+      "ufrj_canis_b",
+      "caap_hellhounds",
+      "aaicei_pinguins",
+    ],
+    placements: [
+      { range: "Classificado", id: "ufu_saints", note: "12-3" },
+      { range: "Classificado", id: "maua_b", note: "12-3" },
+      { range: "Classificado", id: "azure_bears_golden", note: "11-4" },
+      { range: "Classificado", id: "unicamp_tritons_black", note: "11-4" },
+      { range: "Classificado", id: "uninassau_griffins", note: "10-5" },
+      { range: "Classificado", id: "ufg_eagles", note: "9-6" },
+      { range: "Classificado", id: "macklogic_red", note: "9-6" },
+      { range: "Classificado", id: "caap_hellhounds", note: "9-6" },
+      { range: "9-11", id: "ufmt_turuna", note: "7-8" },
+      { range: "9-11", id: "ufu_insane", note: "7-8" },
+      { range: "9-11", id: "ufrj_canis_b", note: "6-9" },
+      { range: "12-14", id: "ufrj_canis", note: "5-10" },
+      { range: "12-14", id: "azure_bears_black", note: "4-11" },
+      { range: "12-14", id: "usp_stars", note: "4-11" },
+      { range: "15-16", id: "aaicei_pinguins", note: "3-12" },
+      { range: "15-16", id: "hunter_esports", note: "1-14" },
+    ],
+    swiss: {
+      roundRobin: true,
+      seriesCount: 120,
+      standingsLabel: "Classifica\u00e7\u00e3o final - as 8 primeiras avan\u00e7am aos playoffs",
+      rounds: [
+        {
+          title: "Rodada 1",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 1", a: "ufrj_canis", scoreA: 1, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
+            { code: "Partida 2", a: "unicamp_tritons_black", scoreA: 13, b: "usp_stars", scoreB: 8, winner: "unicamp_tritons_black" },
+            { code: "Partida 3", a: "ufu_insane", scoreA: 1, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
+            { code: "Partida 4", a: "ufmt_turuna", scoreA: 13, b: "macklogic_red", scoreB: 8, winner: "ufmt_turuna" },
+            { code: "Partida 5", a: "hunter_esports", scoreA: 5, b: "uninassau_griffins", scoreB: 13, winner: "uninassau_griffins" },
+            { code: "Partida 6", a: "ufrj_canis_b", scoreA: 13, b: "azure_bears_black", scoreB: 15, winner: "azure_bears_black" },
+            { code: "Partida 7", a: "caap_hellhounds", scoreA: 7, b: "ufg_eagles", scoreB: 13, winner: "ufg_eagles" },
+            { code: "Partida 8", a: "aaicei_pinguins", scoreA: 6, b: "maua_b", scoreB: 13, winner: "maua_b" },
+          ],
+        },
+        {
+          title: "Rodada 2",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 9", a: "unicamp_tritons_black", scoreA: 9, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
+            { code: "Partida 10", a: "ufu_insane", scoreA: 13, b: "ufrj_canis", scoreB: 11, winner: "ufu_insane" },
+            { code: "Partida 11", a: "ufmt_turuna", scoreA: 10, b: "usp_stars", scoreB: 13, winner: "usp_stars" },
+            { code: "Partida 12", a: "hunter_esports", scoreA: 3, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
+            { code: "Partida 13", a: "ufrj_canis_b", scoreA: 13, b: "macklogic_red", scoreB: 10, winner: "ufrj_canis_b" },
+            { code: "Partida 14", a: "caap_hellhounds", scoreA: 6, b: "uninassau_griffins", scoreB: 13, winner: "uninassau_griffins" },
+            { code: "Partida 15", a: "aaicei_pinguins", scoreA: 13, b: "azure_bears_black", scoreB: 10, winner: "aaicei_pinguins" },
+            { code: "Partida 16", a: "maua_b", scoreA: 16, b: "ufg_eagles", scoreB: 14, winner: "maua_b" },
+          ],
+        },
+        {
+          title: "Rodada 3",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 17", a: "ufu_insane", scoreA: 3, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
+            { code: "Partida 18", a: "ufmt_turuna", scoreA: 6, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
+            { code: "Partida 19", a: "hunter_esports", scoreA: 0, b: "ufrj_canis", scoreB: 1, winner: "ufrj_canis", status: "W.O." },
+            { code: "Partida 20", a: "ufrj_canis_b", scoreA: 17, b: "usp_stars", scoreB: 15, winner: "ufrj_canis_b" },
+            { code: "Partida 21", a: "caap_hellhounds", scoreA: 13, b: "ufu_saints", scoreB: 5, winner: "caap_hellhounds" },
+            { code: "Partida 22", a: "aaicei_pinguins", scoreA: 8, b: "macklogic_red", scoreB: 13, winner: "macklogic_red" },
+            { code: "Partida 23", a: "maua_b", scoreA: 13, b: "uninassau_griffins", scoreB: 5, winner: "maua_b" },
+            { code: "Partida 24", a: "ufg_eagles", scoreA: 13, b: "azure_bears_black", scoreB: 5, winner: "ufg_eagles" },
+          ],
+        },
+        {
+          title: "Rodada 4",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 25", a: "ufmt_turuna", scoreA: 13, b: "azure_bears_golden", scoreB: 8, winner: "ufmt_turuna" },
+            { code: "Partida 26", a: "hunter_esports", scoreA: 13, b: "ufu_insane", scoreB: 10, winner: "hunter_esports" },
+            { code: "Partida 27", a: "ufrj_canis_b", scoreA: 13, b: "unicamp_tritons_black", scoreB: 9, winner: "ufrj_canis_b" },
+            { code: "Partida 28", a: "caap_hellhounds", scoreA: 13, b: "ufrj_canis", scoreB: 10, winner: "caap_hellhounds" },
+            { code: "Partida 29", a: "aaicei_pinguins", scoreA: 7, b: "usp_stars", scoreB: 13, winner: "usp_stars" },
+            { code: "Partida 30", a: "maua_b", scoreA: 11, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
+            { code: "Partida 31", a: "ufg_eagles", scoreA: 8, b: "macklogic_red", scoreB: 13, winner: "macklogic_red" },
+            { code: "Partida 32", a: "azure_bears_black", scoreA: 8, b: "uninassau_griffins", scoreB: 13, winner: "uninassau_griffins" },
+          ],
+        },
+        {
+          title: "Rodada 5",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 33", a: "hunter_esports", scoreA: 2, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
+            { code: "Partida 34", a: "ufrj_canis_b", scoreA: 13, b: "ufmt_turuna", scoreB: 11, winner: "ufrj_canis_b" },
+            { code: "Partida 35", a: "caap_hellhounds", scoreA: 1, b: "ufu_insane", scoreB: 13, winner: "ufu_insane" },
+            { code: "Partida 36", a: "aaicei_pinguins", scoreA: 11, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
+            { code: "Partida 37", a: "maua_b", scoreA: 13, b: "ufrj_canis", scoreB: 9, winner: "maua_b" },
+            { code: "Partida 38", a: "ufg_eagles", scoreA: 13, b: "usp_stars", scoreB: 5, winner: "ufg_eagles" },
+            { code: "Partida 39", a: "azure_bears_black", scoreA: 8, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
+            { code: "Partida 40", a: "uninassau_griffins", scoreA: 13, b: "macklogic_red", scoreB: 6, winner: "uninassau_griffins" },
+          ],
+        },
+        {
+          title: "Rodada 6",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 41", a: "ufrj_canis_b", scoreA: 8, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
+            { code: "Partida 42", a: "caap_hellhounds", scoreA: 13, b: "hunter_esports", scoreB: 9, winner: "caap_hellhounds" },
+            { code: "Partida 43", a: "aaicei_pinguins", scoreA: 2, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
+            { code: "Partida 44", a: "maua_b", scoreA: 13, b: "ufu_insane", scoreB: 10, winner: "maua_b" },
+            { code: "Partida 45", a: "ufg_eagles", scoreA: 13, b: "unicamp_tritons_black", scoreB: 11, winner: "ufg_eagles" },
+            { code: "Partida 46", a: "azure_bears_black", scoreA: 4, b: "ufrj_canis", scoreB: 13, winner: "ufrj_canis" },
+            { code: "Partida 47", a: "uninassau_griffins", scoreA: 13, b: "usp_stars", scoreB: 10, winner: "uninassau_griffins" },
+            { code: "Partida 48", a: "macklogic_red", scoreA: 13, b: "ufu_saints", scoreB: 6, winner: "macklogic_red" },
+          ],
+        },
+        {
+          title: "Rodada 7",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 49", a: "caap_hellhounds", scoreA: 6, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
+            { code: "Partida 50", a: "aaicei_pinguins", scoreA: 13, b: "ufrj_canis_b", scoreB: 10, winner: "aaicei_pinguins" },
+            { code: "Partida 51", a: "maua_b", scoreA: 1, b: "hunter_esports", scoreB: 0, winner: "maua_b", status: "W.O." },
+            { code: "Partida 52", a: "ufg_eagles", scoreA: 15, b: "ufmt_turuna", scoreB: 13, winner: "ufg_eagles" },
+            { code: "Partida 53", a: "azure_bears_black", scoreA: 2, b: "ufu_insane", scoreB: 13, winner: "ufu_insane" },
+            { code: "Partida 54", a: "uninassau_griffins", scoreA: 11, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
+            { code: "Partida 55", a: "macklogic_red", scoreA: 13, b: "ufrj_canis", scoreB: 4, winner: "macklogic_red" },
+            { code: "Partida 56", a: "ufu_saints", scoreA: 1, b: "usp_stars", scoreB: 0, winner: "ufu_saints" },
+          ],
+        },
+        {
+          title: "Rodada 8",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 57", a: "aaicei_pinguins", scoreA: 8, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
+            { code: "Partida 58", a: "maua_b", scoreA: 13, b: "caap_hellhounds", scoreB: 15, winner: "caap_hellhounds" },
+            { code: "Partida 59", a: "ufg_eagles", scoreA: 11, b: "ufrj_canis_b", scoreB: 13, winner: "ufrj_canis_b" },
+            { code: "Partida 60", a: "azure_bears_black", scoreA: 13, b: "hunter_esports", scoreB: 3, winner: "azure_bears_black" },
+            { code: "Partida 61", a: "uninassau_griffins", scoreA: 6, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
+            { code: "Partida 62", a: "macklogic_red", scoreA: 13, b: "ufu_insane", scoreB: 9, winner: "macklogic_red" },
+            { code: "Partida 63", a: "ufu_saints", scoreA: 11, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
+            { code: "Partida 64", a: "usp_stars", scoreA: 0, b: "ufrj_canis", scoreB: 1, winner: "ufrj_canis", status: "W.O." },
+          ],
+        },
+        {
+          title: "Rodada 9",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 65", a: "maua_b", scoreA: 13, b: "azure_bears_golden", scoreB: 11, winner: "maua_b" },
+            { code: "Partida 66", a: "ufg_eagles", scoreA: 13, b: "aaicei_pinguins", scoreB: 11, winner: "ufg_eagles" },
+            { code: "Partida 67", a: "azure_bears_black", scoreA: 10, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
+            { code: "Partida 68", a: "uninassau_griffins", scoreA: 13, b: "ufrj_canis_b", scoreB: 3, winner: "uninassau_griffins" },
+            { code: "Partida 69", a: "macklogic_red", scoreA: 13, b: "hunter_esports", scoreB: 2, winner: "macklogic_red" },
+            { code: "Partida 70", a: "ufu_saints", scoreA: 13, b: "ufmt_turuna", scoreB: 8, winner: "ufu_saints" },
+            { code: "Partida 71", a: "usp_stars", scoreA: 11, b: "ufu_insane", scoreB: 13, winner: "ufu_insane" },
+            { code: "Partida 72", a: "ufrj_canis", scoreA: 4, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
+          ],
+        },
+        {
+          title: "Rodada 10",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 73", a: "ufg_eagles", scoreA: 10, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
+            { code: "Partida 74", a: "azure_bears_black", scoreA: 2, b: "maua_b", scoreB: 13, winner: "maua_b" },
+            { code: "Partida 75", a: "uninassau_griffins", scoreA: 13, b: "aaicei_pinguins", scoreB: 5, winner: "uninassau_griffins" },
+            { code: "Partida 76", a: "macklogic_red", scoreA: 7, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
+            { code: "Partida 77", a: "ufu_saints", scoreA: 13, b: "ufrj_canis_b", scoreB: 4, winner: "ufu_saints" },
+            { code: "Partida 78", a: "usp_stars", scoreA: 13, b: "hunter_esports", scoreB: 9, winner: "usp_stars" },
+            { code: "Partida 79", a: "ufrj_canis", scoreA: 9, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
+            { code: "Partida 80", a: "unicamp_tritons_black", scoreA: 13, b: "ufu_insane", scoreB: 9, winner: "unicamp_tritons_black" },
+          ],
+        },
+        {
+          title: "Rodada 11",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 81", a: "azure_bears_black", scoreA: 3, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
+            { code: "Partida 82", a: "uninassau_griffins", scoreA: 13, b: "ufg_eagles", scoreB: 10, winner: "uninassau_griffins" },
+            { code: "Partida 83", a: "macklogic_red", scoreA: 13, b: "maua_b", scoreB: 5, winner: "macklogic_red" },
+            { code: "Partida 84", a: "ufu_saints", scoreA: 13, b: "aaicei_pinguins", scoreB: 9, winner: "ufu_saints" },
+            { code: "Partida 85", a: "usp_stars", scoreA: 15, b: "caap_hellhounds", scoreB: 13, winner: "usp_stars" },
+            { code: "Partida 86", a: "ufrj_canis", scoreA: 13, b: "ufrj_canis_b", scoreB: 10, winner: "ufrj_canis" },
+            { code: "Partida 87", a: "unicamp_tritons_black", scoreA: 13, b: "hunter_esports", scoreB: 3, winner: "unicamp_tritons_black" },
+            { code: "Partida 88", a: "ufu_insane", scoreA: 9, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
+          ],
+        },
+        {
+          title: "Rodada 12",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 89", a: "uninassau_griffins", scoreA: 14, b: "azure_bears_golden", scoreB: 12, winner: "uninassau_griffins" },
+            { code: "Partida 90", a: "macklogic_red", scoreA: 13, b: "azure_bears_black", scoreB: 8, winner: "macklogic_red" },
+            { code: "Partida 91", a: "ufu_saints", scoreA: 13, b: "ufg_eagles", scoreB: 9, winner: "ufu_saints" },
+            { code: "Partida 92", a: "usp_stars", scoreA: 0, b: "maua_b", scoreB: 1, winner: "maua_b", status: "W.O." },
+            { code: "Partida 93", a: "ufrj_canis", scoreA: 1, b: "aaicei_pinguins", scoreB: 0, winner: "ufrj_canis", status: "W.O." },
+            { code: "Partida 94", a: "unicamp_tritons_black", scoreA: 13, b: "caap_hellhounds", scoreB: 7, winner: "unicamp_tritons_black" },
+            { code: "Partida 95", a: "ufu_insane", scoreA: 1, b: "ufrj_canis_b", scoreB: 0, winner: "ufu_insane", status: "W.O." },
+            { code: "Partida 96", a: "ufmt_turuna", scoreA: 13, b: "hunter_esports", scoreB: 5, winner: "ufmt_turuna" },
+          ],
+        },
+        {
+          title: "Rodada 13",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 97", a: "macklogic_red", scoreA: 7, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
+            { code: "Partida 98", a: "ufu_saints", scoreA: 1, b: "uninassau_griffins", scoreB: 0, winner: "ufu_saints", status: "W.O." },
+            { code: "Partida 99", a: "usp_stars", scoreA: 0, b: "azure_bears_black", scoreB: 1, winner: "azure_bears_black", status: "W.O." },
+            { code: "Partida 100", a: "ufrj_canis", scoreA: 0, b: "ufg_eagles", scoreB: 1, winner: "ufg_eagles" },
+            { code: "Partida 101", a: "unicamp_tritons_black", scoreA: 5, b: "maua_b", scoreB: 13, winner: "maua_b" },
+            { code: "Partida 102", a: "ufu_insane", scoreA: 1, b: "aaicei_pinguins", scoreB: 0, winner: "ufu_insane", status: "W.O." },
+            { code: "Partida 103", a: "ufmt_turuna", scoreA: 11, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
+            { code: "Partida 104", a: "hunter_esports", scoreA: 0, b: "ufrj_canis_b", scoreB: 1, winner: "ufrj_canis_b", status: "W.O." },
+          ],
+        },
+        {
+          title: "Rodada 14",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 105", a: "ufu_saints", scoreA: 13, b: "azure_bears_golden", scoreB: 8, winner: "ufu_saints" },
+            { code: "Partida 106", a: "usp_stars", scoreA: 8, b: "macklogic_red", scoreB: 13, winner: "macklogic_red" },
+            { code: "Partida 107", a: "ufrj_canis", scoreA: 15, b: "uninassau_griffins", scoreB: 17, winner: "uninassau_griffins" },
+            { code: "Partida 108", a: "unicamp_tritons_black", scoreA: 13, b: "azure_bears_black", scoreB: 10, winner: "unicamp_tritons_black" },
+            { code: "Partida 109", a: "ufu_insane", scoreA: 8, b: "ufg_eagles", scoreB: 13, winner: "ufg_eagles" },
+            { code: "Partida 110", a: "ufmt_turuna", scoreA: 9, b: "maua_b", scoreB: 13, winner: "maua_b" },
+            { code: "Partida 111", a: "hunter_esports", scoreA: 0, b: "aaicei_pinguins", scoreB: 1, winner: "aaicei_pinguins", status: "W.O." },
+            { code: "Partida 112", a: "ufrj_canis_b", scoreA: 0, b: "caap_hellhounds", scoreB: 1, winner: "caap_hellhounds", status: "W.O." },
+          ],
+        },
+        {
+          title: "Rodada 15",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 113", a: "usp_stars", scoreA: 0, b: "azure_bears_golden", scoreB: 1, winner: "azure_bears_golden", status: "W.O." },
+            { code: "Partida 114", a: "ufrj_canis", scoreA: 10, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
+            { code: "Partida 115", a: "unicamp_tritons_black", scoreA: 13, b: "macklogic_red", scoreB: 10, winner: "unicamp_tritons_black" },
+            { code: "Partida 116", a: "ufu_insane", scoreA: 1, b: "uninassau_griffins", scoreB: 0, winner: "ufu_insane", status: "W.O." },
+            { code: "Partida 117", a: "ufmt_turuna", scoreA: 0, b: "azure_bears_black", scoreB: 1, winner: "azure_bears_black", status: "W.O." },
+            { code: "Partida 118", a: "hunter_esports", scoreA: 0, b: "ufg_eagles", scoreB: 1, winner: "ufg_eagles", status: "W.O." },
+            { code: "Partida 119", a: "ufrj_canis_b", scoreA: 14, b: "maua_b", scoreB: 16, winner: "maua_b" },
+            { code: "Partida 120", a: "caap_hellhounds", scoreA: 1, b: "aaicei_pinguins", scoreB: 0, winner: "caap_hellhounds", status: "W.O." },
+          ],
+        },
+      ],
+      standings: [
+        { id: "ufu_saints", wins: 12, losses: 3, range: "1\u00ba", status: "Classificado" },
+        { id: "maua_b", wins: 12, losses: 3, range: "2\u00ba", status: "Classificado" },
+        { id: "azure_bears_golden", wins: 11, losses: 4, range: "3\u00ba", status: "Classificado" },
+        { id: "unicamp_tritons_black", wins: 11, losses: 4, range: "4\u00ba", status: "Classificado" },
+        { id: "uninassau_griffins", wins: 10, losses: 5, range: "5\u00ba", status: "Classificado" },
+        { id: "ufg_eagles", wins: 9, losses: 6, range: "6\u00ba", status: "Classificado" },
+        { id: "macklogic_red", wins: 9, losses: 6, range: "7\u00ba", status: "Classificado" },
+        { id: "caap_hellhounds", wins: 9, losses: 6, range: "8\u00ba", status: "Classificado" },
+      ],
+      eliminated: [
+        { id: "ufmt_turuna", wins: 7, losses: 8, range: "9\u00ba" },
+        { id: "ufu_insane", wins: 7, losses: 8, range: "10\u00ba" },
+        { id: "ufrj_canis_b", wins: 6, losses: 9, range: "11\u00ba" },
+        { id: "ufrj_canis", wins: 5, losses: 10, range: "12\u00ba" },
+        { id: "azure_bears_black", wins: 4, losses: 11, range: "13\u00ba" },
+        { id: "usp_stars", wins: 4, losses: 11, range: "14\u00ba" },
+        { id: "aaicei_pinguins", wins: 3, losses: 12, range: "15\u00ba" },
+        { id: "hunter_esports", wins: 1, losses: 14, range: "16\u00ba" },
+      ],
+    },
+  },
+  "lbeu-2025-2-split-fase-suica": {
+    name: "LBEU 2025 - 2\u00ba Split - Fase Su\u00ed\u00e7a",
+    organizer: "LigaGG",
+    prizePool: "-",
+    tier: "A",
+    type: "Online - Fase su\u00ed\u00e7a",
+    status: "Finalizado",
+    teamCount: 25,
+    mapPool: ["Abyss", "Ascent", "Bind", "Corrode", "Haven", "Lotus", "Pearl", "Split", "Sunset"],
+    format: {
+      summary: "Fase su\u00ed\u00e7a com Elo",
+      details: [
+        "10 rodadas com participa\u00e7\u00e3o opcional: a cada rodada a equipe escolhia se jogaria",
+        "Advers\u00e1rio sorteado entre equipes de Elo parecido",
+        "Vencer quem tinha Elo maior valia mais pontos, e perder para quem tinha Elo menor tirava mais",
+        "A classifica\u00e7\u00e3o final era pelo Elo, que levou as equipes ao Championship, \u00e0 Off Season e \u00e0 Practice",
+        "Jogos MD1",
+      ],
+      standings: "Chave de playoffs de cada equipe",
+    },
+    teams: [
+      "azure_bears_golden",
+      "wolf_gaming",
+      "maua_b",
+      "a2e_uff",
+      "black_cyber",
+      "axis_anteaters",
+      "ufu_saints",
+      "ufrj_canis_b",
+      "espm_overbite_misto",
+      "macklogic_white",
+      "unifesp_erex",
+      "azure_bears_black",
+      "fei_darkowls",
+      "sheriff_iff",
+      "azure_bears_red",
+      "ifsp_midas",
+      "ufpr_bbn",
+      "azure_bears_white",
+      "maua_blue",
+      "totale_umc",
+      "inatel_white",
+      "ufmt_turuna",
+      "ufu_insane",
+      "unirv_rushone",
+      "unir_sentinelas",
+    ],
+    placements: [
+      { range: "Classificado", id: "azure_bears_golden", note: "7-0" },
+      { range: "Classificado", id: "wolf_gaming", note: "7-3" },
+      { range: "Classificado", id: "maua_b", note: "6-3" },
+      { range: "Classificado", id: "a2e_uff", note: "6-4" },
+      { range: "Classificado", id: "black_cyber", note: "6-4" },
+      { range: "Classificado", id: "axis_anteaters", note: "5-4" },
+      { range: "Classificado", id: "ufu_saints", note: "4-0" },
+      { range: "Classificado", id: "ufrj_canis_b", note: "4-5" },
+      { range: "Off Season", id: "espm_overbite_misto", note: "5-2" },
+      { range: "Off Season", id: "macklogic_white", note: "5-3" },
+      { range: "Off Season", id: "unifesp_erex", note: "5-5" },
+      { range: "Off Season", id: "azure_bears_black", note: "4-5" },
+      { range: "Off Season", id: "fei_darkowls", note: "4-5" },
+      { range: "Off Season", id: "sheriff_iff", note: "3-5" },
+      { range: "Off Season", id: "azure_bears_red", note: "3-6" },
+      { range: "Practice", id: "ifsp_midas", note: "3-6" },
+      { range: "Practice", id: "ufpr_bbn", note: "2-6" },
+      { range: "Practice", id: "azure_bears_white", note: "2-7" },
+      { range: "Practice", id: "maua_blue", note: "1-5" },
+      { range: "Practice", id: "totale_umc", note: "1-7" },
+    ],
+    swiss: {
+      seriesCount: 97,
+      standingsLabel: "Campanha de cada equipe e a chave para a qual ela foi",
+      rounds: [
+        {
+          title: "Rodada 1",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 1", a: "a2e_uff", scoreA: 13, b: "ifsp_midas", scoreB: 7, winner: "a2e_uff" },
+            { code: "Partida 2", a: "ufu_insane", scoreA: 13, b: "azure_bears_red", scoreB: 9, winner: "ufu_insane" },
+            { code: "Partida 3", a: "azure_bears_black", scoreA: 13, b: "ufmt_turuna", scoreB: 5, winner: "azure_bears_black" },
+            { code: "Partida 4", a: "black_cyber", scoreA: 13, b: "unir_sentinelas", scoreB: 3, winner: "black_cyber" },
+            { code: "Partida 5", a: "inatel_white", scoreA: 13, b: "axis_anteaters", scoreB: 8, winner: "inatel_white" },
+            { code: "Partida 6", a: "ufrj_canis_b", scoreA: 13, b: "sheriff_iff", scoreB: 1, winner: "ufrj_canis_b" },
+            { code: "Partida 7", a: "fei_darkowls", scoreA: 13, b: "unirv_rushone", scoreB: 6, winner: "fei_darkowls" },
+            { code: "Partida 8", a: "ufpr_bbn", scoreA: 13, b: "totale_umc", scoreB: 8, winner: "ufpr_bbn" },
+            { code: "Partida 9", a: "unifesp_erex", scoreA: 13, b: "azure_bears_white", scoreB: 7, winner: "unifesp_erex" },
+            { code: "Partida 10", a: "azure_bears_golden", scoreA: 13, b: "wolf_gaming", scoreB: 8, winner: "azure_bears_golden" },
+          ],
+        },
+        {
+          title: "Rodada 2",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 11", a: "a2e_uff", scoreA: 14, b: "ufpr_bbn", scoreB: 12, winner: "a2e_uff" },
+            { code: "Partida 12", a: "azure_bears_golden", scoreA: 13, b: "black_cyber", scoreB: 4, winner: "azure_bears_golden" },
+            { code: "Partida 13", a: "ufu_insane", scoreA: 13, b: "maua_blue", scoreB: 3, winner: "ufu_insane" },
+            { code: "Partida 14", a: "fei_darkowls", scoreA: 14, b: "ufrj_canis_b", scoreB: 12, winner: "fei_darkowls" },
+            { code: "Partida 15", a: "maua_b", scoreA: 13, b: "unifesp_erex", scoreB: 3, winner: "maua_b" },
+            { code: "Partida 16", a: "ufmt_turuna", scoreA: 13, b: "axis_anteaters", scoreB: 5, winner: "ufmt_turuna" },
+            { code: "Partida 17", a: "unirv_rushone", scoreA: 13, b: "sheriff_iff", scoreB: 10, winner: "unirv_rushone" },
+            { code: "Partida 18", a: "macklogic_white", scoreA: 13, b: "azure_bears_white", scoreB: 0, winner: "macklogic_white" },
+            { code: "Partida 19", a: "ifsp_midas", scoreA: 13, b: "totale_umc", scoreB: 6, winner: "ifsp_midas" },
+            { code: "Partida 20", a: "wolf_gaming", scoreA: 13, b: "unir_sentinelas", scoreB: 1, winner: "wolf_gaming" },
+          ],
+        },
+        {
+          title: "Rodada 3",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 21", a: "ufu_insane", scoreA: 13, b: "a2e_uff", scoreB: 10, winner: "ufu_insane" },
+            { code: "Partida 22", a: "maua_b", scoreA: 13, b: "azure_bears_black", scoreB: 11, winner: "maua_b" },
+            { code: "Partida 23", a: "azure_bears_golden", scoreA: 13, b: "fei_darkowls", scoreB: 10, winner: "azure_bears_golden" },
+            { code: "Partida 24", a: "espm_overbite_misto", scoreA: 13, b: "totale_umc", scoreB: 6, winner: "espm_overbite_misto" },
+            { code: "Partida 25", a: "sheriff_iff", scoreA: 13, b: "unir_sentinelas", scoreB: 4, winner: "sheriff_iff" },
+            { code: "Partida 26", a: "axis_anteaters", scoreA: 13, b: "azure_bears_white", scoreB: 1, winner: "axis_anteaters" },
+            { code: "Partida 27", a: "azure_bears_red", scoreA: 13, b: "unirv_rushone", scoreB: 8, winner: "azure_bears_red" },
+            { code: "Partida 28", a: "ufmt_turuna", scoreA: 13, b: "ufpr_bbn", scoreB: 6, winner: "ufmt_turuna" },
+            { code: "Partida 29", a: "black_cyber", scoreA: 13, b: "ifsp_midas", scoreB: 7, winner: "black_cyber" },
+            { code: "Partida 30", a: "macklogic_white", scoreA: 13, b: "maua_blue", scoreB: 8, winner: "macklogic_white" },
+            { code: "Partida 31", a: "unifesp_erex", scoreA: 13, b: "inatel_white", scoreB: 11, winner: "unifesp_erex" },
+            { code: "Partida 32", a: "wolf_gaming", scoreA: 13, b: "ufrj_canis_b", scoreB: 5, winner: "wolf_gaming" },
+          ],
+        },
+        {
+          title: "Rodada 4",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 33", a: "azure_bears_golden", scoreA: 18, b: "maua_b", scoreB: 16, winner: "azure_bears_golden" },
+            { code: "Partida 34", a: "azure_bears_black", scoreA: 13, b: "ufu_insane", scoreB: 10, winner: "azure_bears_black" },
+            { code: "Partida 35", a: "a2e_uff", scoreA: 13, b: "macklogic_white", scoreB: 5, winner: "a2e_uff" },
+            { code: "Partida 36", a: "unifesp_erex", scoreA: 13, b: "azure_bears_red", scoreB: 11, winner: "unifesp_erex" },
+            { code: "Partida 37", a: "wolf_gaming", scoreA: 13, b: "ufmt_turuna", scoreB: 9, winner: "wolf_gaming" },
+            { code: "Partida 38", a: "black_cyber", scoreA: 13, b: "fei_darkowls", scoreB: 5, winner: "black_cyber" },
+            { code: "Partida 39", a: "azure_bears_white", scoreA: 13, b: "sheriff_iff", scoreB: 11, winner: "azure_bears_white" },
+            { code: "Partida 40", a: "inatel_white", scoreA: 13, b: "espm_overbite_misto", scoreB: 4, winner: "inatel_white" },
+            { code: "Partida 41", a: "axis_anteaters", scoreA: 13, b: "ufrj_canis_b", scoreB: 6, winner: "axis_anteaters" },
+            { code: "Partida 42", a: "unirv_rushone", scoreA: 13, b: "ufpr_bbn", scoreB: 9, winner: "unirv_rushone" },
+          ],
+        },
+        {
+          title: "Rodada 5",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 43", a: "azure_bears_golden", scoreA: 13, b: "azure_bears_black", scoreB: 2, winner: "azure_bears_golden" },
+            { code: "Partida 44", a: "maua_b", scoreA: 13, b: "a2e_uff", scoreB: 3, winner: "maua_b" },
+            { code: "Partida 45", a: "ufu_saints", scoreA: 13, b: "wolf_gaming", scoreB: 7, winner: "ufu_saints" },
+            { code: "Partida 46", a: "black_cyber", scoreA: 13, b: "unifesp_erex", scoreB: 4, winner: "black_cyber" },
+            { code: "Partida 47", a: "espm_overbite_misto", scoreA: 13, b: "unir_sentinelas", scoreB: 1, winner: "espm_overbite_misto" },
+            { code: "Partida 48", a: "ufrj_canis_b", scoreA: 13, b: "totale_umc", scoreB: 5, winner: "ufrj_canis_b" },
+            { code: "Partida 49", a: "sheriff_iff", scoreA: 13, b: "ifsp_midas", scoreB: 5, winner: "sheriff_iff" },
+            { code: "Partida 50", a: "ufpr_bbn", scoreA: 13, b: "azure_bears_white", scoreB: 6, winner: "ufpr_bbn" },
+            { code: "Partida 51", a: "macklogic_white", scoreA: 13, b: "azure_bears_red", scoreB: 5, winner: "macklogic_white" },
+            { code: "Partida 52", a: "ufmt_turuna", scoreA: 13, b: "maua_blue", scoreB: 4, winner: "ufmt_turuna" },
+            { code: "Partida 54", a: "fei_darkowls", scoreA: 13, b: "axis_anteaters", scoreB: 10, winner: "fei_darkowls" },
+          ],
+        },
+        {
+          title: "Rodada 6",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 56", a: "wolf_gaming", scoreA: 13, b: "maua_b", scoreB: 11, winner: "wolf_gaming" },
+            { code: "Partida 57", a: "azure_bears_black", scoreA: 13, b: "unifesp_erex", scoreB: 11, winner: "azure_bears_black" },
+            { code: "Partida 58", a: "ufmt_turuna", scoreA: 13, b: "a2e_uff", scoreB: 6, winner: "ufmt_turuna" },
+            { code: "Partida 59", a: "azure_bears_white", scoreA: 13, b: "totale_umc", scoreB: 10, winner: "azure_bears_white" },
+            { code: "Partida 60", a: "ifsp_midas", scoreA: 13, b: "unir_sentinelas", scoreB: 1, winner: "ifsp_midas" },
+            { code: "Partida 61", a: "black_cyber", scoreA: 13, b: "macklogic_white", scoreB: 10, winner: "black_cyber" },
+            { code: "Partida 62", a: "azure_bears_red", scoreA: 13, b: "fei_darkowls", scoreB: 7, winner: "azure_bears_red" },
+            { code: "Partida 63", a: "ufrj_canis_b", scoreA: 13, b: "espm_overbite_misto", scoreB: 3, winner: "ufrj_canis_b" },
+          ],
+        },
+        {
+          title: "Rodada 7",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 65", a: "inatel_white", scoreA: 13, b: "totale_umc", scoreB: 7, winner: "inatel_white" },
+            { code: "Partida 67", a: "axis_anteaters", scoreA: 13, b: "azure_bears_black", scoreB: 10, winner: "axis_anteaters" },
+            { code: "Partida 68", a: "wolf_gaming", scoreA: 13, b: "ufpr_bbn", scoreB: 2, winner: "wolf_gaming" },
+            { code: "Partida 69", a: "maua_b", scoreA: 13, b: "sheriff_iff", scoreB: 10, winner: "maua_b" },
+            { code: "Partida 71", a: "black_cyber", scoreA: 13, b: "a2e_uff", scoreB: 8, winner: "black_cyber" },
+            { code: "Partida 72", a: "fei_darkowls", scoreA: 13, b: "ifsp_midas", scoreB: 11, winner: "fei_darkowls" },
+            { code: "Partida 73", a: "espm_overbite_misto", scoreA: 13, b: "unifesp_erex", scoreB: 7, winner: "espm_overbite_misto" },
+            { code: "Partida 75", a: "azure_bears_red", scoreA: 13, b: "maua_blue", scoreB: 8, winner: "azure_bears_red" },
+          ],
+        },
+        {
+          title: "Rodada 8",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 76", a: "wolf_gaming", scoreA: 13, b: "black_cyber", scoreB: 9, winner: "wolf_gaming" },
+            { code: "Partida 77", a: "ufu_saints", scoreA: 13, b: "maua_b", scoreB: 10, winner: "ufu_saints" },
+            { code: "Partida 78", a: "azure_bears_golden", scoreA: 13, b: "axis_anteaters", scoreB: 9, winner: "azure_bears_golden" },
+            { code: "Partida 79", a: "ufrj_canis_b", scoreA: 13, b: "azure_bears_black", scoreB: 5, winner: "ufrj_canis_b" },
+            { code: "Partida 80", a: "a2e_uff", scoreA: 13, b: "azure_bears_red", scoreB: 6, winner: "a2e_uff" },
+            { code: "Partida 81", a: "espm_overbite_misto", scoreA: 14, b: "ifsp_midas", scoreB: 12, winner: "espm_overbite_misto" },
+            { code: "Partida 82", a: "macklogic_white", scoreA: 13, b: "sheriff_iff", scoreB: 2, winner: "macklogic_white" },
+            { code: "Partida 83", a: "unifesp_erex", scoreA: 13, b: "ufpr_bbn", scoreB: 1, winner: "unifesp_erex" },
+            { code: "Partida 84", a: "inatel_white", scoreA: 13, b: "azure_bears_white", scoreB: 3, winner: "inatel_white" },
+          ],
+        },
+        {
+          title: "Rodada 9",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 85", a: "wolf_gaming", scoreA: 15, b: "fei_darkowls", scoreB: 13, winner: "wolf_gaming" },
+            { code: "Partida 86", a: "ufu_saints", scoreA: 14, b: "black_cyber", scoreB: 12, winner: "ufu_saints" },
+            { code: "Partida 87", a: "maua_b", scoreA: 13, b: "ufrj_canis_b", scoreB: 7, winner: "maua_b" },
+            { code: "Partida 88", a: "ifsp_midas", scoreA: 13, b: "azure_bears_white", scoreB: 10, winner: "ifsp_midas" },
+            { code: "Partida 89", a: "sheriff_iff", scoreA: 13, b: "totale_umc", scoreB: 9, winner: "sheriff_iff" },
+            { code: "Partida 90", a: "maua_blue", scoreA: 13, b: "azure_bears_black", scoreB: 6, winner: "maua_blue" },
+            { code: "Partida 91", a: "a2e_uff", scoreA: 13, b: "inatel_white", scoreB: 10, winner: "a2e_uff" },
+            { code: "Partida 92", a: "axis_anteaters", scoreA: 13, b: "azure_bears_red", scoreB: 4, winner: "axis_anteaters" },
+            { code: "Partida 93", a: "macklogic_white", scoreA: 13, b: "unifesp_erex", scoreB: 7, winner: "macklogic_white" },
+          ],
+        },
+        {
+          title: "Rodada 10",
+          status: "Conclu\u00edda",
+          bestOf: "MD1",
+          matches: [
+            { code: "Partida 94", a: "azure_bears_golden", scoreA: 13, b: "ufrj_canis_b", scoreB: 3, winner: "azure_bears_golden" },
+            { code: "Partida 95", a: "a2e_uff", scoreA: 13, b: "wolf_gaming", scoreB: 11, winner: "a2e_uff" },
+            { code: "Partida 96", a: "maua_b", scoreA: 13, b: "black_cyber", scoreB: 11, winner: "maua_b" },
+            { code: "Partida 97", a: "ufu_saints", scoreA: 13, b: "fei_darkowls", scoreB: 5, winner: "ufu_saints" },
+            { code: "Partida 98", a: "axis_anteaters", scoreA: 13, b: "macklogic_white", scoreB: 5, winner: "axis_anteaters" },
+            { code: "Partida 99", a: "totale_umc", scoreA: 13, b: "maua_blue", scoreB: 10, winner: "totale_umc" },
+            { code: "Partida 100", a: "azure_bears_black", scoreA: 13, b: "ufpr_bbn", scoreB: 8, winner: "azure_bears_black" },
+            { code: "Partida 101", a: "inatel_white", scoreA: 13, b: "azure_bears_red", scoreB: 6, winner: "inatel_white" },
+            { code: "Partida 102", a: "unifesp_erex", scoreA: 13, b: "ifsp_midas", scoreB: 6, winner: "unifesp_erex" },
+            { code: "Partida 103", a: "espm_overbite_misto", scoreA: 13, b: "azure_bears_white", scoreB: 3, winner: "espm_overbite_misto" },
+          ],
+        },
+      ],
+      standings: [
+        { id: "azure_bears_golden", wins: 7, losses: 0, range: "-", status: "Championship" },
+        { id: "wolf_gaming", wins: 7, losses: 3, range: "-", status: "Championship" },
+        { id: "maua_b", wins: 6, losses: 3, range: "-", status: "Championship" },
+        { id: "a2e_uff", wins: 6, losses: 4, range: "-", status: "Championship" },
+        { id: "black_cyber", wins: 6, losses: 4, range: "-", status: "Championship" },
+        { id: "axis_anteaters", wins: 5, losses: 4, range: "-", status: "Championship" },
+        { id: "ufu_saints", wins: 4, losses: 0, range: "-", status: "Championship" },
+        { id: "ufrj_canis_b", wins: 4, losses: 5, range: "-", status: "Championship" },
+        { id: "espm_overbite_misto", wins: 5, losses: 2, range: "-", status: "Off Season" },
+        { id: "macklogic_white", wins: 5, losses: 3, range: "-", status: "Off Season" },
+        { id: "unifesp_erex", wins: 5, losses: 5, range: "-", status: "Off Season" },
+        { id: "azure_bears_black", wins: 4, losses: 5, range: "-", status: "Off Season" },
+        { id: "fei_darkowls", wins: 4, losses: 5, range: "-", status: "Off Season" },
+        { id: "sheriff_iff", wins: 3, losses: 5, range: "-", status: "Off Season" },
+        { id: "azure_bears_red", wins: 3, losses: 6, range: "-", status: "Off Season" },
+        { id: "ifsp_midas", wins: 3, losses: 6, range: "-", status: "Practice" },
+        { id: "ufpr_bbn", wins: 2, losses: 6, range: "-", status: "Practice" },
+        { id: "azure_bears_white", wins: 2, losses: 7, range: "-", status: "Practice" },
+        { id: "maua_blue", wins: 1, losses: 5, range: "-", status: "Practice" },
+        { id: "totale_umc", wins: 1, losses: 7, range: "-", status: "Practice" },
+        { id: "inatel_white", wins: 5, losses: 2, range: "-", status: "Fora dos playoffs" },
+        { id: "ufmt_turuna", wins: 4, losses: 2, range: "-", status: "Fora dos playoffs" },
+        { id: "ufu_insane", wins: 3, losses: 1, range: "-", status: "Fora dos playoffs" },
+        { id: "unirv_rushone", wins: 2, losses: 2, range: "-", status: "Fora dos playoffs" },
+        { id: "unir_sentinelas", wins: 0, losses: 5, range: "-", status: "Fora dos playoffs" },
+      ],
+    },
+  },
+  "lbeu-2025-2-split-championship": {
+    name: "LBEU 2025 - 2\u00ba Split - Championship",
+    organizer: "LigaGG",
+    prizePool: "-",
+    tier: "A",
+    type: "Online - Playoffs",
+    status: "Finalizado",
+    teamCount: 8,
+    mapPool: ["Abyss", "Bind", "Corrode", "Haven", "Pearl", "Split", "Sunset"],
+    format: {
+      summary: "Elimina\u00e7\u00e3o dupla",
+      details: [
+        "8 equipes: as primeiras do Elo na fase su\u00ed\u00e7a",
+        "Jogos MD3",
+        "Final inferior e grande final MD5",
+      ],
+      standings: "Coloca\u00e7\u00e3o final",
+    },
+    teams: [
+      "ufu_saints",
+      "black_cyber",
+      "azure_bears_golden",
+      "wolf_gaming",
+      "axis_anteaters",
+      "maua_b",
+      "a2e_uff",
+      "ufrj_canis_b",
+    ],
+    placements: [
+      { range: "1", id: "ufu_saints" },
+      { range: "2", id: "black_cyber" },
+      { range: "3", id: "azure_bears_golden", note: "Final inferior" },
+      { range: "4", id: "wolf_gaming", note: "Semifinal inferior" },
+      { range: "5-6", id: "axis_anteaters", note: "Quartas de final inferior" },
+      { range: "5-6", id: "maua_b", note: "Quartas de final inferior" },
+      { range: "7-8", id: "a2e_uff", note: "Rodada de 4 inferior" },
+      { range: "7-8", id: "ufrj_canis_b", note: "Rodada de 4 inferior" },
+    ],
+    bracket: {
+      title: "Elimina\u00e7\u00e3o dupla",
+      regions: [
+        {
+          name: "Grande final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Grande final",
+              matches: [
+                { code: "Partida 130", bestOf: "MD5", a: "ufu_saints", scoreA: 3, b: "black_cyber", scoreB: 0, winner: "ufu_saints" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Quartas de final superior",
+              matches: [
+                { code: "Partida 104", bestOf: "MD3", a: "black_cyber", scoreA: 2, b: "azure_bears_golden", scoreB: 1, winner: "black_cyber" },
+                { code: "Partida 105", bestOf: "MD3", a: "maua_b", scoreA: 2, b: "a2e_uff", scoreB: 0, winner: "maua_b" },
+                { code: "Partida 106", bestOf: "MD3", a: "ufu_saints", scoreA: 2, b: "ufrj_canis_b", scoreB: 0, winner: "ufu_saints" },
+                { code: "Partida 107", bestOf: "MD3", a: "axis_anteaters", scoreA: 2, b: "wolf_gaming", scoreB: 0, winner: "axis_anteaters" },
+              ],
+            },
+            {
+              title: "Semifinais superior",
+              matches: [
+                { code: "Partida 110", bestOf: "MD3", a: "maua_b", scoreA: 1, b: "black_cyber", scoreB: 2, winner: "black_cyber" },
+                { code: "Partida 111", bestOf: "MD3", a: "ufu_saints", scoreA: 2, b: "axis_anteaters", scoreB: 0, winner: "ufu_saints" },
+              ],
+            },
+            {
+              title: "Final superior",
+              matches: [
+                { code: "Partida 114", bestOf: "MD3", a: "ufu_saints", scoreA: 1, b: "black_cyber", scoreB: 2, winner: "black_cyber" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada de 4 inferior",
+              matches: [
+                { code: "Partida 108", bestOf: "MD3", a: "azure_bears_golden", scoreA: 2, b: "a2e_uff", scoreB: 1, winner: "azure_bears_golden" },
+                { code: "Partida 109", bestOf: "MD3", a: "wolf_gaming", scoreA: 2, b: "ufrj_canis_b", scoreB: 0, winner: "wolf_gaming" },
+              ],
+            },
+            {
+              title: "Quartas de final inferior",
+              matches: [
+                { code: "Partida 112", bestOf: "MD3", a: "azure_bears_golden", scoreA: 2, b: "axis_anteaters", scoreB: 0, winner: "azure_bears_golden" },
+                { code: "Partida 113", bestOf: "MD3", a: "wolf_gaming", scoreA: 2, b: "maua_b", scoreB: 0, winner: "wolf_gaming" },
+              ],
+            },
+            {
+              title: "Semifinal inferior",
+              matches: [
+                { code: "Partida 115", bestOf: "MD3", a: "azure_bears_golden", scoreA: 2, b: "wolf_gaming", scoreB: 0, winner: "azure_bears_golden" },
+              ],
+            },
+            {
+              title: "Final inferior",
+              matches: [
+                { code: "Partida 129", bestOf: "MD5", a: "ufu_saints", scoreA: 3, b: "azure_bears_golden", scoreB: 1, winner: "ufu_saints" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "lbeu-2025-2-split-off-season": {
+    name: "LBEU 2025 - 2\u00ba Split - Off Season",
+    organizer: "LigaGG",
+    prizePool: "-",
+    tier: "B",
+    type: "Online - Playoffs",
+    status: "Finalizado",
+    teamCount: 7,
+    mapPool: ["Abyss", "Bind", "Corrode", "Haven", "Pearl", "Split", "Sunset"],
+    format: {
+      summary: "Elimina\u00e7\u00e3o dupla",
+      details: [
+        "7 equipes: as seguintes do Elo na fase su\u00ed\u00e7a",
+        "Jogos MD3",
+        "Final inferior MD5",
+      ],
+      standings: "Coloca\u00e7\u00e3o final",
+    },
+    teams: [
+      "azure_bears_black",
+      "azure_bears_red",
+      "fei_darkowls",
+      "macklogic_white",
+      "unifesp_erex",
+      "espm_overbite_misto",
+      "sheriff_iff",
+    ],
+    placements: [
+      { range: "1", id: "azure_bears_black" },
+      { range: "2", id: "azure_bears_red" },
+      { range: "3", id: "fei_darkowls", note: "Final inferior" },
+      { range: "4", id: "macklogic_white", note: "Semifinal inferior" },
+      { range: "5-6", id: "unifesp_erex", note: "Quartas de final inferior" },
+      { range: "5-6", id: "espm_overbite_misto", note: "Quartas de final inferior" },
+      { range: "7", id: "sheriff_iff", note: "Rodada de 4 inferior" },
+    ],
+    bracket: {
+      title: "Elimina\u00e7\u00e3o dupla",
+      regions: [
+        {
+          name: "Grande final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Grande final",
+              matches: [
+                { code: "Partida 134", bestOf: "MD3", a: "azure_bears_black", scoreA: 2, b: "azure_bears_red", scoreB: 0, winner: "azure_bears_black" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Quartas de final superior",
+              matches: [
+                { code: "Partida 116", bestOf: "MD3", a: "azure_bears_red", scoreA: 1, b: "azure_bears_black", scoreB: 2, winner: "azure_bears_black" },
+                { a: "unifesp_erex", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "unifesp_erex" },
+                { code: "Partida 117", bestOf: "MD3", a: "macklogic_white", scoreA: 2, b: "espm_overbite_misto", scoreB: 0, winner: "macklogic_white" },
+                { code: "Partida 119", bestOf: "MD3", a: "fei_darkowls", scoreA: 2, b: "sheriff_iff", scoreB: 0, winner: "fei_darkowls" },
+              ],
+            },
+            {
+              title: "Semifinais superior",
+              matches: [
+                { code: "Partida 118", bestOf: "MD3", a: "azure_bears_black", scoreA: 2, b: "unifesp_erex", scoreB: 0, winner: "azure_bears_black" },
+                { code: "Partida 131", bestOf: "MD3", a: "fei_darkowls", b: "macklogic_white", winner: "fei_darkowls", status: "Placar n\u00e3o registrado", previewNote: "Placar não registrado. O vencedor sai da sequência da chave." },
+              ],
+            },
+            {
+              title: "Final superior",
+              matches: [
+                { code: "Partida 122", bestOf: "MD3", a: "azure_bears_black", scoreA: 2, b: "fei_darkowls", scoreB: 0, winner: "azure_bears_black" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada de 4 inferior",
+              matches: [
+                { code: "Partida 120", bestOf: "MD3", a: "azure_bears_red", scoreA: 2, b: "sheriff_iff", scoreB: 0, winner: "azure_bears_red" },
+                { a: "espm_overbite_misto", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "espm_overbite_misto" },
+              ],
+            },
+            {
+              title: "Quartas de final inferior",
+              matches: [
+                { code: "Partida 132", bestOf: "MD3", a: "azure_bears_red", b: "espm_overbite_misto", winner: "azure_bears_red", status: "Placar n\u00e3o registrado", previewNote: "Placar não registrado. O vencedor sai da sequência da chave." },
+                { code: "Partida 121", bestOf: "MD3", a: "macklogic_white", scoreA: 2, b: "unifesp_erex", scoreB: 0, winner: "macklogic_white" },
+              ],
+            },
+            {
+              title: "Semifinal inferior",
+              matches: [
+                { code: "Partida 123", bestOf: "MD3", a: "azure_bears_red", scoreA: 2, b: "macklogic_white", scoreB: 0, winner: "azure_bears_red" },
+              ],
+            },
+            {
+              title: "Final inferior",
+              matches: [
+                { code: "Partida 133", bestOf: "MD5", a: "azure_bears_red", scoreA: 3, b: "fei_darkowls", scoreB: 1, winner: "azure_bears_red" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "lbeu-2025-2-split-practice": {
+    name: "LBEU 2025 - 2\u00ba Split - Practice",
+    organizer: "LigaGG",
+    prizePool: "-",
+    tier: "B",
+    type: "Online - Playoffs",
+    status: "Finalizado",
+    teamCount: 5,
+    mapPool: ["Abyss", "Bind", "Corrode", "Haven", "Split", "Sunset"],
+    format: {
+      summary: "Elimina\u00e7\u00e3o dupla",
+      details: ["5 equipes: as seguintes do Elo na fase su\u00ed\u00e7a", "Jogos MD3", "Grande final MD5"],
+      standings: "Coloca\u00e7\u00e3o final",
+    },
+    teams: ["maua_blue", "ufpr_bbn", "totale_umc", "ifsp_midas", "azure_bears_white"],
+    placements: [
+      { range: "1", id: "maua_blue" },
+      { range: "2", id: "ufpr_bbn" },
+      { range: "3", id: "totale_umc", note: "Final inferior" },
+      { range: "4", id: "ifsp_midas", note: "Semifinal inferior" },
+      { range: "5", id: "azure_bears_white", note: "Quartas de final inferior" },
+    ],
+    bracket: {
+      title: "Elimina\u00e7\u00e3o dupla",
+      regions: [
+        {
+          name: "Grande final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Grande final",
+              matches: [
+                { code: "Partida 137", bestOf: "MD5", a: "maua_blue", scoreA: 3, b: "ufpr_bbn", scoreB: 0, winner: "maua_blue" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Quartas de final superior",
+              matches: [
+                { a: "maua_blue", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "maua_blue" },
+                { code: "Partida 124", bestOf: "MD3", a: "totale_umc", scoreA: 2, b: "azure_bears_white", scoreB: 0, winner: "totale_umc" },
+                { a: "ifsp_midas", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "ifsp_midas" },
+                { a: "ufpr_bbn", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "ufpr_bbn" },
+              ],
+            },
+            {
+              title: "Semifinais superior",
+              matches: [
+                { code: "Partida 125", bestOf: "MD3", a: "maua_blue", scoreA: 2, b: "totale_umc", scoreB: 0, winner: "maua_blue" },
+                { code: "Partida 126", bestOf: "MD3", a: "ifsp_midas", scoreA: 1, b: "ufpr_bbn", scoreB: 2, winner: "ufpr_bbn" },
+              ],
+            },
+            {
+              title: "Final superior",
+              matches: [
+                { code: "Partida 135", bestOf: "MD3", a: "maua_blue", b: "ufpr_bbn", winner: "maua_blue", status: "Placar n\u00e3o registrado", previewNote: "Placar não registrado. O vencedor sai da sequência da chave." },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada de 4 inferior",
+              matches: [
+                { a: "azure_bears_white", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "azure_bears_white" },
+              ],
+            },
+            {
+              title: "Quartas de final inferior",
+              matches: [
+                { code: "Partida 127", bestOf: "MD3", a: "ifsp_midas", scoreA: 2, b: "azure_bears_white", scoreB: 0, winner: "ifsp_midas" },
+                { a: "totale_umc", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "totale_umc" },
+              ],
+            },
+            {
+              title: "Semifinal inferior",
+              matches: [
+                { code: "Partida 128", bestOf: "MD3", a: "totale_umc", scoreA: 2, b: "ifsp_midas", scoreB: 0, winner: "totale_umc" },
+              ],
+            },
+            {
+              title: "Final inferior",
+              matches: [
+                { code: "Partida 136", bestOf: "MD3", a: "ufpr_bbn", b: "totale_umc", winner: "ufpr_bbn", status: "Placar n\u00e3o registrado", previewNote: "Placar não registrado. O vencedor sai da sequência da chave." },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
   "uni-ascension": {
     name: "VAL | UNI Ascension | Inters",
     organizer: "AcadArena",
@@ -3335,13 +11191,13 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 16 superior",
               matches: [
-                { code: "Partida 1", a: "octacore_python", scoreA: 1, bLabel: "Sem adversario", scoreB: 0, winner: "octacore_python" },
+                { code: "Partida 1", a: "octacore_python", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "octacore_python" },
                 { code: "Partida 2", a: "octacore_javascript", scoreA: 5, b: "azure_bears_silver", scoreB: 13, winner: "azure_bears_silver" },
-                { code: "Partida 3", a: "azure_bears_black", scoreA: 1, bLabel: "Sem adversario", scoreB: 0, winner: "azure_bears_black" },
+                { code: "Partida 3", a: "azure_bears_black", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "azure_bears_black" },
                 { code: "Partida 4", a: "a2e_uff", scoreA: 13, b: "wolf_gaming", scoreB: 10, winner: "a2e_uff" },
-                { code: "Partida 5", a: "cyberkongs", scoreA: 1, bLabel: "Sem adversario", scoreB: 0, winner: "cyberkongs" },
+                { code: "Partida 5", a: "cyberkongs", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "cyberkongs" },
                 { code: "Partida 6", a: "brutal_esports", scoreA: 13, b: "unirv_rushone", scoreB: 11, winner: "brutal_esports" },
-                { code: "Partida 7", a: "macklogic_white", scoreA: 1, bLabel: "Sem adversario", scoreB: 0, winner: "macklogic_white" },
+                { code: "Partida 7", a: "macklogic_white", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "macklogic_white" },
                 { code: "Partida 8", a: "ufu_saints", scoreA: 14, b: "ufpr_bbn", scoreB: 12, winner: "ufu_saints" },
               ],
             },
@@ -3376,10 +11232,10 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 8 inferior",
               matches: [
-                { code: "Partida 16", aLabel: "Sem adversario", scoreA: 0, b: "octacore_javascript", scoreB: 1, winner: "octacore_javascript" },
-                { code: "Partida 17", aLabel: "Sem adversario", scoreA: 0, b: "wolf_gaming", scoreB: 1, winner: "wolf_gaming" },
-                { code: "Partida 18", aLabel: "Sem adversario", scoreA: 0, b: "unirv_rushone", scoreB: 1, winner: "unirv_rushone" },
-                { code: "Partida 19", aLabel: "Sem adversario", scoreA: 0, b: "ufpr_bbn", scoreB: 1, winner: "ufpr_bbn" },
+                { code: "Partida 16", aLabel: "Sem adversário", scoreA: 0, b: "octacore_javascript", scoreB: 1, winner: "octacore_javascript" },
+                { code: "Partida 17", aLabel: "Sem adversário", scoreA: 0, b: "wolf_gaming", scoreB: 1, winner: "wolf_gaming" },
+                { code: "Partida 18", aLabel: "Sem adversário", scoreA: 0, b: "unirv_rushone", scoreB: 1, winner: "unirv_rushone" },
+                { code: "Partida 19", aLabel: "Sem adversário", scoreA: 0, b: "ufpr_bbn", scoreB: 1, winner: "ufpr_bbn" },
               ],
             },
             {
@@ -3505,7 +11361,7 @@ const TOURNAMENT_OVERRIDES = {
     tier: "B",
     type: "Online - Inters",
     startAt: "2026-04-04T13:00:00",
-    endAt: "2026-04-05T23:00:00",
+    endAt: "2026-04-16T23:00:00",
     teamCount: 24,
     mapPool: ["Bind", "Haven", "Pearl", "Split", "Breeze", "Lotus", "Fracture"],
     format: {
@@ -3652,7 +11508,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 16 inferior",
               matches: [
-                { code: "Partida 40", a: "octacore_python", scoreA: 13, b: "totale_umc", scoreB: 8, winner: "octacore_python" },
+                { code: "Partida 40", a: "octacore_python", scoreA: 13, b: "totale_umc", scoreB: 6, winner: "octacore_python" },
                 { code: "Partida 41", a: "azure_bears_black", scoreA: 1, b: "aaeu_cerberus", scoreB: 0, winner: "azure_bears_black" },
                 { code: "Partida 42", a: "a2e_uff", scoreA: 13, b: "gambiarra_ufg", scoreB: 1, winner: "a2e_uff" },
                 { code: "Partida 43", a: "ceub_octopus_vulgaris", scoreA: 9, b: "pucgo_sistematica", scoreB: 13, winner: "pucgo_sistematica" },
@@ -4294,9 +12150,12 @@ function calculateRankingForCutoff({ teams, matches, matchSeries, players, tourn
     const date = Number(series.sortAt || series.startedAt || 0);
     return !date || date <= cutoffAt;
   });
-  const aliases = rankingSuccessionAliases(teams, filteredMatches, cutoffAt);
+  const fullAliases = rankingSuccessionAliases(teams, filteredMatches, cutoffAt);
+  const aliases = rankingPerformanceAliases(teams, filteredMatches, cutoffAt, fullAliases);
+  const source = { teams, matches: filteredMatches, matchSeries: filteredSeries, tournaments: tournaments.filter(eventIsVisible), rankingWeights: rankingWeights || {} };
+  const achievements = applyRankingSuccessions(source, fullAliases);
   const inherited = applyRankingSuccessions(
-    { teams, matches: filteredMatches, matchSeries: filteredSeries, tournaments: tournaments.filter(eventIsVisible), rankingWeights: rankingWeights || {} },
+    source,
     aliases,
   );
   const currentWeek = cutoffAt >= rankingTuesdayStartOnOrBefore(Date.now());
@@ -4306,8 +12165,9 @@ function calculateRankingForCutoff({ teams, matches, matchSeries, players, tourn
     matches: inherited.matches,
     matchSeries: inherited.matchSeries,
     players,
-    tournaments: inherited.tournaments,
-    weights: inherited.rankingWeights,
+    achievementMatchSeries: achievements.matchSeries,
+    tournaments: achievements.tournaments,
+    weights: achievements.rankingWeights,
     now: cutoffAt,
   });
   return withSucceededRankingRows(ranking, aliases);
@@ -4343,7 +12203,7 @@ function teamsForRankingCutoff(teams, matches, cutoffAt, currentWeek = true) {
 // o fim da cadeia (A -> B -> C manda as partidas de A direto para C) e `since`
 // e a estreia de `by`, quando a heranca comeca.
 function rankingSuccessionAliases(teams, matches, cutoffAt) {
-  const successors = (teams || []).filter((team) => team.succeeds && team.succeeds !== team.id);
+  const successors = (teams || []).filter((team) => (team.succeeds && team.succeeds !== team.id) || team.profile?.historyPredecessors?.length);
   if (!successors.length) return new Map();
   const debut = new Map();
   for (const match of matches || []) {
@@ -4355,7 +12215,16 @@ function rankingSuccessionAliases(teams, matches, cutoffAt) {
   }
   const direct = new Map();
   for (const team of successors) {
-    if (debut.has(team.id)) direct.set(team.succeeds, { by: team.id, since: debut.get(team.id) });
+    const rules = [...(team.succeeds ? [{ id: team.succeeds, since: team.profile?.successionSince }] : []), ...(team.profile?.historyPredecessors || [])];
+    for (const rule of rules) {
+      if (!teams.some((t) => t.id === rule.id) || rule.id === team.id || (rule.since && !Number.isFinite(Date.parse(rule.since)))) throw new Error(`Sucessão inválida: ${rule.id} -> ${team.id}`);
+      if (teams.find((t) => t.id === rule.id)?.profile?.continuity === "none") throw new Error(`Equipe sem continuidade não pode ter sucessora: ${rule.id}`);
+      const floor = rule.since ? Date.parse(rule.since) : -Infinity;
+      const since = matches.filter((m) => m.startedAt >= floor && m.startedAt <= cutoffAt && [m.teamA.id, m.teamB.id].includes(team.id)).reduce((n, m) => Math.min(n, m.startedAt), Infinity);
+      if (!Number.isFinite(since)) continue;
+      if (direct.has(rule.id)) throw new Error(`Sucessão duplicada para ${rule.id}`);
+      direct.set(rule.id, { by: team.id, since, relation: rule.relation });
+    }
   }
   const aliases = new Map();
   for (const [from, row] of direct) {
@@ -4365,9 +12234,44 @@ function rankingSuccessionAliases(teams, matches, cutoffAt) {
       seen.add(to);
       to = direct.get(to).by;
     }
+    if (seen.has(to)) throw new Error(`Ciclo de sucessão em ${from}`);
     aliases.set(from, { ...row, to });
   }
   return aliases;
+}
+
+// Relações parciais podem ter várias origens, como uma fusão de lines.
+// Só o ranking recebe os mapas; campanhas e arquivos de evento ficam na origem.
+function rankingPerformanceAliases(teams, matches, cutoffAt, fullAliases = new Map()) {
+  const direct = new Map(fullAliases);
+  const byId = new Map(teams.map((team) => [team.id, team]));
+  for (const team of teams) {
+    for (const rule of team.profile?.performancePredecessors || []) {
+      const since = Date.parse(rule.since);
+      if (!byId.has(rule.id) || rule.id === team.id || !Number.isFinite(since)) throw new Error(`Herança de desempenho inválida: ${rule.id} -> ${team.id}`);
+      if (byId.get(rule.id).profile?.continuity === "none") throw new Error(`Equipe sem continuidade não pode transferir desempenho: ${rule.id}`);
+      if (since > cutoffAt) continue;
+      const debut = matches.filter((match) => match.startedAt >= since && match.startedAt <= cutoffAt && [match.teamA.id, match.teamB.id].includes(team.id)).reduce((first, match) => Math.min(first, match.startedAt), Infinity);
+      if (!Number.isFinite(debut)) continue;
+      if (direct.has(rule.id)) throw new Error(`Herança duplicada para ${rule.id}`);
+      direct.set(rule.id, { to: team.id, by: team.id, since: debut, performanceOnly: true, relation: rule.relation || "lineup" });
+    }
+  }
+  const result = new Map();
+  for (const [from, row] of direct) {
+    if (byId.get(from)?.profile?.continuity === "none") throw new Error(`Equipe sem continuidade não pode ter sucessora: ${from}`);
+    let to = row.by, partial = Boolean(row.performanceOnly);
+    const seen = new Set([from]);
+    while (direct.has(to)) {
+      if (seen.has(to)) throw new Error(`Ciclo de herança em ${from}`);
+      seen.add(to);
+      partial ||= Boolean(direct.get(to).performanceOnly);
+      to = direct.get(to).by;
+    }
+    if (seen.has(to)) throw new Error(`Ciclo de herança em ${from}`);
+    result.set(from, { ...row, to, performanceOnly: partial });
+  }
+  return result;
 }
 
 function applyRankingSuccessions(input, aliases) {
@@ -4381,6 +12285,19 @@ function applyRankingSuccessions(input, aliases) {
     if (!row || (!aliases.has(row.id) && !aliases.has(row.teamId))) return row;
     return { ...row, ...(row.id ? { id: to(row.id) } : {}), ...(row.teamId ? { teamId: to(row.teamId) } : {}) };
   };
+  // Duas lines fundidas podem ter colocações no mesmo evento. O destino fica
+  // com a melhor campanha, sem receber pontos duas vezes pelo mesmo torneio.
+  const placementValue = (row) => Number.parseFloat(String(row.range ?? row.placement ?? row.rank ?? Infinity));
+  const renamePlacements = (rows, manual = false) => {
+    const result = new Map();
+    for (const source of rows || []) {
+      const row = renamePlacement(source), id = row.teamId || row.id;
+      const key = manual ? `${row.eventId || ""}|${id}` : id;
+      const previous = result.get(key);
+      if (!previous || (manual && Number(row.points || 0) > Number(previous.points || 0)) || placementValue(row) < placementValue(previous)) result.set(key, row);
+    }
+    return [...result.values()];
+  };
   const weights = input.rankingWeights || {};
   return {
     teams: input.teams.filter((team) => !aliases.has(team.id)),
@@ -4393,12 +12310,12 @@ function applyRankingSuccessions(input, aliases) {
     tournaments: input.tournaments.map((event) => ({
       ...event,
       teams: (event.teams || []).map((id) => (typeof id === "string" ? to(id) : id)),
-      placements: (event.placements || []).map(renamePlacement),
+      placements: renamePlacements(event.placements),
     })),
     rankingWeights: {
       ...weights,
-      tournaments: Object.fromEntries(Object.entries(weights.tournaments || {}).map(([id, config]) => [id, config?.placements ? { ...config, placements: config.placements.map(renamePlacement) } : config])),
-      ...(weights.achievements ? { achievements: { ...weights.achievements, manualResults: (weights.achievements.manualResults || []).map(renamePlacement) } } : {}),
+      tournaments: Object.fromEntries(Object.entries(weights.tournaments || {}).map(([id, config]) => [id, config?.placements ? { ...config, placements: renamePlacements(config.placements) } : config])),
+      ...(weights.achievements ? { achievements: { ...weights.achievements, manualResults: renamePlacements(weights.achievements.manualResults, true) } } : {}),
     },
   };
 }
@@ -4411,7 +12328,10 @@ function withSucceededRankingRows(ranking, aliases) {
   if (!aliases.size) return ranking;
   const inherits = new Map();
   for (const [from, alias] of aliases) inherits.set(alias.to, [...(inherits.get(alias.to) || []), from]);
-  for (const row of ranking.teams) if (inherits.has(row.id)) row.inherits = inherits.get(row.id);
+  for (const row of ranking.teams) if (inherits.has(row.id)) {
+    row.inherits = inherits.get(row.id);
+    row.performanceInherits = row.inherits.filter((id) => aliases.get(id).performanceOnly);
+  }
   for (const [from, alias] of aliases) {
     const row = {
       id: from,
@@ -4438,6 +12358,7 @@ function withSucceededRankingRows(ranking, aliases) {
       rank: null,
       succeededBy: alias.by,
       succeededAt: alias.since,
+      performanceOnly: Boolean(alias.performanceOnly),
     };
     ranking.teams.push(row);
     ranking.byTeamId[from] = row;
@@ -4565,6 +12486,7 @@ function rankingMinimumRosterSize(weights) {
 
 // Elenco atual cadastrado da equipe (metadata/planilha), sem depender de partidas.
 function teamActiveRoster(team) {
+  if (team?.profile?.competitiveStatus === "dissolved") return [];
   return (team?.currentLineup || []).filter((entry) => entry && entry.role !== "comissao" && (entry.playerId || entry.name || entry.handle));
 }
 
@@ -4611,6 +12533,19 @@ function teamShortRankLabel(team) {
   return rankingIsInactive(team.ranking) ? "inativo" : "prov";
 }
 
+// Mapa que seguiu depois de decidido: a sala jogou mais um round após a 13ª
+// vitória. Vale o placar oficial, então o round a mais sai do placar, da linha de
+// rounds e dos totais da equipe. Os números dos jogadores seguem como no arquivo.
+const MAP_ROUND_LIMITS = {
+  "364d2b7c-0b49-4686-a06f-7f49f80f039c": 14, // LBEU 2 suíça, Partida 60: 13x1
+};
+
+function officialRoundResults(raw) {
+  const rounds = raw.roundResults || [];
+  const limit = MAP_ROUND_LIMITS[raw.matchInfo?.matchId];
+  return limit ? rounds.slice(0, limit) : rounds;
+}
+
 function parseMatchFile(file, metadata) {
   const raw = file.raw;
   const meta = parseFileName(file.path);
@@ -4632,8 +12567,11 @@ function parseMatchFile(file, metadata) {
           : "Blue");
   const colorForB = colorForA === "Red" ? "Blue" : "Red";
 
-  const matchRoundStats = aggregateMatchPlayerRoundStats(raw.players || [], raw.roundResults || [], metadata);
-  const accountOverrides = sharedAccountOverrides(new Set((raw.players || []).map((player) => player.puuid).filter(Boolean)));
+  const roundResults = officialRoundResults(raw);
+  const roundLimit = MAP_ROUND_LIMITS[raw.matchInfo?.matchId];
+  const roundsWon = (team) => (roundLimit ? roundResults.filter((round) => round.winningTeam === team.teamId).length : team.roundsWon);
+  const matchRoundStats = aggregateMatchPlayerRoundStats(raw.players || [], roundResults, metadata);
+  const accountOverrides = sharedAccountOverrides(new Set((raw.players || []).map((player) => player.puuid).filter(Boolean)), raw.matchInfo?.matchId);
   const players = raw.players
     .filter((player) => !player.isObserver)
     .map((player) =>
@@ -4646,8 +12584,8 @@ function parseMatchFile(file, metadata) {
     );
   assertOnePersonPerMatch(players, raw.matchInfo?.matchId, file.path);
 
-  const teamA = buildMatchTeam(meta.teamAId, colorForA, colorForA === "Red" ? red.roundsWon : blue.roundsWon, metadata);
-  const teamB = buildMatchTeam(meta.teamBId, colorForB, colorForB === "Red" ? red.roundsWon : blue.roundsWon, metadata);
+  const teamA = buildMatchTeam(meta.teamAId, colorForA, colorForA === "Red" ? roundsWon(red) : roundsWon(blue), metadata);
+  const teamB = buildMatchTeam(meta.teamBId, colorForB, colorForB === "Red" ? roundsWon(red) : roundsWon(blue), metadata);
   players.forEach((player) => {
     player.teamId = player.teamColor === teamA.color ? teamA.id : teamB.id;
     player.teamTag = player.teamColor === teamA.color ? teamA.tag : teamB.tag;
@@ -4655,7 +12593,7 @@ function parseMatchFile(file, metadata) {
   });
 
   const playerTeamByPuuid = new Map(players.map((player) => [player.puuid, player.teamColor === teamA.color ? teamA.id : teamB.id]));
-  const teamStats = calculateMatchTeamStats(raw.roundResults || [], teamA, teamB, playerTeamByPuuid);
+  const teamStats = calculateMatchTeamStats(roundResults, teamA, teamB, playerTeamByPuuid);
   const mapMeta = resolveMapMeta(raw.matchInfo.mapId, meta.map, metadata);
   const mapName = mapMeta.name;
   const startedAt = Number(raw.matchInfo.gameStartMillis || 0);
@@ -4682,9 +12620,9 @@ function parseMatchFile(file, metadata) {
     teamB,
     winnerId: teamA.score > teamB.score ? teamA.id : teamB.id,
     loserId: teamA.score > teamB.score ? teamB.id : teamA.id,
-    rounds: raw.teams[0]?.roundsPlayed || teamA.score + teamB.score,
-    roundResults: raw.roundResults || [],
-    sideSummary: matchSideSummary(raw.roundResults || []),
+    rounds: roundLimit || raw.teams[0]?.roundsPlayed || teamA.score + teamB.score,
+    roundResults,
+    sideSummary: matchSideSummary(roundResults),
     players,
     teamStats,
     mvp: players.slice().sort((a, b) => Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0))[0],
@@ -4741,6 +12679,7 @@ function createMatchSeriesSummary(matches) {
     maps,
     mapNames: maps.map((item) => item.mapName),
     label: seriesFormatLabel(maps, score),
+    ...(score.note ? { officialResultNote: score.note, statisticalScoreA: score.statisticalA, statisticalScoreB: score.statisticalB } : {}),
     mvp: players.slice().sort((a, b) => Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0) || Number(playerSwingPerRound(b) || 0) - Number(playerSwingPerRound(a) || 0))[0],
   };
 }
@@ -4750,10 +12689,17 @@ function compareSeriesMaps(a, b) {
 }
 
 function seriesMapScore(matches, teamAId, teamBId) {
-  return {
-    a: matches.filter((item) => item.winnerId === teamAId).length,
-    b: matches.filter((item) => item.winnerId === teamBId).length,
-  };
+  const a = matches.filter((item) => item.winnerId === teamAId).length;
+  const b = matches.filter((item) => item.winnerId === teamBId).length;
+  const first = matches[0];
+  const code = String(Number(first?.seriesCode));
+  const result = TOURNAMENT_OVERRIDES[first?.eventId]?.seriesResults?.[code];
+  if (result && matches.every((item) => item.eventId === first.eventId && item.seriesCode === first.seriesCode)) {
+    const direct = result.a === teamAId && result.b === teamBId;
+    const reversed = result.b === teamAId && result.a === teamBId;
+    if (direct || reversed) return { a: direct ? result.scoreA : result.scoreB, b: direct ? result.scoreB : result.scoreA, statisticalA: a, statisticalB: b, note: result.note };
+  }
+  return { a, b };
 }
 
 function seriesRoundScore(matches, teamAId, teamBId) {
@@ -4931,14 +12877,355 @@ const SHARED_ACCOUNT_RULES = [
         "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A",
     },
   },
+  // Pessoas confirmadas nos oito mapas presenciais do JUBs 2025.
+  {
+    "label": "uninassau_griffins: JUBs 2025 presencial, identificação por UUID",
+    "matchIds": [
+      "8460fedc-d88a-42bd-982f-5590ded99165",
+      "80fd9168-d47c-45ff-b28a-d16ba3f11a34",
+      "e11f3279-235e-4b5e-a606-298214f206d4",
+      "85c1cf47-0494-4ae1-bc1d-cb7234fa5f3e",
+      "e5efe709-413f-4911-9fa8-73667b8bc844",
+      "e5decf0c-69fe-40a9-aafe-e84edb958677",
+      "86329f43-09fb-43b6-9e48-962fdadda88c",
+      "88a40e34-11a3-4ed3-ba28-c604a6e07e1c"
+    ],
+    "accounts": {
+      "9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ": "9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ",
+      "i3aicKYbd7ACS0VMHleipcbPYOc2o3iCMx359INgLc2zdwcRHrmVPQKw3PtUUwXb8rWmp8SRiiCdFg": "i3aicKYbd7ACS0VMHleipcbPYOc2o3iCMx359INgLc2zdwcRHrmVPQKw3PtUUwXb8rWmp8SRiiCdFg",
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw",
+      "vY9uhQ8_Axg0hKaVu-_8e-gQTiaWB1XHCFqytXgoDH28PWLRRMpfKPz5filAzbKbrPpX1IsyEC8Mkw": "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A"
+    }
+  },
+  // Identificações confirmadas exclusivamente para estes 18 UUIDs.
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa cd37a5a7-8cea-4aa1-b89e-d23cec904eea",
+    "matchIds": [
+      "cd37a5a7-8cea-4aa1-b89e-d23cec904eea"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 29085d5d-4998-46d0-8939-d0228c1e76e6",
+    "matchIds": [
+      "29085d5d-4998-46d0-8939-d0228c1e76e6"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa e8cae010-4c1c-42cd-a92d-c84ff46ca454",
+    "matchIds": [
+      "e8cae010-4c1c-42cd-a92d-c84ff46ca454"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 4dab3b22-3864-42e4-87f1-bab75717f2ec",
+    "matchIds": [
+      "4dab3b22-3864-42e4-87f1-bab75717f2ec"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 93644e98-6533-4823-a9fc-b40536aad6e7",
+    "matchIds": [
+      "93644e98-6533-4823-a9fc-b40536aad6e7"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 4937d518-ad4e-47b8-a7b8-4ce25be2dc73",
+    "matchIds": [
+      "4937d518-ad4e-47b8-a7b8-4ce25be2dc73"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 71ac413f-406f-4384-b451-2bebe9f4eaf2",
+    "matchIds": [
+      "71ac413f-406f-4384-b451-2bebe9f4eaf2"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 835423df-b652-4a06-85be-7c24d1ce4a9f",
+    "matchIds": [
+      "835423df-b652-4a06-85be-7c24d1ce4a9f"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 5bc2b8e3-77a3-424c-aae9-ad9b9a10f379",
+    "matchIds": [
+      "5bc2b8e3-77a3-424c-aae9-ad9b9a10f379"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "6roTE5p_leyMeyKDKEsnTaA7OwU8-gCdVdIQR9r9T4doBg_2x14whfK6l-ZiiYGxY_gwjoHNKBPt6A",
+      "vY9uhQ8_Axg0hKaVu-_8e-gQTiaWB1XHCFqytXgoDH28PWLRRMpfKPz5filAzbKbrPpX1IsyEC8Mkw": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 04dbb95b-b229-4caf-b325-a618827a7594",
+    "matchIds": [
+      "04dbb95b-b229-4caf-b325-a618827a7594"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 05b2a2e0-5fd7-4a40-8082-777f216619fd",
+    "matchIds": [
+      "05b2a2e0-5fd7-4a40-8082-777f216619fd"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 8f80b8f1-ec9b-4fc9-ace8-b58929ec5097",
+    "matchIds": [
+      "8f80b8f1-ec9b-4fc9-ace8-b58929ec5097"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 3c6eff79-766f-431b-a8bb-e938cd3625f5",
+    "matchIds": [
+      "3c6eff79-766f-431b-a8bb-e938cd3625f5"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 513b0cf0-e851-46e7-876c-2eca104e538b",
+    "matchIds": [
+      "513b0cf0-e851-46e7-876c-2eca104e538b"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 2a385c2b-17fe-4441-bf07-f578b03c1682",
+    "matchIds": [
+      "2a385c2b-17fe-4441-bf07-f578b03c1682"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 81577abb-690d-416b-ab7a-74a5c387eb54",
+    "matchIds": [
+      "81577abb-690d-416b-ab7a-74a5c387eb54"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa e6f8317c-3db9-4689-a380-ec5d78df78cc",
+    "matchIds": [
+      "e6f8317c-3db9-4689-a380-ec5d78df78cc"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 29e3a019-292c-4b50-96ca-a4d7327943a9",
+    "matchIds": [
+      "29e3a019-292c-4b50-96ca-a4d7327943a9"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q",
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  // Confirmado pelo dono em 31/10/2026, só para estes 15 UUIDs: nos 13 primeiros
+  // jannik era o JV; nos 2 últimos, aham era o Laves.
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 8a30adce-154d-4571-a053-c381cc9e1f62",
+    "matchIds": [
+      "8a30adce-154d-4571-a053-c381cc9e1f62"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa b5c27a9f-6b78-4d21-af68-4782d1a86cfa",
+    "matchIds": [
+      "b5c27a9f-6b78-4d21-af68-4782d1a86cfa"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 9112c1c3-6a99-4ff3-bf77-8df6b68d796c",
+    "matchIds": [
+      "9112c1c3-6a99-4ff3-bf77-8df6b68d796c"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa ec21aaff-1e7b-4e5f-b078-e694457ef590",
+    "matchIds": [
+      "ec21aaff-1e7b-4e5f-b078-e694457ef590"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 6e9a9ed0-d7cd-444d-8d6d-eb86cd87b309",
+    "matchIds": [
+      "6e9a9ed0-d7cd-444d-8d6d-eb86cd87b309"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa c11fa41f-ba23-40eb-a488-ce314b121e74",
+    "matchIds": [
+      "c11fa41f-ba23-40eb-a488-ce314b121e74"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 66b225c7-6205-4245-839b-2b262c144b1a",
+    "matchIds": [
+      "66b225c7-6205-4245-839b-2b262c144b1a"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 12b9e00f-2b5b-4e26-9865-28a098b823e7",
+    "matchIds": [
+      "12b9e00f-2b5b-4e26-9865-28a098b823e7"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 4b180c9e-0c77-4a67-81e3-e178e1132701",
+    "matchIds": [
+      "4b180c9e-0c77-4a67-81e3-e178e1132701"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 2ce275fa-7892-41a3-a6be-561105ad738f",
+    "matchIds": [
+      "2ce275fa-7892-41a3-a6be-561105ad738f"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 9e21adfb-2fc0-4913-ae6f-facc7a966516",
+    "matchIds": [
+      "9e21adfb-2fc0-4913-ae6f-facc7a966516"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 40db3a0d-5a33-4fb3-8f8b-d881e6605541",
+    "matchIds": [
+      "40db3a0d-5a33-4fb3-8f8b-d881e6605541"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa d9e2f5cf-bc32-41db-af39-3c9d22a3bda9",
+    "matchIds": [
+      "d9e2f5cf-bc32-41db-af39-3c9d22a3bda9"
+    ],
+    "accounts": {
+      "CQQxU-NPOk9u1OE3eqdnilJuxHjs_vhKmXfxVSS-NpamWZYKIPp3EYRwLawxv2kk_nhN6QsZhitXkA": "IYl8GKBrusPmJTn2ygy6KMtkstFfNzp7BJwFZqQqzZkmExb2UPutVzpDEcKp8Rgl_tWfqsebnBKu5Q"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa dda75057-7792-4732-9e7a-4aef9fe81d75",
+    "matchIds": [
+      "dda75057-7792-4732-9e7a-4aef9fe81d75"
+    ],
+    "accounts": {
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
+  {
+    "label": "UNINASSAU: pessoas confirmadas no mapa 83d501f3-b205-407f-ab13-ecde0c6ded4c",
+    "matchIds": [
+      "83d501f3-b205-407f-ab13-ecde0c6ded4c"
+    ],
+    "accounts": {
+      "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
+    }
+  },
 ];
 
 // Uma regra só vale quando TODAS as contas que ela descreve estão na partida:
 // é a coexistência que denuncia o empréstimo. Com uma conta só, a unificação
 // normal por metadata.accounts já acerta.
-function sharedAccountOverrides(matchPuuids) {
+function sharedAccountOverrides(matchPuuids, matchId = null) {
   const overrides = new Map();
   for (const rule of SHARED_ACCOUNT_RULES) {
+    if (rule.matchIds && !rule.matchIds.includes(matchId)) continue;
     const accounts = Object.keys(rule.accounts);
     if (!accounts.every((account) => matchPuuids.has(account))) continue;
     for (const account of accounts) overrides.set(account, rule.accounts[account]);
@@ -6245,7 +14532,7 @@ function eventStatus(start, end) {
 
 function renderLoading() {
   updateDocumentTitle();
-  // O database.json tem ~6 MB comprimidos. Numa conexao lenta a espera e longa
+  // O database.json tem ~13 MB comprimidos. Numa conexao lenta a espera e longa
   // o bastante para valer dizer o que esta acontecendo, em vez de "Carregando".
   const message = state.error
     ? `
@@ -8464,7 +16751,7 @@ function ensureMatchDetails(matches) {
     if (!match.detailPending || !match.sourcePath || pendingMatchDetailRequests.has(match.id)) continue;
     const request = loadJson(match.sourcePath)
       .then((raw) => {
-        match.roundResults = raw.roundResults || [];
+        match.roundResults = officialRoundResults(raw);
       })
       .catch((error) => {
         console.error(`Falha ao carregar detalhes da partida ${match.id}`, error);
@@ -8483,7 +16770,7 @@ function renderMatchDetail(id) {
   const match = db.matches.find((item) => item.id === id);
   if (!match) return renderNotFound("Partida");
   const series = matchSeries(match);
-  const aggregateMode = route().tab === "all" && series.length > 1;
+  const aggregateMode = route().tab === "all" && (series.length > 1 || normalizeMatchItem(match).officialResultNote);
   const selectedMatches = aggregateMode ? series : [match];
   const pendingDetail = selectedMatches.filter((item) => item.detailPending);
   if (pendingDetail.length) {
@@ -8578,7 +16865,8 @@ function matchHeroMeta(match, event, score, aggregateMode) {
       ${matchTournamentLink(event)}
       <span>${escapeHtml(matchSeriesScopeLabel(match, aggregateMode))}${aggregateMode ? `, ${escapeHtml(score.label)}` : ""}</span>
       <span>${escapeHtml(formatDate(match.startedAt, "time"))}</span>
-      <span>Patch ${escapeHtml(patchLabel(match.gameVersion))}</span>
+      ${match.gameVersion ? `<span>Patch ${escapeHtml(patchLabel(match.gameVersion))}</span>` : ""}
+      ${TOURNAMENT_OVERRIDES[match.eventId]?.seriesResults?.[String(Number(match.seriesCode))]?.note ? `<span>${escapeHtml(TOURNAMENT_OVERRIDES[match.eventId].seriesResults[String(Number(match.seriesCode))].note)}</span>` : ""}
     </div>
   `;
 }
@@ -8620,7 +16908,7 @@ function matchDisplayScore(match, selectedMatches, aggregateMode) {
 // Cada aba traz o placar do mapa e o escudo de quem venceu, entao o bloco que
 // repetia os mapas e placares embaixo delas saiu.
 function matchMapTabs(match, series, aggregateMode) {
-  const showSeriesSummary = series.length > 1;
+  const showSeriesSummary = series.length > 1 || normalizeMatchItem(match).officialResultNote;
   const placar = seriesMapScore(series, match.teamA.id, match.teamB.id);
   return `
     <nav class="vp-abas-mapa" aria-label="Mapas da série">
@@ -8633,7 +16921,7 @@ function matchMapTabs(match, series, aggregateMode) {
         .map((item, index) => {
           const asset = matchMapAsset(item);
           const ativo = !aggregateMode && item.id === match.id;
-          return `<a class="vp-aba ${ativo ? "active" : ""}" href="#/matches/${item.id}"${ativo ? ' aria-current="page"' : ""}>${asset.src ? `<img class="vp-aba-arte" src="${escapeHtml(asset.src)}" data-fallback="${escapeHtml(asset.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : ""}<span class="vp-aba-nome"><small>${index + 1}</small>${escapeHtml(item.mapName)}</span><span class="vp-aba-placar">${item.winnerId ? teamLogo(item.winnerId, "tiny") : ""}${scoreForTeamInMatch(item, match.teamA.id)}-${scoreForTeamInMatch(item, match.teamB.id)}</span></a>`;
+          return `<a class="vp-aba ${ativo ? "active" : ""}" href="#/matches/${item.id}"${ativo ? ' aria-current="page"' : ""}>${asset.src ? `<img class="vp-aba-arte" src="${escapeHtml(asset.src)}" data-fallback="${escapeHtml(asset.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : ""}<span class="vp-aba-nome"><small>${item.mapNumber || index + 1}</small>${escapeHtml(item.mapName)}</span><span class="vp-aba-placar">${item.winnerId ? teamLogo(item.winnerId, "tiny") : ""}${scoreForTeamInMatch(item, match.teamA.id)}-${scoreForTeamInMatch(item, match.teamB.id)}</span></a>`;
         })
         .join("")}
     </nav>
@@ -9772,7 +18060,7 @@ function tournamentHero(event, matches, standings) {
   const banner = assetPath(event.banner || event.bannerPath || "");
   const patches = tournamentPatchLabels(matches);
   const status = event.status || "Campeonato";
-  const formato = [tournamentFormatLabel(event, matches), ...(event.format?.details || []).map((item) => `${String(item).charAt(0).toLowerCase()}${String(item).slice(1)}`)].filter(Boolean).join(", ");
+  const formato = [tournamentFormatLabel(event, matches), ...(event.format?.details || [])].map((item) => String(item || "").trim().replace(/\.+$/, "")).filter(Boolean).join(". ");
   return `
     <header class="vp-hero-camp">
       ${banner ? `<img class="vp-camp-banner" src="${escapeHtml(banner)}" alt="" loading="lazy" onerror="this.remove()" />` : ""}
@@ -9834,7 +18122,9 @@ function tournamentOverviewSection(event, matches, standings) {
 
 // A campanha de cada equipe no campeonato, em series: chave e suico. W.O.
 // conta, porque e resultado oficial; quem passou direto nao, porque nao houve
-// jogo.
+// jogo. Suico sem chave curada recebe uma chave estimada com as ultimas series,
+// que ja estao nas rodadas ("Partida 045" la, "Partida 45" aqui): da chave sai
+// o numero que o suico ja contou.
 function campanhasDoCampeonato(event) {
   const campanhas = new Map();
   const conta = (match) => {
@@ -9848,13 +18138,20 @@ function campanhasDoCampeonato(event) {
     campanhas.get(vencedor)[0] += 1;
     campanhas.get(perdedor)[1] += 1;
   };
-  (event.bracket?.regions || []).forEach((region) => (region.columns || []).forEach((column) => (column.matches || []).forEach(conta)));
-  (event.swiss?.rounds || []).forEach((round) => (round.matches || []).forEach(conta));
+  const doSuico = new Set();
+  (event.swiss?.rounds || []).forEach((round) => (round.matches || []).forEach((match) => {
+    const numero = tournamentMatchCodeNumber(match?.code);
+    if (Number.isFinite(numero)) doSuico.add(numero);
+    conta(match);
+  }));
+  const jaContada = (match) => doSuico.has(tournamentMatchCodeNumber(match?.code));
+  (event.bracket?.regions || []).forEach((region) => (region.columns || []).forEach((column) => (column.matches || []).filter((match) => !jaContada(match)).forEach(conta)));
   return campanhas;
 }
 
 // Em campeonato encerrado: todas as equipes na ordem oficial, com a campanha.
 function classificacaoFinal(event, standings, matches = []) {
+  if (event.swiss?.finalStandings === false) return "";
   const rows = tournamentResultRows(event, standings);
   if (!rows.length) return "";
   const campanhas = campanhasDoCampeonato({ ...event, bracket: tournamentBracketDefinition(event, matches) || event.bracket });
@@ -10112,7 +18409,7 @@ function tournamentSwissBracketSection(event, matches) {
     <section class="tournament-section tournament-swiss-section">
       <div class="tournament-section-head">
         <h2>Brackets</h2>
-        <span>${escapeHtml(event.bracket?.title || event.format?.summary || "Sistema suico")}</span>
+        <span>${escapeHtml(event.bracket?.title || event.format?.summary || "Sistema suíço")}</span>
       </div>
       <div class="tournament-swiss-bracket" style="--swiss-rounds:${rounds.length}">
         ${rounds
@@ -10171,11 +18468,11 @@ function tournamentSwissOverviewBoard(event) {
   if (!rounds.length) return "";
   return `
     <div class="swiss-flow-shell">
-      <div class="swiss-flow-toolbar" aria-label="Navegacao do mapa suico">
+      <div class="swiss-flow-toolbar" aria-label="Navegação do mapa suíço">
         <button type="button" class="swiss-flow-nav prev" data-swiss-flow-nav="-1" aria-label="Rodada anterior">&lt;</button>
-        <button type="button" class="swiss-flow-nav next" data-swiss-flow-nav="1" aria-label="Proxima rodada">&gt;</button>
+        <button type="button" class="swiss-flow-nav next" data-swiss-flow-nav="1" aria-label="Próxima rodada">&gt;</button>
       </div>
-      <div class="swiss-flow-board" data-swiss-flow aria-label="Mapa do sistema suico">
+      <div class="swiss-flow-board" data-swiss-flow aria-label="Mapa do sistema suíço">
         <div class="swiss-flow-track" style="--swiss-round-count:${rounds.length}">
           ${rounds.map((round, roundIndex) => tournamentSwissFlowRound(event, round, roundIndex)).join("")}
         </div>
@@ -10237,7 +18534,7 @@ function tournamentSwissFlowMatch(event, match, round, roundIndex, matchIndex) {
 
 function tournamentSwissFlowTeam(event, teamId, label, won) {
   const team = teamId ? tournamentTeamById(event, teamId) : null;
-  const name = label || team?.name || "Sem adversario";
+  const name = label || team?.name || "Sem adversário";
   const shortName = label || team?.sourceTag || team?.shortTag || team?.tag || team?.name || "BYE";
   return `
     <span class="swiss-flow-team ${won ? "winner" : ""} ${teamId ? "" : "bye"}" title="${escapeHtml(name)}">
@@ -10375,7 +18672,7 @@ function tournamentSwissStandingsSection(event) {
     <section class="tournament-section tournament-swiss-table-section">
       <div class="tournament-section-head">
         <h2>Tabela</h2>
-        <span>${escapeHtml(event.swiss.standingsLabel || "Classificacao atual")}</span>
+        <span>${escapeHtml(event.swiss.standingsLabel || "Classificação atual")}</span>
       </div>
       ${groups.length ? tournamentSwissGroupTables(event, groups) : tournamentSwissGeneralTables(event)}
     </section>
@@ -10398,7 +18695,7 @@ function tournamentSwissGeneralTables(event) {
   const activeRows = stateRows.filter((row) => !normalize(row.status).includes("eliminado"));
   const eliminatedRows = stateRows.filter((row) => normalize(row.status).includes("eliminado"));
   const generalTables = `
-    ${tournamentSwissTable(event, activeRows, "Classificacao atual")}
+    ${tournamentSwissTable(event, activeRows, "Classificação atual")}
     ${eliminatedRows.length ? tournamentSwissTable(event, eliminatedRows, "Eliminados") : ""}
   `;
   if (!event.swiss.stateTables) {
@@ -10493,7 +18790,7 @@ function tournamentSwissStateStandingGroup(group) {
 function tournamentSwissStateInfo(team) {
   const profile = team?.profile || {};
   const code = profile.state || team?.state || "";
-  const label = profile.stateName || team?.stateName || code || "Estado nao informado";
+  const label = profile.stateName || team?.stateName || code || "Estado não informado";
   const flagSrc = profile.flag || team?.flag || team?.stateFlag || "";
   return { code, label, flagSrc };
 }
@@ -10546,6 +18843,7 @@ function tournamentSwissStateStandingRow(row) {
 
 function tournamentBracketDefinition(event, matches) {
   if (event.bracket?.regions?.length) return event.bracket;
+  if (event.swiss?.rounds?.length && event.bracket?.title) return event.bracket;
   return tournamentEstimatedBracket(matches);
 }
 
@@ -10772,7 +19070,10 @@ function tournamentChaveCelula(event, match, columnIndex, matchIndex) {
   }
   const winner = tournamentBracketMatchWinner(match);
   const key = match.previewKey || tournamentBracketMatchKey(columnIndex, matchIndex, match.code);
-  const wo = match.status && normalize(match.status).startsWith("w.o") ? match.status : "";
+  // W.O. e vencedor sem placar levam o status no card: sem ele, a célula sem
+  // números pareceria uma partida não jogada.
+  const semPlacar = Boolean(winner) && !tournamentBracketMatchHasResult(match) ? match.status || "" : "";
+  const wo = (match.status && normalize(match.status).startsWith("w.o") ? match.status : "") || semPlacar;
   const dica = [match.code, match.bestOf, match.status || (tournamentBracketMatchHasResult(match) ? "" : match.label)].filter(Boolean).join(", ");
   return `<div class="vp-celula"><button type="button" class="vp-bm" data-tournament-match="${escapeHtml(key)}" title="${escapeHtml(dica)}">${tournamentChaveLado(event, match.a, match.aLabel, match.scoreA, Boolean(winner) && winner === match.a)}${tournamentChaveLado(event, match.b, match.bLabel, match.scoreB, Boolean(winner) && winner === match.b)}${wo ? `<span class="vp-bm-wo">${escapeHtml(wo)}</span>` : ""}</button></div>`;
 }
@@ -10799,7 +19100,9 @@ function tournamentCuratedBracketQualifiedCard(event, card, context = {}) {
 }
 
 function tournamentBracketMatchWinner(match) {
-  if (!tournamentBracketMatchHasResult(match)) return "";
+  // Série sem placar, mas com vencedor declarado (a chave mostra quem avançou,
+  // como nas séries inferidas da LBEU 2): vale o vencedor.
+  if (!tournamentBracketMatchHasResult(match)) return match?.winner && match.a && match.b ? match.winner : "";
   if (match.winner) return match.winner;
   if (Number(match.scoreA) === Number(match.scoreB)) return "";
   return Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b;
@@ -10823,7 +19126,7 @@ function tournamentBracketMatchHasResult(match) {
 
 function tournamentBracketMatchStatusLabel(match, round = null) {
   if (match?.status) return match.status;
-  if (tournamentBracketMatchHasResult(match)) return "Concluida";
+  if (tournamentBracketMatchHasResult(match)) return "Concluída";
   return round?.status || "A jogar";
 }
 
@@ -10959,7 +19262,7 @@ function tournamentBracketEntries(event, matches) {
         const key = tournamentSwissMatchKey(roundIndex, matchIndex, match.code);
         entries.set(key, {
           event,
-          region: { name: event.bracket?.title || event.format?.summary || "Sistema suico" },
+          region: { name: event.bracket?.title || event.format?.summary || "Sistema suíço" },
           column: { title: round.title || `Rodada ${roundIndex + 1}` },
           match: { ...match, bestOf: match.bestOf || round.bestOf },
           series: tournamentSeriesForBracketMatch(matches, match),
@@ -11282,7 +19585,9 @@ function tournamentLineupAgent(agent) {
 function tournamentMatchPreviewHtml(entry) {
   const { event, region, column, match, series } = entry;
   const hasResult = tournamentBracketMatchHasResult(match);
-  const winnerId = hasResult ? match.winner || (Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b) : "";
+  // Série inferida pela chave tem vencedor declarado e nenhum placar.
+  const winnerId = hasResult ? match.winner || (Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b) : tournamentBracketMatchWinner(match);
+  const decided = hasResult || Boolean(winnerId);
   const teamA = tournamentTeamById(event, match.a);
   const teamB = tournamentTeamById(event, match.b);
   return `
@@ -11291,16 +19596,17 @@ function tournamentMatchPreviewHtml(entry) {
       <div class="preview-kicker">${escapeHtml(region.name || "Bracket")} - ${escapeHtml(column.title || "Rodada")}</div>
       <h3>${escapeHtml(match.code || "Partida")} ${match.bestOf ? `<span>${escapeHtml(match.bestOf)}</span>` : ""}</h3>
       <div class="preview-scoreboard">
-        ${tournamentPreviewTeam(event, teamA, match.scoreA, winnerId === match.a, hasResult)}
+        ${tournamentPreviewTeam(event, teamA, match.scoreA, winnerId === match.a, decided)}
         <span class="preview-score">${escapeHtml(String(match.scoreA ?? "-"))}<small>x</small>${escapeHtml(String(match.scoreB ?? "-"))}</span>
-        ${tournamentPreviewTeam(event, teamB, match.scoreB, winnerId === match.b, hasResult)}
+        ${tournamentPreviewTeam(event, teamB, match.scoreB, winnerId === match.b, decided)}
       </div>
       <div class="preview-summary-grid">
-        <span><small>${hasResult ? "Vencedor" : "Status"}</small><strong>${escapeHtml(hasResult ? tournamentTeamById(event, winnerId)?.name || "Concluida" : tournamentBracketMatchStatusLabel(match))}</strong></span>
+        <span><small>${decided ? "Vencedor" : "Status"}</small><strong>${escapeHtml(decided ? tournamentTeamById(event, winnerId)?.name || "Concluída" : tournamentBracketMatchStatusLabel(match))}</strong></span>
         <span><small>Formato</small><strong>${escapeHtml(match.bestOf || series?.label || "MD1")}</strong></span>
-        <span><small>Data</small><strong>${escapeHtml(series ? formatDate(series.startedAt, "time") : eventTimeRange(event))}</strong></span>
+        <span><small>Data</small><strong>${escapeHtml(match.playedAt ? formatDate(match.playedAt, "time") : series ? formatDate(series.startedAt, "time") : match.playedOn ? formatDate(match.playedOn) : eventTimeRange(event))}</strong></span>
       </div>
-      ${series ? tournamentPreviewSeriesDetails(series) : `<div class="empty-state">Resumo oficial da chave. Detalhes não disponíveis para essa partida.</div>`}
+      ${series && match.previewNote ? `<div class="empty-state">${escapeHtml(match.previewNote)}</div>` : ""}
+      ${series ? tournamentPreviewSeriesDetails(series) : `<div class="empty-state">${escapeHtml(match.previewNote || "Resumo oficial da chave. Detalhes não disponíveis para essa partida.")}</div>`}
       <div class="preview-actions">
         ${series ? `<a class="action-link primary" href="${matchSeriesHref(series)}" target="_blank" rel="noopener" data-open-match-tab>Ver página da partida</a>` : `<span class="action-link disabled">Página da partida indisponível.</span>`}
         <button type="button" class="action-link" data-tournament-preview-close>Fechar</button>
@@ -11329,7 +19635,7 @@ function tournamentPreviewSeriesDetails(series) {
           .map((match, index) => {
             const scoreA = scoreForTeamInMatch(match, series.teamA.id);
             const scoreB = scoreForTeamInMatch(match, series.teamB.id);
-            return `<span><small>Mapa ${index + 1}</small><strong>${escapeHtml(match.mapName)}</strong><em>${scoreA} - ${scoreB}</em></span>`;
+            return `<span><small>Mapa ${match.mapNumber || index + 1}</small><strong>${escapeHtml(match.mapName)}</strong><em>${scoreA} - ${scoreB}</em></span>`;
           })
           .join("")}
       </div>
@@ -13230,13 +21536,16 @@ function teamSuccessionNote(team) {
     return other ? `<a href="#/teams/${other.id}">${escapeHtml(other.name)}</a>` : escapeHtml(id);
   };
   if (ranking.succeededBy) {
-    return `<p class="ranking-note">Desde ${escapeHtml(formatDate(ranking.succeededAt))}, a nota desta equipe conta para a ${link(ranking.succeededBy)}, que reuniu o núcleo dela. As partidas e os troféus continuam nesta página.</p>`;
+    return `<p class="ranking-note">Desde ${escapeHtml(formatDate(ranking.succeededAt))}, ${ranking.performanceOnly ? "o desempenho desta formação conta" : "a nota desta equipe conta"} para a ${link(ranking.succeededBy)}. ${ranking.performanceOnly ? "Títulos e colocações não são transferidos. " : ""}As partidas e os troféus continuam nesta página.</p>`;
   }
   if (ranking.inherits?.length) {
-    const rows = latestRankingSnapshot()?.byTeamId || {};
-    const parts = ranking.inherits.map((id) => `${link(id)}${rows[id]?.succeededAt ? ` (desde ${escapeHtml(formatDate(rows[id].succeededAt))})` : ""}`);
-    return `<p class="ranking-note">A nota inclui as partidas e colocações da ${parts.join(" e da ")}, que esta equipe sucedeu.</p>`;
+    const partial = new Set(ranking.performanceInherits || []);
+    const fullParts = ranking.inherits.filter((id) => !partial.has(id)).map(link);
+    const partialParts = ranking.inherits.filter((id) => partial.has(id)).map(link);
+    return `<p class="ranking-note">${fullParts.length ? `A nota inclui partidas e colocações de ${fullParts.join(" e ")}. ` : ""}${partialParts.length ? `O desempenho inclui partidas de ${partialParts.join(" e ")}, sem transferir títulos ou colocações. ` : ""}As campanhas antigas permanecem com as equipes que as disputaram.</p>`;
   }
+  if (team.profile?.competitiveStatus === "dissolved") return `<p class="ranking-note">Equipe encerrada, sem sucessora. Suas partidas e campanhas permanecem neste perfil.</p>`;
+  if (team.profile?.continuity === "none") return `<p class="ranking-note">Equipe histórica independente, sem continuidade coletiva em outra equipe.</p>`;
   return "";
 }
 
@@ -13635,8 +21944,8 @@ function seriesScoreForTeam(series, teamId) {
   const isB = series.teamB.id === teamId;
   if (!isA && !isB) return { mapsFor: 0, mapsAgainst: 0, roundsFor: 0, roundsAgainst: 0 };
   return {
-    mapsFor: isA ? Number(series.scoreA || 0) : Number(series.scoreB || 0),
-    mapsAgainst: isA ? Number(series.scoreB || 0) : Number(series.scoreA || 0),
+    mapsFor: isA ? Number(series.statisticalScoreA ?? series.scoreA ?? 0) : Number(series.statisticalScoreB ?? series.scoreB ?? 0),
+    mapsAgainst: isA ? Number(series.statisticalScoreB ?? series.scoreB ?? 0) : Number(series.statisticalScoreA ?? series.scoreA ?? 0),
     roundsFor: isA ? Number(series.roundScoreA || 0) : Number(series.roundScoreB || 0),
     roundsAgainst: isA ? Number(series.roundScoreB || 0) : Number(series.roundScoreA || 0),
   };
@@ -14222,25 +22531,31 @@ function teamStateBadge(team) {
   return `<span class="state-badge">${flag}<span>${escapeHtml(stateLabel)}</span></span>`;
 }
 
-function teamTrophyAchievements(team) {
+function teamTrophyAchievements(team, { includeInherited = true } = {}) {
   if (!team?.id) return [];
   const rows = [];
+  const inherited = includeInherited ? rankingSuccessionAliases(state.db?.teams || [], state.db?.matches || [], Date.now()) : new Map();
+  const origins = new Set([team.id, ...[...inherited].filter(([, row]) => row.to === team.id).map(([id]) => id)]);
   for (const event of visibleTournaments()) {
     if (!eventIsDone(event)) continue;
     const placements = trophyPlacementRows(event);
     placements.forEach((row, index) => {
       const teamId = row.id || row.teamId;
-      if (teamId !== team.id) return;
+      if (!origins.has(teamId)) return;
       const placement = trophyPlacementInfo(row, index);
       if (!placement) return;
-      rows.push({
+      const trophy = {
         event,
         placement: placement.value,
         placementLabel: placement.label,
         trophyKey: placement.trophyKey,
         podiumClass: placement.podiumClass,
         date: Number(event.end || event.start || 0),
-      });
+        originalTeamId: teamId,
+      };
+      const existing = rows.findIndex((item) => item.event.id === event.id);
+      if (existing < 0) rows.push(trophy);
+      else if (trophy.placement < rows[existing].placement) rows[existing] = trophy;
     });
   }
   return rows.sort((a, b) => b.date - a.date || a.placement - b.placement || String(a.event.name || "").localeCompare(String(b.event.name || ""), "pt-BR"));
@@ -15707,7 +24022,7 @@ function playerTeamTrophies(teamId, tournamentRows) {
   const team = teamById(teamId);
   if (!team) return [];
   const eventIds = new Set((tournamentRows || []).filter((row) => row.teamId === teamId).map((row) => row.event.id));
-  return teamTrophyAchievements(team).filter((trophy) => eventIds.has(trophy.event.id));
+  return teamTrophyAchievements(team, { includeInherited: false }).filter((trophy) => eventIds.has(trophy.event.id));
 }
 
 function playerMiniTrophyLink(trophy) {
@@ -15856,7 +24171,7 @@ function normalizeMatchItem(item) {
 
 function matchSeriesRoute(item) {
   const series = normalizeMatchItem(item);
-  return `matches/${series.primaryMatchId}${series.mapCount > 1 ? "/all" : ""}`;
+  return `matches/${series.primaryMatchId}${series.mapCount > 1 || series.officialResultNote ? "/all" : ""}`;
 }
 
 function matchSeriesHref(item) {
@@ -16488,7 +24803,7 @@ function compactRankingRow(team) {
 
 function matchListScore(item) {
   const series = normalizeMatchItem(item);
-  if (series.mapCount > 1) {
+  if (series.mapCount > 1 || series.officialResultNote) {
     return {
       a: series.scoreA,
       b: series.scoreB,
@@ -17531,7 +25846,7 @@ function searchEntities() {
         type: "match",
         path: matchSeriesRoute(series),
         label: `${series.teamA.name} ${score.a} x ${score.b} ${series.teamB.name}`,
-        meta: `${score.label} - ${score.detail} - ${formatDate(series.startedAt, "time")} - ${event?.name || "Campeonato"} - ${patch}`,
+        meta: `${score.label} - ${score.detail} - ${formatDate(series.startedAt, "time")} - ${event?.name || "Campeonato"}${patch ? ` - ${patch}` : ""}`,
         entity: series,
         searchText: matchSearchText(series, score, event, patch),
         colors: ["#181715", "#d8323c"],
@@ -17761,7 +26076,7 @@ function renderMatchSearchResult(item) {
         </span>
         <span class="search-match-facts">
           <span>${escapeHtml(formatDate(series.startedAt, "time"))}</span>
-          <span>${escapeHtml(matchSearchPatchLabel(series))}</span>
+          ${matchSearchPatchLabel(series) ? `<span>${escapeHtml(matchSearchPatchLabel(series))}</span>` : ""}
           <span>${escapeHtml(matchSearchMapLabel(series, score))}</span>
         </span>
       </span>
@@ -17798,7 +26113,7 @@ function matchSearchMapLabel(series, score = matchListScore(series)) {
 
 function matchSearchPatchLabel(series) {
   const patches = [...new Set((series.maps || []).map((match) => patchLabel(match?.gameVersion || "")).filter((label) => label && label !== "-"))];
-  if (!patches.length) return "Patch -";
+  if (!patches.length) return "";
   return `Patch ${patches.slice(0, 3).join(" / ")}${patches.length > 3 ? ` +${patches.length - 3}` : ""}`;
 }
 
@@ -17815,7 +26130,7 @@ function mapSearchMatches(map) {
 
 function mapSearchPatchLabel(map) {
   const patches = [...new Set(mapSearchMatches(map).map((match) => patchLabel(match?.gameVersion || "")).filter((label) => label && label !== "-"))];
-  if (!patches.length) return "Patch -";
+  if (!patches.length) return "";
   return `Patch ${patches.slice(0, 4).join(" / ")}${patches.length > 4 ? ` +${patches.length - 4}` : ""}`;
 }
 
@@ -17860,7 +26175,7 @@ function renderMapSearchResult(item) {
         <strong class="search-result-title">${escapeHtml(map.name)}</strong>
         <span class="search-map-stats">${escapeHtml(`${map.matches} partidas - ${map.rounds} rounds`)}</span>
         <span class="search-map-facts">
-          <span>${escapeHtml(mapSearchPatchLabel(map))}</span>
+          ${mapSearchPatchLabel(map) ? `<span>${escapeHtml(mapSearchPatchLabel(map))}</span>` : ""}
           ${mapSearchTournamentLogos(map)}
         </span>
       </span>
@@ -18008,7 +26323,7 @@ function tournamentRow(event) {
 function eventTimeRange(event) {
   if (!event?.start && !event?.end) return "Sem janela definida";
   if (!event?.start) return `Termina ${formatDate(event.end)}`;
-  if (!event?.end) return `Inicio ${formatDate(event.start)}`;
+  if (!event?.end) return `Início ${formatDate(event.start)}`;
   const endLabel = !eventIsDone(event) && periodEndIsCurrent(event.end) ? "Atualmente" : formatDate(event.end);
   if (formatDate(event.start) === endLabel) return formatDate(event.start);
   return `${formatDate(event.start)} - ${endLabel}`;
@@ -18183,7 +26498,11 @@ function playerById(id) {
   const key = String(id || "");
   if (!key) return null;
   const routeKey = slugify(key);
-  return state.db?.players.find((player) => player.id === key || player.puuid === key || (player.accounts || []).some((account) => account.puuid === key) || player.routeSlug === routeKey);
+  const players = state.db?.players;
+  // Conta emprestada também entra nas contas de quem jogou nela, então o dono
+  // do perfil vem antes da busca por conta.
+  return players?.find((player) => player.id === key || player.puuid === key) ||
+    players?.find((player) => (player.accounts || []).some((account) => account.puuid === key) || player.routeSlug === routeKey);
 }
 
 function playerRouteId(playerOrId) {
@@ -18240,7 +26559,7 @@ function matchDocumentTitle(id, tab) {
   const match = state.db.matches.find((item) => item.id === id);
   if (!match) return STATIC_DOCUMENT_TITLES.matches;
   const series = matchSeries(match);
-  const aggregateMode = tab === "all" && series.length > 1;
+  const aggregateMode = tab === "all" && (series.length > 1 || normalizeMatchItem(match).officialResultNote);
   const selectedMatches = aggregateMode ? series : [match];
   const score = matchDisplayScore(match, selectedMatches, aggregateMode);
   return `${matchTitleTeamTag(match.teamA)} ${score.a} x ${score.b} ${matchTitleTeamTag(match.teamB)}`;

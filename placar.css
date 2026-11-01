@@ -6486,3 +6486,141 @@ body {
     padding-left: calc(clamp(26px, 8vw, 36px) + 8px);
   }
 }
+
+/* Eventos: a lista central do ranking, com a barra de filtros numa placa so. */
+.vp-eventos {
+  width: 100%;
+  max-width: 922px;
+  margin-inline: auto;
+}
+
+.vp-eventos .vp-sec h1 {
+  margin: 0;
+  font: 600 30px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.vp-eventos .vp-sec .lista-contagem {
+  margin: 0 0 0 auto;
+  padding: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-eventos .event-filter-bar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0;
+  margin-bottom: 8px;
+  background: var(--surface);
+  border-radius: 2px;
+}
+
+.vp-eventos .event-filter-drop {
+  position: relative;
+  flex: 0 1 180px;
+  background: none;
+  border: 0;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+}
+
+.vp-eventos .event-filter-drop summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 12px;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 14px;
+  background: none;
+  border: 0;
+  font-size: 13px;
+}
+
+.vp-eventos .event-filter-drop summary > :first-child {
+  display: none;
+}
+
+.vp-eventos .event-filter-toggle {
+  min-height: 44px;
+  padding: 0 14px;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  font: 600 13px/1 var(--font-text);
+}
+
+.vp-eventos .event-filter-toggle[aria-pressed="true"] {
+  color: var(--ink);
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+.vp-lista-pagina.vp-eventos .event-list.large > .event-row.event-row-rich {
+  position: relative;
+  isolation: isolate;
+}
+
+/* A capa da home, com o mesmo veu: quem nao usa mouse nem baixa a imagem. */
+@media (hover: hover) and (pointer: fine) {
+  .vp-eventos .event-row-rich.tem-capa::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0;
+    background-image:
+      linear-gradient(180deg, rgba(11, 11, 16, 0.84), rgba(11, 11, 16, 0.72)),
+      var(--event-capa);
+    background-position: center;
+    background-size: cover;
+    transition: opacity 280ms ease;
+    pointer-events: none;
+  }
+
+  .vp-eventos .event-row-rich.tem-capa:hover::before,
+  .vp-eventos .event-row-rich.tem-capa:focus-visible::before {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 1000px) {
+  .vp-eventos .event-table-head,
+  .vp-lista-pagina.vp-eventos .event-list.large > .event-row.event-row-rich {
+    grid-template-columns: minmax(0, 1fr) 44px 110px 52px 150px 170px;
+    gap: 12px;
+  }
+
+  .vp-eventos .event-table-head > :nth-child(5),
+  .vp-eventos .event-row-rich > [data-rotulo="Tipo"] {
+    display: none;
+  }
+
+  .vp-eventos .event-cell,
+  .vp-eventos .event-cell span {
+    overflow: visible;
+    white-space: normal;
+    text-overflow: clip;
+  }
+}
+
+@media (max-width: 760px) {
+  .vp-eventos .event-filter-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vp-eventos .event-filter-drop {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .vp-eventos .event-filter-toggle {
+    text-align: left;
+  }
+}

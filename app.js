@@ -14753,7 +14753,7 @@ function renderHomeCompact() {
     </div>
   `);
   bindHomeRankingPanel();
-  bindHomeEventCovers();
+  bindEventCovers(".events-panel", ".vp-evrow");
   bindWeekCarousel();
 }
 
@@ -15482,20 +15482,15 @@ function renderEventsPage(id) {
   const events = eventsFiltrados();
   const total = visibleTournaments().length;
   Shell(`
-    <header class="page-header slim-header">
-      <div class="page-title">
-        <h1>Eventos</h1>
-        <p>Chaves, resultados, participantes e contexto competitivo dos eventos cobertos.</p>
-      </div>
-    </header>
-    ${eventFilterBar()}
-    <section class="vp-lista-pagina full-list-panel">
-      ${eventFiltrosAtivos() ? contagemDaLista(events.length, total, "campeonatos") : ""}
+    <section class="vp-lista-pagina full-list-panel vp-eventos">
+      <header class="vp-sec"><h1>Eventos</h1>${contagemDaLista(events.length, total, "campeonatos")}</header>
+      ${eventFilterBar()}
       ${eventTableHead()}
       <div class="event-list large">${events.length ? events.map(eventDirectoryRow).join("") : `<p class="empty-state">Nenhum campeonato com esses filtros. Tire um filtro para ver mais.</p>`}</div>
     </section>
   `);
   bindEventTable();
+  bindEventCovers(".vp-eventos .event-list", ".event-row-rich");
 }
 
 function renderPlayersCompact(id) {
@@ -25037,11 +25032,11 @@ function playerWeekDateLabel(value) {
 // entrar e sair da linha vira so opacidade - sem novo pedido, sem piscada.
 // O `img.onload` existe para nao acender a camada em cima de um buraco: o veu
 // escuro sozinho parece um bug ate a arte chegar.
-function bindHomeEventCovers() {
+function bindEventCovers(painel, linha) {
   // Espelha o @media do CSS: sem ponteiro fino nao ha o que revelar, entao nem
   // o download acontece.
   if (!window.matchMedia?.("(hover: hover) and (pointer: fine)").matches) return;
-  const panel = document.querySelector(".events-panel");
+  const panel = document.querySelector(painel);
   if (!panel) return;
   const revelar = (row) => {
     const capa = row?.dataset?.cover;
@@ -25068,8 +25063,8 @@ function bindHomeEventCovers() {
     };
     img.src = capa;
   };
-  panel.addEventListener("pointerover", (event) => revelar(event.target.closest(".vp-evrow")));
-  panel.addEventListener("focusin", (event) => revelar(event.target.closest(".vp-evrow")));
+  panel.addEventListener("pointerover", (event) => revelar(event.target.closest(linha)));
+  panel.addEventListener("focusin", (event) => revelar(event.target.closest(linha)));
 }
 
 function bindHomeRankingPanel() {
@@ -25468,7 +25463,7 @@ function eventRowCoverPath(event) {
   return nome ? `assets/tournament-banners/row/${nome}.webp` : "";
 }
 
-function eventListRow(event) {
+function atributosDaCapa(event) {
   const capa = eventRowCoverPath(event);
   // A capa cheia viaja junto como reserva. O derivado de linha e gerado por um
   // script a parte (scripts/build_event_row_banners.py) e nada obriga ele a
@@ -25476,12 +25471,16 @@ function eventListRow(event) {
   // Inters, que tinha capa e nao mostrava nada. Com a reserva, campeonato novo
   // sempre revela capa; o que se perde sem o derivado e peso, nao a capa.
   const capaCheia = String(event?.banner || "").trim();
+  return `${capa ? ` data-cover="${escapeHtml(assetPath(capa))}"` : ""}${capaCheia ? ` data-cover-cheia="${escapeHtml(assetPath(capaCheia))}"` : ""}`;
+}
+
+function eventListRow(event) {
   // Linha da Placa de campeonatos. Encerrado nao repete "Finalizado": o normal
   // nao precisa de selo, so o em andamento ganha o ponto vermelho de ao vivo.
   const situacao = eventStatusClass(event.status);
   const marca = situacao === "live" ? `<span class="vp-ao-vivo">Em andamento</span> ` : situacao === "scheduled" ? `${escapeHtml(event.status)}, ` : "";
   return `
-    <a class="vp-evrow" href="#/events/${event.id}"${capa ? ` data-cover="${escapeHtml(assetPath(capa))}"` : ""}${capaCheia ? ` data-cover-cheia="${escapeHtml(assetPath(capaCheia))}"` : ""}>
+    <a class="vp-evrow" href="#/events/${event.id}"${atributosDaCapa(event)}>
       ${eventLogo(event, "small")}
       <span class="vp-evrow-txt"><strong class="vp-evrow-nome" title="${escapeHtml(event.name)}">${escapeHtml(event.name)}</strong><span class="vp-evrow-quando">${marca}${escapeHtml(eventDatesShort(event))}${window.Comments ? window.Comments.selo("event", event.id) : ""}</span></span>
       ${eventTierBadge(event)}
@@ -25535,14 +25534,14 @@ function eventTierBadge(event) {
 function eventDirectoryRow(event) {
   const matches = matchSeriesForEvent(event.id);
   const teamTotal = Number(event.teamCount || 0) || event.teams.length;
-  // Seis escudos, nao oito. Com oito o mosaico media 322px numa trilha de 232 e
+  // Quatro escudos cabem na coluna de 170px. Com oito o mosaico media 322px numa trilha de 232 e
   // os dois primeiros vazavam 90px para a ESQUERDA, por cima da coluna Formato
   // - transbordo que scrollWidth nao ve, porque ele so mede para a direita.
-  const featuredTeams = eventFeaturedTeamIds(event, matches, 6)
+  const featuredTeams = eventFeaturedTeamIds(event, matches, 4)
     .map((teamId) => tournamentTeamById(event, teamId))
     .filter(Boolean);
   return `
-    <a class="event-row event-row-rich" href="#/events/${event.id}">
+    <a class="event-row event-row-rich" href="#/events/${event.id}"${atributosDaCapa(event)}>
       <span class="event-row-identity">
         ${eventLogo(event, "small")}
         <span class="row-main event-row-title">
@@ -25640,7 +25639,7 @@ function eventFilterGrupo(chave, rotulo, valores, ler, resumoVazio) {
   if (!opcoes) return "";
   return `
     <details class="filter-dropdown event-filter-drop${sel.length ? " tem-selecao" : ""}" data-event-group="${escapeHtml(chave)}"${state.eventFilterOpen?.[chave] ? " open" : ""}>
-      <summary>${filterIcon()}<span>${escapeHtml(rotulo)}</span><strong>${escapeHtml(eventFilterResumo(sel, resumoVazio))}</strong></summary>
+      <summary>${filterIcon()}<span>${escapeHtml(rotulo)}</span><strong>${escapeHtml(eventFilterResumo(sel, resumoVazio))}</strong>${chevronIcon()}</summary>
       <div class="filter-dropdown-body">
         <div class="event-filter-rows">${opcoes}</div>
       </div>
@@ -25656,18 +25655,14 @@ function eventFilterBar() {
   const formatos = [...new Set(eventos.map(eventFormatoLabel).filter(Boolean))]
     .sort((a, b) => a.localeCompare(b, "pt-BR"))
     .map((t) => ({ id: t, label: t }));
-  const comPremio = eventos.filter(eventTemPremio).length;
-  const ativos = eventFiltrosAtivos();
 
   return `
     <section class="event-filter-bar" aria-label="Filtros de campeonato">
       ${eventFilterGrupo("tier", "Tier", tiers, eventTierChave, "Todos")}
       ${eventFilterGrupo("tipo", "Tipo", tipos, eventTipoGrupo, "Todos")}
       ${eventFilterGrupo("formato", "Formato", formatos, eventFormatoLabel, "Todos")}
-      <button type="button" class="event-filter-toggle${f.premio ? " active" : ""}" data-event-filter="premio" data-valor="1" aria-pressed="${f.premio ? "true" : "false"}">
-        ${filterIcon()}<span>Com premiação</span><strong>${comPremio}</strong>
-      </button>
-      ${ativos ? `<button type="button" class="filter-reset-button event-filter-reset" data-event-filter-reset>${resetIcon()}<span>Limpar ${ativos} filtro${ativos > 1 ? "s" : ""}</span></button>` : ""}
+      <button type="button" class="event-filter-toggle" data-event-filter="premio" data-valor="1" aria-pressed="${f.premio ? "true" : "false"}">Com premiação</button>
+      ${eventFiltrosAtivos() ? `<button type="button" class="event-filter-toggle" data-event-filter-reset>Limpar filtros</button>` : ""}
     </section>
   `;
 }

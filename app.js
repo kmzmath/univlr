@@ -18703,11 +18703,12 @@ function tournamentColocacaoCor(range) {
   return { "place-1": "vp-col-ouro", "place-2": "vp-col-prata", "place-3": "vp-col-bronze" }[tournamentPlacementPodiumClass(range)] || "";
 }
 
-// Acima de 16 equipes a tabela anda em duas colunas, cortando entre duas colocacoes
-// no ponto mais perto da metade: uma colocacao nunca fica dividida.
+// A partir de 8 equipes a tabela anda em duas colunas, cortando entre duas colocacoes
+// no ponto mais perto da metade: uma colocacao nunca fica dividida. Numa coluna so a
+// linha sobraria vazia entre o nome e os numeros.
 function tournamentColocacaoColunas(grupos) {
   const total = grupos.reduce((soma, grupo) => soma + grupo.equipes.length, 0);
-  if (total <= 16) return [grupos];
+  if (total < 8) return [grupos];
   let soma = 0;
   let melhor = { corte: 1, distancia: Infinity };
   grupos.forEach((grupo, indice) => {
@@ -18765,7 +18766,7 @@ function tournamentColocacaoSection(event, matches, standings) {
   return `
     <section class="vp-s-colocacao">
       ${sectionHead("Colocação")}
-      <div class="vp-colocacao${colunas.length > 1 ? " vp-colocacao-dupla" : ""}">
+      <div class="vp-colocacao">
         ${colunas.map((grupos, indice) => `
           <div class="vp-col-coluna">
             <div class="vp-col-cab" aria-hidden="true"><span>Lugar</span><div class="vp-col-dados"><span>Equipe</span><span>Séries</span><span class="vp-col-mapas">Mapas</span><span>Saldo</span></div></div>
@@ -19097,7 +19098,7 @@ function tournamentSwissGeneralTables(event) {
     ...(event.swiss.standings || []).map((row) => ({ ...row, status: row.status || "Em disputa" })),
     ...(event.swiss.eliminated || []).map((row) => ({ ...row, status: row.status || "Eliminado" })),
   ]);
-  const geral = tournamentSwissTabela(rows, { colunas: 2 });
+  const geral = tournamentSwissTabela(rows, { colunas: 3 });
   if (!event.swiss.stateTables) return geral;
   return `
     <div class="tournament-swiss-table-wrap">
@@ -19122,7 +19123,7 @@ function tournamentSwissStandingRows(event, rows) {
   }));
 }
 
-// Com duas colunas a ordem desce a primeira e continua na segunda, cada uma com o
+// Com tres colunas a ordem desce a primeira e continua nas seguintes, cada uma com o
 // proprio cabecalho. Em 1294px uma linha so deixava um vao enorme entre nome e dados.
 // O titulo entra como HTML por causa da bandeira do estado: quem chama escapa o texto.
 function tournamentSwissTabela(rows, { titulo = "", colunas = 1 } = {}) {
@@ -19132,7 +19133,7 @@ function tournamentSwissTabela(rows, { titulo = "", colunas = 1 } = {}) {
   return `
     <div class="vp-tabela">
       ${titulo ? `<h3>${titulo}</h3>` : ""}
-      <div class="vp-tabela-corpo" style="--colunas:${partes.length}">
+      <div class="vp-tabela-corpo">
         ${partes.map((parte) => `
           <div class="vp-tabela-coluna">
             <div class="vp-tabela-cab" aria-hidden="true"><span>#</span><span></span><span>Equipe</span><span>Estado</span><span>V</span><span>D</span><span>Situação</span></div>
@@ -19237,13 +19238,10 @@ const TOURNAMENT_BRACKET_STAGES = [
   { id: "playoffs", title: "Playoffs" },
 ];
 
-function tournamentCuratedBracketSection(evento) {
-  const regions = tournamentChaveRegioes(tournamentBracketDisplayRegions(evento.bracket.regions));
-  // Com 8 colunas ou mais o nome nao cabe em 1294px sem rolagem: entra a sigla, e o
-  // nome inteiro fica na dica e na previa da partida. A decisao e do campeonato
-  // inteiro, para a mesma equipe nao mudar de rotulo entre as regioes.
-  const densa = Math.max(0, ...regions.map((region) => tournamentCuratedBracketColumns(evento, region).length)) >= 8;
-  const event = densa ? { ...evento, chaveDensa: true } : evento;
+function tournamentCuratedBracketSection(event) {
+  const regions = tournamentChaveRegioes(tournamentBracketDisplayRegions(event.bracket.regions));
+  // Com 8 colunas ou mais o vao entre elas aperta para todas caberem em 1294px.
+  const densa = Math.max(0, ...regions.map((region) => tournamentCuratedBracketColumns(event, region).length)) >= 8;
   const stages = tournamentBracketStages(regions);
   // Uma fase so nao ganha titulo proprio: o cabecalho da secao ja diz o que e.
   const body = stages.length
@@ -19440,27 +19438,18 @@ function tournamentChaveBotao(event, match, key) {
 function tournamentChaveLado(event, teamId, label, score, venceu) {
   const team = teamId ? tournamentTeamById(event, teamId) : null;
   const nome = team?.name || label || "A definir";
-  return `<span class="vp-bm-lado${venceu ? " vp-ganhou" : ""}" style="--team-line:${teamId ? teamLineColor(teamId) : TEAM_LINE_SEM_COR}">${teamId ? teamLogo(teamId, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}<span class="vp-bm-nome" title="${escapeHtml(nome)}">${tournamentChaveRotulo(event, team, nome)}</span><b>${escapeHtml(String(score ?? ""))}</b></span>`;
-}
-
-// Na chave densa a coluna so comporta a sigla. As duas versoes vao no HTML porque o
-// celular volta ao nome: la cada partida tem metade da tela.
-function tournamentChaveRotulo(event, team, nome) {
-  if (!event.chaveDensa) return escapeHtml(nome);
-  const curto = team?.sourceTag || team?.tag || (normalize(nome).includes("sem advers") ? "BYE" : "");
-  return curto ? `<span class="vp-bm-sigla">${escapeHtml(curto)}</span><span class="vp-bm-longo">${escapeHtml(nome)}</span>` : escapeHtml(nome);
+  return `<span class="vp-bm-lado${venceu ? " vp-ganhou" : ""}" style="--team-line:${teamId ? teamLineColor(teamId) : TEAM_LINE_SEM_COR}">${teamId ? teamLogo(teamId, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}<span class="vp-bm-nome" title="${escapeHtml(nome)}">${escapeHtml(nome)}</span><b>${escapeHtml(String(score ?? ""))}</b></span>`;
 }
 
 function tournamentCuratedBracketQualifiedCard(event, card, context = {}) {
-  const team = tournamentTeamById(event, card.id);
-  const name = card.label || team?.name || card.id || "Equipe";
+  const name = card.label || tournamentTeamById(event, card.id)?.name || card.id || "Equipe";
   const rowStart = tournamentBracketRowStart(card.slot ?? context.matchIndex, context.maxMatches || 1, card.slot == null ? context.columnMatches || 1 : context.maxMatches || 1);
   return `
     <article class="tournament-bracket-match curated-match qualified-card terminal ${card.id ? "" : "pending"}" aria-label="${escapeHtml(`Classificado: ${name}`)}" style="--match-row:${rowStart}">
       ${tournamentBracketQualifiedMeta(card)}
       <span class="tournament-bracket-team winner tournament-bracket-qualified-team">
         ${card.id ? teamLogo(card.id, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}
-        <strong title="${escapeHtml(name)}">${tournamentChaveRotulo(event, team, name)}</strong>
+        <strong title="${escapeHtml(name)}">${escapeHtml(name)}</strong>
       </span>
     </article>
   `;
@@ -19475,8 +19464,9 @@ function tournamentBracketMatchWinner(match) {
   return Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b;
 }
 
+// O titulo da coluna ja diz "Classificados": o cartao so fala quando tem nota propria.
 function tournamentBracketQualifiedMeta(card) {
-  return `<span class="tournament-bracket-meta"><span>${escapeHtml(card.note || "Classificado")}</span></span>`;
+  return card.note ? `<span class="tournament-bracket-meta"><span>${escapeHtml(card.note)}</span></span>` : "";
 }
 
 function tournamentBracketMatchHasResult(match) {
@@ -19577,15 +19567,14 @@ function tournamentLinkedBracketMatch(event, match, key, placement) {
 }
 
 function tournamentLinkedBracketQualifiedCard(event, card, placement) {
-  const team = tournamentTeamById(event, card.id);
-  const name = card.label || team?.name || card.id || "Equipe";
+  const name = card.label || tournamentTeamById(event, card.id)?.name || card.id || "Equipe";
   return `
     <div class="linked-match vp-celula" style="${placement}">
       <article class="qualified-card terminal ${card.id ? "" : "pending"}" aria-label="${escapeHtml(`${card.note || "Classificado"}: ${name}`)}">
         ${tournamentBracketQualifiedMeta(card)}
         <span class="tournament-bracket-team winner tournament-bracket-qualified-team">
           ${card.id ? teamLogo(card.id, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}
-          <strong title="${escapeHtml(name)}">${tournamentChaveRotulo(event, team, name)}</strong>
+          <strong title="${escapeHtml(name)}">${escapeHtml(name)}</strong>
         </span>
       </article>
     </div>

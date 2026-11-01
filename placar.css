@@ -3840,22 +3840,12 @@ body {
   --ouro: #f4cb45;
   --prata: #c4cad4;
   --bronze: #bb7440;
-  --col-lugar: 104px;
-  --col-dados: minmax(0, 1fr) 52px 52px 52px;
+  --col-lugar: 100px;
+  --col-dados: minmax(0, 1fr) 44px 44px 44px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr));
   gap: 12px;
   align-items: start;
-}
-
-.vp-colocacao-dupla {
-  --col-lugar: 88px;
-  --col-dados: minmax(0, 1fr) 44px 44px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.vp-colocacao-dupla .vp-col-mapas {
-  display: none;
 }
 
 .vp-col-coluna {
@@ -3971,11 +3961,12 @@ body {
 
 .vp-col-nome > span:last-child {
   min-width: 0;
+  overflow: hidden;
   padding: 3px 0;
   font-size: 14px;
   font-weight: 600;
   line-height: 1.15;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
 }
 
 .vp-col-equipe i {
@@ -4620,6 +4611,13 @@ a.vp-col-equipe:hover .vp-col-nome > span:last-child {
   flex: 0 1 auto;
 }
 
+/* Cada partida tem a mesma largura em chave, grupo e rodada: nome que nao couber vai
+   e volta (.nome-rolante), para o placar nao ficar longe do nome. So encolhe quando
+   as colunas nao cabem na largura da pagina. */
+.tournament-hub {
+  --celula: 160px;
+}
+
 /* Cada rodada e uma coluna de celulas de mesma altura: a partida da rodada
    seguinte cai no meio das duas que a alimentam. Os fios sao
    pseudo-elementos; o bye nao desenha nada. */
@@ -4627,7 +4625,7 @@ a.vp-col-equipe:hover .vp-col-nome > span:last-child {
   --vao: 24px;
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 200px);
+  grid-auto-columns: minmax(0, var(--celula));
   column-gap: var(--vao);
   justify-content: start;
 }
@@ -4644,7 +4642,7 @@ a.vp-col-equipe:hover .vp-col-nome > span:last-child {
 
 .vp-sem-fios .vp-rodada-corpo {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(0, var(--celula)));
   gap: 6px 12px;
 }
 
@@ -4736,10 +4734,6 @@ a.vp-col-equipe:hover .vp-col-nome > span:last-child {
   text-overflow: ellipsis;
 }
 
-.vp-bm-longo {
-  display: none;
-}
-
 .vp-bm-lado.vp-ganhou .vp-bm-nome {
   color: var(--ink);
   font-weight: 600;
@@ -4817,7 +4811,7 @@ a.vp-col-equipe:hover .vp-col-nome > span:last-child {
 /* A chave encadeada (grupos GSL e classificatorias antigas) usa posicao exata em
    grade, com a mesma celula das outras. */
 .vp-chaves .tournament-linked-bracket {
-  --linked-col: minmax(0, 200px);
+  --linked-col: minmax(0, var(--celula));
   --linked-gap: 24px;
   --linked-unit: 13px;
   --linked-line: var(--line-dark);
@@ -4892,12 +4886,67 @@ a.vp-col-equipe:hover .vp-col-nome > span:last-child {
   text-overflow: ellipsis;
 }
 
+/* Com 8 colunas ou mais o tablet deixava 30px para o nome: a chave vira os mesmos
+   blocos do celular, na largura de sempre. As chaves menores continuam com fio. */
+@media (min-width: 761px) and (max-width: 1000px) {
+  .vp-chaves-densas .vp-chave {
+    display: block;
+  }
+
+  .vp-chaves-densas .vp-rodada + .vp-rodada {
+    margin-top: 12px;
+  }
+
+  .vp-chaves-densas .vp-rodada-corpo {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(0, var(--celula)));
+    gap: 6px 8px;
+  }
+
+  .vp-chaves-densas .tournament-linked-bracket {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+  }
+
+  .vp-chaves-densas .linked-link {
+    display: none;
+  }
+
+  .vp-chaves-densas .linked-bracket-title {
+    flex: 0 0 100%;
+    order: var(--ordem);
+    margin: 6px 0 0;
+  }
+
+  .vp-chaves-densas .tournament-linked-bracket .linked-match {
+    flex: 0 0 var(--celula);
+    order: var(--ordem);
+  }
+
+  .vp-chaves-densas .vp-celula {
+    min-height: 0;
+  }
+
+  .vp-chaves-densas .vp-celula.vp-bye {
+    display: none;
+  }
+
+  .vp-chaves-densas .vp-celula::after,
+  .vp-chaves-densas .vp-celula > :first-child::before,
+  .vp-chaves-densas .vp-celula > :first-child::after {
+    content: none !important;
+  }
+}
+
 /* ---- rodadas do suico e dos pontos corridos ---- */
 .vp-rodadas {
   display: grid;
-  grid-template-columns: repeat(var(--por-linha), minmax(0, 1fr));
+  grid-template-columns: repeat(var(--por-linha), minmax(0, var(--celula)));
+  justify-content: start;
   gap: 20px 12px;
   align-items: start;
+  padding: 0;
 }
 
 .vp-rd {
@@ -4947,7 +4996,7 @@ a.vp-col-equipe:hover .vp-col-nome > span:last-child {
 /* ---- tabela ---- */
 .vp-tabelas {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr));
   gap: 16px 32px;
   align-items: start;
 }
@@ -4967,8 +5016,9 @@ a.vp-col-equipe:hover .vp-col-nome > span:last-child {
 
 .vp-tabela-corpo {
   display: grid;
-  grid-template-columns: repeat(var(--colunas), minmax(0, 1fr));
-  gap: 0 32px;
+  grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr));
+  gap: 12px 32px;
+  align-items: start;
 }
 
 .vp-tabela-coluna {
@@ -4979,10 +5029,10 @@ a.vp-col-equipe:hover .vp-col-nome > span:last-child {
 .vp-tabela-cab,
 .vp-tabela-linha {
   display: grid;
-  grid-template-columns: 62px 22px minmax(0, 1fr) 54px 18px 18px 74px;
+  grid-template-columns: 56px 22px minmax(0, 1fr) 46px 16px 16px 70px;
   align-items: center;
-  gap: 10px;
-  padding: 0 14px;
+  gap: 6px;
+  padding: 0 12px;
 }
 
 .vp-tabela-cab {
@@ -5048,6 +5098,8 @@ a.vp-col-equipe:hover .vp-col-nome > span:last-child {
 }
 
 .vp-tabela-linha small {
+  min-width: 0;
+  overflow: hidden;
   color: var(--muted);
   font-size: 12px;
   white-space: nowrap;
@@ -5062,7 +5114,7 @@ a.vp-tabela-linha:hover strong {
    fio e o apagado ja dizem quem passou. */
 .vp-tabelas .vp-tabela-cab,
 .vp-tabelas .vp-tabela-linha {
-  grid-template-columns: 62px 22px minmax(0, 1fr) 54px 18px 18px;
+  grid-template-columns: 56px 22px minmax(0, 1fr) 46px 16px 16px;
 }
 
 .vp-tabelas .vp-tabela-cab > :last-child,
@@ -5073,7 +5125,7 @@ a.vp-tabela-linha:hover strong {
 /* Na visao por estados o titulo ja diz o estado de cada bloco. */
 .swiss-table-view-states-panel .vp-tabela-cab,
 .swiss-table-view-states-panel .vp-tabela-linha {
-  grid-template-columns: 62px 22px minmax(0, 1fr) 18px 18px;
+  grid-template-columns: 56px 22px minmax(0, 1fr) 16px 16px;
 }
 
 .swiss-table-view-states-panel .vp-tabela-cab > :nth-child(4),
@@ -5782,12 +5834,7 @@ a.vp-tabela-linha:hover strong {
   .vp-s-equipes { order: 3; }
 
   .vp-rodadas {
-    grid-template-columns: repeat(min(var(--por-linha), 4), minmax(0, 1fr));
-  }
-
-  .vp-tabela-corpo {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(min(var(--por-linha), 4), minmax(0, var(--celula)));
   }
 }
 
@@ -5841,8 +5888,7 @@ a.vp-tabela-linha:hover strong {
     font-size: 11px;
   }
 
-  .vp-colocacao,
-  .vp-colocacao-dupla {
+  .vp-colocacao {
     --col-lugar: 78px;
     --col-dados: minmax(0, 1fr) 40px 40px;
     grid-template-columns: minmax(0, 1fr);
@@ -5978,7 +6024,7 @@ a.vp-tabela-linha:hover strong {
   }
 
   /* No celular a chave nao cabe em colunas: cada rodada vira um bloco, com tudo a
-     vista, e a sigla da lugar ao nome. */
+     vista. */
   .vp-chave {
     display: block;
   }
@@ -5992,7 +6038,8 @@ a.vp-tabela-linha:hover strong {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .vp-rodada-corpo {
+  .vp-rodada-corpo,
+  .vp-sem-fios .vp-rodada-corpo {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 6px 8px;
@@ -6025,14 +6072,6 @@ a.vp-tabela-linha:hover strong {
 
   .vp-celula.vp-bye {
     display: none;
-  }
-
-  .vp-bm-sigla {
-    display: none;
-  }
-
-  .vp-bm-longo {
-    display: inline;
   }
 
   .vp-rodadas {

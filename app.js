@@ -14801,8 +14801,7 @@ function resumoDasPartidas(filtered) {
 
 // Vitorias e derrotas da equipe dentro do filtro: somar um mapa ou um mes muda o
 // placar. Com duas equipes nao ha um assunto so, entao nao ha cartao.
-function cartaoDaEquipe(filtered) {
-  const team = state.matchTeams.length === 1 ? teamById(state.matchTeams[0]) : null;
+function cartaoDaEquipe(filtered, team = state.matchTeams.length === 1 ? teamById(state.matchTeams[0]) : null) {
   if (!team || !filtered.length) return "";
   const vitorias = filtered.filter((series) => series.winnerId === team.id).length;
   const derrotas = filtered.filter((series) => series.loserId === team.id).length;
@@ -14901,10 +14900,15 @@ function mapasDoResumo() {
   filteredMatches({ ignorar: "mapas" }).forEach((series) => {
     (series.mapNames || []).filter(Boolean).forEach((nome) => contagem.set(nome, (contagem.get(nome) || 0) + 1));
   });
+  return barrasDosMapas(contagem, state.matchMaps, "data-resumo-mapa");
+}
+
+// Cada linha e o mapa em cinza, com a arte colorida revelada ate a popularidade.
+function barrasDosMapas(contagem, marcados, atributo) {
   const linhas = [...contagem.entries()].sort((a, b) => b[1] - a[1]);
   if (!linhas.length) return "";
   const maior = linhas[0][1];
-  const todos = !state.matchMaps.length;
+  const todos = !marcados.length;
   return `
     <section class="vp-resumo-bloco" aria-label="Mapas jogados">
       <div class="vp-rm-lista">
@@ -14912,10 +14916,10 @@ function mapasDoResumo() {
           .map(([nome, vezes]) => {
             const map = mapByName(nome);
             const art = mapBannerSrc(nome);
-            const marcado = Boolean(map) && !todos && state.matchMaps.includes(map.id);
+            const marcado = Boolean(map) && !todos && marcados.includes(map.id);
             const fora = Boolean(map) && !todos && !marcado;
             return `
-              <button type="button" class="vp-rm${fora ? " vp-rm-fora" : ""}" ${map ? `data-resumo-mapa="${escapeHtml(map.id)}"` : "disabled"} aria-pressed="${marcado}" style="--parte:${(vezes / maior).toFixed(4)}">
+              <button type="button" class="vp-rm${fora ? " vp-rm-fora" : ""}" ${map ? `${atributo}="${escapeHtml(map.id)}"` : "disabled"} aria-pressed="${marcado}" style="--parte:${(vezes / maior).toFixed(4)}">
                 <span class="vp-rm-arte">${art ? ["vp-rm-cinza", "vp-rm-cor"].map((classe) => `<img class="${classe}" src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />`).join("") : ""}</span>
                 <span>${escapeHtml(nome)}</span>
                 <b>${vezes}</b>
@@ -18306,6 +18310,8 @@ function renderTournamentDetail(id) {
     bindTournamentBracketPreview(event, matches);
     bindTournamentTeamPreview(event, matches);
     bindVisaoGeralDoCampeonato();
+  } else if (activeTab === "jogos") {
+    bindJogosDoCampeonato();
   } else if (activeTab === "estatisticas" || activeTab === "agentes" || activeTab === "composicoes") {
     bindTournamentStatsControls(event.id);
   }
@@ -18472,7 +18478,7 @@ function tournamentTabNav(event, activeTab) {
 }
 
 function tournamentTabContent(event, matches, standings, activeTab) {
-  if (activeTab === "jogos") return tournamentMatchesSection(matches);
+  if (activeTab === "jogos") return tournamentMatchesSection(event, matches);
   if (activeTab === "estatisticas") return tournamentStatsSection(event, matches, standings);
   if (activeTab === "mapas") return tournamentMapsSection(event, matches);
   if (activeTab === "agentes") return tournamentAgentsSection(event, matches);
@@ -20126,17 +20132,247 @@ function tournamentTeamRankTitle(row) {
   return date ? `Ranking em ${date}${suffix}` : "Ranking historico indisponivel";
 }
 
-function tournamentMatchesSection(matches) {
-  const rows = matches.slice().sort(compareSeriesDateDesc);
+// O nome da fase, sem repetir o que a coluna ja diz: "Chave superior - Rodada 1",
+// "Rodada de 32 superior" e "3º lugar" valem sozinhos; "Opening" precisa do grupo.
+function tournamentJogoFase(region, column, unica) {
+  const nome = region.name || "";
+  const coluna = column.title || "";
+  if (!coluna || normalize(coluna) === normalize(nome)) return nome || coluna || "Jogos";
+  if (unica || /principal/i.test(nome) || /lugar/i.test(coluna)) return coluna;
+  const palavras = normalize(coluna).split(/\s+/);
+  return palavras.includes(normalize(nome).split(/\s+/).at(-1)) ? coluna : `${nome} - ${coluna}`;
+}
+
+// A trilha e cada sequencia que so anda para a frente: as rodadas, ou as colunas de
+// uma regiao da chave. As regioes vem na ordem de exibicao, com a final por ultimo.
+function tournamentJogosColunas(event) {
+  const regioes = tournamentBracketDisplayRegions(event.bracket?.regions || []);
+  return [
+    ...(event.swiss?.rounds || []).map((round, indice) => ({ trilha: "rodadas", fase: round.title || `Rodada ${indice + 1}`, matches: round.matches || [] })),
+    ...regioes.flatMap((region, regiao) => (region.columns || []).map((column) => ({ trilha: regiao, fase: tournamentJogoFase(region, column, regioes.length === 1), matches: column.matches || [] }))),
+  ];
+}
+
+// Todo confronto do campeonato: as series com estatisticas e os resultados que so
+// existem na chave (W.O., partida sem estatisticas). Assim a aba bate com a chave.
+function tournamentJogos(event, matches) {
+  const usadas = new Set();
+  const jogos = [];
+  tournamentJogosColunas(event).forEach(({ trilha, fase, matches: confrontos }, ordem) => {
+    confrontos.filter((match) => match.a && match.b).forEach((match) => {
+      const candidata = tournamentSeriesForBracketMatch(matches, match);
+      const series = candidata && !usadas.has(candidata.seriesKey) ? candidata : null;
+      if (series) usadas.add(series.seriesKey);
+      const quando = series ? series.sortAt || series.startedAt : Date.parse(match.playedAt || match.playedOn || "") || 0;
+      const vencedor = series ? series.winnerId : tournamentBracketMatchWinner(match);
+      const perdedor = series ? series.loserId : vencedor && (vencedor === match.a ? match.b : match.a);
+      jogos.push({ trilha, fase, ordem, match, series, quando, equipes: [match.a, match.b], vencedor, perdedor });
+    });
+  });
+  matches.filter((series) => !usadas.has(series.seriesKey)).forEach((series) => {
+    jogos.push({ trilha: "outros", fase: "Outros jogos", ordem: -1, match: null, series, quando: series.sortAt || series.startedAt, equipes: [series.teamA.id, series.teamB.id], vencedor: series.winnerId, perdedor: series.loserId });
+  });
+  return jogos;
+}
+
+function diaEmTexto(valor) {
+  const data = new Date(valor);
+  return `${data.getFullYear()}-${String(data.getMonth() + 1).padStart(2, "0")}-${String(data.getDate()).padStart(2, "0")}`;
+}
+
+function tournamentJogosFiltro() {
+  const query = routeQuery();
+  return { equipe: query.get("equipe") || "", mapa: query.get("mapa") || "", dia: query.get("dia") || "" };
+}
+
+// Cada filtro ignora a si mesmo na hora de contar a propria faceta, como em Partidas.
+function tournamentJogoPassa(jogo, filtro, ignorar = "") {
+  if (ignorar !== "equipe" && filtro.equipe && !jogo.equipes.includes(filtro.equipe)) return false;
+  if (ignorar !== "mapa" && filtro.mapa && !jogo.series?.maps.some((match) => match.mapId === filtro.mapa)) return false;
+  if (ignorar !== "dia" && filtro.dia && (!jogo.quando || diaEmTexto(jogo.quando) !== filtro.dia)) return false;
+  return true;
+}
+
+function maisRecentePrimeiro(a, b) {
+  return (b.quando || 0) - (a.quando || 0);
+}
+
+// A fase mais recente primeiro. Dentro de uma trilha a ordem nunca volta atras: a
+// Rodada 7 fica acima da 6 mesmo com jogo da 6 remarcado para depois. Fase sem data
+// (so W.O., ou ainda por jogar) herda da vizinha, e trilha sem data nenhuma, como a
+// final por disputar, vai para o topo.
+function tournamentJogosPorFase(jogos) {
+  const grupos = new Map();
+  jogos.slice().sort((a, b) => a.ordem - b.ordem).forEach((jogo) => {
+    if (!grupos.has(jogo.fase)) grupos.set(jogo.fase, { titulo: jogo.fase, ordem: jogo.ordem, trilha: jogo.trilha, jogos: [], data: 0 });
+    const grupo = grupos.get(jogo.fase);
+    grupo.jogos.push(jogo);
+    grupo.data = Math.max(grupo.data, jogo.quando || 0);
+  });
+  const lista = [...grupos.values()];
+  const maisNova = Math.max(0, ...lista.map((grupo) => grupo.data));
+  [...new Set(lista.map((grupo) => grupo.trilha))].forEach((trilha) => {
+    const daTrilha = lista.filter((grupo) => grupo.trilha === trilha);
+    const primeira = daTrilha.find((grupo) => grupo.data)?.data || maisNova;
+    daTrilha.reduce((anterior, grupo) => {
+      grupo.data = Math.max(grupo.data, anterior);
+      return grupo.data;
+    }, primeira);
+  });
+  return lista.sort((a, b) => b.data - a.data || b.ordem - a.ordem).map((grupo) => ({ ...grupo, jogos: grupo.jogos.slice().sort(maisRecentePrimeiro) }));
+}
+
+// O resultado que so existe na chave: sem pagina de partida, entao nao e link, e sem
+// mapa para mostrar. O status por extenso explica por que.
+function tournamentJogoSemArquivo(event, jogo) {
+  const { match, vencedor } = jogo;
+  const status = match.status || (vencedor ? "Sem estatísticas" : eventIsDone(event) ? "Sem resultado" : "A jogar");
+  const lado = (teamId) => {
+    const nome = tournamentTeamById(event, teamId)?.name || teamId;
+    return `<strong title="${escapeHtml(nome)}"><span class="nome-rolante">${escapeHtml(nome)}</span></strong>`;
+  };
+  const classe = (teamId) => (vencedor && vencedor !== teamId ? " vp-pl-perdeu" : "");
+  const numero = (valor, teamId) => `<b${vencedor === teamId ? ' class="vp-venceu"' : ""}>${escapeHtml(String(valor ?? "-"))}</b>`;
   return `
-    <section class="tournament-section">
-      <div class="tournament-section-head">
-        <h2>Jogos</h2>
-        <span>${rows.length} séries</span>
+    <div class="vp-pl vp-pl-sem" style="--maps:1">
+      <span class="vp-pl-topo">
+        <span class="vp-pl-quando">${escapeHtml(jogo.quando ? dataSemAno(jogo.quando) : status)}</span>
+        <span class="vp-pl-mapas">${jogo.quando ? `<span class="vp-pl-mapa">${escapeHtml(status)}</span>` : ""}</span>
+        <span class="vp-pl-evento"></span>
+      </span>
+      <span class="vp-pl-lado vp-pl-a${classe(match.a)}">${teamLogo(match.a)}${lado(match.a)}</span>
+      <span class="vp-pl-placar">${numero(match.scoreA, match.a)}<i>:</i>${numero(match.scoreB, match.b)}</span>
+      <span class="vp-pl-lado vp-pl-b${classe(match.b)}">${lado(match.b)}${teamLogo(match.b)}</span>
+    </div>
+  `;
+}
+
+function tournamentJogosGrupos(event, grupos) {
+  return grupos
+    .map((grupo) => `
+      <section class="vp-jogos-grupo">
+        <h3 class="vp-jogos-titulo">${escapeHtml(grupo.titulo)}<span>${grupo.jogos.length} ${grupo.jogos.length === 1 ? "série" : "séries"}</span></h3>
+        <div class="vp-lista">
+          ${grupo.jogos.map((jogo) => (jogo.series ? matchResultRow(jogo.series, { semEvento: true, when: "curta" }) : tournamentJogoSemArquivo(event, jogo))).join("")}
+        </div>
+      </section>
+    `)
+    .join("");
+}
+
+function tournamentJogosMapas(jogos, filtro) {
+  const contagem = new Map();
+  jogos.filter((jogo) => tournamentJogoPassa(jogo, filtro, "mapa")).forEach((jogo) => {
+    (jogo.series?.mapNames || []).filter(Boolean).forEach((nome) => contagem.set(nome, (contagem.get(nome) || 0) + 1));
+  });
+  return barrasDosMapas(contagem, filtro.mapa ? [filtro.mapa] : [], "data-jogos-mapa");
+}
+
+// So os dias com jogo: em campeonato de meses, o eixo corrido deixaria barras de 2px.
+function tournamentJogosDias(jogos, filtro) {
+  const dias = [...new Set(jogos.filter((jogo) => jogo.quando).map((jogo) => diaEmTexto(jogo.quando)))].sort();
+  if (dias.length < 2) return "";
+  const contagem = new Map();
+  jogos.filter((jogo) => jogo.quando && tournamentJogoPassa(jogo, filtro, "dia")).forEach((jogo) => {
+    const dia = diaEmTexto(jogo.quando);
+    contagem.set(dia, (contagem.get(dia) || 0) + 1);
+  });
+  const rotulo = (dia) => `${contagem.get(dia) || 0} em ${formatDate(dateInputToStart(dia), "date")}`;
+  const maior = Math.max(1, ...contagem.values());
+  const pico = dias.reduce((melhor, dia) => ((contagem.get(dia) || 0) > (contagem.get(melhor) || 0) ? dia : melhor), dias[0]);
+  const leitura = rotulo(filtro.dia || pico);
+  return `
+    <section class="vp-resumo-bloco vp-meses vp-jogos-dias" aria-label="Partidas por dia">
+      <h3>Partidas por dia <span data-resumo-leitura data-padrao="${escapeHtml(leitura)}">${escapeHtml(leitura)}</span></h3>
+      <div class="vp-rt${filtro.dia ? " vp-rt-marcado" : ""}">
+        ${dias.map((dia) => `<button type="button" class="vp-rt-mes" data-jogos-dia="${dia}" data-rotulo="${escapeHtml(rotulo(dia))}" aria-label="${escapeHtml(rotulo(dia))}" aria-pressed="${filtro.dia === dia}" style="--altura:${((contagem.get(dia) || 0) / maior).toFixed(4)}"><i></i></button>`).join("")}
       </div>
-      <div class="result-list tournament-results vp-lista">${rows.length ? rows.map(matchResultRow).join("") : `<div class="empty-state">Nenhuma partida registrada.</div>`}</div>
+      <div class="vp-rt-eixo"><span>${escapeHtml(formatDate(dateInputToStart(dias[0]), "date"))}</span><span>${escapeHtml(formatDate(dateInputToStart(dias.at(-1)), "date"))}</span></div>
     </section>
   `;
+}
+
+function tournamentJogosResumo(event, jogos, filtro) {
+  const ids = [...new Set(jogos.flatMap((jogo) => jogo.equipes))];
+  const equipes = ids.map((id) => tournamentTeamById(event, id)).filter(Boolean).sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
+  const team = filtro.equipe ? teamById(filtro.equipe) : null;
+  const daEquipe = team ? jogos.filter((jogo) => tournamentJogoPassa(jogo, filtro)).map((jogo) => ({ winnerId: jogo.vencedor, loserId: jogo.perdedor })) : [];
+  const ativo = filtro.equipe || filtro.mapa || filtro.dia;
+  const mapas = tournamentJogosMapas(jogos, filtro);
+  return `
+    <aside class="vp-resumo" aria-label="Filtros dos jogos">
+      <section class="vp-resumo-bloco vp-jogos-filtro">
+        <h3>Equipe ${ativo ? `<button type="button" class="vp-filtros-limpar" data-jogos-limpar>Limpar filtros</button>` : ""}</h3>
+        <select data-jogos-equipe aria-label="Filtrar por equipe">
+          <option value="">Todas as equipes</option>
+          ${equipes.map((item) => `<option value="${escapeHtml(item.id)}"${item.id === filtro.equipe ? " selected" : ""}>${escapeHtml(item.name)}</option>`).join("")}
+        </select>
+      </section>
+      ${team && daEquipe.length ? cartaoDaEquipe(daEquipe, team) : ""}
+      ${mapas ? `<div class="vp-jogos-mapas">${sectionHead("Mapas jogados")}${mapas}</div>` : ""}
+      ${tournamentJogosDias(jogos, filtro)}
+    </aside>
+  `;
+}
+
+function tournamentMatchesSection(event, matches) {
+  const filtro = tournamentJogosFiltro();
+  const jogos = tournamentJogos(event, matches);
+  const visiveis = jogos.filter((jogo) => tournamentJogoPassa(jogo, filtro));
+  const total = jogos.length;
+  const comDados = jogos.filter((jogo) => jogo.series).length;
+  const contagem = visiveis.length < total
+    ? `${visiveis.length} de ${total} séries`
+    : `${total} ${total === 1 ? "série" : "séries"}${comDados < total ? `, ${comDados} com estatísticas` : ""}`;
+  const grupos = tournamentJogosPorFase(visiveis);
+  return `
+    <section class="tournament-section vp-jogos">
+      <div class="vp-jogos-lista">
+        ${sectionHead("Jogos", contagem)}
+        ${grupos.length ? tournamentJogosGrupos(event, grupos) : `<div class="empty-state">Nenhum jogo com esses filtros. Tire um filtro para ver mais.</div>`}
+      </div>
+      ${tournamentJogosResumo(event, jogos, filtro)}
+    </section>
+  `;
+}
+
+// O filtro mora na URL: da para compartilhar o link com a equipe ja marcada.
+function bindJogosDoCampeonato() {
+  const pagina = document.querySelector(".vp-jogos");
+  if (!pagina) return;
+  const resumo = pagina.querySelector(".vp-resumo");
+  resumo?.style.setProperty("--resumo-altura", `${resumo.offsetHeight}px`);
+  const aplica = (mudanca, foco) => {
+    const query = routeQuery();
+    mudanca(query);
+    pushFilterState(routePath().slice(2), query, foco);
+  };
+  const alterna = (chave, valor, foco) => aplica((query) => {
+    if (query.get(chave) === valor) query.delete(chave);
+    else query.set(chave, valor);
+  }, foco);
+  pagina.querySelector("[data-jogos-equipe]")?.addEventListener("change", (event) => {
+    aplica((query) => {
+      if (event.target.value) query.set("equipe", event.target.value);
+      else query.delete("equipe");
+    }, "[data-jogos-equipe]");
+  });
+  pagina.addEventListener("click", (event) => {
+    const mapa = event.target.closest("[data-jogos-mapa]");
+    const dia = event.target.closest("[data-jogos-dia]");
+    if (mapa) alterna("mapa", mapa.dataset.jogosMapa, `[data-jogos-mapa="${mapa.dataset.jogosMapa}"]`);
+    if (dia) alterna("dia", dia.dataset.jogosDia, `[data-jogos-dia="${dia.dataset.jogosDia}"]`);
+    if (event.target.closest("[data-jogos-limpar]")) aplica((query) => ["equipe", "mapa", "dia"].forEach((chave) => query.delete(chave)), "[data-jogos-equipe]");
+  });
+  const leitura = pagina.querySelector("[data-resumo-leitura]");
+  if (!leitura) return;
+  ["mouseover", "focusin"].forEach((tipo) => pagina.addEventListener(tipo, (event) => {
+    const dia = event.target.closest("[data-jogos-dia]");
+    if (dia) leitura.textContent = dia.dataset.rotulo;
+  }));
+  ["mouseout", "focusout"].forEach((tipo) => pagina.addEventListener(tipo, (event) => {
+    if (event.target.closest("[data-jogos-dia]")) leitura.textContent = leitura.dataset.padrao;
+  }));
 }
 
 function tournamentStatsSection(event, matches, standings) {
@@ -25057,12 +25293,16 @@ function matchSeriesMetaLabel(item) {
 // saber que o indice chega ali. Quem agrupa por dia pede `{ when: "hour" }`,
 // porque la o dia ja e o cabecalho do grupo. A pagina do jogador pede
 // `{ kd: [abates, mortes] }` para a coluna do K / D dele na serie.
+function dataSemAno(valor) {
+  return formatDate(valor).replace(/ de \d{4}$/, "");
+}
+
 function matchResultRow(item, options) {
   const opts = options && typeof options === "object" ? options : {};
   const series = normalizeMatchItem(item);
   const score = matchListScore(series);
   const event = state.db.tournaments.find((row) => row.id === series.eventId);
-  const when = opts.when === "hour" ? formatDate(series.startedAt, "hour") : formatDate(series.startedAt);
+  const when = opts.when === "hour" ? formatDate(series.startedAt, "hour") : opts.when === "curta" ? dataSemAno(series.startedAt) : formatDate(series.startedAt);
   const nomeDoEvento = event?.name || "Evento";
   const nomes = (series.mapNames || []).filter(Boolean);
   const mapas = nomes.length
@@ -25077,7 +25317,9 @@ function matchResultRow(item, options) {
       <span class="vp-pl-topo">
         <span class="vp-pl-quando">${escapeHtml(when)}${window.Comments ? window.Comments.selo("match", series.seriesKey) : ""}</span>
         ${mapas}
-        <span class="vp-pl-evento" title="${escapeHtml(nomeDoEvento)}"><span class="vp-pl-evento-nome"><span class="nome-rolante">${escapeHtml(nomeDoEvento)}</span></span>${event ? eventLogo(event, "tiny") : ""}</span>
+        ${opts.semEvento
+          ? `<span class="vp-pl-evento"></span>`
+          : `<span class="vp-pl-evento" title="${escapeHtml(nomeDoEvento)}"><span class="vp-pl-evento-nome"><span class="nome-rolante">${escapeHtml(nomeDoEvento)}</span></span>${event ? eventLogo(event, "tiny") : ""}</span>`}
       </span>
       <span class="vp-pl-lado vp-pl-a">${teamLogo(series.teamA.id)}${lado(series.teamA)}</span>
       <span class="vp-pl-placar">${numero(score.a, score.b)}<i>:</i>${numero(score.b, score.a)}</span>

@@ -572,6 +572,37 @@ assert.strictEqual(byes.length, 11, "11 delas sao bye");
 assert(byes.every((celula) => !celula.includes("<button") && !celula.includes("Sem adversário")), "bye e celula vazia, sem partida dentro");
 assert(chave.includes('data-tournament-match="0-1-partida-2"'), "a partida da chave continua abrindo a previa pela mesma chave de antes");
 
+// A fase da aba Jogos nao repete o que a coluna ja diz.
+assert.strictEqual(context.tournamentJogoFase({ name: "Grupo A" }, { title: "Opening" }, false), "Grupo A - Opening");
+assert.strictEqual(context.tournamentJogoFase({ name: "Chave superior" }, { title: "Rodada de 32 superior" }, false), "Rodada de 32 superior");
+assert.strictEqual(context.tournamentJogoFase({ name: "Chave superior" }, { title: "Chave superior - Rodada 1" }, false), "Chave superior - Rodada 1");
+assert.strictEqual(context.tournamentJogoFase({ name: "Chave principal" }, { title: "Semifinais" }, false), "Semifinais");
+assert.strictEqual(context.tournamentJogoFase({ name: "Disputa terceiro lugar" }, { title: "3º lugar" }, false), "3º lugar");
+assert.strictEqual(context.tournamentJogoFase({ name: "Final" }, { title: "Final" }, false), "Final");
+const fasesEmOrdem = context.tournamentJogosPorFase([
+  { fase: "Semifinais", ordem: 0, quando: 10 },
+  { fase: "Final", ordem: 1, quando: 0 },
+  { fase: "Quartas", ordem: -2, quando: 5 },
+]).map((grupo) => grupo.titulo);
+assert.deepStrictEqual(JSON.parse(JSON.stringify(fasesEmOrdem)), ["Final", "Semifinais", "Quartas"], "fase sem data fica logo acima da fase anterior da chave");
+const rodadasEmOrdem = context.tournamentJogosPorFase([
+  { trilha: "rodadas", fase: "Rodada 6", ordem: 5, quando: 14 },
+  { trilha: "rodadas", fase: "Rodada 7", ordem: 6, quando: 13 },
+]).map((grupo) => grupo.titulo);
+assert.deepStrictEqual(JSON.parse(JSON.stringify(rodadasEmOrdem)), ["Rodada 7", "Rodada 6"], "jogo remarcado nao inverte as rodadas");
+const finalPorJogar = context.tournamentJogosPorFase([
+  { trilha: 0, fase: "Quartas de final", ordem: 0, quando: 5 },
+  { trilha: 0, fase: "Semifinais", ordem: 1, quando: 9 },
+  { trilha: 1, fase: "Final", ordem: 2, quando: 0 },
+]).map((grupo) => grupo.titulo);
+assert.deepStrictEqual(JSON.parse(JSON.stringify(finalPorJogar)), ["Final", "Semifinais", "Quartas de final"], "final por jogar, em regiao propria, vai para o topo");
+const chaveDupla = context.tournamentJogosPorFase([
+  { trilha: 0, fase: "Superior 1", ordem: 0, quando: 1 },
+  { trilha: 0, fase: "Superior 2", ordem: 1, quando: 3 },
+  { trilha: 1, fase: "Inferior 1", ordem: 2, quando: 2 },
+]).map((grupo) => grupo.titulo);
+assert.deepStrictEqual(JSON.parse(JSON.stringify(chaveDupla)), ["Superior 2", "Inferior 1", "Superior 1"], "controle: trilhas diferentes intercalam pela data");
+
 const visaoGeral = (evento) => context.tournamentTabContent(evento, [], [], "overview");
 const andamento = visaoGeral({ ...rush, status: "Em andamento" });
 assert(andamento.includes("Equipes Participantes"), "campeonato em andamento mostra a lista de participantes");

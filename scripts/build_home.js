@@ -14,6 +14,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { writeFileWithRetry } = require("./write_with_retry.js");
 const zlib = require("zlib");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -255,7 +256,7 @@ function main() {
     rankingSnapshots,
   };
   const json = JSON.stringify(payload);
-  fs.writeFileSync(OUTPUT, json);
+  writeFileWithRetry(OUTPUT, json);
 
   const kb = (bytes) => `${(bytes / 1024).toFixed(1)} KB`;
   const falhas = [];

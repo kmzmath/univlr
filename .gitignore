@@ -23,3 +23,10 @@ ferramentas/riot/__pycache__/
 # Saidas avulsas de analise (planilhas, previas, scripts de montagem). O site
 # nao le nada daqui.
 /outputs/
+
+# Material de trabalho que nao vai para o repositorio publico.
+/Cartinhas/
+/.superpowers/
+/campeonatos/Univavá/Fase de Grupos/Claude outputs/
+/dados_excel/*.tmp
+/campeonatos/Univavá/Fase de Grupos/*.xlsx

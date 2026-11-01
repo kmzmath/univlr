@@ -65,7 +65,7 @@
 
   function api() {
     if (client) return client;
-    if (!window.supabase) throw new Error("SDK do Supabase nao carregou");
+    if (!window.supabase) throw new Error("SDK do Supabase não carregou");
     client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
       auth: {
         // PKCE devolve o retorno como `?code=` na query. O padrao devolveria
@@ -216,7 +216,7 @@
   }
 
   async function salvarBio(bio) {
-    if (!sessao) throw new Error("nao autenticado");
+    if (!sessao) throw new Error("não autenticado");
     const { error } = await api().from("profiles").update({ bio }).eq("id", sessao.user.id);
     if (error) throw error;
     if (perfil) perfil.bio = bio;
@@ -309,7 +309,7 @@
   // `sinal` e +1, -1 ou 0 (tirar o voto). Devolve o sinal que ficou, para a
   // tela nao precisar adivinhar.
   async function votar(id, sinal) {
-    if (!sessao) throw new Error("nao autenticado");
+    if (!sessao) throw new Error("não autenticado");
     const uid = sessao.user.id;
 
     if (sinal === 0) {
@@ -350,7 +350,7 @@
   }
 
   async function denunciar(id, motivo) {
-    if (!sessao) throw new Error("nao autenticado");
+    if (!sessao) throw new Error("não autenticado");
     const { error } = await api()
       .from("reports")
       .insert({ comment_id: id, reporter_id: sessao.user.id, reason: motivo });
@@ -396,7 +396,7 @@
 
   // Devolve o valor que ficou, para quem chamou saber se marcou ou desmarcou.
   async function definirFavorito(kind, refId) {
-    if (!sessao) throw new Error("nao autenticado");
+    if (!sessao) throw new Error("não autenticado");
     const coluna = COLUNA_FAV[kind];
     if (!coluna) throw new Error("tipo de favorito invalido: " + kind);
     const alvo = ehFavorito(kind, refId) ? null : String(refId);
@@ -541,8 +541,8 @@
 
   const TRADUCAO = {
     "Invalid login credentials": "E-mail ou senha incorretos.",
-    "User already registered": "Ja existe conta com esse e-mail.",
-    "Email address is invalid": "Esse e-mail nao parece valido.",
+    "User already registered": "Já existe conta com esse e-mail.",
+    "Email address is invalid": "Esse e-mail não parece válido.",
     "Password should be at least 6 characters":
       "A senha precisa de pelo menos 6 caracteres.",
     "Email not confirmed": "Confirme o e-mail antes de entrar.",
@@ -562,10 +562,10 @@
     if (!erro) return "Algo deu errado.";
     const texto = erro.message || String(erro);
     for (const chave in TRADUCAO) if (texto.includes(chave)) return TRADUCAO[chave];
-    if (erro.code === "23505") return "Isso ja existe.";
-    if (erro.code === "42501") return "Voce nao tem permissao para isso.";
+    if (erro.code === "23505") return "Isso já existe.";
+    if (erro.code === "42501") return "Você não tem permissão para isso.";
     if (texto.includes("Failed to fetch") || texto.includes("NetworkError"))
-      return "Sem conexao com o servidor. Tente de novo.";
+      return "Sem conexão com o servidor. Tente de novo.";
     return texto;
   }
 

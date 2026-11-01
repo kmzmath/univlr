@@ -1,0 +1,40 @@
+[
+ {
+  "id": "hub-temporada-2026",
+  "fonte": "hub",
+  "nome": "Hub Uni · todos os campeonatos (mín. 200 rounds e 12 partidas, overall ajustado, ao vivo)",
+  "evento": {
+   "nome": "Temporada 2026",
+   "fase": "Todos os campeonatos",
+   "icone": "assets/logo_univlr.png"
+  },
+  "minRounds": 200,
+  "minMatches": 12,
+  "overall": {
+   "base": 65.399,
+   "inclinacao": 18.182
+  },
+  "nomes": "nomes.json",
+  "estatisticas": [
+   "acs",
+   "kast",
+   "kpr",
+   "mpr",
+   "apr",
+   "swing"
+  ],
+  "ajuste": {
+   "ativo": true,
+   "k": 40,
+   "intensidade": 1,
+   "media": "modelo",
+   "kJogador": 39.244,
+   "kAdversario": 52.034,
+   "nota": "Overall ajustado: rAAting final = média + rounds/(rounds + k) × (rAAting 3.0 + intensidade × nível dos adversários − média). kJogador e kAdversario são os encolhimentos do modelo de força dos adversários (estimados por REML em 05/10/2026). ativo=false volta ao overall direto do rAAting."
+  }
+ },
+ {
+  "arquivo": "univava-2026-fase-de-grupos.json",
+  "nome": "Univavá 2026 · Fase de Grupos"
+ }
+]

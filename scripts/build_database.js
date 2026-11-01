@@ -69,6 +69,7 @@ loadScript("app.js");
 
 const codec = require(path.join(ROOT, "db-codec.js"));
 const { checkTeamSuccessions } = require("./team_successions.js");
+const { writeFileWithRetry } = require("./write_with_retry.js");
 
 function readJson(relPath) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relPath), "utf8"));
@@ -181,7 +182,7 @@ function main() {
 
   const payload = codec.encode(db);
   const json = JSON.stringify(payload);
-  fs.writeFileSync(OUTPUT, json);
+  writeFileWithRetry(OUTPUT, json);
 
   // Round-trip: garante que o que o navegador vai decodificar bate com o build.
   const decoded = codec.decode(JSON.parse(json));

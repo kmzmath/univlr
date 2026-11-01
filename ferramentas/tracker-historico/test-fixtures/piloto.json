@@ -1,0 +1,2651 @@
+{
+  "source": "Recortes de respostas reais do piloto; campos sem uso nestes testes foram omitidos.",
+  "plan": {
+    "tournamentId": "1cf639b6-95fe-4d81-89d7-08dd84a120e4",
+    "tournament": "Classificatória 1 [Valorant] - Copa Aliança 2025",
+    "window": {
+      "fromInclusive": "2025-05-24T00:00:00-03:00",
+      "toExclusive": "2025-05-26T00:00:00-03:00",
+      "timezone": "America/Sao_Paulo"
+    },
+    "profiles": [
+      {
+        "handle": "ASTRO#2277",
+        "registrations": [
+          {
+            "seed": 13
+          }
+        ]
+      },
+      {
+        "handle": "andre#aaa12",
+        "registrations": [
+          {
+            "seed": 4
+          }
+        ]
+      }
+    ],
+    "fallbackProfilesByTeam": [],
+    "validation": {
+      "requireTournamentWindow": true,
+      "compareRegisteredOpponentsAndScore": true,
+      "minimumKnownPlayersPerSideForCandidate": 3,
+      "fullRosterMatchPlayersPerSide": 5,
+      "keepUnresolvedPlayersExplicit": true,
+      "neverClassifyByDateAlone": true,
+      "allowCorroboratedLineups": false,
+      "corroborationRule": "Mesmo quinteto de cinco, dois registrados, dois adversarios distintos com pelo menos quatro registrados, um adversario completo, um placar de rounds e horarios compativeis; identidades restantes pendentes."
+    },
+    "administrativeResultsToReview": []
+  },
+  "rosters": [
+    {
+      "seed": 1,
+      "name": "CAAP Hellhounds",
+      "members": [
+        {
+          "role": "Lineup",
+          "handle": "CAAP lopes#bella",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/CAAP lopes%23bella/overview",
+          "challengermodeUserUrl": "/users/033eb38d-6e78-4b6c-8a3a-33a575fa24b0",
+          "challengermodeName": "lopesg"
+        },
+        {
+          "role": "Lineup",
+          "handle": "ricw#scant",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/ricw%23scant/overview",
+          "challengermodeUserUrl": "/users/90fedb89-ea09-4bc6-8143-11d564dd3aca",
+          "challengermodeName": "ric_sccp"
+        },
+        {
+          "role": "Lineup",
+          "handle": "Abyss Star#death",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Abyss Star%23death/overview",
+          "challengermodeUserUrl": "/users/73db9bb6-d37c-43e2-9197-c08ad9bc897a",
+          "challengermodeName": "Luquetaa_"
+        },
+        {
+          "role": "Lineup",
+          "handle": "coutinho#iwnl",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/coutinho%23iwnl/overview",
+          "challengermodeUserUrl": "/users/b1909269-4524-4a56-b7f2-8b465c144ca0",
+          "challengermodeName": "mrzz"
+        },
+        {
+          "role": "Lineup",
+          "handle": "klouzz#ezhs",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/klouzz%23ezhs/overview",
+          "challengermodeUserUrl": "/users/186128b0-d443-4ad6-8d3a-fc79089b9cf3",
+          "challengermodeName": "Klouzz"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "CAAP Metal#iza",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/CAAP Metal%23iza/overview",
+          "challengermodeUserUrl": "/users/163cfd23-4e38-447a-aa65-e52a2b43dce5",
+          "challengermodeName": "Metalvlr"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "CAAP sobrunin#bea",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/CAAP sobrunin%23bea/overview",
+          "challengermodeUserUrl": "/users/ccf82da5-d860-456e-b0ce-0f1e12f9aeef",
+          "challengermodeName": "sobrunin"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "anp4#jana",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/anp4%23jana/overview",
+          "challengermodeUserUrl": "/users/e377bbe2-6577-4e4a-a361-158d54da511c",
+          "challengermodeName": "Anp4vlr"
+        },
+        {
+          "role": "Treinadores",
+          "handle": "Kaos#Nix",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Kaos%23Nix/overview",
+          "challengermodeUserUrl": "/users/e21254a0-cbc8-4992-9289-6563cc1d7212",
+          "challengermodeName": "Kaos#Nix"
+        }
+      ]
+    },
+    {
+      "seed": 4,
+      "name": "Azure Bears UTFPR - Golden [VAL]",
+      "members": [
+        {
+          "role": "Lineup",
+          "handle": "andre#aaa12",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/andre%23aaa12/overview",
+          "challengermodeUserUrl": "/users/56287224-8cd2-41d3-b21b-dfae27b6426e",
+          "challengermodeName": "Andreer"
+        },
+        {
+          "role": "Lineup",
+          "handle": "alluka#tired",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/alluka%23tired/overview",
+          "challengermodeUserUrl": "/users/b88b08cc-0e0c-44a8-89ab-1b6cdb24ffb3",
+          "challengermodeName": "taekzin"
+        },
+        {
+          "role": "Lineup",
+          "handle": "greiN#quel",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/greiN%23quel/overview",
+          "challengermodeUserUrl": "/users/999c4685-373a-4b42-8b81-3442553f7f55",
+          "challengermodeName": "greinzera"
+        },
+        {
+          "role": "Lineup",
+          "handle": "piM#まいさ",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/piM%23まいさ/overview",
+          "challengermodeUserUrl": "/users/6a15601f-f26d-42ca-9626-1af54bee368a",
+          "challengermodeName": "piMzera"
+        },
+        {
+          "role": "Lineup",
+          "handle": "Kick#SchrB",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Kick%23SchrB/overview",
+          "challengermodeUserUrl": "/users/9226e3a9-aa3f-41d0-9f48-74df4ae7c5a1",
+          "challengermodeName": "kick_"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "ScherBi#Kick",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/ScherBi%23Kick/overview",
+          "challengermodeUserUrl": "/users/cb731f5b-9ec6-46d9-92f7-7afd40faa571",
+          "challengermodeName": "ScherBi"
+        }
+      ]
+    },
+    {
+      "seed": 6,
+      "name": "Azure Bears UTFPR - Black [VAL]",
+      "members": [
+        {
+          "role": "Lineup",
+          "handle": "Maoki ツ#CTB",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Maoki ツ%23CTB/overview",
+          "challengermodeUserUrl": "/users/b73e292f-1305-4645-9665-24d1eed597f7",
+          "challengermodeName": "shinwaa"
+        },
+        {
+          "role": "Lineup",
+          "handle": "zeNith#mond",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/zeNith%23mond/overview",
+          "challengermodeUserUrl": "/users/8c19ce3c-9132-4ab3-9e17-073ca5c862ce",
+          "challengermodeName": "Aldeath"
+        },
+        {
+          "role": "Lineup",
+          "handle": "stockão#BAGRE",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/stockão%23BAGRE/overview",
+          "challengermodeUserUrl": "/users/6894a532-36dd-44a8-890f-e6c4778cf314",
+          "challengermodeName": "stockão"
+        },
+        {
+          "role": "Lineup",
+          "handle": "Rapunzel#ELA",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Rapunzel%23ELA/overview",
+          "challengermodeUserUrl": "/users/0508febf-834a-4aa8-8487-a15fa4e7349b",
+          "challengermodeName": "Rapunzelzinha"
+        },
+        {
+          "role": "Lineup",
+          "handle": "ÔMEGA 9x90#solo",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/ÔMEGA 9x90%23solo/overview",
+          "challengermodeUserUrl": "/users/6dc2f88a-ff5d-44fe-b43f-466b33d18e94",
+          "challengermodeName": "ÔMEGA9x90"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "GrimmW#trupe",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/GrimmW%23trupe/overview",
+          "challengermodeUserUrl": "/users/8984a6c7-30cb-429c-8d47-4f090b5b477d",
+          "challengermodeName": "GrimmW"
+        }
+      ]
+    },
+    {
+      "seed": 10,
+      "name": "CANIS B",
+      "members": [
+        {
+          "role": "Lineup",
+          "handle": "Gutojt#BDM",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Gutojt%23BDM/overview",
+          "challengermodeUserUrl": "/users/0ac6e3eb-afa7-41b6-b6ae-8c382444d0f5",
+          "challengermodeName": "gutojt"
+        },
+        {
+          "role": "Lineup",
+          "handle": "mtch L#IMA",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/mtch L%23IMA/overview",
+          "challengermodeUserUrl": "/users/75a9bc44-a517-4504-a9df-1b46d1b5a7fd",
+          "challengermodeName": "m1tchel98"
+        },
+        {
+          "role": "Lineup",
+          "handle": "devas tld#INSS",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/devas tld%23INSS/overview",
+          "challengermodeUserUrl": "/users/9ee08e01-1c70-4bdf-9263-f2d653c6c9c7",
+          "challengermodeName": "dvz2006"
+        },
+        {
+          "role": "Lineup",
+          "handle": "orca fanboy#orcas",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/orca fanboy%23orcas/overview",
+          "challengermodeUserUrl": "/users/37515e9c-8bfc-4bb2-89b5-57ed7f9e0ec6",
+          "challengermodeName": "zanifeliz"
+        },
+        {
+          "role": "Lineup",
+          "handle": "markin turbo#eng",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/markin turbo%23eng/overview",
+          "challengermodeUserUrl": "/users/887a59d4-e659-44d4-bea9-3fee34ddaffe",
+          "challengermodeName": "marco1331"
+        },
+        {
+          "role": "Treinadores",
+          "handle": "GalvaoJv#mec",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/GalvaoJv%23mec/overview",
+          "challengermodeUserUrl": "/users/7ef1cf42-36e4-4817-b13d-cb9900882a4a",
+          "challengermodeName": "GalvaoJv"
+        }
+      ]
+    },
+    {
+      "seed": 12,
+      "name": "OVERBITE ESPM",
+      "members": [
+        {
+          "role": "Lineup",
+          "handle": "Kenjuy#0808",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Kenjuy%230808/overview",
+          "challengermodeUserUrl": "/users/3ebf4f48-a706-4800-8fce-ad97e40368c6",
+          "challengermodeName": "Kenjuy"
+        },
+        {
+          "role": "Lineup",
+          "handle": "MFG#Shiro",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/MFG%23Shiro/overview",
+          "challengermodeUserUrl": "/users/5c4e0eab-c7cb-49c1-a37f-f619986a0209",
+          "challengermodeName": "Mari13fg"
+        },
+        {
+          "role": "Lineup",
+          "handle": "i like cats#dolph",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/i like cats%23dolph/overview",
+          "challengermodeUserUrl": "/users/cadeaf68-d6f3-4f6c-aed9-0e68dc9ca6c9",
+          "challengermodeName": "DeNieD200"
+        },
+        {
+          "role": "Lineup",
+          "handle": "Nostalgic#dream",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Nostalgic%23dream/overview",
+          "challengermodeUserUrl": "/users/de74e59a-008c-4176-b7d2-f4bdce29fb67",
+          "challengermodeName": "Sparky.The7"
+        },
+        {
+          "role": "Lineup",
+          "handle": "kovalski#lori",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/kovalski%23lori/overview",
+          "challengermodeUserUrl": "/users/f4005c31-2022-4b9f-a313-48f2768a556b",
+          "challengermodeName": "loriizinha"
+        },
+        {
+          "role": "Treinadores",
+          "handle": "OVB LeKrU#4662",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/OVB LeKrU%234662/overview",
+          "challengermodeUserUrl": "/users/4f290fcd-b463-4ac9-9509-7c734e8da6c1",
+          "challengermodeName": "LeKrU"
+        }
+      ]
+    },
+    {
+      "seed": 13,
+      "name": "UFG Eagles",
+      "members": [
+        {
+          "role": "Lineup",
+          "handle": "ASTRO#2277",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/ASTRO%232277/overview",
+          "challengermodeUserUrl": "/users/3775709d-4a2d-47ae-8544-04ca4858d9a7",
+          "challengermodeName": "ASTRO27"
+        },
+        {
+          "role": "Lineup",
+          "handle": "falcomer#BANDO",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/falcomer%23BANDO/overview",
+          "challengermodeUserUrl": "/users/f543e4e0-f8d2-4768-b671-e0b4f038f982",
+          "challengermodeName": "falcomeer"
+        },
+        {
+          "role": "Lineup",
+          "handle": "evil catboy#eth",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/evil catboy%23eth/overview",
+          "challengermodeUserUrl": "/users/aaf4d4c1-fe1d-4190-940a-0c79c98c8dae",
+          "challengermodeName": "haltmm8"
+        },
+        {
+          "role": "Lineup",
+          "handle": "rxx#916",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/rxx%23916/overview",
+          "challengermodeUserUrl": "/users/fcfebc23-13c2-4373-a4c0-5df0cdf6febb",
+          "challengermodeName": "rxxxx"
+        },
+        {
+          "role": "Lineup",
+          "handle": "little docas#BANDO",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/little docas%23BANDO/overview",
+          "challengermodeUserUrl": "/users/31682364-238e-46f8-a626-f870180a7dea",
+          "challengermodeName": "docas"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "icaropereira1#1108",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/icaropereira1%231108/overview",
+          "challengermodeUserUrl": "/users/47f1e3b6-9ad3-4708-be5c-319d8291f49c",
+          "challengermodeName": "Xícaro"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "jonx#jota",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/jonx%23jota/overview",
+          "challengermodeUserUrl": "/users/48a87dbd-e88f-4450-a40b-ea6fbde1fd1b",
+          "challengermodeName": "tnoxj"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "Sabrna Carpenter#mussi",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Sabrna Carpenter%23mussi/overview",
+          "challengermodeUserUrl": "/users/c6da3523-723f-48de-9ee3-8306e64bacfb",
+          "challengermodeName": "muussi_7"
+        },
+        {
+          "role": "Treinadores",
+          "handle": "Arashi#XIX",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Arashi%23XIX/overview",
+          "challengermodeUserUrl": "/users/66ebce09-d9c5-48b6-97b6-b9fc4c1f9db9",
+          "challengermodeName": "arashinha"
+        }
+      ]
+    },
+    {
+      "seed": 16,
+      "name": "UFU Saints",
+      "members": [
+        {
+          "role": "Lineup",
+          "handle": "Feupe#777",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Feupe%23777/overview",
+          "challengermodeUserUrl": "/users/d0feff06-ef81-4d6e-975e-a2e1d183639b",
+          "challengermodeName": "Feupe"
+        },
+        {
+          "role": "Lineup",
+          "handle": "marelo#UFU",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/marelo%23UFU/overview",
+          "challengermodeUserUrl": "/users/7c6a5571-ffe8-455d-b81b-e00b0123e293",
+          "challengermodeName": "murilomeds"
+        },
+        {
+          "role": "Lineup",
+          "handle": "Gutoso#vlr",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Gutoso%23vlr/overview",
+          "challengermodeUserUrl": "/users/f09fb49e-f57c-4a47-bcd2-f9ac757c6b03",
+          "challengermodeName": "Gutoso#6730"
+        },
+        {
+          "role": "Lineup",
+          "handle": "ily#x x",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/ily%23x x/overview",
+          "challengermodeUserUrl": "/users/c03856b1-b09f-47f8-bf9b-18f29c29744d",
+          "challengermodeName": "fillip1n"
+        },
+        {
+          "role": "Lineup",
+          "handle": "Bellingham 10#bKIND",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Bellingham 10%23bKIND/overview",
+          "challengermodeUserUrl": "/users/2a0573f9-cf03-4ce5-8ad2-06a17c865a87",
+          "challengermodeName": "Fijora"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "ju glockadas#glock",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/ju glockadas%23glock/overview",
+          "challengermodeUserUrl": "/users/8aac34ec-7e41-4246-a8e8-cb9ba35a9aa8",
+          "challengermodeName": "Juju_de_Glock"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "cks ヵ#777",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/cks ヵ%23777/overview",
+          "challengermodeUserUrl": "/users/a5283bf5-93c7-4a91-97c4-62621c0de432",
+          "challengermodeName": "ckss"
+        }
+      ]
+    },
+    {
+      "seed": 17,
+      "name": "Burning Bunnies UFPR Academy",
+      "members": [
+        {
+          "role": "Lineup",
+          "handle": "mingau e eugênio#byha",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/mingau e eugênio%23byha/overview",
+          "challengermodeUserUrl": "/users/40982719-7477-466e-9486-d16be6ec8972",
+          "challengermodeName": "byha#2745"
+        },
+        {
+          "role": "Lineup",
+          "handle": "parrudinho#lau",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/parrudinho%23lau/overview",
+          "challengermodeUserUrl": "/users/ae702a59-a6f3-44db-9fe0-a1ff4f9256bc",
+          "challengermodeName": "gigiomax13"
+        },
+        {
+          "role": "Lineup",
+          "handle": "anoguti#0808",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/anoguti%230808/overview",
+          "challengermodeUserUrl": "/users/577269ba-f0d4-4450-8bd7-5255276609cc",
+          "challengermodeName": "anoguti"
+        },
+        {
+          "role": "Lineup",
+          "handle": "BBN Ford Fiesta#Xicoh",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/BBN Ford Fiesta%23Xicoh/overview",
+          "challengermodeUserUrl": "/users/13894dec-1d76-46fd-9b18-bc680ffe4da4",
+          "challengermodeName": "fcmtitico"
+        },
+        {
+          "role": "Lineup",
+          "handle": "BBN wonDer#hope",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/BBN wonDer%23hope/overview",
+          "challengermodeUserUrl": "/users/8622fb44-e933-40bc-a947-4ee72167f570",
+          "challengermodeName": "wonDer_xD"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "professorwick#wick",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/professorwick%23wick/overview",
+          "challengermodeUserUrl": "/users/0136d8cd-d2a7-49f7-92e5-44af5ffe0e3f",
+          "challengermodeName": "professorwick"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "PittyChisai#0000",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/PittyChisai%230000/overview",
+          "challengermodeUserUrl": "/users/7fecd8b8-2ee3-49e3-bb42-0f761a69c0f7",
+          "challengermodeName": "PittyChisai"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "cami qtb#miau",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/cami qtb%23miau/overview",
+          "challengermodeUserUrl": "/users/69c0d726-725a-4565-949e-ea91c5aa8378",
+          "challengermodeName": "camiilinha"
+        }
+      ]
+    },
+    {
+      "seed": 20,
+      "name": "Puc Priests Valorant",
+      "members": [
+        {
+          "role": "Lineup",
+          "handle": "Garcia#CS2",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Garcia%23CS2/overview",
+          "challengermodeUserUrl": "/users/596b76fa-760d-431e-9254-8c9d6cd95c8e",
+          "challengermodeName": "Garciaaa"
+        },
+        {
+          "role": "Lineup",
+          "handle": "bidu tse tung#sccp",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/bidu tse tung%23sccp/overview",
+          "challengermodeUserUrl": "/users/f9c8bf4e-d1d0-44e0-bfa9-d0672ab276d8",
+          "challengermodeName": "Leco bidu"
+        },
+        {
+          "role": "Lineup",
+          "handle": "yChagasx#21y",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/yChagasx%2321y/overview",
+          "challengermodeUserUrl": "/users/a5a59afd-73f0-4945-baad-2224d831143f",
+          "challengermodeName": "yChagasx"
+        },
+        {
+          "role": "Lineup",
+          "handle": "obsessão#1337",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/obsessão%231337/overview",
+          "challengermodeUserUrl": "/users/533c958e-fbb7-450a-9618-fcf8c56f0592",
+          "challengermodeName": "mthehang"
+        },
+        {
+          "role": "Lineup",
+          "handle": "ego win#1337",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/ego win%231337/overview",
+          "challengermodeUserUrl": "/users/687c0755-cea2-4fa7-b341-5bd06831bf25",
+          "challengermodeName": "GSkayo"
+        },
+        {
+          "role": "Treinadores",
+          "handle": "Kawa#juve",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Kawa%23juve/overview",
+          "challengermodeUserUrl": "/users/65a3075e-cd62-447b-992a-80f3eb849288",
+          "challengermodeName": "kaueian"
+        }
+      ]
+    },
+    {
+      "seed": 21,
+      "name": "Atlética UNIFEI",
+      "members": [
+        {
+          "role": "Lineup",
+          "handle": "amo submissas#333",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/amo submissas%23333/overview",
+          "challengermodeUserUrl": "/users/33ba3780-ed12-47e7-9720-e07e750af6ca",
+          "challengermodeName": "juanpr"
+        },
+        {
+          "role": "Lineup",
+          "handle": "nanzk#2810",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/nanzk%232810/overview",
+          "challengermodeUserUrl": "/users/318bf1fb-64c4-4b64-8f54-59afd69d7bf8",
+          "challengermodeName": "fael1"
+        },
+        {
+          "role": "Lineup",
+          "handle": "GuiS#7926",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/GuiS%237926/overview",
+          "challengermodeUserUrl": "/users/6f2faeb7-d219-4a60-a02b-ad03a6ae22f2",
+          "challengermodeName": "GuiS1811"
+        },
+        {
+          "role": "Lineup",
+          "handle": "Varajao#157",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Varajao%23157/overview",
+          "challengermodeUserUrl": "/users/7939174d-9316-44d4-9ce7-80cbf620a12e",
+          "challengermodeName": "Varajao"
+        },
+        {
+          "role": "Lineup",
+          "handle": "king of sky wars#123",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/king of sky wars%23123/overview",
+          "challengermodeUserUrl": "/users/02a3ef2b-9408-420f-bdcf-aa1dfdd8c655",
+          "challengermodeName": "_baesso_"
+        },
+        {
+          "role": "Treinadores",
+          "handle": "BellaTrix#6528",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/BellaTrix%236528/overview",
+          "challengermodeUserUrl": "/users/6d43cbc7-b3ef-40ed-aeac-6d22b788d8db",
+          "challengermodeName": "Beatrix_"
+        }
+      ]
+    },
+    {
+      "seed": 26,
+      "name": "Brutal eSports - UFSJ",
+      "members": [
+        {
+          "role": "Lineup",
+          "handle": "zeph ツ#szsz",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/zeph ツ%23szsz/overview",
+          "challengermodeUserUrl": "/users/b4fdc394-d20e-4282-bcba-39399e62ace4",
+          "challengermodeName": "lelaxy."
+        },
+        {
+          "role": "Lineup",
+          "handle": "Lozartan#GALO",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Lozartan%23GALO/overview",
+          "challengermodeUserUrl": "/users/2e82e7f2-0c94-4554-aeb9-37120bafd503",
+          "challengermodeName": "Jr.#7863"
+        },
+        {
+          "role": "Lineup",
+          "handle": "nw111#19y",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/nw111%2319y/overview",
+          "challengermodeUserUrl": "/users/ea984566-e55d-4721-b02c-988e0d13dca8",
+          "challengermodeName": "nw#"
+        },
+        {
+          "role": "Lineup",
+          "handle": "bmo#JOY",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/bmo%23JOY/overview",
+          "challengermodeUserUrl": "/users/93ca85f5-7bea-48b9-b5fa-320c730fb0ff",
+          "challengermodeName": "cailloou"
+        },
+        {
+          "role": "Lineup",
+          "handle": "lumie#1888",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/lumie%231888/overview",
+          "challengermodeUserUrl": "/users/2a883151-9457-4a89-8464-3508fe0ec148",
+          "challengermodeName": "lumie"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "Soutles#FFC",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Soutles%23FFC/overview",
+          "challengermodeUserUrl": "/users/6a3b0bfd-eac3-434a-a1f5-ec48ceeb3c3b",
+          "challengermodeName": "Soutles"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "theuzin ruf ruf#001",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/theuzin ruf ruf%23001/overview",
+          "challengermodeUserUrl": "/users/b5fddc99-05b1-4b20-8b10-0808f63014ab",
+          "challengermodeName": "Wisent"
+        }
+      ]
+    },
+    {
+      "seed": 33,
+      "name": "Univap Carrascos Academy (was deleted at: 2025-06-23T19:55:48.6121978Z)",
+      "members": [
+        {
+          "role": "Lineup",
+          "handle": "K I R A#SDM",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/K  I  R  A%23SDM/overview",
+          "challengermodeUserUrl": "/users/a3c7e804-04a2-48d0-9411-bb8a4a3981ee",
+          "challengermodeName": "aRhaast"
+        },
+        {
+          "role": "Lineup",
+          "handle": "bEzo#edup",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/bEzo%23edup/overview",
+          "challengermodeUserUrl": "/users/0d605fbe-c17d-4c85-8adf-64914a00ca7b",
+          "challengermodeName": "EduPeron"
+        },
+        {
+          "role": "Lineup",
+          "handle": "Reimu Hakurei#BLACK",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Reimu Hakurei%23BLACK/overview",
+          "challengermodeUserUrl": "/users/60cc57a2-57ef-4a9b-a64e-e6cf38db4a7d",
+          "challengermodeName": "NuL1995"
+        },
+        {
+          "role": "Lineup",
+          "handle": "Permafrost#Human",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Permafrost%23Human/overview",
+          "challengermodeUserUrl": "/users/44669b9c-9060-4e7d-a9b9-44a463490b23",
+          "challengermodeName": "panthera5097"
+        },
+        {
+          "role": "Lineup",
+          "handle": "gpsbiel#gps",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/gpsbiel%23gps/overview",
+          "challengermodeUserUrl": "/users/adf9097a-7415-4241-a703-e83002922462",
+          "challengermodeName": "gpsbiel"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "SalgaHatesNi#aura",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/SalgaHatesNi%23aura/overview",
+          "challengermodeUserUrl": "/users/dafc49f9-60dd-4da9-8061-b0d0e117112e",
+          "challengermodeName": "salgaaa"
+        },
+        {
+          "role": "Substitutos",
+          "handle": "Amery#nini",
+          "trackerUrl": "https://tracker.gg/valorant/profile/riot/Amery%23nini/overview",
+          "challengermodeUserUrl": "/users/b4f62fc2-aedd-46e6-88b7-8b1e1fe11530",
+          "challengermodeName": "amery_."
+        }
+      ]
+    }
+  ],
+  "manifest": {
+    "slots": [
+      {
+        "number": 33,
+        "status": "placar_de_rounds",
+        "teamA": 1,
+        "teamB": 33,
+        "scoreA": 13,
+        "scoreB": 1,
+        "stage": "Etapa 1 • Rodada de 32 superior",
+        "scheduledAt": "2025-05-24T14:15:00-03:00",
+        "reportedAt": "2025-05-24T13:55:00-03:00",
+        "trackerMatches": []
+      },
+      {
+        "number": 38,
+        "status": "placar_de_rounds",
+        "teamA": 13,
+        "teamB": 20,
+        "scoreA": 13,
+        "scoreB": 10,
+        "stage": "Etapa 1 • Rodada de 32 superior",
+        "scheduledAt": "2025-05-24T14:15:00-03:00",
+        "reportedAt": "2025-05-24T15:16:00-03:00",
+        "trackerMatches": [
+          "69cdf76e-82a0-4695-a15f-05602f4719e6"
+        ]
+      },
+      {
+        "number": 40,
+        "status": "placar_de_rounds",
+        "teamA": 12,
+        "teamB": 21,
+        "scoreA": 7,
+        "scoreB": 13,
+        "stage": "Etapa 1 • Rodada de 32 superior",
+        "scheduledAt": "2025-05-24T14:15:00-03:00",
+        "reportedAt": "2025-05-24T14:05:00-03:00",
+        "trackerMatches": []
+      },
+      {
+        "number": 51,
+        "status": "placar_de_rounds",
+        "teamA": 4,
+        "teamB": 13,
+        "scoreA": 13,
+        "scoreB": 11,
+        "stage": "Etapa 1 • Rodada de 16 superior",
+        "scheduledAt": "2025-05-24T15:30:00-03:00",
+        "reportedAt": "2025-05-24T16:32:00-03:00",
+        "trackerMatches": [
+          "d66ff1c3-7d44-45c5-a61e-23a973ed698d"
+        ]
+      },
+      {
+        "number": 102,
+        "status": "placar_de_rounds",
+        "teamA": 17,
+        "teamB": 33,
+        "scoreA": 13,
+        "scoreB": 10,
+        "stage": "Etapa 1 • Rodada de 16 inferior",
+        "scheduledAt": "2025-05-24T16:45:00-03:00",
+        "reportedAt": "2025-05-24T15:52:00-03:00",
+        "trackerMatches": []
+      },
+      {
+        "number": 105,
+        "status": "placar_de_rounds",
+        "teamA": 13,
+        "teamB": 10,
+        "scoreA": 13,
+        "scoreB": 4,
+        "stage": "Etapa 1 • Rodada de 16 inferior",
+        "scheduledAt": "2025-05-24T18:00:00-03:00",
+        "reportedAt": "2025-05-24T17:29:00-03:00",
+        "trackerMatches": [
+          "3d1703ed-39b3-419a-ac71-26eb99f5ca5d"
+        ]
+      },
+      {
+        "number": 112,
+        "status": "resultado_0_1_a_verificar",
+        "teamA": 13,
+        "teamB": 21,
+        "scoreA": 0,
+        "scoreB": 1,
+        "stage": "Etapa 1 • Rodada de 8 inferior",
+        "scheduledAt": "2025-05-25T13:00:00-03:00",
+        "reportedAt": "2025-05-25T13:19:00-03:00",
+        "trackerMatches": []
+      },
+      {
+        "number": 116,
+        "status": "resultado_0_1_a_verificar",
+        "teamA": 26,
+        "teamB": 21,
+        "scoreA": 1,
+        "scoreB": 0,
+        "stage": "Etapa 1 • Rodada de 8 inferior",
+        "scheduledAt": "2025-05-25T14:15:00-03:00",
+        "reportedAt": null,
+        "trackerMatches": []
+      },
+      {
+        "number": 121,
+        "status": "resultado_0_1_a_verificar",
+        "teamA": 16,
+        "teamB": 6,
+        "scoreA": 1,
+        "scoreB": 0,
+        "stage": "Etapa 1 • Rodada de 4 inferior",
+        "scheduledAt": "2025-05-25T16:45:00-03:00",
+        "reportedAt": null,
+        "trackerMatches": []
+      }
+    ]
+  },
+  "index": {
+    "data": {
+      "matches": [
+        {
+          "attributes": {
+            "id": "36517a6d-3d91-4d40-ad0a-6a704c211510"
+          },
+          "metadata": {
+            "timestamp": "2025-07-19T18:23:26.601+00:00",
+            "modeKey": "bomb",
+            "mapName": "Ascent"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 13
+                },
+                "roundsLost": {
+                  "value": 10
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "58db253f-af58-4f89-a80f-a364e87eee48"
+          },
+          "metadata": {
+            "timestamp": "2025-07-19T17:25:31.729+00:00",
+            "modeKey": "bomb",
+            "mapName": "Sunset"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 13
+                },
+                "roundsLost": {
+                  "value": 11
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "2b678989-a2ca-46ca-83a3-42ed4e74db24"
+          },
+          "metadata": {
+            "timestamp": "2025-07-12T18:15:45.815+00:00",
+            "modeKey": "bomb",
+            "mapName": "Icebox"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 13
+                },
+                "roundsLost": {
+                  "value": 10
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "d403e8f2-cc93-4814-8302-746392d4c04b"
+          },
+          "metadata": {
+            "timestamp": "2025-07-12T17:20:36.012+00:00",
+            "modeKey": "bomb",
+            "mapName": "Lotus"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 13
+                },
+                "roundsLost": {
+                  "value": 8
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "d26591ef-e99d-4c69-9354-cd4aef169334"
+          },
+          "metadata": {
+            "timestamp": "2025-07-05T21:30:57.478+00:00",
+            "modeKey": "bomb",
+            "mapName": "Lotus"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 9
+                },
+                "roundsLost": {
+                  "value": 13
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "f61837da-91dd-4253-8546-4f1fcd67f553"
+          },
+          "metadata": {
+            "timestamp": "2025-07-05T20:38:11.215+00:00",
+            "modeKey": "bomb",
+            "mapName": "Ascent"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 13
+                },
+                "roundsLost": {
+                  "value": 10
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "92bf4af4-7b5b-45ea-8cd1-208f7538b3c1"
+          },
+          "metadata": {
+            "timestamp": "2025-07-05T19:47:29.742+00:00",
+            "modeKey": "bomb",
+            "mapName": "Corrode"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 11
+                },
+                "roundsLost": {
+                  "value": 13
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "38b4b054-b7d3-4bc2-9ecf-d393f4ca31d4"
+          },
+          "metadata": {
+            "timestamp": "2025-07-05T19:07:44.515+00:00",
+            "modeKey": "bomb",
+            "mapName": "Corrode"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 13
+                },
+                "roundsLost": {
+                  "value": 7
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "ac319947-046b-4e37-a51d-71a1d128b21e"
+          },
+          "metadata": {
+            "timestamp": "2025-07-05T17:43:57.71+00:00",
+            "modeKey": "bomb",
+            "mapName": "Ascent"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 13
+                },
+                "roundsLost": {
+                  "value": 4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "31c1ceff-ab55-414e-9726-be94fd3c6785"
+          },
+          "metadata": {
+            "timestamp": "2025-07-05T17:11:24.253+00:00",
+            "modeKey": "bomb",
+            "mapName": "Icebox"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 13
+                },
+                "roundsLost": {
+                  "value": 4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "838df2ea-79fa-4648-b4ef-cc2b66423a31"
+          },
+          "metadata": {
+            "timestamp": "2025-07-02T23:51:49.514+00:00",
+            "modeKey": "deathmatch",
+            "mapName": "Ascent"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 0
+                },
+                "roundsLost": {
+                  "value": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "c9e670bb-2708-4679-9eac-b7ed901744ef"
+          },
+          "metadata": {
+            "timestamp": "2025-06-08T20:21:54.058+00:00",
+            "modeKey": "bomb",
+            "mapName": "Lotus"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 14
+                },
+                "roundsLost": {
+                  "value": 12
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "5585fc5e-10b4-49f1-a34a-87b07edfc165"
+          },
+          "metadata": {
+            "timestamp": "2025-06-08T19:05:51.864+00:00",
+            "modeKey": "bomb",
+            "mapName": "Lotus"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 16
+                },
+                "roundsLost": {
+                  "value": 14
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "26ef8b82-a0ec-445b-a7b6-6305d88cf1bb"
+          },
+          "metadata": {
+            "timestamp": "2025-06-08T17:29:04.341+00:00",
+            "modeKey": "bomb",
+            "mapName": "Ascent"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 17
+                },
+                "roundsLost": {
+                  "value": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "b2ed15e5-e349-42dd-9772-c7849ed1efe6"
+          },
+          "metadata": {
+            "timestamp": "2025-06-07T20:38:13.023+00:00",
+            "modeKey": "bomb",
+            "mapName": "Split"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 14
+                },
+                "roundsLost": {
+                  "value": 12
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "da825644-4aa1-4202-8b7b-b4cc16cc6ced"
+          },
+          "metadata": {
+            "timestamp": "2025-06-07T19:21:53.511+00:00",
+            "modeKey": "bomb",
+            "mapName": "Haven"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 13
+                },
+                "roundsLost": {
+                  "value": 8
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "da66eedb-a2b9-44ff-b048-0a8a86a874d7"
+          },
+          "metadata": {
+            "timestamp": "2025-06-07T18:11:08.899+00:00",
+            "modeKey": "bomb",
+            "mapName": "Lotus"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 13
+                },
+                "roundsLost": {
+                  "value": 4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "5af68ae2-e0c2-46ff-9df5-6411926ff2b7"
+          },
+          "metadata": {
+            "timestamp": "2025-06-07T17:21:20.278+00:00",
+            "modeKey": "bomb",
+            "mapName": "Lotus"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 5
+                },
+                "roundsLost": {
+                  "value": 13
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "3d1703ed-39b3-419a-ac71-26eb99f5ca5d"
+          },
+          "metadata": {
+            "timestamp": "2025-05-24T19:52:27.853+00:00",
+            "modeKey": "bomb",
+            "mapName": "Haven"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 13
+                },
+                "roundsLost": {
+                  "value": 4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "id": "d66ff1c3-7d44-45c5-a61e-23a973ed698d"
+          },
+          "metadata": {
+            "timestamp": "2025-05-24T18:42:42.077+00:00",
+            "modeKey": "bomb",
+            "mapName": "Lotus"
+          },
+          "segments": [
+            {
+              "type": "overview",
+              "attributes": {
+                "platformSlug": "riot",
+                "platformUserIdentifier": "ASTRO#2277"
+              },
+              "stats": {
+                "roundsWon": {
+                  "value": 11
+                },
+                "roundsLost": {
+                  "value": 13
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "metadata": {
+        "schema": "riot-api",
+        "next": 3
+      },
+      "paginationType": "Next",
+      "requestingPlayerAttributes": {
+        "platformSlug": "riot",
+        "platformUserIdentifier": "ASTRO#2277"
+      },
+      "expiryDate": "2026-10-25T07:17:33.6791624+00:00"
+    }
+  },
+  "details": {
+    "d66ff1c3-7d44-45c5-a61e-23a973ed698d": {
+      "data": {
+        "attributes": {
+          "id": "d66ff1c3-7d44-45c5-a61e-23a973ed698d"
+        },
+        "metadata": {
+          "dateStarted": "2025-05-24T18:42:42.077+00:00",
+          "mapName": "Lotus"
+        },
+        "segments": [
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Blue"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 13
+              }
+            }
+          },
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Red"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 11
+              }
+            }
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "andre#aaa12"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "rxx#916"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "piM#まいさ"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "falcomer#BANDO"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "greiN#quel"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "evil catboy#eth"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "alluka#tired"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Kick#SchrB"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "little docas#BANDO"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "ASTRO#2277"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          }
+        ]
+      }
+    },
+    "3d1703ed-39b3-419a-ac71-26eb99f5ca5d": {
+      "data": {
+        "attributes": {
+          "id": "3d1703ed-39b3-419a-ac71-26eb99f5ca5d"
+        },
+        "metadata": {
+          "dateStarted": "2025-05-24T19:52:27.853+00:00",
+          "mapName": "Haven"
+        },
+        "segments": [
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Red"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 13
+              }
+            }
+          },
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Blue"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 4
+              }
+            }
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "rxx#916"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "devas tld#INSS"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "mtch L#IMA"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "markin turbo#eng"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "evil catboy#eth"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Gutojt#BDM"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "little docas#BANDO"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "orca fanboy#orcas"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "ASTRO#2277"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "falcomer#BANDO"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          }
+        ]
+      }
+    },
+    "69cdf76e-82a0-4695-a15f-05602f4719e6": {
+      "data": {
+        "attributes": {
+          "id": "69cdf76e-82a0-4695-a15f-05602f4719e6"
+        },
+        "metadata": {
+          "dateStarted": "2025-05-24T17:29:38.994+00:00",
+          "mapName": "Haven"
+        },
+        "segments": [
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Red"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 13
+              }
+            }
+          },
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Blue"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 10
+              }
+            }
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "ASTRO#2277"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "rxx#916"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "ego win#1337"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "falcomer#BANDO"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "yChagasx#21y"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "evil catboy#eth"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "bidu tse tung#sccp"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Garcia#CS2"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "little docas#BANDO"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "vvs#ggf"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          }
+        ]
+      }
+    },
+    "eaf96c7b-3fd9-4199-9624-02a018e20a92": {
+      "data": {
+        "attributes": {
+          "id": "eaf96c7b-3fd9-4199-9624-02a018e20a92"
+        },
+        "metadata": {
+          "dateStarted": "2025-05-25T19:49:24.445+00:00",
+          "mapName": "Ascent"
+        },
+        "segments": [
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Blue"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 13
+              }
+            }
+          },
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Red"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 4
+              }
+            }
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Feupe#777"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "ily#x x"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Bellingham 10#bKIND"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Rapunzel#ELA"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "stockão#BAGRE"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Maoki ツ#CTB"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Gutoso#vlr"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "ÔMEGA 9x90#solo"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "zeNith#mond"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "marelo#UFU"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          }
+        ]
+      }
+    },
+    "b360157b-8efb-4675-bb7b-d0874956b458": {
+      "data": {
+        "attributes": {
+          "id": "b360157b-8efb-4675-bb7b-d0874956b458"
+        },
+        "metadata": {
+          "dateStarted": "2025-05-24T18:08:36.188+00:00",
+          "mapName": "Ascent"
+        },
+        "segments": [
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Blue"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 10
+              }
+            }
+          },
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Red"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 13
+              }
+            }
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "K  I  R  A#SDM"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "MacroHard#edup"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Reimu Hakurei#BLACK"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "anoguti#0808"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "PittyChisai#0000"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "BBN wonDer#hope"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "parrudinho#lau"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "gps final boss#aura"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Permafrost#Human"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "mingau e eugênio#byha"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          }
+        ]
+      }
+    },
+    "d4e25f74-e92d-4465-b108-a46b3bbda795": {
+      "data": {
+        "attributes": {
+          "id": "d4e25f74-e92d-4465-b108-a46b3bbda795"
+        },
+        "metadata": {
+          "dateStarted": "2025-05-24T16:29:37.99+00:00",
+          "mapName": "Haven"
+        },
+        "segments": [
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Red"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 13
+              }
+            }
+          },
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Blue"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 1
+              }
+            }
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Abyss Star#death"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "K  I  R  A#SDM"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Permafrost#Human"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "gps final boss#aura"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "boguin istrupido#boga"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "klouzz#ezhs"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "ricw#scant"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "coutinho#iwnl"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "CAAP lopes#bella"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Reimu Hakurei#BLACK"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          }
+        ]
+      }
+    },
+    "b7723b7e-11c8-4652-aecb-2fbd532dafb7": {
+      "data": {
+        "attributes": {
+          "id": "b7723b7e-11c8-4652-aecb-2fbd532dafb7"
+        },
+        "metadata": {
+          "dateStarted": "2025-05-24T16:23:38.014+00:00",
+          "mapName": "Ascent",
+          "duration": 2246000
+        },
+        "segments": [
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Blue"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 7
+              }
+            }
+          },
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Red"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 13
+              }
+            }
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "i like cats#dolph"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "kovalski#lori"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Auauteza#MFG"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "PERNILACEBOLADO4#TTK"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Kenjuy#0808"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "jpr#1111"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Nostalgic#dream"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "GuiS#7926"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "nan zk#mari"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Varajao#157"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          }
+        ]
+      }
+    },
+    "0a713bb8-4127-4301-9e34-bd62be931573": {
+      "data": {
+        "attributes": {
+          "id": "0a713bb8-4127-4301-9e34-bd62be931573"
+        },
+        "metadata": {
+          "dateStarted": "2025-05-25T16:48:43.542+00:00",
+          "mapName": "Haven",
+          "duration": 3416000
+        },
+        "segments": [
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Red"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 16
+              }
+            }
+          },
+          {
+            "type": "team-summary",
+            "attributes": {
+              "teamId": "Blue"
+            },
+            "metadata": {},
+            "stats": {
+              "roundsWon": {
+                "value": 14
+              }
+            }
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Soutles#ffc"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "bmo#JOY"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Varajao#157"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "jpr#1111"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "Lozartan#GALO"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "PERNILACEBOLADO4#TTK"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "nw111#19y"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "lumie#1888"
+            },
+            "metadata": {
+              "teamId": "Red"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "GuiS#7926"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          },
+          {
+            "type": "player-summary",
+            "attributes": {
+              "platformUserIdentifier": "nan zk#mari"
+            },
+            "metadata": {
+              "teamId": "Blue"
+            },
+            "stats": {}
+          }
+        ]
+      }
+    }
+  },
+  "winIndexMatch": {
+    "attributes": {
+      "id": "eaf96c7b-3fd9-4199-9624-02a018e20a92",
+      "mapId": "/Game/Maps/Ascent/Ascent",
+      "modeId": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+      "seasonId": "aef237a0-494d-3a14-a1c8-ec8de84e309c"
+    },
+    "metadata": {
+      "modeKey": "bomb",
+      "modeName": "Normal",
+      "modeImageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/icons/modes/normal.png",
+      "modeMaxRounds": 25,
+      "isAvailable": true,
+      "timestamp": "2025-05-25T19:49:24.445+00:00",
+      "result": "victory",
+      "map": "7eaecc1b-4337-bbf6-6ab9-04b8f06b3319",
+      "mapName": "Ascent",
+      "mapImageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/maps/7.04/ascent.jpg",
+      "seasonName": "V25: A3"
+    },
+    "segments": [
+      {
+        "type": "overview",
+        "stats": {
+          "roundsWon": {
+            "displayName": "Rounds Won",
+            "displayCategory": "Combat",
+            "category": "combat",
+            "metadata": {},
+            "value": 13,
+            "displayValue": "13",
+            "displayType": "Number"
+          },
+          "roundsLost": {
+            "displayName": "Rounds Lost",
+            "displayCategory": "Combat",
+            "category": "combat",
+            "metadata": {},
+            "value": 4,
+            "displayValue": "4",
+            "displayType": "Number"
+          }
+        }
+      }
+    ]
+  },
+  "gameRosterEvidence": {
+    "schemaVersion": 1,
+    "tournamentId": "1cf639b6-95fe-4d81-89d7-08dd84a120e4",
+    "evidence": [
+      {
+        "fixtureNumber": 112,
+        "gameUrl": "https://www.challengermode.com/s/AcadArena/games/47fa5922-d794-4e6a-f447-08dd9b4fdfe0",
+        "sourceUrl": "https://www.challengermode.com/s/AcadArena/tournaments/1cf639b6-95fe-4d81-89d7-08dd84a120e4/matches/1",
+        "observedAt": "2026-10-25T09:29:08.985Z",
+        "members": [
+          {
+            "challengermodeName": "Varajao",
+            "challengermodeUserUrl": "/users/7939174d-9316-44d4-9ce7-80cbf620a12e",
+            "handleDisplay": "Varajao#157",
+            "role": "Lineup",
+            "teamName": "Atlética UNIFEI",
+            "trackerUrl": "https://tracker.gg/valorant/profile/riot/Varajao%23157/overview",
+            "teamSeed": 21,
+            "handle": "Varajao#157"
+          },
+          {
+            "challengermodeName": "fael1",
+            "challengermodeUserUrl": "/users/318bf1fb-64c4-4b64-8f54-59afd69d7bf8",
+            "handleDisplay": "nan zk#mari",
+            "role": "Lineup",
+            "teamName": "Atlética UNIFEI",
+            "trackerUrl": "https://tracker.gg/valorant/profile/riot/nan%20zk%23mari/overview",
+            "teamSeed": 21,
+            "handle": "nan zk#mari"
+          },
+          {
+            "challengermodeName": "juanpr",
+            "challengermodeUserUrl": "/users/33ba3780-ed12-47e7-9720-e07e750af6ca",
+            "handleDisplay": "amo submissas#333",
+            "role": "Lineup",
+            "teamName": "Atlética UNIFEI",
+            "trackerUrl": "https://tracker.gg/valorant/profile/riot/amo%20submissas%23333/overview",
+            "teamSeed": 21,
+            "handle": "amo submissas#333"
+          },
+          {
+            "challengermodeName": "GuiS1811",
+            "challengermodeUserUrl": "/users/6f2faeb7-d219-4a60-a02b-ad03a6ae22f2",
+            "handleDisplay": "GuiS#7926",
+            "role": "Lineup",
+            "teamName": "Atlética UNIFEI",
+            "trackerUrl": "https://tracker.gg/valorant/profile/riot/GuiS%237926/overview",
+            "teamSeed": 21,
+            "handle": "GuiS#7926"
+          },
+          {
+            "challengermodeName": "_baesso_",
+            "challengermodeUserUrl": "/users/02a3ef2b-9408-420f-bdcf-aa1dfdd8c655",
+            "handleDisplay": "PERNILACEBOLADO4#TTK",
+            "role": "Lineup",
+            "teamName": "Atlética UNIFEI",
+            "trackerUrl": "https://tracker.gg/valorant/profile/riot/PERNILACEBOLADO4%23TTK/overview",
+            "teamSeed": 21,
+            "handle": "PERNILACEBOLADO4#TTK"
+          },
+          {
+            "challengermodeName": "Beatrix_",
+            "challengermodeUserUrl": "/users/6d43cbc7-b3ef-40ed-aeac-6d22b788d8db",
+            "handleDisplay": "BellaTrix#6528",
+            "role": "Treinadores",
+            "teamName": "Atlética UNIFEI",
+            "trackerUrl": "https://tracker.gg/valorant/profile/riot/BellaTrix%236528/overview",
+            "teamSeed": 21,
+            "handle": "BellaTrix#6528"
+          },
+          {
+            "challengermodeName": "haltmm8",
+            "challengermodeUserUrl": "/users/aaf4d4c1-fe1d-4190-940a-0c79c98c8dae",
+            "handleDisplay": "evil catboy#eth",
+            "role": "Lineup",
+            "teamName": "UFG Eagles",
+            "trackerUrl": "https://tracker.gg/valorant/profile/riot/evil%20catboy%23eth/overview",
+            "teamSeed": 13,
+            "handle": "evil catboy#eth"
+          },
+          {
+            "challengermodeName": "ASTRO27",
+            "challengermodeUserUrl": "/users/3775709d-4a2d-47ae-8544-04ca4858d9a7",
+            "handleDisplay": "ASTRO#2277",
+            "role": "Lineup",
+            "teamName": "UFG Eagles",
+            "trackerUrl": "https://tracker.gg/valorant/profile/riot/ASTRO%232277/overview",
+            "teamSeed": 13,
+            "handle": "ASTRO#2277"
+          },
+          {
+            "challengermodeName": "rxxxx",
+            "challengermodeUserUrl": "/users/fcfebc23-13c2-4373-a4c0-5df0cdf6febb",
+            "handleDisplay": "rxx#916",
+            "role": "Lineup",
+            "teamName": "UFG Eagles",
+            "trackerUrl": "https://tracker.gg/valorant/profile/riot/rxx%23916/overview",
+            "teamSeed": 13,
+            "handle": "rxx#916"
+          },
+          {
+            "challengermodeName": "docas",
+            "challengermodeUserUrl": "/users/31682364-238e-46f8-a626-f870180a7dea",
+            "handleDisplay": "little docas#BANDO",
+            "role": "Lineup",
+            "teamName": "UFG Eagles",
+            "trackerUrl": "https://tracker.gg/valorant/profile/riot/little%20docas%23BANDO/overview",
+            "teamSeed": 13,
+            "handle": "little docas#BANDO"
+          },
+          {
+            "challengermodeName": "falcomeer",
+            "challengermodeUserUrl": "/users/f543e4e0-f8d2-4768-b671-e0b4f038f982",
+            "handleDisplay": "falcomer#BANDO",
+            "role": "Lineup",
+            "teamName": "UFG Eagles",
+            "trackerUrl": "https://tracker.gg/valorant/profile/riot/falcomer%23BANDO/overview",
+            "teamSeed": 13,
+            "handle": "falcomer#BANDO"
+          },
+          {
+            "challengermodeName": "arashinha",
+            "challengermodeUserUrl": "/users/66ebce09-d9c5-48b6-97b6-b9fc4c1f9db9",
+            "handleDisplay": "Arashi#XIX",
+            "role": "Treinadores",
+            "teamName": "UFG Eagles",
+            "trackerUrl": "https://tracker.gg/valorant/profile/riot/Arashi%23XIX/overview",
+            "teamSeed": 13,
+            "handle": "Arashi#XIX"
+          }
+        ]
+      }
+    ]
+  }
+}

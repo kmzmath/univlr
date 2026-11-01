@@ -31,10 +31,38 @@ body {
   box-shadow: none;
 }
 
-/* So a altura minima: no celular o topo tem tres linhas (logo e Entrar, menu,
-   busca) e uma altura fixa aqui as empilhava por cima da pagina. */
+/* So a altura minima: no celular o topo tem tres linhas (logo e Entrar, busca,
+   menu) e uma altura fixa aqui as empilhava por cima da pagina. */
 .topbar-inner {
   min-height: 56px;
+}
+
+/* Celular: presa inteira, a barra tomava 169px, 20% da tela, o tempo todo. O
+   menu desce para a ultima linha e o topo negativo deixa logo e busca subirem
+   com a pagina: so a faixa do menu fica presa. */
+@media (max-width: 760px) {
+  .topbar {
+    --topo-logo: 42px;
+    --topo-busca: 34px;
+    --topo-vao: 12px;
+    top: calc((var(--topo-logo) + var(--topo-busca) + var(--topo-vao) * 3) * -1);
+  }
+
+  .topbar-inner {
+    grid-template-rows: var(--topo-logo) var(--topo-busca) auto;
+    gap: var(--topo-vao);
+    padding: var(--topo-vao) 0 0;
+  }
+
+  .topbar-inner .nav {
+    order: 1;
+  }
+
+  /* O menu agora vem depois da busca e pintaria por cima da lista de resultados. */
+  .topbar-inner .global-search {
+    position: relative;
+    z-index: 3;
+  }
 }
 
 .nav-link,
@@ -314,6 +342,8 @@ body {
 .vp-pl {
   --ponta: 150px;
   --fim: 0px;
+  --respiro: 14px;
+  --nome-mapa: 66px;
   position: relative;
   isolation: isolate;
   display: grid;
@@ -325,7 +355,7 @@ body {
   column-gap: 14px;
   row-gap: 4px;
   min-width: 0;
-  padding: 6px 14px 8px;
+  padding: 6px var(--respiro) 8px;
   color: inherit;
   text-decoration: none;
   transition: background-color 160ms ease;
@@ -348,27 +378,20 @@ body {
     "a placar b kd";
 }
 
-/* O holofote e os nomes dos mapas saem da mesma conta de largura, presos ao
-   mesmo bloco (a linha), e por isso cada nome cai sobre a propria fatia. */
-.vp-pl-artes,
-.vp-pl-mapas {
-  position: absolute;
-  left: calc((100% - var(--fim)) / 2);
-  width: min(calc(200px + var(--maps, 1) * 120px), calc((100% - var(--fim)) * 0.62), calc(100% - var(--fim) - var(--ponta) * 2));
-  transform: translateX(-50%);
-}
-
+/* A arte e os nomes dividem a linha em partes iguais, uma por mapa, e por isso
+   cada nome cai sobre a propria fatia. */
 .vp-pl-artes {
   --lean: 22px;
   --seam: 2px;
+  position: absolute;
   z-index: -1;
   top: 0;
   bottom: 0;
+  left: 0;
+  right: var(--fim);
   display: flex;
   opacity: 0.2;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 76%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 76%, transparent 100%);
   transition: opacity 200ms ease;
 }
 
@@ -378,15 +401,35 @@ body {
 }
 
 .vp-pl-artes i {
+  --esq-topo: calc(var(--lean) / 2 + var(--seam) / 2);
+  --esq-base: calc(var(--seam) / 2 - var(--lean) / 2);
+  --dir-topo: calc(100% + var(--lean) / 2 - var(--seam) / 2);
+  --dir-base: calc(100% - var(--lean) / 2 - var(--seam) / 2);
   position: relative;
   flex: 1 1 0;
   min-width: 0;
   clip-path: polygon(
-    calc(var(--lean) / 2 + var(--seam) / 2) 0,
-    calc(100% + var(--lean) / 2 - var(--seam) / 2) 0,
-    calc(100% - var(--lean) / 2 - var(--seam) / 2) 100%,
-    calc(var(--seam) / 2 - var(--lean) / 2) 100%
+    var(--esq-topo) 0,
+    var(--dir-topo) 0,
+    var(--dir-base) 100%,
+    var(--esq-base) 100%
   );
+}
+
+/* As pontas nao tem vizinha: sem diagonal, senao sobra uma cunha preta na borda.
+   A ultima ainda passa por baixo do K / D, sem mexer nas emendas do miolo. */
+.vp-pl-artes i:first-child {
+  --esq-topo: 0px;
+  --esq-base: 0px;
+}
+
+.vp-pl-artes i:last-child {
+  --dir-topo: calc(100% + var(--fim));
+  --dir-base: calc(100% + var(--fim));
+}
+
+.vp-pl-artes i:last-child img {
+  width: calc(100% + var(--lean) + var(--fim));
 }
 
 .vp-pl-artes img {
@@ -422,13 +465,17 @@ body {
 }
 
 .vp-pl-mapas {
+  position: absolute;
   top: 6px;
-  display: flex;
+  left: 0;
+  right: var(--fim);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   height: 16px;
 }
 
 .vp-pl-mapa {
-  flex: 1 1 0;
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
@@ -439,13 +486,25 @@ body {
   text-transform: uppercase;
 }
 
+/* As pontas guardam o espaco da hora e do campeonato, sempre deixando --nome-mapa
+   livre na fatia para o nome. Em %, a conta e sobre a coluna do proprio mapa. */
+.vp-pl-mapa:first-child {
+  padding-left: min(var(--ponta), calc(100% - var(--nome-mapa)));
+}
+
+.vp-pl-mapa:last-child {
+  padding-right: min(var(--ponta), calc(100% - var(--nome-mapa)));
+}
+
+/* A mesma reserva da ultima fatia, agora medida pela linha de cima: e por isso
+   que o campeonato encolhe e rola nas series de 3 mapas ou mais. */
 .vp-pl-evento {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 8px;
   min-width: 0;
-  max-width: calc(var(--ponta) - 12px);
+  max-width: calc(min(var(--ponta), (100% + var(--respiro) * 2) / var(--maps, 1) - var(--nome-mapa)) - 16px);
 }
 
 .vp-pl-evento-nome {
@@ -552,8 +611,8 @@ body {
 @media (max-width: 560px) {
   .vp-pl {
     --ponta: 66px;
-    column-gap: 10px;
-    padding: 6px 10px 8px;
+    --respiro: 10px;
+    column-gap: clamp(6px, 2.6vw, 10px);
   }
 
   .vp-pl-kd {
@@ -565,17 +624,34 @@ body {
     display: none;
   }
 
+  /* Os clamps valem abaixo de 390px: em 320px a coluna do nome caia para 64px e
+     "Hellhounds" quebrava no meio da palavra. */
   .vp-pl-lado {
-    gap: 8px;
+    gap: clamp(5px, 2.1vw, 8px);
   }
 
   .vp-pl-lado .team-logo {
-    width: 26px;
-    height: 26px;
+    width: clamp(22px, 7vw, 26px);
+    height: clamp(22px, 7vw, 26px);
+  }
+
+  .vp-pl-lado {
+    min-height: 32px;
+  }
+
+  /* Sem rolagem no celular: o nome quebra em ate duas linhas e fica inteiro no
+     print. A caixa interna entra junto porque traz o nowrap da rolagem. */
+  .vp-pl-lado strong,
+  .vp-pl-lado strong > .nome-rolante {
+    overflow: visible;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
   }
 
   .vp-pl-lado strong {
-    font-size: 14px;
+    font-size: clamp(13px, 3.6vw, 14px);
+    line-height: 1.1;
   }
 
   .vp-pl-placar {
@@ -583,7 +659,7 @@ body {
   }
 
   .vp-pl-placar b {
-    font-size: 28px;
+    font-size: clamp(24px, 7.2vw, 28px);
   }
 
   .vp-pl-placar i {
@@ -819,6 +895,63 @@ body {
    Melhores da semana: um lider por vez
    ========================================================================== */
 
+/* Oswald e a fonte das cartinhas (licenca em assets/fonts/OFL-Oswald.txt): o
+   cartao do jogador em destaque fala a mesma lingua delas, e e o unico lugar do
+   site que usa essa fonte. */
+@font-face {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/oswald-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+}
+
+@font-face {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/oswald-400-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+1E00-1E9F, U+1EF2-1EFF, U+20A0-20AB;
+}
+
+@font-face {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/oswald-500-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+}
+
+@font-face {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/oswald-500-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+1E00-1E9F, U+1EF2-1EFF, U+20A0-20AB;
+}
+
+@font-face {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/oswald-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+}
+
+@font-face {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/oswald-600-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+1E00-1E9F, U+1EF2-1EFF, U+20A0-20AB;
+}
+
 /* O fundo e de cada slide; o cartao so recorta o trilho e leva os tracinhos
    embaixo, fora da foto. */
 .vp-semana-cartao {
@@ -837,117 +970,163 @@ body {
   transition: none;
 }
 
-/* Fundo na cor da equipe do lider, entao ele muda junto quando passa de uma
-   equipe para outra. */
+/* Duas pecas chapadas, como uma camisa (cores em teamPlateStyle). A emenda tem a
+   mesma inclinacao das fatias de mapa da linha de partida, e a cor1 fica com
+   mais da metade do cartao. So em tela muito estreita ela recua em %, para o
+   texto continuar cabendo na peca da direita. */
 .vp-slide {
+  --emenda: min(226px, 66.5%);
+  --fonte-carta: "Oswald", var(--font-display);
   position: relative;
+  isolation: isolate;
   flex: 0 0 100%;
-  display: grid;
-  grid-template-columns: 128px minmax(0, 1fr);
+  display: block;
   height: 206px;
   overflow: hidden;
-  color: inherit;
+  color: var(--placa-tinta);
   text-decoration: none;
-  background: linear-gradient(
-    115deg,
-    color-mix(in srgb, var(--team-line) 34%, var(--surface)) 0%,
-    color-mix(in srgb, var(--team-line) 12%, var(--surface)) 46%,
-    var(--surface) 78%
-  );
+  background: var(--placa-peca);
 }
 
-/* A foto solta, sangrando na base: sem moldura, sem fundo. As fotos sao
-   quadradas, com a pessoa no meio da metade de cima para baixo, entao a caixa
-   e quadrada e quase da altura do cartao: a pessoa ocupa a altura toda e cai
-   inteira na coluna da esquerda. */
+/* 2px alem do cartao em toda a volta: a borda do recorte tem antialias, e em
+   zoom ou escala de tela fracionarios ela caia entre dois pixels e deixava a
+   cor2 vazar como um fio claro no topo do campo. So a emenda fica a mostra. */
+.vp-slide-campo {
+  position: absolute;
+  z-index: -1;
+  inset: -2px;
+  background: var(--placa-campo);
+  clip-path: polygon(0 0, calc(var(--emenda) + 2px) 0, calc(var(--emenda) - 64px) 100%, 0 100%);
+}
+
+/* O logo da equipe com as cores dele, apagado, cortado pela emenda. So o
+   contorno em um tom nao bastava: varios logos sao um bloco sem desenho. */
+.vp-slide-campo i {
+  position: absolute;
+  top: -24px;
+  left: -2px;
+  width: 254px;
+  height: 254px;
+  opacity: 0.2;
+  filter: var(--placa-logo-filtro, none);
+  background: var(--placa-logo, none) center / contain no-repeat;
+}
+
+/* A foto solta, sangrando na base e passando por cima da emenda. As fotos sao
+   quadradas, com a cabeca a 3% do topo: 34px para baixo da borda poem o rosto
+   no meio da altura sem cortar o cabelo. A posicao anda com a emenda: a pessoa
+   invade a peca da direita sem nunca chegar no numero, que tem a cor da sombra. */
 .vp-slide .player-figure {
-  align-self: end;
-  width: 190px;
-  height: 190px;
-  margin-left: -18px;
+  position: absolute;
+  bottom: -34px;
+  left: calc(var(--emenda) - 232px);
+  width: 236px;
+  height: 236px;
+  overflow: visible;
   background: none;
   border: 0;
   border-radius: 0;
   box-shadow: none;
 }
 
+/* A sombra dura na cor do campo so aparece onde a pessoa invade a peca da
+   direita: e ela que amarra a foto ao cartao, e separa da peca a camisa da
+   mesma cor (o branco do CAAP sobre o branco). */
 .vp-slide .player-figure img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: center bottom;
+  filter: drop-shadow(8px 0 0 var(--placa-campo));
 }
 
-/* Sem foto, a silhueta fica no fundo, e nao como um vulto cinza do tamanho da
-   pessoa. */
+/* Sem foto, a silhueta entra como mais uma peca do desenho: um tom chapado e
+   opaco, que cobre o logo em vez de se misturar com ele, com a mesma sombra dura
+   da foto. A cor vem da mascara porque um filtro so chegaria em preto ou branco. */
+/* O arquivo da silhueta tem 10% de margem embaixo e a base arredondada: 30px
+   para fora da borda cortam os dois, senao o boneco flutua acima do cartao. */
 .vp-slide .player-figure.is-silhouette {
-  width: 156px;
-  height: 156px;
-  margin-left: -2px;
+  bottom: -30px;
+  left: calc(var(--emenda) - 224px);
+  width: 210px;
+  height: 210px;
+}
+
+.vp-slide .player-figure.is-silhouette {
+  filter: drop-shadow(8px 0 0 var(--placa-campo));
+}
+
+.vp-slide .player-figure.is-silhouette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--placa-silhueta);
+  -webkit-mask: url("assets/user-silhouette.png") center bottom / contain no-repeat;
+  mask: url("assets/user-silhouette.png") center bottom / contain no-repeat;
 }
 
 .vp-slide .player-figure.is-silhouette img {
-  opacity: 0.38;
+  visibility: hidden;
 }
 
+/* O texto fica inteiro na peca da direita: nome maior que ela rola. */
 .vp-slide-txt {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  bottom: 12px;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto auto auto 1fr auto;
-  min-width: 0;
-  padding: 16px 16px 16px 6px;
+  justify-items: end;
+  width: calc(100% - var(--emenda) - 6px);
+  font-family: var(--fonte-carta);
   text-align: right;
 }
 
 .vp-slide-txt > small {
-  color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+/* Embaixo a peca e mais larga que o bloco de texto: o apoio aproveita isso em
+   vez de quebrar a linha. */
+.vp-slide-txt > small:last-child {
+  white-space: nowrap;
+}
+
+/* Contorno na cor da peca, invisivel sobre ela: so aparece nas fotos de bracos
+   abertos, que chegam ate o numero, e ai recorta o texto da foto. */
+.vp-slide-valor,
+.vp-slide-txt > small:last-child {
+  -webkit-text-stroke: 8px var(--placa-peca);
+  paint-order: stroke fill;
+}
+
+.vp-slide-txt > small:last-child {
+  -webkit-text-stroke-width: 5px;
 }
 
 .vp-slide-nick {
+  max-width: 100%;
   margin-top: 2px;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font: 600 24px/1.1 var(--font-text);
+  font: 600 30px/1.2 var(--fonte-carta);
 }
 
 .vp-slide-equipe {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 6px;
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.vp-slide-equipe .team-logo {
-  width: 16px;
-  height: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 .vp-slide-valor {
   align-self: end;
-}
-
-.vp-slide-valor b {
-  display: block;
-  font: 600 56px/0.9 var(--font-display);
+  color: var(--placa-numero);
+  font: 600 64px/1.05 var(--fonte-carta);
   font-variant-numeric: tabular-nums;
-}
-
-.vp-slide-valor span {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.vp-slide-ctx {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  color: var(--muted);
-  font-size: 12px;
-  text-shadow: 0 1px 2px #000;
+  white-space: nowrap;
 }
 
 /* Os tracinhos: o atual enche enquanto conta o tempo. Ficam embaixo do
@@ -1016,9 +1195,15 @@ body {
    Home em trilhos: tres colunas desde o topo, como HLTV e vlr.gg
    ========================================================================== */
 
+/* --partidas deixa 169px de nome de cada lado, o bastante para 162 das 168
+   equipes do banco; as 6 mais longas rolam em vaivem (.nome-rolante). A partir
+   dai a coluna so afastaria nome e placar, entao ela para e os trilhos vem para
+   o centro. */
 .vp-home {
+  --partidas: 550px;
   display: grid;
-  grid-template-columns: 340px minmax(0, 1fr) 340px;
+  grid-template-columns: 340px minmax(0, var(--partidas)) 340px;
+  justify-content: center;
   gap: 32px;
   align-items: start;
 }
@@ -4711,5 +4896,887 @@ body {
 @media (max-width: 760px) {
   .page-header .page-title h1 {
     font-size: 36px;
+  }
+}
+
+/* ---- tabelas de estatisticas em blocos ---- */
+/* A tabela pede 1100px. Abaixo disso nada de rolagem lateral: cada linha vira um
+   bloco, o nome ocupa a primeira fila e cada numero leva o nome da coluna em
+   cima (data-label, posto por tabelaComRotulos). Os botoes de ordenar continuam
+   no alto, quebrando linha. */
+@media (max-width: 1180px) {
+  .table-wrap.tournament-stats-table-wrap,
+  .table-wrap.team-player-stats-wrap {
+    overflow: visible;
+  }
+
+  .tournament-stats-table,
+  .team-player-stats-table,
+  .tournament-stats-table tbody,
+  .team-player-stats-table tbody {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .team-player-stats-table thead {
+    display: none;
+  }
+
+  .tournament-stats-table thead {
+    display: block;
+  }
+
+  .tournament-stats-table thead tr {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 4px;
+    padding: 6px 10px;
+  }
+
+  .tournament-stats-table thead th {
+    display: block;
+    width: auto;
+    min-width: 0;
+    height: auto;
+    padding: 0;
+    border: 0;
+  }
+
+  .tournament-stats-table tbody tr,
+  .team-player-stats-table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+    gap: 8px 4px;
+    align-items: start;
+    padding: 10px 12px;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .tournament-stats-table tbody td,
+  .team-player-stats-table tbody td,
+  .team-page .team-player-stats-table tbody td.numeric,
+  .player-page .team-player-stats-table tbody td {
+    display: block;
+    width: auto;
+    min-width: 0;
+    height: auto;
+    padding: 0;
+    border: 0;
+    background: none;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .tournament-stats-table tbody td:first-child,
+  .team-player-stats-table tbody td:first-child {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+
+  .tournament-stats-table tbody td[colspan],
+  .team-player-stats-table tbody td[colspan] {
+    grid-column: 1 / -1;
+  }
+
+  .tournament-stats-table tbody td:has(.agent-stack),
+  .team-player-stats-table tbody td:has(.agent-stack) {
+    grid-column: span 2;
+  }
+
+  .tournament-stats-table tbody td[data-label]:not(:first-child)::before,
+  .team-player-stats-table tbody td[data-label]:not(:first-child)::before {
+    content: attr(data-label);
+    display: block;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 13px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* ---- matriz de agentes por mapa ---- */
+/* Com todos os agentes a tabela pedia 1759px. No computador as colunas apertam
+   para caber; abaixo de 1180px cada mapa vira um bloco e cada numero leva o
+   icone do agente. */
+.tournament-map-agent-table-wrap {
+  overflow-x: visible;
+}
+
+.tournament-map-agent-table {
+  min-width: 0;
+  table-layout: fixed;
+}
+
+.tournament-map-agent-table th,
+.tournament-map-agent-table td {
+  overflow: hidden;
+  padding: 6px 1px;
+  font-size: 11px;
+}
+
+.tournament-map-agent-table th:first-child,
+.tournament-map-agent-table td:first-child {
+  position: static;
+  width: 112px;
+  min-width: 0;
+  padding-left: 8px;
+}
+
+.tournament-map-agent-table th:nth-child(2),
+.tournament-map-agent-table td:nth-child(2) {
+  width: 38px;
+  min-width: 0;
+}
+
+.tournament-map-agent-table th:nth-child(n+3),
+.tournament-map-agent-table td:nth-child(n+3) {
+  width: auto;
+  min-width: 0;
+}
+
+.tournament-map-agent-table th img {
+  max-width: 100%;
+}
+
+.rotulo-imagem {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .tournament-map-agent-table,
+  .tournament-map-agent-table tbody {
+    display: block;
+  }
+
+  .tournament-map-agent-table thead {
+    display: none;
+  }
+
+  .tournament-map-agent-table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+    gap: 8px 4px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .tournament-map-agent-table tbody td,
+  .tournament-map-agent-table tbody td:first-child,
+  .tournament-map-agent-table tbody td:nth-child(2),
+  .tournament-map-agent-table tbody td:nth-child(n+3) {
+    display: block;
+    width: auto;
+    padding: 2px 0;
+    border: 0;
+    white-space: normal;
+  }
+
+  .tournament-map-agent-table tbody td:first-child {
+    grid-column: 1 / -1;
+    padding-left: 0;
+    background: none;
+  }
+
+  .tournament-map-agent-table tbody td:nth-child(2)::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+  }
+
+  .rotulo-imagem {
+    display: grid;
+    justify-items: center;
+    margin-bottom: 2px;
+  }
+}
+
+/* ---- classificacao do suico no celular ---- */
+/* Pedia 700px. A linha vira posicao, equipe com estado e status embaixo, e V e D
+   a direita com o rotulo em cima. */
+@media (max-width: 760px) {
+  .tournament-stats-table-wrap:not(.table-wrap) {
+    overflow: visible;
+  }
+
+  .tournament-swiss-table,
+  .tournament-swiss-table tbody {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .tournament-swiss-table thead {
+    display: none;
+  }
+
+  .tournament-swiss-table tbody tr {
+    display: grid;
+    grid-template-columns: 26px minmax(0, 1fr) 30px 30px;
+    gap: 2px 6px;
+    align-items: center;
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(142, 162, 193, 0.12);
+  }
+
+  .tournament-swiss-table tbody td,
+  .swiss-state-standings-block .tournament-swiss-table tbody td {
+    display: block;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .tournament-swiss-table tbody td:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .tournament-swiss-table tbody td:nth-child(2),
+  .swiss-state-standings-block .tournament-swiss-table tbody td:nth-child(2) {
+    display: flex;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .tournament-swiss-table tbody td:nth-child(3) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .tournament-swiss-table tbody td:nth-child(4),
+  .tournament-swiss-table tbody td:nth-child(5) {
+    grid-row: 1 / span 2;
+    text-align: center;
+  }
+
+  .tournament-swiss-table tbody td:nth-child(4) {
+    grid-column: 3;
+  }
+
+  .tournament-swiss-table tbody td:nth-child(5) {
+    grid-column: 4;
+  }
+
+  .tournament-swiss-table tbody td:nth-child(4)::before,
+  .tournament-swiss-table tbody td:nth-child(5)::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .tournament-swiss-table tbody td:nth-child(6) {
+    grid-column: 2 / -1;
+    grid-row: 3;
+  }
+}
+
+/* Agentes e composicoes pediam 1420px e 1380px, mais que a coluna do site em
+   qualquer monitor. No computador as colunas apertam para caber. */
+@media (min-width: 1181px) {
+  .tournament-agent-stats-table,
+  .tournament-composition-stats-table {
+    min-width: 0;
+    table-layout: auto;
+  }
+
+  .tournament-agent-stats-table th,
+  .tournament-agent-stats-table td,
+  .tournament-composition-stats-table th,
+  .tournament-composition-stats-table td {
+    padding-right: 3px;
+    padding-left: 3px;
+    font-size: 11px;
+  }
+
+  .tournament-agent-stats-table .tournament-stat-sort,
+  .tournament-composition-stats-table .tournament-stat-sort {
+    min-width: 0;
+    padding: 0;
+    font-size: 10px;
+    white-space: normal;
+  }
+
+  .tournament-agent-stats-table th:first-child,
+  .tournament-composition-stats-table th:first-child {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 1180px) {
+  .tournament-stats-table tbody tr:nth-child(even) td,
+  .tournament-stats-table tbody tr:hover td,
+  .team-player-stats-table tbody tr:nth-child(even) td,
+  .team-player-stats-table tbody tr:hover td {
+    background: none;
+  }
+}
+
+/* ==========================================================================
+   Partidas: as mesmas tres colunas da home
+   ========================================================================== */
+
+/* Nas colunas da home a tela nao pula ao trocar de aba, e a linha de partida
+   fica igual nas duas: em 1212px sobravam de 352 a 459px entre nome e placar. */
+.vp-partidas {
+  grid-template-columns: 340px minmax(0, 550px) 340px;
+  grid-template-areas: "filtros lista resumo";
+  justify-content: center;
+  gap: 32px;
+}
+
+.vp-partidas-esq {
+  grid-area: filtros;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  min-width: 0;
+}
+
+.vp-partidas .match-filter-sidebar {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+.vp-partidas .results-panel {
+  grid-area: lista;
+}
+
+.vp-partidas .vp-resumo {
+  grid-area: resumo;
+}
+
+.vp-partidas .vp-sec h1 {
+  margin: 0;
+  font: 600 30px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.vp-partidas .vp-sec .lista-contagem {
+  margin: 0 0 0 auto;
+  padding: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-filtros-limpar {
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Os filtros numa placa so, como o ranking: sem caixa em volta de cada um e sem
+   o funil repetido. Quem diz que abre e a seta. */
+.vp-filtros {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+  background: var(--surface);
+  border-radius: 2px;
+}
+
+.vp-filtros .filter-dropdown {
+  min-width: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+
+.vp-filtros .filter-dropdown + .filter-dropdown {
+  border-top: 1px solid var(--line);
+}
+
+.vp-filtros .filter-dropdown summary {
+  grid-template-columns: minmax(0, 1fr) auto 12px;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 14px;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  transition: background-color 160ms ease;
+}
+
+.vp-filtros .filter-dropdown summary:hover {
+  background: var(--surface-2);
+}
+
+.vp-filtros .filter-dropdown summary strong {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vp-filtros .filter-dropdown .result-day-mark {
+  color: var(--muted);
+  transition: transform 220ms ease;
+}
+
+.vp-filtros .filter-dropdown[open] .result-day-mark {
+  transform: rotate(180deg);
+}
+
+/* Resumo */
+.vp-resumo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  min-width: 0;
+}
+
+.vp-resumo > .vp-sec {
+  margin-bottom: -8px;
+}
+
+.vp-resumo-bloco {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* O cartao Camisa da equipe filtrada: o logo faz o papel da foto, inteiro, com as
+   cores dele e a mesma sombra dura invadindo a cor2. Por isso sai o logo apagado
+   do fundo. O placar tem no maximo 5 caracteres no banco, e nesse tamanho o
+   numero de 64px entrava no logo. */
+.vp-camisa-equipe {
+  flex: none;
+}
+
+.vp-camisa-equipe .vp-slide-campo i {
+  display: none;
+}
+
+.vp-camisa-logo {
+  position: absolute;
+  bottom: 18px;
+  left: calc(var(--emenda) - 204px);
+  display: block;
+  width: 170px;
+  height: 170px;
+  filter: var(--placa-logo-contorno, drop-shadow(0 0 0 transparent)) drop-shadow(8px 0 0 var(--placa-campo));
+}
+
+.vp-camisa-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vp-camisa-equipe .vp-slide-nick {
+  font-size: 26px;
+}
+
+.vp-valor-longo .vp-slide-valor {
+  font-size: 54px;
+}
+
+.vp-resumo-bloco h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0;
+  color: var(--ink);
+  font: 600 13px/1.2 var(--font-text);
+}
+
+.vp-resumo-bloco h3 span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* O cartao Camisa do mapa filtrado. Mapa nao tem cor de equipe, entao as duas
+   pecas sao ataque e defesa, nas cores de lado do site, com a arte do mapa impressa
+   em cada uma. A emenda e o dado: fica na proporcao entre os dois lados, com a
+   mesma inclinacao dos outros cartoes. */
+.vp-mapa-resumo {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.vp-mapa-camisa {
+  --emenda-mapa: calc(var(--ataque) * 1%);
+  position: relative;
+  isolation: isolate;
+  display: block;
+  height: 206px;
+  overflow: hidden;
+  border-radius: 2px;
+  color: #fff;
+  font-family: "Oswald", var(--font-display);
+  text-decoration: none;
+}
+
+.vp-mapa-peca {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+}
+
+.vp-mapa-peca img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  filter: grayscale(1) contrast(1.15);
+  mix-blend-mode: multiply;
+}
+
+.vp-mapa-atk {
+  background: var(--side-attack);
+  clip-path: polygon(0 0, calc(var(--emenda-mapa) + 33px) 0, calc(var(--emenda-mapa) - 33px) 100%, 0 100%);
+}
+
+.vp-mapa-def {
+  background: var(--side-defense);
+  clip-path: polygon(calc(var(--emenda-mapa) + 33px) 0, 100% 0, 100% 100%, calc(var(--emenda-mapa) - 33px) 100%);
+}
+
+.vp-mapa-topo {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  left: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0 12px;
+}
+
+.vp-mapa-topo strong {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  font: 600 30px/1.15 "Oswald", var(--font-display);
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.vp-mapa-topo small {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+
+.vp-mapa-lado {
+  position: absolute;
+  bottom: 12px;
+  display: grid;
+}
+
+.vp-mapa-lado-a {
+  left: 16px;
+}
+
+.vp-mapa-lado-d {
+  right: 16px;
+  text-align: right;
+}
+
+/* Em 320px, dois numeros de 64px com 100% de um lado batiam no meio do cartao. */
+.vp-mapa-lado b {
+  font: 600 clamp(52px, 17vw, 64px)/1.05 "Oswald", var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-mapa-lado small {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+/* O resto dos dados numa placa, colada no cartao. */
+.vp-mapa-dados {
+  display: grid;
+  margin: 0;
+  overflow: hidden;
+  background: var(--surface);
+  border-radius: 2px;
+}
+
+.vp-mapa-dados > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  min-height: 34px;
+  padding: 8px 14px;
+}
+
+.vp-mapa-dados > div + div {
+  border-top: 1px solid var(--line);
+}
+
+.vp-mapa-dados dt {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-mapa-dados dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-mapa-dados dd b {
+  color: var(--ink);
+  font: 600 16px/1 var(--font-display);
+}
+
+/* O mapa inteiro fica em cinza e a popularidade colore a arte: a imagem colorida
+   e a cinza sao a mesma, do mesmo tamanho, e so o corte muda. O corte tem a
+   inclinacao das fatias da linha de partida (9px em 30px, como 22px em 68px). A
+   base e sempre zero. */
+.vp-rm-lista {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-rm {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  padding: 0 10px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 0;
+  border-radius: 2px;
+  color: var(--ink);
+  cursor: pointer;
+  font: 600 13px/1 var(--font-text);
+  text-align: left;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.vp-rm:disabled {
+  cursor: default;
+}
+
+.vp-rm b {
+  font: 600 16px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-rm-arte {
+  --ponta: max(14px, calc(var(--parte) * 100%));
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+}
+
+.vp-rm-arte img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+.vp-rm-cinza {
+  filter: grayscale(1) brightness(0.8);
+  opacity: 0.34;
+}
+
+.vp-rm-cor {
+  clip-path: polygon(0 0, var(--ponta) 0, calc(var(--ponta) - 9px) 100%, 0 100%);
+  opacity: 0.8;
+  transition: opacity 160ms ease;
+}
+
+.vp-rm:hover .vp-rm-cor,
+.vp-rm:focus-visible .vp-rm-cor,
+.vp-rm[aria-pressed="true"] .vp-rm-cor {
+  opacity: 1;
+}
+
+.vp-rm-fora {
+  color: var(--muted);
+}
+
+.vp-rm-fora .vp-rm-cor {
+  opacity: 0.3;
+}
+
+/* Meses: uma serie so, em tinta neutra. Vermelho e marca e verde e vitoria. */
+.vp-rt {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  height: 64px;
+}
+
+.vp-rt-mes {
+  display: flex;
+  flex: 1 1 0;
+  align-items: flex-end;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.vp-rt-mes i {
+  display: block;
+  width: 100%;
+  height: max(2px, calc(var(--altura) * 100%));
+  background: var(--ink);
+  border-radius: 1px 1px 0 0;
+  opacity: 0.5;
+  transition: opacity 160ms ease;
+}
+
+.vp-rt-marcado .vp-rt-mes i {
+  opacity: 0.2;
+}
+
+.vp-rt .vp-rt-mes:hover i,
+.vp-rt .vp-rt-mes:focus-visible i,
+.vp-rt .vp-rt-mes[aria-pressed="true"] i {
+  opacity: 1;
+}
+
+.vp-rt-eixo {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* Tres colunas: filtros e resumo acompanham a lista. O topo negativo e para a
+   tela baixa: o resumo mais alto que ela rola ate a base aparecer e so entao
+   gruda, em vez de ficar com o fim cortado. Filtro aberto pode passar da tela,
+   entao ele so gruda fechado. */
+@media (min-width: 1181px) {
+  .vp-resumo {
+    position: sticky;
+    top: min(72px, calc(100vh - var(--resumo-altura, 820px) - 16px));
+  }
+
+  .vp-partidas-esq:not(:has(details[open])) {
+    position: sticky;
+    top: 72px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .vp-partidas {
+    grid-template-columns: 340px minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "filtros lista"
+      "resumo lista";
+  }
+}
+
+/* Celular: os filtros em duas colunas, com o valor embaixo do nome, para a lista
+   nao comecar uma tela abaixo. Filtro aberto toma a largura toda. */
+@media (max-width: 760px) {
+  /* stretch porque .results-layout traz align-items: start: na coluna flex isso
+     encolhe cada item ao conteudo, e o cartao, todo absoluto, ficava com largura 0. */
+  .vp-partidas {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 28px;
+  }
+
+  .vp-partidas-esq,
+  .vp-resumo {
+    display: contents;
+  }
+
+  /* O cartao da equipe vem antes da lista: ele resume o que vem embaixo. */
+  .vp-partidas .match-filter-sidebar {
+    order: 1;
+  }
+
+  .vp-partidas .vp-camisa-equipe,
+  .vp-partidas .vp-mapa-resumo {
+    order: 2;
+  }
+
+  .vp-partidas .results-panel {
+    order: 3;
+  }
+
+  .vp-partidas .vp-resumo > .vp-sec {
+    order: 4;
+    margin-bottom: -16px;
+  }
+
+  .vp-partidas .vp-resumo > .vp-resumo-bloco {
+    order: 5;
+  }
+
+  .vp-partidas .vp-meses {
+    order: 6;
+  }
+
+  .vp-filtros {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+  }
+
+  .vp-filtros .filter-dropdown,
+  .vp-filtros .filter-dropdown + .filter-dropdown {
+    background: var(--surface);
+    border: 0;
+  }
+
+  .vp-filtros .filter-dropdown:last-child,
+  .vp-filtros .filter-dropdown[open] {
+    grid-column: 1 / -1;
+  }
+
+  .vp-filtros .filter-dropdown summary {
+    grid-template-columns: minmax(0, 1fr) 12px;
+    gap: 2px 8px;
+    min-height: 52px;
+    padding: 8px 12px;
+  }
+
+  .vp-filtros .filter-dropdown summary strong {
+    grid-row: 2;
+    grid-column: 1 / -1;
+  }
+
+  .vp-filtros .filter-dropdown .result-day-mark {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .vp-partidas .vp-sec .lista-contagem {
+    margin-left: 0;
   }
 }

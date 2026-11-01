@@ -125,18 +125,18 @@ const md3 = serie("k-md3", "azr", "Azure Bears Black", "ceub", "CEUB Octopus Vul
 const md1 = serie("k-md1", "mack", "MackLogic White", "ceub", "CEUB Octopus Vulgaris", 0, 1, [mapaDaSerie("mack", "ceub", "lotus", "Lotus", 1, 6, 13)]);
 // A linha de partida e o modelo antigo, mais baixo (escolha do dono em 24/10):
 // escudo grande de cada lado, placar grande no meio com o vencedor em verde, e
-// a arte dos mapas num holofote no meio, com os nomes em cima, cada um sobre a
-// propria arte.
+// a arte dos mapas de fundo na linha inteira, com os nomes em cima, cada um sobre
+// a propria arte.
 const placarDa = (linha) => linha.split('class="vp-pl-placar"')[1].split("</span>")[0];
 const nomesDosMapas = (linha) => (linha.split('class="vp-pl-mapas"')[1] || "").match(/<span class="vp-pl-mapa">[^<]+</g)?.map((s) => s.split(">")[1].slice(0, -1)) || [];
 
 const linhaMd3 = context.matchResultRow(md3);
-assert(linhaMd3.includes('<a class="vp-pl"'), "a partida vira uma vp-pl");
+assert(linhaMd3.includes('<a class="vp-pl" style="--maps:3"'), "a partida vira uma vp-pl, com a contagem de mapas para o espaco do campeonato");
 assert(/<b class="vp-venceu">2<\/b>/.test(placarDa(linhaMd3)) && /<b>1<\/b>/.test(placarDa(linhaMd3)), "so o placar do vencedor ganha a cor de vitoria");
 const posicoesMd3 = ["Azure Bears Black", "CEUB Octopus Vulgaris"].map((nome) => linhaMd3.indexOf(nome));
 assert(posicoesMd3[0] > -1 && posicoesMd3[1] > posicoesMd3[0], "equipe A a esquerda e B a direita");
 assert.deepStrictEqual(nomesDosMapas(linhaMd3), ["Bind", "Abyss", "Ascent"], "os nomes dos mapas vem em cima, na ordem da serie");
-assert.strictEqual((linhaMd3.match(/--maps:3/g) || []).length, 2, "arte e nomes usam a mesma contagem, para cada nome cair sobre a propria arte");
+assert.strictEqual((linhaMd3.split('class="vp-pl-artes"')[1].split("</span>")[0].match(/<i>/g) || []).length, 3, "uma fatia de arte por nome de mapa");
 assert(linhaMd3.includes('data-fallback="assets/maps/bind.png"') && linhaMd3.includes('onerror="mapArtError(this)"'), "a arte cai no PNG de reserva e depois some");
 assert(linhaMd3.includes("Rush Series 3ª Edição"), "o campeonato fica na linha de cima");
 
@@ -152,7 +152,7 @@ assert(!linhaMd1.includes("vp-kd"), "sem K/D pedido, sem a coluna");
 
 const semArte = serie("k-novo", "azr", "Azure Bears Black", "ceub", "CEUB Octopus Vulgaris", 0, 1, [mapaDaSerie("azr", "ceub", "novo", "Mapa Novo", 1, 9, 13)]);
 const linhaSemArte = context.matchResultRow(semArte);
-assert(!linhaSemArte.includes("vp-pl-artes"), "sem nenhuma arte, o holofote de mapas nao entra");
+assert(!linhaSemArte.includes("vp-pl-artes"), "sem nenhuma arte, o fundo de mapas nao entra");
 assert.deepStrictEqual(nomesDosMapas(linhaSemArte), ["Mapa Novo"], "o nome do mapa continua em cima");
 
 const listaAgrupada = context.listaDeResultados([md3, md1], 50);
@@ -206,6 +206,64 @@ const semanaVazia = context.weekHighlights();
 assert(semanaVazia.includes("Nenhum jogador atingiu o mínimo") && !semanaVazia.includes("vp-slide"), "semana sem lideres mostra o estado vazio");
 assert.strictEqual(typeof context.bindWeekCarousel, "function", "o carrossel tem quem o ligue");
 vm.runInContext("state.homeSummary = null;", context);
+
+// O cartao Camisa de #/matches so existe com uma equipe filtrada, e o placar sai
+// do que esta filtrado.
+const serieDaEquipe = (vencedor, perdedor) => ({ winnerId: vencedor, loserId: perdedor });
+vm.runInContext("state.matchTeams = [];", context);
+assert.strictEqual(context.cartaoDaEquipe([serieDaEquipe("azr", "ceub")]), "", "sem equipe filtrada nao ha cartao");
+vm.runInContext('state.matchTeams = ["azr", "ceub"];', context);
+assert.strictEqual(context.cartaoDaEquipe([serieDaEquipe("azr", "ceub")]), "", "com duas equipes nao ha um assunto so");
+vm.runInContext('state.matchTeams = ["azr"];', context);
+assert.strictEqual(context.cartaoDaEquipe([]), "", "filtro sem partida nao tem cartao");
+const cartaoEquipe = context.cartaoDaEquipe([serieDaEquipe("azr", "ceub"), serieDaEquipe("azr", "ceub"), serieDaEquipe("ceub", "azr")]);
+assert(cartaoEquipe.includes(">2-1<") && cartaoEquipe.includes("67% de vitórias") && cartaoEquipe.includes("3 partidas"), "o cartao soma vitorias e derrotas do filtro");
+assert(!cartaoEquipe.includes("vp-valor-longo"), "placar curto fica no tamanho cheio");
+const longa = Array.from({ length: 20 }, () => serieDaEquipe("azr", "ceub")).concat(Array.from({ length: 10 }, () => serieDaEquipe("ceub", "azr")));
+assert(context.cartaoDaEquipe(longa).includes("vp-valor-longo"), "placar de 5 caracteres usa o numero menor");
+vm.runInContext("state.matchTeams = [];", context);
+
+// Plant, retake e pistol por lado saem dos rounds. O plant da defesa nao existe:
+// quem plantou e sempre o atacante, mesmo perdendo o round.
+const equipeTesteA = { id: "a", color: "Red" };
+const equipeTesteB = { id: "b", color: "Blue" };
+const roundsTeste = [
+  { roundNum: 0, winningTeam: "Red", winningTeamRole: "Attacker", bombPlanter: "x", plantSite: "A" },
+  { roundNum: 1, winningTeam: "Blue", winningTeamRole: "Defender", bombPlanter: "x", plantSite: "b" },
+  { roundNum: 2, winningTeam: "Blue", winningTeamRole: "Defender" },
+  { roundNum: 12, winningTeam: "Blue", winningTeamRole: "Attacker", bombPlanter: "y", plantSite: "C" },
+];
+const linhasTeste = JSON.parse(JSON.stringify(context.calculateMatchTeamStats(roundsTeste, equipeTesteA, equipeTesteB, new Map())));
+assert.strictEqual(linhasTeste.a.plants, 2, "o atacante leva o plant, ganhando ou perdendo");
+assert.strictEqual(linhasTeste.a.plantWins, 1, "so conta como vitoria depois de plantar o round ganho");
+assert.strictEqual(linhasTeste.b.retakes, 1, "retake e round plantado que a defesa venceu");
+assert.strictEqual(linhasTeste.a.plantA + linhasTeste.a.plantB, 2, "o site vale em maiuscula ou minuscula");
+assert.strictEqual(linhasTeste.b.plantC, 1, "o site entra na conta de quem plantou");
+assert.strictEqual(linhasTeste.a.pistolAttackRounds + linhasTeste.b.pistolAttackRounds, 2, "cada pistol tem um atacante");
+assert.strictEqual(linhasTeste.a.pistolAttackWins + linhasTeste.b.pistolAttackWins, 2, "pistol vencido no ataque");
+
+// O cartao de mapa so existe com um mapa filtrado, e soma as duas equipes ou uma so.
+const estatisticaTeste = (ataque, defesa) => ({ ...context.emptyTeamRoundStats(), attackWins: ataque, attackRounds: 12, defenseWins: defesa, defenseRounds: 12, pistolWins: 1, pistolRounds: 2, pistolAttackWins: 1, pistolAttackRounds: 1, plants: 6, plantA: 6, plantWins: 3, plantsAgainst: 6, retakes: 3 });
+const mapaNoFiltro = (mapId) => ({ maps: [{ mapId, winnerId: "azr", loserId: "ceub", teamStats: { azr: estatisticaTeste(9, 3), ceub: estatisticaTeste(3, 9) } }] });
+vm.runInContext("state.matchMaps = []; state.matchTeams = [];", context);
+assert.strictEqual(context.cartaoDoMapa([mapaNoFiltro("lotus")]), "", "sem mapa filtrado nao ha cartao de mapa");
+vm.runInContext('state.matchMaps = ["lotus", "bind"];', context);
+assert.strictEqual(context.cartaoDoMapa([mapaNoFiltro("lotus")]), "", "com dois mapas nao ha um assunto so");
+vm.runInContext('state.matchMaps = ["lotus"];', context);
+assert.strictEqual(context.cartaoDoMapa([]), "", "filtro sem partida nao tem cartao de mapa");
+const cartaoMapa = context.cartaoDoMapa([mapaNoFiltro("lotus")]);
+assert(cartaoMapa.includes(">50%</b><small>Ataque") && cartaoMapa.includes(">50%</b><small>Defesa"), "sozinho, o mapa soma as duas equipes por round");
+assert(cartaoMapa.includes("1 mapa, 24 rounds"), "cada round entra uma vez");
+assert(cartaoMapa.includes("Retakes") && cartaoMapa.includes("<b>50%</b> dos plants"), "retake sobre os plants");
+assert(!cartaoMapa.includes("Depois de plantar"), "sozinho, depois de plantar seria o inverso do retake");
+vm.runInContext('state.matchTeams = ["azr"];', context);
+const cartaoMapaEquipe = context.cartaoDoMapa([mapaNoFiltro("lotus")]);
+assert(cartaoMapaEquipe.includes(">75%</b><small>Ataque") && cartaoMapaEquipe.includes(">25%</b><small>Defesa"), "com equipe, os numeros sao dela");
+assert(cartaoMapaEquipe.includes("1-0 em 1 mapa") && cartaoMapaEquipe.includes("Depois de plantar"), "com equipe, entram placar e conversao");
+assert(context.resumoDasPartidas([mapaNoFiltro("lotus")]).includes("vp-mapa-camisa") && !context.resumoDasPartidas([mapaNoFiltro("lotus")]).includes("vp-camisa-equipe"), "um cartao Camisa por tela");
+vm.runInContext("state.matchMaps = []; state.matchTeams = [];", context);
+// O mes clicado no grafico de #/matches vira o filtro de data.
+assert.deepStrictEqual(JSON.parse(JSON.stringify(context.diasDoMes(2026 * 12 + 1))), { de: "2026-02-01", ate: "2026-02-28" }, "o mes vai do dia 1 ao ultimo dia");
 
 // ---------------------------------------------------------------- Tarefa 6
 // Home em trilhos: esquerda (semana e ranking), meio (partidas), direita

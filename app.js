@@ -5518,6 +5518,26 @@ function calculateMatchTeamStats(roundResults, teamA, teamB, playerTeamByPuuid) 
       if (teamB.id) rows[teamB.id].pistolRounds += 1;
     }
 
+    // Quem atacou sai do lado do vencedor: o arquivo nao diz o lado do perdedor.
+    const atacante = winnerRole === "Attacker" ? winnerId : loserId;
+    const defensor = winnerRole === "Attacker" ? loserId : winnerId;
+    if (atacante && (round.roundNum === 0 || round.roundNum === 12)) {
+      rows[atacante].pistolAttackRounds += 1;
+      if (winnerRole === "Attacker") rows[atacante].pistolAttackWins += 1;
+    }
+    if (round.bombPlanter || Number(round.plantRoundTime) > 0) {
+      if (atacante) {
+        rows[atacante].plants += 1;
+        if (winnerRole === "Attacker") rows[atacante].plantWins += 1;
+        const site = `plant${String(round.plantSite || "").toUpperCase()}`;
+        if (site in rows[atacante]) rows[atacante][site] += 1;
+      }
+      if (defensor) {
+        rows[defensor].plantsAgainst += 1;
+        if (winnerRole !== "Attacker") rows[defensor].retakes += 1;
+      }
+    }
+
     const kills = (round.playerStats || []).flatMap((item) => item.kills || []);
     if (kills.length) {
       const firstKill = kills.slice().sort((a, b) => a.timeSinceRoundStartMillis - b.timeSinceRoundStartMillis)[0];
@@ -5539,6 +5559,16 @@ function emptyTeamRoundStats() {
     pistolWins: 0,
     pistolRounds: 0,
     firstKills: 0,
+    // Retake e round com bomba plantada que a defesa venceu.
+    plants: 0,
+    plantWins: 0,
+    plantsAgainst: 0,
+    retakes: 0,
+    plantA: 0,
+    plantB: 0,
+    plantC: 0,
+    pistolAttackWins: 0,
+    pistolAttackRounds: 0,
   };
 }
 
@@ -6448,22 +6478,271 @@ function renderMatchesCompact(id) {
   const filtered = filteredMatches();
   const limite = limiteDaLista(routeQuery());
   Shell(`
-    <header class="page-header slim-header">
-      <div class="page-title">
-        <h1>Resultados</h1>
+    <div class="results-layout vp-partidas">
+      <div class="vp-partidas-esq">
+        ${matchFilterSidebar()}
+        ${mesesDoResumo()}
       </div>
-    </header>
-    <div class="results-layout">
-      ${matchFilterSidebar()}
       <section class="vp-lista-pagina full-list-panel results-panel">
-        ${contagemDaLista(Math.min(limite, filtered.length), filtered.length, "partidas")}
+        <header class="vp-sec"><h1>Partidas</h1>${contagemDaLista(Math.min(limite, filtered.length), filtered.length, "partidas")}</header>
         <div class="result-list">${listaDeResultados(filtered, limite)}</div>
         ${verMaisBotao("matches", Math.min(limite, filtered.length), filtered.length, matchFiltersToQuery())}
       </section>
+      ${resumoDasPartidas(filtered)}
     </div>
   `);
   bindMatchFilters();
   bindResultDayToggles();
+  bindResumoDasPartidas();
+}
+
+// O resumo ao lado da lista de partidas: os mapas do que esta filtrado. Os meses
+// ficam embaixo dos filtros porque sao um filtro de data. Sem jogadores aqui de
+// proposito: eles ficam para a futura pagina de stats. Com um mapa ou uma equipe
+// filtrados, ele vira o assunto da pagina e ganha o cartao Camisa. Os dois juntos
+// dividem um cartao so, o do mapa, com os numeros daquela equipe.
+// Mapa e mes filtram ao clicar, e por isso cada um ignora o proprio filtro (ver
+// filteredMatches): com Lotus marcado, as outras barras continuam ali para pular
+// de mapa em mapa, em vez de sumirem.
+function resumoDasPartidas(filtered) {
+  return `
+    <aside class="vp-resumo" aria-label="Resumo das partidas filtradas">
+      ${cartaoDoMapa(filtered) || cartaoDaEquipe(filtered)}
+      ${sectionHead("Mapas jogados")}
+      ${mapasDoResumo()}
+    </aside>
+  `;
+}
+
+// Vitorias e derrotas da equipe dentro do filtro: somar um mapa ou um mes muda o
+// placar. Com duas equipes nao ha um assunto so, entao nao ha cartao.
+function cartaoDaEquipe(filtered) {
+  const team = state.matchTeams.length === 1 ? teamById(state.matchTeams[0]) : null;
+  if (!team || !filtered.length) return "";
+  const vitorias = filtered.filter((series) => series.winnerId === team.id).length;
+  const derrotas = filtered.filter((series) => series.loserId === team.id).length;
+  const taxa = Math.round((vitorias / Math.max(1, vitorias + derrotas)) * 100);
+  const placar = `${vitorias}-${derrotas}`;
+  const logo = assetPath(team.profile?.logo || team.logo || "");
+  const quantas = `${filtered.length} ${filtered.length === 1 ? "partida" : "partidas"}`;
+  return plateCard({
+    classe: `vp-slide vp-camisa-equipe${placar.length > 4 ? " vp-valor-longo" : ""}`,
+    team,
+    href: `#/teams/${encodeURIComponent(team.id)}`,
+    nome: team.sourceTag || team.tag || team.name,
+    figura: logo ? `<span class="vp-camisa-logo"><img src="${escapeHtml(logo)}" alt="" onerror="this.parentElement.remove()" /></span>` : "",
+    rotulo: "Neste filtro",
+    tag: `${taxa}% de vitórias`,
+    valor: placar,
+    apoio: quantas,
+    atributos: ` aria-label="${escapeHtml(`${team.name}: ${vitorias} ${vitorias === 1 ? "vitória" : "vitórias"} e ${derrotas} ${derrotas === 1 ? "derrota" : "derrotas"} em ${quantas}`)}"`,
+  });
+}
+
+// Soma o teamStats dos mapas do filtro: de uma equipe, ou das duas de cada mapa.
+// Com as duas, cada round entra uma vez em attackRounds e uma em defenseRounds,
+// entao as taxas continuam sendo por round.
+function somaDoMapa(filtered, mapId, teamId) {
+  const soma = { ...emptyTeamRoundStats(), mapas: 0, vitorias: 0, derrotas: 0 };
+  filtered.forEach((series) => {
+    (series.maps || []).filter((match) => match.mapId === mapId).forEach((match) => {
+      const linhas = teamId ? [match.teamStats?.[teamId]] : Object.values(match.teamStats || {});
+      if (!linhas.every(Boolean)) return;
+      soma.mapas += 1;
+      if (teamId && match.winnerId === teamId) soma.vitorias += 1;
+      if (teamId && match.loserId === teamId) soma.derrotas += 1;
+      linhas.forEach((linha) => {
+        Object.keys(emptyTeamRoundStats()).forEach((campo) => {
+          soma[campo] += Number(linha[campo]) || 0;
+        });
+      });
+    });
+  });
+  return soma;
+}
+
+function taxaInteira(parte, total) {
+  return total ? Math.round((parte / total) * 100) : 0;
+}
+
+// O cartao do mapa filtrado. Sozinho, ele fala do mapa: ataque e defesa somam 100 e
+// o pistol vem por lado. Com uma equipe filtrada, os numeros passam a ser dela, e
+// ataque e defesa deixam de ser complementares.
+function cartaoDoMapa(filtered) {
+  const map = state.matchMaps.length === 1 ? mapById(state.matchMaps[0]) : null;
+  if (!map) return "";
+  const team = state.matchTeams.length === 1 ? teamById(state.matchTeams[0]) : null;
+  const soma = somaDoMapa(filtered, map.id, team?.id);
+  if (!soma.mapas) return "";
+  const ataque = taxaInteira(soma.attackWins, soma.attackRounds);
+  const defesa = team ? taxaInteira(soma.defenseWins, soma.defenseRounds) : 100 - ataque;
+  const emenda = ataque + defesa ? Math.round((ataque / (ataque + defesa)) * 100) : 50;
+  const art = mapArtAttrs(map);
+  const arte = art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" onerror="mapArtError(this)" />` : "";
+  const nome = team ? `${team.sourceTag || team.tag || team.name} em ${map.name}` : map.name;
+  const quantos = `${soma.mapas} ${soma.mapas === 1 ? "mapa" : "mapas"}`;
+  const apoio = team ? `${soma.vitorias}-${soma.derrotas} em ${quantos}` : `${quantos}, ${soma.attackRounds} rounds`;
+  const plantados = soma.plantA + soma.plantB + soma.plantC;
+  const sites = ["A", "B", "C"]
+    .filter((site) => soma[`plant${site}`])
+    .map((site) => `${site} <b>${taxaInteira(soma[`plant${site}`], plantados)}%</b>`)
+    .join(", ");
+  const pistolAtaque = taxaInteira(soma.pistolAttackWins, soma.pistolAttackRounds);
+  const linhas = [
+    ["Pistol", team ? `<b>${taxaInteira(soma.pistolWins, soma.pistolRounds)}%</b> de vitórias` : `<b>${pistolAtaque}%</b> ataque, <b>${100 - pistolAtaque}%</b> defesa`],
+    ["Plants", `<b>${taxaInteira(soma.plants, soma.attackRounds)}%</b> dos rounds`],
+    ["Retakes", `<b>${taxaInteira(soma.retakes, soma.plantsAgainst)}%</b> dos plants`],
+    ...(team ? [["Depois de plantar", `<b>${taxaInteira(soma.plantWins, soma.plants)}%</b> de vitórias`]] : []),
+    ...(sites ? [["Sites", sites]] : []),
+  ];
+  return `
+    <section class="vp-mapa-resumo" aria-label="Dados de ${escapeHtml(nome)}">
+      <a class="vp-mapa-camisa" href="#/maps/${encodeURIComponent(map.id)}" style="--ataque:${emenda}" aria-label="${escapeHtml(`${nome}: ${ataque}% no ataque e ${defesa}% na defesa`)}">
+        <span class="vp-mapa-peca vp-mapa-atk">${arte}</span>
+        <span class="vp-mapa-peca vp-mapa-def">${arte}</span>
+        <span class="vp-mapa-topo"><strong title="${escapeHtml(nome)}"><span class="nome-rolante">${escapeHtml(nome)}</span></strong><small>${escapeHtml(apoio)}</small><small>Neste filtro</small></span>
+        <span class="vp-mapa-lado vp-mapa-lado-a"><b>${ataque}%</b><small>Ataque</small></span>
+        <span class="vp-mapa-lado vp-mapa-lado-d"><b>${defesa}%</b><small>Defesa</small></span>
+      </a>
+      <dl class="vp-mapa-dados">
+        ${linhas.map(([rotulo, valor]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd>${valor}</dd></div>`).join("")}
+      </dl>
+    </section>
+  `;
+}
+
+function mapasDoResumo() {
+  const contagem = new Map();
+  filteredMatches({ ignorar: "mapas" }).forEach((series) => {
+    (series.mapNames || []).filter(Boolean).forEach((nome) => contagem.set(nome, (contagem.get(nome) || 0) + 1));
+  });
+  const linhas = [...contagem.entries()].sort((a, b) => b[1] - a[1]);
+  if (!linhas.length) return "";
+  const maior = linhas[0][1];
+  const todos = !state.matchMaps.length;
+  return `
+    <section class="vp-resumo-bloco" aria-label="Mapas jogados">
+      <div class="vp-rm-lista">
+        ${linhas
+          .map(([nome, vezes]) => {
+            const map = mapByName(nome);
+            const art = mapBannerSrc(nome);
+            const marcado = Boolean(map) && !todos && state.matchMaps.includes(map.id);
+            const fora = Boolean(map) && !todos && !marcado;
+            return `
+              <button type="button" class="vp-rm${fora ? " vp-rm-fora" : ""}" ${map ? `data-resumo-mapa="${escapeHtml(map.id)}"` : "disabled"} aria-pressed="${marcado}" style="--parte:${(vezes / maior).toFixed(4)}">
+                <span class="vp-rm-arte">${art ? ["vp-rm-cinza", "vp-rm-cor"].map((classe) => `<img class="${classe}" src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />`).join("") : ""}</span>
+                <span>${escapeHtml(nome)}</span>
+                <b>${vezes}</b>
+              </button>
+            `;
+          })
+          .join("")}
+      </div>
+    </section>
+  `;
+}
+
+function mesDoResumo(valor) {
+  const data = new Date(valor);
+  return data.getFullYear() * 12 + data.getMonth();
+}
+
+function rotuloDoMes(indice, curto = false) {
+  const data = new Date(Math.floor(indice / 12), indice % 12, 1);
+  const mes = data.toLocaleDateString("pt-BR", { month: "short" }).replace(".", "");
+  return curto ? `${mes} ${String(data.getFullYear()).slice(2)}` : `${mes} de ${data.getFullYear()}`;
+}
+
+// O eixo vem do banco inteiro, e nao do que esta filtrado: as barras ficam no
+// mesmo lugar quando o filtro muda, e mes sem partida continua no eixo.
+function mesesDoResumo() {
+  const datas = allMatchSeries().map((series) => series.sortAt || series.startedAt).filter(Boolean);
+  if (!datas.length) return "";
+  const primeiro = mesDoResumo(Math.min(...datas));
+  const ultimo = mesDoResumo(Math.max(...datas));
+  const contagem = new Map();
+  filteredMatches({ ignorar: "datas" }).forEach((series) => {
+    const mes = mesDoResumo(series.sortAt || series.startedAt);
+    contagem.set(mes, (contagem.get(mes) || 0) + 1);
+  });
+  const meses = Array.from({ length: ultimo - primeiro + 1 }, (_, i) => primeiro + i);
+  const maior = Math.max(1, ...contagem.values());
+  const pico = meses.reduce((melhor, mes) => ((contagem.get(mes) || 0) > (contagem.get(melhor) || 0) ? mes : melhor), meses[0]);
+  const marcado = mesMarcadoNoFiltro();
+  const destaque = marcado ?? pico;
+  const leitura = contagem.size ? `${contagem.get(destaque) || 0} em ${rotuloDoMes(destaque)}` : "Nenhuma partida";
+  return `
+    <section class="vp-resumo-bloco vp-meses" aria-label="Partidas por mês">
+      <h3>Partidas por mês <span data-resumo-leitura data-padrao="${escapeHtml(leitura)}">${escapeHtml(leitura)}</span></h3>
+      <div class="vp-rt${marcado === null ? "" : " vp-rt-marcado"}">
+        ${meses
+          .map((mes) => {
+            const vezes = contagem.get(mes) || 0;
+            const rotulo = `${vezes} em ${rotuloDoMes(mes)}`;
+            return `<button type="button" class="vp-rt-mes" data-resumo-mes="${mes}" data-rotulo="${escapeHtml(rotulo)}" aria-label="${escapeHtml(rotulo)}" aria-pressed="${marcado === mes}" style="--altura:${(vezes / maior).toFixed(4)}"><i></i></button>`;
+          })
+          .join("")}
+      </div>
+      <div class="vp-rt-eixo"><span>${escapeHtml(rotuloDoMes(primeiro, true))}</span><span>${escapeHtml(rotuloDoMes(ultimo, true))}</span></div>
+    </section>
+  `;
+}
+
+function diasDoMes(indice) {
+  const ano = Math.floor(indice / 12);
+  const mes = indice % 12;
+  const texto = (data) => `${data.getFullYear()}-${String(data.getMonth() + 1).padStart(2, "0")}-${String(data.getDate()).padStart(2, "0")}`;
+  return { de: texto(new Date(ano, mes, 1)), ate: texto(new Date(ano, mes + 1, 0)) };
+}
+
+// O mes so conta como marcado quando o filtro de data e exatamente aquele mes:
+// um intervalo digitado a mao nao acende barra nenhuma.
+function mesMarcadoNoFiltro() {
+  if (!state.matchDateFrom || !state.matchDateTo) return null;
+  const mes = mesDoResumo(dateInputToStart(state.matchDateFrom));
+  const { de, ate } = diasDoMes(mes);
+  return state.matchDateFrom === de && state.matchDateTo === ate ? mes : null;
+}
+
+function bindResumoDasPartidas() {
+  const pagina = document.querySelector(".vp-partidas");
+  const resumo = pagina?.querySelector(".vp-resumo");
+  if (!resumo) return;
+  resumo.style.setProperty("--resumo-altura", `${resumo.offsetHeight}px`);
+  const leitura = pagina.querySelector("[data-resumo-leitura]");
+  const mostrar = (texto) => {
+    if (leitura) leitura.textContent = texto;
+  };
+  pagina.addEventListener("click", (event) => {
+    const mapa = event.target.closest("[data-resumo-mapa]");
+    const mes = event.target.closest("[data-resumo-mes]");
+    if (mapa) {
+      const id = mapa.dataset.resumoMapa;
+      const soEle = state.matchMaps.length === 1 && state.matchMaps[0] === id;
+      state.matchMaps = soEle ? [] : [id];
+      pushFilterState("matches", matchFiltersToQuery(), `[data-resumo-mapa="${id}"]`);
+    }
+    if (mes) {
+      const indice = Number(mes.dataset.resumoMes);
+      const { de, ate } = diasDoMes(indice);
+      const jaMarcado = mesMarcadoNoFiltro() === indice;
+      state.matchDateFrom = jaMarcado ? "" : de;
+      state.matchDateTo = jaMarcado ? "" : ate;
+      pushFilterState("matches", matchFiltersToQuery(), `[data-resumo-mes="${indice}"]`);
+    }
+  });
+  ["mouseover", "focusin"].forEach((tipo) => {
+    pagina.addEventListener(tipo, (event) => {
+      const mes = event.target.closest("[data-resumo-mes]");
+      if (mes) mostrar(mes.dataset.rotulo);
+    });
+  });
+  ["mouseout", "focusout"].forEach((tipo) => {
+    pagina.addEventListener(tipo, (event) => {
+      if (event.target.closest("[data-resumo-mes]")) mostrar(leitura?.dataset.padrao || "");
+    });
+  });
 }
 
 const LISTA_PAGINA = 50;
@@ -6586,9 +6865,13 @@ function contagemDaLista(mostrando, total, rotulo) {
 function matchFilterSidebar() {
   return `
     <aside class="match-filter-sidebar" aria-label="Filtros de resultados">
-      <button type="button" class="filter-reset-button" data-match-filter="reset">${resetIcon()}<span>Reset</span></button>
+      <header class="vp-sec">
+        <h2>Filtros</h2>
+        ${matchFiltersToQuery().toString() ? `<button type="button" class="vp-sec-more vp-filtros-limpar" data-match-filter="reset">Limpar filtros</button>` : ""}
+      </header>
+      <div class="vp-filtros">
       <details class="filter-dropdown" data-filter-group="bestOf"${resultFilterOpenAttr("bestOf")}>
-        <summary>${filterIcon()}<span>Melhor de</span><strong>${matchBestOfLabel()}</strong></summary>
+        <summary><span>Melhor de</span><strong>${matchBestOfLabel()}</strong>${chevronIcon()}</summary>
         <div class="filter-dropdown-body">
           <div class="filter-button-grid best-of-grid">
             ${MELHOR_DE_OPCOES.map((value) => filterPill("bestOf", value, `MD${value}`, state.matchBestOfs.includes(value))).join("")}
@@ -6596,7 +6879,7 @@ function matchFilterSidebar() {
         </div>
       </details>
       <details class="filter-dropdown" data-filter-group="maps"${resultFilterOpenAttr("maps")}>
-        <summary>${filterIcon()}<span>Mapa</span><strong>${mapFilterSummary()}</strong></summary>
+        <summary><span>Mapa</span><strong>${mapFilterSummary()}</strong>${chevronIcon()}</summary>
         <div class="filter-dropdown-body">
           <div class="filter-option-stack map-filter-options">
             ${state.db.maps.map(mapFilterButton).join("")}
@@ -6604,7 +6887,7 @@ function matchFilterSidebar() {
         </div>
       </details>
       <details class="filter-dropdown" data-filter-group="tournaments"${resultFilterOpenAttr("tournaments")}>
-        <summary>${filterIcon()}<span>Campeonato</span><strong>${tournamentFilterSummary()}</strong></summary>
+        <summary><span>Campeonato</span><strong>${tournamentFilterSummary()}</strong>${chevronIcon()}</summary>
         <div class="filter-dropdown-body">
           ${ordemDeCampeonatoControle()}
           <div class="filter-option-stack event-filter-options" data-event-options>
@@ -6613,7 +6896,7 @@ function matchFilterSidebar() {
         </div>
       </details>
       <details class="filter-dropdown" data-filter-group="datas"${resultFilterOpenAttr("datas")}>
-        <summary>${filterIcon()}<span>Data</span><strong>${escapeHtml(dateFilterSummary())}</strong></summary>
+        <summary><span>Data</span><strong>${escapeHtml(dateFilterSummary())}</strong>${chevronIcon()}</summary>
         <div class="filter-dropdown-body">
           <label class="filter-date-field">
             <span>De</span>
@@ -6626,7 +6909,7 @@ function matchFilterSidebar() {
         </div>
       </details>
       <details class="filter-dropdown" data-filter-group="teams"${resultFilterOpenAttr("teams")}>
-        <summary>${filterIcon()}<span>Equipe</span><strong>${teamFilterSummary()}</strong></summary>
+        <summary><span>Equipe</span><strong>${teamFilterSummary()}</strong>${chevronIcon()}</summary>
         <div class="filter-dropdown-body">
           <input id="match-team-query" class="filter-control team-filter-search" type="search" placeholder="Buscar equipe" value="${escapeHtml(state.matchTeamQuery)}" autocomplete="off" />
           <div class="team-filter-options" data-team-options>
@@ -6634,26 +6917,20 @@ function matchFilterSidebar() {
           </div>
         </div>
       </details>
+      </div>
     </aside>
   `;
 }
 
 const LISTA_SEP = ",";
 
-function mesmaLista(a, b) {
-  if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
-  const x = [...a].sort();
-  const y = [...b].sort();
-  return x.every((v, i) => v === y[i]);
-}
-
 // So entra na URL o que difere do padrao: link curto para o caso comum.
 function matchFiltersToQuery() {
   const p = new URLSearchParams();
   const todosMapas = state.db.maps.map((m) => m.id);
   const todosEventos = visibleTournaments().map((e) => e.id);
-  // Serializa o lado mais curto. Desmarcar 1 de 12 mapas vira "sem-mapas=lotus"
-  // em vez de listar os outros 11.
+  // Serializa o lado mais curto, e so o que esta marcado: nada marcado nao entra
+  // na URL. Marcar 11 de 12 mapas vira "sem-mapas=lotus" em vez de listar os 11.
   // `md` guarda a mesma chave de antes de o filtro virar multipla escolha, e
   // continua legivel do jeito antigo: um link salvo com `?md=3` cai em lerSelecao
   // como a lista de um item so, que e exatamente o que ele queria dizer.
@@ -6667,7 +6944,7 @@ function matchFiltersToQuery() {
 }
 
 function escreverSelecao(p, chave, selecionados, todos) {
-  if (!Array.isArray(selecionados) || mesmaLista(selecionados, todos)) return;
+  if (!Array.isArray(selecionados) || !selecionados.length) return;
   const fora = todos.filter((id) => !selecionados.includes(id));
   if (fora.length && fora.length < selecionados.length) p.set("sem-" + chave, fora.join(LISTA_SEP));
   else p.set(chave, selecionados.join(LISTA_SEP));
@@ -6770,12 +7047,12 @@ function restoreFilterFocus() {
 }
 
 function ensureResultFilterDefaults() {
-  if (!Array.isArray(state.matchBestOfs)) state.matchBestOfs = [...MELHOR_DE_OPCOES];
+  if (!Array.isArray(state.matchBestOfs)) state.matchBestOfs = [];
   if (!Array.isArray(state.matchMaps)) {
-    state.matchMaps = state.matchMap && state.matchMap !== "all" ? [state.matchMap] : state.db.maps.map((map) => map.id);
+    state.matchMaps = state.matchMap && state.matchMap !== "all" ? [state.matchMap] : [];
   }
   if (!Array.isArray(state.matchTournaments)) {
-    state.matchTournaments = state.matchTournament && state.matchTournament !== "all" ? [state.matchTournament] : visibleTournaments().map((event) => event.id);
+    state.matchTournaments = state.matchTournament && state.matchTournament !== "all" ? [state.matchTournament] : [];
   } else {
     const visibleIds = new Set(visibleTournaments().map((event) => event.id));
     state.matchTournaments = state.matchTournaments.filter((eventId) => visibleIds.has(eventId));
@@ -6809,8 +7086,7 @@ function dateFilterSummary() {
 
 function matchBestOfLabel() {
   const selecionados = Array.isArray(state.matchBestOfs) ? state.matchBestOfs : [];
-  if (!selecionados.length) return "Nenhum formato";
-  if (selecionados.length === MELHOR_DE_OPCOES.length) return "Todos";
+  if (!selecionados.length || selecionados.length === MELHOR_DE_OPCOES.length) return "Todos";
   // Sao no maximo tres, entao a gaveta fechada diz quais - "2 formatos" seria
   // uma contagem onde cabe a resposta.
   return MELHOR_DE_OPCOES.filter((valor) => selecionados.includes(valor)).map((valor) => `MD${valor}`).join(", ");
@@ -6840,15 +7116,15 @@ function ordemDeCampeonatoControle() {
 }
 
 function mapFilterSummary() {
-  return selectedFilterSummary(state.matchMaps, state.db.maps, "mapa", "mapas", "Nenhum mapa", "Todos selecionados");
+  return selectedFilterSummary(state.matchMaps, state.db.maps, "mapa", "mapas", "Todos", "Todos");
 }
 
 function tournamentFilterSummary() {
-  return selectedFilterSummary(state.matchTournaments, visibleTournaments(), "campeonato", "campeonatos", "Nenhum campeonato", "Todos selecionados");
+  return selectedFilterSummary(state.matchTournaments, visibleTournaments(), "campeonato", "campeonatos", "Todos", "Todos");
 }
 
 function teamFilterSummary() {
-  return selectedFilterSummary(state.matchTeams, state.db.teams, "equipe", "equipes", "Nenhuma equipe", "Nenhuma equipe");
+  return selectedFilterSummary(state.matchTeams, state.db.teams, "equipe", "equipes", "Todas", "Todas");
 }
 
 function selectedFilterSummary(selectedIds, items, singular, plural, emptyLabel, allLabel) {
@@ -9131,8 +9407,8 @@ function matchLineupDuel(selection, teamA, playersA, teamB, playersB) {
   `;
 }
 
-// O melhor da partida usa o mesmo cartao do jogador da semana, parado, e as
-// quatro estatisticas de apoio numa linha embaixo.
+// O melhor da partida usa o mesmo cartao do jogador da semana (plateCard),
+// parado, e as quatro estatisticas de apoio numa linha embaixo.
 function matchMvpCard(player, mapCount) {
   if (!player) return `<section class="vp-s-mvp">${sectionHead("Melhor da partida")}<div class="empty-state">Sem jogadores para calcular MVP.</div></section>`;
   const team = teamById(player.teamId);
@@ -9140,16 +9416,17 @@ function matchMvpCard(player, mapCount) {
   return `
     <section class="vp-s-mvp">
       ${sectionHead("Melhor da partida")}
-      <a class="vp-slide vp-mvp" href="${playerHref(player)}" style="--team-line:${teamLineColor(player.teamId)}">
-        ${playerFigure(lineupHistoricalPlayer(player), team, "vp-slide-foto")}
-        <span class="vp-slide-txt">
-          <small>${mapCount > 1 ? "Melhor da série" : "Melhor do mapa"}</small>
-          <strong class="vp-slide-nick" title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong>
-          <span class="vp-slide-equipe">${team ? teamLogo(team.id, "tiny") : ""}${escapeHtml(tag)}</span>
-          <span class="vp-slide-valor"><b>${escapeHtml(playerRating(player))}</b><span>rAAting 3.0</span></span>
-        </span>
-        <span class="vp-slide-ctx">${escapeHtml(`${mapCount > 1 ? `${mapCount} mapas, ` : ""}${player.rounds || 0} rounds`)}</span>
-      </a>
+      ${plateCard({
+        classe: "vp-slide vp-mvp",
+        team,
+        href: playerHref(player),
+        nome: player.nick,
+        figura: playerFigure(lineupHistoricalPlayer(player), team, "vp-slide-foto"),
+        rotulo: mapCount > 1 ? "Melhor da série" : "Melhor do mapa",
+        tag,
+        valor: playerRating(player),
+        apoio: `rAAting 3.0, ${player.rounds || 0} rounds`,
+      })}
       <div class="vp-mvp-stats"><span><small>ACS</small><b>${escapeHtml(fmt(player.acs, 0))}</b></span><span><small>KAST</small><b>${escapeHtml(pct(player.kast))}</b></span><span><small>ADR</small><b>${escapeHtml(fmt(player.adr, 0))}</b></span><span><small>Swing/R</small><b>${escapeHtml(`${signedDecimal(playerSwingPerRound(player))} pp`)}</b></span></div>
     </section>
   `;
@@ -10166,7 +10443,7 @@ function tournamentSwissTable(event, rows, title, options = {}) {
 
 function tournamentSwissTableMarkup(rows, options = {}) {
   const compact = Boolean(options.compact);
-  return `
+  return tabelaComRotulos(`
     <div class="tournament-stats-table-wrap">
       <table class="tournament-swiss-table ${compact ? "compact-state-table" : ""}">
         <thead>
@@ -10177,7 +10454,7 @@ function tournamentSwissTableMarkup(rows, options = {}) {
         </tbody>
       </table>
     </div>
-  `;
+  `);
 }
 
 function tournamentSwissStateTables(event, rows) {
@@ -11544,7 +11821,7 @@ function tournamentMapAgentPickrateTable(rows, agentColumns) {
           <small>Picks divididos por 2 seleções possíveis em cada mapa</small>
         </span>
       </div>
-      <div class="table-wrap tournament-map-agent-table-wrap">
+      ${tabelaComRotulos(`<div class="table-wrap tournament-map-agent-table-wrap">
         <table class="tournament-map-agent-table">
           <thead>
             <tr>
@@ -11558,7 +11835,7 @@ function tournamentMapAgentPickrateTable(rows, agentColumns) {
             ${rows.map((row) => tournamentMapAgentPickrateRow(row, agentColumns)).join("")}
           </tbody>
         </table>
-      </div>
+      </div>`)}
     </article>
   `;
 }
@@ -11959,7 +12236,7 @@ function tournamentPlayerStatsTable(eventId, players) {
         </span>
         ${tournamentStatsExpandButton("players", sortedRows.length, expanded)}
       </div>
-      <div class="table-wrap tournament-stats-table-wrap">
+      ${tabelaComRotulos(`<div class="table-wrap tournament-stats-table-wrap">
         <table class="tournament-stats-table">
           <thead>
             <tr>
@@ -11970,7 +12247,7 @@ function tournamentPlayerStatsTable(eventId, players) {
             ${visibleRows.length ? visibleRows.map(tournamentPlayerStatsRow).join("") : `<tr><td colspan="${columns.length}"><div class="empty-state compact-empty">Nenhuma estatística de jogador disponível.</div></td></tr>`}
           </tbody>
         </table>
-      </div>
+      </div>`)}
     </article>
   `;
 }
@@ -12032,7 +12309,7 @@ function tournamentTeamStatsTable(eventId, teams) {
         </span>
         ${tournamentStatsExpandButton("teams", sortedRows.length, expanded)}
       </div>
-      <div class="table-wrap tournament-stats-table-wrap">
+      ${tabelaComRotulos(`<div class="table-wrap tournament-stats-table-wrap">
         <table class="tournament-stats-table tournament-team-stats-table">
           <thead>
             <tr>
@@ -12043,7 +12320,7 @@ function tournamentTeamStatsTable(eventId, teams) {
             ${visibleRows.length ? visibleRows.map(tournamentTeamStatsRow).join("") : `<tr><td colspan="${columns.length}"><div class="empty-state compact-empty">Nenhuma estatística de equipe disponível.</div></td></tr>`}
           </tbody>
         </table>
-      </div>
+      </div>`)}
     </article>
   `;
 }
@@ -12304,7 +12581,7 @@ function tournamentAgentStatsTable(eventId, agents, columns = tournamentAgentSta
         </span>
         ${tournamentStatsExpandButton("agents", sortedRows.length, expanded)}
       </div>
-      <div class="table-wrap tournament-stats-table-wrap">
+      ${tabelaComRotulos(`<div class="table-wrap tournament-stats-table-wrap">
         <table class="tournament-stats-table tournament-agent-stats-table">
           <thead>
             <tr>
@@ -12315,7 +12592,7 @@ function tournamentAgentStatsTable(eventId, agents, columns = tournamentAgentSta
             ${visibleRows.length ? visibleRows.map((row) => tournamentAgentStatsRow(row, columns)).join("") : `<tr><td colspan="${columns.length}"><div class="empty-state compact-empty">Nenhum agente com estatísticas disponíveis.</div></td></tr>`}
           </tbody>
         </table>
-      </div>
+      </div>`)}
     </article>
   `;
 }
@@ -12588,7 +12865,7 @@ function tournamentCompositionStatsTable(eventId, compositions) {
         </span>
         ${tournamentStatsExpandButton("compositions", sortedRows.length, expanded)}
       </div>
-      <div class="table-wrap tournament-stats-table-wrap">
+      ${tabelaComRotulos(`<div class="table-wrap tournament-stats-table-wrap">
         <table class="tournament-stats-table tournament-composition-stats-table">
           <thead>
             <tr>
@@ -12599,7 +12876,7 @@ function tournamentCompositionStatsTable(eventId, compositions) {
             ${visibleRows.length ? visibleRows.map(tournamentCompositionStatsRow).join("") : `<tr><td colspan="${columns.length}"><div class="empty-state compact-empty">Nenhuma composição com estatísticas disponíveis.</div></td></tr>`}
           </tbody>
         </table>
-      </div>
+      </div>`)}
     </article>
   `;
 }
@@ -13810,6 +14087,9 @@ const TEAM_FIELD_MATIZ_MINIMO = 18;
 // movimento sem inventar uma segunda marca.
 const TEAM_FIELD_GIRO = 26;
 const TEAM_FIELD_GIRO_SAT = 0.62;
+const TEAM_PLACA_SEM_COR = "#3a3d48";
+const TEAM_PLACA_LUZ_MINIMA = 0.012;
+const TEAM_PLACA_CONTRASTE = 4.5;
 
 function chromaOf(rgb) {
   return (Math.max(...rgb) - Math.min(...rgb)) / 255;
@@ -14415,10 +14695,34 @@ function teamStatsAgentCell(pool) {
   `;
 }
 
+// Na tela estreita a tabela de estatísticas vira blocos, sem rolagem lateral, e
+// cada número precisa do nome da coluna ao lado dele.
+function tabelaComRotulos(html) {
+  const molde = document.createElement("template");
+  molde.innerHTML = html;
+  const tabela = molde.content?.querySelector("table");
+  if (!tabela) return html;
+  const colunas = [...tabela.querySelectorAll("thead th")];
+  const nomes = colunas.map((th) => (th.querySelector("span") || th).textContent.trim());
+  tabela.querySelectorAll("tbody tr").forEach((linha) => {
+    [...linha.children].forEach((celula, indice) => {
+      if (nomes[indice] && celula.colSpan === 1) celula.dataset.label = nomes[indice];
+      // Coluna identificada só por imagem, como a de agente: a imagem vai junto.
+      if (!nomes[indice] && colunas[indice]?.firstElementChild) {
+        const rotulo = document.createElement("span");
+        rotulo.className = "rotulo-imagem";
+        rotulo.append(colunas[indice].firstElementChild.cloneNode(true));
+        celula.prepend(rotulo);
+      }
+    });
+  });
+  return molde.innerHTML;
+}
+
 function teamPlayerStatsTable(players) {
   if (!players.length) return `<div class="empty-state">Nenhum jogador disponível para a tabela de stats.</div>`;
   return `
-    <div class="table-wrap team-player-stats-wrap">
+    ${tabelaComRotulos(`<div class="table-wrap team-player-stats-wrap">
       <table class="team-player-stats-table">
         <thead><tr><th>Jogador</th><th>Agentes</th><th class="numeric">rAAting 3.0</th><th class="numeric">Rounds</th><th class="numeric">Mapas</th><th class="numeric">ACS</th><th class="numeric">K/D</th><th class="numeric">ADR</th><th class="numeric">KAST</th><th class="numeric">Swing/R</th><th class="numeric">FK-FD</th></tr></thead>
         <tbody>${players
@@ -14449,7 +14753,7 @@ function teamPlayerStatsTable(players) {
           )
           .join("")}</tbody>
       </table>
-    </div>
+    </div>`)}
   `;
 }
 
@@ -14976,7 +15280,7 @@ function playerMapStatsTable(scopeId, rows) {
         </span>
         ${tournamentStatsExpandButton("maps", sortedRows.length, expanded)}
       </div>
-      <div class="table-wrap tournament-stats-table-wrap">
+      ${tabelaComRotulos(`<div class="table-wrap tournament-stats-table-wrap">
         <table class="tournament-stats-table tournament-map-stats-table">
           <thead>
             <tr>
@@ -14987,7 +15291,7 @@ function playerMapStatsTable(scopeId, rows) {
             ${visibleRows.length ? visibleRows.map((row) => playerMapStatsRow(row, columns)).join("") : `<tr><td colspan="${columns.length}"><div class="empty-state compact-empty">Nenhum mapa com estatísticas disponíveis.</div></td></tr>`}
           </tbody>
         </table>
-      </div>
+      </div>`)}
     </article>
   `;
 }
@@ -15587,20 +15891,25 @@ function matchSeriesForPlayer(playerId) {
   return allMatchSeries().filter((series) => seriesHasPlayer(series, playerId)).sort(compareSeriesDateDesc);
 }
 
-function filteredMatches() {
+// `ignorar` tira um filtro da conta: o resumo ao lado da lista conta os mapas
+// sem o filtro de mapa e os meses sem o de data.
+function filteredMatches({ ignorar = "" } = {}) {
   ensureResultFilterDefaults();
-  const from = dateInputToStart(state.matchDateFrom);
-  const to = dateInputToEnd(state.matchDateTo);
+  const from = ignorar === "datas" ? null : dateInputToStart(state.matchDateFrom);
+  const to = ignorar === "datas" ? null : dateInputToEnd(state.matchDateTo);
   // Tres de tres marcados nao vira `includes`: seriesBestOf le o numero do
   // rotulo da serie, entao um formato que ainda nao existe no banco (MD2, MD7)
   // sumiria da lista sem nenhum filtro ligado. Com todos marcados o filtro sai
   // do caminho, que e o que "Todos" sempre significou aqui.
-  const todosOsFormatos = state.matchBestOfs.length === MELHOR_DE_OPCOES.length;
+  const todosOsFormatos = !state.matchBestOfs.length || state.matchBestOfs.length === MELHOR_DE_OPCOES.length;
+  // Sem campeonato marcado continua valendo a lista dos visiveis: o filtro desligado
+  // nao pode trazer de volta o que o site esconde.
+  const eventos = new Set(state.matchTournaments.length ? state.matchTournaments : visibleTournaments().map((event) => event.id));
   return allMatchSeries()
     .filter((series) => todosOsFormatos || state.matchBestOfs.includes(seriesBestOf(series)))
-    .filter((series) => state.matchMaps.some((mapId) => seriesHasMap(series, mapId)))
+    .filter((series) => ignorar === "mapas" || !state.matchMaps.length || state.matchMaps.some((mapId) => seriesHasMap(series, mapId)))
     .filter((series) => state.matchTeams.every((teamId) => seriesHasTeam(series, teamId)))
-    .filter((series) => state.matchTournaments.includes(series.eventId))
+    .filter((series) => eventos.has(series.eventId))
     .filter((series) => !from || (series.sortAt || series.startedAt) >= from)
     .filter((series) => !to || series.startedAt <= to)
     .sort(compareSeriesDateDesc);
@@ -15649,7 +15958,8 @@ function bindMatchFilters() {
     const foco = `[data-match-filter="${filter}"]` + (button.dataset.value ? `[data-value="${button.dataset.value}"]` : "");
     if (filter === "reset") {
       resetResultFilters();
-      pushFilterState("matches", new URLSearchParams(), foco);
+      // Sem filtro ativo o botao some, entao o foco vai para o primeiro filtro.
+      pushFilterState("matches", new URLSearchParams(), ".vp-filtros summary");
       return;
     }
     if (filter === "bestOf") toggleResultFilterValue("matchBestOfs", value);
@@ -15697,10 +16007,12 @@ function toggleResultFilterValue(key, value) {
   state[key] = current.includes(value) ? current.filter((item) => item !== value) : [...current, value];
 }
 
+// Lista vazia e sem filtro: tudo comeca desmarcado e o primeiro marcado ja deixa
+// so ele. Antes tudo comecava marcado, e filtrar um mapa pedia desmarcar doze.
 function resetResultFilters() {
-  state.matchBestOfs = [...MELHOR_DE_OPCOES];
-  state.matchMaps = state.db.maps.map((map) => map.id);
-  state.matchTournaments = visibleTournaments().map((event) => event.id);
+  state.matchBestOfs = [];
+  state.matchMaps = [];
+  state.matchTournaments = [];
   state.matchTeams = [];
   state.matchTeamQuery = "";
   state.matchDateFrom = "";
@@ -15845,26 +16157,89 @@ function weekHighlights() {
   `;
 }
 
-// Um cartao do carrossel: fundo na cor da equipe do lider, foto solta
-// sangrando na base (silhueta para quem nao tem foto) e o numero grande. O
-// clone do fim sai da arvore de acessibilidade e da ordem de Tab.
-function weekSlide({ category, player }, clone) {
-  const team = teamById(player.teamId);
-  const tag = team?.sourceTag || team?.tag || player.teamTag || "";
-  const valor = category.format(player);
-  const acessivel = clone ? ` aria-hidden="true" tabindex="-1"` : ` aria-label="${escapeHtml(`${category.label}: ${player.nick}, ${valor}`)}"`;
+// As duas pecas do cartao, como uma camisa: a cor1 da planilha chapada atras da
+// foto e a cor2 chapada atras do texto, sem degrade e sem preto no meio.
+//
+// 1. Cor1 quase preta nao vira cartao preto: entra o tom de grafico da equipe,
+//    que ja escolhe a cor com croma entre as duas.
+// 2. O campo escurece so o bastante para a tinta dar 4,5:1 em texto de 12px. O
+//    azul do Azure Bears, cru, da 4,2:1.
+// 3. A cor2 so vira peca quando agrega (mesmo corte do campo do heroi: cor2 de
+//    contorno de logo ou igual a cor1 nao conta). Sem ela, a peca e um tom bem
+//    claro do proprio campo, para as duas pecas continuarem separadas.
+function teamPlateStyle(team) {
+  const [primary, secondary] = team?.colors || [];
+  const cru = hexToRgb(safeCssColor(primary, TEAM_PLACA_SEM_COR)) || hexToRgb(TEAM_PLACA_SEM_COR);
+  const segunda = hexToRgb(safeCssColor(secondary, "")) || null;
+  const quasePreta = relativeLuminance(cru) < TEAM_PLACA_LUZ_MINIMA && chromaOf(cru) < TEAM_FIELD_CROMA_MINIMA;
+  const base = quasePreta ? hexToRgb(teamChartInk(rgbToHex(cru), rgbToHex(segunda || cru))) : cru;
+  const misturar = (a, b, f) => a.map((c, i) => Math.round(c * (1 - f) + b[i] * f));
+
+  const tinta = hexToRgb(teamInkFor(rgbToHex(base)));
+  let campo = base;
+  const clara = relativeLuminance(tinta) > 0.5;
+  for (let passo = 0; passo < 40 && contrastRatio(campo, tinta) < TEAM_PLACA_CONTRASTE; passo += 1) {
+    campo = misturar(campo, clara ? [0, 0, 0] : [255, 255, 255], 0.03);
+  }
+
+  const agrega = segunda && relativeLuminance(segunda) > TEAM_FIELD_LUZ_MINIMA_COR2 && contrastRatio(campo, segunda) >= 1.5;
+  const peca = agrega ? segunda : clara ? misturar(campo, [255, 255, 255], 0.86) : misturar(campo, tinta, 0.16);
+  const tintas = [TEAM_INK_CLARO, TEAM_INK_ESCURO].map(hexToRgb);
+  const tintaPeca = contrastRatio(peca, tintas[0]) >= contrastRatio(peca, tintas[1]) ? tintas[0] : tintas[1];
+  const numero = contrastRatio(peca, campo) >= 3 ? campo : tintaPeca;
+  const logo = assetPath(team?.profile?.logo || team?.logo || "");
+
+  return [
+    `--placa-campo:${rgbToHex(campo)}`,
+    `--placa-silhueta:${rgbToHex(misturar(campo, tinta, 0.34))}`,
+    `--placa-peca:${rgbToHex(peca)}`,
+    `--placa-tinta:${rgbToHex(tintaPeca)}`,
+    `--placa-numero:${rgbToHex(numero)}`,
+    logo ? `--placa-logo:url('${logo}')` : "",
+    // Logo branco sumiria em campo branco: ali entra so a forma dele, em preto.
+    relativeLuminance(campo) > 0.7 ? "--placa-logo-filtro:brightness(0) opacity(0.55)" : "",
+    // No cartao de equipe o logo aparece inteiro, com as cores dele: um contorno
+    // separa do campo claro o que for branco, sem apagar as outras cores.
+    relativeLuminance(campo) > 0.7 ? `--placa-logo-contorno:${[[1.5, 0], [-1.5, 0], [0, 1.5], [0, -1.5]].map(([x, y]) => `drop-shadow(${x}px ${y}px 0 ${rgbToHex(tinta)})`).join(" ")}` : "",
+  ].filter(Boolean).join(";");
+}
+
+// O cartao Camisa: quem e o assunto pisa na emenda das duas pecas, com o numero
+// na cor da equipe. Serve aos melhores da semana, ao melhor da partida e a equipe
+// filtrada em #/matches, onde o logo faz o papel da foto.
+function plateCard({ classe, team, href, nome, figura, rotulo, tag, valor, apoio, atributos = "" }) {
   return `
-    <a class="vp-slide" href="${playerHref(player)}" style="--team-line:${teamLineColor(player.teamId)}"${acessivel}>
-      ${playerFigure(player, team, "vp-slide-foto")}
+    <a class="${classe}" href="${href}" style="${escapeHtml(teamPlateStyle(team))}"${atributos}>
+      <span class="vp-slide-campo"><i></i></span>
+      ${figura}
       <span class="vp-slide-txt">
-        <small>${escapeHtml(category.label)}</small>
-        <strong class="vp-slide-nick" title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong>
-        <span class="vp-slide-equipe">${team ? teamLogo(team.id) : ""}${escapeHtml(tag)}</span>
-        <span class="vp-slide-valor"><b>${escapeHtml(valor)}</b><span>${escapeHtml(category.statLabel)}</span></span>
+        <small>${escapeHtml(rotulo)}</small>
+        <strong class="vp-slide-nick" title="${escapeHtml(nome)}"><span class="nome-rolante">${escapeHtml(nome)}</span></strong>
+        <span class="vp-slide-equipe">${escapeHtml(tag)}</span>
+        <b class="vp-slide-valor">${escapeHtml(valor)}</b>
+        <small>${escapeHtml(apoio)}</small>
       </span>
-      <span class="vp-slide-ctx">${escapeHtml(`${player.matches} mapas, ${player.rounds} rounds`)}</span>
     </a>
   `;
+}
+
+// Um cartao do carrossel. O clone do fim sai da arvore de acessibilidade e da
+// ordem de Tab.
+function weekSlide({ category, player }, clone) {
+  const team = teamById(player.teamId);
+  const valor = category.format(player);
+  return plateCard({
+    classe: "vp-slide",
+    team,
+    href: playerHref(player),
+    nome: player.nick,
+    figura: playerFigure(player, team, "vp-slide-foto"),
+    rotulo: category.label,
+    tag: team?.sourceTag || team?.tag || player.teamTag || "",
+    valor,
+    apoio: `${player.matches} mapas, ${player.rounds} rounds`,
+    atributos: clone ? ` aria-hidden="true" tabindex="-1"` : ` aria-label="${escapeHtml(`${category.label}: ${player.nick}, ${valor}`)}"`,
+  });
 }
 
 // Liga o carrossel que o weekHighlights desenhou. Nao ha timer: quem avanca e o
@@ -16140,9 +16515,7 @@ function matchSeriesMetaLabel(item) {
 // Escudo grande de cada lado, nome ao lado do escudo, placar grande no meio
 // com o vencedor em verde. Em cima, uma linha so de contexto: a hora, os nomes
 // dos mapas no meio, cada um sobre a propria fatia de arte, e o campeonato na
-// ponta direita. A arte fica num holofote no meio da linha, e nao de fundo na
-// linha inteira: assim ela marca qual mapa foi jogado sem deixar um vao vazio
-// entre o nome e o campeonato.
+// ponta direita. A arte cobre a linha inteira, com uma fatia por mapa.
 // Opcoes num objeto de proposito: `.map(matchResultRow)` passa o indice no
 // segundo argumento, e um numero nao tem `.when` nem `.kd`. Assim as listas que
 // chamam pelo `.map` cru recebem exatamente o padrao (a data) sem precisar
@@ -16157,16 +16530,14 @@ function matchResultRow(item, options) {
   const when = opts.when === "hour" ? formatDate(series.startedAt, "hour") : formatDate(series.startedAt);
   const nomeDoEvento = event?.name || "Evento";
   const nomes = (series.mapNames || []).filter(Boolean);
-  // --maps vai nos dois, arte e nomes: a largura dos dois sai da mesma conta,
-  // e e isso que poe cada nome em cima da propria fatia.
   const mapas = nomes.length
-    ? `<span class="vp-pl-mapas" style="--maps:${nomes.length}">${nomes.map((nome) => `<span class="vp-pl-mapa">${escapeHtml(nome)}</span>`).join("")}</span>`
+    ? `<span class="vp-pl-mapas">${nomes.map((nome) => `<span class="vp-pl-mapa">${escapeHtml(nome)}</span>`).join("")}</span>`
     : "";
   const numero = (valor, contra) => `<b${Number(valor) > Number(contra) ? ' class="vp-venceu"' : ""}>${escapeHtml(valor)}</b>`;
   const lado = (team) => `<strong title="${escapeHtml(team.name)}"><span class="nome-rolante">${escapeHtml(team.name)}</span></strong>`;
   const kd = Array.isArray(opts.kd) ? `<span class="vp-kd"><b>${escapeHtml(opts.kd[0])} / ${escapeHtml(opts.kd[1])}</b><small>K / D</small></span>` : "";
   return `
-    <a class="vp-pl${kd ? " vp-pl-kd" : ""}" href="${matchSeriesHref(series)}">
+    <a class="vp-pl${kd ? " vp-pl-kd" : ""}" style="--maps:${nomes.length || 1}" href="${matchSeriesHref(series)}">
       ${matchMapBanner(series)}
       <span class="vp-pl-topo">
         <span class="vp-pl-quando">${escapeHtml(when)}${window.Comments ? window.Comments.selo("match", series.seriesKey) : ""}</span>
@@ -16349,6 +16720,10 @@ function embrulharTextosCortados(escopo) {
     // texto cortado, e passava a animar em toda rota, invisivel e a toa.
     // Abaixo de 16px nao ha nome que se leia, entao nao ha o que revelar.
     if (largura < ROLAGEM_CAIXA_MINIMA) continue;
+    // Um `.nome-rolante` longo ainda nao medido parece texto cortado. Embrulhado
+    // de novo, a caixa de fora muda de largura a cada medida, o observador dispara
+    // uma vez por segundo e a animacao reinicia antes de sair do lugar.
+    if (el.classList.contains("nome-rolante")) continue;
     if (el.scrollWidth > largura + 0.5) candidatos.push(el);
   }
   if (!candidatos.length) return;
@@ -16406,10 +16781,10 @@ function remedirTextosVariaveis() {
 }
 
 // Arte do mapa em versao web: 640x360 WebP (~20 KB) em vez do PNG de origem
-// 1600x900 (~500 KB, e 2 MB no caso do summit). Nenhum lugar do site desenha
-// essa arte acima de 640px de largura - nem o holofote da home nem o tile de
-// 40px das listas cheias - entao o PNG grande nunca chegou a ser usado como
-// PNG grande: so como download grande.
+// 1600x900 (~500 KB, e 2 MB no caso do summit). O uso mais largo e o fundo da
+// linha de partida, que passa de 640px nas listas largas, mas a 20% de opacidade
+// e numa tira de 68px de altura a perda nao aparece, entao o PNG grande seria so
+// download grande.
 // O original fica no data-fallback e entra se o WebP faltar, para um mapa novo
 // que ainda nao passou pela conversao nao aparecer sem arte nenhuma.
 function mapArtAttrs(map, preferred) {
@@ -16448,7 +16823,7 @@ function mapBannerSrc(name) {
   return mapArtAttrs(mapByName(name));
 }
 
-// O holofote de mapas da linha de partida: uma fatia por mapa, na ordem
+// O fundo de mapas da linha de partida: uma fatia por mapa, na ordem
 // jogada, cortada em diagonal. Numa md3 a serie inteira aparece de uma vez, em
 // vez de escolhermos um mapa "representativo" e esconder os outros.
 function matchMapBanner(item) {
@@ -16459,7 +16834,7 @@ function matchMapBanner(item) {
   // fatias. A fatia sem arte entra vazia e segura a coluna.
   const slices = names.map((name) => mapBannerSrc(name));
   if (!slices.some(Boolean)) return "";
-  return `<span class="vp-pl-artes" style="--maps:${slices.length}" aria-hidden="true">${slices
+  return `<span class="vp-pl-artes" aria-hidden="true">${slices
     .map((art) =>
       art
         ? `<i><img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" /></i>`

@@ -699,5 +699,18 @@ assert.strictEqual(codec.decode({ format: "univlr-db@1", root: { $: "r", i: 0 },
 assert(!/["`>]Concluida|Sistema suico|Estado nao informado/.test(fs.readFileSync(path.join(__dirname, "..", "app.js"), "utf8")), "texto publico com acento");
 assert(/@media \(max-width: 1180px\)[\s\S]*\.tournament-stats-table[\s\S]*attr\(data-label\)/.test(fs.readFileSync(path.join(__dirname, "..", "placar.css"), "utf8")), "tabela de estatisticas vira blocos na tela estreita");
 
+// Ranking, 01/11: a lista nas duas primeiras colunas da home e o trilho na
+// terceira, com a nota colada na equipe e a lineup depois dela.
+assert(/\.vp-ranking\.com-resumo \{[^}]*minmax\(0, 922px\) 340px/.test(estiloDoRanking), "com o resumo aberto, lista e trilho somam a largura da home");
+assert(/\.vp-ranking \{[^}]*minmax\(0, 922px\) 0px/.test(estiloDoRanking), "o resumo nasce fechado, com a lista centralizada");
+assert(/\.vp-ranking \.rank-change-cell\.down \{[^}]*var\(--muted\)/.test(estiloDoRanking), "cair nao e vermelho, como na home");
+const fonteDoRanking = ler("app.js");
+assert(fonteDoRanking.indexOf('class="numeric ranking-score-cell"') < fonteDoRanking.indexOf('class="ranking-lineup-inline optional"'), "a nota vem antes da lineup");
+assert.strictEqual(context.alturaNoGrafico(1), 5, "o primeiro lugar fica no topo do grafico");
+assert.strictEqual(context.alturaNoGrafico(8), 95, "o oitavo fica no fundo do grafico");
+assert(context.alturaNoGrafico(9) > 100, "abaixo do oitavo a linha sai do grafico");
+assert.strictEqual(context.curvaDaEquipe([1, 8]), "M0.00 5.00C50.00 5.00 50.00 95.00 100.00 95.00", "a curva sai e chega na horizontal");
+assert.strictEqual((context.curvaDaEquipe([1, null, 2]).match(/M/g) || []).length, 2, "semana fora do ranking interrompe a linha");
+
 void vp;
 console.log("Visual Placar contract tests passed");

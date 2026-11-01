@@ -15616,44 +15616,51 @@ function renderRankingPage(teamId = route().id || "") {
   const scope = state.rankingScope === "all" ? "all" : "valid";
   const rows = rankingRowsForScope(state.db.teams, scope);
   const snapshot = selectedRankingSnapshot();
-  const minimumMatches = state.db.rankingMinimumMatches || 9;
-  const minimumRosterSize = rankingMinimumRosterSize(state.db?.rankingWeights);
   const aba = rankingRouteTab();
   const semanaMatches = rankingWeekMatches(snapshot);
   Shell(`
-    <header class="page-header slim-header">
-      <div class="page-title">
-        <h1>Ranking</h1>
-        <p>Nota final: 70% desempenho, 15% conquistas, 10% forma recente e 5% rAAting 3.0 dos jogadores. Equipes com menos de ${minimumMatches} partidas ficam marcadas como provisórias e equipes com elenco incompleto (menos de ${minimumRosterSize} jogadores) ficam inativas; nas semanas passadas, conta a formação que jogou em cada uma. Quando o núcleo de uma equipe passa para uma equipe nova, a nova herda o histórico da antiga no ranking.</p>
-      </div>
-    </header>
-    <section class="vp-lista-pagina ranking-full-panel">
-      <div class="ranking-page-toolbar">
-        <div class="ranking-toolbar-context">
-          <span data-ranking-count>${escapeHtml(aba === "partidas" ? rankingWeekMatchesSummary(semanaMatches, snapshot) : rankingScopeSummary(scope))}</span>
-          <label class="ranking-version-picker">
-            <select data-ranking-version aria-label="Semana do ranking">
-              ${rankingVersionOptions(snapshot)}
-            </select>
-          </label>
-        </div>
-        ${rankingTabSwitch(aba, semanaMatches.length)}
-        ${aba === "partidas" ? "" : `<div class="ranking-toolbar-actions"><div class="ranking-toolbar-actions-inner">
-          <label class="ranking-details-toggle">
-            <input type="checkbox" data-ranking-score-details ${state.rankingShowDetails ? "checked" : ""} />
-            <span>Detalhes da nota</span>
-          </label>
-          <div class="ranking-scope-switch" data-scope="${scope}" role="group" aria-label="Filtro do ranking">
-            <button type="button" data-ranking-scope="valid" aria-pressed="${scope === "valid"}" class="${scope === "valid" ? "active" : ""}">Apenas válidos</button>
-            <button type="button" data-ranking-scope="all" aria-pressed="${scope === "all"}" class="${scope === "all" ? "active" : ""}">Todos</button>
+    <section class="vp-ranking${state.rankingResumo ? " com-resumo" : ""}">
+      <div class="vp-lista-pagina ranking-full-panel">
+        <header class="vp-sec">
+          <h1>Ranking</h1>
+          <span class="lista-contagem" data-ranking-count>${escapeHtml(aba === "partidas" ? rankingWeekMatchesSummary(semanaMatches, snapshot) : rankingScopeSummary(scope))}</span>
+        </header>
+        <div class="ranking-page-toolbar">
+          <div class="ranking-toolbar-context">
+            <label class="ranking-version-picker">
+              <span>Semana</span>
+              <select data-ranking-version aria-label="Semana do ranking">
+                ${rankingVersionOptions(snapshot)}
+              </select>
+            </label>
           </div>
-        </div></div>`}
+          ${rankingTabSwitch(aba, semanaMatches.length)}
+          <label class="ranking-details-toggle ranking-resumo-botao">
+            <input type="checkbox" data-ranking-resumo ${state.rankingResumo ? "checked" : ""} />
+            <span>Resumo da semana</span>
+          </label>
+          ${aba === "partidas" ? "" : `<div class="ranking-toolbar-actions"><div class="ranking-toolbar-actions-inner">
+            <label class="ranking-details-toggle">
+              <input type="checkbox" data-ranking-score-details ${state.rankingShowDetails ? "checked" : ""} />
+              <span>Detalhes da nota</span>
+            </label>
+            <div class="ranking-scope-switch" data-scope="${scope}" role="group" aria-label="Equipes do ranking">
+              <button type="button" data-ranking-scope="valid" aria-pressed="${scope === "valid"}" class="${scope === "valid" ? "active" : ""}">Válidas</button>
+              <button type="button" data-ranking-scope="all" aria-pressed="${scope === "all"}" class="${scope === "all" ? "active" : ""}">Todas</button>
+            </div>
+          </div></div>`}
+        </div>
+        ${aba === "partidas" ? rankingWeekMatchesSection(semanaMatches) : rankingAccordion(rows, scope, state.rankingShowDetails)}
       </div>
-      ${aba === "partidas" ? rankingWeekMatchesSection(semanaMatches) : rankingAccordion(rows, scope, state.rankingShowDetails)}
+      <aside class="vp-resumo" data-ranking-trilho aria-label="Resumo do ranking">
+        ${trilhoDoRanking(snapshot)}
+      </aside>
     </section>
   `);
   bindRankingVersionPicker();
   bindRankingTabSwitch();
+  bindTrilhoDoRanking();
+  bindResumoDoRanking();
   if (aba === "partidas") {
     bindResultDayToggles();
     return;
@@ -15891,8 +15898,8 @@ function rankingScopeSummary(scope) {
   // Devolvia "" no escopo "Apenas válidos", que e o padrao da pagina: o slot da
   // esquerda da barra nascia vazio e os 721px de controle ficavam sozinhos
   // contra 617px de vao. O texto e o contrapeso, e ele tem informacao real.
-  if (scope === "all") return `${total} equipes exibidas · ${validCount} válidas · mínimo ${minimumMatches} partidas`;
-  return `${validCount} equipes válidas · mínimo ${minimumMatches} partidas`;
+  if (scope === "all") return `${total} equipes, ${validCount} válidas, mínimo de ${minimumMatches} partidas`;
+  return `${validCount} equipes válidas, mínimo de ${minimumMatches} partidas`;
 }
 
 // "25 Agosto 2026" e "25 ago 2026". formatDate() devolveria "25 de agosto de
@@ -15986,6 +15993,283 @@ function rankingWeekMatchesSection(matches) {
   `;
 }
 
+// O trilho e opcional: por padrao a lista fica sozinha, centralizada, e "Resumo da
+// semana" abre o trilho no lugar em que ele esta na home e em #/matches. O cartao
+// Camisa fala da lider da semana, ou da equipe aberta na lista. Grafico e
+// movimentos sao de equipes, nunca de jogadores.
+function trilhoDoRanking(snapshot = selectedRankingSnapshot()) {
+  return `
+    <div class="vp-ranking-cartao" data-ranking-cartao>${cartaoDoRanking(rankingLider(snapshot))}</div>
+    ${disputaPeloTopo(snapshot)}
+    ${movimentosDaSemana(snapshot)}
+    ${comoANotaEFeita()}
+  `;
+}
+
+function rankingPorPosicao(snapshot) {
+  return rankingExistingSnapshotTeams(snapshot)
+    .filter((ranking) => rankingCanonicalPosition(ranking))
+    .sort((a, b) => rankingCanonicalPosition(a) - rankingCanonicalPosition(b));
+}
+
+function rankingLider(snapshot) {
+  const ranking = rankingPorPosicao(snapshot)[0];
+  const team = ranking ? teamById(ranking.id) : null;
+  return team && rankingCanonicalPosition(ranking) === 1 ? { team, ranking, snapshot } : null;
+}
+
+function semanasDoRanking() {
+  return (state.db?.rankingSnapshots || []).slice().sort((a, b) => Number(a.cutoffAt || 0) - Number(b.cutoffAt || 0));
+}
+
+// Semanas seguidas na lideranca, contadas para tras a partir da semana escolhida.
+function semanasNaLideranca(snapshot, teamId) {
+  const semanas = semanasDoRanking();
+  let indice = semanas.findIndex((semana) => semana.id === snapshot?.id);
+  let total = 0;
+  while (indice >= 0 && rankingPorPosicao(semanas[indice])[0]?.id === teamId) {
+    total += 1;
+    indice -= 1;
+  }
+  return total;
+}
+
+function movimentoDaEquipe(row) {
+  const mudanca = rankingPositionChange(row);
+  const quantas = Math.abs(Number(mudanca.label)) || 0;
+  const posicoes = `${quantas} ${quantas === 1 ? "posição" : "posições"}`;
+  if (mudanca.className === "up") return `Subiu ${posicoes}`;
+  if (mudanca.className === "down") return `Caiu ${posicoes}`;
+  if (mudanca.className === "new") return "Entrou nesta semana";
+  return mudanca.className === "even" ? "Manteve a posição" : "";
+}
+
+function cartaoDoRanking(row) {
+  if (!row) return "";
+  const { team, ranking, snapshot } = row;
+  const posicao = rankingCanonicalPosition(ranking);
+  const semanas = posicao === 1 ? semanasNaLideranca(snapshot, team.id) : 0;
+  const nota = fmt(ranking.score ?? team.rankingScore ?? team.points, 1);
+  const logo = assetPath(team.profile?.logo || team.logo || "");
+  const partidas = Number.isFinite(Number(ranking.matches)) ? Number(ranking.matches) : team.matches;
+  const rotulo = posicao === 1 ? "Líder do ranking" : posicao ? `${posicao}º no ranking` : rankingStatusLabel(ranking);
+  return plateCard({
+    classe: `vp-slide vp-camisa-equipe${nota.length > 4 ? " vp-valor-longo" : ""}`,
+    team,
+    href: `#/teams/${encodeURIComponent(team.id)}`,
+    nome: team.sourceTag || team.tag || team.name,
+    figura: logo ? `<span class="vp-camisa-logo"><img src="${escapeHtml(logo)}" alt="" onerror="this.parentElement.remove()" /></span>` : "",
+    rotulo,
+    tag: semanas > 1 ? `há ${semanas} semanas` : semanas ? "Nova líder" : movimentoDaEquipe(row),
+    valor: nota,
+    apoio: `${partidas} partidas`,
+    atributos: ` aria-label="${escapeHtml(`${team.name}: ${rotulo}, nota ${nota}`)}"`,
+  });
+}
+
+function trocarCartaoDoRanking() {
+  const lugar = document.querySelector("[data-ranking-cartao]");
+  if (!lugar) return;
+  const snapshot = selectedRankingSnapshot();
+  const aberta = document.querySelector(".ranking-accordion-item.open")?.dataset.rankingTeamId;
+  const ranking = aberta ? snapshot?.byTeamId?.[aberta] : null;
+  const team = ranking ? teamById(aberta) : null;
+  lugar.innerHTML = cartaoDoRanking(team ? { team, ranking, snapshot } : rankingLider(snapshot));
+  ajustarTextosVariaveis(lugar);
+}
+
+// Doze semanas das cinco primeiras da semana escolhida. Quem sai do oitavo lugar
+// desce para fora do grafico. A janela vai duas semanas alem da escolhida, para
+// dar para andar nos dois sentidos clicando no proprio grafico.
+const RANKING_GRAFICO_SEMANAS = 12;
+const RANKING_GRAFICO_EQUIPES = 5;
+const RANKING_GRAFICO_FUNDO = 8;
+
+function alturaNoGrafico(posicao) {
+  if (posicao > RANKING_GRAFICO_FUNDO) return 112;
+  return 5 + ((posicao - 1) / (RANKING_GRAFICO_FUNDO - 1)) * 90;
+}
+
+function curvaDaEquipe(posicoes) {
+  const passo = 100 / (posicoes.length - 1);
+  let caminho = "";
+  posicoes.forEach((posicao, i) => {
+    if (!posicao) return;
+    const x = i * passo;
+    const y = alturaNoGrafico(posicao);
+    const antes = posicoes[i - 1];
+    if (!antes) {
+      caminho += `M${x.toFixed(2)} ${y.toFixed(2)}`;
+      return;
+    }
+    const meio = (x - passo / 2).toFixed(2);
+    caminho += `C${meio} ${alturaNoGrafico(antes).toFixed(2)} ${meio} ${y.toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)}`;
+  });
+  return caminho;
+}
+
+function disputaPeloTopo(snapshot) {
+  const semanas = semanasDoRanking();
+  const indice = semanas.findIndex((semana) => semana.id === snapshot?.id);
+  const fim = Math.min(semanas.length - 1, indice + 2);
+  const janela = semanas.slice(Math.max(0, fim - RANKING_GRAFICO_SEMANAS + 1), fim + 1);
+  const topo = rankingPorPosicao(snapshot).slice(0, RANKING_GRAFICO_EQUIPES);
+  if (indice < 0 || janela.length < 2 || !topo.length) return "";
+  const passo = 100 / (janela.length - 1);
+  const linhas = topo.map((ranking) => ({
+    id: ranking.id,
+    team: teamById(ranking.id),
+    posicoes: janela.map((semana) => rankingCanonicalPosition(semana.byTeamId?.[ranking.id])),
+  }));
+  const leitura = `Semana de ${formatShortDate(snapshot.cutoffAt)}`;
+  return `
+    <section class="vp-resumo-bloco vp-bump-bloco" aria-label="Disputa pelo topo do ranking">
+      <h3>Disputa pelo topo <span data-ranking-leitura data-padrao="${escapeHtml(leitura)}">${escapeHtml(leitura)}</span></h3>
+      <div class="vp-bump-placa">
+        <div class="vp-bump" data-ranking-grafico>
+          <span class="vp-bump-pos" style="top:${alturaNoGrafico(1)}%">1</span>
+          <span class="vp-bump-pos" style="top:${alturaNoGrafico(RANKING_GRAFICO_FUNDO)}%">${RANKING_GRAFICO_FUNDO}</span>
+          <i class="vp-bump-marca" style="left:${(janela.indexOf(snapshot) * passo).toFixed(2)}%"></i>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            ${linhas.slice().reverse().map((linha) => `<path d="${curvaDaEquipe(linha.posicoes)}" stroke="${escapeHtml(teamLineColor(linha.id))}" data-ranking-linha="${escapeHtml(linha.id)}" />`).join("")}
+          </svg>
+          <div class="vp-bump-semanas" style="left:${(-passo / 2).toFixed(2)}%;right:${(-passo / 2).toFixed(2)}%">
+            ${janela
+              .map((semana) => {
+                const rotulo = `Semana de ${formatShortDate(semana.cutoffAt)}`;
+                return `<button type="button" data-ranking-semana="${escapeHtml(semana.id)}" data-rotulo="${escapeHtml(rotulo)}" aria-label="Ver o ranking da ${escapeHtml(rotulo.toLowerCase())}" aria-pressed="${semana === snapshot}"></button>`;
+              })
+              .join("")}
+          </div>
+          ${linhas
+            .map((linha) => {
+              const ultima = linha.posicoes[linha.posicoes.length - 1];
+              if (!ultima || ultima > RANKING_GRAFICO_FUNDO) return "";
+              return `<a class="vp-bump-logo" href="#/ranking/${escapeHtml(linha.id)}" style="top:${alturaNoGrafico(ultima).toFixed(2)}%" data-ranking-foco="${escapeHtml(linha.id)}" aria-label="${escapeHtml(`Abrir ${linha.team?.name || linha.id} na lista`)}">${teamLogo(linha.id)}</a>`;
+            })
+            .join("")}
+        </div>
+      </div>
+      <div class="vp-rt-eixo"><span>${escapeHtml(formatShortDate(janela[0].cutoffAt))}</span><span>${escapeHtml(formatShortDate(janela[janela.length - 1].cutoffAt))}</span></div>
+    </section>
+  `;
+}
+
+// As maiores subidas e quedas da semana, na mesma linha da Placa da home.
+function movimentosDaSemana(snapshot) {
+  const anterior = previousRankingSnapshot(snapshot);
+  if (!anterior) return "";
+  const linhas = rankingPorPosicao(snapshot)
+    .map((ranking) => {
+      const antes = rankingCanonicalPosition(anterior.byTeamId?.[ranking.id]);
+      const team = teamById(ranking.id);
+      return antes && team ? { team, ranking, snapshot, delta: antes - rankingCanonicalPosition(ranking) } : null;
+    })
+    .filter((linha) => linha?.delta);
+  const subiram = linhas.filter((linha) => linha.delta > 0).sort((a, b) => b.delta - a.delta);
+  const cairam = linhas.filter((linha) => linha.delta < 0).sort((a, b) => a.delta - b.delta);
+  const resumo = linhas.length ? `${subiram.length} ${subiram.length === 1 ? "subiu" : "subiram"}, ${cairam.length} ${cairam.length === 1 ? "caiu" : "caíram"}` : "";
+  return `
+    <section class="vp-resumo-bloco vp-movimentos" aria-label="Movimentos da semana">
+      <h3>Movimentos da semana <span>${escapeHtml(resumo)}</span></h3>
+      ${linhas.length
+        ? `<div class="vp-placa vp-placa-rk">${[...subiram.slice(0, 3), ...cairam.slice(0, 3)].map(linhaDeMovimento).join("")}</div>`
+        : `<p class="vp-nota-regras">Nenhuma equipe mudou de posição nesta semana.</p>`}
+    </section>
+  `;
+}
+
+function linhaDeMovimento(row) {
+  const { team, ranking } = row;
+  return `
+    <a class="vp-rk pintura-de-equipe" href="#/ranking/${escapeHtml(team.id)}" ${teamAccentStyle(team)}>
+      <span class="vp-rk-pos">${rankingCanonicalPosition(ranking)}</span>
+      ${rankingPositionChangeBadge(row, "vp-rk-delta")}
+      ${teamLogo(team.id)}
+      <span class="vp-rk-nome" title="${escapeHtml(team.name)}">${escapeHtml(team.name)}</span>
+      <span class="vp-rk-nota">${fmt(ranking.score, 1)}</span>
+    </a>
+  `;
+}
+
+function comoANotaEFeita() {
+  const pesos = [["Desempenho", 70], ["Conquistas", 15], ["Forma recente", 10], ["rAAting 3.0 dos jogadores", 5]];
+  const minimoPartidas = state.db.rankingMinimumMatches || 9;
+  const minimoElenco = rankingMinimumRosterSize(state.db?.rankingWeights);
+  return `
+    <section class="vp-resumo-bloco vp-nota-bloco" aria-label="Como a nota é feita">
+      <h3>Como a nota é feita</h3>
+      <div class="vp-rk-soma" style="--team-line:var(--ink)" aria-hidden="true">${pesos.map(([, peso]) => `<i style="--w:${peso}%"></i>`).join("")}</div>
+      <dl class="vp-mapa-dados">
+        ${pesos.map(([nome, peso]) => `<div><dt>${escapeHtml(nome)}</dt><dd><b>${peso}%</b></dd></div>`).join("")}
+      </dl>
+      <p class="vp-nota-regras">Equipes com menos de ${minimoPartidas} partidas ficam provisórias, e com menos de ${minimoElenco} jogadores, inativas. Nas semanas passadas, conta a formação que jogou em cada uma. Quando o núcleo de uma equipe passa para uma equipe nova, a nova herda o histórico da antiga.</p>
+    </section>
+  `;
+}
+
+function atualizarTrilhoDoRanking() {
+  const trilho = document.querySelector("[data-ranking-trilho]");
+  if (!trilho) return;
+  const snapshot = selectedRankingSnapshot();
+  trilho.innerHTML = trilhoDoRanking(snapshot);
+  const seletor = document.querySelector("[data-ranking-version]");
+  if (seletor && snapshot) seletor.value = snapshot.id;
+  ajustarTextosVariaveis(trilho);
+  trilho.style.setProperty("--resumo-altura", `${trilho.scrollHeight}px`);
+}
+
+// Troca so a classe, sem re-renderizar: a lista desliza enquanto o trilho abre. O
+// estado fica em state, como a semana, o escopo e os detalhes desta pagina.
+function bindResumoDoRanking() {
+  document.querySelector("[data-ranking-resumo]")?.addEventListener("change", (event) => {
+    state.rankingResumo = event.currentTarget.checked;
+    document.querySelector(".vp-ranking")?.classList.toggle("com-resumo", state.rankingResumo);
+    const trilho = document.querySelector("[data-ranking-trilho]");
+    if (!state.rankingResumo || !trilho) return;
+    ajustarTextosVariaveis(trilho);
+    trilho.style.setProperty("--resumo-altura", `${trilho.scrollHeight}px`);
+  });
+}
+
+function bindTrilhoDoRanking() {
+  const pagina = document.querySelector(".vp-ranking");
+  const trilho = pagina?.querySelector("[data-ranking-trilho]");
+  if (!trilho) return;
+  trilho.style.setProperty("--resumo-altura", `${trilho.scrollHeight}px`);
+  const mostrar = (texto) => {
+    const leitura = trilho.querySelector("[data-ranking-leitura]");
+    if (leitura) leitura.textContent = texto ?? leitura.dataset.padrao;
+  };
+  const focar = (id) => {
+    const grafico = trilho.querySelector("[data-ranking-grafico]");
+    grafico?.classList.toggle("com-foco", Boolean(id));
+    grafico?.querySelectorAll("[data-ranking-linha]").forEach((linha) => linha.classList.toggle("foco", linha.dataset.rankingLinha === id));
+  };
+  trilho.addEventListener("click", (event) => {
+    const semana = event.target.closest("[data-ranking-semana]");
+    if (!semana) return;
+    const id = semana.dataset.rankingSemana;
+    state.rankingVersionId = id;
+    updateRankingVersionView();
+    document.querySelector(`[data-ranking-semana="${id}"]`)?.focus({ preventScroll: true });
+  });
+  ["mouseover", "focusin"].forEach((tipo) => {
+    trilho.addEventListener(tipo, (event) => {
+      const semana = event.target.closest("[data-ranking-semana]");
+      const logo = event.target.closest("[data-ranking-foco]");
+      if (semana) mostrar(semana.dataset.rotulo);
+      if (logo) focar(logo.dataset.rankingFoco);
+    });
+  });
+  ["mouseout", "focusout"].forEach((tipo) => {
+    trilho.addEventListener(tipo, (event) => {
+      if (event.target.closest("[data-ranking-semana]")) mostrar();
+      if (event.target.closest("[data-ranking-foco]")) focar("");
+    });
+  });
+}
+
 function rankingAccordion(rows, scope = "valid", showDetails = false) {
   return `
     <div class="ranking-accordion" data-ranking-accordion data-status-visible="${scope === "all"}" data-details-visible="${showDetails}">
@@ -15993,8 +16277,8 @@ function rankingAccordion(rows, scope = "valid", showDetails = false) {
         ${rankingSortHeader("rank", "#")}
         <span class="rank-change-head" aria-hidden="true"></span>
         ${rankingSortHeader("team", "Equipe")}
-        <span class="ranking-lineup-head optional">Lineup</span>
         ${rankingSortHeader("score", "Nota", "numeric ranking-score-head")}
+        <span class="ranking-lineup-head optional">Lineup</span>
         ${rankingSortHeader("competitive", "Desempenho", "numeric optional ranking-detail-cell")}
         ${rankingSortHeader("achievements", "Conquistas", "numeric optional ranking-detail-cell")}
         ${rankingSortHeader("recentForm", "Forma", "numeric optional ranking-detail-cell")}
@@ -16023,7 +16307,7 @@ function rankingSortHeader(key, label, extraClass = "") {
 }
 
 function rankingAccordionRows(rows) {
-  return rows.length ? rows.map(rankingAccordionItem).join("") : `<div class="empty-state">Nenhuma equipe válida ainda. Alterne para "Todos" para ver equipes provisórias.</div>`;
+  return rows.length ? rows.map(rankingAccordionItem).join("") : `<div class="empty-state">Nenhuma equipe válida ainda. Mostre "Todas" para ver as equipes provisórias.</div>`;
 }
 
 function rankingAccordionItem(row) {
@@ -16037,11 +16321,11 @@ function rankingAccordionItem(row) {
   return `
     <article class="ranking-accordion-item" data-ranking-team-id="${escapeHtml(team.id)}">
       <button class="ranking-accordion-button pintura-de-equipe" type="button" data-ranking-toggle aria-expanded="false" aria-controls="${panelId}" ${teamAccentStyle(team)}>
-        <span class="rank-cell">#${displayRank}</span>
+        <span class="rank-cell${displayRank === 1 ? " rank-lider" : ""}">${displayRank}</span>
         ${rankingPositionChangeLabel(row)}
         <span class="ranking-team-cell">${teamLogo(team.id)}<span><strong>${escapeHtml(team.name)}</strong><small>${escapeHtml(team.sourceTag || team.tag || team.id)} - ${matchesCount} partidas</small></span></span>
-        <span class="ranking-lineup-inline optional">${rankingInlineLineup(team, cutoffAt)}</span>
         <span class="numeric ranking-score-cell">${fmt(ranking.score ?? team.rankingScore ?? team.points, 1)}</span>
+        <span class="ranking-lineup-inline optional">${rankingInlineLineup(team, cutoffAt)}</span>
         <span class="numeric optional ranking-detail-cell" data-label="Desempenho">${fmt(blocks.competitive, 1)}</span>
         <span class="numeric optional ranking-detail-cell" data-label="Conquistas">${fmt(blocks.achievements, 1)}</span>
         <span class="numeric optional ranking-detail-cell" data-label="Forma">${fmt(blocks.recentForm, 1)}</span>
@@ -16579,7 +16863,7 @@ function rankingWeekMatchesSummary(matches, snapshot) {
   const total = matches.length;
   const quantas = `${total} ${total === 1 ? "partida" : "partidas"}`;
   if (!janela) return quantas;
-  return `${quantas} · ${formatShortDate(janela.inicio)} a ${formatShortDate(janela.fim)}`;
+  return `${quantas}, de ${formatShortDate(janela.inicio)} a ${formatShortDate(janela.fim)}`;
 }
 
 function updateRankingVersionView() {
@@ -16592,6 +16876,7 @@ function updateRankingVersionView() {
   const rows = rankingRowsForScope(state.db.teams, scope);
   rowsRoot.innerHTML = rankingAccordionRows(rows);
   updateRankingToolbarSummaries(scope);
+  atualizarTrilhoDoRanking();
 }
 
 function updateRankingDetailsVisibility(showDetails) {
@@ -16633,6 +16918,7 @@ function updateRankingScopeView(scope) {
     const rows = rankingRowsForScope(state.db.teams, scope);
     rowsRoot.innerHTML = rankingAccordionRows(rows);
     updateRankingToolbarSummaries(scope);
+    trocarCartaoDoRanking();
   }, 170);
 }
 
@@ -16665,6 +16951,7 @@ function updateRankingSortView() {
   }
   rowsRoot.innerHTML = rankingAccordionRows(rankingRowsForScope(state.db.teams, state.rankingScope === "all" ? "all" : "valid"));
   updateRankingSortIndicators();
+  trocarCartaoDoRanking();
 }
 
 function updateRankingSortIndicators() {
@@ -16702,6 +16989,7 @@ function bindRankingAccordion() {
     const shouldOpen = !item.classList.contains("open");
     root.querySelectorAll(".ranking-accordion-item.open").forEach((openItem) => setRankingAccordionItem(openItem, false));
     setRankingAccordionItem(item, shouldOpen);
+    trocarCartaoDoRanking();
   });
 }
 
@@ -16713,6 +17001,7 @@ function openRankingRouteTeam(teamId) {
   if (!root || !item) return;
   root.querySelectorAll(".ranking-accordion-item.open").forEach((openItem) => setRankingAccordionItem(openItem, false));
   setRankingAccordionItem(item, true);
+  trocarCartaoDoRanking();
   window.requestAnimationFrame(() => {
     item.scrollIntoView({ block: "center", behavior: "smooth" });
   });

@@ -4347,14 +4347,14 @@ body {
   }
 
   .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-lineup-inline,
-  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head > :nth-child(4),
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head > :nth-child(5),
   .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head .ranking-detail-cell,
   .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head .ranking-status-cell {
     display: none;
   }
 
   .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-score-cell,
-  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head > :nth-child(5) {
+  .vp-lista-pagina .ranking-accordion[data-details-visible="true"] .ranking-accordion-head > :nth-child(4) {
     grid-column: 7;
     grid-row: 1;
   }
@@ -5252,7 +5252,8 @@ body {
   grid-area: resumo;
 }
 
-.vp-partidas .vp-sec h1 {
+.vp-partidas .vp-sec h1,
+.vp-ranking .vp-sec h1 {
   margin: 0;
   font: 600 30px/1 var(--font-display);
   letter-spacing: 0;
@@ -5261,7 +5262,8 @@ body {
   white-space: nowrap;
 }
 
-.vp-partidas .vp-sec .lista-contagem {
+.vp-partidas .vp-sec .lista-contagem,
+.vp-ranking .vp-sec .lista-contagem {
   margin: 0 0 0 auto;
   padding: 0;
   color: var(--muted);
@@ -5778,5 +5780,674 @@ body {
 
   .vp-partidas .vp-sec .lista-contagem {
     margin-left: 0;
+  }
+}
+
+/* ==========================================================================
+   Ranking: a lista nas duas primeiras colunas da home, o trilho na terceira
+   ========================================================================== */
+
+/* 922px sao 340 + 32 + 550: com o resumo aberto, a lista comeca onde os filtros de
+   Partidas comecam e o trilho fica no lugar do resumo de la. Fechado, a trilha zera
+   e a lista fica centralizada. Em 1359px sobravam 370px entre nome e lineup. Com os
+   detalhes ligados, os quatro blocos entram no lugar da lineup, e equipe e nota nao
+   saem do lugar. */
+.vp-ranking {
+  display: grid;
+  grid-template-columns: minmax(0, 922px) 0px;
+  justify-content: center;
+  align-items: start;
+  column-gap: 0;
+  row-gap: 32px;
+  transition: grid-template-columns 220ms ease, column-gap 220ms ease;
+}
+
+.vp-ranking.com-resumo {
+  grid-template-columns: minmax(0, 922px) 340px;
+  column-gap: 32px;
+}
+
+/* O interior tem sempre 340px: a coluna abre e corta, sem espremer o cartao. */
+@media (min-width: 1181px) {
+  .vp-ranking .vp-resumo {
+    grid-template-columns: 340px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 180ms ease, visibility 0s linear 220ms;
+  }
+
+  .vp-ranking.com-resumo .vp-resumo {
+    max-height: none;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 180ms ease 40ms;
+  }
+}
+
+.vp-ranking .ranking-full-panel {
+  min-width: 0;
+}
+
+/* A barra numa placa so, como os filtros: nada de pilula. */
+.vp-ranking .ranking-page-toolbar {
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: 0;
+  min-height: 44px;
+  margin: 0 0 12px;
+  background: var(--surface);
+  border-radius: 2px;
+}
+
+.vp-ranking .ranking-version-picker {
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 14px;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  color: var(--muted);
+  font: 500 12px/1 var(--font-text);
+}
+
+.vp-ranking .ranking-version-picker select {
+  min-width: 0;
+  color: var(--ink);
+  color-scheme: dark;
+  font: 600 13px/1 var(--font-text);
+}
+
+.vp-ranking .ranking-version-picker option {
+  background: var(--surface-2);
+}
+
+.vp-ranking .ranking-version-picker:focus-within {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+.vp-ranking .ranking-page-toolbar .ranking-tab-switch {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0 14px;
+  background: none;
+  border: 0;
+  border-left: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--ink);
+  font: 600 13px/1 var(--font-text);
+}
+
+.vp-ranking .ranking-page-toolbar .ranking-tab-switch:hover,
+.vp-ranking .ranking-page-toolbar .ranking-tab-switch:focus-visible {
+  background: var(--surface-2);
+}
+
+.vp-ranking .ranking-page-toolbar .ranking-tab-switch[disabled] {
+  background: none;
+  color: var(--muted);
+  font-weight: 500;
+  opacity: 1;
+}
+
+.vp-ranking .ranking-toolbar-actions {
+  border-left: 1px solid var(--line);
+}
+
+.vp-ranking .ranking-toolbar-actions-inner {
+  gap: 0;
+}
+
+.vp-ranking .ranking-details-toggle {
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  color: var(--muted);
+  font: 600 13px/1 var(--font-text);
+}
+
+.vp-ranking .ranking-resumo-botao {
+  border-left: 1px solid var(--line);
+}
+
+.vp-ranking .ranking-details-toggle:has(input:checked) {
+  background: none;
+  color: var(--ink);
+}
+
+.vp-ranking .ranking-details-toggle input {
+  appearance: none;
+  flex: none;
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  padding: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--line-dark);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.vp-ranking .ranking-details-toggle input:checked {
+  background: var(--ink);
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 3px var(--surface);
+}
+
+.vp-ranking .ranking-details-toggle input:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+
+/* Validas e Todas: duas palavras, a escolhida sublinhada, como Padrao e Avancado
+   na partida. */
+.vp-ranking .ranking-scope-switch {
+  display: inline-flex;
+  gap: 14px;
+  min-width: 0;
+  padding: 0 14px;
+  background: none;
+  border: 0;
+  border-left: 1px solid var(--line);
+  border-radius: 0;
+}
+
+.vp-ranking .ranking-scope-switch::before {
+  display: none;
+}
+
+.vp-ranking .ranking-scope-switch button {
+  min-height: 44px;
+  padding: 0;
+  border-radius: 0;
+  color: var(--muted);
+  font: 600 13px/1 var(--font-text);
+}
+
+.vp-ranking .ranking-scope-switch button.active {
+  color: var(--ink);
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+.vp-ranking .ranking-scope-switch button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+/* As colunas numa conta so. A equipe tem o tamanho do nome mais longo (179px, mais
+   logo) e a nota cola nela. Tudo em pixel, menos a sobra no status: em pixel a troca
+   entre lineup e blocos anima, e sem gap a trilha zerada nao deixa vao para tras. */
+.vp-ranking .ranking-accordion {
+  --rk-equipe: 240px;
+  --rk-lineup: 360px;
+  --rk-bloco: 0px;
+  --rk-colunas: 40px 36px var(--rk-equipe) 72px var(--rk-lineup) repeat(4, var(--rk-bloco)) minmax(0, 1fr) 28px;
+  gap: 2px;
+}
+
+.vp-ranking .ranking-accordion[data-details-visible="true"] {
+  --rk-lineup: 0px;
+  --rk-bloco: 96px;
+}
+
+@media (min-width: 941px) {
+  .vp-ranking .ranking-accordion[data-details-visible="false"] :is(.ranking-accordion-head, .ranking-accordion-button) {
+    grid-template-columns: var(--rk-colunas);
+    column-gap: 0;
+  }
+}
+
+@media (min-width: 1181px) {
+  .vp-ranking .ranking-accordion[data-details-visible="true"] :is(.ranking-accordion-head, .ranking-accordion-button) {
+    grid-template-columns: var(--rk-colunas);
+    column-gap: 0;
+  }
+}
+
+.vp-ranking .ranking-accordion-button {
+  min-height: 50px;
+  padding: 6px 12px;
+}
+
+.vp-ranking .ranking-team-cell .team-logo {
+  width: 36px;
+  height: 36px;
+}
+
+.vp-ranking .ranking-team-cell strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.vp-ranking .ranking-team-cell small {
+  margin-top: 1px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vp-ranking .rank-cell {
+  font-size: 18px;
+}
+
+.vp-ranking .rank-cell.rank-lider {
+  color: var(--ink);
+}
+
+.vp-ranking .rank-change-cell {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Cair nao e vermelho, como na home: vermelho e marca. */
+.vp-ranking .rank-change-cell.down {
+  color: var(--muted) !important;
+}
+
+.vp-ranking .ranking-score-cell {
+  font: 600 20px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.vp-ranking .ranking-score-head {
+  letter-spacing: 0;
+}
+
+.vp-ranking .ranking-lineup-inline {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vp-ranking .ranking-lineup-head {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.vp-ranking .ranking-accordion[data-details-visible="false"] :is(.ranking-lineup-inline, .ranking-lineup-head) {
+  padding-left: 18px;
+}
+
+.vp-ranking .ranking-accordion[data-details-visible="true"] :is(.ranking-lineup-inline, .ranking-lineup-head) {
+  visibility: hidden;
+}
+
+.vp-ranking .ranking-accordion-button .ranking-detail-cell {
+  font: 600 16px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.vp-ranking .ranking-accordion[data-status-visible="true"] .ranking-status-cell:not(:empty) {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.vp-ranking .ranking-status-cell .chip {
+  min-height: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vp-ranking .ranking-status-cell .chip.green {
+  color: var(--ink);
+}
+
+/* Disputa pelo topo: a linha de cada equipe na cor dela, com o logo no fim. */
+.vp-ranking-cartao {
+  min-width: 0;
+}
+
+.vp-bump-placa {
+  padding: 8px 34px 8px 24px;
+  background: var(--surface);
+  border-radius: 2px;
+}
+
+.vp-bump {
+  position: relative;
+  height: 164px;
+}
+
+.vp-bump svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.vp-bump path {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  transition: opacity 160ms ease;
+}
+
+.vp-bump.com-foco path:not(.foco) {
+  opacity: 0.16;
+}
+
+.vp-bump-pos {
+  position: absolute;
+  left: -16px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.vp-bump-marca {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line-dark);
+}
+
+.vp-bump-semanas {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+}
+
+.vp-bump-semanas button {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.vp-bump-semanas button:hover {
+  background: rgba(245, 241, 242, 0.05);
+}
+
+.vp-bump-semanas button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+.vp-bump-logo {
+  position: absolute;
+  left: 100%;
+  width: 22px;
+  height: 22px;
+  transform: translate(7px, -50%);
+}
+
+.vp-bump-logo .team-logo {
+  width: 22px;
+  height: 22px;
+}
+
+.vp-bump-logo:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+
+/* Movimentos: a Placa do ranking da home, sem o destaque da primeira linha. */
+.vp-movimentos .vp-placa-rk {
+  grid-template-columns: 4px 20px 26px 22px minmax(0, 1fr) auto 6px;
+}
+
+.vp-movimentos .vp-rk:first-child .vp-rk-pos {
+  color: var(--muted);
+}
+
+.vp-nota-bloco .vp-rk-soma {
+  background: none;
+}
+
+.vp-nota-regras {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+/* Abaixo de 1300px, com o resumo aberto, a lista perde largura para o trilho fixo: a
+   lineup quebra em duas linhas, os blocos apertam e a barra ganha uma linha, em vez
+   de cortar o nome da equipe. */
+@media (min-width: 1181px) and (max-width: 1300px) {
+  .vp-ranking.com-resumo .ranking-accordion {
+    --rk-equipe: 228px;
+    --rk-lineup: 240px;
+  }
+
+  .vp-ranking.com-resumo .ranking-accordion[data-details-visible="true"] {
+    --rk-lineup: 0px;
+    --rk-bloco: 64px;
+  }
+
+  .vp-ranking.com-resumo .ranking-accordion[data-details-visible="false"] .ranking-lineup-inline {
+    white-space: normal;
+  }
+
+  .vp-ranking.com-resumo .ranking-page-toolbar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .vp-ranking.com-resumo .ranking-toolbar-actions {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .vp-ranking.com-resumo .ranking-toolbar-actions-inner {
+    justify-content: space-between;
+  }
+}
+
+/* Sem espaco para o trilho ao lado: com o resumo aberto, cartao e grafico vem antes
+   da lista, um ao lado do outro, e o resto depois. */
+@media (max-width: 1180px) {
+  .vp-ranking {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "titulo"
+      "barra"
+      "lista";
+    gap: 16px;
+    transition: none;
+  }
+
+  .vp-ranking.com-resumo {
+    grid-template-columns: 340px minmax(0, 1fr);
+    grid-template-areas:
+      "titulo titulo"
+      "barra barra"
+      "cartao grafico"
+      "lista lista"
+      "movimentos nota";
+    gap: 16px 32px;
+  }
+
+  .vp-ranking:not(.com-resumo) :is(.vp-ranking-cartao, .vp-bump-bloco, .vp-movimentos, .vp-nota-bloco) {
+    display: none;
+  }
+
+  .vp-ranking .ranking-full-panel,
+  .vp-ranking .vp-resumo {
+    display: contents;
+  }
+
+  .vp-ranking .vp-sec {
+    grid-area: titulo;
+    margin: 0;
+  }
+
+  .vp-ranking .ranking-page-toolbar {
+    grid-area: barra;
+    margin: 0;
+  }
+
+  .vp-ranking .vp-ranking-cartao {
+    grid-area: cartao;
+  }
+
+  .vp-ranking .vp-bump-bloco {
+    grid-area: grafico;
+  }
+
+  .vp-ranking .ranking-accordion,
+  .vp-ranking .ranking-week-matches,
+  .vp-ranking .ranking-full-panel > .empty-state {
+    grid-area: lista;
+    min-width: 0;
+  }
+
+  .vp-ranking .vp-movimentos {
+    grid-area: movimentos;
+  }
+
+  .vp-ranking .vp-nota-bloco {
+    grid-area: nota;
+  }
+}
+
+/* A barra em duas linhas. */
+@media (max-width: 940px) {
+  .vp-ranking .ranking-page-toolbar {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .vp-ranking .ranking-resumo-botao {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .vp-ranking .ranking-toolbar-actions {
+    border-top: 1px solid var(--line);
+  }
+
+  .vp-ranking .ranking-toolbar-actions-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .vp-ranking .ranking-details-toggle {
+    justify-content: flex-start;
+  }
+
+  .vp-ranking .ranking-scope-switch {
+    width: auto;
+    border-left: 0;
+  }
+
+  .vp-ranking .ranking-version-picker {
+    justify-content: flex-start;
+  }
+
+  .vp-ranking .ranking-accordion-button {
+    padding-right: 10px;
+    padding-left: 6px;
+  }
+}
+
+@media (max-width: 760px) {
+  .vp-ranking.com-resumo {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "titulo"
+      "barra"
+      "cartao"
+      "lista"
+      "grafico"
+      "movimentos"
+      "nota";
+    gap: 16px;
+  }
+
+  .vp-ranking .vp-sec .lista-contagem {
+    margin-left: 0;
+  }
+
+  .vp-ranking .ranking-accordion[data-details-visible="false"] :is(.ranking-accordion-head, .ranking-accordion-button) {
+    grid-template-columns: 28px 30px minmax(0, 1fr) 52px 0 20px;
+    column-gap: 6px;
+  }
+
+  .vp-ranking .ranking-accordion[data-status-visible="true"][data-details-visible="false"] :is(.ranking-accordion-head, .ranking-accordion-button) {
+    grid-template-columns: 28px 30px minmax(0, 1fr) 52px 60px 20px;
+  }
+
+  .vp-ranking .ranking-accordion[data-details-visible="false"] .ranking-score-cell {
+    min-width: 0;
+  }
+
+  /* Com o status fora da linha, o "+" cairia na trilha zerada, em cima da nota. */
+  .vp-ranking .ranking-accordion[data-details-visible="false"] .ranking-toggle-mark {
+    grid-row: 1;
+    grid-column: -2 / -1;
+  }
+}
+
+/* Celular: o print sai inteiro. O nome quebra em ate duas linhas, como na linha de
+   partida, a barra ganha uma linha por controle e o status desce para baixo do nome. */
+@media (max-width: 560px) {
+  .vp-ranking .ranking-page-toolbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vp-ranking .ranking-page-toolbar .ranking-tab-switch {
+    justify-self: stretch;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .vp-ranking .ranking-resumo-botao {
+    text-align: left;
+  }
+
+  .vp-ranking .ranking-toolbar-actions {
+    border-left: 0;
+  }
+
+  .vp-ranking .ranking-team-cell {
+    gap: 8px;
+  }
+
+  .vp-ranking .ranking-team-cell .team-logo {
+    flex: none;
+    width: clamp(26px, 8vw, 36px);
+    height: clamp(26px, 8vw, 36px);
+  }
+
+  .vp-ranking .ranking-team-cell strong {
+    font-size: clamp(12.5px, 3.6vw, 14px);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  .vp-ranking .ranking-team-cell small {
+    white-space: normal;
+  }
+
+  .vp-ranking .ranking-accordion[data-status-visible="true"][data-details-visible="false"] :is(.ranking-accordion-head, .ranking-accordion-button) {
+    grid-template-columns: 28px 30px minmax(0, 1fr) 52px 0 20px;
+  }
+
+  .vp-ranking .ranking-accordion[data-status-visible="true"][data-details-visible="false"] .ranking-accordion-button .ranking-status-cell {
+    grid-row: 2;
+    grid-column: 3 / -1;
+    justify-self: start;
+    padding-left: calc(clamp(26px, 8vw, 36px) + 8px);
   }
 }

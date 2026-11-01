@@ -5934,7 +5934,7 @@ body {
   gap: 0;
 }
 
-.vp-ranking .ranking-details-toggle {
+:is(.vp-ranking, .vp-jogadores) .ranking-details-toggle {
   gap: 8px;
   min-height: 44px;
   padding: 0 14px;
@@ -5949,12 +5949,12 @@ body {
   border-left: 1px solid var(--line);
 }
 
-.vp-ranking .ranking-details-toggle:has(input:checked) {
+:is(.vp-ranking, .vp-jogadores) .ranking-details-toggle:has(input:checked) {
   background: none;
   color: var(--ink);
 }
 
-.vp-ranking .ranking-details-toggle input {
+:is(.vp-ranking, .vp-jogadores) .ranking-details-toggle input {
   appearance: none;
   flex: none;
   box-sizing: border-box;
@@ -5968,13 +5968,13 @@ body {
   cursor: pointer;
 }
 
-.vp-ranking .ranking-details-toggle input:checked {
+:is(.vp-ranking, .vp-jogadores) .ranking-details-toggle input:checked {
   background: var(--ink);
   border-color: var(--ink);
   box-shadow: inset 0 0 0 3px var(--surface);
 }
 
-.vp-ranking .ranking-details-toggle input:focus-visible {
+:is(.vp-ranking, .vp-jogadores) .ranking-details-toggle input:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 1px;
 }
@@ -6376,7 +6376,7 @@ body {
     justify-content: space-between;
   }
 
-  .vp-ranking .ranking-details-toggle {
+  :is(.vp-ranking, .vp-jogadores) .ranking-details-toggle {
     justify-content: flex-start;
   }
 
@@ -6623,4 +6623,366 @@ body {
   .vp-eventos .event-filter-toggle {
     text-align: left;
   }
+}
+
+/* Jogadores: a lista central, com cada linha vestindo a camisa da equipe. */
+.vp-jogadores {
+  --jg-foto: 108px;
+  --jg-dados: 388px;
+  --jg-colunas: 156px minmax(0, 1fr) 92px 124px 56px 56px;
+  width: 100%;
+  max-width: 922px;
+  margin-inline: auto;
+}
+
+.vp-jogadores .vp-sec h1 {
+  margin: 0;
+  font: 600 30px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.vp-jogadores .vp-sec .lista-contagem {
+  margin: 0 0 0 auto;
+  padding: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-jg-filtros {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  background: var(--surface);
+  border-radius: 2px;
+}
+
+.vp-jg-busca {
+  flex: 1 1 220px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 14px;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  font: 500 13px/1 var(--font-text);
+}
+
+.vp-jg-busca::placeholder {
+  color: var(--muted);
+}
+
+.vp-jg-busca:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+.vp-jg-filtros .player-team-dropdown {
+  position: relative;
+  flex: 0 1 220px;
+  min-width: 0;
+  background: none;
+  border: 0;
+  border-inline: 1px solid var(--line);
+  border-radius: 0;
+}
+
+.vp-jg-filtros .player-team-dropdown summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 12px;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 14px;
+  background: none;
+  border: 0;
+  font-size: 13px;
+}
+
+.vp-jg-filtros .player-team-dropdown summary > :first-child {
+  display: none;
+}
+
+.vp-jg-filtros .player-team-dropdown summary strong {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: right;
+}
+
+.vp-jg-toggle {
+  min-height: 44px;
+  padding: 0 14px;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  font: 600 13px/1 var(--font-text);
+  text-align: left;
+}
+
+.vp-jg-toggle[aria-pressed="true"] {
+  color: var(--ink);
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+.vp-jg-cabeca,
+.vp-jg-linha.vp-slide {
+  display: grid;
+  grid-template-columns: var(--jg-colunas);
+  align-items: center;
+  column-gap: 12px;
+  padding: 0 14px 0 var(--jg-foto);
+}
+
+.vp-jg-cabeca {
+  min-height: 34px;
+  color: var(--muted);
+  font: 600 12px/1 var(--font-text);
+}
+
+.vp-jg-cabeca button {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.vp-jg-cabeca button.ativa {
+  color: var(--ink);
+}
+
+.vp-jg-cabeca i {
+  font-style: normal;
+}
+
+.vp-jg-cabeca .num {
+  justify-self: end;
+}
+
+.vp-jg-lista {
+  display: grid;
+  gap: 4px;
+}
+
+/* A camisa em tira: a cor 1 e a maior peca, com foto, nome e equipe, e a cor 2
+   fica com os dados. A emenda anda com a borda direita, para acompanhar a
+   largura da lista, e tem a inclinacao do cartao: os 64px dele virariam 45 graus. */
+.vp-jg-linha.vp-slide {
+  --emenda: calc(100% - var(--jg-dados));
+  flex: none;
+  height: 64px;
+  min-width: 0;
+  outline-offset: 2px;
+}
+
+.vp-jg-linha .vp-slide-campo {
+  clip-path: polygon(0 0, calc(var(--emenda) + 2px) 0, calc(var(--emenda) - 19px) 100%, 0 100%);
+}
+
+.vp-jg-linha .vp-slide-campo i {
+  top: -14px;
+  left: 4px;
+  width: 92px;
+  height: 92px;
+}
+
+.vp-jg-linha:hover,
+.vp-jg-linha:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--placa-tinta);
+}
+
+.vp-slide.vp-jg-linha .player-figure {
+  bottom: -14px;
+  left: 30px;
+  width: 80px;
+  height: 80px;
+}
+
+.vp-slide.vp-jg-linha .player-figure.is-silhouette {
+  bottom: -12px;
+  left: 36px;
+  width: 72px;
+  height: 72px;
+}
+
+.vp-slide.vp-jg-linha .player-figure img {
+  filter: drop-shadow(3px 0 0 var(--placa-campo));
+}
+
+.vp-jg-nome,
+.vp-jg-equipe span {
+  min-width: 0;
+}
+
+.vp-jg-nome,
+.vp-jg-equipe {
+  color: var(--placa-campo-tinta);
+}
+
+.vp-jg-nome {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-jg-nome strong {
+  overflow-wrap: anywhere;
+  font: 600 18px/1.1 var(--fonte-carta);
+}
+
+.vp-jg-nome small {
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+
+.vp-jg-equipe {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding-right: 32px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-jg-equipe.sem-atual {
+  font-weight: 500;
+}
+
+.vp-jg-equipe .team-logo {
+  flex: none;
+  filter: var(--placa-logo-contorno, none);
+}
+
+.vp-jg-agentes {
+  display: flex;
+  gap: 4px;
+}
+
+.vp-jg-funcao {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-jg-funcao,
+.vp-jg-cabeca > :nth-child(4) {
+  margin-left: 16px;
+}
+
+.vp-jg-funcao .role-mini {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.vp-jg-funcao .role-mini img {
+  filter: var(--placa-icone);
+}
+
+.vp-jg-numero {
+  text-align: right;
+  font: 600 18px/1 var(--fonte-carta);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-paginas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+}
+
+.vp-paginas a,
+.vp-paginas span {
+  display: inline-grid;
+  place-items: center;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0 8px;
+  color: var(--muted);
+  font: 600 13px/1 var(--font-text);
+  text-decoration: none;
+}
+
+.vp-paginas a:hover {
+  color: var(--ink);
+  background: var(--surface);
+}
+
+.vp-paginas a[aria-current="page"] {
+  color: var(--ink);
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+@media (max-width: 860px) {
+  .vp-jogadores {
+    --jg-foto: 84px;
+    --jg-dados: 112px;
+  }
+
+  .vp-jg-filtros {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vp-jg-filtros .player-team-dropdown {
+    border-inline: 0;
+    border-block: 1px solid var(--line);
+  }
+
+  .vp-jg-cabeca {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 8px 0;
+  }
+
+  .vp-jg-cabeca > span {
+    display: none;
+  }
+
+  .vp-jg-linha.vp-slide {
+    grid-template-columns: minmax(0, 1fr) 92px;
+    grid-template-rows: repeat(4, auto);
+    row-gap: 3px;
+    column-gap: 36px;
+    height: 146px;
+    align-content: center;
+    padding-block: 0;
+    padding-right: 10px;
+  }
+
+  /* Altura fixa e o mesmo recuo em toda linha: o corte nao muda de angulo com
+     nomes de tamanhos diferentes. */
+  .vp-jg-linha .vp-slide-campo i {
+    top: 10px;
+    left: -10px;
+  }
+
+  .vp-slide.vp-jg-linha .player-figure {
+    left: 2px;
+  }
+
+  .vp-slide.vp-jg-linha .player-figure.is-silhouette {
+    left: 6px;
+  }
+
+  .vp-jg-nome { grid-column: 1; grid-row: 1 / 3; align-self: end; }
+  .vp-jg-equipe { grid-column: 1; grid-row: 3 / 5; align-self: start; padding-right: 0; }
+  .vp-jg-agentes,
+  .vp-jg-funcao,
+  .vp-jg-numero { grid-column: 2; margin-left: 0; text-align: left; font: 500 12px/1.2 var(--font-text); }
+  .vp-jg-numero::after { content: " " attr(data-rotulo); }
 }

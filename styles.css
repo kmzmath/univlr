@@ -2376,7 +2376,7 @@ tr:hover td {
   transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 
-.roster-player-card:hover {
+a.roster-player-card:hover {
   border-color: color-mix(in srgb, var(--team-accent-2, var(--teal)) 58%, var(--line-dark));
   background: var(--surface);
   transform: translateY(-2px);
@@ -12063,7 +12063,7 @@ img.search-state-flag + .search-state-flag.placeholder {
     #0b0b10;
 }
 
-.team-page .roster-player-card:hover {
+.team-page a.roster-player-card:hover {
   border-color: rgba(246, 19, 42, 0.38);
   background: #11131a;
 }

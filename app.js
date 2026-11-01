@@ -16590,8 +16590,8 @@ function rankingLineupCard(entry) {
   const player = playerById(entry.playerId || entry.id);
   const name = player?.nick || entry.name || entry.handle || "Jogador";
   const handle = player?.handle && player.handle !== name ? player.handle : player?.matches ? `${player.matches} partidas` : "";
-  const tag = player ? "a" : "span";
-  const attrs = player ? `href="${playerHref(player)}"` : "";
+  const tag = playerTemPerfil(player) ? "a" : "span";
+  const attrs = playerTemPerfil(player) ? `href="${playerHref(player)}"` : "";
   return `
     <${tag} class="ranking-lineup-card" ${attrs}>
       ${player ? playerLogo(player.id, "large") : logo(String(entry.slot || "?").padStart(2, "0"), ["#1a2638", "#334155"], "round")}
@@ -21838,7 +21838,7 @@ function teamHeroCoverSelection(lineupPlayers, team) {
 function teamHeroCoverPlayer({ entry, player }) {
   const name = player?.nick || entry?.name || "Jogador";
   const body = `${player ? playerLogo(player.id, "vp-equipe-foto-img") : ""}<span>${escapeHtml(name)}</span>`;
-  return player ? `<a class="vp-equipe-foto" href="${playerHref(player)}">${body}</a>` : `<span class="vp-equipe-foto">${body}</span>`;
+  return playerTemPerfil(player) ? `<a class="vp-equipe-foto" href="${playerHref(player)}">${body}</a>` : `<span class="vp-equipe-foto">${body}</span>`;
 }
 
 // So as redes que a equipe cadastrou, como texto. Os seis icones apagados de
@@ -21863,12 +21863,13 @@ function elencoPlaca(team, roster) {
   const linhas = destaque.map((entry) => {
     const player = entry.playerId ? playerById(entry.playerId) : null;
     const nome = player?.nick || entry.name || "Jogador";
-    const stats = player ? playerStatsForTeam(player, team.id) : null;
+    const comPerfil = playerTemPerfil(player);
+    const stats = comPerfil ? playerStatsForTeam(player, team.id) : null;
     const numeros = stats
       ? `<span class="vp-elenco-n vp-elenco-nota paint-ink">${escapeHtml(playerRating(stats))}</span><span class="vp-elenco-n paint-ink">${escapeHtml(String(stats.matches || 0))}</span><span class="vp-elenco-n paint-ink">${escapeHtml(fmt(stats.acs, 0))}</span>`
       : `<span class="vp-elenco-n">-</span><span class="vp-elenco-n">-</span><span class="vp-elenco-n">-</span>`;
     const miolo = `<span class="vp-elenco-foto">${player ? playerLogo(player.id) : ""}</span><span class="vp-elenco-nome"><b class="paint-ink">${escapeHtml(nome)}</b><small class="paint-ink">${escapeHtml(player?.handle || "Perfil em atualização")}</small></span>${numeros}`;
-    return player
+    return comPerfil
       ? `<a class="vp-elenco-linha pintura-de-equipe" href="${playerHref(player)}" ${estilo}>${miolo}</a>`
       : `<span class="vp-elenco-linha pintura-de-equipe" ${estilo}>${miolo}</span>`;
   });
@@ -22377,7 +22378,7 @@ function teamPlayerAgentPool(team, player, limite = 3) {
 // era gente que saiu, com amostra pequena, ordenada junto de quem joga.
 // Quem saiu continua na aba Elenco, com periodo e nota.
 function teamStatsPlayers(team, currentLineup, observedPlayers) {
-  const daLine = currentLineup.map((entry) => (entry.playerId ? playerById(entry.playerId) : null)).filter(Boolean);
+  const daLine = currentLineup.map((entry) => (entry.playerId ? playerById(entry.playerId) : null)).filter(playerTemPerfil);
   // Equipe sem elenco curado cai no observado: sem isso a aba ficaria vazia
   // justamente para as equipes que so existem via partida.
   const base = daLine.length ? daLine : observedPlayers.slice(0, 5);
@@ -23123,6 +23124,7 @@ function teamHistoricalPlayers(team) {
   const lineupIds = new Set(registeredLineup.map((entry) => entry.playerId).filter(Boolean));
   const lineupNameKeys = new Set(registeredLineup.map((entry) => normalizeNameKey(entry.name)).filter(Boolean));
   return state.db.players
+    .filter(playerTemPerfil)
     .filter((player) => {
       if (!(player.teamHistory || []).includes(team.id)) return false;
       if (!registeredLineup.length) return player.currentTeam !== team.id;
@@ -23472,7 +23474,7 @@ function teamPlayerStatsTable(players) {
 
 function renderPlayerDetail(id) {
   const player = playerById(id);
-  if (!player) return renderNotFound("Jogador");
+  if (!playerTemPerfil(player)) return renderNotFound("Jogador");
   const activeTab = normalizePlayerTab(route().tab);
   const matches = matchSeriesForPlayer(player.id);
   const team = playerPrimaryTeam(player);
@@ -24742,6 +24744,7 @@ function resetResultFilters() {
 function filteredPlayers() {
   const nameQuery = normalize(state.playerQuery);
   const rows = state.db.players
+    .filter(playerTemPerfil)
     .filter((player) => {
       const nick = normalize(`${player.nick} ${player.handle} ${(player.nickHistory || []).join(" ")}`);
       return !nameQuery || nick.includes(nameQuery);
@@ -26187,7 +26190,7 @@ function searchEntities() {
       colors: map.colors,
       mark: map.name.slice(0, 3).toUpperCase(),
     })),
-    ...db.players.map(searchPlayerResult),
+    ...db.players.filter(playerTemPerfil).map(searchPlayerResult),
     ...(window.Community?.usuariosParaBusca() || []).map(searchUserResult),
     ...allMatchSeries().map((series) => {
       const score = matchListScore(series);
@@ -26645,6 +26648,7 @@ function lineupEntryCard(entry, team) {
   const player = entry.playerId ? playerById(entry.playerId) : null;
   const name = player?.nick || entry.name || "Jogador";
   const handle = player?.handle || "";
+  const comPerfil = playerTemPerfil(player);
   const stats = player && team ? playerStatsForTeam(player, team.id) : player;
   const body = `
     <div class="roster-photo-wrap">
@@ -26653,16 +26657,16 @@ function lineupEntryCard(entry, team) {
     <div class="roster-card-body">
       <strong>${escapeHtml(name)}</strong>
       <span>${handle ? escapeHtml(handle) : "Perfil em atualização"}</span>
-      ${player ? `
+      ${comPerfil ? `
         <div class="roster-player-metrics">
           <span><strong>${escapeHtml(playerRating(stats))}</strong><small>rAAting</small></span>
           <span><strong>${escapeHtml(String(stats.matches || 0))}</strong><small>Mapas</small></span>
           <span><strong>${escapeHtml(fmt(stats.acs, 0))}</strong><small>ACS</small></span>
         </div>
-      ` : `<small class="roster-player-empty">Perfil em atualização</small>`}
+      ` : `<small class="roster-player-empty">${player ? "Ainda sem partidas" : "Perfil em atualização"}</small>`}
     </div>
   `;
-  return player ? `<a class="roster-player-card" href="${playerHref(player)}">${body}</a>` : `<div class="roster-player-card">${body}</div>`;
+  return comPerfil ? `<a class="roster-player-card" href="${playerHref(player)}">${body}</a>` : `<div class="roster-player-card">${body}</div>`;
 }
 
 function tournamentRow(event) {
@@ -26856,6 +26860,12 @@ function playerById(id) {
     players?.find((player) => (player.accounts || []).some((account) => account.puuid === key) || player.routeSlug === routeKey);
 }
 
+// Jogador sem nenhum mapa fica fora do site (lista, busca e rota), mas segue no
+// elenco como nome sem link. O perfil aparece sozinho no primeiro mapa.
+function playerTemPerfil(player) {
+  return Number(player?.matches || 0) > 0;
+}
+
 function playerRouteId(playerOrId) {
   const player = resolvePlayerRouteTarget(playerOrId);
   return player?.routeSlug || player?.id || String(playerOrId || "");
@@ -26929,7 +26939,8 @@ function tournamentDocumentTitle(id) {
 
 function playerDocumentTitle(id) {
   const player = playerById(id);
-  return player?.nick || player?.handle || STATIC_DOCUMENT_TITLES.players;
+  if (!playerTemPerfil(player)) return STATIC_DOCUMENT_TITLES.players;
+  return player.nick || player.handle || STATIC_DOCUMENT_TITLES.players;
 }
 
 function teamDocumentTitle(id) {

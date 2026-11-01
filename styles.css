@@ -15431,45 +15431,6 @@ img {
 
 /* ------------------------------------------------------------------ listagem */
 
-.news-lista { display: flex; flex-direction: column; gap: var(--space-4); }
-
-.news-item {
-  display: flex;
-  gap: var(--space-5);
-  align-items: center;
-  padding: var(--space-4);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 160ms ease;
-}
-
-.news-item:hover { border-color: var(--line-dark); }
-.news-item-texto { min-width: 0; }
-
-.news-item-texto time {
-  display: block;
-  font: 600 var(--text-2xs) / 1 var(--font-text);
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: var(--space-2);
-}
-
-.news-item-texto h2 {
-  font: 800 var(--text-xl) / 1.2 var(--font-display);
-  margin-bottom: var(--space-2);
-}
-
-.news-item:hover h2 { color: var(--brand-text); }
-
-.news-item-texto p {
-  font: 400 var(--text-sm) / 1.5 var(--font-text);
-  color: var(--muted);
-  max-width: 70ch;
-}
-
 .news-vazio { text-align: center; }
 .news-vazio strong { display: block; margin-bottom: var(--space-2); font-size: var(--text-lg); }
 .news-vazio p { color: var(--muted); }
@@ -15614,7 +15575,6 @@ img {
 .news-artigo .cmt-secao { margin-top: var(--space-8); }
 
 @media (max-width: 560px) {
-  .news-item { flex-direction: column; align-items: stretch; gap: var(--space-4); }
   .news-capa.media { width: 100%; }
   .news-artigo-titulo h1 { font-size: var(--text-2xl); }
   .news-corpo { font-size: var(--text-md); }
@@ -15814,15 +15774,6 @@ img {
 }
 
 /* ---------------------------------------------- arestas da comunidade */
-
-/* O selo de contagem ao lado do titulo na listagem de noticias: alinhado pela
-   base do texto e nao pelo topo, senao ele flutua acima da linha do titulo. */
-.news-item-texto h2 .cmt-selo-contagem {
-  margin-left: var(--space-3);
-  vertical-align: middle;
-  position: relative;
-  top: -2px;
-}
 
 /* Usuario no resultado da busca: o avatar gerado entra no lugar do escudo, na
    mesma caixa que os outros tipos usam. */

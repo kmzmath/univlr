@@ -88,26 +88,24 @@
 
   // ---------------------------------------------------------------- listagem
 
+  function textoDaNoticia(a) {
+    return `
+      <span class="vp-nt-texto">
+        <time datetime="${esc(a.data)}">${dataLonga(a.data)}</time>
+        <h2>${esc(a.titulo)}${window.Comments ? window.Comments.selo("article", a.slug) : ""}</h2>
+        <p>${esc(a.resumo)}</p>
+      </span>`;
+  }
+
   function renderLista() {
-    const itens = lista();
+    const [manchete, ...resto] = lista();
     window.Shell(`
-      <section class="news-pagina">
-        <header class="page-header slim-header">
-          <div class="page-title"><h1>Notícias</h1></div>
-        </header>
+      <section class="vp-lista-pagina vp-noticias-pagina">
+        <header class="vp-sec"><h1>Notícias</h1></header>
         ${
-          itens.length
-            ? `<div class="news-lista">
-                 ${itens.map((a) => `
-                   <a class="news-item" href="#/news/${esc(a.slug)}">
-                     ${capa(a, "media")}
-                     <div class="news-item-texto">
-                       <time datetime="${esc(a.data)}">${dataLonga(a.data)}</time>
-                       <h2>${esc(a.titulo)}${window.Comments ? window.Comments.selo("article", a.slug) : ""}</h2>
-                       <p>${esc(a.resumo)}</p>
-                     </div>
-                   </a>`).join("")}
-               </div>`
+          manchete
+            ? `<a class="vp-nt-manchete" href="#/news/${esc(manchete.slug)}">${capa(manchete, "media", false)}${textoDaNoticia(manchete)}</a>
+               ${resto.length ? `<div class="vp-nt-lista">${resto.map((a) => `<a class="vp-nt-linha" href="#/news/${esc(a.slug)}">${capa(a, "media")}${textoDaNoticia(a)}</a>`).join("")}</div>` : ""}`
             : `<div class="empty-state news-vazio">
                  <strong>Nenhuma notícia publicada ainda.</strong>
                  <p>Quando a primeira sair, ela aparece aqui e na página inicial.</p>
@@ -847,12 +845,12 @@
     window.Shell(`
       <article class="news-artigo">
         <header class="news-artigo-capa">
-          ${a.capa ? `<img class="news-artigo-imagem" src="${esc(a.capa)}" alt="" />` : ""}
           <div class="news-artigo-titulo">
             <a class="subtle-link" href="#/news">Notícias</a>
             <h1>${esc(a.titulo)}</h1>
             <time datetime="${esc(a.data)}">${dataLonga(a.data)}</time>
           </div>
+          ${a.capa ? `<img class="news-artigo-imagem" src="${esc(a.capa)}" alt="" />` : ""}
         </header>
         <div class="news-corpo">${a.html}</div>
         ${window.Comments ? window.Comments.shell("article", a.slug) : ""}

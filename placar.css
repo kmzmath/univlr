@@ -5884,6 +5884,41 @@ body {
   background: var(--surface-2);
 }
 
+/* Sublinhado e seta: e o unico texto da barra que leva a outra lista. */
+.vp-ranking .ranking-page-toolbar .ranking-tab-switch:not([disabled]) span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vp-ranking .ranking-page-toolbar .ranking-tab-switch svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+}
+
+/* Trocar entre ranking e partidas: uma lista sai por um lado e a outra entra pelo
+   outro. O clip segura o deslize, sem criar rolagem lateral. */
+.vp-ranking {
+  overflow-x: clip;
+}
+
+.vp-sai-esquerda { animation: vp-lista-sai-esquerda 220ms ease forwards; }
+.vp-sai-direita { animation: vp-lista-sai-direita 220ms ease forwards; }
+.vp-entra-esquerda { animation: vp-lista-entra-esquerda 220ms ease; }
+.vp-entra-direita { animation: vp-lista-entra-direita 220ms ease; }
+
+@keyframes vp-lista-sai-esquerda { to { opacity: 0; transform: translateX(-32px); } }
+@keyframes vp-lista-sai-direita { to { opacity: 0; transform: translateX(32px); } }
+@keyframes vp-lista-entra-esquerda { from { opacity: 0; transform: translateX(-32px); } }
+@keyframes vp-lista-entra-direita { from { opacity: 0; transform: translateX(32px); } }
+
+/* A largura da coluna de Ultimas partidas: nome colado no placar. */
+.vp-ranking .ranking-week-matches {
+  width: 100%;
+  max-width: 550px;
+  margin-inline: auto;
+}
+
 .vp-ranking .ranking-page-toolbar .ranking-tab-switch[disabled] {
   background: none;
   color: var(--muted);

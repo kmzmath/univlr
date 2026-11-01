@@ -15661,6 +15661,10 @@ function renderRankingPage(teamId = route().id || "") {
   bindRankingTabSwitch();
   bindTrilhoDoRanking();
   bindResumoDoRanking();
+  if (state.rankingListaEntra) {
+    document.querySelector(".ranking-accordion, .ranking-week-matches")?.classList.add(state.rankingListaEntra);
+    state.rankingListaEntra = "";
+  }
   if (aba === "partidas") {
     bindResultDayToggles();
     return;
@@ -15687,19 +15691,22 @@ function bindRankingTabSwitch() {
   document.querySelectorAll("[data-ranking-tab]").forEach((button) => {
     button.addEventListener("click", () => {
       const params = routeQuery();
+      const lista = document.querySelector(".ranking-accordion, .ranking-week-matches");
       if (button.dataset.rankingTab !== "partidas") {
         params.delete("aba");
         state.rankingAnimarEntrada = true;
-        pushFilterState("ranking", params);
+        state.rankingListaEntra = "vp-entra-esquerda";
+        lista?.classList.remove("vp-entra-direita");
+        lista?.classList.add("vp-sai-direita");
+        window.setTimeout(() => pushFilterState("ranking", params), RANKING_ABA_MS);
         return;
       }
       params.set("aba", "partidas");
+      state.rankingListaEntra = "vp-entra-direita";
+      lista?.classList.remove("vp-entra-esquerda");
+      lista?.classList.add("vp-sai-esquerda");
       const acoes = document.querySelector(".ranking-toolbar-actions");
-      if (!acoes) {
-        pushFilterState("ranking", params);
-        return;
-      }
-      fecharAcoesDoRanking(acoes);
+      if (acoes) fecharAcoesDoRanking(acoes);
       // setTimeout e nao transitionend: em aba oculta o compositor nao avanca a
       // transicao e o evento nunca chega - a troca de aba ficaria presa.
       window.setTimeout(() => pushFilterState("ranking", params), RANKING_ABA_MS);
@@ -15782,7 +15789,8 @@ function rankingRowsForScope(teams, scope) {
 function rankingRowExistsInSnapshot(ranking) {
   const matches = Number(ranking?.matches || 0);
   if (!Number.isFinite(matches) || matches <= 0) return false;
-  // Equipe sem nenhum jogador no elenco atual nao aparece nem no escopo "Todos".
+  // Equipe inativa nao aparece nem em "Todas": esse escopo so soma as provisorias.
+  if (rankingIsInactive(ranking)) return false;
   return Number(ranking?.rosterSize ?? -1) !== 0;
 }
 
@@ -15967,8 +15975,12 @@ function rankingTabSwitch(aba, total) {
   if (aba === "partidas") {
     return `<button class="ranking-tab-switch" type="button" data-ranking-tab="ranking">Voltar ao ranking</button>`;
   }
-  const rotulo = total ? `${total} ${total > 1 ? "novas partidas contabilizadas" : "nova partida contabilizada"}` : "Nenhuma partida nova nesta semana";
-  return `<button class="ranking-tab-switch" type="button" data-ranking-tab="partidas" ${total ? "" : "disabled"}>${escapeHtml(rotulo)}</button>`;
+  return `<button class="ranking-tab-switch" type="button" data-ranking-tab="partidas" ${total ? "" : "disabled"}>${rotuloDasNovasPartidas(total)}</button>`;
+}
+
+function rotuloDasNovasPartidas(total) {
+  if (!total) return "Nenhuma partida nova nesta semana";
+  return `<span>Ver ${total} ${total > 1 ? "novas partidas" : "nova partida"}</span>${chevronIcon()}`;
 }
 
 // Reusa a lista de /partidas inteira em vez de montar uma parecida:
@@ -16850,9 +16862,7 @@ function updateRankingToolbarSummaries(scope) {
   const botao = document.querySelector('[data-ranking-tab="partidas"]');
   if (!botao) return;
   const total = rankingWeekMatches().length;
-  botao.textContent = total
-    ? `${total} ${total > 1 ? "novas partidas contabilizadas" : "nova partida contabilizada"}`
-    : "Nenhuma partida nova nesta semana";
+  botao.innerHTML = rotuloDasNovasPartidas(total);
   botao.disabled = !total;
 }
 

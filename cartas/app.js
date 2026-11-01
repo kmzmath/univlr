@@ -9,6 +9,7 @@ const busca = document.getElementById("busca-jogador");
 const buscaResultados = document.getElementById("busca-resultados");
 const conversa = document.getElementById("comentarios");
 const conversaTotal = document.getElementById("conversa-total");
+const trilho = document.querySelector(".cartas-trilho");
 let manifest;
 let cartas = [];
 
@@ -49,6 +50,12 @@ function dataLonga(iso) {
 function dataCurta(iso) {
   const { mes, dia } = partes(iso);
   return `${String(dia).padStart(2, "0")}/${String(mes).padStart(2, "0")}`;
+}
+
+// O gerador poe uma barra na frente de todo caminho, inclusive do icone que mora
+// em outro site (o da Veto), e o endereco quebrava.
+function icone(src) {
+  return String(src || "").replace(/^\/+(?=https?:)/i, "");
 }
 
 function dataDoJogo(value) {
@@ -97,14 +104,14 @@ function renderContagem(faixas) {
   const proximo = faixas.find((day) => !day.revelado);
   const fracao = manifest.total ? (reveladas / manifest.total) * 100 : 0;
   contagem.innerHTML = `
-    <p class="contagem-numero"><b>${num(reveladas)}</b><span>de ${num(manifest.total)} reveladas</span></p>
-    <span class="contagem-barra" aria-hidden="true"><i style="--p:${fracao.toFixed(2)}%"></i></span>
     ${
       proximo
         ? `<p class="contagem-timer">Próxima revelação <b id="relogio" data-alvo="${horaDaRevelacao(proximo.date)}"></b></p>
            <p class="contagem-proxima">${esc(dataLonga(proximo.date))}, às 21:30 de Brasília, ${proximo.count} ${proximo.count === 1 ? "cartinha" : "cartinhas"} (${pos(proximo.primeira)} a ${pos(proximo.ultima)})</p>`
         : `<p class="contagem-proxima">Todas as cartinhas foram reveladas.</p>`
     }
+    <span class="contagem-barra" aria-hidden="true"><i style="--p:${fracao.toFixed(2)}%"></i></span>
+    <p class="contagem-numero"><b>${num(reveladas)}</b><span>de ${num(manifest.total)} reveladas</span></p>
   `;
   pulsaRelogio();
 }
@@ -169,7 +176,7 @@ function pulsaRelogio() {
 function agentesMini(card) {
   return (card.agents || [])
     .slice(0, 3)
-    .map((agent) => (agent.icon ? `<img src="${esc(agent.icon)}" alt="${esc(agent.name)}" title="${esc(`${agent.name}, ${num(agent.share * 100)}% dos mapas`)}" loading="lazy" />` : ""))
+    .map((agent) => (agent.icon ? `<img src="${esc(icone(agent.icon))}" alt="${esc(agent.name)}" title="${esc(`${agent.name}, ${num(agent.share * 100)}% dos mapas`)}" loading="lazy" />` : ""))
     .join("");
 }
 
@@ -196,7 +203,7 @@ function jogosRecentes(card) {
 function perfil(card) {
   const stat = card.stats || {};
   const agentes = (card.agents || [])
-    .map((agent) => `<span class="agente">${agent.icon ? `<img src="${esc(agent.icon)}" alt="" loading="lazy" />` : ""}<strong>${esc(agent.name)}</strong><small>${num(agent.share * 100)}%</small></span>`)
+    .map((agent) => `<span class="agente">${agent.icon ? `<img src="${esc(icone(agent.icon))}" alt="" loading="lazy" />` : ""}<strong>${esc(agent.name)}</strong><small>${num(agent.share * 100)}%</small></span>`)
     .join("");
   return `
     <div class="perfil-dentro">
@@ -222,18 +229,89 @@ function perfil(card) {
   `;
 }
 
-// Uma linha por jogador, no estilo do ranking: risco e banho na cor da equipe.
-// A linha inteira e um botao que abre o perfil logo abaixo dela.
+// As pecas da camisa da linha, com a conta do teamPlateStyle do site. O manifesto
+// so traz uma cor e os dias ja postados nao mudam, entao as duas vem de cores.json
+// (scripts/build_card_colors.js). Equipe fora do arquivo fica com a cor do manifesto.
+let coresDasEquipes = {};
+
+function buscaCores() {
+  return fetch("cores.json?v=1")
+    .then((response) => response.json())
+    .then((data) => {
+      coresDasEquipes = data;
+    })
+    .catch(() => {});
+}
+
+const TINTA_CLARA = [245, 241, 242];
+const TINTA_ESCURA = [4, 3, 6];
+const SEM_COR = [58, 61, 72];
+
+function paraRgb(hex) {
+  const achado = /^#([0-9a-f]{6})$/i.exec(String(hex || "").trim());
+  if (!achado) return null;
+  const valor = Number.parseInt(achado[1], 16);
+  return [(valor >> 16) & 255, (valor >> 8) & 255, valor & 255];
+}
+
+function paraHex(rgb) {
+  return `#${rgb.map((canal) => canal.toString(16).padStart(2, "0")).join("")}`;
+}
+
+function luz(rgb) {
+  const canal = (v) => {
+    const x = v / 255;
+    return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * canal(rgb[0]) + 0.7152 * canal(rgb[1]) + 0.0722 * canal(rgb[2]);
+}
+
+function contraste(a, b) {
+  const [la, lb] = [luz(a), luz(b)];
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
+function camisaDaLinha(card) {
+  const misturar = (a, b, f) => a.map((c, i) => Math.round(c * (1 - f) + b[i] * f));
+  const [primeira, segunda] = (coresDasEquipes[card.teamLogo] || []).map(paraRgb);
+  const linhaDaEquipe = paraRgb(card.teamColor) || SEM_COR;
+  const bruta = primeira || linhaDaEquipe;
+  const quasePreta = luz(bruta) < 0.012 && (Math.max(...bruta) - Math.min(...bruta)) / 255 < 0.12;
+  const base = quasePreta ? linhaDaEquipe : bruta;
+  const tinta = luz(base) >= 0.45 ? TINTA_ESCURA : TINTA_CLARA;
+  const clara = luz(tinta) > 0.5;
+  let campo = base;
+  for (let passo = 0; passo < 40 && contraste(campo, tinta) < 4.5; passo += 1) {
+    campo = misturar(campo, clara ? [0, 0, 0] : [255, 255, 255], 0.03);
+  }
+  const agrega = segunda && luz(segunda) > 0.06 && contraste(campo, segunda) >= 1.5;
+  const peca = agrega ? segunda : clara ? misturar(campo, [255, 255, 255], 0.86) : misturar(campo, tinta, 0.16);
+  const tintaPeca = contraste(peca, TINTA_CLARA) >= contraste(peca, TINTA_ESCURA) ? TINTA_CLARA : TINTA_ESCURA;
+  const numero = contraste(peca, campo) >= 3 ? campo : tintaPeca;
+  return [
+    `--placa-campo:${paraHex(campo)}`,
+    `--placa-peca:${paraHex(peca)}`,
+    `--placa-tinta:${paraHex(tintaPeca)}`,
+    `--placa-campo-tinta:${paraHex(tinta)}`,
+    `--placa-numero:${paraHex(numero)}`,
+    card.teamLogo ? `--placa-logo:url('${card.teamLogo}')` : "",
+    luz(campo) > 0.7 ? "--placa-logo-filtro:brightness(0) opacity(0.55)" : "",
+  ].filter(Boolean).join(";");
+}
+
+// Uma linha por jogador, na camisa da equipe, como em Jogadores. A linha inteira e
+// um botao que abre o perfil logo abaixo dela.
 function linha(card) {
   const stat = card.stats || {};
   return `
-    <article class="linha" id="carta-${card.rank}" style="--team-line:${esc(card.teamColor || "#8a8d98")}">
-      <button type="button" class="resumo" aria-expanded="false" aria-controls="perfil-${card.rank}">
+    <article class="linha" id="carta-${card.rank}" style="${esc(camisaDaLinha(card))}">
+      <button type="button" class="resumo vp-slide" aria-expanded="false" aria-controls="perfil-${card.rank}">
+        <span class="vp-slide-campo" aria-hidden="true"><i></i></span>
         <span class="r-pos">${pos(card.rank)}</span>
         <img class="r-mini" src="${esc(card.image)}" alt="" loading="lazy" />
         <span class="r-quem"><strong>${esc(card.name)}</strong><small>${card.teamLogo ? `<img src="${esc(card.teamLogo)}" alt="" loading="lazy" />` : ""}<span>${esc(card.team)}${card.role ? `, ${esc(card.role)}` : ""}</span></small></span>
         <span class="r-ovr"><span class="r-cmt"${card.thread ? ` data-thread="${esc(card.thread)}"` : ""}></span><b aria-label="Overall ${esc(card.overall)}">${esc(card.overall)}</b></span>
-        <span class="r-n">${num(stat.raating, 2)}</span>
+        <span class="r-n r-raating">${num(stat.raating, 2)}</span>
         <span class="r-n">${num(stat.acs)}</span>
         <span class="r-n">${num(stat.kd, 2)}</span>
         <span class="r-n r-kast">${num(stat.kast)}%</span>
@@ -256,7 +334,7 @@ function renderDias(faixas) {
     .map(
       (day) => `
       <section class="dia" id="dia-${day.date}">
-        <header class="sec"><h2>${esc(dataLonga(day.date))}</h2><span class="sec-aparte">${day.count} ${day.count === 1 ? "revelada" : "reveladas"}, ${pos(day.primeira)} a ${pos(day.ultima)}</span></header>
+        <header class="vp-sec"><h2>${esc(dataLonga(day.date))}</h2><span class="vp-sec-aside">${day.count} ${day.count === 1 ? "revelada" : "reveladas"}, ${pos(day.primeira)} a ${pos(day.ultima)}</span></header>
         <div class="placa">
           <div class="cab" aria-hidden="true"><span>#</span><span></span><span>Jogador</span><span>Overall</span><span>rAAting</span><span>ACS</span><span>K/D</span><span>KAST</span><span>Agentes</span><span></span></div>
           ${day.cards.slice().sort((a, b) => a.rank - b.rank).map(linha).join("")}
@@ -377,6 +455,7 @@ function aplicar(data) {
     if (el) abrir(el, true);
   });
   pintaSelos();
+  trilho?.style?.setProperty("--trilho-altura", `${trilho.offsetHeight}px`);
 }
 
 // ---------------------------------------------------------------- comentarios
@@ -478,14 +557,23 @@ window.addEventListener("hashchange", () => {
   if (manifest) seguirEndereco();
 });
 
+// No celular o menu rola de lado, e Cartinhas e a ultima aba: sem isso a aba atual
+// abria fora da tela.
+const menu = document.querySelector(".nav");
+const mostraAbaAtual = () => {
+  if (menu) menu.scrollLeft = menu.scrollWidth;
+};
+mostraAbaAtual();
+document.fonts?.ready.then(mostraAbaAtual);
+
 if (comunidade) window.Community.carregarContagens().then(pintaSelos);
 else {
   conversa.hidden = true;
   document.querySelector(".atalho-conversa").hidden = true;
 }
 
-buscaManifesto()
-  .then((data) => {
+Promise.all([buscaManifesto(), buscaCores()])
+  .then(([data]) => {
     aplicar(data);
     seguirEndereco();
     conversa.dataset.thread = String(data.season);

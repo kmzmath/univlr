@@ -12,7 +12,7 @@ A revelação é às **21:30 de Brasília** (UTC-3, sem horário de verão). O t
 
 ## A página
 
-Cada dia revelado é uma lista, o dia mais recente primeiro: uma linha por jogador com a miniatura da cartinha, equipe, overall, rAAting, ACS, K/D, KAST e agentes. Clicar na linha abre o perfil com a cartinha grande, os números (incluindo a força média de adversário), os últimos jogos e a conversa da cartinha. Os dias que ainda não saíram aparecem só no calendário ao lado, com a quantidade e a faixa de posições de cada dia. A busca encontra somente jogadores revelados.
+A página usa o topo, o rodapé, o fundo e os comentários do site (`/styles.css` e `/placar.css`), e a busca do topo procura só jogadores revelados. Cada dia revelado é uma lista, o dia mais recente primeiro: uma linha por jogador, na camisa da equipe como em Jogadores, com a miniatura da cartinha, equipe, overall, rAAting, ACS, K/D, KAST e agentes. As duas cores das linhas vêm de `cores.json`, gerado por `node scripts/build_card_colors.js` e fora do manifesto, porque os dias já postados não mudam; rode de novo quando as cores de uma equipe mudarem. Equipe fora do arquivo usa a cor do manifesto. Clicar na linha abre o perfil com a cartinha grande, os números (incluindo a força média de adversário), os últimos jogos e a conversa da cartinha. Os dias que ainda não saíram aparecem só no calendário ao lado, com a quantidade e a faixa de posições de cada dia. A busca encontra somente jogadores revelados.
 
 A **força média de adversário** é o `nivelAdversarios` do gerador (`ferramentas/cartinhas/ajuste-overall.js`): quanto, em rAAting, os times enfrentados costumam tirar de quem joga contra eles, pesado pelos rounds. Zero é o adversário típico; positivo, adversários mais fortes; negativo, mais fracos.
 

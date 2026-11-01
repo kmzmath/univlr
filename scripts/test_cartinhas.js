@@ -54,6 +54,10 @@ assert.strictEqual(new Set(cartas.map((card) => card.thread)).size, cartas.lengt
 const imagens = fs.readdirSync(path.join(raiz, "cartas/cards")).sort();
 assert.deepStrictEqual(imagens, cartas.map((card) => card.image.slice("cards/".length)).sort(), "a pasta cards tem so as cartinhas liberadas");
 
+// A linha veste as duas cores da equipe. Faltando, ela cai na cor do manifesto.
+const cores = JSON.parse(ler("cartas/cores.json"));
+assert(cartas.every((card) => cores[card.teamLogo]?.length), "toda equipe revelada tem cor em cores.json");
+
 // ------------------------------------------------------------- pagina
 
 const html = ler("cartas/index.html");

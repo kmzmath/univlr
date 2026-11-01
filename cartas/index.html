@@ -7,7 +7,11 @@
     <meta name="description" content="Cartinhas e estatísticas dos jogadores de VALORANT universitário em 2026." />
     <title>Cartinhas 2026 | UNIVLR</title>
     <link rel="icon" type="image/png" href="/assets/logo_univlr.png" />
-    <link rel="stylesheet" href="styles.css?v=6" />
+    <!-- As folhas do site trazem topo, rodape, fundo, comentarios e conta; a
+         daqui so tem o que e desta pagina. -->
+    <link rel="stylesheet" href="/styles.css?v=304" />
+    <link rel="stylesheet" href="/placar.css?v=111" />
+    <link rel="stylesheet" href="styles.css?v=11" />
     <!-- Comunidade, os mesmos arquivos do site, na ordem do index.html da
          raiz. UNIVLR_RAIZ faz os links internos dos comentarios ("#/u/fulano")
          voltarem ao site em vez de ficarem nesta pagina. -->
@@ -16,57 +20,65 @@
     <script defer src="/community-core.js?v=12"></script>
     <script defer src="/comments.js?v=15"></script>
     <script defer src="/auth.js?v=7"></script>
-    <script defer src="app.js?v=4"></script>
+    <script defer src="app.js?v=7"></script>
   </head>
   <body>
-    <header class="topo-site">
-      <div class="topo-site-dentro">
-        <a class="marca" href="/#/home" aria-label="UNIVLR, início"><img src="/assets/univlr_logo_longa.png" alt="UNIVLR" /></a>
-        <nav aria-label="Navegação principal">
-          <a href="/#/home">Inicial</a>
-          <a href="/#/news">Notícias</a>
-          <a href="/#/matches">Partidas</a>
-          <a href="/#/events">Eventos</a>
-          <a href="/#/players">Players</a>
-          <a href="/#/ranking">Ranking</a>
-          <a href="/cartas/" aria-current="page">Cartinhas</a>
-        </nav>
-        <div class="conta-slot"></div>
-      </div>
-    </header>
-
-    <div class="pagina">
-      <header class="cabeca">
-        <div>
-          <h1>Cartinhas 2026</h1>
-          <p id="regra">É revelado um lote de cartinhas por dia, em ordem do menor para o maior overall. No total são 216 cartinhas, de jogadores com pelo menos 200 rounds e 12 mapas jogados no ano. Última revelação em 24 de novembro.</p>
-        </div>
-        <div class="contagem" id="contagem" aria-live="polite"></div>
-      </header>
-
-      <div class="corpo">
-        <main class="principal">
-          <div class="busca">
-            <label class="sr-only" for="busca-jogador">Buscar jogador revelado</label>
-            <input id="busca-jogador" type="search" autocomplete="off" placeholder="Buscar jogador revelado" />
+    <div class="vp-fundo" aria-hidden="true"><i></i></div>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <a class="brand" href="/#/home" aria-label="UNIVLR">
+            <img class="brand-wordmark" src="/assets/univlr_logo_longa.png" alt="" loading="eager" decoding="async" />
+            <span class="sr-only">UNIVLR</span>
+          </a>
+          <nav class="nav" aria-label="Navegação principal">
+            <a class="nav-link" href="/#/home">Inicial</a>
+            <a class="nav-link" href="/#/news">Notícias</a>
+            <a class="nav-link" href="/#/matches">Partidas</a>
+            <a class="nav-link" href="/#/events">Eventos</a>
+            <a class="nav-link" href="/#/players">Players</a>
+            <a class="nav-link" href="/#/ranking">Ranking</a>
+            <a class="nav-link active" aria-current="page" href="/cartas/">Cartinhas</a>
+          </nav>
+          <div class="global-search busca">
+            <input id="busca-jogador" type="search" autocomplete="off" placeholder="Buscar jogador revelado" aria-label="Buscar jogador revelado" />
             <div id="busca-resultados" class="busca-resultados" hidden></div>
           </div>
-          <div id="dias"><p class="aviso">Carregando...</p></div>
-        </main>
-        <aside class="trilho" aria-label="Calendário de revelações">
-          <section>
-            <header class="sec"><h2>Calendário</h2></header>
-            <div id="calendario"></div>
-          </section>
-          <a class="atalho-conversa" href="#comentarios">Conversa da coleção <b id="conversa-total">Comente</b></a>
-        </aside>
-        <section class="conversa cmt-secao" id="comentarios" aria-label="Comentários sobre a coleção"></section>
-      </div>
-    </div>
+          <div class="conta-slot"></div>
+        </div>
+      </header>
 
-    <footer class="rodape">
-      <a href="/#/home" aria-label="UNIVLR, início"><img src="/assets/logo_univlr.png" alt="" /></a>
-      <span>Estatísticas do cenário universitário brasileiro de VALORANT.</span>
-    </footer>
+      <main class="main">
+        <div class="vp-cartas">
+          <header class="cartas-topo">
+            <h1>Cartinhas 2026</h1>
+            <p id="regra">É revelado um lote de cartinhas por dia, em ordem do menor para o maior overall. No total são 216 cartinhas, de jogadores com pelo menos 200 rounds e 12 mapas jogados no ano. Última revelação em 24 de novembro.</p>
+          </header>
+
+          <div class="cartas-lista" id="dias"><p class="aviso">Carregando...</p></div>
+
+          <aside class="cartas-trilho" aria-label="Calendário de revelações">
+            <section class="cartas-bloco contagem" id="contagem" aria-live="polite"></section>
+            <section class="cartas-bloco cartas-calendario">
+              <h2>Calendário</h2>
+              <div id="calendario"></div>
+            </section>
+            <a class="atalho-conversa" href="#comentarios">Conversa da coleção <b id="conversa-total">Comente</b></a>
+          </aside>
+
+          <section class="conversa cmt-secao" id="comentarios" aria-label="Comentários sobre a coleção"></section>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-inner vp-rodape">
+          <a class="footer-logo-link" href="/#/home" aria-label="UNIVLR">
+            <img class="footer-logo" src="/assets/logo_univlr.png" alt="" loading="lazy" decoding="async" />
+          </a>
+          <span class="vp-rodape-texto">Estatísticas do cenário universitário brasileiro de VALORANT.</span>
+          <nav class="vp-rodape-links" aria-label="Rodapé"><a href="/#/matches">Partidas</a><a href="/#/events">Eventos</a><a href="/#/ranking">Ranking</a><a href="/#/news">Notícias</a></nav>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>

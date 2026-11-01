@@ -1,140 +1,122 @@
-/* Cartinhas 2026, no visual "Placar" do site: uma placa por lista, linhas
-   separadas por 1px, cada jogador com o risco e o banho na cor da equipe. O
-   vermelho e a marca (topo, aba atual, o proximo dia); nunca e dado. */
+/* Cartinhas 2026. Topo, rodape, fundo, tokens, comentarios e conta vem das folhas
+   do site (/styles.css e /placar.css); aqui fica so o que e desta pagina. */
 
-@font-face { font-family: Barlow; src: url("/assets/fonts/barlow-400-latin.woff2") format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: Barlow; src: url("/assets/fonts/barlow-400-latin-ext.woff2") format("woff2"); font-weight: 400; font-display: swap; unicode-range: U+0100-024F, U+1E00-1EFF; }
-@font-face { font-family: Barlow; src: url("/assets/fonts/barlow-500-latin.woff2") format("woff2"); font-weight: 500; font-display: swap; }
-@font-face { font-family: Barlow; src: url("/assets/fonts/barlow-500-latin-ext.woff2") format("woff2"); font-weight: 500; font-display: swap; unicode-range: U+0100-024F, U+1E00-1EFF; }
-@font-face { font-family: Barlow; src: url("/assets/fonts/barlow-600-latin.woff2") format("woff2"); font-weight: 600; font-display: swap; }
-@font-face { font-family: Barlow; src: url("/assets/fonts/barlow-600-latin-ext.woff2") format("woff2"); font-weight: 600; font-display: swap; unicode-range: U+0100-024F, U+1E00-1EFF; }
-@font-face { font-family: Barlow; src: url("/assets/fonts/barlow-700-latin.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-@font-face { font-family: "Barlow Condensed"; src: url("/assets/fonts/barlow-condensed-600-latin.woff2") format("woff2"); font-weight: 600; font-display: swap; }
-@font-face { font-family: "Barlow Condensed"; src: url("/assets/fonts/barlow-condensed-600-latin-ext.woff2") format("woff2"); font-weight: 600; font-display: swap; unicode-range: U+0100-024F, U+1E00-1EFF; }
-@font-face { font-family: "Barlow Condensed"; src: url("/assets/fonts/barlow-condensed-700-latin.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-
-:root {
-  --bg: #040306;
-  --surface: #11131a;
-  --surface-2: #171a23;
-  --ink: #f5f1f2;
-  --muted: #a3a5af;
-  --loss-ink: rgba(245, 241, 242, 0.62);
-  --line: rgba(245, 241, 242, 0.08);
-  --line-dark: rgba(245, 241, 242, 0.18);
-  --surface-3: #09090d;
-  --brand: #f6132a;
-  --brand-text: #ff5f6d;
-  --on-brand: #040306;
-  --win: #31e981;
-  --teal: #2ad4c1;
-  --danger: #ff6678;
-  --font-text: Barlow, system-ui, sans-serif;
-  --font-display: "Barlow Condensed", Barlow, system-ui, sans-serif;
-  --gutter: clamp(16px, 3vw, 40px);
-  --rail: 340px;
+html {
+  scroll-padding-top: 72px;
 }
 
-* { box-sizing: border-box; }
-
-html { scroll-behavior: smooth; scroll-padding-top: 72px; }
-
-body {
-  min-width: 320px;
-  margin: 0;
-  color: var(--ink);
-  background: linear-gradient(rgba(246, 19, 42, 0.06), transparent 240px), var(--bg);
-  font: 400 13px/1.4 var(--font-text);
-}
-
-a { color: inherit; text-decoration: none; }
-img { display: block; }
-h1, h2, h3, p { margin: 0; }
-button, input, textarea { font: inherit; color: inherit; }
-:focus-visible { outline: 2px solid var(--brand-text); outline-offset: 2px; }
-[hidden] { display: none !important; }
-.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-
-/* ---- topo do site ---- */
-.topo-site {
-  position: sticky;
-  top: 0;
-  z-index: 30;
-  border-bottom: 1px solid var(--line);
-  background: var(--bg);
-}
-
-.topo-site-dentro {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  max-width: 1360px;
-  min-height: 56px;
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-
-.marca img { width: auto; height: 26px; }
-
-.topo-site nav { display: flex; gap: 22px; align-self: stretch; }
-
-.topo-site .conta-slot { margin-left: auto; }
-
-.topo-site nav a {
+/* No site quem marca a aba e o indicador animado pelo app.js, que nao roda aqui. */
+.nav-link.active {
   position: relative;
-  display: flex;
-  align-items: center;
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
 }
 
-.topo-site nav a:hover,
-.topo-site nav a[aria-current] { color: var(--ink); }
-
-.topo-site nav a[aria-current]::after {
+.nav-link.active::after {
   content: "";
   position: absolute;
   right: 0;
-  bottom: -1px;
+  bottom: 0;
   left: 0;
   height: 2px;
   background: var(--brand);
 }
 
-/* ---- pagina ---- */
-.pagina {
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 24px var(--gutter) 56px;
-}
-
-.cabeca {
+/* A mesma medida do ranking com o trilho aberto: lista de 922px e coluna de 340px. */
+.vp-cartas {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--rail);
-  align-items: end;
-  gap: 32px;
-  margin-bottom: 24px;
+  grid-template-columns: minmax(0, 922px) 340px;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-areas:
+    "topo trilho"
+    "lista trilho"
+    "conversa trilho";
+  justify-content: center;
+  align-items: start;
+  gap: 16px 32px;
 }
 
-.cabeca h1 { font: 600 44px/1 var(--font-display); }
+.cartas-topo { grid-area: topo; }
+.cartas-lista { grid-area: lista; min-width: 0; }
+.conversa { grid-area: conversa; min-width: 0; }
 
-.cabeca > div > p {
-  max-width: 60ch;
-  margin-top: 6px;
+.cartas-trilho {
+  position: sticky;
+  top: min(72px, calc(100vh - var(--trilho-altura, 760px) - 16px));
+  grid-area: trilho;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* O texto da regra tem varias linhas e nao pode ficar por cima dos escudos. */
+.cartas-topo {
+  padding: 12px 14px;
+  background: var(--surface);
+}
+
+.cartas-topo h1 {
+  margin: 0;
+  font: 600 30px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.cartas-topo p {
+  margin: 6px 0 0;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 1.4;
 }
 
-.contagem-numero { display: flex; align-items: baseline; gap: 8px; }
-.contagem-numero b { font: 600 44px/0.9 var(--font-display); font-variant-numeric: tabular-nums; }
-.contagem-numero span { color: var(--muted); font-size: 13px; }
+.aviso {
+  padding: 12px 0;
+  color: var(--muted);
+}
+
+/* ---- trilho ---- */
+.cartas-bloco,
+.atalho-conversa,
+.conversa {
+  background-color: var(--surface);
+}
+
+.cartas-bloco {
+  padding: 12px 14px;
+}
+
+.cartas-bloco h2 {
+  margin: 0 0 10px;
+  font: 600 20px/1 var(--font-display);
+  color: var(--ink);
+}
+
+.contagem-timer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2px 12px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.contagem-timer b {
+  color: var(--ink);
+  font: 600 26px/1.1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.contagem-proxima {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
 
 .contagem-barra {
   display: block;
   height: 4px;
-  margin: 10px 0 8px;
+  margin: 12px 0 8px;
   background: var(--line-dark);
 }
 
@@ -145,79 +127,160 @@ button, input, textarea { font: inherit; color: inherit; }
   background: var(--ink);
 }
 
-.contagem-timer { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; color: var(--muted); font-size: 13px; }
-.contagem-timer b { color: var(--ink); font: 600 22px/1.1 var(--font-display); font-variant-numeric: tabular-nums; }
-.contagem-proxima { margin-top: 2px; color: var(--muted); font-size: 12px; }
-
-.corpo {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--rail);
-  align-items: start;
-  gap: 32px;
+.contagem-numero {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0;
 }
 
-.principal, .trilho, .conversa { min-width: 0; }
+.contagem-numero b {
+  font: 600 20px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
 
-/* A conversa da colecao fica embaixo da lista, na mesma coluna; o calendario
-   ocupa as duas linhas ao lado. No celular a ordem do HTML vale: lista,
-   calendario, conversa. */
-.principal { grid-column: 1; grid-row: 1; }
-.trilho { position: sticky; top: 80px; grid-column: 2; grid-row: 1 / span 2; }
-.conversa { grid-column: 1; grid-row: 2; }
+.contagem-numero span {
+  color: var(--muted);
+  font-size: 12px;
+}
 
 .atalho-conversa {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  margin-top: 18px;
-  padding: 10px 12px;
-  border-radius: 2px;
-  background: var(--surface);
+  padding: 10px 14px;
+  color: var(--ink);
   font-weight: 600;
+  text-decoration: none;
 }
 
-.atalho-conversa b { color: var(--teal); font-weight: 600; font-variant-numeric: tabular-nums; }
-.atalho-conversa:hover { background: var(--surface-2); }
+.atalho-conversa b {
+  color: var(--teal);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
 
-/* Titulo de secao: condensado, sem caixa, com o aparte ao lado. */
-.sec {
+.atalho-conversa:hover {
+  background: var(--surface-2);
+}
+
+/* ---- calendario ---- */
+.mes + .mes {
+  margin-top: 12px;
+}
+
+.mes h3 {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font: 600 13px/1.2 var(--font-text);
+  text-transform: capitalize;
+}
+
+.semana,
+.grade {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.semana {
+  margin-bottom: 3px;
+}
+
+.semana span {
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+.grade > * {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1px;
+  aspect-ratio: 1;
+  color: var(--ink);
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.grade b {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.grade small {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1;
+}
+
+.grade .fora {
+  color: rgba(245, 241, 242, 0.24);
+  font-size: 12px;
+}
+
+.grade .futuro,
+.grade .proximo {
+  background: var(--surface-2);
+}
+
+.grade .proximo {
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+.grade .revelado {
+  background: rgba(245, 241, 242, 0.14);
+}
+
+.grade .revelado small {
+  color: var(--ink);
+}
+
+.grade a.revelado:hover {
+  background: rgba(245, 241, 242, 0.22);
+}
+
+.legenda {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 12px;
-  margin-bottom: 10px;
+  gap: 6px 14px;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 11px;
 }
 
-.sec h2 { font: 600 30px/1 var(--font-display); }
-.sec-aparte { color: var(--muted); font-size: 12px; }
-
-.aviso { padding: 12px 0; color: var(--muted); }
-
-/* ---- busca ---- */
-.busca { position: relative; margin-bottom: 24px; }
-
-.busca input {
-  display: block;
-  width: 100%;
-  height: 36px;
-  padding: 0 12px;
-  border: 0;
-  border-radius: 3px;
-  background: var(--surface);
-  appearance: none;
-  outline-offset: 0;
+.legenda span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.busca input::placeholder { color: var(--muted); }
+.legenda .l-revelado::before,
+.legenda .l-proximo::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+}
 
+.legenda .l-revelado::before {
+  background: rgba(245, 241, 242, 0.14);
+}
+
+.legenda .l-proximo::before {
+  background: var(--surface-2);
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+/* ---- busca, no lugar da busca do site ---- */
 .busca-resultados {
   position: absolute;
   top: calc(100% + 4px);
   right: 0;
   left: 0;
-  z-index: 20;
+  z-index: 30;
   padding: 4px 0;
-  border-radius: 3px;
   background: var(--surface-2);
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
 }
@@ -227,75 +290,124 @@ button, input, textarea { font: inherit; color: inherit; }
   justify-content: space-between;
   gap: 12px;
   padding: 8px 12px;
+  color: var(--ink);
   font-weight: 600;
+  text-decoration: none;
 }
 
-.busca-item small { color: var(--muted); font-weight: 400; text-align: right; }
-.busca-item:hover, .busca-item:focus-visible { background: rgba(245, 241, 242, 0.06); }
-.busca-resultados .aviso { padding: 8px 12px; }
+.busca-item small {
+  color: var(--muted);
+  font-weight: 400;
+  text-align: right;
+}
 
-/* ---- dia revelado: uma placa, uma linha por jogador ---- */
-.dia + .dia { margin-top: 32px; }
+.busca-item:hover,
+.busca-item:focus-visible {
+  background: rgba(245, 241, 242, 0.06);
+}
 
+.busca-resultados .aviso {
+  padding: 8px 12px;
+}
+
+/* ---- dia revelado ---- */
+.dia + .dia {
+  margin-top: 24px;
+}
+
+.dia .vp-sec h2 {
+  font-size: 22px;
+}
+
+/* Lista: a camisa em tira, como em Jogadores. A cor da equipe fica com a cartinha
+   e o nome, a peca derivada dela fica com os dados. */
 .placa {
-  --colunas: 56px 52px minmax(0, 1fr) 104px 72px 56px 56px 56px 92px 32px;
-  border-radius: 2px;
-  background: var(--surface);
+  --dados: 460px;
+  --folga-emenda: 44px;
+  --colunas: 44px 60px minmax(0, 1fr) 72px 56px 44px 44px 44px 84px 12px;
+  display: grid;
+  gap: 4px;
+}
+
+.cab,
+.resumo.vp-slide {
+  display: grid;
+  grid-template-columns: var(--colunas);
+  align-items: center;
+  column-gap: 12px;
+  padding: 0 14px 0 8px;
 }
 
 .cab {
-  display: grid;
-  grid-template-columns: var(--colunas);
-  align-items: center;
-  height: 30px;
-  border-bottom: 1px solid var(--line-dark);
+  min-height: 34px;
+  background: var(--surface);
   color: var(--muted);
-  font-size: 12px;
+  font: 600 12px/1 var(--font-text);
 }
 
-.cab span:nth-child(n + 4):not(:last-child) { text-align: right; }
-.cab span:nth-child(3) { padding-left: 2px; }
+.cab span:nth-child(n + 4):not(:last-child) {
+  text-align: right;
+}
 
-.linha + .linha { border-top: 1px solid var(--line); }
+.cab span:first-child {
+  text-align: center;
+}
 
-.resumo {
-  display: grid;
-  grid-template-columns: var(--colunas);
-  align-items: center;
+.resumo.vp-slide {
+  --emenda: calc(100% - var(--dados));
+  flex: none;
   width: 100%;
-  min-height: 80px;
-  padding: 0;
+  height: 100px;
   border: 0;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--team-line) 14%, transparent), transparent 62%);
-  box-shadow: inset 3px 0 0 var(--team-line);
   cursor: pointer;
+  font: inherit;
   text-align: left;
-  transition: background-color 200ms ease;
+  outline-offset: 2px;
 }
 
-.resumo:hover { background-color: rgba(245, 241, 242, 0.03); }
-.aberta .resumo { background-color: rgba(245, 241, 242, 0.04); }
-.resumo:focus-visible { outline-offset: -2px; }
+.resumo .vp-slide-campo {
+  clip-path: polygon(0 0, calc(var(--emenda) + 2px) 0, calc(var(--emenda) - 31px) 100%, 0 100%);
+}
+
+.resumo .vp-slide-campo i {
+  top: -22px;
+  left: calc(var(--emenda) - 190px);
+  width: 148px;
+  height: 148px;
+}
+
+.resumo.vp-slide:hover,
+.resumo.vp-slide:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--placa-tinta);
+}
 
 .r-pos {
-  padding-left: 16px;
-  color: var(--muted);
-  font-size: 12px;
+  color: var(--placa-campo-tinta);
+  font: 600 13px/1 var(--font-text);
   font-variant-numeric: tabular-nums;
+  text-align: center;
 }
 
 .r-mini {
-  width: 44px;
-  height: 70px;
+  display: block;
+  width: 60px;
+  height: 96px;
   object-fit: contain;
 }
 
-.r-quem { display: grid; gap: 3px; min-width: 0; padding-left: 2px; }
+/* A folga acompanha a emenda: sem ela o fim do nome da equipe cai na peca dos dados,
+   onde a tinta e outra. */
+.r-quem {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding-right: var(--folga-emenda);
+  color: var(--placa-campo-tinta);
+}
 
 .r-quem strong {
-  font-size: 16px;
-  font-weight: 600;
   overflow-wrap: anywhere;
+  font: 600 18px/1.1 var(--fonte-carta);
 }
 
 .r-quem small {
@@ -303,48 +415,82 @@ button, input, textarea { font: inherit; color: inherit; }
   align-items: center;
   gap: 6px;
   min-width: 0;
-  color: var(--muted);
   font-size: 12px;
+  font-weight: 500;
 }
 
-.r-quem small img { flex: none; width: 16px; height: 16px; object-fit: contain; }
-.r-quem small span { min-width: 0; overflow-wrap: anywhere; }
+.r-quem small img {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  filter: var(--placa-logo-contorno, none);
+}
+
+.r-quem small span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 
 /* O selo de comentarios encosta a esquerda do overall, e so existe quando a
    cartinha tem algum comentario. */
-.r-ovr { display: flex; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; }
-.r-cmt:empty { display: none; }
+.r-ovr {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.r-cmt:empty {
+  display: none;
+}
 
 .r-ovr b {
-  font: 600 30px/1 var(--font-display);
+  color: var(--placa-numero);
+  font: 600 30px/1 var(--fonte-carta);
   font-variant-numeric: tabular-nums;
 }
 
 .r-n {
-  font-size: 14px;
+  font: 600 16px/1 var(--fonte-carta);
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
 
-.r-agentes { display: flex; justify-content: flex-end; gap: 4px; }
-.r-agentes img { width: 22px; height: 22px; border-radius: 2px; }
+.r-agentes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.r-agentes img {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+}
 
 .r-seta {
   justify-self: center;
   width: 8px;
   height: 8px;
-  border-right: 2px solid var(--muted);
-  border-bottom: 2px solid var(--muted);
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
   transform: translateY(-2px) rotate(45deg);
   transition: transform 220ms ease;
 }
 
-.aberta .r-seta { transform: translateY(2px) rotate(225deg); }
+.aberta .r-seta {
+  transform: translateY(2px) rotate(225deg);
+}
 
 /* O perfil aparece na hora e desliza 8px em 220ms, como as trocas de conteudo
    do site. Sem animar a altura: numa aba em segundo plano a transicao congela,
    e o que congela aqui e so o deslize, nunca o perfil escondido. */
-.perfil { display: none; }
+.perfil {
+  display: none;
+  background: var(--surface);
+}
 
 .aberta .perfil {
   display: block;
@@ -361,10 +507,12 @@ button, input, textarea { font: inherit; color: inherit; }
   grid-template-columns: 180px minmax(0, 1fr);
   column-gap: 28px;
   align-content: start;
-  padding: 0 16px 0 19px;
+  padding: 0 14px;
 }
 
-.perfil-dados { display: contents; }
+.perfil-dados {
+  display: contents;
+}
 
 .perfil-carta {
   grid-row: 1 / span 5;
@@ -372,34 +520,87 @@ button, input, textarea { font: inherit; color: inherit; }
   margin: 16px 0;
 }
 
-.perfil-carta img { width: 180px; height: auto; }
+.perfil-carta img {
+  display: block;
+  width: 180px;
+  height: auto;
+}
 
 .perfil-dentro > :not(.perfil-carta),
-.perfil-dados > * { grid-column: 2; }
+.perfil-dados > * {
+  grid-column: 2;
+}
 
-.amostra { margin-top: 16px; color: var(--muted); font-size: 12px; }
+.amostra {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
 
 .numeros {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: end;
   gap: 12px 16px;
   margin-top: 10px;
 }
 
-.numero { display: grid; gap: 2px; }
-.numero small { color: var(--muted); font-size: 12px; }
-.numero b { font: 600 24px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.numero {
+  display: grid;
+  gap: 2px;
+}
 
-.perfil h3 { margin-bottom: 6px; color: var(--muted); font-size: 12px; font-weight: 600; }
+.numero small {
+  color: var(--muted);
+  font-size: 12px;
+}
 
-.agentes { margin-top: 16px; }
-.agentes > div { display: flex; flex-wrap: wrap; gap: 6px 16px; }
-.agente { display: inline-flex; align-items: center; gap: 6px; }
-.agente img { width: 22px; height: 22px; border-radius: 2px; }
-.agente strong { font-weight: 600; }
-.agente small { color: var(--muted); font-size: 12px; }
+.numero b {
+  font: 600 24px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
 
-.jogos { margin-top: 16px; }
+.perfil h3 {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.agentes {
+  margin-top: 16px;
+}
+
+.agentes > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.agente {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.agente img {
+  width: 22px;
+  height: 22px;
+  object-fit: cover;
+}
+
+.agente strong {
+  font-weight: 600;
+}
+
+.agente small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.jogos {
+  margin-top: 16px;
+}
 
 .jogo {
   display: grid;
@@ -408,496 +609,317 @@ button, input, textarea { font: inherit; color: inherit; }
   gap: 12px;
   min-height: 44px;
   border-top: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
 }
 
-.jogo time { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
-.jogo-contra { display: flex; align-items: center; gap: 8px; min-width: 0; }
-.jogo-contra img { flex: none; width: 18px; height: 18px; object-fit: contain; }
-.jogo-contra > span { display: grid; min-width: 0; }
-.jogo-contra strong { font-weight: 600; overflow-wrap: anywhere; }
-.jogo-contra small { color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
-.jogo-placar { display: grid; justify-items: end; }
-.jogo-placar b { color: var(--loss-ink); font: 600 16px/1.1 var(--font-display); font-variant-numeric: tabular-nums; }
-.jogo.venceu .jogo-placar b { color: var(--win); }
-.jogo-placar small { color: var(--muted); font-size: 12px; white-space: nowrap; }
-.jogo:hover .jogo-contra strong { text-decoration: underline; text-underline-offset: 3px; }
+.jogo time {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
 
-.links { display: flex; gap: 18px; margin: 14px 0 18px; }
-.links a { font-weight: 600; }
-.links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.jogo-contra {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.jogo-contra img {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.jogo-contra > span {
+  display: grid;
+  min-width: 0;
+}
+
+.jogo-contra strong {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.jogo-contra small {
+  color: var(--muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.jogo-placar {
+  display: grid;
+  justify-items: end;
+}
+
+.jogo-placar b {
+  color: rgba(245, 241, 242, 0.62);
+  font: 600 16px/1.1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.jogo.venceu .jogo-placar b {
+  color: var(--win);
+}
+
+.jogo-placar small {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.jogo:hover .jogo-contra strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.links {
+  display: flex;
+  gap: 18px;
+  margin: 14px 0 18px;
+}
+
+.links a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 /* A conversa da cartinha, dentro do perfil aberto. */
-.cmt-carta { margin: 4px 0 20px; padding-top: 16px; border-top: 1px solid var(--line); }
-.cmt-secao.cmt-carta .section-head h2 { font-size: 22px; }
-
-/* ---- calendario ---- */
-.mes + .mes { margin-top: 18px; }
-
-.mes h3 {
-  margin-bottom: 6px;
-  font: 600 20px/1 var(--font-display);
-  text-transform: capitalize;
+.cmt-carta {
+  margin: 4px 0 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
 }
 
-.semana, .grade {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 3px;
+.cmt-secao.cmt-carta .section-head h2 {
+  font-size: 22px;
 }
 
-.semana span { color: var(--muted); font-size: 11px; text-align: center; }
-.semana { margin-bottom: 3px; }
+.conversa {
+  margin-top: 8px;
+  padding: 12px 14px;
+}
 
-.grade > * {
+/* O perfil continua a camisa da linha: a cor 1 desce inteira, com o logo apagado
+   atras, e a tinta e a mesma do nome. */
+.perfil {
   position: relative;
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: 1px;
-  aspect-ratio: 1;
-  border-radius: 2px;
-  font-variant-numeric: tabular-nums;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--placa-campo);
+  color: var(--placa-campo-tinta);
 }
 
-.grade b { font-size: 13px; font-weight: 600; line-height: 1; }
-.grade small { color: var(--muted); font-size: 10px; line-height: 1; }
-.grade .fora { color: rgba(245, 241, 242, 0.24); font-size: 12px; }
-.grade .futuro, .grade .proximo { background: var(--surface); }
-.grade .proximo { box-shadow: inset 0 -2px var(--brand); }
-.grade .revelado { background: rgba(245, 241, 242, 0.14); }
-.grade .revelado small { color: var(--ink); }
-.grade a.revelado:hover { background: rgba(245, 241, 242, 0.22); }
-
-.legenda {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 14px;
-  margin-top: 12px;
-  color: var(--muted);
-  font-size: 11px;
+/* Sem apagar nada com opacidade: a tinta tem 4,54:1 no pior campo (MackLogic Red) e
+   com 86% caia para 3,64. Quem separa rotulo de valor e o tamanho. */
+.perfil :is(.amostra, .numero small, h3, .agente small, .jogo time, .jogo-contra small, .jogo-placar small) {
+  color: inherit;
 }
 
-.legenda span { display: inline-flex; align-items: center; gap: 6px; }
-.legenda .l-revelado::before, .legenda .l-proximo::before { content: ""; width: 12px; height: 12px; border-radius: 2px; }
-.legenda .l-revelado::before { background: rgba(245, 241, 242, 0.14); }
-.legenda .l-proximo::before { background: var(--surface); box-shadow: inset 0 -2px var(--brand); }
+.perfil :is(.jogo, .links a, .jogo-placar b) {
+  color: inherit;
+}
 
-/* ---- comentarios e conta ----
-   Os mesmos comments.js e auth.js do site, com o desenho do site trazido para
-   os tokens desta pagina. Teal marca o que a comunidade produz (voto, selo de
-   contagem); o vermelho fica so na marca e nas chamadas para entrar. */
-.conversa { margin-top: 8px; }
-.cmt-secao .section-head { margin-bottom: 12px; }
-.cmt-secao .section-head h2 { font: 600 30px/1 var(--font-display); }
-.cmt-secao .section-head p { margin-top: 4px; color: var(--muted); font-size: 12px; }
+.perfil .jogo {
+  border-top-color: color-mix(in srgb, currentColor 26%, transparent);
+}
 
-.conta-slot { display: flex; flex-shrink: 0; align-items: center; gap: 4px; }
-
-.conta-entrar {
-  min-height: 32px;
-  padding: 0 14px;
-  border: 0;
-  border-radius: 999px;
-  background: var(--brand);
-  color: var(--on-brand);
-  font-size: 13px;
+/* O verde da vitoria some em muita cor de equipe: quem marca e o V ou D e o peso. */
+.perfil .jogo.venceu .jogo-placar b {
+  color: inherit;
   font-weight: 700;
-  white-space: nowrap;
-  cursor: pointer;
 }
 
-.conta-entrar:hover { filter: brightness(1.12); }
-
-.conta-sino, .conta-avatar-botao {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
-}
-
-.conta-sino:hover, .conta-avatar-botao:hover { color: var(--ink); background: rgba(245, 241, 242, 0.08); }
-
-.conta-badge {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  min-width: 15px;
-  height: 15px;
-  padding: 0 3px;
-  border-radius: 999px;
-  background: var(--brand);
-  color: var(--on-brand);
-  font: 800 11px/15px var(--font-text);
-  text-align: center;
-}
-
-.auth-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  display: grid;
-  place-items: center;
-  padding: 16px;
-  background: rgba(4, 3, 6, 0.72);
-  backdrop-filter: blur(3px);
-}
-
-.auth-janela {
-  position: relative;
-  width: min(400px, 100%);
-  max-height: 88vh;
-  overflow-y: auto;
-  padding: 32px;
-  border: 1px solid var(--line-dark);
-  border-radius: 6px;
-  background: var(--surface);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.34);
-}
-
-.auth-fechar {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 32px;
-  height: 32px;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--muted);
-  font-size: 20px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.auth-fechar:hover { color: var(--ink); background: rgba(245, 241, 242, 0.08); }
-.auth-corpo h2 { margin-bottom: 16px; font: 600 26px/1.1 var(--font-display); }
-.auth-campo { display: block; margin-bottom: 12px; }
-.auth-campo > span { display: block; margin-bottom: 4px; color: var(--muted); font-size: 12px; font-weight: 600; }
-
-.auth-campo input, .auth-campo textarea, .cmt-form textarea {
-  display: block;
-  width: 100%;
-  min-height: 40px;
-  padding: 8px 12px;
-  border: 1px solid var(--line-dark);
-  border-radius: 3px;
-  background: var(--surface-3);
-  color: var(--ink);
-  font-size: 14px;
-  line-height: 1.5;
-  resize: vertical;
-}
-
-.auth-campo input:focus, .auth-campo textarea:focus, .cmt-form textarea:focus { border-color: transparent; outline: 2px solid var(--brand-text); outline-offset: 1px; }
-
-.auth-principal {
-  width: 100%;
-  min-height: 40px;
-  margin-top: 4px;
-  border: 0;
-  border-radius: 3px;
-  background: var(--brand);
-  color: var(--on-brand);
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.auth-principal:hover:not(:disabled) { filter: brightness(1.12); }
-.auth-principal:disabled { opacity: 0.5; cursor: progress; }
-.auth-dica { display: block; margin: -4px 0 12px; color: var(--muted); font-size: 12px; line-height: 1.5; }
-.auth-dica.ok { color: var(--win); }
-.auth-dica.ruim { color: var(--danger); }
-.auth-convite { display: grid; gap: 12px; margin: 16px 0 24px; padding: 0; list-style: none; }
-.auth-convite li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 12px; font-size: 13px; line-height: 1.45; }
-.auth-convite svg { margin-top: 2px; color: var(--teal); }
-.auth-erro { margin-bottom: 8px; padding: 8px; border-left: 2px solid var(--danger); background: rgba(255, 102, 120, 0.1); color: var(--danger); font-size: 13px; font-weight: 600; }
-.auth-legal { margin-top: 12px; color: var(--muted); font-size: 11px; line-height: 1.5; }
-.auth-rodape { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
-.auth-rodape.coluna { flex-direction: column; align-items: flex-start; gap: 8px; }
-.auth-perfil { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-.auth-perfil strong { display: block; font-size: 16px; font-weight: 700; }
-.auth-perfil .auth-dica { margin: 0; }
-.auth-avisos { margin: 0; padding: 0; list-style: none; }
-.auth-avisos li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
-.auth-avisos li a { color: var(--muted); }
-.auth-avisos li.nova a { color: var(--ink); font-weight: 700; }
-.auth-avisos time { color: var(--muted); font-size: 12px; white-space: nowrap; }
-
-.cmt-avatar {
-  display: grid;
-  flex-shrink: 0;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 999px;
-  background: var(--avatar-cor, #6658b8);
-  color: var(--bg);
-  font-size: 13px;
-  font-weight: 800;
-  user-select: none;
-}
-
-.cmt-avatar.grande { width: 56px; height: 56px; font-size: 24px; }
-.cmt-avatar.removido { border: 1px solid var(--line); background: var(--surface-2); color: var(--muted); }
-.cmt-avatar.removido svg { width: 62%; height: 62%; }
-
-.cmt-lista { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
-.cmt-linha { display: flex; align-items: flex-start; gap: 12px; }
-.cmt-conteudo { flex: 1; min-width: 0; }
-.cmt-cabeca { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin-bottom: 4px; color: var(--muted); font-size: 12px; }
-.cmt-autor { color: var(--ink); font-size: 13px; font-weight: 700; }
-.cmt-autor:hover { color: var(--brand-text); }
-.cmt-selo { padding: 1px 4px; border-radius: 3px; background: var(--brand); color: var(--on-brand); font-size: 11px; font-weight: 800; line-height: 1.5; text-transform: uppercase; }
-.cmt-editado::before { content: "\00b7 "; }
-.cmt-para { font-style: italic; }
-.cmt-corpo { font-size: 14px; line-height: 1.55; overflow-wrap: anywhere; }
-.cmt-mencao { color: var(--brand-text); font-weight: 600; }
-.cmt-mencao:hover { text-decoration: underline; }
-.cmt-removido { color: var(--muted); font-size: 13px; font-style: italic; }
-
-.cmt-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 4px; }
-.cmt-voto { display: inline-flex; align-items: center; gap: 2px; padding: 2px; border: 1px solid var(--line-dark); border-radius: 999px; }
-
-.cmt-voto-seta {
-  display: grid;
-  place-items: center;
+/* Logo de adversario na cor da equipe sumiria: ele ganha uma base escura. */
+.perfil .jogo-contra img {
   width: 24px;
   height: 24px;
-  padding: 0;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
+  padding: 3px;
+  background: var(--surface);
 }
 
-.cmt-voto-seta:hover { color: var(--ink); background: rgba(245, 241, 242, 0.08); }
-.cmt-voto-seta.ativo { color: var(--teal); background: rgba(42, 212, 193, 0.14); }
-.cmt-voto-seta.baixo.ativo { color: var(--danger); background: rgba(255, 102, 120, 0.14); }
-.cmt-score { min-width: 20px; color: var(--muted); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; text-align: center; }
-.cmt-score.positivo { color: var(--teal); }
-.cmt-score.negativo { color: var(--danger); }
-
-.cmt-link {
-  min-height: 28px;
-  padding: 4px 8px;
-  border: 0;
-  border-radius: 3px;
-  background: transparent;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
+.perfil a:focus-visible {
+  outline-color: currentColor;
 }
 
-.cmt-link:hover { color: var(--ink); background: rgba(245, 241, 242, 0.06); }
-.cmt-link.discreto { opacity: 0.65; }
-.cmt-link.perigo { color: var(--danger); }
-
-.cmt-filhos { display: flex; flex-direction: column; gap: 16px; margin: 16px 0 0 15px; padding-left: 16px; border-left: 1px solid var(--line-dark); }
-.cmt-filhos.sem-recuo { margin-left: 0; padding-left: 0; border-left: 0; }
-
-.cmt-form { margin-top: 8px; }
-.cmt-form-rodape { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
-.cmt-resposta-slot .cmt-form-rodape, .cmt .cmt-form .cmt-form-rodape { padding-bottom: 0; border-bottom: 0; }
-.cmt-form-botoes { display: flex; align-items: center; gap: 4px; }
-.cmt-contador { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
-.cmt-contador b { color: var(--ink); font-weight: 700; }
-.cmt-contador.pouco b { color: var(--danger); }
-
-.cmt-enviar {
-  min-height: 32px;
-  padding: 0 16px;
-  border: 0;
-  border-radius: 3px;
-  background: var(--brand);
-  color: var(--on-brand);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
+/* A conversa fica numa faixa escura: botao vermelho e campo de texto nao servem em
+   toda cor de equipe. */
+.perfil .cmt-carta {
+  grid-column: 1 / -1;
+  margin: 4px -14px 0;
+  padding: 14px;
+  border-top: 0;
+  background: var(--surface);
+  color: var(--ink);
 }
 
-.cmt-enviar:hover:not(:disabled) { filter: brightness(1.12); }
-.cmt-enviar:disabled { opacity: 0.5; cursor: progress; }
-.cmt-erro { margin-top: 4px; color: var(--danger); font-size: 12px; font-weight: 600; }
-
-.cmt-convite {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 16px;
-  border: 1px dashed var(--line-dark);
-  border-radius: 3px;
+.perfil::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 16px;
+  right: -48px;
+  width: 460px;
+  height: 460px;
+  opacity: 0.1;
+  filter: var(--placa-logo-filtro, none);
+  background: var(--placa-logo, none) center / contain no-repeat;
 }
-
-.cmt-convite p { color: var(--muted); font-size: 13px; }
-
-.cmt-barra { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 4px; }
-
-.cmt-barra-botao {
-  min-width: 30px;
-  height: 28px;
-  padding: 0 4px;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  background: transparent;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.cmt-barra-botao:hover { border-color: var(--line-dark); background: rgba(245, 241, 242, 0.06); color: var(--ink); }
-.cmt-barra-botao.negrito { font-weight: 900; }
-.cmt-barra-botao.italico { font-style: italic; }
-.cmt-barra-botao.sublinhado { text-decoration: underline; text-underline-offset: 2px; }
-.cmt-barra-botao.riscado { text-decoration: line-through; }
-.cmt-barra-botao.ajuda { margin-left: auto; border-radius: 999px; }
-.cmt-barra-botao.ajuda.ativo { border-color: rgba(42, 212, 193, 0.45); color: var(--teal); }
-
-.cmt-ajuda { margin-bottom: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 3px; background: var(--surface-3); }
-.cmt-ajuda table { width: 100%; border-collapse: collapse; }
-.cmt-ajuda td { padding: 4px 0; color: var(--muted); font-size: 12px; line-height: 1.5; vertical-align: baseline; }
-.cmt-ajuda td:first-child { width: 45%; padding-right: 12px; }
-.cmt-ajuda code { color: var(--ink); font: 600 12px/1.5 ui-monospace, Consolas, monospace; white-space: nowrap; }
-.cmt-ajuda p { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
-
-.cmt-corpo .cmt-u { text-decoration: underline; text-underline-offset: 2px; }
-.cmt-corpo .cmt-h { margin: 12px 0 4px; font-family: var(--font-display); font-weight: 600; line-height: 1.25; }
-.cmt-corpo .cmt-h:first-child { margin-top: 0; }
-.cmt-corpo .cmt-h1 { font-size: 20px; }
-.cmt-corpo .cmt-h2 { font-size: 16px; }
-.cmt-corpo .cmt-h3 { font-size: 14px; text-transform: uppercase; }
-.cmt-corpo .cmt-quote { margin: 8px 0; padding: 4px 12px; border-left: 2px solid var(--line-dark); color: var(--muted); font-style: italic; }
-.cmt-corpo .cmt-code { display: inline-block; max-width: 100%; padding: 4px 8px; border: 1px solid var(--line); border-radius: 3px; background: var(--surface-3); font: 400 13px/1.5 ui-monospace, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; vertical-align: middle; }
-.cmt-corpo .cmt-hr { margin: 12px 0; border: 0; border-top: 1px solid var(--line); }
-.cmt-corpo .cmt-url { color: var(--brand-text); text-decoration: underline; text-underline-offset: 2px; overflow-wrap: anywhere; }
-.cmt-corpo .cmt-spoiler { padding: 0 4px; border-radius: 3px; background: var(--surface-2); color: transparent; cursor: pointer; user-select: none; }
-.cmt-corpo .cmt-spoiler:hover { background: var(--surface-3); }
-.cmt-corpo .cmt-spoiler.aberto { padding: 0; background: transparent; color: inherit; cursor: auto; user-select: auto; }
-.cmt-corpo .cmt-spoiler:not(.aberto) a { color: transparent; }
-
-.cmt.destacado { border-radius: 3px; animation: cmt-realce 2.6s ease; }
-
-@keyframes cmt-realce {
-  0%, 55% { background: rgba(42, 212, 193, 0.12); box-shadow: 0 0 0 8px rgba(42, 212, 193, 0.12); }
-  100% { background: transparent; box-shadow: 0 0 0 8px transparent; }
-}
-
-.cmt-selo-contagem {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  padding: 1px 6px;
-  border-radius: 999px;
-  background: rgba(42, 212, 193, 0.12);
-  color: var(--teal);
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.6;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-.cmt-selo-contagem svg { flex-shrink: 0; opacity: 0.85; }
 
 @media (max-width: 560px) {
-  .auth-janela { padding: 24px 16px; }
-  .cmt-filhos { margin-left: 8px; padding-left: 12px; }
-  .cmt-convite { flex-direction: column; align-items: stretch; text-align: center; }
-  .cmt-ajuda td:first-child { width: auto; }
-  .cmt-ajuda table, .cmt-ajuda tbody, .cmt-ajuda tr, .cmt-ajuda td { display: block; }
-  .cmt-ajuda tr { padding: 4px 0; border-bottom: 1px solid var(--line); }
-  .cmt-ajuda td { padding: 0; }
+  .perfil .cmt-carta {
+    margin-inline: -12px;
+    padding: 12px;
+  }
+
+  .perfil::before {
+    right: -60px;
+    width: 300px;
+    height: 300px;
+  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .cmt.destacado { animation: none; background: rgba(42, 212, 193, 0.12); }
+/* O site esconde a busca nesta faixa, mas aqui ela e o unico jeito de achar um
+   jogador, entao ganha uma linha propria no topo. */
+@media (max-width: 940px) {
+  .global-search.busca {
+    display: block;
+    grid-column: 1 / -1;
+  }
 }
 
-/* ---- rodape ---- */
-.rodape {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 18px var(--gutter);
-  border-top: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.rodape img { width: 22px; height: 22px; object-fit: contain; }
-
-/* ---- tela media: o calendario desce para baixo da lista ---- */
+/* ---- tela media: o trilho se desfaz e cada peca entra na sua vez ---- */
 @media (max-width: 1180px) {
-  .cabeca, .corpo { grid-template-columns: minmax(0, 1fr); }
-  .cabeca { gap: 16px; }
-  .contagem { max-width: 420px; }
-  .principal, .trilho, .conversa { grid-column: 1; grid-row: auto; }
-  .trilho { position: static; max-width: 420px; }
+  .vp-cartas {
+    grid-template-columns: minmax(0, 922px);
+    grid-template-rows: none;
+    grid-template-areas: none;
+  }
+
+  .cartas-topo,
+  .cartas-lista,
+  .conversa {
+    grid-area: auto;
+  }
+
+  .cartas-trilho {
+    display: contents;
+  }
+
+  .cartas-topo { order: 1; }
+  .contagem { order: 2; }
+  .cartas-lista { order: 3; }
+  .cartas-calendario { order: 4; }
+  .atalho-conversa { order: 5; }
+  .conversa { order: 6; }
 }
 
-@media (max-width: 900px) {
-  .placa { --colunas: 48px 48px minmax(0, 1fr) 92px 64px 52px 52px 32px; }
-  .cab span:nth-child(8), .cab span:nth-child(9), .r-kast, .r-agentes { display: none; }
+@media (max-width: 860px) {
+  .placa {
+    --dados: 214px;
+    --folga-emenda: 58px;
+    --colunas: 40px 50px minmax(0, 1fr) 64px 52px 12px;
+  }
+
+  .cab span:nth-child(n + 6):nth-child(-n + 9),
+  .r-n:not(.r-raating),
+  .r-agentes {
+    display: none;
+  }
+
+  .resumo.vp-slide {
+    height: 84px;
+  }
+
+  .resumo .vp-slide-campo {
+    clip-path: polygon(0 0, calc(var(--emenda) + 2px) 0, calc(var(--emenda) - 26px) 100%, 0 100%);
+  }
+
+  .r-mini {
+    width: 50px;
+    height: 80px;
+  }
 }
 
 /* ---- celular ---- */
-@media (max-width: 760px) {
-  html { scroll-padding-top: 100px; }
-
-  .topo-site-dentro {
-    flex-wrap: wrap;
-    gap: 0 16px;
-    min-height: 0;
+@media (max-width: 560px) {
+  .placa {
+    --dados: 92px;
+    --folga-emenda: 30px;
+    --colunas: 34px 44px minmax(0, 1fr) 48px 12px;
   }
 
-  .marca { display: flex; align-items: center; height: 48px; }
-  .topo-site .conta-slot { order: 1; }
-
-  .topo-site nav {
-    order: 2;
-    flex: 1 0 100%;
-    height: 40px;
-    gap: 18px;
-    overflow-x: auto;
-    scrollbar-width: none;
+  .cab {
+    display: none;
   }
 
-  .cabeca h1 { font-size: 36px; }
-  .sec h2 { font-size: 26px; }
+  .resumo.vp-slide {
+    column-gap: 8px;
+    height: 76px;
+    padding-right: 10px;
+    padding-left: 4px;
+  }
 
-  .placa { --colunas: 44px 40px minmax(0, 1fr) 84px 28px; }
-  .cab { display: none; }
-  .r-n { display: none; }
-  .resumo { min-height: 70px; }
-  .r-pos { padding-left: 12px; }
-  .r-mini { width: 36px; height: 58px; }
-  .r-quem strong { font-size: 15px; }
-  .r-ovr b { font-size: 26px; }
+  .resumo.vp-slide .r-n {
+    display: none;
+  }
+
+  .resumo .vp-slide-campo {
+    clip-path: polygon(0 0, calc(var(--emenda) + 2px) 0, calc(var(--emenda) - 23px) 100%, 0 100%);
+  }
+
+  .r-pos {
+    font-size: 12px;
+  }
+
+  .r-mini {
+    width: 44px;
+    height: 70px;
+  }
+
+  .r-quem strong {
+    font-size: 16px;
+  }
+
+  .r-ovr b {
+    font-size: 26px;
+  }
 
   .perfil-dentro {
     grid-template-columns: 112px minmax(0, 1fr);
     column-gap: 14px;
-    padding: 0 12px 0 15px;
+    padding: 0 12px;
   }
 
-  .perfil-carta { grid-row: 1 / span 2; }
-  .perfil-carta img { width: 112px; }
-  .agentes, .jogos, .links, .cmt-carta { grid-column: 1 / -1 !important; }
-  .numeros { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 12px; }
-  .numero b { font-size: 20px; }
+  .perfil-carta {
+    grid-row: 1 / span 2;
+  }
 
-  .rodape { flex-wrap: wrap; }
+  .perfil-carta img {
+    width: 112px;
+  }
+
+  .agentes,
+  .jogos,
+  .links,
+  .cmt-carta {
+    grid-column: 1 / -1 !important;
+  }
+
+  .numeros {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 12px;
+  }
+
+  .numero b {
+    font-size: 20px;
+  }
 }

@@ -18290,8 +18290,11 @@ function renderTournamentDetail(id) {
   });
   Shell(`
     <article class="tournament-hub">
-      ${tournamentHero(event, matches, standings)}
-      ${tournamentTabNav(event, activeTab)}
+      <div class="vp-camp-cabeca">
+        ${tournamentHero(event)}
+        ${tournamentEtapasNav(event)}
+        ${tournamentTabNav(event, activeTab)}
+      </div>
       <div class="tournament-tab-panel">
         ${tournamentTabContent(event, matches, standings, activeTab)}
       </div>
@@ -18301,7 +18304,8 @@ function renderTournamentDetail(id) {
   window.Comments?.montar("event", event.id);
   if (activeTab === "overview") {
     bindTournamentBracketPreview(event, matches);
-    bindTournamentTeamPreview(event, matches, standings);
+    bindTournamentTeamPreview(event, matches);
+    bindVisaoGeralDoCampeonato();
   } else if (activeTab === "estatisticas" || activeTab === "agentes" || activeTab === "composicoes") {
     bindTournamentStatsControls(event.id);
   }
@@ -18462,6 +18466,7 @@ function tournamentTabNav(event, activeTab) {
   return `
     <nav class="tournament-page-tabs" aria-label="Abas do campeonato">
       ${tabs.map(([key, label, href]) => `<a class="${activeTab === key ? "active" : ""}" href="${href}" aria-current="${activeTab === key ? "page" : "false"}">${escapeHtml(label)}</a>`).join("")}
+      ${activeTab === "overview" ? `<span class="vp-camp-atalhos" data-atalhos></span>` : ""}
     </nav>
   `;
 }
@@ -18472,49 +18477,74 @@ function tournamentTabContent(event, matches, standings, activeTab) {
   if (activeTab === "mapas") return tournamentMapsSection(event, matches);
   if (activeTab === "agentes") return tournamentAgentsSection(event, matches);
   if (activeTab === "composicoes") return tournamentCompositionsSection(event, matches);
-  // Encerrado, a classificacao final (todas as equipes, com a campanha de cada
-  // uma) substitui a lista de participantes e o bloco de resultados. Em
-  // andamento, a lista continua, porque ainda nao ha ordem final.
-  const encerrado = eventIsDone(event);
   return `
     ${tournamentOverviewSection(event, matches, standings)}
     <div class="tournament-main">
-      ${encerrado ? "" : tournamentTeamsSection(event, standings, matches)}
-      ${tournamentBracketSection(event, matches)}
       ${tournamentSwissStandingsSection(event)}
-      ${encerrado ? classificacaoFinal(event, standings, matches) : tournamentPlacementsSection(event, standings)}
+      ${tournamentBracketSection(event, matches)}
     </div>
   `;
 }
 
-function tournamentHero(event, matches, standings) {
+// O banner fica numa peca so dele, a direita da emenda: o nome do campeonato nunca
+// cai em cima da arte, que costuma ter letreiro proprio. Campeonato sem banner
+// (23 de 50) mostra o proprio logo apagado no lugar. Os dados moram na ficha da
+// Visao Geral.
+function tournamentHero(event) {
   const banner = assetPath(event.banner || event.bannerPath || "");
-  const patches = tournamentPatchLabels(matches);
+  const logo = assetPath(event.logo || "");
   const status = event.status || "Campeonato";
-  const formato = [tournamentFormatLabel(event, matches), ...(event.format?.details || [])].map((item) => String(item || "").trim().replace(/\.+$/, "")).filter(Boolean).join(". ");
+  const arte = banner
+    ? `<img src="${escapeHtml(banner)}" alt="" loading="lazy" onerror="this.remove()" />`
+    : logo ? `<img class="vp-camp-arte-logo" src="${escapeHtml(logo)}" alt="" loading="lazy" onerror="this.remove()" />` : "";
   return `
     <header class="vp-hero-camp">
-      ${banner ? `<img class="vp-camp-banner" src="${escapeHtml(banner)}" alt="" loading="lazy" onerror="this.remove()" />` : ""}
+      <div class="vp-camp-arte">${arte}</div>
       ${eventLogo(event, "hero")}
       <div class="vp-camp-id">
-        <span class="vp-camp-status">${eventStatusClass(event.status) === "live" ? `<span class="vp-ao-vivo">${escapeHtml(status)}</span>` : escapeHtml(status)}</span>
         <h1>${escapeHtml(event.name)}</h1>
-        <span class="vp-camp-quando">${escapeHtml(eventTimeRange(event))}${patches.length ? `, patch${patches.length > 1 ? "es" : ""} ${escapeHtml(patches.join(" e "))}` : ""}</span>
+        <span class="vp-camp-quando">${eventStatusClass(event.status) === "live" ? `<span class="vp-ao-vivo">${escapeHtml(status)}</span>` : escapeHtml(status)}, ${escapeHtml(eventTimeRange(event))}</span>
       </div>
-      <div class="vp-camp-org"><small>Organização</small><span>${organizerLogo(event, "large")}${escapeHtml(event.organizer || event.source || SITE_NAME)}</span></div>
     </header>
-    <div class="vp-fatos">
-      ${tournamentFact("Prêmio", event.prizePool || "-")}
-      ${tournamentFact("Equipes", event.teamCount || event.teams.length)}
-      <span><small>Tier</small>${event.tier ? eventTierBadge(event) : "<strong>A definir</strong>"}</span>
-      ${tournamentFact("Tipo", event.type || "Evento")}
-      ${tournamentFact("Formato", formato || "-")}
-    </div>
   `;
 }
 
-function tournamentFact(label, value) {
-  return `<span><small>${escapeHtml(label)}</small><strong>${escapeHtml(String(value))}</strong></span>`;
+// "UNIVAVÁ - Fase de Grupos": o que vem antes do hifen e a serie, o resto e a etapa.
+function tournamentSerie(event) {
+  const partes = /^(.*?)\s+-\s+(.+)$/.exec(event?.name || "");
+  return partes ? { nome: partes[1], etapa: partes[2] } : null;
+}
+
+// As etapas da mesma serie, em ordem de data. Campeonato sozinho nao tem etapas.
+function tournamentEtapas(event) {
+  const serie = tournamentSerie(event);
+  if (!serie) return [];
+  const etapas = visibleTournaments()
+    .filter((item) => tournamentSerie(item)?.nome === serie.nome)
+    .sort((a, b) => (a.start || 0) - (b.start || 0) || a.name.localeCompare(b.name, "pt-BR", { numeric: true }));
+  return etapas.length > 1 ? etapas : [];
+}
+
+function tournamentEtapasNav(event) {
+  const etapas = tournamentEtapas(event);
+  if (!etapas.length) return "";
+  return `
+    <nav class="vp-camp-etapas" aria-label="${escapeHtml(`Etapas de ${tournamentSerie(event).nome}`)}">
+      <strong>${escapeHtml(tournamentSerie(event).nome)}</strong>
+      ${etapas.map((etapa) => `<a href="#/events/${escapeHtml(etapa.id)}"${etapa.id === event.id ? ` aria-current="page"` : ""}>${escapeHtml(tournamentSerie(etapa).etapa)}</a>`).join("")}
+    </nav>
+  `;
+}
+
+// De qual etapa veio a vaga de cada equipe: a mais recente em que ela se classificou.
+function tournamentOrigens(event) {
+  const anteriores = tournamentEtapas(event).filter((etapa) => etapa.id !== event.id && (etapa.start || 0) <= (event.start || 0)).reverse();
+  const origens = new Map();
+  (event.teams || []).forEach((teamId) => {
+    const etapa = anteriores.find((item) => (item.placements || []).some((row) => (row.id || row.teamId) === teamId && placementIsQualified(placementRawValue(row))));
+    if (etapa) origens.set(teamId, tournamentSerie(etapa).etapa);
+  });
+  return origens;
 }
 
 function tournamentPatchLabels(matches) {
@@ -18529,26 +18559,67 @@ function tournamentPatchLabels(matches) {
   return [...versions].sort((a, b) => a.localeCompare(b, "pt-BR", { numeric: true }));
 }
 
+// A coluna da esquerda segue a ordem da Liquipedia, a referencia do dono para esta
+// pagina: colocacao e, logo abaixo, quem jogou. A da direita e a ficha, que fica
+// presa enquanto couber na tela. Chave e tabela vem depois, na largura toda.
 function tournamentOverviewSection(event, matches, standings) {
-  const podium = tournamentPodiumRows(event, standings, matches);
-  const maps = event.mapPool || event.maps || [];
-  const mapRows = tournamentMapPoolRows(maps, matches);
-  const campanhas = campanhasDoCampeonato({ ...event, bracket: tournamentBracketDefinition(event, matches) || event.bracket });
-  const linhas = tournamentPodiumDisplayRows(event, podium);
-  // O Resumo (equipes, series e dias) saiu em 24/10: o dono achou pouco
-  // relevante, e equipes e datas ja estao no topo do campeonato.
   return `
     <div class="vp-camp-topo">
-      <section class="vp-s-podio">
-        ${sectionHead(tournamentPodiumTitle(linhas))}
-        <div class="vp-podio">${linhas.map((row) => tournamentPodiumCard(event, row, campanhas)).join("")}</div>
-      </section>
-      <section class="vp-s-pool">
-        ${sectionHead("Map pool")}
-        <div class="vp-pool">${mapRows.length ? mapRows.map(tournamentMapPoolBanner).join("") : `<small class="vp-pool-vazio">A definir</small>`}</div>
-      </section>
+      <div class="vp-camp-esq">
+        ${tournamentColocacaoSection(event, matches, standings)}
+        ${tournamentTeamsSection(event, standings, matches)}
+      </div>
+      ${tournamentFicha(event, matches)}
     </div>
   `;
+}
+
+function tournamentFicha(event, matches) {
+  const mapRows = tournamentMapPoolRows(event.mapPool || event.maps || [], matches).sort((a, b) => b.played - a.played);
+  const maiorMapa = Math.max(1, ...mapRows.map((map) => map.played));
+  const patches = tournamentPatchLabels(matches);
+  const premio = String(event.prizePool || "").trim();
+  const formato = [tournamentFormatLabel(event, matches), ...(event.format?.details || [])].map((item) => String(item || "").trim().replace(/\.+$/, "")).filter(Boolean).join(". ");
+  const linhas = [
+    ["Organização", `<span class="vp-ficha-org">${organizerLogo(event, "large")}${escapeHtml(event.organizer || event.source || SITE_NAME)}</span>`],
+    ["Tier", event.tier ? eventTierBadge(event) : "A definir"],
+    ["Tipo", escapeHtml(event.type || "Evento")],
+    ["Datas", escapeHtml(eventTimeRange(event))],
+    ["Equipes", escapeHtml(String(event.teamCount || event.teams.length))],
+    ["Séries", escapeHtml(String(matches.length))],
+    patches.length ? [patches.length > 1 ? "Patches" : "Patch", escapeHtml(patches.join(", "))] : null,
+    premio && premio !== "-" ? ["Prêmio", escapeHtml(premio)] : null,
+  ].filter(Boolean);
+  return `
+    <aside class="vp-camp-lado" aria-label="Informações do campeonato">
+      <section>
+        ${sectionHead("Informações")}
+        <dl class="vp-ficha">${linhas.map(([rotulo, valor]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd>${valor}</dd></div>`).join("")}</dl>
+      </section>
+      ${formato ? `<section class="vp-camp-formato"><h3>Formato</h3><p>${escapeHtml(formato)}</p></section>` : ""}
+      <section class="vp-camp-pool">
+        <h3>Map pool <span>Jogos em cada mapa</span></h3>
+        ${mapRows.length ? `<div class="vp-rm-lista">${mapRows.map((map) => tournamentMapPoolBanner(map, maiorMapa)).join("")}</div>` : `<small class="vp-pool-vazio">A definir</small>`}
+      </section>
+    </aside>
+  `;
+}
+
+// A pagina e longa, entao os atalhos saem das proprias secoes: o que existe neste
+// campeonato (chave, tabela, rodadas) e o que aparece. A ficha mede a propria altura
+// para so ficar presa se couber na tela.
+function bindVisaoGeralDoCampeonato() {
+  const atalhos = document.querySelector("[data-atalhos]");
+  if (atalhos) {
+    const secoes = [...document.querySelectorAll(".tournament-hub .tournament-section, .tournament-hub .cmt-secao")].filter((secao) => secao.querySelector("h2"));
+    atalhos.innerHTML = secoes.map((secao, indice) => `<button type="button" data-atalho="${indice}">${escapeHtml(secao.querySelector("h2").textContent.trim())}</button>`).join("");
+    atalhos.addEventListener("click", (clickEvent) => {
+      const botao = clickEvent.target.closest("[data-atalho]");
+      if (botao) secoes[Number(botao.dataset.atalho)].scrollIntoView({ block: "start" });
+    });
+  }
+  const lado = document.querySelector(".vp-camp-lado");
+  lado?.style.setProperty("--lado-altura", `${lado.offsetHeight}px`);
 }
 
 // A campanha de cada equipe no campeonato, em series: chave e suico. W.O.
@@ -18580,29 +18651,127 @@ function campanhasDoCampeonato(event) {
   return campanhas;
 }
 
-// Em campeonato encerrado: todas as equipes na ordem oficial, com a campanha.
-function classificacaoFinal(event, standings, matches = []) {
-  if (event.swiss?.finalStandings === false) return "";
-  const rows = tournamentResultRows(event, standings);
-  if (!rows.length) return "";
-  const campanhas = campanhasDoCampeonato({ ...event, bracket: tournamentBracketDefinition(event, matches) || event.bracket });
-  const linhas = rows
-    .map((row, index) => {
-      const team = tournamentTeamById(event, row.id || row.teamId);
-      if (!team) return "";
-      // "5º-6º", sem o "lugar": a coluna da posicao e estreita e o rotulo cabe
-      // numa linha so.
-      const label = tournamentPlacementDisplayLabel(event, row.range || placementLabel(index)).replace(/ lugar$/, "");
-      const campanha = campanhas.get(team.id);
-      const detalhe = campanha ? `${campanha[0]}-${campanha[1]}` : row.note || (Number.isFinite(row.seriesWins) ? `${row.seriesWins}-${row.seriesLosses}` : "");
-      const miolo = `<b>${escapeHtml(label)}</b>${teamLogo(team.id, "tiny")}<span>${escapeHtml(team.name)}</span><small>${escapeHtml(detalhe)}</small>`;
-      return team.missing ? `<span class="vp-classif-linha">${miolo}</span>` : `<a class="vp-classif-linha" href="#/teams/${escapeHtml(team.id)}">${miolo}</a>`;
-    })
-    .join("");
+// No suico sem chave depois, a tabela logo abaixo ja e a classificacao inteira. Em
+// andamento isso ainda nao vale: quem ja saiu aparece aqui, abaixo das vagas abertas.
+function tournamentTabelaFechaOCampeonato(event) {
+  if (!eventIsDone(event)) return false;
+  if (event.swiss?.finalStandings === false) return true;
+  return Boolean(event.swiss?.standings?.length) && event.swiss.finalStandings !== true && !event.bracket?.regions?.length;
+}
+
+function tournamentRotuloDaColocacao(event, range) {
+  const rotulo = tournamentPlacementDisplayLabel(event, range).replace(/ lugar$/, "");
+  // "Off Season" e "Practice" sao divisoes, nao posicoes: vale o nome como veio.
+  return rotulo === "Colocação não informada" ? String(range) : rotulo;
+}
+
+function tournamentCampanhas(event, matches) {
+  return campanhasDoCampeonato({ ...event, bracket: tournamentBracketDefinition(event, matches) || event.bracket });
+}
+
+// Uma entrada por colocacao, com todas as equipes que dividem a posicao. O podio vem
+// antes, com as vagas ainda em aberto, e depois quem ficou pelo caminho.
+function tournamentColocacaoGrupos(event, matches, standings) {
+  const destaques = tournamentPodiumDisplayRows(event, tournamentPodiumRows(event, standings, matches));
+  const vistos = new Set(destaques.map((row) => row.team?.id).filter(Boolean));
+  const demais = tournamentTabelaFechaOCampeonato(event)
+    ? []
+    : tournamentResultRows(event, standings).flatMap((row, index) => {
+        const range = row.range || placementLabel(index);
+        if (placementIsOngoing(range) && !eventIsDone(event)) return [];
+        const team = tournamentTeamById(event, row.id || row.teamId);
+        return team && !vistos.has(team.id) ? [{ range, team }] : [];
+      });
+  const grupos = [];
+  [...destaques, ...demais].forEach((row) => {
+    const rotulo = tournamentRotuloDaColocacao(event, row.range);
+    if (grupos.at(-1)?.rotulo !== rotulo) grupos.push({ rotulo, range: row.range, equipes: [] });
+    grupos.at(-1).equipes.push(row.team);
+  });
+  return grupos;
+}
+
+function tournamentColocacaoCor(range) {
+  if (placementIsQualified(String(range))) return "vp-col-vaga";
+  return { "place-1": "vp-col-ouro", "place-2": "vp-col-prata", "place-3": "vp-col-bronze" }[tournamentPlacementPodiumClass(range)] || "";
+}
+
+// Acima de 16 equipes a tabela anda em duas colunas, cortando entre duas colocacoes
+// no ponto mais perto da metade: uma colocacao nunca fica dividida.
+function tournamentColocacaoColunas(grupos) {
+  const total = grupos.reduce((soma, grupo) => soma + grupo.equipes.length, 0);
+  if (total <= 16) return [grupos];
+  let soma = 0;
+  let melhor = { corte: 1, distancia: Infinity };
+  grupos.forEach((grupo, indice) => {
+    soma += grupo.equipes.length;
+    const distancia = Math.abs(soma - total / 2);
+    if (distancia < melhor.distancia) melhor = { corte: indice + 1, distancia };
+  });
+  return [grupos.slice(0, melhor.corte), grupos.slice(melhor.corte)].filter((coluna) => coluna.length);
+}
+
+function tournamentColocacaoLinha(team, campanhas, dados) {
+  if (!team) return `<span class="vp-col-equipe vp-col-aberta"><span class="vp-col-nome"><span class="team-logo clean-logo tiny logo-empty"></span><span>TBD</span></span></span>`;
+  const campanha = campanhas.get(team.id);
+  const linha = dados.get(team.id);
+  const series = campanha ? `${campanha[0]}-${campanha[1]}` : linha ? `${linha.seriesWins}-${linha.seriesLosses}` : "-";
+  const jogouMapas = linha && linha.mapWins + linha.mapLosses > 0;
+  const mapas = jogouMapas ? `${linha.mapWins}-${linha.mapLosses}` : "-";
+  const saldo = jogouMapas ? signed(linha.roundDiff || 0) : "-";
+  const miolo = `<span class="vp-col-nome">${teamLogo(team.id, "tiny")}<span title="${escapeHtml(team.name)}">${escapeHtml(team.name)}</span></span><i>${escapeHtml(series)}</i><i class="vp-col-mapas">${escapeHtml(mapas)}</i><i>${escapeHtml(saldo)}</i>`;
+  const rotulo = `${team.name}: ${series} em séries, ${mapas} em mapas, saldo de rounds ${saldo}`;
+  return team.missing
+    ? `<span class="vp-col-equipe" aria-label="${escapeHtml(rotulo)}">${miolo}</span>`
+    : `<a class="vp-col-equipe" href="#/teams/${escapeHtml(team.id)}" aria-label="${escapeHtml(rotulo)}">${miolo}</a>`;
+}
+
+// O MVP e prêmio individual: fecha a tabela, em linha propria. Vai por PUUID, como o
+// resto do prêmio.
+function tournamentMvpGrupo(event) {
+  const premiado = String(event.mvp || "").trim();
+  if (!premiado || !eventIsDone(event)) return "";
+  const player = (state.db?.players || []).find((item) => {
+    const chaves = playerMvpKeys(item);
+    return chaves.has(premiado) || chaves.has(normalizeNameKey(premiado));
+  });
+  if (!player) return "";
+  const team = teamById(player.teamId);
   return `
-    <section class="tournament-section vp-s-classif">
-      ${sectionHead("Classificação final", campanhas.size ? "Com a campanha de cada equipe" : "")}
-      <div class="vp-classif">${linhas}</div>
+    <div class="vp-col-grupo vp-col-mvp">
+      <b>MVP</b>
+      <div class="vp-col-equipes">
+        <a class="vp-col-equipe" href="${playerHref(player)}"><span class="vp-col-nome">${team ? teamLogo(team.id, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}<span>${escapeHtml(player.nick)}</span></span><small>${escapeHtml(team?.name || "")}</small></a>
+      </div>
+    </div>
+  `;
+}
+
+// Uma tabela com uma linha por equipe, como a de premiacao da Liquipedia: a coluna
+// que nasce quando os campeonatos apontarem um para o outro (e os premios, quando
+// existirem) entra aqui sem mudar o desenho.
+function tournamentColocacaoSection(event, matches, standings) {
+  const campanhas = tournamentCampanhas(event, matches);
+  const dados = new Map(standings.map((row) => [row.id, row]));
+  const colunas = tournamentColocacaoColunas(tournamentColocacaoGrupos(event, matches, standings));
+  const mvp = tournamentMvpGrupo(event);
+  return `
+    <section class="vp-s-colocacao">
+      ${sectionHead("Colocação")}
+      <div class="vp-colocacao${colunas.length > 1 ? " vp-colocacao-dupla" : ""}">
+        ${colunas.map((grupos, indice) => `
+          <div class="vp-col-coluna">
+            <div class="vp-col-cab" aria-hidden="true"><span>Lugar</span><div class="vp-col-dados"><span>Equipe</span><span>Séries</span><span class="vp-col-mapas">Mapas</span><span>Saldo</span></div></div>
+            ${grupos.map((grupo) => `
+              <div class="vp-col-grupo ${tournamentColocacaoCor(grupo.range)}">
+                <b class="${/^\d/.test(grupo.rotulo) ? "" : "vp-col-texto"}">${escapeHtml(grupo.rotulo)}</b>
+                <div class="vp-col-equipes">${grupo.equipes.map((team) => tournamentColocacaoLinha(team, campanhas, dados)).join("")}</div>
+              </div>
+            `).join("")}
+            ${indice === colunas.length - 1 ? mvp : ""}
+          </div>
+        `).join("")}
+      </div>
     </section>
   `;
 }
@@ -18689,55 +18858,16 @@ function tournamentPodiumDisplayRows(event, rows) {
   return [...abertas, ...rows];
 }
 
-// Classificatoria nao tem 1o, 2o e 3o: as vagas sao todas "Classificado". O
-// rotulo em texto nao cabe na coluna do numero (passava por cima do escudo e
-// do nome), entao ele vai pequeno junto da campanha, e a coluna sai.
-function tournamentPodiumCard(event, row, campanhas = new Map()) {
-  const label = tournamentPodiumLabel(row.range);
-  const team = row.team;
-  const campanha = team ? campanhas.get(team.id) : null;
-  const placar = campanha ? `${campanha[0]}-${campanha[1]}` : "";
-  const emTexto = !/^\d/.test(label);
-  const escudo = team ? teamLogo(team.id) : `<span class="team-logo clean-logo logo-empty"></span>`;
-  const miolo = emTexto
-    ? `${escudo}<strong>${escapeHtml(team ? team.name : "TBD")}</strong><small>${escapeHtml([label, placar].filter(Boolean).join(", "))}</small>`
-    : `<b>${escapeHtml(label.replace(/ lugar$/, ""))}</b>${escudo}<strong>${escapeHtml(team ? team.name : "TBD")}</strong><small>${placar}</small>`;
-  // "3º/4º" e mais largo que a coluna do numero: vai num corpo menor.
-  const dupla = !emTexto && label.includes("/");
-  const classes = `vp-pod podium-${escapeHtml(slugify(label))}${emTexto ? " vp-pod-texto" : ""}${dupla ? " vp-pod-dupla" : ""}${team ? "" : " vp-pod-vaga"}`;
-  const estilo = `--team-line:${team ? teamLineColor(team.id) : TEAM_LINE_SEM_COR}`;
-  return team && !team.missing
-    ? `<a class="${classes}" href="#/teams/${escapeHtml(team.id)}" style="${estilo}">${miolo}</a>`
-    : `<span class="${classes}" style="${estilo}">${miolo}</span>`;
-}
-
-// "Classificados" quando nenhuma vaga tem colocacao (as classificatorias).
-function tournamentPodiumTitle(rows) {
-  const comColocacao = (rows || []).some((row) => /^\d/.test(tournamentPodiumLabel(row.range)));
-  return rows?.length && !comColocacao ? "Classificados" : "Pódio";
-}
-
-function tournamentPodiumLabel(range) {
-  const value = String(range || "").trim();
-  const normalizedValue = normalize(value);
-  const compactValue = normalizeNameKey(value);
-  if (normalizedValue === "1st") return "1\u00ba lugar";
-  if (normalizedValue === "2nd") return "2\u00ba lugar";
-  if (normalizedValue === "3rd") return "3\u00ba lugar";
-  if (compactValue.startsWith("34")) return "3\u00ba/4\u00ba lugar";
-  if (value === "1") return "1º lugar";
-  if (value === "2") return "2º lugar";
-  if (value === "3") return "3º lugar";
-  if (value === "3-4" || value === "3/4") return "3º/4º lugar";
-  return value;
-}
-
-function tournamentMapPoolBanner(map) {
-  const art = mapArtAttrs(map);
+// Como em Partidas: o mapa em cinza, e a arte colorida revelada ate a proporcao de
+// jogos. O total de rounds fica na dica.
+function tournamentMapPoolBanner(map, maior) {
+  const nome = map.name || map.poolName;
+  const art = mapBannerSrc(nome);
   return `
-    <a class="vp-pool-mapa" href="#/maps/${escapeHtml(map.id)}">
-      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : ""}
-      <b>${escapeHtml(map.name || map.poolName)}</b><small>${escapeHtml(`${map.played} ${map.played === 1 ? "jogo" : "jogos"}, ${map.rounds} rounds`)}</small>
+    <a class="vp-rm" href="#/maps/${escapeHtml(map.id)}" style="--parte:${(map.played / maior).toFixed(4)}" title="${escapeHtml(`${map.played} ${map.played === 1 ? "jogo" : "jogos"}, ${map.rounds} rounds`)}">
+      <span class="vp-rm-arte">${art ? ["vp-rm-cinza", "vp-rm-cor"].map((classe) => `<img class="${classe}" src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />`).join("") : ""}</span>
+      <span>${escapeHtml(nome)}</span>
+      <b>${map.played}</b>
     </a>
   `;
 }
@@ -18814,198 +18944,52 @@ function tournamentStageCard(event, stage) {
   `;
 }
 
+// Chave e rodadas podem existir juntas (pontos corridos com playoffs). A chave vem
+// antes, porque e a fase que decide. Suico sem chave curada nao usa a estimada:
+// ela sairia das mesmas series das rodadas.
 function tournamentBracketSection(event, matches) {
-  if (event.swiss?.rounds?.length) return tournamentSwissBracketSection(event, matches);
   const bracket = tournamentBracketDefinition(event, matches);
-  if (bracket?.regions?.length) return tournamentCuratedBracketSection({ ...event, bracket });
+  const rodadas = event.swiss?.rounds?.length ? tournamentSwissBracketSection(event) : "";
+  const temChave = rodadas ? event.bracket?.regions?.length : bracket?.regions?.length;
+  const chave = temChave ? tournamentCuratedBracketSection({ ...event, bracket }) : "";
+  if (rodadas || chave) return `${chave}${rodadas}`;
   return `
     <section class="tournament-section">
-      <div class="tournament-section-head">
-        <h2>Brackets</h2>
-        <span>Bracket oficial</span>
-      </div>
-      <div class="empty-state">Bracket aguardando partidas registradas.</div>
+      ${sectionHead("Chave")}
+      <div class="empty-state">A chave aparece quando as partidas forem registradas.</div>
     </section>
   `;
 }
 
-function tournamentSwissBracketSection(event, matches) {
+// Todas as rodadas a vista, sem seta nem rolagem de lado: ate 7 cabem numa fileira,
+// e os campeonatos longos quebram em fileiras iguais.
+function tournamentSwissBracketSection(event) {
   const rounds = event.swiss?.rounds || [];
-  const activeIndex = Math.max(0, rounds.findIndex((round) => {
-    const status = normalize(round.status || "");
-    return status.includes("agendada") || status.includes("andamento");
-  }));
-  const roundTabs = tournamentSwissRoundTabs(event, rounds, activeIndex);
+  const porLinha = rounds.length <= 7 ? rounds.length : Math.min(6, Math.ceil(rounds.length / 2));
   return `
     <section class="tournament-section tournament-swiss-section">
-      <div class="tournament-section-head">
-        <h2>Brackets</h2>
-        <span>${escapeHtml(event.bracket?.title || event.format?.summary || "Sistema suíço")}</span>
-      </div>
-      <div class="tournament-swiss-bracket" style="--swiss-rounds:${rounds.length}">
-        ${rounds
-          .map(
-            (round, index) => `
-              <input type="radio" name="swiss-round-${escapeHtml(event.id)}" id="swiss-round-${escapeHtml(event.id)}-${index}" ${index === activeIndex ? "checked" : ""} />
-            `,
-          )
-          .join("")}
-        <input class="swiss-view-mode-input swiss-view-mode-map" type="radio" name="swiss-view-${escapeHtml(event.id)}" id="swiss-view-${escapeHtml(event.id)}-map" checked />
-        <input class="swiss-view-mode-input swiss-view-mode-list" type="radio" name="swiss-view-${escapeHtml(event.id)}" id="swiss-view-${escapeHtml(event.id)}-list" />
-        <div class="swiss-view-toggle" aria-label="Modo de exibicao da bracket">
-          <label class="swiss-view-option map" for="swiss-view-${escapeHtml(event.id)}-map">Mapa</label>
-          <label class="swiss-view-option list" for="swiss-view-${escapeHtml(event.id)}-list">Lista</label>
-        </div>
-        <div class="swiss-view swiss-flow-view">
-          ${tournamentSwissOverviewBoard(event)}
-        </div>
-        <div class="swiss-view swiss-list-view">
-          ${roundTabs}
-          <div class="swiss-round-panels">
-            ${rounds.map((round, roundIndex) => tournamentSwissRoundPanel(event, round, roundIndex, matches, activeIndex)).join("")}
-          </div>
-        </div>
+      ${sectionHead("Rodadas", event.format?.summary || event.bracket?.title || "Sistema suíço")}
+      <div class="tournament-swiss-bracket vp-rodadas" style="--por-linha:${porLinha}">
+        ${rounds.map((round, roundIndex) => tournamentSwissRodada(event, round, roundIndex)).join("")}
       </div>
     </section>
   `;
 }
 
-function tournamentSwissRoundTabs(event, rounds, activeIndex = 0) {
-  return `
-    <div class="swiss-round-tabs">
-      ${rounds.map((round, index) => `<label class="${index === activeIndex ? "is-active" : ""}" for="swiss-round-${escapeHtml(event.id)}-${index}"><strong>${escapeHtml(round.title || `Rodada ${index + 1}`)}</strong><small>${escapeHtml(round.status || "")}</small></label>`).join("")}
-    </div>
-  `;
-}
-
-function tournamentSwissRoundPanel(event, round, roundIndex, matches, activeIndex = 0) {
-  const matchesCount = round.matches?.length || 0;
-  const groups = tournamentSwissRoundGroups(event, roundIndex);
-  return `
-    <section class="swiss-round-panel ${roundIndex === activeIndex ? "is-active" : ""}" style="--round-index:${roundIndex}">
-      <header class="swiss-round-header">
-        <span><strong>${escapeHtml(round.title || `Rodada ${roundIndex + 1}`)}</strong><small>${escapeHtml([round.bestOf, round.status].filter(Boolean).join(" - "))}</small></span>
-        <em>${matchesCount} partidas</em>
-      </header>
-      <div class="swiss-score-groups">
-        ${groups.map((group) => tournamentSwissScoreGroup(event, round, roundIndex, group)).join("")}
+function tournamentSwissRodada(event, round, roundIndex) {
+  const detalhe = [round.bestOf, round.status].filter(Boolean).join(", ");
+  const grupos = tournamentSwissRoundGroups(event, roundIndex)
+    .map((group) => `
+      ${group.label ? `<h4>${escapeHtml(group.label)}</h4>` : ""}
+      <div class="vp-rd-lista">
+        ${group.matches.map(({ match, matchIndex }) => tournamentChaveBotao(event, match, tournamentSwissMatchKey(roundIndex, matchIndex, match.code))).join("")}
       </div>
-    </section>
-  `;
-}
-
-function tournamentSwissOverviewBoard(event) {
-  const rounds = event.swiss?.rounds || [];
-  if (!rounds.length) return "";
+    `)
+    .join("");
   return `
-    <div class="swiss-flow-shell">
-      <div class="swiss-flow-toolbar" aria-label="Navegação do mapa suíço">
-        <button type="button" class="swiss-flow-nav prev" data-swiss-flow-nav="-1" aria-label="Rodada anterior">&lt;</button>
-        <button type="button" class="swiss-flow-nav next" data-swiss-flow-nav="1" aria-label="Próxima rodada">&gt;</button>
-      </div>
-      <div class="swiss-flow-board" data-swiss-flow aria-label="Mapa do sistema suíço">
-        <div class="swiss-flow-track" style="--swiss-round-count:${rounds.length}">
-          ${rounds.map((round, roundIndex) => tournamentSwissFlowRound(event, round, roundIndex)).join("")}
-        </div>
-        <button type="button" class="swiss-flow-nav swiss-flow-edge-nav prev" data-swiss-flow-nav="-1" aria-label="Mover mapa para a esquerda">&lt;</button>
-        <button type="button" class="swiss-flow-nav swiss-flow-edge-nav next" data-swiss-flow-nav="1" aria-label="Mover mapa para a direita">&gt;</button>
-      </div>
-    </div>
-  `;
-}
-
-function tournamentSwissFlowRound(event, round, roundIndex) {
-  const groups = tournamentSwissRoundGroups(event, roundIndex);
-  const statusClass = normalize(round.status || "").includes("agendada") ? "scheduled" : "played";
-  return `
-    <section class="swiss-flow-round ${statusClass}" data-swiss-flow-round="${roundIndex}">
-      <header class="swiss-flow-round-head">
-        <span>
-          <strong>${escapeHtml(round.title || `Rodada ${roundIndex + 1}`)}</strong>
-          <small>${escapeHtml(round.status || "")}</small>
-        </span>
-        <em>${escapeHtml(String(round.matches?.length || 0))}</em>
-      </header>
-      <div class="swiss-flow-groups">
-        ${groups.map((group) => tournamentSwissFlowGroup(event, round, roundIndex, group)).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function tournamentSwissFlowGroup(event, round, roundIndex, group) {
-  const tone = tournamentSwissFlowScoreTone(group.label);
-  return `
-    <section class="swiss-flow-group tone-${escapeHtml(tone)}">
-      ${group.label ? `<header class="swiss-flow-group-head">
-        <strong>${escapeHtml(group.label)}</strong>
-        <small>${escapeHtml(String(group.matches.length))}</small>
-      </header>` : ""}
-      <div class="swiss-flow-matches">
-        ${group.matches.map(({ match, matchIndex }) => tournamentSwissFlowMatch(event, match, round, roundIndex, matchIndex)).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function tournamentSwissFlowMatch(event, match, round, roundIndex, matchIndex) {
-  const key = tournamentSwissMatchKey(roundIndex, matchIndex, match.code);
-  const hasResult = tournamentBracketMatchHasResult(match);
-  const winner = hasResult ? match.winner || (Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b) : "";
-  const scoreLabel = hasResult ? `${match.scoreA}:${match.scoreB}` : "VS";
-  return `
-    <button type="button" class="swiss-flow-match ${hasResult ? "played" : "pending"}" data-tournament-match="${escapeHtml(key)}">
-      ${tournamentSwissFlowTeam(event, match.a, match.aLabel, winner === match.a)}
-      <span class="swiss-flow-score">${escapeHtml(scoreLabel)}</span>
-      ${tournamentSwissFlowTeam(event, match.b, match.bLabel, winner === match.b)}
-      <small>${escapeHtml(match.code || round.bestOf || "Partida")}</small>
-    </button>
-  `;
-}
-
-function tournamentSwissFlowTeam(event, teamId, label, won) {
-  const team = teamId ? tournamentTeamById(event, teamId) : null;
-  const name = label || team?.name || "Sem adversário";
-  const shortName = label || team?.sourceTag || team?.shortTag || team?.tag || team?.name || "BYE";
-  return `
-    <span class="swiss-flow-team ${won ? "winner" : ""} ${teamId ? "" : "bye"}" title="${escapeHtml(name)}">
-      ${teamId ? teamLogo(teamId, "flow-logo") : `<span class="team-logo clean-logo flow-logo logo-empty"></span>`}
-      <strong>${escapeHtml(shortName)}</strong>
-    </span>
-  `;
-}
-
-function tournamentSwissFlowScoreTone(label) {
-  const records = tournamentSwissRecordsFromLabel(label);
-  if (!records.length) return "neutral";
-  const bestWins = Math.max(...records.map((record) => record.wins));
-  const worstLosses = Math.max(...records.map((record) => record.losses));
-  if (worstLosses >= 3) return "eliminated";
-  if (bestWins >= 3 && worstLosses <= 1) return "advanced";
-  if (worstLosses >= 2) return "danger";
-  if (bestWins >= 2 && worstLosses === 0) return "strong";
-  if (bestWins > worstLosses) return "positive";
-  if (worstLosses > bestWins) return "warning";
-  return "neutral";
-}
-
-function tournamentSwissRecordsFromLabel(label) {
-  return [...String(label || "").matchAll(/(\d+)-(\d+)/g)].map((match) => ({
-    wins: Number(match[1] || 0),
-    losses: Number(match[2] || 0),
-  }));
-}
-
-function tournamentSwissScoreGroup(event, round, roundIndex, group) {
-  return `
-    <section class="swiss-score-group">
-      ${group.label ? `<header class="swiss-score-group-head">
-        <strong>${escapeHtml(group.label)}</strong>
-        <small>${escapeHtml(`${group.matches.length} ${group.matches.length === 1 ? "partida" : "partidas"}`)}</small>
-      </header>` : ""}
-      <div class="swiss-match-grid">
-        ${group.matches.map(({ match, matchIndex }) => tournamentSwissMatchCard(event, match, round, roundIndex, matchIndex)).join("")}
-      </div>
+    <section class="vp-rd">
+      <h3>${escapeHtml(round.title || `Rodada ${roundIndex + 1}`)}${detalhe ? `<small>${escapeHtml(detalhe)}</small>` : ""}</h3>
+      ${grupos}
     </section>
   `;
 }
@@ -19078,20 +19062,6 @@ function tournamentSwissScoreSortValue(label) {
   return Number(match.groups.wins) * 100 - Number(match.groups.losses);
 }
 
-function tournamentSwissMatchCard(event, match, round, roundIndex, matchIndex) {
-  const key = tournamentSwissMatchKey(roundIndex, matchIndex, match.code);
-  const status = tournamentBracketMatchStatusLabel(match, round);
-  const hasResult = tournamentBracketMatchHasResult(match);
-  const winner = hasResult ? match.winner || (Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b) : "";
-  return `
-    <button type="button" class="swiss-match-card ${hasResult ? "played" : "pending"}" data-tournament-match="${escapeHtml(key)}">
-      <span class="tournament-bracket-meta"><span>${escapeHtml(status)}</span><b>${escapeHtml(match.code || "Partida")}</b>${round.bestOf ? `<em>${escapeHtml(round.bestOf)}</em>` : ""}</span>
-      ${tournamentCuratedBracketTeam(event, match.a, match.aLabel, match.scoreA, winner === match.a)}
-      ${tournamentCuratedBracketTeam(event, match.b, match.bLabel, match.scoreB, winner === match.b)}
-    </button>
-  `;
-}
-
 function tournamentSwissMatchKey(roundIndex, matchIndex, code) {
   return `swiss-${roundIndex}-${matchIndex}-${slugify(code || "partida")}`;
 }
@@ -19101,10 +19071,7 @@ function tournamentSwissStandingsSection(event) {
   if (!groups.length && !event.swiss?.standings?.length) return "";
   return `
     <section class="tournament-section tournament-swiss-table-section">
-      <div class="tournament-section-head">
-        <h2>Tabela</h2>
-        <span>${escapeHtml(event.swiss.standingsLabel || "Classificação atual")}</span>
-      </div>
+      ${sectionHead("Tabela", event.swiss.standingsLabel || "Classificação atual")}
       ${groups.length ? tournamentSwissGroupTables(event, groups) : tournamentSwissGeneralTables(event)}
     </section>
   `;
@@ -19112,40 +19079,29 @@ function tournamentSwissStandingsSection(event) {
 
 function tournamentSwissGroupTables(event, groups) {
   return `
-    <div class="tournament-swiss-table-wrap swiss-group-tables">
-      ${groups.map((group) => tournamentSwissTable(event, tournamentSwissStandingRows(event, group.standings), group.title || "Grupo", { compact: true })).join("")}
+    <div class="vp-tabelas">
+      ${groups.map((group) => tournamentSwissTabela(tournamentSwissStandingRows(event, group.standings), { titulo: escapeHtml(group.title || "Grupo") })).join("")}
     </div>
   `;
 }
 
 function tournamentSwissGeneralTables(event) {
-  const stateRows = tournamentSwissStandingRows(event, [
+  const rows = tournamentSwissStandingRows(event, [
     ...(event.swiss.standings || []).map((row) => ({ ...row, status: row.status || "Em disputa" })),
     ...(event.swiss.eliminated || []).map((row) => ({ ...row, status: row.status || "Eliminado" })),
   ]);
-  const activeRows = stateRows.filter((row) => !normalize(row.status).includes("eliminado"));
-  const eliminatedRows = stateRows.filter((row) => normalize(row.status).includes("eliminado"));
-  const generalTables = `
-    ${tournamentSwissTable(event, activeRows, "Classificação atual")}
-    ${eliminatedRows.length ? tournamentSwissTable(event, eliminatedRows, "Eliminados") : ""}
-  `;
-  if (!event.swiss.stateTables) {
-    return `<div class="tournament-swiss-table-wrap">${generalTables}</div>`;
-  }
+  const geral = tournamentSwissTabela(rows, { colunas: 2 });
+  if (!event.swiss.stateTables) return geral;
   return `
     <div class="tournament-swiss-table-wrap">
       <input class="swiss-table-view-mode-input swiss-table-view-mode-general" type="radio" name="swiss-table-view-${escapeHtml(event.id)}" id="swiss-table-view-${escapeHtml(event.id)}-general" checked />
       <input class="swiss-table-view-mode-input swiss-table-view-mode-states" type="radio" name="swiss-table-view-${escapeHtml(event.id)}" id="swiss-table-view-${escapeHtml(event.id)}-states" />
-      <div class="swiss-table-view-toggle" aria-label="Modo de exibicao da tabela">
+      <div class="swiss-table-view-toggle" aria-label="Modo de exibição da tabela">
         <label class="swiss-table-view-option general" for="swiss-table-view-${escapeHtml(event.id)}-general">Geral</label>
         <label class="swiss-table-view-option states" for="swiss-table-view-${escapeHtml(event.id)}-states">Estados</label>
       </div>
-      <div class="swiss-table-view swiss-table-view-general-panel">
-        ${generalTables}
-      </div>
-      <div class="swiss-table-view swiss-table-view-states-panel">
-        ${tournamentSwissStateTables(event, stateRows)}
-      </div>
+      <div class="swiss-table-view swiss-table-view-general-panel">${geral}</div>
+      <div class="swiss-table-view swiss-table-view-states-panel">${tournamentSwissStateTables(rows)}</div>
     </div>
   `;
 }
@@ -19159,40 +19115,51 @@ function tournamentSwissStandingRows(event, rows) {
   }));
 }
 
-function tournamentSwissTable(event, rows, title, options = {}) {
+// Com duas colunas a ordem desce a primeira e continua na segunda, cada uma com o
+// proprio cabecalho. Em 1294px uma linha so deixava um vao enorme entre nome e dados.
+// O titulo entra como HTML por causa da bandeira do estado: quem chama escapa o texto.
+function tournamentSwissTabela(rows, { titulo = "", colunas = 1 } = {}) {
   if (!rows.length) return "";
+  const porColuna = Math.ceil(rows.length / colunas);
+  const partes = Array.from({ length: colunas }, (_, indice) => rows.slice(indice * porColuna, (indice + 1) * porColuna)).filter((parte) => parte.length);
   return `
-    <div class="swiss-standings-block">
-      <h3>${escapeHtml(title)}</h3>
-      ${tournamentSwissTableMarkup(rows, options)}
+    <div class="vp-tabela">
+      ${titulo ? `<h3>${titulo}</h3>` : ""}
+      <div class="vp-tabela-corpo" style="--colunas:${partes.length}">
+        ${partes.map((parte) => `
+          <div class="vp-tabela-coluna">
+            <div class="vp-tabela-cab" aria-hidden="true"><span>#</span><span></span><span>Equipe</span><span>Estado</span><span>V</span><span>D</span><span>Situação</span></div>
+            ${parte.map(tournamentSwissLinha).join("")}
+          </div>
+        `).join("")}
+      </div>
     </div>
   `;
 }
 
-function tournamentSwissTableMarkup(rows, options = {}) {
-  const compact = Boolean(options.compact);
-  return tabelaComRotulos(`
-    <div class="tournament-stats-table-wrap">
-      <table class="tournament-swiss-table ${compact ? "compact-state-table" : ""}">
-        <thead>
-          <tr><th>#</th><th>Equipe</th><th>Estado</th><th class="numeric">V</th><th class="numeric">D</th>${compact ? "" : "<th>Status</th>"}</tr>
-        </thead>
-        <tbody>
-          ${rows.map((row) => (compact ? tournamentSwissStateStandingRow(row) : tournamentSwissStandingRow(row))).join("")}
-        </tbody>
-      </table>
-    </div>
-  `);
+function tournamentSwissLinha(row) {
+  const status = normalize(row.status);
+  const classes = ["vp-tabela-linha", status.includes("eliminado") ? "vp-fora" : "", status.includes("classificad") ? "vp-dentro" : ""].filter(Boolean).join(" ");
+  const posicao = String(row.rank).replace(/ lugar$/, "");
+  const estado = tournamentSwissStateInfo(row.team);
+  const miolo = `
+    <b>${escapeHtml(posicao)}</b>
+    ${row.team ? teamLogo(row.team.id, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}
+    <strong>${escapeHtml(row.team?.name || row.id || "-")}</strong>
+    <span class="vp-tabela-uf" title="${escapeHtml(estado.label)}">${estado.code || estado.flagSrc ? `${tournamentSwissStateFlag(estado)}<span>${escapeHtml(estado.code)}</span>` : "-"}</span>
+    <i>${escapeHtml(String(row.wins ?? 0))}</i>
+    <i>${escapeHtml(String(row.losses ?? 0))}</i>
+    <small>${escapeHtml(row.status)}</small>
+  `;
+  return row.team && !row.team.missing
+    ? `<a class="${classes}" href="#/teams/${escapeHtml(row.team.id)}">${miolo}</a>`
+    : `<span class="${classes}">${miolo}</span>`;
 }
 
-function tournamentSwissStateTables(event, rows) {
+function tournamentSwissStateTables(rows) {
   const groups = tournamentSwissStateGroups(rows);
   if (!groups.length) return `<div class="empty-state">Nenhum time encontrado para agrupar por estado.</div>`;
-  return `
-    <div class="swiss-state-standing-groups">
-      ${groups.map((group) => tournamentSwissStateStandingGroup(group)).join("")}
-    </div>
-  `;
+  return `<div class="vp-tabelas">${groups.map((group) => tournamentSwissTabela(group.rows, { titulo: `${tournamentSwissStateFlag(group.state)}${escapeHtml(group.state.label)}` })).join("")}</div>`;
 }
 
 function tournamentSwissStateGroups(rows) {
@@ -19204,18 +19171,6 @@ function tournamentSwissStateGroups(rows) {
     grouped.get(key).rows.push(row);
   }
   return [...grouped.values()].sort((a, b) => a.state.label.localeCompare(b.state.label, "pt-BR", { sensitivity: "base" }));
-}
-
-function tournamentSwissStateStandingGroup(group) {
-  return `
-    <div class="swiss-state-standings-block">
-      <header class="swiss-state-standings-head">
-        ${tournamentSwissStateFlag(group.state)}
-        <span><strong>${escapeHtml(group.state.label)}</strong><small>${escapeHtml(`${group.rows.length} ${group.rows.length === 1 ? "equipe" : "equipes"}`)}</small></span>
-      </header>
-      ${tournamentSwissTableMarkup(group.rows, { compact: true })}
-    </div>
-  `;
 }
 
 function tournamentSwissStateInfo(team) {
@@ -19231,45 +19186,6 @@ function tournamentSwissStateFlag(state) {
   return state.flagSrc
     ? `<img class="state-flag" src="${escapeHtml(assetPath(state.flagSrc))}" alt="Bandeira ${escapeHtml(state.label)}" loading="lazy" onerror="this.replaceWith(this.nextElementSibling)" /><span class="state-flag placeholder">${fallback}</span>`
     : `<span class="state-flag placeholder">${fallback}</span>`;
-}
-
-function tournamentSwissStateCell(team) {
-  if (!team) return `<span class="swiss-state-cell empty">-</span>`;
-  const profile = team.profile || {};
-  const stateCode = profile.state || team.state || "";
-  const stateLabel = profile.stateName || team.stateName || stateCode || "Estado não informado";
-  const flagSrc = profile.flag || team.flag || team.stateFlag || "";
-  const fallback = escapeHtml(stateCode || "UF");
-  const flag = flagSrc
-    ? `<img class="state-flag" src="${escapeHtml(assetPath(flagSrc))}" alt="Bandeira ${escapeHtml(stateLabel)}" loading="lazy" onerror="this.replaceWith(this.nextElementSibling)" /><span class="state-flag placeholder">${fallback}</span>`
-    : `<span class="state-flag placeholder">${fallback}</span>`;
-  return `<span class="swiss-state-cell">${flag}<span>${escapeHtml(stateLabel)}</span></span>`;
-}
-
-function tournamentSwissStandingRow(row) {
-  return `
-    <tr>
-      <td class="numeric">${escapeHtml(String(row.rank))}</td>
-      <td>${row.team ? `${teamLogo(row.team.id, "tiny")} <strong>${escapeHtml(row.team.name)}</strong>` : escapeHtml(row.id || "-")}</td>
-      <td>${tournamentSwissStateCell(row.team)}</td>
-      <td class="numeric">${escapeHtml(String(row.wins ?? 0))}</td>
-      <td class="numeric">${escapeHtml(String(row.losses ?? 0))}</td>
-      <td><span class="swiss-status ${normalize(row.status).includes("eliminado") ? "out" : "live"}">${escapeHtml(row.status)}</span></td>
-    </tr>
-  `;
-}
-
-function tournamentSwissStateStandingRow(row) {
-  const isEliminated = normalize(row.status).includes("eliminado");
-  return `
-    <tr class="${isEliminated ? "eliminated" : ""}">
-      <td class="numeric">${escapeHtml(String(row.rank))}</td>
-      <td>${row.team ? `${teamLogo(row.team.id, "tiny")} <strong>${escapeHtml(row.team.name)}</strong>` : escapeHtml(row.id || "-")}</td>
-      <td>${tournamentSwissStateCell(row.team)}</td>
-      <td class="numeric">${escapeHtml(String(row.wins ?? 0))}</td>
-      <td class="numeric">${escapeHtml(String(row.losses ?? 0))}</td>
-    </tr>
-  `;
 }
 
 function tournamentBracketDefinition(event, matches) {
@@ -19314,8 +19230,13 @@ const TOURNAMENT_BRACKET_STAGES = [
   { id: "playoffs", title: "Playoffs" },
 ];
 
-function tournamentCuratedBracketSection(event) {
-  const regions = tournamentChaveRegioes(tournamentBracketDisplayRegions(event.bracket.regions));
+function tournamentCuratedBracketSection(evento) {
+  const regions = tournamentChaveRegioes(tournamentBracketDisplayRegions(evento.bracket.regions));
+  // Com 8 colunas ou mais o nome nao cabe em 1294px sem rolagem: entra a sigla, e o
+  // nome inteiro fica na dica e na previa da partida. A decisao e do campeonato
+  // inteiro, para a mesma equipe nao mudar de rotulo entre as regioes.
+  const densa = Math.max(0, ...regions.map((region) => tournamentCuratedBracketColumns(evento, region).length)) >= 8;
+  const event = densa ? { ...evento, chaveDensa: true } : evento;
   const stages = tournamentBracketStages(regions);
   // Uma fase so nao ganha titulo proprio: o cabecalho da secao ja diz o que e.
   const body = stages.length
@@ -19330,7 +19251,7 @@ function tournamentCuratedBracketSection(event) {
   return `
     <section class="tournament-section vp-s-chave">
       ${sectionHead("Chave", `${event.bracket.title || "Chave oficial"}${temBye ? ". Quem passou direto aparece só na rodada seguinte." : ""}`)}
-      <div class="tournament-curated-bracket vp-chaves ${stages.length ? "staged" : tournamentCuratedBracketLayoutClass(regions)}">
+      <div class="tournament-curated-bracket vp-chaves${densa ? " vp-chaves-densas" : ""} ${stages.length ? "staged" : tournamentCuratedBracketLayoutClass(regions)}">
         ${body}
       </div>
     </section>
@@ -19389,12 +19310,10 @@ function tournamentCuratedBracketRegions(event, regions = []) {
 }
 
 function tournamentBracketDisplayRegions(regions = []) {
+  // Grupos antes das chaves: e a ordem em que o campeonato acontece.
   const priority = { "upper-bracket": 1, "lower-bracket": 2, "grand-final": 3 };
-  return regions.slice().sort((a, b) => {
-    const priorityA = priority[tournamentBracketRegionKind(a)] || 10;
-    const priorityB = priority[tournamentBracketRegionKind(b)] || 10;
-    return priorityA - priorityB;
-  });
+  const peso = (region) => (String(region.className || "").includes("group-stage") ? 0 : priority[tournamentBracketRegionKind(region)] || 10);
+  return regions.slice().sort((a, b) => peso(a) - peso(b));
 }
 
 function tournamentBracketRegionKind(region = {}) {
@@ -19463,10 +19382,8 @@ function tournamentCuratedBracketRegion(event, region) {
   return `
     <section class="tournament-bracket-region vp-chave-regiao ${escapeHtml(region.className || "")}">
       <h3>${escapeHtml(region.name || "Chave")}</h3>
-      <div class="vp-chave-rolo">
-        <div class="vp-chave${semFios ? " vp-sem-fios" : ""}">
-          ${columns.map((column, columnIndex) => tournamentChaveRodada(event, column, columns, columnIndex)).join("")}
-        </div>
+      <div class="vp-chave${semFios ? " vp-sem-fios" : ""}">
+        ${columns.map((column, columnIndex) => tournamentChaveRodada(event, column, columns, columnIndex)).join("")}
       </div>
     </section>
   `;
@@ -19499,20 +19416,32 @@ function tournamentChaveCelula(event, match, columnIndex, matchIndex) {
     const quem = tournamentTeamById(event, match.a || match.b)?.name || "";
     return `<div class="vp-celula vp-bye"${quem ? ` title="${escapeHtml(`${match.code || "Partida"}: ${quem} passou direto`)}"` : ""}></div>`;
   }
+  return `<div class="vp-celula">${tournamentChaveBotao(event, match, match.previewKey || tournamentBracketMatchKey(columnIndex, matchIndex, match.code))}</div>`;
+}
+
+// A partida em si, igual na chave, nos grupos e nas rodadas do suico.
+function tournamentChaveBotao(event, match, key) {
   const winner = tournamentBracketMatchWinner(match);
-  const key = match.previewKey || tournamentBracketMatchKey(columnIndex, matchIndex, match.code);
   // W.O. e vencedor sem placar levam o status no card: sem ele, a célula sem
   // números pareceria uma partida não jogada.
   const semPlacar = Boolean(winner) && !tournamentBracketMatchHasResult(match) ? match.status || "" : "";
   const wo = (match.status && normalize(match.status).startsWith("w.o") ? match.status : "") || semPlacar;
   const dica = [match.code, match.bestOf, match.status || (tournamentBracketMatchHasResult(match) ? "" : match.label)].filter(Boolean).join(", ");
-  return `<div class="vp-celula"><button type="button" class="vp-bm" data-tournament-match="${escapeHtml(key)}" title="${escapeHtml(dica)}">${tournamentChaveLado(event, match.a, match.aLabel, match.scoreA, Boolean(winner) && winner === match.a)}${tournamentChaveLado(event, match.b, match.bLabel, match.scoreB, Boolean(winner) && winner === match.b)}${wo ? `<span class="vp-bm-wo">${escapeHtml(wo)}</span>` : ""}</button></div>`;
+  return `<button type="button" class="vp-bm" data-tournament-match="${escapeHtml(key)}" title="${escapeHtml(dica)}">${tournamentChaveLado(event, match.a, match.aLabel, match.scoreA, Boolean(winner) && winner === match.a)}${tournamentChaveLado(event, match.b, match.bLabel, match.scoreB, Boolean(winner) && winner === match.b)}${wo ? `<span class="vp-bm-wo">${escapeHtml(wo)}</span>` : ""}</button>`;
 }
 
 function tournamentChaveLado(event, teamId, label, score, venceu) {
   const team = teamId ? tournamentTeamById(event, teamId) : null;
   const nome = team?.name || label || "A definir";
-  return `<span class="vp-bm-lado${venceu ? " vp-ganhou" : ""}" style="--team-line:${teamId ? teamLineColor(teamId) : TEAM_LINE_SEM_COR}">${teamId ? teamLogo(teamId, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}<span class="vp-bm-nome">${escapeHtml(nome)}</span><b>${escapeHtml(String(score ?? ""))}</b></span>`;
+  return `<span class="vp-bm-lado${venceu ? " vp-ganhou" : ""}" style="--team-line:${teamId ? teamLineColor(teamId) : TEAM_LINE_SEM_COR}">${teamId ? teamLogo(teamId, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}<span class="vp-bm-nome" title="${escapeHtml(nome)}">${tournamentChaveRotulo(event, team, nome)}</span><b>${escapeHtml(String(score ?? ""))}</b></span>`;
+}
+
+// Na chave densa a coluna so comporta a sigla. As duas versoes vao no HTML porque o
+// celular volta ao nome: la cada partida tem metade da tela.
+function tournamentChaveRotulo(event, team, nome) {
+  if (!event.chaveDensa) return escapeHtml(nome);
+  const curto = team?.sourceTag || team?.tag || (normalize(nome).includes("sem advers") ? "BYE" : "");
+  return curto ? `<span class="vp-bm-sigla">${escapeHtml(curto)}</span><span class="vp-bm-longo">${escapeHtml(nome)}</span>` : escapeHtml(nome);
 }
 
 function tournamentCuratedBracketQualifiedCard(event, card, context = {}) {
@@ -19524,7 +19453,7 @@ function tournamentCuratedBracketQualifiedCard(event, card, context = {}) {
       ${tournamentBracketQualifiedMeta(card)}
       <span class="tournament-bracket-team winner tournament-bracket-qualified-team">
         ${card.id ? teamLogo(card.id, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}
-        <strong>${escapeHtml(name)}</strong>
+        <strong title="${escapeHtml(name)}">${tournamentChaveRotulo(event, team, name)}</strong>
       </span>
     </article>
   `;
@@ -19537,14 +19466,6 @@ function tournamentBracketMatchWinner(match) {
   if (match.winner) return match.winner;
   if (Number(match.scoreA) === Number(match.scoreB)) return "";
   return Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b;
-}
-
-// Enquanto a partida nao tem data nem resultado, o rotulo do confronto
-// ("Final superior") informa mais que um "A jogar" repetido em toda a chave.
-function tournamentBracketMatchMeta(match) {
-  const useLabel = Boolean(match.label) && !match.status && !tournamentBracketMatchHasResult(match);
-  const lead = useLabel ? match.label : tournamentBracketMatchStatusLabel(match);
-  return `<span class="tournament-bracket-meta"><span${useLabel ? ` class="bracket-meta-label"` : ""}>${escapeHtml(lead)}</span><b>${escapeHtml(match.code || "Partida")}</b>${match.bestOf ? `<em>${escapeHtml(match.bestOf)}</em>` : ""}</span>`;
 }
 
 function tournamentBracketQualifiedMeta(card) {
@@ -19590,7 +19511,7 @@ function tournamentLinkedBracketRegion(event, region) {
       <div class="tournament-linked-bracket" style="--linked-template:${template}">
         ${columns.map((column, columnIndex) => (normalize(column.title || "") === normalize(region.name || "")
           ? ""
-          : `<h4 class="linked-bracket-title" style="grid-column:${columnIndex * 2 + 1}">${escapeHtml(column.title || "")}</h4>`)).join("")}
+          : `<h4 class="linked-bracket-title" style="grid-column:${columnIndex * 2 + 1}; --ordem:${columnIndex * 2}">${escapeHtml(String(column.title || "").replace(`${region.name} - `, ""))}</h4>`)).join("")}
         ${links.join("")}
         ${columns.flatMap((column, columnIndex) => column.entries.map((entry) => entry.render(tournamentLinkedBracketPlacement(columnIndex, entry.band)))).join("")}
       </div>
@@ -19625,7 +19546,7 @@ function tournamentLinkedBracketColumns(event, region) {
 
 function tournamentLinkedBracketPlacement(columnIndex, band) {
   const rowStart = 2 + Math.round(band * LINKED_BRACKET_UNITS_PER_BAND);
-  return `grid-column:${columnIndex * 2 + 1}; grid-row:${rowStart} / span ${LINKED_BRACKET_UNITS_PER_BAND}`;
+  return `grid-column:${columnIndex * 2 + 1}; grid-row:${rowStart} / span ${LINKED_BRACKET_UNITS_PER_BAND}; --ordem:${columnIndex * 2 + 1}`;
 }
 
 function tournamentLinkedBracketLink(source, target) {
@@ -19645,39 +19566,22 @@ function tournamentLinkedBracketLink(source, target) {
 }
 
 function tournamentLinkedBracketMatch(event, match, key, placement) {
-  const winner = tournamentBracketMatchWinner(match);
-  return `
-    <button type="button" class="tournament-bracket-match curated-match linked-match" data-tournament-match="${escapeHtml(key)}" style="${placement}">
-      ${tournamentBracketMatchMeta(match)}
-      ${tournamentCuratedBracketTeam(event, match.a, match.aLabel, match.scoreA, winner === match.a)}
-      ${tournamentCuratedBracketTeam(event, match.b, match.bLabel, match.scoreB, winner === match.b)}
-    </button>
-  `;
+  return `<div class="linked-match vp-celula" style="${placement}">${tournamentChaveBotao(event, match, key)}</div>`;
 }
 
 function tournamentLinkedBracketQualifiedCard(event, card, placement) {
   const team = tournamentTeamById(event, card.id);
   const name = card.label || team?.name || card.id || "Equipe";
   return `
-    <article class="tournament-bracket-match curated-match qualified-card terminal linked-match ${card.id ? "" : "pending"}" aria-label="${escapeHtml(`${card.note || "Classificado"}: ${name}`)}" style="${placement}">
-      ${tournamentBracketQualifiedMeta(card)}
-      <span class="tournament-bracket-team winner tournament-bracket-qualified-team">
-        ${card.id ? teamLogo(card.id, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}
-        <strong>${escapeHtml(name)}</strong>
-      </span>
-    </article>
-  `;
-}
-
-function tournamentCuratedBracketTeam(event, teamId, label, score, won) {
-  const team = teamId ? tournamentTeamById(event, teamId) : null;
-  const name = label || team?.name || "Sem adversário";
-  return `
-    <span class="tournament-bracket-team ${won ? "winner" : ""} ${teamId ? "" : "bye"}">
-      ${teamId ? teamLogo(teamId, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}
-      <strong>${escapeHtml(name)}</strong>
-      <b>${escapeHtml(String(score ?? "-"))}</b>
-    </span>
+    <div class="linked-match vp-celula" style="${placement}">
+      <article class="qualified-card terminal ${card.id ? "" : "pending"}" aria-label="${escapeHtml(`${card.note || "Classificado"}: ${name}`)}">
+        ${tournamentBracketQualifiedMeta(card)}
+        <span class="tournament-bracket-team winner tournament-bracket-qualified-team">
+          ${card.id ? teamLogo(card.id, "tiny") : `<span class="team-logo clean-logo tiny logo-empty"></span>`}
+          <strong title="${escapeHtml(name)}">${tournamentChaveRotulo(event, team, name)}</strong>
+        </span>
+      </article>
+    </div>
   `;
 }
 
@@ -19700,7 +19604,6 @@ function tournamentBracketEntries(event, matches) {
         });
       });
     });
-    return entries;
   }
   if (!event.bracket?.regions?.length) return entries;
   for (const region of event.bracket.regions) {
@@ -19756,12 +19659,12 @@ function tournamentMatchCodeNumber(code) {
   return match ? Number(match[0]) : NaN;
 }
 
+// Chave e rodadas podem dividir a mesma aba, entao o clique e ouvido no painel.
 function bindTournamentBracketPreview(event, matches) {
-  const bracket = document.querySelector(".tournament-curated-bracket, .tournament-swiss-bracket");
-  if (!bracket) return;
-  bindTournamentSwissFlowSlider(bracket);
+  const painel = document.querySelector(".tournament-main");
+  if (!painel) return;
   const entries = tournamentBracketEntries({ ...event, bracket: tournamentBracketDefinition(event, matches) }, matches);
-  bracket.addEventListener("click", (clickEvent) => {
+  painel.addEventListener("click", (clickEvent) => {
     const button = clickEvent.target.closest("[data-tournament-match]");
     if (!button) return;
     const entry = entries.get(button.dataset.tournamentMatch);
@@ -19770,72 +19673,13 @@ function bindTournamentBracketPreview(event, matches) {
   });
 }
 
-function bindTournamentSwissFlowSlider(bracket) {
-  const board = bracket.querySelector("[data-swiss-flow]");
-  const track = board?.querySelector(".swiss-flow-track");
-  const rounds = [...(track?.querySelectorAll("[data-swiss-flow-round]") || [])];
-  const inputs = [...bracket.querySelectorAll('input[type="radio"][name^="swiss-round-"]')];
-  const modeInputs = [...bracket.querySelectorAll(".swiss-view-mode-input")];
-  const navButtons = [...bracket.querySelectorAll("[data-swiss-flow-nav]")];
-  const tabLabels = [...bracket.querySelectorAll(".swiss-round-tabs label")];
-  const panels = [...bracket.querySelectorAll(".swiss-round-panel")];
-  if (!board || !track || !rounds.length || !inputs.length) return;
-
-  let flowOffset = 0;
-  let manuallyScrolled = false;
-  const activeIndex = () => Math.max(0, inputs.findIndex((input) => input.checked));
-  const maxFlowOffset = () => Math.max(0, track.scrollWidth - board.clientWidth);
-  const applyFlowOffset = (offset) => {
-    if (!board.clientWidth || !track.scrollWidth) return;
-    flowOffset = clamp(offset, 0, maxFlowOffset());
-    track.style.setProperty("--swiss-flow-offset", `${Math.round(flowOffset)}px`);
-    navButtons.forEach((button) => {
-      const direction = Number(button.dataset.swissFlowNav || 0);
-      button.disabled = maxFlowOffset() <= 0 || (direction < 0 && flowOffset <= 1) || (direction > 0 && flowOffset >= maxFlowOffset() - 1);
-    });
-  };
-  const activeRoundOffset = (checkedIndex) => {
-    const round = rounds[checkedIndex] || rounds[0];
-    return round.offsetLeft + round.offsetWidth / 2 - board.clientWidth / 2;
-  };
-  const sync = () => {
-    const checkedIndex = activeIndex();
-    tabLabels.forEach((label, index) => label.classList.toggle("is-active", index === checkedIndex));
-    panels.forEach((panel, index) => panel.classList.toggle("is-active", index === checkedIndex));
-    applyFlowOffset(manuallyScrolled ? flowOffset : activeRoundOffset(checkedIndex));
-  };
-  const scheduleSync = () => window.requestAnimationFrame(sync);
-  navButtons.forEach((button) =>
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-      manuallyScrolled = true;
-      const direction = Number(button.dataset.swissFlowNav || 0);
-      const step = Math.max(320, board.clientWidth * 0.55);
-      applyFlowOffset(flowOffset + direction * step);
-    }),
-  );
-  inputs.forEach((input) =>
-    input.addEventListener("change", () => {
-      manuallyScrolled = false;
-      scheduleSync();
-    }),
-  );
-  modeInputs.forEach((input) => input.addEventListener("change", scheduleSync));
-  if (window.ResizeObserver) {
-    const observer = new ResizeObserver(scheduleSync);
-    observer.observe(board);
-    observer.observe(track);
-  }
-  scheduleSync();
-}
-
-function bindTournamentTeamPreview(event, matches, standings) {
+function bindTournamentTeamPreview(event, matches) {
   const root = document.querySelector("[data-tournament-teams]");
   if (!root) return;
   root.addEventListener("click", (clickEvent) => {
     const button = clickEvent.target.closest("[data-tournament-team]");
     if (!button) return;
-    openTournamentTeamPreview(event, matches, standings, button.dataset.tournamentTeam);
+    openTournamentTeamPreview(event, matches, button.dataset.tournamentTeam);
   });
 }
 
@@ -19887,30 +19731,42 @@ function closeTournamentMatchPreview() {
   root.innerHTML = "";
 }
 
-function openTournamentTeamPreview(event, matches, standings, teamId) {
+function openTournamentTeamPreview(event, matches, teamId) {
   const root = ensureTournamentPreviewRoot();
   if (!root) return;
-  root.innerHTML = tournamentTeamPreviewHtml(event, matches, standings, teamId);
+  root.innerHTML = tournamentTeamPreviewHtml(event, matches, teamId);
   root.classList.add("open");
   root.querySelector("[data-tournament-preview-close]")?.focus();
 }
 
-function tournamentTeamPreviewHtml(event, matches, standings, teamId) {
+// O menu da equipe: a camisa dela no topo, com a campanha, e o elenco com as fotos. A
+// campanha e a mesma conta da Colocacao, para o W.O. nao dar numero diferente. Mapas e
+// saldo saem das series: com colocacao parcial, a lista oficial nao tem os finalistas.
+function tournamentTeamPreviewHtml(event, matches, teamId) {
   const team = tournamentTeamById(event, teamId);
-  const standing = standings.find((row) => row.id === teamId) || {};
+  const standing = eventStandings(matches).find((row) => row.id === teamId) || {};
+  const campanha = tournamentCampanhas(event, matches).get(teamId);
   const lineup = tournamentLineupRows(teamId, matches);
   const teamMatches = tournamentTeamSeriesRows(teamId, matches);
+  const origem = tournamentOrigens(event).get(teamId);
+  const numeros = [
+    ["Séries", campanha ? `${campanha[0]}-${campanha[1]}` : `${standing.seriesWins || 0}-${standing.seriesLosses || 0}`],
+    ["Mapas", `${standing.mapWins || 0}-${standing.mapLosses || 0}`],
+    ["Saldo", signed(standing.roundDiff || 0)],
+  ];
   return `
-    <div class="tournament-match-preview-card tournament-lineup-preview-card" role="dialog" aria-modal="true" aria-label="Line-up da equipe no torneio">
-      <button type="button" class="preview-close" data-tournament-preview-close aria-label="Fechar">x</button>
-      <div class="preview-kicker">${escapeHtml(event.name)} - Line-up</div>
-      <div class="lineup-preview-header">
+    <div class="tournament-match-preview-card tournament-lineup-preview-card vp-eq-menu" style="${escapeHtml(teamPlateStyle(team))}" role="dialog" aria-modal="true" aria-label="${escapeHtml(`${team?.name || "Equipe"} em ${event.name}`)}">
+      <button type="button" class="preview-close" data-tournament-preview-close aria-label="Fechar">&times;</button>
+      <header class="vp-slide vp-menu-topo">
+        <span class="vp-slide-campo"><i></i></span>
         ${teamLogo(teamId, "large")}
-        <span>
+        <span class="vp-menu-id">
+          <small>${escapeHtml(event.name)}</small>
           <h3>${escapeHtml(team?.name || "Equipe")}</h3>
-          <small>${escapeHtml(team?.sourceTag || team?.tag || teamId)}</small>
+          <small>${escapeHtml([team?.sourceTag || team?.tag || teamId, origem ? `via ${origem}` : ""].filter(Boolean).join(", "))}</small>
         </span>
-      </div>
+        <dl class="vp-menu-numeros">${numeros.map(([rotulo, valor]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd>${escapeHtml(valor)}</dd></div>`).join("")}</dl>
+      </header>
       <div class="tournament-lineup-tabs">
         <input type="radio" name="lineup-tab-${escapeHtml(teamId)}" id="lineup-performance-${escapeHtml(teamId)}" checked />
         <input type="radio" name="lineup-tab-${escapeHtml(teamId)}" id="lineup-matches-${escapeHtml(teamId)}" />
@@ -19921,14 +19777,9 @@ function tournamentTeamPreviewHtml(event, matches, standings, teamId) {
         <div class="lineup-tab-window">
           <div class="lineup-tab-track">
             <section class="lineup-tab-panel">
-              <div class="preview-summary-grid">
-                <span><small>Séries</small><strong>${escapeHtml(`${standing.seriesWins || 0}-${standing.seriesLosses || 0}`)}</strong></span>
-                <span><small>Mapas</small><strong>${escapeHtml(`${standing.mapWins || 0}-${standing.mapLosses || 0}`)}</strong></span>
-                <span><small>Saldo</small><strong>${escapeHtml(signed(standing.roundDiff || 0))}</strong></span>
-              </div>
-              <div class="tournament-lineup-grid">
-                ${lineup.length ? lineup.map(tournamentLineupPlayerCard).join("") : `<div class="empty-state">Line-up indisponível para este torneio.</div>`}
-              </div>
+              ${lineup.length
+                ? `<div class="vp-lu-cab" aria-hidden="true"><span>Jogador</span><span>Agentes</span><span>rAAting</span><span>Mapas</span><span>K/D/A</span></div><div class="vp-lu-lista">${lineup.map((row) => tournamentLineupPlayerCard(row, team)).join("")}</div>`
+                : `<div class="empty-state">Line-up indisponível para este torneio.</div>`}
             </section>
             <section class="lineup-tab-panel">
               <div class="lineup-match-list vp-lista">
@@ -19940,7 +19791,6 @@ function tournamentTeamPreviewHtml(event, matches, standings, teamId) {
       </div>
       <div class="preview-actions">
         ${team && !team.missing ? `<a class="action-link primary" href="#/teams/${team.id}" data-open-team-page>Abrir página da equipe</a>` : ""}
-        <button type="button" class="action-link" data-tournament-preview-close>Fechar</button>
       </div>
     </div>
   `;
@@ -19989,20 +19839,18 @@ function tournamentLineupRows(teamId, matches) {
     .sort((a, b) => b.maps - a.maps || b.rounds - a.rounds || b.rating - a.rating || a.nick.localeCompare(b.nick));
 }
 
-function tournamentLineupPlayerCard(row) {
+// A tira da pagina de Jogadores: foto e nome na cor 1, dados na cor 2. A figura e a
+// mesma do cartao, com a silhueta para quem nao tem foto.
+function tournamentLineupPlayerCard(row, team) {
   return `
-    <a class="tournament-lineup-player" href="${playerHref(row.id)}" data-open-player-page>
-      ${playerLogo(row.id, "lineup-photo")}
-      <span class="lineup-player-main">
-        <strong>${escapeHtml(row.nick)}</strong>
-        <small>${escapeHtml(row.handle || `${row.maps} mapas`)}</small>
-      </span>
-      <span class="lineup-agent-pile">
-        ${row.agents.slice(0, 4).map(tournamentLineupAgent).join("")}
-      </span>
-      <span class="lineup-player-stat"><b>${escapeHtml(playerRating(row))}</b><small>rAAting 3.0</small></span>
-      <span class="lineup-player-stat"><b>${escapeHtml(String(row.maps))}</b><small>Mapas</small></span>
-      <span class="lineup-player-stat"><b>${escapeHtml(`${row.kills}/${row.deaths}/${row.assists}`)}</b><small>K/D/A</small></span>
+    <a class="vp-slide vp-lu" href="${playerHref(row.id)}" data-open-player-page>
+      <span class="vp-slide-campo"><i></i></span>
+      ${playerFigure(playerById(row.id), team)}
+      <span class="vp-lu-nome"><strong>${escapeHtml(row.nick)}</strong><small>${escapeHtml(row.handle || "")}</small></span>
+      <span class="vp-lu-agentes">${row.agents.slice(0, 4).map(tournamentLineupAgent).join("")}</span>
+      <b data-rotulo="rAAting">${escapeHtml(playerRating(row))}</b>
+      <b data-rotulo="mapas">${escapeHtml(String(row.maps))}</b>
+      <b data-rotulo="K/D/A">${escapeHtml(`${row.kills}/${row.deaths}/${row.assists}`)}</b>
     </a>
   `;
 }
@@ -20023,7 +19871,7 @@ function tournamentMatchPreviewHtml(entry) {
   const teamB = tournamentTeamById(event, match.b);
   return `
     <div class="tournament-match-preview-card" role="dialog" aria-modal="true" aria-label="Resumo da partida">
-      <button type="button" class="preview-close" data-tournament-preview-close aria-label="Fechar">x</button>
+      <button type="button" class="preview-close" data-tournament-preview-close aria-label="Fechar">&times;</button>
       <div class="preview-kicker">${escapeHtml(region.name || "Bracket")} - ${escapeHtml(column.title || "Rodada")}</div>
       <h3>${escapeHtml(match.code || "Partida")} ${match.bestOf ? `<span>${escapeHtml(match.bestOf)}</span>` : ""}</h3>
       <div class="preview-scoreboard">
@@ -20040,7 +19888,6 @@ function tournamentMatchPreviewHtml(entry) {
       ${series ? tournamentPreviewSeriesDetails(series) : `<div class="empty-state">${escapeHtml(match.previewNote || "Resumo oficial da chave. Detalhes não disponíveis para essa partida.")}</div>`}
       <div class="preview-actions">
         ${series ? `<a class="action-link primary" href="${matchSeriesHref(series)}" target="_blank" rel="noopener" data-open-match-tab>Ver página da partida</a>` : `<span class="action-link disabled">Página da partida indisponível.</span>`}
-        <button type="button" class="action-link" data-tournament-preview-close>Fechar</button>
       </div>
       <div class="preview-open-status" data-open-match-status hidden><span aria-hidden="true">&#10003;</span>Partida aberta em uma nova aba</div>
     </div>
@@ -20098,23 +19945,6 @@ function tournamentBracketColumns(matches) {
   return [{ title: sorted.length > 1 ? "Partidas finais" : "Grande final", matches: sorted }];
 }
 
-function tournamentPlacementsSection(event, standings) {
-  const rows = tournamentResultRows(event, standings);
-  const featuredCount = tournamentFeaturedPlacementCount(event, rows);
-  const finished = eventIsDone(event);
-  return `
-    <section class="tournament-section">
-      <div class="tournament-section-head">
-        <h2>Resultados</h2>
-        <span>${finished ? "Resultado oficial" : "Equipes eliminadas"}</span>
-      </div>
-      <div class="tournament-placement-grid featured-count-${featuredCount}">
-        ${rows.length ? rows.map((row, index) => tournamentPlacementCard(event, row, index)).join("") : `<div class="empty-state">Distribuição aguardando resultados.</div>`}
-      </div>
-    </section>
-  `;
-}
-
 function tournamentResultRows(event, standings) {
   if (event.placements?.length) return tournamentOfficialPlacements(event);
   if (!eventIsDone(event)) return tournamentEliminatedRows(event);
@@ -20131,28 +19961,6 @@ function tournamentEliminatedRows(event) {
   }));
 }
 
-function tournamentPlacementCard(event, row, index) {
-  const team = tournamentTeamById(event, row.id || row.teamId);
-  if (!team) return "";
-  const rawLabel = row.range || placementLabel(index);
-  const label = tournamentPlacementDisplayLabel(event, rawLabel);
-  const detail = row.note || (Number.isFinite(row.seriesWins) ? `${row.seriesWins}-${row.seriesLosses}` : "Colocação oficial");
-  const isFeatured = tournamentPlacementIsFeatured(label, index);
-  const podiumClass = tournamentPlacementPodiumClass(label);
-  const tag = team.missing ? "article" : "a";
-  const href = team.missing ? "" : ` href="#/teams/${team.id}"`;
-  const classes = ["tournament-placement-card", podiumClass, isFeatured ? "featured-placement" : ""].filter(Boolean).join(" ");
-  return `
-    <${tag} class="${classes}"${href}>
-      <span>${escapeHtml(label)}</span>
-      ${teamLogo(team.id, "large")}
-      <strong>${escapeHtml(team.name)}</strong>
-      <small>${escapeHtml(detail)}</small>
-      ${row.reason ? `<small class="placement-reason">${escapeHtml(row.reason)}</small>` : ""}
-    </${tag}>
-  `;
-}
-
 function tournamentPlacementIsFeatured(label, index) {
   const normalizedLabel = normalize(String(label || ""));
   if (normalizedLabel.startsWith("classificado")) return true;
@@ -20165,16 +19973,8 @@ function tournamentPlacementPodiumClass(label) {
   const compactLabel = normalizeNameKey(value);
   if (value === "1" || normalizedLabel === "1st" || compactLabel === "1olugar") return "place-1";
   if (value === "2" || normalizedLabel === "2nd" || compactLabel === "2olugar") return "place-2";
-  if (value === "3" || normalizedLabel === "3rd" || compactLabel === "3olugar" || compactLabel.startsWith("3o4") || compactLabel.startsWith("34") || normalizedLabel.startsWith("3-4") || normalizedLabel.startsWith("3/4")) return "place-3";
+  if (value === "3" || normalizedLabel === "3rd" || compactLabel === "3olugar" || compactLabel.startsWith("3o4") || /^3\D+4/.test(value)) return "place-3";
   return "";
-}
-
-function tournamentFeaturedPlacementCount(event, rows) {
-  return rows.filter((row, index) => {
-    const rawLabel = row.range || placementLabel(index);
-    const label = tournamentPlacementDisplayLabel(event, rawLabel);
-    return tournamentPlacementIsFeatured(label, index);
-  }).length;
 }
 
 // Rotulos como "Classificado" continuam visiveis quando o evento termina;
@@ -20255,40 +20055,27 @@ function tournamentFirstMatchTimestamp(event, matches = []) {
   return dates[0] || Number(event.start || 0) || null;
 }
 
+// Quem jogou, pelo ranking da data do evento. Cada quadrado abre o menu com o elenco
+// em fotos, o desempenho e as partidas da equipe.
 function tournamentTeamsSection(event, standings, matches = []) {
   const rows = tournamentTeamRows(event, standings, matches);
-  const columns = tournamentTeamGridColumns(rows.length);
+  const origens = tournamentOrigens(event);
   return `
-    <section class="tournament-section">
-      <div class="tournament-section-head">
-        <h2>Equipes Participantes</h2>
-        <span>${rows.length} times</span>
-      </div>
-      <div class="tournament-team-grid ${columns ? "balanced-columns" : ""}"${columns ? ` style="--team-columns:${columns}"` : ""} data-tournament-teams>
-        ${rows.map((row, index) => tournamentTeamCard(row, index)).join("") || `<div class="empty-state">Nenhum time detectado.</div>`}
+    <section class="tournament-section vp-s-equipes">
+      ${sectionHead("Equipes Participantes", `${rows.length} ${rows.length === 1 ? "equipe" : "equipes"}, pelo ranking na data do campeonato`)}
+      <div class="vp-eq-grade" style="--por-linha:${tournamentEquipesPorLinha(rows.length)}" data-tournament-teams>
+        ${rows.map((row) => tournamentEquipeQuadrado(row, origens.get(row.team.id))).join("") || `<div class="empty-state">Nenhum time detectado.</div>`}
       </div>
     </section>
   `;
 }
 
-// Escolhe quantos cards por linha para que todas as linhas fiquem com a mesma
-// quantidade (ex.: 40 times -> 5x8, 36 -> 4x9, 12 -> 2x6, 10 -> 2x5).
-function tournamentTeamGridColumns(count) {
-  if (!count) return 0;
-  if (count <= 9) return count;
-  for (let columns = 9; columns >= 4; columns--) {
-    if (count % columns === 0) return columns;
-  }
-  let best = 9;
-  let bestEmpty = Infinity;
-  for (let columns = 9; columns >= 4; columns--) {
-    const empty = (columns - (count % columns)) % columns;
-    if (empty < bestEmpty) {
-      best = columns;
-      bestEmpty = empty;
-    }
-  }
-  return best;
+// Fileiras completas sempre que der: 8 equipes em 4, 10 em 5, 12 em 6. Acima de 20
+// vale o quadrado menor, para a secao nao passar de duas telas.
+function tournamentEquipesPorLinha(total) {
+  if (total > 20) return 6;
+  const sobra = (colunas) => (colunas - (total % colunas)) % colunas;
+  return [6, 5, 4].reduce((melhor, colunas) => (sobra(colunas) < sobra(melhor) ? colunas : melhor));
 }
 
 function tournamentTeamRows(event, standings, matches = []) {
@@ -20316,14 +20103,14 @@ function compareTournamentTeamByRank(a, b) {
   return String(a.team?.name || "").localeCompare(String(b.team?.name || ""), "pt-BR");
 }
 
-function tournamentTeamCard(row, index) {
+function tournamentEquipeQuadrado(row, origem) {
   const team = row.team;
   return `
-    <button type="button" class="tournament-team-card" data-tournament-team="${escapeHtml(team.id)}">
-      <span class="team-rank" title="${escapeHtml(tournamentTeamRankTitle(row))}">${escapeHtml(tournamentTeamRankLabel(row))}</span>
-      ${teamLogo(team.id, "large")}
-      <strong>${escapeHtml(team.name)}</strong>
-      <small>${escapeHtml(team.sourceTag || team.tag || team.id)}</small>
+    <button type="button" class="vp-slide vp-eq" data-tournament-team="${escapeHtml(team.id)}" style="${escapeHtml(teamPlateStyle(team))}" title="${escapeHtml(team.name)}" aria-label="${escapeHtml(`Ver elenco, desempenho e partidas de ${team.name}`)}">
+      <span class="vp-slide-campo"><i></i></span>
+      <b title="${escapeHtml(tournamentTeamRankTitle(row))}">${escapeHtml(tournamentTeamRankLabel(row))}</b>
+      <span class="vp-eq-logo">${teamLogo(team.id, "large")}</span>
+      <span class="vp-eq-txt"><strong>${escapeHtml(team.name)}</strong>${origem ? `<small>Via ${escapeHtml(origem)}</small>` : ""}</span>
     </button>
   `;
 }

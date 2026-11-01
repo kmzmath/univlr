@@ -576,20 +576,15 @@ const visaoGeral = (evento) => context.tournamentTabContent(evento, [], [], "ove
 const andamento = visaoGeral({ ...rush, status: "Em andamento" });
 assert(andamento.includes("Equipes Participantes"), "campeonato em andamento mostra a lista de participantes");
 const encerrado = visaoGeral(rush);
-assert(!encerrado.includes("Equipes Participantes"), "campeonato encerrado troca os participantes pela classificacao");
-assert(encerrado.includes("Classificação final") && encerrado.includes("vp-classif"), "campeonato encerrado tem a classificacao final");
-assert(/vp-classif-linha[\s\S]*?CEUB[\s\S]*?8-1/.test(encerrado) || encerrado.includes(">8-1<"), "a classificacao traz a campanha de cada equipe");
+assert(encerrado.includes("Equipes Participantes"), "encerrado tambem mostra quem jogou");
+assert(encerrado.includes("vp-eq-grade") && encerrado.includes("data-tournament-team="), "as equipes sao quadrados que abrem o menu");
+assert(encerrado.includes("Colocação") && encerrado.includes("vp-colocacao"), "a colocacao substitui o podio e a classificacao final");
+assert(encerrado.includes('class="vp-col-equipe"'), "cada equipe e uma linha da colocacao");
+assert(encerrado.includes(">8-1<"), "a colocacao traz a campanha de cada equipe");
+assert(!encerrado.includes("Classificação final"), "a classificacao final nao aparece duas vezes");
 
-// Rodada de 24/10: o Resumo (equipes, series, dias) saiu de todo campeonato,
-// e o podio das classificatorias nao poe "Classificado" na coluna do numero.
+// Rodada de 24/10: o Resumo (equipes, series, dias) saiu de todo campeonato.
 assert(!encerrado.includes("vp-resumo-camp") && !encerrado.includes(">Resumo<"), "o campeonato nao tem mais o Resumo");
-const equipeDoPodio = { id: "azr", name: "Azure Bears Black" };
-const classificado = context.tournamentPodiumCard(rush, { range: "Classificado", team: equipeDoPodio });
-assert(classificado.includes("vp-pod-texto"), "rotulo em texto usa o podio sem a coluna do numero");
-assert(!/<b>Classificado<\/b>/.test(classificado), "Classificado nao vai na coluna do numero");
-assert(/<small>[^<]*Classificado/.test(classificado), "Classificado fica pequeno, junto da campanha");
-const primeiro = context.tournamentPodiumCard(rush, { range: "1st", team: equipeDoPodio });
-assert(/<b>1º<\/b>/.test(primeiro) && !primeiro.includes("vp-pod-texto"), "controle: o 1º continua na coluna do numero");
 // Campeonato em andamento com as semis jogadas (UNIVAVA, 24/10): os eliminados
 // nas semis ja sao 3o-4o, e o 1o e o 2o seguem em aberto ate a final.
 const playoffsEmAndamento = { id: "teste-playoffs", name: "Playoffs", status: "Em andamento", placements: [{ range: "3-4", id: "azr", note: "Semifinal" }, { range: "3-4", id: "ceub", note: "Semifinal" }, { range: "5-8", id: "mack", note: "Quartas de final" }] };
@@ -603,12 +598,12 @@ const semNada = context.tournamentPodiumDisplayRows(playoffsEmAndamento, []);
 assert.deepStrictEqual(doVm(semNada.map((row) => row.range)), ["1", "2", "3"], "controle: sem colocacao nenhuma, as tres vagas de sempre");
 const encerradoComPodio = [{ range: "1", team: { id: "azr" } }, { range: "2", team: { id: "ceub" } }, { range: "3-4", team: { id: "mack" } }];
 assert.deepStrictEqual(doVm(context.tournamentPodiumDisplayRows({ status: "Finalizado" }, encerradoComPodio).map((row) => row.range)), ["1", "2", "3-4"], "controle: campeonato encerrado nao ganha vaga em aberto");
-assert(context.tournamentPodiumCard(playoffsEmAndamento, podioComVagas[2]).includes("vp-pod-dupla"), "o 3o/4o usa o rotulo mais estreito, para caber na coluna do numero");
-assert(context.tournamentPodiumTitle([{ range: "Classificado" }, { range: "Classificado" }]) === "Classificados", "so classificados: o titulo diz isso");
-assert(context.tournamentPodiumTitle([{ range: "1st" }, { range: "2nd" }]) === "Pódio", "controle: com colocacao, continua Pódio");
+assert.strictEqual(context.tournamentPlacementPodiumClass("34th"), "", "o 34o lugar nao e 3o-4o");
+assert.strictEqual(context.tournamentPlacementPodiumClass("3-4th"), "place-3", "controle: 3-4th continua sendo o podio");
+assert.deepStrictEqual(doVm(context.tournamentColocacaoGrupos(playoffsEmAndamento, [], []).map((grupo) => [grupo.rotulo, grupo.equipes.length])), [["1º", 1], ["2º", 1], ["3º-4º", 2], ["5º-8º", 1]], "quem divide a posicao fica no mesmo grupo, depois das vagas em aberto");
 
 const luce = { id: "copa-luce-inters", name: "Copa LUCE Inters", status: "Finalizado", ...overrides["copa-luce-inters"] };
-assert(context.tournamentSwissStandingsSection(luce).includes("<table"), "o suico continua mostrando a tabela");
+assert(context.tournamentSwissStandingsSection(luce).includes("vp-tabela-linha"), "o suico continua mostrando a tabela");
 
 // Revisao final: o ajuste que encolhe nome longo de equipe para caber em duas
 // linhas tem de mirar o titulo do topo novo, senao o nome passa da faixa de

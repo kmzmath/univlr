@@ -4060,6 +4060,13 @@ a.vp-col-equipe:hover .vp-col-nome > span:last-child {
   paint-order: stroke fill;
 }
 
+.vp-eq > .vp-eq-atual {
+  right: auto;
+  left: 8px;
+  color: var(--placa-campo-tinta);
+  -webkit-text-stroke-color: var(--placa-campo);
+}
+
 .vp-eq-logo {
   position: relative;
   min-height: 0;
@@ -5467,6 +5474,152 @@ a.vp-tabela-linha:hover strong {
   font-variant-numeric: tabular-nums;
 }
 
+/* ---- aba Agentes ---- */
+.vp-ag-nome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.vp-ag-nome .tournament-agent-logo {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: none;
+  border: 0;
+  border-radius: 2px;
+}
+
+.vp-ag-nome .tournament-agent-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vp-ag-nome span:last-child {
+  display: grid;
+  min-width: 0;
+}
+
+.vp-ag-nome strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-ag-nome small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vp-est .tournament-stats-table tbody tr:has(.vp-ag-nome[aria-pressed="true"]) td {
+  background: var(--surface-2);
+}
+
+.vp-est .tournament-stats-table tbody tr:has(.vp-ag-nome[aria-pressed="true"]) td:first-child {
+  box-shadow: inset 2px 0 0 var(--brand);
+}
+
+.vp-ag-aba .tournament-composition-cell {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.vp-ag-aba .tournament-composition-stack {
+  display: flex;
+  gap: 2px;
+}
+
+.vp-ag-aba .tournament-composition-agent {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: none;
+  border: 0;
+  border-radius: 2px;
+}
+
+.vp-ag-aba .tournament-composition-agent img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vp-ag-aba .tournament-composition-cell small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: normal;
+}
+
+/* A formacao em simbolos de funcao, com a proporcao de usos atras. A base e zero, e o
+   ambar e o mesmo da popularidade em Mapas. */
+.vp-fo-lista {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-fo {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 34px;
+  padding: 0 10px;
+  overflow: hidden;
+  background: var(--surface);
+  border-radius: 2px;
+}
+
+.vp-fo::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 auto 0 0;
+  width: calc(var(--parte) * 100%);
+  background: #7a5315;
+}
+
+.vp-fo span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+  font: 600 12px/1 var(--font-text);
+}
+
+.vp-fo img {
+  display: block;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.vp-fo b {
+  color: var(--ink);
+  font: 600 16px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
 .vp-est-bloco + .vp-est-bloco {
   margin-top: 20px;
 }
@@ -5807,8 +5960,68 @@ a.vp-tabela-linha:hover strong {
   }
 }
 
+/* Em bloco o agente escolhido e realcado na linha inteira, nao em cada numero. */
+@media (max-width: 1180px) {
+  .vp-est .tournament-stats-table tbody tr:has(.vp-ag-nome[aria-pressed="true"]) {
+    background: var(--surface-2);
+    box-shadow: inset 2px 0 0 var(--brand);
+  }
+
+  .vp-est .tournament-stats-table tbody tr:has(.vp-ag-nome[aria-pressed="true"]) td,
+  .vp-est .tournament-stats-table tbody tr:has(.vp-ag-nome[aria-pressed="true"]) td:first-child {
+    background: none;
+    box-shadow: none;
+  }
+}
+
+/* Agentes e composicoes nao tem a coluna de agentes dos jogadores: no tablet cabe tudo
+   numa fila, e no celular o nome fica sozinho com a seta e os numeros vao embaixo. */
+@media (min-width: 761px) and (max-width: 1180px) {
+  .vp-ag-aba.vp-est .tournament-stats-table tbody tr:has(.vp-est-abre) {
+    grid-template-columns: minmax(0, 3fr) repeat(8, minmax(0, 1fr)) 24px;
+  }
+
+  .vp-ag-aba.vp-est .tournament-stats-table tbody tr:has(.tournament-composition-cell) {
+    grid-template-columns: minmax(0, 4fr) repeat(7, minmax(0, 1fr)) 24px;
+  }
+
+  .vp-ag-aba.vp-est .tournament-stats-table tr:has(.vp-est-abre) td:first-child {
+    grid-column: auto;
+  }
+
+  .vp-ag-aba.vp-est .tournament-stats-table td.vp-est-abre {
+    grid-row: auto;
+    grid-column: auto;
+    padding: 0;
+  }
+
+  .vp-ag-aba .vp-mapa-resumo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .vp-ag-aba.vp-est .tournament-stats-table tr:has(.vp-est-abre) td:first-child {
+    grid-column: 1 / span 3;
+  }
+
+  .vp-ag-aba.vp-est .tournament-stats-table td.vp-est-abre {
+    grid-row: 1;
+    grid-column: 4;
+    justify-items: end;
+  }
+}
+
 /* Em quatro colunas o K/D/A de tres casas nao cabe. */
 @media (max-width: 360px) {
+  .vp-ag-aba.vp-est .tournament-stats-table tr:has(.vp-est-abre) td:first-child {
+    grid-column: 1 / span 2;
+  }
+
+  .vp-ag-aba.vp-est .tournament-stats-table td.vp-est-abre {
+    grid-column: 3;
+  }
+
   .vp-est .tournament-stats-table tbody tr:has(.vp-est-abre) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }

@@ -18315,7 +18315,7 @@ function renderTournamentDetail(id) {
     bindVisaoGeralDoCampeonato();
   } else if (activeTab === "jogos") {
     bindJogosDoCampeonato();
-  } else if (activeTab === "estatisticas" || activeTab === "agentes" || activeTab === "composicoes") {
+  } else if (activeTab === "estatisticas" || activeTab === "agentes") {
     bindTournamentStatsControls(event.id);
     bindEstatisticasDoCampeonato();
   } else if (activeTab === "mapas") {
@@ -18324,10 +18324,10 @@ function renderTournamentDetail(id) {
   playPanelSlide(tabTransition);
 }
 
-const TOURNAMENT_TAB_KEYS = ["overview", "jogos", "estatisticas", "mapas", "agentes", "composicoes"];
+const TOURNAMENT_TAB_KEYS = ["overview", "jogos", "estatisticas", "mapas", "agentes"];
 
 function tournamentActiveTab() {
-  const tab = route().tab || "overview";
+  const tab = route().tab === "composicoes" ? "agentes" : route().tab || "overview";
   return TOURNAMENT_TAB_KEYS.includes(tab) ? tab : "overview";
 }
 
@@ -18473,7 +18473,6 @@ function tournamentTabNav(event, activeTab) {
     ["estatisticas", "Estatísticas", `#/events/${event.id}/estatisticas`],
     ["mapas", "Mapas", `#/events/${event.id}/mapas`],
     ["agentes", "Agentes", `#/events/${event.id}/agentes`],
-    ["composicoes", "Composições", `#/events/${event.id}/composicoes`],
   ];
   return `
     <nav class="tournament-page-tabs" aria-label="Abas do campeonato">
@@ -18488,7 +18487,6 @@ function tournamentTabContent(event, matches, standings, activeTab) {
   if (activeTab === "estatisticas") return tournamentStatsSection(event, matches, standings);
   if (activeTab === "mapas") return tournamentMapsSection(event, matches);
   if (activeTab === "agentes") return tournamentAgentsSection(event, matches);
-  if (activeTab === "composicoes") return tournamentCompositionsSection(event, matches);
   return `
     ${tournamentOverviewSection(event, matches, standings)}
     <div class="tournament-main">
@@ -20063,7 +20061,7 @@ function tournamentTeamsSection(event, standings, matches = []) {
   const origens = tournamentOrigens(event);
   return `
     <section class="tournament-section vp-s-equipes">
-      ${sectionHead("Equipes Participantes", `${rows.length} ${rows.length === 1 ? "equipe" : "equipes"}, pelo ranking na data do campeonato`)}
+      ${sectionHead("Equipes Participantes", `${rows.length} ${rows.length === 1 ? "equipe" : "equipes"}`)}
       <div class="vp-eq-grade" style="--por-linha:${tournamentEquipesPorLinha(rows.length)}" data-tournament-teams>
         ${rows.map((row) => tournamentEquipeQuadrado(row, origens.get(row.team.id))).join("") || `<div class="empty-state">Nenhum time detectado.</div>`}
       </div>
@@ -20109,22 +20107,26 @@ function tournamentEquipeQuadrado(row, origem) {
   return `
     <button type="button" class="vp-slide vp-eq" data-tournament-team="${escapeHtml(team.id)}" style="${escapeHtml(teamPlateStyle(team))}" title="${escapeHtml(team.name)}" aria-label="${escapeHtml(`Ver elenco, desempenho e partidas de ${team.name}`)}">
       <span class="vp-slide-campo"><i></i></span>
-      <b title="${escapeHtml(tournamentTeamRankTitle(row))}">${escapeHtml(tournamentTeamRankLabel(row))}</b>
+      ${tournamentEquipeRanking(row)}
       <span class="vp-eq-logo">${teamLogo(team.id, "large")}</span>
       <span class="vp-eq-txt"><strong>${escapeHtml(team.name)}</strong>${origem ? `<small>Via ${escapeHtml(origem)}</small>` : ""}</span>
     </button>
   `;
 }
 
+// Um ranking em cada canto: o atual a esquerda, no campo livre, e o da data do
+// campeonato a direita. Quem esta inativa ou provisoria hoje fica so com o do inicio.
+function tournamentEquipeRanking(row) {
+  const hoje = teamValidRank(row.team);
+  return `
+    ${hoje ? `<b class="vp-eq-atual" title="Atual">#${hoje}</b>` : ""}
+    <b title="Início">${escapeHtml(tournamentTeamRankLabel(row))}</b>
+  `;
+}
+
 function tournamentTeamRankLabel(row) {
   const rank = Number(row.eventRanking?.validRank || 0);
   return rank > 0 ? `#${rank}` : "prov";
-}
-
-function tournamentTeamRankTitle(row) {
-  const date = row.eventRankingDate ? formatDate(row.eventRankingDate, "date") : "";
-  const suffix = row.eventRanking?.provisional ? " - provisório" : "";
-  return date ? `Ranking em ${date}${suffix}` : "Ranking historico indisponivel";
 }
 
 // O nome da fase, sem repetir o que a coluna ja diz: "Chave superior - Rodada 1",
@@ -20454,7 +20456,7 @@ function tournamentEstLideres(players) {
   `;
 }
 
-function tournamentEstFiltros(event, matches, filtro, maximo, minimo) {
+function tournamentEstFiltros(event, matches, filtro, maximo, minimo, rotulo = "Rounds mínimos", chave = "rounds") {
   const ids = [...new Set(matches.flatMap((series) => [series.teamA?.id, series.teamB?.id]).filter(Boolean))];
   const equipes = ids.map((id) => tournamentTeamById(event, id)).filter(Boolean).sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
   const mapas = tournamentFilterMapOptions(matches);
@@ -20469,11 +20471,11 @@ function tournamentEstFiltros(event, matches, filtro, maximo, minimo) {
         ${mapas.map((map) => `<option value="${escapeHtml(map.id)}"${map.id === filtro.mapa ? " selected" : ""}>${escapeHtml(map.name)} (${map.count})</option>`).join("")}
       </select>
       <label class="vp-est-rounds" style="--cheio:${maximo ? (minimo / maximo) * 100 : 0}%">
-        <span>Rounds mínimos</span>
-        <input type="range" min="0" max="${maximo}" step="1" value="${minimo}" data-est-rounds>
+        <span>${escapeHtml(rotulo)}</span>
+        <input type="range" min="0" max="${maximo}" step="1" value="${minimo}" data-est-rounds data-est-chave="${escapeHtml(chave)}">
         <b data-est-rounds-valor>${minimo}</b>
       </label>
-      ${filtro.equipe || filtro.mapa || filtro.rounds ? `<button type="button" class="vp-filtros-limpar" data-est-limpar>Limpar filtros</button>` : ""}
+      ${filtro.equipe || filtro.mapa || filtro.rounds || filtro.usos || filtro.agente ? `<button type="button" class="vp-filtros-limpar" data-est-limpar>Limpar filtros</button>` : ""}
     </div>
   `;
 }
@@ -20487,7 +20489,7 @@ function tournamentEstPagina(event, rows, chave, porPagina) {
   const inicio = (pagina - 1) * porPagina;
   return {
     linhas: rows.slice(inicio, inicio + porPagina),
-    paginador: paginacaoDaLista(`events/${event.id}/estatisticas`, pagina, total, query, chave),
+    paginador: paginacaoDaLista(routePath().slice(2), pagina, total, query, chave),
   };
 }
 
@@ -20518,7 +20520,7 @@ function tournamentEstLinha(row, columns, detalhe, todas) {
   if (!detalhe) return `<tr>${celulas}</tr>`;
   const resto = todas.filter((column) => !column.curta && !["kills", "deaths", "assists"].includes(column.key));
   return `
-    <tr>${celulas}<td class="vp-est-abre"><button type="button" data-est-detalhe aria-expanded="false" aria-label="${escapeHtml(`Mais números de ${row.nick || "jogador"}`)}"><i></i></button></td></tr>
+    <tr>${celulas}<td class="vp-est-abre"><button type="button" data-est-detalhe aria-expanded="false" aria-label="${escapeHtml(`Mais números de ${row.nick || row.name || "esta composição"}`)}"><i></i></button></td></tr>
     <tr class="vp-est-detalhe" hidden><td colspan="${columns.length + 1}"><dl>${resto.map((column) => `<div><dt>${escapeHtml(column.label)}</dt><dd>${escapeHtml(column.texto(row))}</dd></div>`).join("")}</dl></td></tr>
   `;
 }
@@ -20550,14 +20552,15 @@ function bindEstatisticasDoCampeonato() {
   const aplica = (mudanca, foco) => {
     const query = routeQuery();
     mudanca(query);
-    ["pagina", "pagina-equipes"].forEach((chave) => query.delete(chave));
+    ["pagina", "pagina-equipes", "pagina-comps"].forEach((chave) => query.delete(chave));
     pushFilterState(routePath().slice(2), query, foco);
   };
   [["data-est-equipe", "equipe"], ["data-est-mapa", "mapa"], ["data-est-rounds", "rounds"]].forEach(([atributo, chave]) => {
     pagina.querySelector(`[${atributo}]`)?.addEventListener("change", (event) => {
+      const campo = event.target.dataset.estChave || chave;
       aplica((query) => {
-        if (event.target.value && event.target.value !== "0") query.set(chave, event.target.value);
-        else query.delete(chave);
+        if (event.target.value && event.target.value !== "0") query.set(campo, event.target.value);
+        else query.delete(campo);
       }, `[${atributo}]`);
     });
   });
@@ -20568,7 +20571,16 @@ function bindEstatisticasDoCampeonato() {
     pagina.querySelector("[data-est-rounds-valor]").textContent = value;
   });
   pagina.addEventListener("click", (event) => {
-    if (event.target.closest("[data-est-limpar]")) aplica((query) => ["equipe", "mapa", "rounds"].forEach((chave) => query.delete(chave)), "[data-est-equipe]");
+    if (event.target.closest("[data-est-limpar]")) aplica((query) => ["equipe", "mapa", "rounds", "usos", "agente"].forEach((chave) => query.delete(chave)), "[data-est-equipe]");
+    // Trocar de agente mantem a pagina da lista de agentes: so as composicoes mudam.
+    const agente = event.target.closest("[data-agente]");
+    if (agente) {
+      const query = routeQuery();
+      if (agente.getAttribute("aria-pressed") === "true") query.delete("agente");
+      else query.set("agente", agente.dataset.agente);
+      query.delete("pagina-comps");
+      pushFilterState(routePath().slice(2), query, `[data-agente="${agente.dataset.agente}"]`);
+    }
     const lider = event.target.closest("[data-est-lider]");
     if (lider) {
       const indice = Number(lider.dataset.estLider);
@@ -20878,22 +20890,6 @@ function tournamentPlayerStatSort(a, b) {
   return Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0) || Number(b.rounds || 0) - Number(a.rounds || 0) || Number(b.kills || 0) - Number(a.kills || 0) || String(a.nick || "").localeCompare(String(b.nick || ""), "pt-BR");
 }
 
-function tournamentStatsTopList(title, subtitle, rows, emptyLabel) {
-  return `
-    <article class="tournament-stat-card">
-      <div class="tournament-stat-card-head">
-        <span>
-          <strong>${escapeHtml(title)}</strong>
-          <small>${escapeHtml(subtitle)}</small>
-        </span>
-      </div>
-      <div class="tournament-stat-list">
-        ${rows.length ? rows.join("") : `<div class="empty-state compact-empty">${escapeHtml(emptyLabel)}</div>`}
-      </div>
-    </article>
-  `;
-}
-
 function tournamentTeamStatRows(event, matches, standings, players = []) {
   const rows = new Map();
   const ensure = (teamId) => {
@@ -21044,7 +21040,7 @@ function tournamentTeamStatColumns() {
 }
 
 function tournamentStatsSortState(table) {
-  const fallback = table === "teams" ? { key: "lugar", direction: "asc" } : table === "agents" ? { key: "picks", direction: "desc" } : { key: "rating", direction: "desc" };
+  const fallback = table === "teams" ? { key: "lugar", direction: "asc" } : table === "agents" || table === "compositions" ? { key: "picks", direction: "desc" } : { key: "rating", direction: "desc" };
   return state.tournamentStatsSort?.[table] || fallback;
 }
 
@@ -21090,15 +21086,6 @@ function tournamentStatsExpandButton(table, totalRows, expanded) {
 function bindTournamentStatsControls(eventId) {
   const root = document.querySelector(".tournament-stats-section");
   if (!root) return;
-  const updateMapFilter = (target) => {
-    const mapFilter = target.closest("[data-tournament-map-filter]");
-    if (!mapFilter) return false;
-    const scope = mapFilter.dataset.tournamentMapFilter;
-    state.tournamentMapFilters = { ...state.tournamentMapFilters, [`${eventId}:${scope}`]: mapFilter.value || "all" };
-    state.tournamentStatsExpanded = { ...state.tournamentStatsExpanded, [`${eventId}:${scope}`]: false };
-    renderTournamentDetail(eventId);
-    return true;
-  };
   root.addEventListener("click", (event) => {
     const sortButton = event.target.closest("[data-tournament-stat-sort]");
     if (sortButton) {
@@ -21124,9 +21111,6 @@ function bindTournamentStatsControls(eventId) {
     }
 
   });
-  root.addEventListener("change", (event) => {
-    updateMapFilter(event.target);
-  });
 }
 
 function tournamentStatValueCell(display) {
@@ -21138,37 +21122,221 @@ function tournamentPlayerTeamLabel(player) {
   return team?.sourceTag || team?.tag || player.teamTag || player.teamId || "Sem equipe";
 }
 
-function tournamentAgentsSection(event, matches) {
-  const selectedMap = tournamentSelectedMapFilter(event.id, "agents");
-  const mapMatches = tournamentFilteredMapMatches(matches, selectedMap);
-  const agents = tournamentAgentRows(mapMatches);
-  const sortedTop = agents.slice().sort(tournamentAgentStatSort);
+// Agente nao tem cor de equipe: cada Camisa usa as duas cores mais marcantes da arte dele.
+const AGENT_CORES = {
+  astra: ["#5a2ea6", "#f0c55a"],
+  breach: ["#d9722a", "#2b2b33"],
+  brimstone: ["#b5502a", "#2e3b4a"],
+  chamber: ["#b8963e", "#f1ece0"],
+  clove: ["#d15fa8", "#5a3fa0"],
+  cypher: ["#3b82c4", "#ecd8ab"],
+  deadlock: ["#4a5a68", "#e3d1b6"],
+  fade: ["#2b2f52", "#cbd7e5"],
+  gekko: ["#8fbf3f", "#d65fa0"],
+  harbor: ["#1f7f8c", "#e0b25a"],
+  iso: ["#5a46b8", "#9475d6"],
+  jett: ["#7fb2e8", "#f4f8fd"],
+  kayo: ["#2c3f9c", "#57d6e8"],
+  killjoy: ["#f2c523", "#2e7d57"],
+  miks: ["#c05a9e", "#3e2a5c"],
+  neon: ["#1f4fb8", "#f5d63d"],
+  omen: ["#4a4fa8", "#28a6c4"],
+  phoenix: ["#e8622a", "#f1dd9d"],
+  raze: ["#e0762a", "#2a6fb0"],
+  reyna: ["#a03fa0", "#4e2956"],
+  sage: ["#2fae92", "#e4f3ec"],
+  skye: ["#4f9a44", "#d9a25e"],
+  sova: ["#3a6fb8", "#dfe7f2"],
+  tejo: ["#b77a2f", "#3f4a3a"],
+  veto: ["#3d6b73", "#d7c8a0"],
+  viper: ["#2e8b57", "#16241c"],
+  vyse: ["#5b4fb0", "#fad47e"],
+  waylay: ["#e89a3c", "#a5dcd3"],
+  yoru: ["#2a3fa8", "#92c4e3"],
+};
+
+function tournamentAgFiltro() {
+  const query = routeQuery();
+  return { equipe: query.get("equipe") || "", mapa: query.get("mapa") || "", agente: query.get("agente") || "", usos: Number.parseInt(query.get("usos") || "0", 10) || 0 };
+}
+
+// Junta o que a tabela do site pede as colunas da aba, que tambem servem ao perfil do jogador.
+function tournamentAgColunas(colunas, textos, curtas, celulas, extras) {
+  const texto = (column) => textos[column.key] || ((row) => String(column.value(row) ?? ""));
+  return [
+    ...colunas.map((column) => ({
+      ...column,
+      texto: texto(column),
+      curta: curtas.includes(column.key),
+      celula: celulas[column.key] || ((row) => `<td class="numeric">${escapeHtml(texto(column)(row))}</td>`),
+    })),
+    ...extras,
+  ];
+}
+
+function tournamentAgenteColunas(ativo) {
+  const textos = {
+    pickRate: (row) => pct(row.pickRate),
+    winRate: tournamentAgentNonMirroredWinRate,
+    rating: (row) => fmt(row.rating),
+    acs: (row) => fmt(row.acs, 0),
+    kd: (row) => fmt(row.kd),
+    kast: (row) => pct(row.kast),
+    adr: (row) => fmt(row.adr, 0),
+    kpr: (row) => fmt(row.kpr),
+    apr: (row) => fmt(row.apr),
+    fkpr: (row) => fmt(row.rounds ? row.firstKills / row.rounds : 0),
+    fdpr: (row) => fmt(row.rounds ? row.firstDeaths / row.rounds : 0),
+    hs: (row) => pct(row.hs),
+  };
+  const celulas = {
+    agent: (row) => `<td><button type="button" class="vp-ag-nome" data-agente="${escapeHtml(row.id)}" aria-pressed="${row.id === ativo}" title="Ver as composições com ${escapeHtml(row.name)}">${tournamentAgentLogo(row)}<span><strong>${escapeHtml(row.name)}</strong><small>${escapeHtml(roleDisplayInfo(row.role).label)}</small></span></button></td>`,
+  };
+  const extras = [
+    { key: "semEspelho", label: "Mapas sem espelho", texto: (row) => `${row.nonMirroredWins}-${row.nonMirroredLosses}` },
+    { key: "kda", label: "K/D/A", texto: (row) => `${row.kills}/${row.deaths}/${row.assists}` },
+  ];
+  const rotulos = { winRate: "Win%", rating: "rAAting" };
+  const colunas = tournamentAgentStatColumns().map((column) => ({ ...column, label: rotulos[column.key] || column.label }));
+  return tournamentAgColunas(colunas, textos, ["agent", "picks", "pickRate", "winRate", "rating", "acs", "kd", "kast", "adr"], celulas, extras);
+}
+
+function tournamentComposicaoColunas() {
+  const textos = {
+    pickRate: (row) => pct(row.pickRate),
+    winRate: (row) => pct(row.winRate),
+    maps: (row) => `${row.mapWins}-${row.mapLosses}`,
+    roundDiff: (row) => signed(row.roundDiff),
+    rating: (row) => fmt(row.rating),
+    acs: (row) => fmt(row.acs, 0),
+    kd: (row) => fmt(row.kd),
+    kast: (row) => pct(row.kast),
+    adr: (row) => fmt(row.adr, 0),
+    kpr: (row) => fmt(row.kpr),
+    apr: (row) => fmt(row.apr),
+    fkpr: (row) => fmt(row.playerRounds ? row.firstKills / row.playerRounds : 0),
+    fdpr: (row) => fmt(row.playerRounds ? row.firstDeaths / row.playerRounds : 0),
+    hs: (row) => pct(row.hs),
+  };
+  const celulas = {
+    composition: (row) => `<td><span class="tournament-composition-cell">${tournamentCompositionAgentStack(row.agents)}<small>${escapeHtml(tournamentCompositionLabel(row))}</small></span></td>`,
+  };
+  const rotulos = { pickRate: "Uso%", rating: "rAAting" };
+  const colunas = tournamentCompositionStatColumns().map((column) => ({ ...column, label: rotulos[column.key] || column.label }));
+  return tournamentAgColunas(colunas, textos, ["composition", "picks", "pickRate", "winRate", "maps", "roundDiff", "rating", "acs"], celulas, []);
+}
+
+// A formacao conta quantos agentes de cada funcao a composicao levou. O que passa dos
+// cinco primeiros vira uma linha so, para a soma continuar fechando 100%.
+const TOURNAMENT_FORMACAO_PAPEIS = ["duelista", "iniciador", "controlador", "sentinela"];
+
+function tournamentFormacoes(composicoes) {
+  const usos = new Map();
+  composicoes.forEach((row) => {
+    const chave = TOURNAMENT_FORMACAO_PAPEIS.map((papel) => row.agents.filter((agent) => normalizeRoleKey(agent.role) === papel).length).join("-");
+    usos.set(chave, (usos.get(chave) || 0) + row.picks);
+  });
+  const total = [...usos.values()].reduce((soma, valor) => soma + valor, 0);
+  const linhas = [...usos.entries()].sort((a, b) => b[1] - a[1]).map(([chave, valor]) => ({ chave, valor, parte: total ? valor / total : 0 }));
+  const resto = linhas.slice(5);
+  return {
+    linhas: linhas.slice(0, 5),
+    outras: resto.reduce((soma, linha) => soma + linha.parte, 0),
+    variantes: resto.length,
+  };
+}
+
+function tournamentFormacaoLinha({ chave, parte }) {
+  const contagem = chave.split("-").map(Number);
+  const icones = TOURNAMENT_FORMACAO_PAPEIS.flatMap((papel, indice) => Array(contagem[indice]).fill(papel));
+  const titulo = TOURNAMENT_FORMACAO_PAPEIS.map((papel, indice) => (contagem[indice] ? `${contagem[indice]} ${ROLE_ICONS[papel].label.toLowerCase()}` : "")).filter(Boolean).join(", ");
   return `
-    <section class="tournament-section tournament-agents-section tournament-stats-section">
-      <div class="tournament-section-head">
-        <h2>Agentes</h2>
-        <span>${agents.length} agentes · ${agents.reduce((sum, row) => sum + row.picks, 0)} picks</span>
+    <div class="vp-fo" style="--parte:${parte.toFixed(4)}" title="${escapeHtml(titulo)}">
+      <span>${icones.map((papel) => `<img src="${escapeHtml(assetPath(ROLE_ICONS[papel].icon))}" alt="${escapeHtml(ROLE_ICONS[papel].label)}" loading="lazy" />`).join("")}</span>
+      <b>${Math.round(parte * 100)}%</b>
+    </div>
+  `;
+}
+
+function tournamentAgenteCamisa(agente, escolhido) {
+  const papel = roleDisplayInfo(agente.role).label;
+  const valor = pct(agente.pickRate);
+  const arte = assetPath(agente.icon || "");
+  return plateCard({
+    classe: `vp-slide vp-camisa-equipe${valor.length > 4 ? " vp-valor-longo" : ""}`,
+    team: { colors: AGENT_CORES[agente.id] || [] },
+    href: escapeHtml(window.location.hash),
+    nome: agente.name,
+    figura: arte ? `<span class="vp-camisa-logo"><img src="${escapeHtml(arte)}" alt="" onerror="this.parentElement.remove()" /></span>` : "",
+    rotulo: escolhido ? "Selecionado" : "Mais usado",
+    tag: papel,
+    valor,
+    apoio: `${agente.picks} ${agente.picks === 1 ? "pick" : "picks"}`,
+  });
+}
+
+function tournamentAgenteResumo(agente, escolhido, composicoes) {
+  const { linhas, outras, variantes } = tournamentFormacoes(composicoes);
+  const dados = [
+    ["Vitórias", agente.nonMirroredPicks ? `<b>${escapeHtml(pct(agente.winRateNM))}</b> em ${agente.nonMirroredPicks} ${agente.nonMirroredPicks === 1 ? "mapa" : "mapas"}` : "Sempre espelhado"],
+    ["rAAting", `<b>${escapeHtml(fmt(agente.rating))}</b>`],
+    ["ACS", `<b>${escapeHtml(fmt(agente.acs, 0))}</b>`],
+    ["K:D", `<b>${escapeHtml(fmt(agente.kd))}</b>`],
+    ["Quem usou", `<b>${agente.uniquePlayers}</b> ${agente.uniquePlayers === 1 ? "jogador" : "jogadores"}, <b>${agente.uniqueTeams}</b> ${agente.uniqueTeams === 1 ? "equipe" : "equipes"}`],
+  ];
+  return `
+    <aside class="vp-resumo" aria-label="Agente e formações">
+      <div class="vp-mapa-resumo">
+        ${tournamentAgenteCamisa(agente, escolhido)}
+        <dl class="vp-mapa-dados">${dados.map(([rotulo, valor]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd>${valor}</dd></div>`).join("")}</dl>
       </div>
-      <div class="tournament-stats-shell">
-        ${tournamentMapFilterControl(event.id, matches, "agents")}
-        <div class="tournament-stats-top-grid tournament-agents-top-grid">
-          ${tournamentStatsTopList("Mais escolhidos", "Volume, pick rate e aproveitamento sem espelhamentos", sortedTop.slice(0, 8).map((row, index) => tournamentTopAgentRow(row, index, "volume")), "Nenhum agente registrado.")}
-          ${tournamentStatsTopList("Melhor rAAting 3.0", "Agentes com maior rAAting 3.0 agregado por round", agents.slice().sort((a, b) => b.rating - a.rating || b.rounds - a.rounds || a.name.localeCompare(b.name, "pt-BR")).slice(0, 8).map((row, index) => tournamentTopAgentRow(row, index, "rating")), "Nenhum agente com estatísticas disponíveis.")}
-        </div>
-        <div class="tournament-stat-tables">
-          ${tournamentAgentStatsTable(event.id, agents)}
+      <div class="vp-resumo-bloco">
+        <h3>Formações</h3>
+        <div class="vp-fo-lista">
+          ${linhas.map(tournamentFormacaoLinha).join("")}
+          ${variantes ? `<div class="vp-fo vp-fo-outras" style="--parte:${outras.toFixed(4)}"><span>Outras ${variantes}</span><b>${Math.round(outras * 100)}%</b></div>` : ""}
         </div>
       </div>
+    </aside>
+  `;
+}
+
+function tournamentAgentsSection(event, matches) {
+  const filtro = tournamentAgFiltro();
+  const mapas = filtro.mapa ? tournamentFilteredMapMatches(matches, filtro.mapa) : tournamentStatMapMatches(matches);
+  const agentes = tournamentAgentRows(mapas, filtro.equipe);
+  const todas = tournamentCompositionRows(mapas, filtro.equipe);
+  const ativo = agentes.find((row) => row.id === filtro.agente) || null;
+  const comAgente = ativo ? todas.filter((row) => row.agents.some((agent) => (agent.slug || agent.name) === ativo.id)) : todas;
+  // Trocar de equipe, mapa ou agente pode baixar o teto: o minimo acompanha.
+  const maximo = comAgente.reduce((maior, row) => Math.max(maior, row.picks), 0);
+  const minimo = Math.min(filtro.usos, maximo);
+  const composicoes = comAgente.filter((row) => row.picks >= minimo);
+  const picks = agentes.reduce((sum, row) => sum + row.picks, 0);
+  const contagem = `${agentes.length} ${agentes.length === 1 ? "agente" : "agentes"}, ${picks} picks, ${todas.length} ${todas.length === 1 ? "composição" : "composições"}`;
+  const destaque = ativo || agentes[0];
+  return `
+    <section class="tournament-section tournament-stats-section vp-est vp-ag-aba">
+      <div class="vp-est-lista">
+        ${sectionHead("Agentes", contagem)}
+        ${tournamentEstFiltros(event, matches, filtro, maximo, minimo, "Usos mínimos das composições", "usos")}
+        ${agentes.length ? "" : `<div class="empty-state">Nenhum agente com esses filtros. Tire um filtro para ver mais.</div>`}
+        ${tournamentEstTabela(event, { table: "agents", titulo: "Agentes", descricao: "Clique num agente para ver as composições dele. Win% não conta mapas com o mesmo agente nos dois lados", rows: agentes, columns: tournamentAgenteColunas(ativo?.id), fallback: tournamentAgentStatSort, chave: "pagina", porPagina: 10, detalhe: true })}
+        ${tournamentEstTabela(event, { table: "compositions", titulo: "Composições", descricao: ativo ? `Só as que usaram ${ativo.name}` : "Cada equipe em cada mapa conta um uso", rows: composicoes, columns: tournamentComposicaoColunas(), fallback: tournamentCompositionStatSort, chave: "pagina-comps", porPagina: 10, detalhe: true })}
+      </div>
+      ${destaque ? tournamentAgenteResumo(destaque, Boolean(ativo), todas) : ""}
     </section>
   `;
 }
 
-function tournamentAgentRows(mapMatches) {
+function tournamentAgentRows(mapMatches, teamId = "") {
   const rows = new Map();
-  const pickOpportunities = (mapMatches || []).length * 2;
+  const mapas = (mapMatches || []).filter((match) => !teamId || match.teamA?.id === teamId || match.teamB?.id === teamId);
+  const pickOpportunities = mapas.length * (teamId ? 1 : 2);
 
-  for (const match of mapMatches || []) {
+  for (const match of mapas) {
     for (const player of match.players || []) {
+      if (teamId && agentStatsTeamId(match, player) !== teamId) continue;
       const key = agentStatsKey(player);
       if (!rows.has(key)) rows.set(key, tournamentAgentEmptyRow(key, player));
       updateTournamentAgentRow(rows.get(key), player, match);
@@ -21313,46 +21481,6 @@ function tournamentAgentStatSort(a, b) {
   return b.picks - a.picks || b.rounds - a.rounds || b.rating - a.rating || a.name.localeCompare(b.name, "pt-BR");
 }
 
-function tournamentTopAgentRow(row, index, mode = "volume") {
-  const metrics = tournamentTopAgentMetrics(row, mode);
-  const detail = mode === "rating"
-    ? `${row.picks} pick${row.picks === 1 ? "" : "s"} · ${row.rounds} rounds · ${row.nonMirroredWins}-${row.nonMirroredLosses} mapas NM`
-    : `${row.uniqueTeams} equipe${row.uniqueTeams === 1 ? "" : "s"} · ${row.uniquePlayers} jogador${row.uniquePlayers === 1 ? "" : "es"} · ${row.rounds} rounds`;
-  return `
-    <article class="tournament-stat-list-row tournament-agent-highlight-row">
-      <span class="stat-rank">${index + 1}</span>
-      <div class="tournament-agent-highlight-main">
-        ${tournamentAgentLogo(row, "tournament-stat-logo")}
-        <span class="stat-row-main">
-          <strong>${escapeHtml(row.name)}</strong>
-          ${rolePill(row.role, "compact")}
-          <small>${escapeHtml(detail)}</small>
-        </span>
-      </div>
-      <div class="tournament-agent-highlight-metrics">
-        ${metrics.map(([label, value]) => `<span><strong>${escapeHtml(value)}</strong><small>${escapeHtml(label)}</small></span>`).join("")}
-      </div>
-    </article>
-  `;
-}
-
-function tournamentTopAgentMetrics(row, mode) {
-  if (mode === "rating") {
-    return [
-      ["rAAting 3.0", fmt(row.rating)],
-      ["ACS", fmt(row.acs, 0)],
-      ["K:D", fmt(row.kd)],
-      ["ADR", fmt(row.adr, 0)],
-    ];
-  }
-  return [
-    ["Picks", String(row.picks)],
-    ["Pick%", pct(row.pickRate)],
-    ["Win% (NM)", tournamentAgentNonMirroredWinRate(row)],
-    ["Mapas NM", `${row.nonMirroredWins}-${row.nonMirroredLosses}`],
-  ];
-}
-
 function tournamentAgentNonMirroredWinRate(row) {
   return row.nonMirroredPicks ? pct(row.winRateNM) : "-";
 }
@@ -21467,38 +21595,13 @@ function tournamentAgentLogo(row, extra = "") {
   return `<span class="tournament-agent-logo ${escapeHtml(extra)}">${src ? `<img src="${escapeHtml(src)}" alt="${escapeHtml(row.name || label)}" loading="lazy" onerror="this.remove()" />` : `<span>${escapeHtml(label)}</span>`}</span>`;
 }
 
-function tournamentCompositionsSection(event, matches) {
-  const selectedMap = tournamentSelectedMapFilter(event.id, "compositions");
-  const mapMatches = tournamentFilteredMapMatches(matches, selectedMap);
-  const compositions = tournamentCompositionRows(mapMatches);
-  const sortedTop = compositions.slice().sort(tournamentCompositionStatSort);
-  return `
-    <section class="tournament-section tournament-compositions-section tournament-stats-section">
-      <div class="tournament-section-head">
-        <h2>Composições</h2>
-        <span>${compositions.length} comps · ${compositions.reduce((sum, row) => sum + row.picks, 0)} usos</span>
-      </div>
-      <div class="tournament-stats-shell">
-        ${tournamentMapFilterControl(event.id, matches, "compositions")}
-        <div class="tournament-stats-top-grid tournament-compositions-top-grid">
-          ${tournamentStatsTopList("Mais usadas", "Composições por lado jogado em cada mapa", sortedTop.slice(0, 8).map(tournamentTopCompositionRow), "Nenhuma composição registrada.")}
-          ${tournamentStatsTopList("Melhor win rate", "Aproveitamento por uso da composição", compositions.slice().sort((a, b) => b.winRate - a.winRate || b.picks - a.picks || b.roundDiff - a.roundDiff).slice(0, 8).map(tournamentTopCompositionRow), "Nenhuma composição com estatísticas disponíveis.")}
-        </div>
-        <div class="tournament-stat-tables">
-          ${tournamentCompositionStatsTable(event.id, compositions)}
-        </div>
-      </div>
-    </section>
-  `;
-}
-
-function tournamentCompositionRows(mapMatches) {
+function tournamentCompositionRows(mapMatches, soEquipe = "") {
   const rows = new Map();
   let totalPicks = 0;
   for (const match of mapMatches || []) {
     for (const side of [match.teamA, match.teamB]) {
       const teamId = side?.id;
-      if (!teamId) continue;
+      if (!teamId || (soEquipe && teamId !== soEquipe)) continue;
       const players = (match.players || []).filter((player) => player.teamId === teamId);
       if (!players.length) continue;
       const agents = players.map(tournamentCompositionAgentFromPlayer).filter(Boolean).sort(tournamentCompositionAgentSort);
@@ -21625,51 +21728,6 @@ function tournamentCompositionLabel(row) {
   return (row.agents || []).map((agent) => agent.name || agent.slug).join(" / ");
 }
 
-function tournamentTopCompositionRow(row, index) {
-  return `
-    <article class="tournament-stat-list-row tournament-composition-top-row">
-      <span class="stat-rank">${index + 1}</span>
-      ${tournamentCompositionAgentStack(row.agents)}
-      <span class="stat-row-main">
-        <strong>${escapeHtml(`${row.picks} uso${row.picks === 1 ? "" : "s"}`)}</strong>
-        <small>${escapeHtml(`${row.mapWins}-${row.mapLosses} mapas · ${signed(row.roundDiff)} saldo`)}</small>
-      </span>
-      <span class="stat-row-metric"><strong>${escapeHtml(pct(row.winRate))}</strong><small>Win%</small></span>
-      <span class="stat-row-metric"><strong>${escapeHtml(fmt(row.rating))}</strong><small>rAAting 3.0</small></span>
-    </article>
-  `;
-}
-
-function tournamentCompositionStatsTable(eventId, compositions) {
-  const columns = tournamentCompositionStatColumns();
-  const sortedRows = tournamentSortedStatRows("compositions", compositions, columns, tournamentCompositionStatSort);
-  const expanded = tournamentStatsTableExpanded(eventId, "compositions");
-  const visibleRows = expanded ? sortedRows : sortedRows.slice(0, 10);
-  return `
-    <article class="tournament-stat-card tournament-stat-table-card">
-      <div class="tournament-stat-card-head">
-        <span>
-          <strong>Tabela de composições</strong>
-          <small>Agentes, uso, aproveitamento e desempenho por composição</small>
-        </span>
-        ${tournamentStatsExpandButton("compositions", sortedRows.length, expanded)}
-      </div>
-      ${tabelaComRotulos(`<div class="table-wrap tournament-stats-table-wrap">
-        <table class="tournament-stats-table tournament-composition-stats-table">
-          <thead>
-            <tr>
-              ${columns.map((column) => tournamentStatsHeaderCell("compositions", column)).join("")}
-            </tr>
-          </thead>
-          <tbody>
-            ${visibleRows.length ? visibleRows.map(tournamentCompositionStatsRow).join("") : `<tr><td colspan="${columns.length}"><div class="empty-state compact-empty">Nenhuma composição com estatísticas disponíveis.</div></td></tr>`}
-          </tbody>
-        </table>
-      </div>`)}
-    </article>
-  `;
-}
-
 function tournamentCompositionStatColumns() {
   return [
     { key: "composition", label: "Composição", value: tournamentCompositionLabel, type: "text", direction: "asc" },
@@ -21692,39 +21750,6 @@ function tournamentCompositionStatColumns() {
     { key: "fdpr", label: "FDPR", value: (row) => (row.playerRounds ? row.firstDeaths / row.playerRounds : 0) },
     { key: "hs", label: "HS%", value: (row) => Number(row.hs || 0) },
   ];
-}
-
-function tournamentCompositionStatsRow(row) {
-  const fkpr = row.playerRounds ? row.firstKills / row.playerRounds : 0;
-  const fdpr = row.playerRounds ? row.firstDeaths / row.playerRounds : 0;
-  return `
-    <tr>
-      <td>
-        <span class="tournament-composition-cell">
-          ${tournamentCompositionAgentStack(row.agents)}
-          <small>${escapeHtml(tournamentCompositionLabel(row))}</small>
-        </span>
-      </td>
-      <td class="numeric">${escapeHtml(String(row.picks || 0))}</td>
-      ${tournamentStatValueCell(pct(row.pickRate))}
-      ${tournamentStatValueCell(pct(row.winRate))}
-      <td class="numeric">${escapeHtml(`${row.mapWins}-${row.mapLosses}`)}</td>
-      <td class="numeric">${escapeHtml(String(row.rounds || 0))}</td>
-      <td class="numeric">${escapeHtml(signed(row.roundDiff))}</td>
-      <td class="numeric">${escapeHtml(String(row.uniqueTeams || 0))}</td>
-      <td class="numeric">${escapeHtml(String(row.uniqueMaps || 0))}</td>
-      ${tournamentStatValueCell(fmt(row.rating))}
-      ${tournamentStatValueCell(fmt(row.acs, 0))}
-      ${tournamentStatValueCell(fmt(row.kd))}
-      ${tournamentStatValueCell(pct(row.kast))}
-      ${tournamentStatValueCell(fmt(row.adr, 0))}
-      ${tournamentStatValueCell(fmt(row.kpr))}
-      ${tournamentStatValueCell(fmt(row.apr))}
-      ${tournamentStatValueCell(fmt(fkpr))}
-      ${tournamentStatValueCell(fmt(fdpr))}
-      ${tournamentStatValueCell(pct(row.hs))}
-    </tr>
-  `;
 }
 
 function tournamentCompositionAgentStack(agents = []) {

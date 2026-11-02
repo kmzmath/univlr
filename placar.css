@@ -2717,42 +2717,6 @@ body {
   gap: 24px;
 }
 
-/* O topo: o campo animado de sempre atras, o escudo solto, o nome grande, o
-   ranking solto e as cinco fotos do elenco sangrando na base. */
-.vp-hero-equipe {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  grid-template-columns: 112px minmax(0, 1fr) auto minmax(0, 560px);
-  align-items: center;
-  gap: 0 22px;
-  height: 196px;
-  padding: 0 0 0 20px;
-  overflow: hidden;
-  box-shadow: inset 3px 0 0 var(--team-line);
-}
-
-.vp-hero-equipe > :not(.team-field) {
-  position: relative;
-  z-index: 1;
-}
-
-.vp-hero-equipe .team-logo-frame {
-  display: block;
-  width: 112px;
-  height: 112px;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-}
-
-.vp-hero-equipe .team-logo-frame .team-logo {
-  width: 100%;
-  height: 100%;
-}
-
 .vp-equipe-id {
   display: grid;
   gap: 4px;
@@ -2817,75 +2781,6 @@ body {
   color: var(--ink);
 }
 
-.vp-equipe-rank {
-  display: grid;
-  justify-items: end;
-  align-self: end;
-  padding-bottom: 22px;
-}
-
-.vp-equipe-rank b {
-  font: 700 56px/0.9 var(--font-display);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-.vp-equipe-rank small {
-  margin-left: 4px;
-  font: 600 16px/1 var(--font-display);
-  vertical-align: top;
-}
-
-.vp-equipe-rank .vp-mov-up { color: var(--win); }
-.vp-equipe-rank .vp-mov-down { color: var(--danger); }
-.vp-equipe-rank .vp-mov-flat { color: var(--muted); }
-
-.vp-equipe-rank span {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.vp-equipe-fotos {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  align-self: end;
-  height: 186px;
-}
-
-.vp-equipe-foto {
-  position: relative;
-  color: inherit;
-  text-decoration: none;
-}
-
-.vp-equipe-foto .player-avatar {
-  position: absolute;
-  inset: auto 0 0;
-  width: 100%;
-  height: 176px;
-  border: 0;
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-}
-
-.vp-equipe-foto .player-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: bottom;
-}
-
-.vp-equipe-foto > span:last-child {
-  position: absolute;
-  right: 0;
-  bottom: 8px;
-  left: 0;
-  font: 600 12px/1 var(--font-text);
-  text-align: center;
-  text-shadow: 0 1px 3px #000, 0 0 10px #000;
-}
-
 /* ---- corpo do Resumo ---- */
 .vp-equipe-corpo {
   display: grid;
@@ -2948,43 +2843,7 @@ body {
 }
 
 /* ---- elenco em Placa ---- */
-.vp-elenco {
-  display: grid;
-  grid-template-columns: 4px 34px minmax(0, 1fr) auto auto auto 6px;
-  column-gap: 10px;
-}
-
-.vp-elenco-cab,
-.vp-elenco-linha {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: subgrid;
-  align-items: center;
-}
-
-.vp-elenco-cab {
-  height: 28px;
-  border-bottom: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.vp-elenco-cab span:first-child { grid-column: 3; }
-.vp-elenco-cab span:not(:first-child) { text-align: right; }
-
-.vp-elenco-linha {
-  height: 46px;
-  overflow: hidden;
-  color: inherit;
-  text-decoration: none;
-}
-
-.vp-elenco-linha + .vp-elenco-linha {
-  border-top: 1px solid var(--line);
-}
-
 .vp-elenco-foto {
-  grid-column: 2;
   align-self: end;
   width: 34px;
   height: 42px;
@@ -3006,40 +2865,6 @@ body {
   object-position: bottom;
 }
 
-.vp-elenco-nome {
-  display: grid;
-  min-width: 0;
-}
-
-.vp-elenco-nome b,
-.vp-elenco-nome small {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.vp-elenco-nome b { font-size: 13px; font-weight: 600; }
-.vp-elenco-nome small { color: var(--muted); font-size: 11px; }
-
-.vp-elenco-n {
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-}
-
-.vp-elenco-nota {
-  font: 600 16px/1 var(--font-display);
-}
-
-.vp-elenco-mais {
-  display: inline-block;
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 12px;
-  text-decoration: none;
-}
-
-.vp-elenco-mais:hover { color: var(--ink); }
 
 /* ---- trofeus soltos ---- */
 .vp-trofeus {
@@ -3098,20 +2923,6 @@ body {
 }
 
 @media (max-width: 1180px) {
-  .vp-hero-equipe {
-    grid-template-columns: 96px minmax(0, 1fr) auto;
-    padding-right: 20px;
-  }
-
-  .vp-hero-equipe .team-logo-frame {
-    width: 96px;
-    height: 96px;
-  }
-
-  .vp-equipe-fotos {
-    display: none;
-  }
-
   .vp-equipe-corpo {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -3125,35 +2936,6 @@ body {
 @media (max-width: 760px) {
   .team-page.team-page {
     gap: 20px;
-  }
-
-  .vp-hero-equipe {
-    grid-template-columns: 64px minmax(0, 1fr);
-    height: auto;
-    padding: 16px 14px;
-    gap: 6px 14px;
-  }
-
-  .vp-hero-equipe .team-logo-frame {
-    width: 64px;
-    height: 64px;
-  }
-
-  .vp-equipe-id h1 {
-    font-size: 30px;
-  }
-
-  .vp-equipe-rank {
-    grid-column: 1 / -1;
-    grid-auto-flow: column;
-    justify-content: start;
-    align-items: baseline;
-    gap: 8px;
-    padding: 0;
-  }
-
-  .vp-equipe-rank b {
-    font-size: 34px;
   }
 
   .vp-equipe-trilho {
@@ -9661,7 +9443,6 @@ a.vp-tabela-linha:hover strong {
    igual; os demais viram Placas. */
 .vp-hero-partida,
 .vp-abas-mapa,
-.vp-hero-equipe,
 .vp-hero-jogador {
   background-color: var(--bg);
 }
@@ -9741,5 +9522,1241 @@ a.vp-tabela-linha:hover strong {
 @media (max-width: 560px) {
   .vp-comparativo {
     padding-inline: 4px;
+  }
+}
+
+/* ==========================================================================
+   Equipe: capa com a faixa de fotos, uma tabela por assunto em cada aba e a
+   mesma largura do campeonato (922 + 32 + 340)
+   ========================================================================== */
+
+.team-page.team-page {
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: 1294px;
+  margin-inline: auto;
+}
+
+.team-page .team-tab-panel {
+  min-width: 0;
+}
+
+.vp-capa-cabeca,
+.vp-capa {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+}
+
+/* A faixa e o Camisa da pagina: as duas pecas da equipe atras dos cinco. */
+.vp-slide.vp-capa-fotos {
+  --emenda: 59%;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  flex: none;
+  height: 206px;
+}
+
+.vp-capa-fotos .vp-slide-campo {
+  clip-path: polygon(0 0, calc(var(--emenda) + 2px) 0, calc(var(--emenda) - 70px) 100%, 0 100%);
+}
+
+.vp-capa-fotos .vp-slide-campo i {
+  top: -130px;
+  left: -70px;
+  width: 470px;
+  height: 470px;
+  opacity: 0.15;
+}
+
+.vp-capa-jog {
+  position: relative;
+  display: block;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* A foto e quadrada, com a cabeca a 3% do topo: 48px para fora da base deixam o
+   rosto inteiro na faixa e o corpo sangrando. */
+.vp-slide.vp-capa-fotos .player-figure {
+  bottom: -48px;
+  left: 50%;
+  width: 262px;
+  height: 262px;
+  transform: translateX(-50%);
+}
+
+.vp-slide.vp-capa-fotos .player-figure.is-silhouette {
+  bottom: -26px;
+  left: 50%;
+  width: 196px;
+  height: 196px;
+}
+
+.vp-capa-nick {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  max-width: calc(100% - 12px);
+  padding: 3px 12px 4px;
+  overflow: hidden;
+  background: var(--placa-campo);
+  color: var(--placa-campo-tinta);
+  font: 500 17px/1.1 var(--fonte-carta);
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+a.vp-capa-jog:hover .vp-capa-nick {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.vp-capa-id {
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0 24px;
+  min-height: 106px;
+  padding: 12px 22px 12px 14px;
+  background: var(--surface);
+}
+
+.vp-capa-id .team-logo-frame {
+  display: block;
+  width: 82px;
+  height: 82px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-capa-id .team-logo-frame .team-logo {
+  width: 100%;
+  height: 100%;
+}
+
+.vp-capa-id .vp-equipe-id h1 {
+  font-size: 42px;
+  line-height: 1.02;
+}
+
+.vp-capa-id .vp-equipe-acoes {
+  flex-wrap: nowrap;
+  gap: 14px;
+  margin-top: 0;
+}
+
+.vp-capa-id .vp-equipe-onde {
+  gap: 4px 14px;
+  font-size: 15px;
+}
+
+.vp-capa-id .vp-equipe-tag {
+  font-size: 15px;
+}
+
+.vp-capa-id .vp-equipe-onde .state-flag {
+  width: 30px;
+  height: 21px;
+}
+
+.vp-capa-id .vp-equipe-rede {
+  display: flex;
+}
+
+.vp-capa-numeros {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 34px;
+  margin: 0;
+  text-align: right;
+}
+
+.vp-capa-numeros dd {
+  margin: 0;
+  font: 600 42px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.vp-capa-numeros dd.vp-capa-texto {
+  font-size: 28px;
+  line-height: 42px;
+}
+
+.vp-capa-numeros dt {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-capa-trofeus {
+  --por-linha: 14;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+}
+
+.vp-trofeus-janela {
+  grid-column: 2;
+  overflow: hidden;
+}
+
+.vp-trofeus-trilho {
+  display: flex;
+  transform: translateX(calc(var(--pos, 0) * -100% / var(--por-linha)));
+  transition: transform 220ms ease;
+}
+
+.vp-capa-trofeu {
+  display: grid;
+  flex: 0 0 calc(100% / var(--por-linha));
+  justify-items: center;
+}
+
+.vp-capa-trofeus:not(.com-setas) [data-copia] {
+  display: none;
+}
+
+.vp-capa-trofeu .trophy-visual {
+  position: relative;
+  display: block;
+  width: 72px;
+  height: 80px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-capa-trofeu .trophy-image {
+  width: 72px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.vp-capa-trofeu .trophy-event-logo {
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  width: 28px;
+  height: 28px;
+}
+
+.vp-trofeus-seta {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 56px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.vp-trofeus-seta[hidden] {
+  display: none;
+}
+
+.vp-trofeus-seta:hover {
+  color: var(--ink);
+}
+
+.vp-trofeus-seta i {
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+  transform: translateX(2px) rotate(45deg);
+}
+
+.vp-trofeus-prox {
+  grid-column: 3;
+}
+
+.vp-trofeus-prox i {
+  transform: translateX(-2px) rotate(225deg);
+}
+
+.team-page .vp-capa-cabeca .team-tabs {
+  padding: 0 14px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  border-bottom: 0;
+}
+
+/* ---- aba Visao Geral ---- */
+.vp-forma {
+  display: flex;
+  gap: 2px;
+}
+
+.vp-forma-item {
+  display: grid;
+  flex: 1 1 0;
+  justify-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: 184px;
+  padding: 14px 10px 12px;
+  background: var(--surface);
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+}
+
+.vp-forma-item:hover {
+  background: var(--surface-2);
+}
+
+.vp-forma-item .team-logo {
+  width: 52px;
+  height: 52px;
+}
+
+.vp-forma-item strong {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vp-forma-item b {
+  font: 600 26px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-forma-item b i {
+  margin: 0 3px;
+  color: var(--muted);
+  font-style: normal;
+}
+
+.vp-forma-item small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-forma-v small {
+  color: var(--win);
+}
+
+.vp-campanhas,
+.vp-movimentos {
+  background: var(--surface);
+}
+
+.vp-campanha,
+.vp-movimento {
+  display: grid;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-campanha {
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  min-height: 40px;
+}
+
+.vp-movimento {
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  min-height: 50px;
+}
+
+.vp-campanha + .vp-campanha,
+.vp-movimento + .vp-movimento {
+  border-top: 1px solid var(--line);
+}
+
+a.vp-campanha:hover,
+a.vp-movimento:hover,
+a.vp-et:hover,
+a.vp-cp:hover {
+  background: var(--surface-2);
+}
+
+.vp-campanha > strong {
+  display: block;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vp-campanha .team-placement-badge strong {
+  font-size: 13px;
+}
+
+/* A explicacao da nota sai da moldura e fica como os outros blocos da aba. */
+.team-page .team-ranking-explainer {
+  padding: 14px;
+  border: 0;
+  border-radius: 0;
+  background: var(--surface);
+  box-shadow: none;
+}
+
+.team-page .ranking-chart-stage {
+  height: 250px;
+}
+
+/* Sem bolinha fixa: a linha limpa, e o ponto so aparece em cima da semana. */
+.team-page .ranking-chart-hotspot {
+  top: 0;
+  bottom: 0;
+  left: calc(var(--esq) * 1%);
+  width: calc(var(--larg) * 1%);
+  height: auto;
+  border-radius: 0;
+  cursor: default;
+  transform: none;
+}
+
+.team-page .ranking-chart-hotspot:hover,
+.team-page .ranking-chart-hotspot:focus {
+  z-index: 5;
+  outline: none;
+}
+
+.team-page .ranking-chart-hotspot::before {
+  inset: auto;
+  top: calc(var(--y) * 1%);
+  left: calc(var(--c) * 1%);
+  width: 0;
+  height: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: translate(-50%, -50%);
+}
+
+.team-page .ranking-chart-hotspot:hover::before,
+.team-page .ranking-chart-hotspot:focus-visible::before {
+  inset: auto;
+  top: calc(var(--y) * 1%);
+  left: calc(var(--c) * 1%);
+  width: 12px;
+  height: 12px;
+  background: var(--ink);
+  box-shadow: 0 0 0 3px var(--team-panel-strong, #0b0b10);
+}
+
+.team-page .ranking-chart-tooltip,
+.team-page .ranking-chart-hotspot.na-esquerda .ranking-chart-tooltip,
+.team-page .ranking-chart-hotspot.na-direita .ranking-chart-tooltip {
+  top: calc(var(--y) * 1%);
+  right: auto;
+  bottom: auto;
+  left: calc(var(--c) * 1%);
+}
+
+.team-page .ranking-chart-tooltip,
+.team-page .ranking-chart-hotspot:hover .ranking-chart-tooltip,
+.team-page .ranking-chart-hotspot:focus .ranking-chart-tooltip {
+  transform: translate(-50%, calc(-100% - 12px));
+}
+
+.team-page .ranking-chart-hotspot.na-esquerda .ranking-chart-tooltip,
+.team-page .ranking-chart-hotspot.na-esquerda:hover .ranking-chart-tooltip,
+.team-page .ranking-chart-hotspot.na-esquerda:focus .ranking-chart-tooltip {
+  transform: translate(0, calc(-100% - 12px));
+}
+
+.team-page .ranking-chart-hotspot.na-direita .ranking-chart-tooltip,
+.team-page .ranking-chart-hotspot.na-direita:hover .ranking-chart-tooltip,
+.team-page .ranking-chart-hotspot.na-direita:focus .ranking-chart-tooltip {
+  transform: translate(-100%, calc(-100% - 12px));
+}
+
+/* Um rotulo por mes, em pe, para caberem todos. */
+.vp-meses-verticais > span,
+.ranking-chart-dates.vp-meses-verticais span:first-child,
+.ranking-chart-dates.vp-meses-verticais span:last-child {
+  font: 500 11px/1 var(--font-text);
+  writing-mode: vertical-rl;
+  transform: translateX(-50%) rotate(180deg);
+}
+
+.ranking-chart-dates.vp-meses-verticais span:last-child {
+  right: auto;
+  left: calc(var(--t) * 1%);
+}
+
+.vp-nota-calculo {
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.vp-nota-calculo summary {
+  padding-top: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  font: 600 13px/1 var(--font-text);
+}
+
+.vp-nota-calculo summary:hover,
+.vp-nota-calculo[open] summary {
+  color: var(--ink);
+}
+
+.vp-nota-calculo[open] summary {
+  margin-bottom: 14px;
+}
+
+/* ---- aba Elenco ---- */
+.vp-eq-coluna {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  min-width: 0;
+}
+
+.vp-s-linha-do-tempo {
+  min-width: 0;
+}
+
+/* Sem a coluna de periodo: as passagens por extenso estao em Ex-membros. */
+.vp-s-linha-do-tempo .lineup-timeline-chart {
+  --timeline-name: 150px;
+  --timeline-meta: 0px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+}
+
+.vp-s-linha-do-tempo .lineup-timeline-rows {
+  --timeline-name: 150px;
+  --timeline-meta: 0px;
+  min-width: 0;
+}
+
+.vp-s-linha-do-tempo .lineup-timeline-marker {
+  left: calc(var(--timeline-name) + 12px + (100% - var(--timeline-name) - 12px) * var(--t, 0));
+}
+
+.vp-s-linha-do-tempo .lineup-timeline-row,
+.vp-s-linha-do-tempo .lineup-timeline-axis {
+  grid-template-columns: 150px minmax(0, 1fr);
+}
+
+.vp-s-linha-do-tempo .lineup-timeline-axis > span:last-child {
+  display: none;
+}
+
+.vp-elenco-tabela {
+  display: grid;
+  background: var(--surface);
+}
+
+.vp-et {
+  display: grid;
+  align-items: center;
+  gap: 0 12px;
+  min-height: 54px;
+  padding: 5px 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-et-atual {
+  grid-template-columns: 40px minmax(0, 1fr) 112px 58px 44px 54px 38px 38px 88px;
+}
+
+.vp-et-ex {
+  grid-template-columns: 40px minmax(0, 1fr) 132px 58px 44px 54px 38px 38px 52px;
+}
+
+.vp-et + .vp-et {
+  border-top: 1px solid var(--line);
+}
+
+.vp-et-cab.vp-et {
+  min-height: 30px;
+  color: var(--muted);
+  font: 600 12px/1 var(--font-text);
+}
+
+.vp-et-cab > :nth-child(n + 4) {
+  text-align: right;
+}
+
+.vp-et-nome {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.vp-et-nome b,
+.vp-et-nome small {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.vp-et-nome b {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.vp-et-nome small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-et-c,
+.vp-et-n {
+  font-size: 13px;
+}
+
+.vp-et-c {
+  color: var(--muted);
+}
+
+.vp-et-n {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-et-nota {
+  font-weight: 700;
+}
+
+.vp-et-agentes {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.vp-et-periodos {
+  display: grid;
+  gap: 1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-s-linha-do-tempo .lineup-timeline-axis,
+.vp-s-linha-do-tempo .lineup-axis-track {
+  min-height: 92px;
+}
+
+.vp-mov-tipo {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vp-mov-entrou {
+  color: var(--win);
+}
+
+/* ---- aba Partidas: as colunas da home, com filtros, lista e mapas ---- */
+.vp-eq-aba.vp-eq-partidas.vp-jogos {
+  grid-template-columns: 340px minmax(0, 550px) 340px;
+}
+
+.vp-jl-lista {
+  display: grid;
+  background: var(--surface);
+}
+
+.vp-jl {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 56px 150px;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 14px;
+  color: inherit;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.vp-jl + .vp-jl {
+  border-top: 1px solid var(--line);
+}
+
+a.vp-jl:hover {
+  background: var(--surface-2);
+}
+
+.vp-jl-data {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-jl-rival {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.vp-jl-rival .team-logo {
+  flex: none;
+  width: 26px;
+  height: 26px;
+}
+
+.vp-jl-rival strong {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vp-jl-placar {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  color: var(--muted);
+  font: 600 18px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-jl-placar b {
+  font-weight: inherit;
+}
+
+.vp-jl-placar i {
+  font-style: normal;
+}
+
+.vp-jl-v b:first-child {
+  color: var(--win);
+}
+
+.vp-jl-d b:last-child {
+  color: var(--ink);
+}
+
+.vp-jl-mapas {
+  display: block;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ---- aba Campeonatos: lista de 922px e coluna de filtros ---- */
+.vp-eq-aba.vp-jogos {
+  display: grid;
+  grid-template-columns: minmax(0, 922px) 340px;
+  justify-content: center;
+  align-items: start;
+  gap: 32px;
+}
+
+.vp-eq-aba .vp-jogos-filtro {
+  display: grid;
+  gap: 6px;
+}
+
+.vp-eq-aba .vp-jogos-titulo {
+  align-items: center;
+}
+
+.vp-eq-aba .vp-jogos-titulo a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-eq-aba .vp-jogos-titulo .vp-jogos-oculto {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.vp-eq-aba .vp-jogos-titulo a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vp-eq-escolha {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.vp-eq-escolha button,
+.vp-cp-trofeus button {
+  min-height: 40px;
+  border: 0;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font: 600 13px/1 var(--font-text);
+}
+
+.vp-eq-escolha button:hover,
+.vp-cp-trofeus button:hover {
+  background: var(--surface-2);
+}
+
+.vp-eq-escolha button[aria-pressed="true"],
+.vp-cp-trofeus button[aria-pressed="true"] {
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+.vp-eq-escolha b {
+  color: var(--muted);
+}
+
+.vp-cp-trofeus {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-cp-trofeus h3 {
+  margin-bottom: 4px;
+}
+
+.vp-cp-trofeus button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  padding: 0 14px;
+  text-align: left;
+}
+
+.vp-cp-trofeus b {
+  font: 600 20px/1 var(--font-display);
+}
+
+.vp-cp-cab,
+.vp-cp {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 24px 142px 128px 38px 38px 38px;
+  align-items: center;
+  gap: 0 12px;
+}
+
+.vp-cp-cab {
+  padding: 0 14px 6px;
+  color: var(--muted);
+  font: 600 12px/1 var(--font-text);
+}
+
+.vp-cp-cab > :nth-child(n + 6) {
+  text-align: right;
+}
+
+.vp-cp-lista {
+  display: grid;
+  background: var(--surface);
+}
+
+.vp-cp {
+  min-height: 60px;
+  padding: 6px 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-cp + .vp-cp {
+  border-top: 1px solid var(--line);
+}
+
+.vp-cp .vp-cp-logo {
+  width: 38px;
+  height: 38px;
+}
+
+.vp-cp-nome {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.vp-cp-nome strong {
+  display: block;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vp-cp-nome small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-cp-lugar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.vp-cp-lugar .trophy-visual {
+  position: relative;
+  flex: none;
+  width: 32px;
+  height: 38px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-cp-lugar .trophy-image {
+  width: 32px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.vp-cp-lugar .trophy-event-logo {
+  display: none;
+}
+
+.vp-cp .team-placement-badge strong {
+  font-size: 15px;
+}
+
+.vp-cp .team-placement-badge small {
+  font-size: 11px;
+}
+
+.vp-cp-destaque {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.vp-cp-destaque .vp-cp-foto {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vp-cp-destaque span {
+  display: grid;
+  min-width: 0;
+}
+
+.vp-cp-destaque b {
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vp-cp-destaque small {
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.vp-cp-n {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ---- aba Estatisticas ---- */
+.vp-eq-bloco.vp-est {
+  display: grid;
+  grid-template-columns: minmax(0, 922px) 340px;
+  justify-content: center;
+  align-items: start;
+  gap: 32px;
+}
+
+.vp-eq-confronto > div {
+  grid-template-columns: 128px minmax(0, 1fr);
+}
+
+.vp-eq-data {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 10px;
+  background: var(--surface);
+  color: var(--muted);
+  font: 600 13px/1 var(--font-text);
+}
+
+.vp-eq-data input {
+  border: 0;
+  background: none;
+  color: var(--ink);
+  color-scheme: dark;
+  font: 600 13px/1 var(--font-text);
+}
+
+@media (max-width: 1180px) {
+  .vp-eq-aba.vp-jogos {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .vp-eq-aba .vp-ficha,
+  .vp-cp-trofeus {
+    order: 2;
+  }
+
+  .vp-eq-bloco.vp-est {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .vp-capa-id {
+    grid-template-columns: 82px minmax(0, 1fr) auto;
+  }
+
+  .vp-capa-id .vp-equipe-acoes {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 8px;
+  }
+
+  .vp-capa-numeros {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+}
+
+@media (max-width: 760px) {
+  .vp-slide.vp-capa-fotos {
+    height: 132px;
+  }
+
+  .vp-slide.vp-capa-fotos .player-figure {
+    bottom: -32px;
+    width: 172px;
+    height: 172px;
+  }
+
+  .vp-slide.vp-capa-fotos .player-figure.is-silhouette {
+    bottom: -18px;
+    width: 128px;
+    height: 128px;
+  }
+
+  .vp-capa-nick {
+    bottom: 6px;
+    padding: 2px 6px 3px;
+    font-size: 13px;
+  }
+
+  .vp-capa-id {
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 10px 12px;
+    padding: 12px 14px;
+  }
+
+  .vp-capa-id .team-logo-frame {
+    width: 56px;
+    height: 56px;
+  }
+
+  .vp-capa-id .vp-equipe-id h1 {
+    font-size: 28px;
+  }
+
+  .vp-capa-id .vp-equipe-acoes {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    margin-top: 0;
+  }
+
+  .vp-capa-numeros {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    justify-content: start;
+    gap: 28px;
+    text-align: left;
+  }
+
+  .vp-capa-numeros dd {
+    font-size: 30px;
+  }
+
+  .vp-capa-trofeus {
+    --por-linha: 6;
+    padding: 6px;
+  }
+
+  .vp-capa-trofeu .trophy-visual,
+  .vp-capa-trofeu .trophy-image {
+    width: 52px;
+    height: 58px;
+  }
+
+  .vp-capa-trofeu .trophy-event-logo {
+    width: 22px;
+    height: 22px;
+  }
+
+  .vp-jl {
+    grid-template-columns: 42px minmax(0, 1fr) 50px;
+    grid-template-rows: auto auto;
+    height: auto;
+    padding: 6px 14px;
+    row-gap: 2px;
+  }
+
+  .vp-jl-mapas {
+    grid-column: 2 / -1;
+    text-align: left;
+  }
+
+  .vp-cp-destaque {
+    grid-template-columns: auto auto;
+  }
+
+  .vp-cp .vp-cp-destaque {
+    display: grid;
+    column-gap: 8px;
+  }
+
+  .vp-cp-destaque::before {
+    grid-column: 1 / -1;
+  }
+
+  .vp-et-cab.vp-et,
+  .vp-cp-cab {
+    display: none;
+  }
+
+  /* A linha do tempo cabe na tela: o nome em cima e a faixa embaixo. */
+  .vp-s-linha-do-tempo .lineup-timeline-chart,
+  .vp-s-linha-do-tempo .lineup-timeline-rows {
+    --timeline-name: 0px;
+  }
+
+  .vp-s-linha-do-tempo .lineup-timeline-marker {
+    left: calc(100% * var(--t, 0));
+  }
+
+  .vp-s-linha-do-tempo .lineup-timeline-axis {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .vp-s-linha-do-tempo .lineup-timeline-axis > span:first-child {
+    display: none;
+  }
+
+  .vp-s-linha-do-tempo .lineup-timeline-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .vp-et,
+  .vp-cp {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    padding: 10px 14px;
+  }
+
+  .vp-et-nome {
+    flex: 1 1 calc(100% - 56px);
+  }
+
+  .vp-cp-nome {
+    flex: 1 1 calc(100% - 54px);
+  }
+
+  .vp-et-c,
+  .vp-et-n,
+  .vp-et-agentes,
+  .vp-cp-tier,
+  .vp-cp-lugar,
+  .vp-cp-n {
+    display: grid;
+    justify-content: start;
+    gap: 3px;
+    text-align: left;
+  }
+
+  .vp-et [data-rotulo]::before,
+  .vp-cp [data-rotulo]::before {
+    content: attr(data-rotulo);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  .vp-cp-lugar {
+    grid-template-columns: auto auto;
+    column-gap: 8px;
+  }
+
+  .vp-cp-lugar::before {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .vp-capa-trofeus {
+    --por-linha: 5;
+  }
+
+  /* No celular um mes sim, um mes nao: 31 rotulos nao cabem em 320px. */
+  .ranking-chart-dates.vp-meses-verticais span:nth-child(even),
+  .lineup-axis-track.vp-meses-verticais > span:nth-of-type(even) {
+    display: none;
+  }
+
+  .vp-slide.vp-capa-fotos {
+    height: 104px;
+  }
+
+  .vp-slide.vp-capa-fotos .player-figure {
+    bottom: -24px;
+    width: 134px;
+    height: 134px;
+  }
+
+  .vp-slide.vp-capa-fotos .player-figure.is-silhouette {
+    bottom: -14px;
+    width: 100px;
+    height: 100px;
+  }
+
+  .vp-capa-nick {
+    font-size: 12px;
+  }
+
+  .vp-forma {
+    flex-wrap: wrap;
+  }
+
+  .vp-forma-item {
+    flex: 1 1 30%;
+    max-width: none;
   }
 }

@@ -395,12 +395,30 @@ vm.runInContext(
   context,
 );
 const azr = context.teamById("azr");
-const elenco = context.elencoPlaca(azr, azr.currentLineup);
-assert(elenco.includes('class="vp-placa vp-elenco"'), "o elenco do trilho e uma Placa");
-assert.strictEqual((elenco.match(/class="vp-elenco-linha pintura-de-equipe"/g) || []).length, 5, "uma linha com pintura de equipe por titular");
-assert(!elenco.includes("Reserva<"), "reserva fica fora da Placa do trilho");
-assert(elenco.includes("zeNith#mond") && elenco.includes("1.07") && elenco.includes(">44<") && elenco.includes(">208<"), "a linha traz Riot ID, rAAting, mapas e ACS da equipe");
-assert(/href="#\/teams\/azr\/roster"[^>]*>[^<]*1 reserva/.test(elenco), "o link leva para o elenco completo e conta os reservas");
+const elenco = context.teamElencoTabela(azr, azr.currentLineup, context.teamPassagens(azr, [md3]));
+assert.strictEqual((elenco.match(/class="vp-et vp-et-atual"/g) || []).length, 6, "uma linha por pessoa do elenco, reserva inclusa");
+assert(elenco.includes("Titular") && elenco.includes("Reserva"), "a funcao de cada um aparece");
+assert(elenco.includes("zeNith#mond") && elenco.includes("1.07") && elenco.includes(">208<"), "a linha traz Riot ID, rAAting e ACS da equipe");
+
+// Stand-in fica fora: a passagem conta com 10 mapas, ou 40% quando a equipe jogou pouco.
+const mapaFalso = (dia, ids) => ({ eventId: "e", startedAt: Date.UTC(2026, 0, dia), maps: [{ startedAt: Date.UTC(2026, 0, dia), players: ids.map((id) => ({ id, teamId: "azr" })) }] });
+const trintaMapas = Array.from({ length: 30 }, (_, indice) => mapaFalso(indice + 1, ["p1", ...(indice < 12 ? ["ex1"] : []), ...(indice === 20 ? ["subst"] : [])]));
+const passagensFalsas = context.teamPassagens(azr, trintaMapas);
+assert(passagensFalsas.standins.has("subst"), "quem jogou um mapa de 30 e stand-in");
+assert(!passagensFalsas.standins.has("ex1"), "quem jogou 12 de 30 fez parte da equipe");
+assert(!context.teamPassagens(azr, trintaMapas.slice(0, 2)).standins.has("subst"), "a regra nao pega quem nao jogou");
+const poucosMapas = Array.from({ length: 5 }, (_, indice) => mapaFalso(indice + 1, ["p1", ...(indice < 3 ? ["novo"] : [])]));
+assert(!context.teamPassagens(azr, poucosMapas).standins.has("novo"), "em equipe de 5 mapas, 3 mapas ja contam");
+
+// Saida so depois de 60 dias com a equipe jogando sem o jogador.
+const comIntervalo = [...Array.from({ length: 12 }, (_, indice) => mapaFalso(indice + 1, ["p1", "volta"])), ...Array.from({ length: 5 }, (_, indice) => mapaFalso(40 + indice * 10, ["p1"])), ...Array.from({ length: 12 }, (_, indice) => mapaFalso(100 + indice, ["p1", "volta"]))];
+assert.strictEqual(context.teamPassagens(azr, comIntervalo).jogadores.get("volta").length, 2, "quem saiu e voltou tem duas passagens");
+assert.strictEqual(context.teamPassagensDeElenco(context.teamPassagens(azr, comIntervalo).jogadores.get("volta")).length, 1, "88 dias sem jogar tiram a titularidade, nao a vaga no elenco");
+const paradaDaEquipe = [...Array.from({ length: 12 }, (_, indice) => mapaFalso(indice + 1, ["p1", "fica"])), ...Array.from({ length: 12 }, (_, indice) => mapaFalso(100 + indice, ["p1", "fica"]))];
+assert.strictEqual(context.teamPassagens(azr, paradaDaEquipe).jogadores.get("fica").length, 1, "parada da equipe inteira nao e saida");
+
+const linhaComVao = context.teamRankingChart([...Array.from({ length: 5 }, (_, i) => ({ date: Date.UTC(2025, 0, 1 + i * 7), rank: 3, points: 80, note: "" })), ...Array.from({ length: 5 }, (_, i) => ({ date: Date.UTC(2026, 0, 1 + i * 7), rank: 4, points: 80, note: "" }))]);
+assert.strictEqual((linhaComVao.match(/class="ranking-chart-line"/g) || []).length, 2, "a linha interrompe na inatividade");
 
 const trofeus = context.trofeusLista([
   { event: { id: "rush", name: "Rush Series 3ª Edição", logo: "assets/tournament-icons/rushSeries.png" }, placementLabel: "Vice-campeão", trophyKey: "second", podiumClass: "podium-silver", date: Date.UTC(2026, 9, 20) },
@@ -409,21 +427,21 @@ assert(trofeus.includes('class="vp-trofeus"') && (trofeus.match(/class="vp-trofe
 assert(trofeus.includes("Vice-campeão") && trofeus.includes("Rush Series 3ª Edição, out de 2026"), "colocacao, campeonato e mes");
 assert.strictEqual(context.trofeusLista([]), "", "sem trofeu, sem bloco");
 
-const resumo = context.teamResumoTab(azr, { matches: [md3], currentLineup: azr.currentLineup });
+const jogoDaEquipe = { series: md3, vencedor: md3.winnerId, perdedor: md3.loserId, equipes: [md3.teamA.id, md3.teamB.id], quando: md3.startedAt, event: { id: "e", name: "Evento" } };
+const resumo = context.teamResumoTab(azr, { matches: [md3], currentLineup: azr.currentLineup, jogos: [jogoDaEquipe], tournaments: [], trophies: [] });
 const principal = resumo.indexOf('class="vp-equipe-principal"');
 const trilho = resumo.indexOf('class="vp-equipe-trilho"');
-assert(principal > -1 && trilho > principal, "o Resumo tem a coluna principal e depois o trilho");
-const colunaPrincipal = resumo.slice(principal, trilho);
-assert(colunaPrincipal.includes("Histórico do ranking") && colunaPrincipal.includes("vp-lista"), "a coluna principal tem o ranking e as partidas");
-assert(resumo.slice(trilho).includes("vp-elenco"), "o elenco vai para o trilho");
+assert(principal > -1 && trilho > principal, "a Visao Geral tem a coluna principal e depois o trilho");
+assert(resumo.slice(principal, trilho).includes("vp-forma"), "a coluna principal comeca pela fila de ultimas partidas");
+assert(resumo.slice(trilho).includes("Informações"), "o trilho tem a ficha da equipe");
 
 context.location.hash = "#/teams/azr";
 context.renderTeamDetail("azr");
 const paginaEquipe = appElement.innerHTML;
 const topoEquipe = paginaEquipe.slice(0, paginaEquipe.indexOf("team-tabs"));
-assert(topoEquipe.includes('class="vp-hero-equipe"'), "o topo da equipe e a faixa nova");
+assert(topoEquipe.includes("vp-capa-fotos"), "o topo da equipe e a faixa de fotos");
 assert(!paginaEquipe.includes("team-trophy-panel"), "o painel de trofeus sai do topo");
-assert(/class="vp-equipe-rank"[\s\S]*no ranking/.test(topoEquipe), "o ranking fica solto no topo");
+assert(/class="vp-capa-numeros"[\s\S]*Ranking/.test(topoEquipe) && !topoEquipe.includes("Na semana"), "a capa fica so com ranking e nota");
 context.location.hash = "";
 
 // ---------------------------------------------------------------- Tarefa 9

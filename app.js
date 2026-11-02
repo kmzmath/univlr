@@ -8101,7 +8101,16 @@ const TOURNAMENT_OVERRIDES = {
         "range": "8"
       }
     ],
-    "seriesResults": {},
+    "seriesResults": {
+      "11": {
+        "a": "uninassau_griffins",
+        "b": "azure_bears_golden",
+        "scoreA": 1,
+        "scoreB": 2,
+        "bestOf": "MD3",
+        "note": "Placar oficial. 1 dos 3 mapas fica fora das estatísticas porque os dados da partida estão incompletos."
+      }
+    },
     "startAt": "2024-10-14T12:21:31.248Z",
     "endAt": "2024-10-17T16:09:07.677Z",
     "bracket": {
@@ -8350,6 +8359,7 @@ const TOURNAMENT_OVERRIDES = {
                   "scoreA": 1,
                   "scoreB": 2,
                   "winner": "azure_bears_golden",
+                  "previewNote": "Placar oficial. 1 dos 3 mapas fica fora das estatísticas porque os dados da partida estão incompletos.",
                   "band": 0
                 },
                 {

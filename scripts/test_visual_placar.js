@@ -417,6 +417,18 @@ assert.strictEqual(context.teamPassagensDeElenco(context.teamPassagens(azr, comI
 const paradaDaEquipe = [...Array.from({ length: 12 }, (_, indice) => mapaFalso(indice + 1, ["p1", "fica"])), ...Array.from({ length: 12 }, (_, indice) => mapaFalso(100 + indice, ["p1", "fica"]))];
 assert.strictEqual(context.teamPassagens(azr, paradaDaEquipe).jogadores.get("fica").length, 1, "parada da equipe inteira nao e saida");
 
+// Inatividade: 150 dias sem jogar tira do ranking oficial, a volta recoloca, e rodar de novo nao muda nada.
+const DIA = 24 * 60 * 60 * 1000;
+const semanaFalsa = () => ({ teams: [{ id: "a", validRank: 1, overallRank: 1 }, { id: "b", validRank: 2, overallRank: 2 }, { id: "c", validRank: 3, overallRank: 3, inherits: ["velha"] }, { id: "d", validRank: null, overallRank: 4, provisional: true }], byTeamId: {} });
+const datasFalsas = new Map([["a", [1000 * DIA]], ["b", [800 * DIA]], ["velha", [990 * DIA]], ["d", [1000 * DIA]]]);
+const semanaInativa = context.rankingAplicaInatividade(semanaFalsa(), datasFalsas, 1001 * DIA, 150, []);
+assert.deepStrictEqual(semanaInativa.teams.map((row) => row.validRank), [1, null, 2, null], "a parada sai e quem esta abaixo sobe");
+assert.strictEqual(semanaInativa.teams[1].inactive, true, "a parada fica inativa");
+assert.strictEqual(semanaInativa.teams[3].inactive, undefined, "provisoria continua provisoria");
+assert.deepStrictEqual(context.rankingAplicaInatividade(semanaInativa, datasFalsas, 1001 * DIA, 150, []).teams.map((row) => row.validRank), [1, null, 2, null], "aplicar de novo nao muda nada");
+assert.deepStrictEqual(context.rankingAplicaInatividade(semanaFalsa(), datasFalsas, 900 * DIA, 150, []).teams.map((row) => row.validRank), [1, 2, 3, null], "na semana em que jogava, ela continua");
+assert.strictEqual(context.rankingDiasSemJogar(100 * DIA, 300 * DIA, [[120 * DIA, 220 * DIA]]), 100, "parada do cenario inteiro nao conta");
+assert.strictEqual(JSON.stringify(context.rankingParadasDoCenario(new Map([["a", [10 * DIA, 15 * DIA, 60 * DIA]], ["b", [12 * DIA]]]))), JSON.stringify([[15 * DIA, 60 * DIA]]), "so intervalo de 30 dias ou mais e parada do cenario");
 const linhaComVao = context.teamRankingChart([...Array.from({ length: 5 }, (_, i) => ({ date: Date.UTC(2025, 0, 1 + i * 7), rank: 3, points: 80, note: "" })), ...Array.from({ length: 5 }, (_, i) => ({ date: Date.UTC(2026, 0, 1 + i * 7), rank: 4, points: 80, note: "" }))]);
 assert.strictEqual((linhaComVao.match(/class="ranking-chart-line"/g) || []).length, 2, "a linha interrompe na inatividade");
 

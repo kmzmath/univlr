@@ -11740,6 +11740,7 @@ async function init() {
     // resumo, e uma janela da semana virada durante a sessão nunca corrigiria.
     state.homeSummary = null;
     ensureCurrentRankingSnapshot(state.db);
+    rankingInatividadeNasSemanas(state.db);
     state.tournamentRankingCache.clear();
     state.ready = true;
     window.addEventListener("hashchange", render);
@@ -12168,7 +12169,7 @@ function calculateRankingForCutoff({ teams, matches, matchSeries, players, tourn
     weights: achievements.rankingWeights,
     now: cutoffAt,
   });
-  return withSucceededRankingRows(ranking, aliases);
+  return rankingAplicaInatividade(withSucceededRankingRows(ranking, aliases), rankingDatasDeJogo(inherited.matches, inherited.matchSeries), cutoffAt, rankingInactivityDays(rankingWeights));
 }
 
 function teamsForRankingCutoff(teams, matches, cutoffAt, currentWeek = true) {
@@ -12480,6 +12481,87 @@ function rankingMinimumMatches(weights) {
 function rankingMinimumRosterSize(weights) {
   const value = Number(weights?.minimumRosterSize);
   return Number.isFinite(value) && value > 0 ? Math.floor(value) : 5;
+}
+
+function rankingInactivityDays(weights) {
+  const value = Number(weights?.inactivityDays);
+  return Number.isFinite(value) && value > 0 ? value : 150;
+}
+
+// Os dias em que cada equipe jogou, em ordem, para achar o ultimo jogo antes de cada semana.
+function rankingDatasDeJogo(matches, matchSeries) {
+  const datas = new Map();
+  const anota = (teamId, quando) => {
+    if (!teamId || !quando) return;
+    if (!datas.has(teamId)) datas.set(teamId, []);
+    datas.get(teamId).push(quando);
+  };
+  (matches || []).forEach((match) => [match.teamA, match.teamB].forEach((side) => anota(side?.id, Number(match.startedAt || 0))));
+  (matchSeries || []).forEach((series) => [series.teamA, series.teamB].forEach((side) => anota(side?.id, Number(series.sortAt || series.startedAt || 0))));
+  datas.forEach((lista) => lista.sort((a, b) => a - b));
+  return datas;
+}
+
+// As paradas do cenario inteiro: 30 dias ou mais sem jogo de ninguem. Elas nao contam
+// para a inatividade: sem isso, o intervalo de nov/24 a mai/25 deixava todas as equipes
+// inativas ao mesmo tempo, e o ranking daquelas semanas ficava vazio.
+function rankingParadasDoCenario(datas) {
+  const dias = [...new Set([...datas.values()].flat())].sort((a, b) => a - b);
+  return dias.flatMap((dia, indice) => (indice && dia - dias[indice - 1] >= 30 * DAY_MS ? [[dias[indice - 1], dia]] : []));
+}
+
+function rankingDiasSemJogar(ultimo, cutoffAt, paradas) {
+  const descontar = paradas.reduce((soma, [inicio, fim]) => soma + Math.max(0, Math.min(fim, cutoffAt) - Math.max(inicio, ultimo)), 0);
+  return (cutoffAt - ultimo - descontar) / DAY_MS;
+}
+
+function rankingUltimoJogo(datas, ids, cutoffAt) {
+  return ids.reduce((ultimo, id) => {
+    const lista = datas.get(id) || [];
+    let inicio = 0;
+    let fim = lista.length;
+    while (inicio < fim) {
+      const meio = (inicio + fim) >> 1;
+      if (lista[meio] <= cutoffAt) inicio = meio + 1;
+      else fim = meio;
+    }
+    return Math.max(ultimo, inicio ? lista[inicio - 1] : 0);
+  }, 0);
+}
+
+// Equipe sem jogar ha mais de `dias`, contando so o tempo em que o cenario estava
+// ativo, fica inativa naquela semana e sai do ranking oficial; volta quando jogar de
+// novo. A nota nao muda: so quem esta ativo e numerado.
+// Serve ao calculo de cada semana e as semanas ja gravadas no banco, que recebem a
+// regra ao carregar, e por isso rodar duas vezes nao muda nada.
+function rankingAplicaInatividade(ranking, datas, cutoffAt, dias, paradas = rankingParadasDoCenario(datas)) {
+  const linhas = ranking?.teams || Object.values(ranking?.byTeamId || {});
+  const validas = linhas.filter((row) => row.validRank).sort((a, b) => a.validRank - b.validRank);
+  let posicao = 0;
+  validas.forEach((row) => {
+    const ultimo = rankingUltimoJogo(datas, [row.id, ...(row.inherits || []), ...(row.performanceInherits || [])], cutoffAt);
+    const parada = ultimo && rankingDiasSemJogar(ultimo, cutoffAt, paradas) > dias;
+    if (!parada) posicao += 1;
+    [row, ranking.byTeamId?.[row.id]].filter(Boolean).forEach((linha) => {
+      linha.inactive = parada ? true : linha.inactive;
+      linha.validRank = parada ? null : posicao;
+      linha.canonicalRank = linha.validRank;
+      linha.rank = linha.validRank || linha.overallRank;
+    });
+  });
+  return ranking;
+}
+
+function rankingInatividadeNasSemanas(db) {
+  const snapshots = db?.rankingSnapshots || [];
+  if (!snapshots.length) return;
+  const datas = rankingDatasDeJogo(db.matches, db.matchSeries);
+  const dias = rankingInactivityDays(db.rankingWeights);
+  const paradas = rankingParadasDoCenario(datas);
+  snapshots.forEach((snapshot) => rankingAplicaInatividade(snapshot, datas, Number(snapshot.cutoffAt || 0), dias, paradas));
+  const atual = snapshots.reduce((maior, snapshot) => (Number(snapshot.cutoffAt || 0) > Number(maior.cutoffAt || 0) ? snapshot : maior));
+  applyRankingResultToTeams(db.teams || [], atual);
+  db.teams?.sort(compareTeamsByCanonicalRank);
 }
 
 // Elenco atual cadastrado da equipe (metadata/planilha), sem depender de partidas.

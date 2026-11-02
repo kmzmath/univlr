@@ -2,6 +2,7 @@
   "description": "Modelo de pesos do ranking. Ajuste pesos de campeonatos, fases, colocacoes e resultados manuais sem alterar o codigo.",
   "minimumMatches": 9,
   "minimumRosterSize": 5,
+  "inactivityDays": 150,
   "halfLives": {
     "matches": 150,
     "recentForm": 30,

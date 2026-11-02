@@ -6938,48 +6938,431 @@ a.vp-tabela-linha:hover strong {
   }
 }
 
-/* ---- matriz de agentes por mapa ---- */
-/* Com todos os agentes a tabela pedia 1759px. No computador as colunas apertam
-   para caber; abaixo de 1180px cada mapa vira um bloco e cada numero leva o
-   icone do agente. */
-.tournament-map-agent-table-wrap {
-  overflow-x: visible;
+/* ---- aba Mapas ---- */
+/* O sticky do resumo so para no fim da secao, e aqui a tabela de agentes vem depois
+   dentro dela: o cartao descia por cima da tabela. A lista e curta, entao ele fica. */
+@media (min-width: 1181px) {
+  .vp-est.vp-mapas .vp-resumo {
+    position: static;
+  }
 }
 
-.tournament-map-agent-table {
-  min-width: 0;
-  table-layout: fixed;
+.vp-est-trilho > .vp-mapa-resumo {
+  flex: 0 0 100%;
 }
 
-.tournament-map-agent-table th,
-.tournament-map-agent-table td {
+.vp-ml-cab,
+.vp-ml {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 56px 112px 96px;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.vp-ml-cab {
+  padding: 0 14px 6px 0;
+  color: var(--muted);
+  font: 600 12px/1.2 var(--font-text);
+  text-align: right;
+}
+
+.vp-ml-cab > span:first-child {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 14px;
+}
+
+.vp-ml-lista {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-ml {
+  position: relative;
+  width: 100%;
+  padding: 0 14px 0 0;
+  background: var(--surface);
+  border: 0;
+  border-radius: 2px;
+  color: var(--ink);
+  cursor: pointer;
+  font: 600 20px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-ml:hover {
+  background: var(--surface-2);
+}
+
+/* Por cima da faixa: o contorno do proprio botao ficaria atras da arte. */
+.vp-ml[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.vp-ml-faixa {
+  --emenda-mapa: calc(var(--ataque) * 1%);
+  --corte: 10px;
+  position: relative;
+  isolation: isolate;
+  display: block;
+  height: 64px;
   overflow: hidden;
-  padding: 6px 1px;
-  font-size: 11px;
+  color: #fff;
+  font-family: "Oswald", var(--font-display);
+  text-align: left;
 }
 
-.tournament-map-agent-table th:first-child,
-.tournament-map-agent-table td:first-child {
-  position: static;
-  width: 112px;
-  min-width: 0;
-  padding-left: 8px;
+.vp-ml-faixa strong,
+.vp-ml-faixa b {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font: 600 26px/1 "Oswald", var(--font-display);
 }
 
-.tournament-map-agent-table th:nth-child(2),
-.tournament-map-agent-table td:nth-child(2) {
-  width: 38px;
-  min-width: 0;
+.vp-ml-faixa strong {
+  left: 14px;
 }
 
-.tournament-map-agent-table th:nth-child(n+3),
-.tournament-map-agent-table td:nth-child(n+3) {
-  width: auto;
-  min-width: 0;
+/* Colado na emenda, sem nunca entrar no nome do mapa nem no numero da defesa. */
+.vp-ml-a {
+  left: min(max(116px, calc(var(--emenda-mapa) - 72px)), calc(100% - 128px));
 }
 
-.tournament-map-agent-table th img {
-  max-width: 100%;
+.vp-ml-d {
+  right: 14px;
+}
+
+.vp-ml-fora {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.vp-ma .tournament-agent-logo {
+  flex: none;
+  display: block;
+  width: 26px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: none;
+  border: 0;
+  border-radius: 2px;
+}
+
+.vp-ma .tournament-agent-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- agentes por mapa ---- */
+/* Com 29 agentes a coluna chega a 38px, entao a matriz usa a largura toda da pagina.
+   Cinco degraus de ambar, do escuro para pouco ao claro para muito: vermelho e marca,
+   verde e vitoria e o azul e a defesa. Abaixo de 1180px cada mapa vira um
+   bloco so com os agentes usados, cada numero com o proprio icone. */
+.vp-ma-bloco {
+  grid-column: 1 / -1;
+}
+
+.vp-ma {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 1px;
+  table-layout: fixed;
+  font: 600 12px/1 var(--font-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-ma th,
+.vp-ma td {
+  padding: 0;
+  border: 0;
+  text-align: center;
+}
+
+.vp-ma th {
+  height: 38px;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-ma th:first-child {
+  width: 124px;
+  text-align: left;
+}
+
+.vp-ma th:nth-child(2) {
+  width: 34px;
+}
+
+.vp-ma th .tournament-agent-logo {
+  width: 100%;
+  max-width: 30px;
+  height: auto;
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+
+.vp-ma td {
+  height: 36px;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.vp-ma td.vp-ma-zero {
+  color: var(--muted);
+  opacity: 0.5;
+}
+
+.vp-ma-bloco {
+  --pop1: #3d2d12;
+  --pop2: #7a5315;
+  --pop3: #c98a22;
+  --pop4: #f5b64e;
+  --pop5: #ffe2a8;
+}
+
+/* A letra troca entre o segundo e o terceiro degrau: o pior contraste e 5,9:1. */
+.vp-ma-bloco .vp-ma-n1 {
+  background: var(--pop1);
+  color: var(--ink);
+}
+
+.vp-ma-bloco .vp-ma-n2 {
+  background: var(--pop2);
+  color: var(--ink);
+}
+
+.vp-ma-bloco .vp-ma-n3 {
+  background: var(--pop3);
+  color: #000;
+}
+
+.vp-ma-bloco .vp-ma-n4 {
+  background: var(--pop4);
+  color: #000;
+}
+
+.vp-ma-bloco .vp-ma-n5 {
+  background: var(--pop5);
+  color: #000;
+}
+
+.vp-ma-chave {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  margin-bottom: 8px;
+  font: 600 12px/1 var(--font-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-ma-chave small {
+  color: var(--muted);
+  font: inherit;
+}
+
+.vp-ma-chave small:first-child {
+  margin-right: 8px;
+}
+
+.vp-ma-chave small:last-child {
+  margin-left: 8px;
+}
+
+.vp-ma-chave span {
+  min-width: 58px;
+  padding: 6px 6px;
+  text-align: center;
+}
+
+.vp-ma td .tournament-agent-logo {
+  display: none;
+}
+
+.vp-ma-todos td {
+  height: 30px;
+  font-weight: 700;
+}
+
+.vp-ma-nome {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 10px;
+  overflow: hidden;
+  color: var(--ink);
+  text-align: left;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.vp-ma-nome img {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  opacity: 0.55;
+}
+
+.vp-ma-nome:hover img {
+  opacity: 1;
+}
+
+/* Com 29 agentes a coluna cai a 32px aqui, e "100%" em 12px pede 33px. */
+@media (min-width: 1181px) and (max-width: 1320px) {
+  .vp-ma td {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .vp-ma,
+  .vp-ma tbody {
+    display: block;
+  }
+
+  .vp-ma thead {
+    display: none;
+  }
+
+  .vp-ma tr {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-bottom: 8px;
+  }
+
+  .vp-ma td {
+    display: flex;
+    flex: 0 0 64px;
+    order: var(--ordem);
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    height: 34px;
+  }
+
+  .vp-ma td.vp-ma-zero {
+    display: none;
+  }
+
+  .vp-ma td.vp-ma-taxa .tournament-agent-logo {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+
+  .vp-ma td.vp-ma-mapa {
+    flex: 1 1 calc(100% - 48px);
+    order: -2;
+    justify-content: stretch;
+  }
+
+  .vp-ma td.vp-ma-n {
+    flex: 0 0 46px;
+    order: -1;
+  }
+
+  .vp-ma-nome {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1180px) {
+  .vp-ml-corpo {
+    order: 2;
+  }
+
+  .vp-mapas .vp-resumo {
+    scroll-margin-top: calc(var(--topbar-h, 72px) + 8px);
+  }
+}
+
+/* No tablet o cartao esticado afastava demais os dois numeros: os dados vao ao lado. */
+@media (min-width: 761px) and (max-width: 1180px) {
+  .vp-mapas .vp-mapa-resumo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .vp-ml-cab {
+    display: flex;
+    padding-right: 0;
+  }
+
+  .vp-ml-cab > span:not(:first-child) {
+    display: none;
+  }
+
+  .vp-ml-cab > span:first-child {
+    flex: 1;
+  }
+
+  .vp-ml {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 8px;
+    padding: 0 0 10px;
+    text-align: center;
+  }
+
+  .vp-ml-faixa {
+    grid-column: 1 / -1;
+  }
+
+  .vp-ma-chave {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .vp-ma-chave small {
+    grid-row: 1;
+    margin: 0 0 6px;
+  }
+
+  .vp-ma-chave small:first-child {
+    grid-column: 1 / 3;
+    margin-right: 0;
+  }
+
+  .vp-ma-chave small:last-child {
+    grid-column: 4 / 6;
+    margin-left: 0;
+    text-align: right;
+  }
+
+  .vp-ma-chave span {
+    grid-row: 2;
+    min-width: 0;
+    padding: 6px 0;
+    font-size: 11px;
+  }
+
+  .vp-ml-num::before {
+    content: attr(data-rotulo);
+    display: block;
+    margin-bottom: 4px;
+    color: var(--muted);
+    font: 600 11px/1.2 var(--font-text);
+  }
 }
 
 .rotulo-imagem {
@@ -6987,47 +7370,6 @@ a.vp-tabela-linha:hover strong {
 }
 
 @media (max-width: 1180px) {
-  .tournament-map-agent-table,
-  .tournament-map-agent-table tbody {
-    display: block;
-  }
-
-  .tournament-map-agent-table thead {
-    display: none;
-  }
-
-  .tournament-map-agent-table tbody tr {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
-    gap: 8px 4px;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--line-dark);
-  }
-
-  .tournament-map-agent-table tbody td,
-  .tournament-map-agent-table tbody td:first-child,
-  .tournament-map-agent-table tbody td:nth-child(2),
-  .tournament-map-agent-table tbody td:nth-child(n+3) {
-    display: block;
-    width: auto;
-    padding: 2px 0;
-    border: 0;
-    white-space: normal;
-  }
-
-  .tournament-map-agent-table tbody td:first-child {
-    grid-column: 1 / -1;
-    padding-left: 0;
-    background: none;
-  }
-
-  .tournament-map-agent-table tbody td:nth-child(2)::before {
-    content: attr(data-label);
-    display: block;
-    color: var(--muted);
-    font-size: 10px;
-  }
-
   .rotulo-imagem {
     display: grid;
     justify-items: center;
@@ -7280,6 +7622,7 @@ a.vp-tabela-linha:hover strong {
 
 .vp-mapa-camisa {
   --emenda-mapa: calc(var(--ataque) * 1%);
+  --corte: 33px;
   position: relative;
   isolation: isolate;
   display: block;
@@ -7309,12 +7652,12 @@ a.vp-tabela-linha:hover strong {
 
 .vp-mapa-atk {
   background: var(--side-attack);
-  clip-path: polygon(0 0, calc(var(--emenda-mapa) + 33px) 0, calc(var(--emenda-mapa) - 33px) 100%, 0 100%);
+  clip-path: polygon(0 0, calc(var(--emenda-mapa) + var(--corte)) 0, calc(var(--emenda-mapa) - var(--corte)) 100%, 0 100%);
 }
 
 .vp-mapa-def {
   background: var(--side-defense);
-  clip-path: polygon(calc(var(--emenda-mapa) + 33px) 0, 100% 0, 100% 100%, calc(var(--emenda-mapa) - 33px) 100%);
+  clip-path: polygon(calc(var(--emenda-mapa) + var(--corte)) 0, 100% 0, 100% 100%, calc(var(--emenda-mapa) - var(--corte)) 100%);
 }
 
 .vp-mapa-topo {

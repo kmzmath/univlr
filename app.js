@@ -14849,15 +14849,10 @@ function taxaInteira(parte, total) {
   return total ? Math.round((parte / total) * 100) : 0;
 }
 
-// O cartao do mapa filtrado. Sozinho, ele fala do mapa: ataque e defesa somam 100 e
-// o pistol vem por lado. Com uma equipe filtrada, os numeros passam a ser dela, e
-// ataque e defesa deixam de ser complementares.
-function cartaoDoMapa(filtered) {
-  const map = state.matchMaps.length === 1 ? mapById(state.matchMaps[0]) : null;
-  if (!map) return "";
-  const team = state.matchTeams.length === 1 ? teamById(state.matchTeams[0]) : null;
-  const soma = somaDoMapa(filtered, map.id, team?.id);
-  if (!soma.mapas) return "";
+// O cartao do mapa. Sozinho, ele fala do mapa: ataque e defesa somam 100 e o pistol
+// vem por lado. Com uma equipe, os numeros passam a ser dela, e ataque e defesa
+// deixam de ser complementares.
+function mapaCamisa(map, soma, team, nota, atributos = "") {
   const ataque = taxaInteira(soma.attackWins, soma.attackRounds);
   const defesa = team ? taxaInteira(soma.defenseWins, soma.defenseRounds) : 100 - ataque;
   const emenda = ataque + defesa ? Math.round((ataque / (ataque + defesa)) * 100) : 50;
@@ -14880,11 +14875,11 @@ function cartaoDoMapa(filtered) {
     ...(sites ? [["Sites", sites]] : []),
   ];
   return `
-    <section class="vp-mapa-resumo" aria-label="Dados de ${escapeHtml(nome)}">
+    <section class="vp-mapa-resumo" aria-label="Dados de ${escapeHtml(nome)}"${atributos}>
       <a class="vp-mapa-camisa" href="#/maps/${encodeURIComponent(map.id)}" style="--ataque:${emenda}" aria-label="${escapeHtml(`${nome}: ${ataque}% no ataque e ${defesa}% na defesa`)}">
         <span class="vp-mapa-peca vp-mapa-atk">${arte}</span>
         <span class="vp-mapa-peca vp-mapa-def">${arte}</span>
-        <span class="vp-mapa-topo"><strong title="${escapeHtml(nome)}"><span class="nome-rolante">${escapeHtml(nome)}</span></strong><small>${escapeHtml(apoio)}</small><small>Neste filtro</small></span>
+        <span class="vp-mapa-topo"><strong title="${escapeHtml(nome)}"><span class="nome-rolante">${escapeHtml(nome)}</span></strong><small>${escapeHtml(apoio)}</small><small>${escapeHtml(nota)}</small></span>
         <span class="vp-mapa-lado vp-mapa-lado-a"><b>${ataque}%</b><small>Ataque</small></span>
         <span class="vp-mapa-lado vp-mapa-lado-d"><b>${defesa}%</b><small>Defesa</small></span>
       </a>
@@ -14893,6 +14888,14 @@ function cartaoDoMapa(filtered) {
       </dl>
     </section>
   `;
+}
+
+function cartaoDoMapa(filtered) {
+  const map = state.matchMaps.length === 1 ? mapById(state.matchMaps[0]) : null;
+  if (!map) return "";
+  const team = state.matchTeams.length === 1 ? teamById(state.matchTeams[0]) : null;
+  const soma = somaDoMapa(filtered, map.id, team?.id);
+  return soma.mapas ? mapaCamisa(map, soma, team, "Neste filtro") : "";
 }
 
 function mapasDoResumo() {
@@ -18315,6 +18318,8 @@ function renderTournamentDetail(id) {
   } else if (activeTab === "estatisticas" || activeTab === "agentes" || activeTab === "composicoes") {
     bindTournamentStatsControls(event.id);
     bindEstatisticasDoCampeonato();
+  } else if (activeTab === "mapas") {
+    bindMapasDoCampeonato();
   }
   playPanelSlide(tabTransition);
 }
@@ -20582,29 +20587,90 @@ function bindEstatisticasDoCampeonato() {
   });
 }
 
-function tournamentMapsSection(event, matches) {
-  const mapMatches = tournamentStatMapMatches(matches);
-  const rows = tournamentMapAnalyticsRows(event, mapMatches);
-  const agentColumns = tournamentMapAgentColumns(rows);
-  const totalMaps = rows.reduce((sum, row) => sum + row.matches, 0);
-  const totalRounds = rows.reduce((sum, row) => sum + row.rounds, 0);
+// Os numeros de cada mapa do campeonato, com as somas que o cartao usa.
+function tournamentMapasDados(event, matches) {
+  return tournamentMapAnalyticsRows(event, tournamentStatMapMatches(matches)).map((row) => ({
+    ...row,
+    mapa: mapById(row.id) || { id: row.id, name: row.name, icon: row.icon },
+    soma: somaDoMapa(matches, row.id),
+    prorrogacoes: tournamentFilteredMapMatches(matches, row.id).filter((match) => Number(match.rounds || 0) > 24).length,
+  }));
+}
+
+function tournamentMapasArte(mapa) {
+  const art = mapArtAttrs(mapa);
+  return art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : "";
+}
+
+// A faixa e a Camisa do mapa deitada: a emenda fica na proporcao entre ataque e defesa.
+function tournamentMapasLinha(row, indice, atual) {
+  const ataque = taxaInteira(row.soma.attackWins, row.soma.attackRounds);
+  const arte = tournamentMapasArte(row.mapa);
   return `
-    <section class="tournament-section tournament-maps-section">
-      <div class="tournament-section-head">
-        <h2>Mapas</h2>
-        <span>${escapeHtml(`${totalMaps} mapas · ${totalRounds} rounds`)}</span>
+    <button type="button" class="vp-ml" data-mapa-linha="${indice}" data-mapa-id="${escapeHtml(row.id)}" aria-pressed="${indice === atual}">
+      <span class="vp-ml-faixa" style="--ataque:${ataque}">
+        <span class="vp-mapa-peca vp-mapa-atk">${arte}</span>
+        <span class="vp-mapa-peca vp-mapa-def">${arte}</span>
+        <strong>${escapeHtml(row.name)}</strong>
+        <b class="vp-ml-a">${ataque}%</b>
+        <b class="vp-ml-d">${100 - ataque}%</b>
+      </span>
+      <span class="vp-ml-num" data-rotulo="Mapas">${row.matches}</span>
+      <span class="vp-ml-num" data-rotulo="Média de rounds">${escapeHtml(fmt(row.rounds / row.matches, 1))}</span>
+      <span class="vp-ml-num" data-rotulo="Prorrogações">${row.prorrogacoes}</span>
+    </button>
+  `;
+}
+
+function tournamentMapsSection(event, matches) {
+  const linhas = tournamentMapasDados(event, matches);
+  const totalMapas = linhas.reduce((sum, row) => sum + row.matches, 0);
+  const totalRounds = linhas.reduce((sum, row) => sum + row.rounds, 0);
+  const cabeca = sectionHead("Mapas", `${totalMapas} ${totalMapas === 1 ? "mapa" : "mapas"}, ${totalRounds} rounds`);
+  if (!linhas.length) {
+    return `<section class="tournament-section">${cabeca}<div class="empty-state">Nenhum mapa registrado para este campeonato.</div></section>`;
+  }
+  const atual = Math.max(0, linhas.findIndex((row) => row.id === state.tournamentMapaLinha));
+  const fora = tournamentMapPoolRows(event.mapPool || [], matches).filter((map) => !map.played);
+  return `
+    <section class="tournament-section vp-est vp-mapas">
+      <div class="vp-est-lista">
+        ${cabeca}
+        <div class="vp-ml-corpo">
+          <div class="vp-ml-cab" aria-hidden="true"><span><span>Ataque</span><span>Defesa</span></span><span>Mapas</span><span>Média de rounds</span><span>Prorrogações</span></div>
+          <div class="vp-ml-lista">${linhas.map((row, indice) => tournamentMapasLinha(row, indice, atual)).join("")}</div>
+          ${fora.length ? `<p class="vp-ml-fora">Não jogados: ${escapeHtml(fora.map((map) => map.name || map.poolName).join(", "))}</p>` : ""}
+        </div>
       </div>
-      <div class="tournament-stats-shell tournament-maps-shell">
-        ${rows.length ? `
-          <div class="tournament-map-charts">
-            ${tournamentMapDistributionChart(rows)}
-            ${tournamentMapSideWinChart(rows)}
+      <aside class="vp-resumo" aria-label="Dados do mapa">
+        <div class="vp-est-cartas">
+          <div class="vp-est-trilho" style="--atual:${atual}">
+            ${linhas.map((row, indice) => mapaCamisa(row.mapa, row.soma, null, "Neste campeonato", indice === atual ? "" : " inert")).join("")}
           </div>
-          ${tournamentMapAgentPickrateTable(rows, agentColumns)}
-        ` : `<div class="empty-state">Nenhum mapa registrado para este campeonato.</div>`}
-      </div>
+        </div>
+      </aside>
+      ${tournamentMapAgentPickrateTable(linhas, tournamentMapAgentColumns(linhas))}
     </section>
   `;
+}
+
+// Clicar numa faixa desliza o trilho ate o cartao do mapa, como os lideres de Estatisticas.
+function bindMapasDoCampeonato() {
+  const pagina = document.querySelector(".vp-mapas");
+  if (!pagina) return;
+  pagina.addEventListener("click", (event) => {
+    const linha = event.target.closest("[data-mapa-linha]");
+    if (!linha) return;
+    const indice = Number(linha.dataset.mapaLinha);
+    state.tournamentMapaLinha = linha.dataset.mapaId;
+    pagina.querySelector(".vp-est-trilho").style.setProperty("--atual", indice);
+    pagina.querySelectorAll(".vp-est-trilho > *").forEach((cartao, posicao) => {
+      cartao.inert = posicao !== indice;
+    });
+    pagina.querySelectorAll("[data-mapa-linha]").forEach((botao) => botao.setAttribute("aria-pressed", String(botao === linha)));
+    // Numa coluna so o cartao fica acima da lista: sem isso a troca aconteceria fora da tela.
+    if (window.matchMedia("(max-width: 1180px)").matches) pagina.querySelector(".vp-resumo").scrollIntoView({ block: "nearest", behavior: "smooth" });
+  });
 }
 
 function tournamentMapAnalyticsRows(event, mapMatches) {
@@ -20691,91 +20757,32 @@ function tournamentMapAgentColumns(rows) {
     .sort((a, b) => b.picks - a.picks || roleSortOrder(a.role) - roleSortOrder(b.role) || String(a.name || a.key).localeCompare(String(b.name || b.key), "pt-BR"));
 }
 
-function tournamentMapDistributionChart(rows) {
-  const max = Math.max(1, ...rows.map((row) => row.matches));
-  return `
-    <article class="tournament-stat-card tournament-map-chart-card">
-      <div class="tournament-stat-card-head">
-        <span>
-          <strong>Distribuição de mapas jogados</strong>
-          <small>Volume de mapas registrados no campeonato</small>
-        </span>
-      </div>
-      <div class="tournament-map-distribution">
-        ${rows.map((row, index) => tournamentMapDistributionRow(row, max, index)).join("")}
-      </div>
-    </article>
-  `;
-}
-
-function tournamentMapDistributionRow(row, max, index) {
-  const width = pctValue(row.matches, max);
-  return `
-    <div class="tournament-map-bar-row" style="--bar:${clamp(width, 2, 100)}; --tone:${index}">
-      <span class="tournament-map-bar-label">${mapLogo(row.id, "tournament-map-mini-logo")}<strong>${escapeHtml(row.name)}</strong></span>
-      <div class="tournament-map-bar-track"><i></i></div>
-      <span class="numeric">${escapeHtml(String(row.matches))}</span>
-    </div>
-  `;
-}
-
-function tournamentMapSideWinChart(rows) {
-  return `
-    <article class="tournament-stat-card tournament-map-chart-card">
-      <div class="tournament-stat-card-head">
-        <span>
-          <strong>Vitórias por lado</strong>
-          <small>Taxa de rounds vencidos por Ataque e Defesa</small>
-        </span>
-      </div>
-      <div class="tournament-map-side-chart">
-        ${rows.map(tournamentMapSideWinRow).join("")}
-      </div>
-      <div class="tournament-map-side-legend">
-        <span class="attack">Ataque</span>
-        <span class="defense">Defesa</span>
-      </div>
-    </article>
-  `;
-}
-
-function tournamentMapSideWinRow(row) {
-  return `
-    <div class="tournament-map-side-row" style="--atk:${clamp(row.attackRate, 0, 100)}; --def:${clamp(row.defenseRate, 0, 100)}">
-      <span class="tournament-map-side-label">${escapeHtml(row.name)}</span>
-      <div class="tournament-map-side-bars">
-        <span class="attack"><i></i><b>${escapeHtml(pct(row.attackRate))}</b></span>
-        <span class="defense"><i></i><b>${escapeHtml(pct(row.defenseRate))}</b></span>
-      </div>
-    </div>
-  `;
-}
+// Cinco degraus, do escuro ao claro: a cor mostra o tamanho e o numero, o valor exato.
+const TOURNAMENT_MAPA_DEGRAUS = [[1, 19], [20, 39], [40, 59], [60, 79], [80, 100]];
 
 function tournamentMapAgentPickrateTable(rows, agentColumns) {
   const totalRow = tournamentMapTotalAgentRow(rows, agentColumns);
   return `
-    <article class="tournament-stat-card tournament-map-agent-card">
-      <div class="tournament-stat-card-head">
-        <span>
-          <strong>Pickrate por agente em cada mapa</strong>
-          <small>Picks divididos por 2 seleções possíveis em cada mapa</small>
-        </span>
+    <article class="vp-est-bloco vp-ma-bloco">
+      <h3>Agentes por mapa<span>Percentual das equipes que usaram cada agente</span></h3>
+      <div class="vp-ma-chave">
+        <small>Pouco usado</small>
+        ${TOURNAMENT_MAPA_DEGRAUS.map(([minimo, maximo], indice) => `<span class="vp-ma-n${indice + 1}">${minimo}-${maximo}%</span>`).join("")}
+        <small>Muito usado</small>
       </div>
-      ${tabelaComRotulos(`<div class="table-wrap tournament-map-agent-table-wrap">
-        <table class="tournament-map-agent-table">
-          <thead>
-            <tr>
-              <th>Mapa</th>
-              <th class="numeric">#</th>
-              ${agentColumns.map((agent) => `<th title="${escapeHtml(`${agent.name || agent.key}${agent.role ? ` - ${roleDisplayInfo(agent.role).label}` : ""}`)}">${tournamentAgentLogo(agent, "tournament-map-agent-logo")}</th>`).join("")}
-            </tr>
-          </thead>
-          <tbody>
-            ${totalRow ? tournamentMapAgentPickrateRow(totalRow, agentColumns, true) : ""}
-            ${rows.map((row) => tournamentMapAgentPickrateRow(row, agentColumns)).join("")}
-          </tbody>
-        </table>
-      </div>`)}
+      <table class="vp-ma">
+        <thead>
+          <tr>
+            <th scope="col">Mapa</th>
+            <th scope="col" title="Mapas jogados">#</th>
+            ${agentColumns.map((agent) => `<th scope="col" title="${escapeHtml(`${agent.name || agent.key}${agent.role ? ` - ${roleDisplayInfo(agent.role).label}` : ""}`)}">${tournamentAgentLogo(agent)}</th>`).join("")}
+          </tr>
+        </thead>
+        <tbody>
+          ${totalRow ? tournamentMapAgentPickrateRow(totalRow, agentColumns, true) : ""}
+          ${rows.map((row) => tournamentMapAgentPickrateRow(row, agentColumns)).join("")}
+        </tbody>
+      </table>
     </article>
   `;
 }
@@ -20803,44 +20810,26 @@ function tournamentMapTotalAgentRow(rows, agentColumns) {
 }
 
 function tournamentMapAgentPickrateRow(row, agentColumns, summary = false) {
+  const nome = summary
+    ? `<span class="vp-ma-nome"><span>${escapeHtml(row.name)}</span></span>`
+    : `<a class="vp-ma-nome" href="#/maps/${escapeHtml(row.id)}">${tournamentMapasArte(row.mapa)}<span>${escapeHtml(row.name)}</span></a>`;
   return `
-    <tr class="${summary ? "summary-row" : ""}">
-      <td>${tournamentMapAgentMapCell(row, summary)}</td>
-      <td class="numeric">${escapeHtml(String(row.matches || 0))}</td>
-      ${agentColumns.map((agent) => tournamentMapAgentPickrateCell(row.agentRates.get(agent.key)?.rate || 0)).join("")}
+    <tr class="${summary ? "vp-ma-todos" : ""}">
+      <td class="vp-ma-mapa">${nome}</td>
+      <td class="vp-ma-n">${escapeHtml(String(row.matches || 0))}</td>
+      ${agentColumns.map((agent) => tournamentMapAgentPickrateCell(agent, row.agentRates.get(agent.key)?.rate || 0)).join("")}
     </tr>
   `;
 }
 
-function tournamentMapAgentMapCell(row, summary = false) {
-  if (summary) {
-    return `
-      <span class="tournament-map-agent-map-cell summary">
-        <strong>${escapeHtml(row.name)}</strong>
-        <small>${escapeHtml(`${row.matches || 0} mapa${Number(row.matches || 0) === 1 ? "" : "s"}`)}</small>
-      </span>
-    `;
-  }
-  const map = mapById(row.id) || {};
-  const art = mapArtAttrs(map.id ? map : { id: row.id, icon: row.icon }, row.icon);
-  return `
-    <a class="tournament-map-agent-banner ${art ? "has-banner" : ""}" href="#/maps/${escapeHtml(row.id)}">
-      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="${escapeHtml(row.name)}" loading="lazy" onerror="mapArtError(this)" />` : ""}
-      <span>
-        <strong>${escapeHtml(row.name)}</strong>
-        <small>${escapeHtml(`${row.matches || 0} mapa${Number(row.matches || 0) === 1 ? "" : "s"}`)}</small>
-      </span>
-    </a>
-  `;
-}
-
-function tournamentMapAgentPickrateCell(rate) {
-  const value = clamp(rate, 0, 100);
-  const hue = Math.round(value * 1.28);
-  const lightness = Math.round(value <= 0 ? 24 : 28 + Math.min(18, value * 0.18));
-  const alpha = (value <= 0 ? 0.52 : 0.42 + (value / 100) * 0.34).toFixed(2);
-  const tone = value <= 0 ? "zero" : value >= 35 ? "high" : value >= 12 ? "mid" : "low";
-  return `<td class="numeric map-agent-rate ${tone}" style="--rate:${value}; --heat-bg:hsl(${hue} 72% ${lightness}% / ${alpha}); --heat-border:hsl(${hue} 82% 62% / 0.42)">${escapeHtml(pct(value))}</td>`;
+// Quem foi usado aparece com pelo menos 1%, para nao se confundir com quem ficou de
+// fora. No bloco do celular cada numero leva o icone, porque o cabecalho some, e os
+// mais usados vem primeiro.
+function tournamentMapAgentPickrateCell(agent, rate) {
+  const valor = rate > 0 ? Math.max(1, Math.round(clamp(rate, 0, 100))) : 0;
+  if (!valor) return `<td class="vp-ma-zero">-</td>`;
+  const degrau = TOURNAMENT_MAPA_DEGRAUS.findIndex(([, maximo]) => valor <= maximo) + 1;
+  return `<td class="vp-ma-taxa vp-ma-n${degrau}" style="--ordem:${100 - valor}" title="${escapeHtml(agent.name || agent.key)}">${tournamentAgentLogo(agent)}<span>${valor}%</span></td>`;
 }
 
 function tournamentStatMapMatches(matches) {

@@ -228,4 +228,27 @@ const datedLegacy = teamsWith("velha").map((t) => t.id === "nova" ? { ...t, prof
 assert.equal(rankingSuccessionAliases(datedLegacy, matches, at(29)).size, 0, "uma estreia antiga não antecipa a sucessão datada");
 assert.equal(rankingSuccessionAliases(datedLegacy, matches, at(35)).get("velha").since, at(30));
 assert(rank(fullMerge, at(35)).byTeamId.nova.achievements.some((a) => a.eventId === "copa"), "fusão integral inclui conquistas");
+
+// As duas equipes da fusão no mesmo campeonato: a tabela era completa antes da
+// fusão, então as demais equipes não perdem a conquista. Foi o que zerou C2, C4
+// e CPUE na prévia: a lista ficava com N-1 equipes e o evento inteiro saía.
+const copaComAsDuas = [{
+  id: "copa",
+  name: "Copa",
+  teams: ["velha", "nova", "r1", "r2"],
+  placements: [{ range: "1", id: "velha" }, { range: "2", id: "nova" }, { range: "3", id: "r1" }, { range: "4", id: "r2" }],
+  end: at(8),
+}];
+const pesosComAsDuas = { tournaments: { copa: { teams: 4, endAt: new Date(at(8)).toISOString(), placementPoints: { 1: 30, 2: 20, 3: 10, 4: 5 } } } };
+const fundidas = calculateRankingForCutoff({ teams: teamsWith("velha"), matches, matchSeries: matches.map(serie), players: [], tournaments: copaComAsDuas, rankingWeights: pesosComAsDuas, cutoffAt: at(35) });
+const campanhaNaCopa = (id) => fundidas.byTeamId[id].achievements.filter((row) => row.eventId === "copa");
+assert.equal(campanhaNaCopa("r1").length, 1, "a fusão de duas equipes não apaga a conquista das outras");
+assert.equal(campanhaNaCopa("r1")[0].placementLabel, "3", "a colocação das outras não muda");
+assert.equal(campanhaNaCopa("r2")[0].basePoints, 5, "a tabela do campeonato continua valendo");
+assert.equal(campanhaNaCopa("nova").length, 1, "a fusão recebe o campeonato uma vez só");
+assert.equal(campanhaNaCopa("nova")[0].placement, 1, "a fusão fica com a melhor colocação");
+// Controle: tabela incompleta antes da fusão continua sem conquista.
+const copaIncompleta = [{ ...copaComAsDuas[0], placements: copaComAsDuas[0].placements.slice(0, 3) }];
+const incompleta = calculateRankingForCutoff({ teams: teamsWith("velha"), matches, matchSeries: matches.map(serie), players: [], tournaments: copaIncompleta, rankingWeights: pesosComAsDuas, cutoffAt: at(35) });
+assert.equal(incompleta.byTeamId.r1.achievements.filter((row) => row.eventId === "copa").length, 0, "controle: evento sem tabela completa segue sem conquista");
 console.log("team succession tests passed");

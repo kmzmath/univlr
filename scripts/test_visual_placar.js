@@ -586,7 +586,7 @@ const notasPublicas = [];
   }
 })(overrides);
 assert(notasPublicas.length > 0, "a varredura encontrou notas");
-const notasDeBastidor = notasPublicas.filter((nota) => /arquivo|respons[aá]vel|\bfonte\b|mapa\(s\)|excluído\(s\)|excel|planilha|tracker|challengermode|faceit|battlefy/i.test(nota));
+const notasDeBastidor = notasPublicas.filter((nota) => /arquivo|respons[aá]vel|\bfontes?\b|boletim|mapa\(s\)|excluído\(s\)|excel|planilha|tracker|challengermode|faceit|battlefy/i.test(nota));
 assert.deepStrictEqual(notasDeBastidor, [], "as notas falam de partida, nao de bastidor");
 
 const superior = rush.bracket.regions.find((region) => region.className === "upper-bracket");
@@ -766,4 +766,31 @@ assert.strictEqual(context.curvaDaEquipe([1, 8]), "M0.00 5.00C50.00 5.00 50.00 9
 assert.strictEqual((context.curvaDaEquipe([1, null, 2]).match(/M/g) || []).length, 2, "semana fora do ranking interrompe a linha");
 
 void vp;
+// Quem joga o mesmo campeonato por duas equipes tem uma campanha para cada uma.
+// Somar tudo em uma linha dizia que o Fijora fez 4 mapas pela UFU Saints na LBEU,
+// quando 1 foi pela UFU Insane.
+const campanhaDividida = vm.runInContext(
+  `(() => {
+    const salvo = state.db;
+    const ator = (teamColor, rating, acs) => [{ id: "fulano", teamColor, rounds: 20, rating, acs }];
+    const mapa = (id, cor, rating, acs) => ({ id, eventId: "liga", startedAt: ${Date.UTC(2025, 8, 1, 15)}, teamA: { id: "ana", color: "Red" }, teamB: { id: "bia", color: "Blue" }, players: ator(cor, rating, acs) });
+    const serie = (id, maps) => ({ id, eventId: "liga", maps, teamA: { id: "ana" }, teamB: { id: "bia" }, startedAt: maps[0].startedAt });
+    const series = [serie("s1", [mapa("m1", "Red", 1.2, 240)]), serie("s2", [mapa("m2", "Red", 1.2, 240)]), serie("s3", [mapa("m3", "Red", 1.2, 240)]), serie("s4", [mapa("m4", "Blue", 0.8, 120)])];
+    state.db = { ...salvo, teams: [{ id: "ana", name: "Ana" }, { id: "bia", name: "Bia" }], tournaments: [{ id: "liga", name: "Liga", teams: ["ana", "bia"], status: "Finalizado" }], matchSeries: series };
+    const jogador = { id: "fulano", eventStats: [{ eventId: "liga", rating: 1.1, acs: 210 }] };
+    const linhas = playerTournamentRows(jogador, series);
+    const campanhas = playerCampanhas(linhas, [{ event: { id: "liga" }, trophyKey: "champion", teamId: "ana" }]);
+    state.db = salvo;
+    return JSON.stringify({ linhas: linhas.map((row) => ({ teamId: row.teamId, series: row.series, maps: row.maps, rating: row.rating, acs: row.acs, principal: row.principal })), trofeus: campanhas.map((row) => Boolean(row.trofeu)) });
+  })()`,
+  context,
+);
+assert.deepStrictEqual(JSON.parse(campanhaDividida), {
+  linhas: [
+    { teamId: "ana", series: 3, maps: 3, rating: 1.2, acs: 240, principal: true },
+    { teamId: "bia", series: 1, maps: 1, rating: 0.8, acs: 120, principal: false },
+  ],
+  trofeus: [true, false],
+}, "cada equipe do campeonato tem a propria campanha, com os proprios numeros");
+
 console.log("Visual Placar contract tests passed");

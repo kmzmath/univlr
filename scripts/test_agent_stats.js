@@ -160,7 +160,7 @@ const personalJettMap = makeMatch(
   ["astra", "raze", "fade", "cypher", "brimstone"],
   { playerIdsA: ["hero"] },
 );
-const personalRows = playerAgentRows("hero", [{ maps: [personalOmenMap, personalJettMap] }]);
+const personalRows = playerAgentRows(playerEstMapas({ id: "hero" }, [{ maps: [personalOmenMap, personalJettMap] }], {}));
 close(personalRows.find((row) => row.slug === "omen").pickRate, 50, "perfil pessoal mantém uma oportunidade por mapa");
 close(personalRows.find((row) => row.slug === "jett").pickRate, 50, "distribuição pessoal soma 100%");
 

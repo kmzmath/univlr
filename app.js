@@ -7828,7 +7828,7 @@ const TOURNAMENT_OVERRIDES = {
       "details": [
         "16 equipes disputam oito vagas na etapa presencial.",
         "No máximo uma representante de cada estado avança ao presencial.",
-        "USP CAASO e FAMETRO venceram no online; CAAP e UFMT participaram do presencial, conforme o boletim.",
+        "USP CAASO e FAMETRO venceram no online; CAAP e UFMT participaram do presencial.",
         "UTFPR Azure Bears corresponde à Azure Bears Golden nesta edição.",
         "FAMETRO Codify Team integra o histórico da atual FAMETRO Berserkers."
       ],
@@ -8062,7 +8062,7 @@ const TOURNAMENT_OVERRIDES = {
       "details": [
         "Dois grupos de quatro em eliminação dupla (GSL), com partidas MD1.",
         "Dois classificados por grupo. Semifinais, disputa de terceiro lugar e final em MD3.",
-        "Resultados e classificação da etapa presencial conforme o Boletim 05 da CBDU.",
+        "Resultados e classificação oficiais da CBDU.",
         "UTFPR Azure Bears corresponde à Azure Bears Golden nesta edição."
       ],
       "standings": "Classificação oficial"
@@ -8070,43 +8070,35 @@ const TOURNAMENT_OVERRIDES = {
     "placements": [
       {
         "id": "azure_bears_golden",
-        "range": "1",
-        "note": "1º lugar no boletim"
+        "range": "1"
       },
       {
         "id": "unb_black",
-        "range": "2",
-        "note": "2º lugar no boletim"
+        "range": "2"
       },
       {
         "id": "uninassau_griffins",
-        "range": "3",
-        "note": "3º lugar no boletim"
+        "range": "3"
       },
       {
         "id": "ufrj_canis_b",
-        "range": "4",
-        "note": "4º lugar no boletim"
+        "range": "4"
       },
       {
         "id": "ufg_eagles",
-        "range": "5",
-        "note": "5º lugar no boletim"
+        "range": "5"
       },
       {
         "id": "caap_hellhounds",
-        "range": "6",
-        "note": "6º lugar no boletim"
+        "range": "6"
       },
       {
         "id": "inatel",
-        "range": "7",
-        "note": "7º lugar no boletim"
+        "range": "7"
       },
       {
         "id": "ufmt_turuna",
-        "range": "8",
-        "note": "8º lugar no boletim"
+        "range": "8"
       }
     ],
     "seriesResults": {},
@@ -9323,7 +9315,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "azure_bears_golden",
               "status": "Bye",
-              "previewNote": "Avanço direto registrado no boletim."
+              "previewNote": "Avanço direto."
             },
             {
               "code": "Partida 2",
@@ -9353,7 +9345,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 2,
               "winner": "green_owls_pulsatrix",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 5",
@@ -9394,7 +9386,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "ceuma",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 9",
@@ -9432,7 +9424,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "inatel_white",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 13",
@@ -9443,7 +9435,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 2,
               "winner": "aufa_faesa",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 14",
@@ -9499,7 +9491,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 2,
               "winner": "ufu_saints",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 20",
@@ -9510,7 +9502,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "uninassau_griffins",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 21",
@@ -9539,7 +9531,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "wolf_gaming",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             }
           ]
         },
@@ -9557,7 +9549,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "undbala",
               "status": "Bye",
-              "previewNote": "Avanço direto registrado no boletim."
+              "previewNote": "Avanço direto."
             },
             {
               "code": "Partida 25",
@@ -9567,7 +9559,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreA": 0,
               "scoreB": 0,
               "status": "Duplo W.O.",
-              "previewNote": "Derrota das duas equipes registrada nas fontes oficiais."
+              "previewNote": "Derrota das duas equipes."
             },
             {
               "code": "Partida 26",
@@ -9598,7 +9590,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "unit_troianos_trojan",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 29",
@@ -9608,7 +9600,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreA": 0,
               "scoreB": 0,
               "status": "Duplo W.O.",
-              "previewNote": "Derrota das duas equipes registrada nas fontes oficiais."
+              "previewNote": "Derrota das duas equipes."
             },
             {
               "code": "Partida 30",
@@ -9789,7 +9781,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "grifos_unisales",
               "status": "Bye",
-              "previewNote": "Avanço direto registrado no boletim."
+              "previewNote": "Avanço direto."
             },
             {
               "code": "Partida 48",
@@ -9809,7 +9801,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 2,
               "winner": "ggg_sports",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 50",
@@ -9868,7 +9860,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 2,
               "winner": "limpezinha",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 56",
@@ -9951,7 +9943,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "team_nyx_ufersa",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 65",
@@ -9996,7 +9988,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "ufrn_carcaras",
               "status": "Bye",
-              "previewNote": "Avanço direto registrado no boletim."
+              "previewNote": "Avanço direto."
             },
             {
               "code": "Partida 69",
@@ -10025,7 +10017,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "rahnag",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 72",
@@ -10036,7 +10028,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "ggg_sports",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 73",
@@ -10046,7 +10038,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreA": 0,
               "scoreB": 0,
               "status": "Duplo W.O.",
-              "previewNote": "Derrota das duas equipes registrada nas fontes oficiais."
+              "previewNote": "Derrota das duas equipes."
             },
             {
               "code": "Partida 74",
@@ -10133,7 +10125,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 2,
               "winner": "compressora_cangaceiros",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 83",
@@ -10144,7 +10136,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 2,
               "winner": "undbala",
               "status": "W.O.",
-              "previewNote": "W.O. registrado no boletim oficial. Sem estatísticas de partida."
+              "previewNote": "W.O. Sem estatísticas de partida."
             },
             {
               "code": "Partida 84",
@@ -10190,7 +10182,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreB": 0,
               "winner": "rahnag",
               "status": "Bye",
-              "previewNote": "Avanço direto registrado no boletim."
+              "previewNote": "Avanço direto."
             },
             {
               "code": "Partida 88",
@@ -20463,11 +20455,17 @@ function applyRankingSuccessions(input, aliases) {
       .filter((match) => !againstItself(match))
       .map((match) => (!touches(match) ? match : { ...renameSides(match), players: (match.players || []).map((player) => (aliases.has(player.teamId) ? { ...player, teamId: to(player.teamId) } : player)) })),
     matchSeries: input.matchSeries.filter((series) => !againstItself(series)).map((series) => (touches(series) ? renameSides(series) : series)),
-    tournaments: input.tournaments.map((event) => ({
-      ...event,
-      teams: (event.teams || []).map((id) => (typeof id === "string" ? to(id) : id)),
-      placements: renamePlacements(event.placements),
-    })),
+    tournaments: input.tournaments.map((event) => {
+      const placements = renamePlacements(event.placements);
+      return {
+        ...event,
+        teams: (event.teams || []).map((id) => (typeof id === "string" ? to(id) : id)),
+        placements,
+        // A tabela completa se mede como o campeonato terminou: a fusao de duas
+        // equipes dele deixa N-1 linhas, e o evento inteiro perderia a conquista.
+        ...(placements.length < (event.placements || []).length ? { placementsBeforeMerge: event.placements } : {}),
+      };
+    }),
     rankingWeights: {
       ...weights,
       tournaments: Object.fromEntries(Object.entries(weights.tournaments || {}).map(([id, config]) => [id, config?.placements ? { ...config, placements: renamePlacements(config.placements) } : config])),
@@ -32765,7 +32763,7 @@ const PLAYER_EVOLUCAO_REGUA = [0.6, 0.8, 1, 1.2, 1.4, 1.6];
 // mesma largura, porque etapas da mesma semana cairiam uma em cima da outra num eixo
 // de datas, e o logo embaixo diz qual e cada ponto.
 function playerEvolucao(tournamentRows) {
-  const rows = tournamentRows.filter((row) => row.rating && row.maps >= PLAYER_EVOLUCAO_MAPAS).reverse();
+  const rows = tournamentRows.filter((row) => row.principal && row.rating && row.maps >= PLAYER_EVOLUCAO_MAPAS).reverse();
   if (rows.length < 2) return "";
   const width = 760;
   const height = 250;
@@ -32827,7 +32825,7 @@ function playerInformacoes(player, { matches, jogos, teamRows, tournamentRows, t
     datas.length ? ["Última partida", formatDate(Math.max(...datas), "date")] : null,
     ["Séries", `${vitorias}-${derrotas}`],
     ["Aproveitamento", pct(vitorias + derrotas ? (vitorias / (vitorias + derrotas)) * 100 : 0)],
-    ["Campeonatos", String(tournamentRows.length)],
+    ["Campeonatos", String(tournamentRows.filter((row) => row.principal).length)],
     ["Equipes", String(teamRows.length)],
     titulos ? ["Títulos", String(titulos)] : null,
     mvps ? ["MVP de mapa", String(mvps)] : null,
@@ -33137,7 +33135,7 @@ function playerCampanhas(tournamentRows, trophies) {
   return tournamentRows
     .map((row) => {
       const estado = eventStatusClass(row.event.status);
-      const doCampeonato = trophies.filter((trophy) => trophy.event.id === row.event.id);
+      const doCampeonato = trophies.filter((trophy) => trophy.event.id === row.event.id && (!trophy.teamId || trophy.teamId === row.teamId));
       return {
         ...row,
         estado: estado in ordem ? estado : "live",
@@ -33176,7 +33174,9 @@ function playerCampeonatosTab({ tournamentRows, trophies }) {
   const filtro = teamCampeonatosFiltro();
   const linhas = playerCampanhas(tournamentRows, trophies);
   const visiveis = linhas.filter((linha) => teamCampanhaPassa(linha, filtro));
-  const contagem = visiveis.length < linhas.length ? `${visiveis.length} de ${linhas.length} campeonatos` : `${linhas.length} ${linhas.length === 1 ? "campeonato" : "campeonatos"}`;
+  const distintos = (rows) => new Set(rows.map((linha) => linha.event.id)).size;
+  const total = distintos(linhas);
+  const contagem = distintos(visiveis) < total ? `${distintos(visiveis)} de ${total} campeonatos` : `${total} ${total === 1 ? "campeonato" : "campeonatos"}`;
   const grupos = TEAM_TOURNAMENT_GROUPS.map((grupo) => ({ ...grupo, linhas: visiveis.filter((linha) => linha.estado === grupo.key) })).filter((grupo) => grupo.linhas.length);
   return `
     <section class="vp-eq-aba vp-jogos">
@@ -33348,11 +33348,15 @@ function playerMultiKills(soma) {
   `;
 }
 
+// O Win% do campeonato tira os mapas espelhados porque la os dois lados contam.
+// Aqui so existe o lado do jogador, e cada mapa e uma escolha dele.
+function playerAgentRows(mapas) {
+  return tournamentAgentRows(mapas).map((row) => ({ ...row, pickRate: pctValue(row.picks, mapas.length), nonMirroredPicks: row.picks, nonMirroredWins: row.mapWins, nonMirroredLosses: row.mapLosses, winRateNM: pctValue(row.mapWins, row.picks) }));
+}
+
 function playerAgentesBloco(mapas) {
   const ativoId = routeQuery().get("agente") || "";
-  // O Win% do campeonato tira os mapas espelhados porque la os dois lados contam.
-  // Aqui so existe o lado do jogador, e cada mapa e uma escolha dele.
-  const agentes = tournamentAgentRows(mapas).map((row) => ({ ...row, pickRate: pctValue(row.picks, mapas.length), nonMirroredPicks: row.picks, nonMirroredWins: row.mapWins, nonMirroredLosses: row.mapLosses, winRateNM: pctValue(row.mapWins, row.picks) }));
+  const agentes = playerAgentRows(mapas);
   if (!agentes.length) return "";
   const ativo = agentes.find((row) => row.id === ativoId) || null;
   const destaque = ativo || agentes[0];
@@ -33473,7 +33477,7 @@ function playerTeamHistoryRows(player, matches = matchSeriesForPlayer(player.id)
       const bucket = matchBuckets.get(teamId) || {};
       const start = minPositive(timeline?.start, bucket.start);
       const end = maxPositive(timeline?.end, bucket.end, start);
-      const trophies = playerTeamTrophies(teamId, tournamentRows);
+      const trophies = playerTeamTrophies(teamId, tournamentRows.filter((row) => row.principal));
       const current = teamId === playerPrimaryTeam(player)?.id;
       const range = start || end ? formatDateRange(start, end, { current }) : "Período não informado";
       const duration = start || end ? formatTenureDuration(start || end, end || start) : "Duração indisponível";
@@ -33575,41 +33579,47 @@ function playerTeamTimelineChart(linhas) {
 
 function playerTournamentRows(player, matches = matchSeriesForPlayer(player.id)) {
   const visibleEvents = new Map(visibleTournaments().map((event) => [event.id, event]));
-  const byEvent = new Map();
+  // Uma linha por equipe: quem jogou o campeonato por duas lines tem cada campanha
+  // com os proprios mapas. `principal` e a equipe com mais series no campeonato:
+  // trofeu, contagem de campeonatos e evolucao contam o evento uma vez, por ela.
+  const byCampaign = new Map();
   for (const series of matches) {
     const event = visibleEvents.get(series.eventId);
     if (!event) continue;
-    const row = byEvent.get(event.id) || {
-      event,
-      teams: new Map(),
-      series: 0,
-      maps: 0,
-      rounds: 0,
-      start: 0,
-      end: 0,
-    };
-    row.series += 1;
     const seriesTeams = new Set();
     for (const match of series.maps || []) {
       const entry = playerInMatchTeam(match, player.id);
       if (!entry?.teamId) continue;
+      const key = `${event.id}|${entry.teamId}`;
+      const row = byCampaign.get(key) || { event, teamId: entry.teamId, series: 0, maps: 0, rounds: 0, start: 0, end: 0, ratingTotal: 0, acsTotal: 0 };
+      const rounds = Number(entry.player.rounds || 0);
       row.maps += 1;
-      row.rounds += Number(entry.player.rounds || 0);
+      row.rounds += rounds;
+      row.ratingTotal += Number(entry.player.rating || 0) * rounds;
+      row.acsTotal += Number(entry.player.acs || 0) * rounds;
       row.start = minPositive(row.start, match.startedAt || series.startedAt);
       row.end = maxPositive(row.end, match.startedAt || series.startedAt);
-      seriesTeams.add(entry.teamId);
+      byCampaign.set(key, row);
+      if (!seriesTeams.has(key)) row.series += 1;
+      seriesTeams.add(key);
     }
-    seriesTeams.forEach((teamId) => row.teams.set(teamId, (row.teams.get(teamId) || 0) + 1));
-    byEvent.set(event.id, row);
   }
-  return [...byEvent.values()]
+  const campaignsByEvent = new Map();
+  for (const row of byCampaign.values()) campaignsByEvent.set(row.event.id, [...(campaignsByEvent.get(row.event.id) || []), row]);
+  for (const rows of campaignsByEvent.values()) {
+    rows.sort((a, b) => b.series - a.series || a.teamId.localeCompare(b.teamId)).forEach((row, index) => {
+      row.principal = index === 0;
+    });
+  }
+  return [...byCampaign.values()]
     .map((row) => {
-      const teamId = [...row.teams.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] || "";
+      const { teamId, ratingTotal, acsTotal, ...campos } = row;
       const team = teamById(teamId);
       const campaign = team ? teamEventCampaign(teamId, row.event) : {};
-      const stats = player.eventStats?.find((eventStats) => eventStats.eventId === row.event.id) || {};
+      const onlyTeam = campaignsByEvent.get(row.event.id).length === 1;
+      const eventStats = onlyTeam ? player.eventStats?.find((stats) => stats.eventId === row.event.id) : null;
       return {
-        ...row,
+        ...campos,
         teamId,
         team,
         placement: campaign.placement || 0,
@@ -33617,8 +33627,8 @@ function playerTournamentRows(player, matches = matchSeriesForPlayer(player.id))
         placementStatus: campaign.placementStatus || "unknown",
         campaign,
         size: campaign.size || row.event.teams.length,
-        rating: stats.rating || 0,
-        acs: stats.acs || 0,
+        rating: onlyTeam ? eventStats?.rating || 0 : row.rounds ? ratingTotal / row.rounds : 0,
+        acs: onlyTeam ? eventStats?.acs || 0 : row.rounds ? acsTotal / row.rounds : 0,
       };
     })
     .sort((a, b) => Number(b.event.end || b.end || b.event.start || 0) - Number(a.event.end || a.end || a.event.start || 0) || String(a.event.name || "").localeCompare(String(b.event.name || ""), "pt-BR"));
@@ -33648,7 +33658,7 @@ function playerMvpAwards(player, tournamentRows = playerTournamentRows(player)) 
     const premiado = String(event.mvp || "").trim();
     if (!premiado) continue;
     if (!chaves.has(premiado) && !chaves.has(normalizeNameKey(premiado))) continue;
-    const doJogador = tournamentRows.find((row) => row.event?.id === event.id);
+    const doJogador = tournamentRows.find((row) => row.principal && row.event?.id === event.id);
     rows.push({
       event,
       placement: 0,
@@ -33665,7 +33675,7 @@ function playerMvpAwards(player, tournamentRows = playerTournamentRows(player)) 
 
 function playerTrophyAchievements(player, tournamentRows = playerTournamentRows(player)) {
   return [
-    ...tournamentRows.flatMap((row) => playerTeamTrophies(row.teamId, [row]).map((trophy) => ({ ...trophy, teamId: row.teamId, team: row.team, playerMaps: row.maps, playerSeries: row.series }))),
+    ...tournamentRows.filter((row) => row.principal).flatMap((row) => playerTeamTrophies(row.teamId, [row]).map((trophy) => ({ ...trophy, teamId: row.teamId, team: row.team, playerMaps: row.maps, playerSeries: row.series }))),
     ...playerMvpAwards(player, tournamentRows),
   ].sort((a, b) => b.date - a.date || a.placement - b.placement || String(a.event.name || "").localeCompare(String(b.event.name || ""), "pt-BR"));
 }

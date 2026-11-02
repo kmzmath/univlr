@@ -760,11 +760,13 @@
         const eventConfig = weights.tournaments?.[event.id] || {};
         if (!achievementEventIsEligible(eventConfig, event, now)) continue;
         if (eventConfig.placements?.length) continue;
-        const eventPlacements = normalizeAchievementPlacements(
-          (event.placements || []).map((row) => ({ ...row, teamId: row.teamId || row.id })),
+        const normalizedPlacements = (rows) => normalizeAchievementPlacements(
+          (rows || []).map((row) => ({ ...row, teamId: row.teamId || row.id })),
           finiteNumber(eventConfig.teams, Array.isArray(event.teams) ? event.teams.length : 0),
         );
-        if (!eventPlacements.length || !achievementPlacementsAreComplete(eventPlacements, eventConfig, event)) continue;
+        const eventPlacements = normalizedPlacements(event.placements);
+        const originalTable = event.placementsBeforeMerge ? normalizedPlacements(event.placementsBeforeMerge) : eventPlacements;
+        if (!eventPlacements.length || !achievementPlacementsAreComplete(originalTable, eventConfig, event)) continue;
         for (const result of eventPlacements) {
           if (!result.teamId || !teamIds.includes(result.teamId)) continue;
           const key = `${result.teamId}|${event.id}`;

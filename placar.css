@@ -2950,165 +2950,10 @@ body {
 .vp-bom { color: var(--win); }
 .vp-ruim { color: var(--danger); }
 
-.player-page.player-page {
-  gap: 24px;
-}
-
-.vp-hero-jogador {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  grid-template-columns: 220px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 0 26px;
-  height: 220px;
-  overflow: hidden;
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--team-line, #6b6e78) 30%, var(--bg)) 0%,
-    color-mix(in srgb, var(--team-line, #6b6e78) 10%, var(--bg)) 50%,
-    var(--bg) 100%
-  );
-  box-shadow: inset 3px 0 0 var(--team-line, #6b6e78);
-}
-
-.vp-jogador-foto {
-  align-self: end;
-  width: 220px;
-  height: 210px;
-}
-
-.vp-jogador-foto .player-avatar,
-.vp-jogador-foto .player-avatar img {
-  width: 100%;
-  height: 100%;
-}
-
-.vp-jogador-foto .player-avatar {
-  border: 0;
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-}
-
-.vp-jogador-foto .player-avatar img {
-  object-fit: contain;
-  object-position: bottom;
-}
-
-.vp-jogador-id {
-  display: grid;
-  gap: 4px;
-  min-width: 0;
-}
-
-.vp-jogador-funcao {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.vp-jogador-funcao img,
-.vp-jogador-funcao .role-mini {
-  width: 16px;
-  height: 16px;
-  opacity: 0.85;
-}
-
-.vp-jogador-id h1 {
-  margin: 0;
-  font: 700 64px/0.95 var(--font-display);
-  letter-spacing: 0;
-  text-transform: none;
-  overflow-wrap: anywhere;
-}
-
-.vp-jogador-riot {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.vp-jogador-riot em {
-  color: rgba(163, 165, 175, 0.8);
-  font-style: normal;
-}
-
-.vp-jogador-acoes {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 14px;
-  margin-top: 8px;
-}
-
-.vp-jogador-equipe {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--ink);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.vp-jogador-equipe .team-logo {
-  width: 22px;
-  height: 22px;
-}
-
-.vp-jogador-equipe:hover span {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.vp-jogador-sem-equipe {
-  color: var(--muted);
-}
-
-.vp-jogador-numeros {
-  display: grid;
-  grid-template-columns: auto auto;
-  align-items: end;
-  gap: 14px 30px;
-  padding-right: 26px;
-}
-
-.vp-jogador-numeros span {
-  display: grid;
-  gap: 2px;
-}
-
-.vp-jogador-numeros span:first-child {
-  grid-row: span 2;
-  align-self: center;
-  padding-right: 8px;
-}
-
-.vp-jogador-numeros small {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.vp-jogador-numeros b {
-  font: 600 28px/1 var(--font-display);
-  font-variant-numeric: tabular-nums;
-}
-
-.vp-jogador-numeros span:first-child b {
-  font-size: 64px;
-  line-height: 0.9;
-}
-
 /* ---- ficha do jogador ---- */
-.vp-ficha {
-  display: grid;
-}
-
 .vp-ficha-grupo {
   display: grid;
-  grid-template-columns: 118px repeat(9, minmax(0, 1fr));
+  grid-template-columns: repeat(9, minmax(0, 1fr));
   align-items: end;
   gap: 0 10px;
   padding: 11px 14px;
@@ -3120,7 +2965,8 @@ body {
 }
 
 .vp-ficha-grupo > small {
-  align-self: center;
+  grid-column: 1 / -1;
+  margin-bottom: 8px;
   color: var(--muted);
   font-size: 12px;
   font-weight: 600;
@@ -3265,53 +3111,9 @@ body {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     row-gap: 10px;
   }
-
-  .vp-ficha-grupo > small {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (max-width: 760px) {
-  .player-page.player-page {
-    gap: 20px;
-  }
-
-  .vp-hero-jogador {
-    grid-template-columns: 130px minmax(0, 1fr);
-    height: auto;
-    gap: 0 12px;
-  }
-
-  .vp-jogador-foto {
-    width: 130px;
-    height: 150px;
-  }
-
-  .vp-jogador-id {
-    padding: 12px 12px 12px 0;
-  }
-
-  .vp-jogador-id h1 {
-    font-size: 38px;
-  }
-
-  .vp-jogador-numeros {
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(5, auto);
-    justify-content: space-between;
-    gap: 6px;
-    padding: 12px 14px 14px;
-  }
-
-  .vp-jogador-numeros span:first-child {
-    grid-row: auto;
-    padding: 0;
-  }
-
-  .vp-jogador-numeros b,
-  .vp-jogador-numeros span:first-child b {
-    font-size: 24px;
-  }
 
   .vp-ficha-grupo {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -9442,8 +9244,7 @@ a.vp-tabela-linha:hover strong {
    deixavam os escudos passar. Os topos usam o preto de sempre, para a arte ficar
    igual; os demais viram Placas. */
 .vp-hero-partida,
-.vp-abas-mapa,
-.vp-hero-jogador {
+.vp-abas-mapa {
   background-color: var(--bg);
 }
 
@@ -10758,5 +10559,576 @@ a.vp-jl:hover {
   .vp-forma-item {
     flex: 1 1 30%;
     max-width: none;
+  }
+}
+
+/* ==========================================================================
+   Jogador: capa em Camisa grande, cinco abas por assunto e as mesmas pecas e
+   larguras da pagina de equipe (922 + 32 + 340)
+   ========================================================================== */
+
+/* A pessoa e a identificacao ficam na cor 1, e os numeros na cor 2. */
+.vp-slide.vp-cj {
+  --emenda: 68%;
+  flex: none;
+  height: 250px;
+}
+
+.vp-cj .vp-slide-campo {
+  clip-path: polygon(0 0, calc(var(--emenda) + 2px) 0, calc(var(--emenda) - 74px) 100%, 0 100%);
+}
+
+.vp-cj .vp-slide-campo i {
+  top: -120px;
+  left: -60px;
+  width: 490px;
+  height: 490px;
+  opacity: 0.16;
+}
+
+/* A foto e quadrada, com a cabeca a 3% do topo. */
+.vp-slide.vp-cj .player-figure {
+  bottom: -58px;
+  left: 6px;
+  width: 304px;
+  height: 304px;
+}
+
+.vp-slide.vp-cj .player-figure.is-silhouette {
+  bottom: -32px;
+  left: 30px;
+  width: 256px;
+  height: 256px;
+}
+
+.vp-cj-id {
+  position: absolute;
+  top: 0;
+  right: calc(100% - var(--emenda) + 84px);
+  bottom: 0;
+  left: 312px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--placa-campo-tinta);
+  font-family: var(--fonte-carta);
+}
+
+.vp-cj-funcao {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.vp-cj-funcao img,
+.vp-cj-funcao .role-mini {
+  width: 18px;
+  height: 18px;
+  filter: var(--placa-campo-icone, none);
+}
+
+.vp-cj-id h1 {
+  margin: 0;
+  overflow: hidden;
+  font: 600 68px/1.05 var(--fonte-carta);
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.vp-cj-id h1.vp-cj-longo {
+  font-size: 50px;
+}
+
+.vp-cj-riot {
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.vp-cj-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-top: 8px;
+}
+
+.vp-cj-equipe {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.vp-cj-equipe .team-logo {
+  flex: none;
+  width: 26px;
+  height: 26px;
+}
+
+a.vp-cj-equipe:hover span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vp-cj .fav-botao {
+  background: none;
+  border-color: currentColor;
+  color: var(--placa-campo-tinta);
+}
+
+.vp-cj-numeros {
+  position: absolute;
+  top: 0;
+  right: 26px;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: auto repeat(2, minmax(62px, auto));
+  align-content: center;
+  align-items: end;
+  gap: 16px 28px;
+  margin: 0;
+  color: var(--placa-tinta);
+  font-family: var(--fonte-carta);
+  text-align: right;
+}
+
+.vp-cj-numeros dd {
+  margin: 0;
+  font: 600 38px/1 var(--fonte-carta);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-cj-numeros dt {
+  margin-top: 2px;
+  font-size: 14px;
+}
+
+.vp-cj-numeros .vp-cj-nota {
+  grid-row: span 2;
+  align-self: center;
+}
+
+.vp-cj-nota dd {
+  color: var(--placa-numero);
+  font-size: 88px;
+}
+
+.vp-perfil .vp-s-linha-do-tempo .lineup-timeline-name .team-logo {
+  width: 28px;
+  height: 28px;
+}
+
+/* ---- aba Visao Geral ---- */
+.vp-perfil .ranking-chart-grid .vp-ev-media {
+  stroke: var(--muted);
+  stroke-dasharray: 4 4;
+}
+
+.vp-perfil a.ranking-chart-hotspot {
+  cursor: pointer;
+}
+
+.vp-perfil .vp-evolucao .ranking-chart-stage {
+  height: 200px;
+}
+
+.vp-ev-logos {
+  position: relative;
+  height: 28px;
+}
+
+.vp-ev-logos a {
+  position: absolute;
+  top: 0;
+  left: calc(var(--t) * 1%);
+  transform: translateX(-50%);
+}
+
+.vp-ev-logos .tiny {
+  width: 24px;
+  height: 24px;
+}
+
+/* ---- aba Carreira ---- */
+.vp-et-car {
+  grid-template-columns: 30px minmax(0, 1fr) 132px 50px 44px 44px 54px 38px 38px 50px;
+}
+
+.vp-et-logo {
+  width: 30px;
+  height: 30px;
+}
+
+.vp-et-cab.vp-et-car > :nth-child(3) {
+  text-align: left;
+}
+
+.vp-movimento:has(> .vp-et-logo) {
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+}
+
+.vp-pf-nicks {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--surface);
+}
+
+.vp-pf-nicks li {
+  padding: 8px 14px;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-pf-nicks li + li {
+  border-top: 1px solid var(--line);
+}
+
+/* ---- aba Partidas: a coluna extra sao os abates e mortes do jogador ---- */
+.vp-jl:has(.vp-jl-kd) {
+  grid-template-columns: 46px minmax(0, 1fr) 56px 54px 104px;
+}
+
+.vp-jl-kd {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ---- aba Campeonatos ---- */
+.vp-cp-cab.vp-cp-jog,
+.vp-cp.vp-cp-jog {
+  grid-template-columns: 38px minmax(0, 1fr) 24px 176px 40px 40px 52px 36px;
+}
+
+.vp-cp-cab.vp-cp-jog > :nth-child(5) {
+  text-align: right;
+}
+
+.vp-cp-premios {
+  display: flex;
+  flex: none;
+  gap: 4px;
+}
+
+/* ---- aba Estatisticas ---- */
+.vp-fj {
+  background: var(--surface);
+}
+
+.vp-est-bloco .vp-fj {
+  padding: 0;
+}
+
+.vp-resumo-bloco:has(.vp-cm, .vp-mk) {
+  padding: 12px 14px;
+  background: var(--surface);
+}
+
+.vp-cm {
+  display: grid;
+  gap: 8px;
+}
+
+.vp-cm-linha {
+  position: relative;
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) 38px;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+/* A barra sai do meio da coluna: 1,00 e o centro. */
+.vp-cm-linha i {
+  position: relative;
+  height: 6px;
+  background: linear-gradient(90deg, transparent calc(50% - 1px), var(--muted) calc(50% - 1px), var(--muted) calc(50% + 1px), transparent calc(50% + 1px)), rgba(245, 241, 242, 0.06);
+}
+
+.vp-cm-linha i::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--v);
+}
+
+.vp-cm-mais::after {
+  left: 50%;
+  background: var(--win);
+}
+
+.vp-cm-menos::after {
+  right: 50%;
+  background: var(--danger);
+}
+
+.vp-cm-linha b {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-mk {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+}
+
+.vp-mk dd {
+  margin: 0;
+  font: 600 26px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-mk dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* O Numero da aba nao tem coluna ao lado: Mapas usa a largura toda. */
+.vp-pf-mapas .vp-est-lista {
+  grid-column: 1 / -1;
+}
+
+.vp-mj {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 10px;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-mj img {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  opacity: 0.22;
+  -webkit-mask-image: linear-gradient(90deg, #000 30%, transparent);
+  mask-image: linear-gradient(90deg, #000 30%, transparent);
+}
+
+.vp-mj:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1180px) {
+  .vp-slide.vp-cj {
+    --emenda: 63%;
+    height: 220px;
+  }
+
+  .vp-slide.vp-cj .player-figure {
+    bottom: -48px;
+    left: -10px;
+    width: 250px;
+    height: 250px;
+  }
+
+  .vp-slide.vp-cj .player-figure.is-silhouette {
+    bottom: -28px;
+    left: 8px;
+    width: 210px;
+    height: 210px;
+  }
+
+  .vp-cj-id {
+    right: calc(100% - var(--emenda) + 76px);
+    left: 226px;
+  }
+
+  .vp-cj-id h1 {
+    font-size: 48px;
+  }
+
+  .vp-cj-id h1.vp-cj-longo {
+    font-size: 36px;
+  }
+
+  .vp-cj-numeros {
+    right: 16px;
+    grid-template-columns: repeat(2, minmax(54px, auto));
+    gap: 10px 18px;
+  }
+
+  .vp-cj-numeros .vp-cj-nota {
+    grid-row: auto;
+    grid-column: 1 / -1;
+  }
+
+  .vp-cj-nota dd {
+    font-size: 54px;
+  }
+
+  .vp-cj-numeros dd {
+    font-size: 26px;
+  }
+
+  .vp-cj-numeros .vp-cj-nota dd {
+    font-size: 54px;
+  }
+
+  .vp-cj-numeros dt {
+    font-size: 12px;
+  }
+
+  .vp-est-bloco .vp-ficha-grupo {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  /* Numa coluna so, os numeros vem antes da composicao deles. */
+  .vp-eq-bloco.vp-est:has(.vp-fj) .vp-resumo {
+    order: 2;
+  }
+
+  /* Em 14 por linha a medalha de 72px nao cabe na celula. */
+  .vp-capa-trofeus {
+    --por-linha: 9;
+  }
+
+  .vp-eq-aba.vp-pf-partidas.vp-jogos {
+    display: flex;
+  }
+
+  .vp-pf-mapas .vp-est-lista {
+    grid-column: auto;
+  }
+}
+
+/* No celular a emenda deita: a pessoa e o nome em cima e os numeros embaixo, num
+   bloco que cobre a foto em vez de deixar o corpo dela passar por cima dos numeros. */
+@media (max-width: 760px) {
+  .vp-slide.vp-cj {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    height: auto;
+  }
+
+  .vp-cj .vp-slide-campo {
+    clip-path: none;
+  }
+
+  .vp-cj .vp-slide-campo i {
+    top: -70px;
+    left: -60px;
+    width: 300px;
+    height: 300px;
+  }
+
+  .vp-slide.vp-cj .player-figure {
+    top: 8px;
+    bottom: auto;
+    left: -24px;
+    width: 160px;
+    height: 160px;
+  }
+
+  .vp-slide.vp-cj .player-figure.is-silhouette {
+    top: 22px;
+    bottom: auto;
+    left: -6px;
+    width: 128px;
+    height: 128px;
+  }
+
+  .vp-cj-id {
+    position: relative;
+    inset: auto;
+    grid-column: 2;
+    gap: 3px;
+    padding: 14px 14px 40px 8px;
+  }
+
+  .vp-cj-id h1 {
+    font-size: 36px;
+  }
+
+  .vp-cj-id h1.vp-cj-longo {
+    font-size: 27px;
+  }
+
+  .vp-cj-funcao,
+  .vp-cj-riot {
+    font-size: 13px;
+  }
+
+  .vp-cj-acoes {
+    margin-top: 4px;
+  }
+
+  .vp-cj-equipe {
+    font-size: 14px;
+  }
+
+  .vp-cj-numeros {
+    position: relative;
+    inset: auto;
+    z-index: 1;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(5, auto);
+    justify-content: space-between;
+    gap: 6px;
+    margin-top: -26px;
+    padding: 30px 14px 12px;
+    background: var(--placa-peca);
+    clip-path: polygon(0 22px, 100% 0, 100% 100%, 0 100%);
+    text-align: left;
+  }
+
+  .vp-cj-numeros .vp-cj-nota {
+    grid-column: auto;
+    align-self: end;
+  }
+
+  .vp-cj-numeros dd,
+  .vp-cj-numeros .vp-cj-nota dd {
+    font-size: 26px;
+  }
+
+  .vp-est-bloco .vp-ficha-grupo {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .vp-ev-logos:has(a:nth-child(13)) {
+    display: none;
+  }
+
+  .vp-jl:has(.vp-jl-kd) {
+    grid-template-columns: 42px minmax(0, 1fr) 50px;
+  }
+
+  .vp-jl-kd {
+    grid-column: 1;
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .vp-jl-kd + .vp-jl-mapas {
+    grid-column: 2 / -1;
+  }
+
+  .vp-et-logo {
+    flex: none;
   }
 }

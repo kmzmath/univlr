@@ -21,6 +21,14 @@ const FILENAME_TEAM_ALIASES = {
 
 const LEGACY_TEAM_ID_ALIASES = {
   azure_bears_s: "azure_bears_silver",
+  // Continuidade confirmada pelo responsável na revisão das equipes de 2024.
+  utfpr_azure_bears_pr_2024: "azure_bears_golden",
+  fametro_codify_team_am_2024: "fametro_berserkers",
+  // Mesmas equipes confirmadas pelo responsável; o nome histórico fica por edição.
+  ufg_eagles_black_7712cb48_2024: "ufg_eagles",
+  unicamp_tritons_2024: "unicamp_tritons_black",
+  macklogic_2024: "macklogic_red",
+  udf_thunder_fusion_df_2024: "rahnag",
 };
 
 function readJson(file) {
@@ -117,6 +125,15 @@ function readSharedAccountRules() {
   return vm.runInNewContext(`(${source.slice(start, source.indexOf("\n];", start) + 2)})`);
 }
 
+// Reusa a política do app: contas sem prova de pessoa não se unem por nome.
+function readHistoricalIdentityPolicy() {
+  const source = fs.readFileSync(path.join(ROOT, "app.js"), "utf8");
+  const start = source.indexOf("const HISTORICAL_PEOPLE_2024 = ");
+  const end = source.indexOf("const SHARED_ACCOUNT_RULES = [", start);
+  if (start < 0 || end < 0) return { people: {}, resolve: () => null };
+  return vm.runInNewContext(`${source.slice(start, end)}\n({ people: HISTORICAL_PEOPLE_2024, resolve: resolveHistoricalPlayer2024 });`);
+}
+
 function sharedAccountOverrides(rules, matchPuuids, matchId) {
   const overrides = new Map();
   for (const rule of rules) {
@@ -151,7 +168,7 @@ function playerTeamConfidence(registered, teamId) {
 function resolvePlayer(rawPlayer, lookups, teamId, personOverride = null) {
   const registered = personOverride || registeredPlayerForRaw(rawPlayer, lookups);
   const profileConfidence = Math.max(0, playerTeamConfidence(registered, teamId));
-  const id = registered?.puuid || rawPlayer.puuid || normalizeNameKey(rawPlayer.gameName);
+  const id = registered?.historicalPersonId || registered?.puuid || rawPlayer.puuid || normalizeNameKey(rawPlayer.gameName);
   const name = registered?.name || rawPlayer.gameName || id;
   const handle = rawPlayer.tagLine ? `${rawPlayer.gameName}#${rawPlayer.tagLine}` : rawPlayer.gameName || name;
   return {
@@ -206,6 +223,7 @@ function colorTeamMap(raw, meta, lookups) {
 function collectTeamAppearances(dataSources, metadata) {
   const lookups = buildPlayerLookups(metadata);
   const sharedAccountRules = readSharedAccountRules();
+  const historical = readHistoricalIdentityPolicy();
   const appearances = new Map();
   const failures = [];
 
@@ -242,7 +260,14 @@ function collectTeamAppearances(dataSources, metadata) {
         const teamId = byColor[rawPlayer.teamId];
         if (!teamId) continue;
         if (!perTeam.has(teamId)) perTeam.set(teamId, []);
-        const personOverride = accountOverrides.has(rawPlayer.puuid) ? lookups.byPuuid.get(accountOverrides.get(rawPlayer.puuid)) : null;
+        const personKey = accountOverrides.get(rawPlayer.puuid);
+        const historicalPerson = historical.people[personKey];
+        const personOverride = accountOverrides.has(rawPlayer.puuid)
+          ? lookups.byPuuid.get(personKey) || (historicalPerson ? {
+            ...historicalPerson,
+            historicalPersonId: `registered-${normalizeNameKey(historicalPerson.name)}`,
+          } : null)
+          : historical.resolve(rawPlayer, { ...metadata, playersByPuuid: lookups.byPuuid }, raw.matchInfo?.matchId);
         perTeam.get(teamId).push(resolvePlayer(rawPlayer, lookups, teamId, personOverride));
       }
       for (const [teamId, players] of perTeam) {

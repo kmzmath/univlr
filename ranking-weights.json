@@ -916,6 +916,289 @@
         "3-4": 45,
         "5-8": 35
       }
+    },
+    "alianca-2024-classificatoria-1": {
+      "name": "Copa Aliança 2024.1 - Classificatória 1",
+      "logo": "assets/tournament-icons/copa_alianca.png",
+      "teams": 44,
+      "endAt": "2024-04-22T14:38:44.44Z",
+      "defaultPhase": "qualifier",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 1,
+          "seriesCodeMax": 1
+        }
+      ],
+      "placementPoints": {},
+      "qualifiesTo": "alianca-2024-grupos-playoffs",
+      "ignoreAchievements": true
+    },
+    "alianca-2024-classificatoria-2": {
+      "name": "Copa Aliança 2024.1 - Classificatória 2",
+      "logo": "assets/tournament-icons/copa_alianca.png",
+      "teams": 42,
+      "endAt": "2024-05-05T22:12:52.787Z",
+      "defaultPhase": "qualifier",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 1,
+          "seriesCodeMax": 1
+        }
+      ],
+      "placementPoints": {},
+      "qualifiesTo": "alianca-2024-grupos-playoffs",
+      "ignoreAchievements": true
+    },
+    "alianca-2024-grupos-playoffs": {
+      "name": "Copa Aliança 2024.1 - Grupos e playoffs",
+      "logo": "assets/tournament-icons/copa_alianca.png",
+      "teams": 16,
+      "endAt": "2024-07-20T19:37:04.18Z",
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 2,
+          "seriesCodeMax": 2
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 4,
+          "seriesCodeMax": 4
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 6,
+          "seriesCodeMax": 6
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 8,
+          "seriesCodeMax": 8
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 10,
+          "seriesCodeMax": 10
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 12,
+          "seriesCodeMax": 12
+        },
+        {
+          "phase": "final",
+          "seriesCodeMin": 14,
+          "seriesCodeMax": 14
+        }
+      ],
+      "placementPoints": {
+        "1": 100,
+        "2": 80,
+        "3-4": 45,
+        "5-8": 35,
+        "9-11": 25,
+        "12-14": 20,
+        "15-16": 15
+      }
+    },
+    "alianca-2024-2-classificatoria": {
+      "name": "Copa Aliança 2024.2 - Classificatória",
+      "logo": "assets/tournament-icons/copa_alianca.png",
+      "teams": 46,
+      "endAt": "2024-10-08T01:49:38.147Z",
+      "defaultPhase": "qualifier",
+      "phaseRules": [],
+      "placementPoints": {},
+      "qualifiesTo": "alianca-2024-2-grupos-playoffs",
+      "ignoreAchievements": true
+    },
+    "alianca-2024-2-grupos-playoffs": {
+      "name": "Copa Aliança 2024.2 - Grupos e playoffs",
+      "logo": "assets/tournament-icons/copa_alianca.png",
+      "teams": 16,
+      "endAt": "2024-12-07T16:10:07.66Z",
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 4,
+          "seriesCodeMax": 4
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 6,
+          "seriesCodeMax": 6
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 8,
+          "seriesCodeMax": 8
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 10,
+          "seriesCodeMax": 10
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 12,
+          "seriesCodeMax": 12
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 18,
+          "seriesCodeMax": 18
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 20,
+          "seriesCodeMax": 20
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 22,
+          "seriesCodeMax": 22
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 26,
+          "seriesCodeMax": 26
+        }
+      ],
+      "placementPoints": {
+        "1": 100,
+        "2": 80,
+        "3": 50,
+        "4": 40,
+        "5-6": 35,
+        "7-8": 30,
+        "9-11": 25,
+        "12-14": 20,
+        "15-16": 15
+      }
+    },
+    "jubs-2024-qualify-1": {
+      "name": "JUBS 2024 - Qualify 1",
+      "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+      "teams": 42,
+      "endAt": "2024-07-14T20:05:08.257Z",
+      "defaultPhase": "qualifier",
+      "phaseRules": [],
+      "placementPoints": {
+        "Classificado": 0,
+        "9-16": 0,
+        "17-32": 0,
+        "33-42": 0
+      },
+      "qualifiesTo": "jubs-2024-playoffs-online",
+      "bestOfGroup": "jubs-2024-classificatorias"
+    },
+    "jubs-2024-qualify-2": {
+      "name": "JUBS 2024 - Qualify 2",
+      "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+      "teams": 35,
+      "endAt": "2024-08-03T16:35:21.076Z",
+      "defaultPhase": "qualifier",
+      "phaseRules": [],
+      "placementPoints": {
+        "Classificado": 0,
+        "9-16": 0,
+        "17-32": 0,
+        "33-35": 0
+      },
+      "qualifiesTo": "jubs-2024-playoffs-online",
+      "bestOfGroup": "jubs-2024-classificatorias"
+    },
+    "jubs-2024-playoffs-online": {
+      "name": "JUBS 2024 - Playoffs online",
+      "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+      "teams": 16,
+      "endAt": "2024-08-10T22:50:31.596Z",
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 1,
+          "seriesCodeMax": 1
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 2,
+          "seriesCodeMax": 2
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 3,
+          "seriesCodeMax": 3
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 4,
+          "seriesCodeMax": 4
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 5,
+          "seriesCodeMax": 5
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 6,
+          "seriesCodeMax": 6
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 7,
+          "seriesCodeMax": 7
+        }
+      ],
+      "placementPoints": {
+        "Classificado": 0,
+        "9-16": 0
+      },
+      "qualifiesTo": "jubs-2024-presencial"
+    },
+    "jubs-2024-presencial": {
+      "name": "JUBS 2024 - Etapa presencial",
+      "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+      "teams": 8,
+      "endAt": "2024-10-17T16:09:07.677Z",
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 11,
+          "seriesCodeMax": 11
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 12,
+          "seriesCodeMax": 12
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 13,
+          "seriesCodeMax": 13
+        },
+        {
+          "phase": "final",
+          "seriesCodeMin": 14,
+          "seriesCodeMax": 14
+        }
+      ],
+      "placementPoints": {
+        "1": 100,
+        "2": 80,
+        "3": 50,
+        "4": 40,
+        "5": 35,
+        "6": 35,
+        "7": 30,
+        "8": 30
+      }
     }
   }
 }

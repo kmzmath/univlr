@@ -305,6 +305,28 @@
       "lineup": []
     },
     {
+      "id": "anhanguera_the_dream_team_df_2024",
+      "sourceId": "2975",
+      "slug": "anhanguera_the_dream_team_df_2024",
+      "tag": "ANHANGUERA",
+      "displayName": "ANHANGUERA The Dream Team",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "DF",
+      "stateName": "Distrito Federal",
+      "stateFlag": "assets/state-flags/df.webp",
+      "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#9f4823",
+        "#185946"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "anhangueros",
       "sourceId": "2905",
       "slug": "anhangueros",
@@ -320,6 +342,28 @@
       "colors": [
         "#239f52",
         "#4c1859"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "asces_unita_pe_2024",
+      "sourceId": "2980",
+      "slug": "asces_unita_pe_2024",
+      "tag": "Asces-unita",
+      "displayName": "Asces-unita",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "PE",
+      "stateName": "Pernambuco",
+      "stateFlag": "assets/state-flags/pe.webp",
+      "stateRegion": "Nordeste",
+      "colors": [
+        "#9f2333",
+        "#18592a"
       ],
       "socials": {
         "instagram": ""
@@ -371,6 +415,50 @@
       "lineup": []
     },
     {
+      "id": "atletica_unifei_2024",
+      "sourceId": "2941",
+      "slug": "atletica_unifei_2024",
+      "tag": "UNIFEI",
+      "displayName": "Atlética UNIFEI",
+      "org": "Universidade Federal de Itajubá",
+      "orgTag": "UNIFEI",
+      "logo": "assets/team-logos/atletica_unifei.png",
+      "state": "MG",
+      "stateName": "Minas Gerais",
+      "stateFlag": "assets/state-flags/mg.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f2380",
+        "#2d5918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "atletica_unifei_6f52b4a1_2024",
+      "sourceId": "2946",
+      "slug": "atletica_unifei_6f52b4a1_2024",
+      "tag": "UNIFEI",
+      "displayName": "Atlética UNIFEI",
+      "org": "Universidade Federal de Itajubá",
+      "orgTag": "UNIFEI",
+      "logo": "assets/team-logos/atletica_unifei.png",
+      "state": "MG",
+      "stateName": "Minas Gerais",
+      "stateFlag": "assets/state-flags/mg.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f236f",
+        "#255918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "aufa_faesa",
       "sourceId": "2898",
       "slug": "aufa_faesa",
@@ -386,6 +474,50 @@
       "colors": [
         "#239f76",
         "#591853"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "aufa_line_a_2024",
+      "sourceId": "2919",
+      "slug": "aufa_line_a_2024",
+      "tag": "AUFA",
+      "displayName": "AUFA LINE A",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#9f9923",
+        "#184159"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "aufa_line_b_2024",
+      "sourceId": "2917",
+      "slug": "aufa_line_b_2024",
+      "tag": "AUFA",
+      "displayName": "AUFA LINE B",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#23659f",
+        "#59181f"
       ],
       "socials": {
         "instagram": ""
@@ -446,6 +578,50 @@
       ]
     },
     {
+      "id": "axis_anteaters_black_valorant_2024",
+      "sourceId": "2954",
+      "slug": "axis_anteaters_black_valorant_2024",
+      "tag": "UFABC",
+      "displayName": "AXIS Anteaters Black - Valorant",
+      "org": "Universidade Federal do ABC",
+      "orgTag": "UFABC",
+      "logo": "assets/team-logos/axis_anteaters.png",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f7e23",
+        "#184f59"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "axis_anteaters_green_valorant_2024",
+      "sourceId": "2959",
+      "slug": "axis_anteaters_green_valorant_2024",
+      "tag": "UFABC",
+      "displayName": "AXIS Anteaters Green - Valorant",
+      "org": "Universidade Federal do ABC",
+      "orgTag": "UFABC",
+      "logo": "assets/team-logos/axis_anteaters.png",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f2354",
+        "#185919"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "axis_anteaters_shadow",
       "sourceId": "2880",
       "slug": "axis_anteaters_shadow",
@@ -464,6 +640,28 @@
       ],
       "socials": {
         "instagram": "https://www.instagram.com/axis_anteaters/"
+      },
+      "lineup": []
+    },
+    {
+      "id": "axis_anteaters_valorant_2024",
+      "sourceId": "2940",
+      "slug": "axis_anteaters_valorant_2024",
+      "tag": "UFABC",
+      "displayName": "AXIS Anteaters - Valorant",
+      "org": "Universidade Federal do ABC",
+      "orgTag": "UFABC",
+      "logo": "assets/team-logos/axis_anteaters.png",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f236d",
+        "#235918"
+      ],
+      "socials": {
+        "instagram": ""
       },
       "lineup": []
     },
@@ -994,6 +1192,28 @@
       "lineup": []
     },
     {
+      "id": "bot_s_academy_pb_2024",
+      "sourceId": "2983",
+      "slug": "bot_s_academy_pb_2024",
+      "tag": "Bot's",
+      "displayName": "Bot's academy",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "PB",
+      "stateName": "Paraíba",
+      "stateFlag": "assets/state-flags/pb.webp",
+      "stateRegion": "Nordeste",
+      "colors": [
+        "#9f237a",
+        "#2a5918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "brutal_esports",
       "sourceId": "36",
       "slug": "brutal_esports",
@@ -1050,6 +1270,28 @@
           "role": "titular"
         }
       ]
+    },
+    {
+      "id": "burning_bunnies_ufpr_white_2024",
+      "sourceId": "2953",
+      "slug": "burning_bunnies_ufpr_white_2024",
+      "tag": "UFPR",
+      "displayName": "Burning Bunnies UFPR - White",
+      "org": "Universidade Federal do Paraná",
+      "orgTag": "UFPR",
+      "logo": "",
+      "state": "PR",
+      "stateName": "Paraná",
+      "stateFlag": "assets/state-flags/pr.webp",
+      "stateRegion": "Sul",
+      "colors": [
+        "#9f235f",
+        "#1c5918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "caap_auroras",
@@ -1153,6 +1395,28 @@
       ]
     },
     {
+      "id": "caap_hellhounds_black_2024",
+      "sourceId": "2945",
+      "slug": "caap_hellhounds_black_2024",
+      "tag": "UFABC",
+      "displayName": "CAAP Hellhounds Black",
+      "org": "Universidade Federal do ABC",
+      "orgTag": "UFABC",
+      "logo": "assets/team-logos/caap_hellhounds.png",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#239f63",
+        "#541859"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "caap_malditos",
       "sourceId": "2834",
       "slug": "caap_malditos",
@@ -1227,6 +1491,138 @@
         }
       ],
       "succeeds": "axis_ego"
+    },
+    {
+      "id": "caap_void_2024",
+      "sourceId": "2952",
+      "slug": "caap_void_2024",
+      "tag": "UFABC",
+      "displayName": "CAAP Void",
+      "org": "Universidade Federal do ABC",
+      "orgTag": "UFABC",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f2374",
+        "#275918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "caaso_hogs_usp_2024",
+      "sourceId": "2922",
+      "slug": "caaso_hogs_usp_2024",
+      "tag": "USP",
+      "displayName": "Caaso Hogs - USP",
+      "org": "Universidade de São Paulo",
+      "orgTag": "USP",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#23319f",
+        "#592b18"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "calango_team_fametro_am_2024",
+      "sourceId": "2984",
+      "slug": "calango_team_fametro_am_2024",
+      "tag": "Calango",
+      "displayName": "Calango Team - FAMETRO",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "AM",
+      "stateName": "Amazonas",
+      "stateFlag": "assets/state-flags/am.webp",
+      "stateRegion": "Norte",
+      "colors": [
+        "#7e9f23",
+        "#182c59"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "calango_team_fametro_am_668459eb_2024",
+      "sourceId": "2985",
+      "slug": "calango_team_fametro_am_668459eb_2024",
+      "tag": "Calango",
+      "displayName": "Calango Team - FAMETRO",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "AM",
+      "stateName": "Amazonas",
+      "stateFlag": "assets/state-flags/am.webp",
+      "stateRegion": "Norte",
+      "colors": [
+        "#9f5923",
+        "#18594f"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "calango_team_manaus_am_2024",
+      "sourceId": "2986",
+      "slug": "calango_team_manaus_am_2024",
+      "tag": "Calango",
+      "displayName": "Calango Team - Manaus/AM",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "AM",
+      "stateName": "Amazonas",
+      "stateFlag": "assets/state-flags/am.webp",
+      "stateRegion": "Norte",
+      "colors": [
+        "#239f57",
+        "#4e1859"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "canis_valorant_inclusivo_2024",
+      "sourceId": "2955",
+      "slug": "canis_valorant_inclusivo_2024",
+      "tag": "UFRJ",
+      "displayName": "Canis - Valorant Inclusivo",
+      "org": "Universidade Federal do Rio de Janeiro",
+      "orgTag": "UFRJ",
+      "logo": "",
+      "state": "RJ",
+      "stateName": "Rio de Janeiro",
+      "stateFlag": "assets/state-flags/rj.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#23869f",
+        "#591831"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "carrascos_fd8j",
@@ -1470,6 +1866,28 @@
       "lineup": []
     },
     {
+      "id": "cyber_kongs_dourada_2024",
+      "sourceId": "2937",
+      "slug": "cyber_kongs_dourada_2024",
+      "tag": "USJT",
+      "displayName": "Cyber Kongs Dourada",
+      "org": "Universidade São Judas Tadeu",
+      "orgTag": "USJT",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f9723",
+        "#184259"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "cyberkongs",
       "sourceId": "45",
       "slug": "cyberkongs",
@@ -1548,6 +1966,50 @@
       ]
     },
     {
+      "id": "each_griffins_valorant_2024",
+      "sourceId": "2957",
+      "slug": "each_griffins_valorant_2024",
+      "tag": "USP",
+      "displayName": "EACH Griffins VALORANT",
+      "org": "Universidade de São Paulo",
+      "orgTag": "USP",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#239f6f",
+        "#591856"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "eng_ufes_es_2024",
+      "sourceId": "2982",
+      "slug": "eng_ufes_es_2024",
+      "tag": "UFES",
+      "displayName": "Eng. UFES",
+      "org": "Universidade Federal do Espírito Santo",
+      "orgTag": "UFES",
+      "logo": "",
+      "state": "ES",
+      "stateName": "Espírito Santo",
+      "stateFlag": "assets/state-flags/es.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#71239f",
+        "#555918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "espm_overbite_misto",
       "sourceId": "2871",
       "slug": "espm_overbite_misto",
@@ -1563,6 +2025,28 @@
       "colors": [
         "#9f239b",
         "#3b5918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "facens_night_owls_2024",
+      "sourceId": "2948",
+      "slug": "facens_night_owls_2024",
+      "tag": "FACENS",
+      "displayName": "FACENS NIGHT OWLS",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#233c9f",
+        "#592618"
       ],
       "socials": {
         "instagram": ""
@@ -1621,6 +2105,28 @@
           "role": "titular"
         }
       ]
+    },
+    {
+      "id": "fatec_ornyx_2024",
+      "sourceId": "2916",
+      "slug": "fatec_ornyx_2024",
+      "tag": "FATEC",
+      "displayName": "FATEC Ornyx",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#239f8c",
+        "#591847"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "fatec_pg",
@@ -1756,6 +2262,28 @@
       ]
     },
     {
+      "id": "fei_esports_valorant_2024",
+      "sourceId": "2915",
+      "slug": "fei_esports_valorant_2024",
+      "tag": "FEI",
+      "displayName": "FEI eSports Valorant",
+      "org": "Fundação Educacional Inaciana",
+      "orgTag": "FEI",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#239f7e",
+        "#59184f"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "fei_last_dance",
       "sourceId": "2853",
       "slug": "fei_last_dance",
@@ -1839,6 +2367,28 @@
           "role": "titular"
         }
       ]
+    },
+    {
+      "id": "fgv_alligators_valorant_2024",
+      "sourceId": "2925",
+      "slug": "fgv_alligators_valorant_2024",
+      "tag": "FGV",
+      "displayName": "FGV Alligators Valorant",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#235f9f",
+        "#59181c"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "fm_alligators",
@@ -1931,6 +2481,28 @@
           "role": "titular"
         }
       ]
+    },
+    {
+      "id": "fusve_barao_rj_2024",
+      "sourceId": "2969",
+      "slug": "fusve_barao_rj_2024",
+      "tag": "FUSVE",
+      "displayName": "FUSVE Barão",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "RJ",
+      "stateName": "Rio de Janeiro",
+      "stateFlag": "assets/state-flags/rj.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#23909f",
+        "#591836"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "gambiarra_ufg",
@@ -2406,6 +2978,50 @@
       ]
     },
     {
+      "id": "ibtec_2024",
+      "sourceId": "2931",
+      "slug": "ibtec_2024",
+      "tag": "IBTEC",
+      "displayName": "IBTEC",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#7a239f",
+        "#515918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "iesb_cesb_ieb_df_2024",
+      "sourceId": "2979",
+      "slug": "iesb_cesb_ieb_df_2024",
+      "tag": "IESB/CESB",
+      "displayName": "IESB/CESB IEB",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "DF",
+      "stateName": "Distrito Federal",
+      "stateFlag": "assets/state-flags/df.webp",
+      "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#9f9b23",
+        "#184059"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "if_academy",
       "sourceId": "2902",
       "slug": "if_academy",
@@ -2521,6 +3137,28 @@
           "name": "O CALVINISTA"
         }
       ]
+    },
+    {
+      "id": "imperador_uvv_2024",
+      "sourceId": "2978",
+      "slug": "imperador_uvv_2024",
+      "tag": "IMPERADOR",
+      "displayName": "IMPERADOR - UVV",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#9f2393",
+        "#375918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "inatel",
@@ -2801,6 +3439,50 @@
         }
       ],
       "succeeds": "ufpe_virtus"
+    },
+    {
+      "id": "laurp_royal_ps_orange_2024",
+      "sourceId": "2923",
+      "slug": "laurp_royal_ps_orange_2024",
+      "tag": "USP",
+      "displayName": "LAURP Royal PS Orange",
+      "org": "Universidade de São Paulo",
+      "orgTag": "USP",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#59239f",
+        "#594f18"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "liga_atletica_unisinos_lau_2024",
+      "sourceId": "2938",
+      "slug": "liga_atletica_unisinos_lau_2024",
+      "tag": "Liga",
+      "displayName": "Liga Atlética Unisinos - LAU",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#23829f",
+        "#59182e"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "liga_vulkanica",
@@ -3177,6 +3859,28 @@
       ]
     },
     {
+      "id": "madness_ufop_2024",
+      "sourceId": "2933",
+      "slug": "madness_ufop_2024",
+      "tag": "MADNESS",
+      "displayName": "MADNESS - UFOP",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#239f2d",
+        "#381859"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "maua_b",
       "sourceId": "2857",
       "slug": "maua_b",
@@ -3245,6 +3949,94 @@
           "role": "titular"
         }
       ]
+    },
+    {
+      "id": "maua_esports_black_2024",
+      "sourceId": "2914",
+      "slug": "maua_esports_black_2024",
+      "tag": "MAUÁ",
+      "displayName": "Mauá Esports Black",
+      "org": "Instituto Mauá de Tecnologia",
+      "orgTag": "MAUÁ",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#699f23",
+        "#182159"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "maua_esports_imt_2024",
+      "sourceId": "2950",
+      "slug": "maua_esports_imt_2024",
+      "tag": "MAUÁ",
+      "displayName": "Mauá Esports - IMT",
+      "org": "Instituto Mauá de Tecnologia",
+      "orgTag": "MAUÁ",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#23639f",
+        "#59181e"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "maua_esports_imt_e15688a9_2024",
+      "sourceId": "2951",
+      "slug": "maua_esports_imt_e15688a9_2024",
+      "tag": "MAUÁ",
+      "displayName": "Mauá Esports - IMT",
+      "org": "Instituto Mauá de Tecnologia",
+      "orgTag": "MAUÁ",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#469f23",
+        "#201859"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "maua_rubi_2024",
+      "sourceId": "2947",
+      "slug": "maua_rubi_2024",
+      "tag": "MAUÁ",
+      "displayName": "Mauá Rubi",
+      "org": "Instituto Mauá de Tecnologia",
+      "orgTag": "MAUÁ",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9b239f",
+        "#405918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "milionaria_ufam",
@@ -3335,6 +4127,50 @@
           "name": "kissa"
         }
       ]
+    },
+    {
+      "id": "minerva_esports_misto_2024",
+      "sourceId": "2928",
+      "slug": "minerva_esports_misto_2024",
+      "tag": "UFRJ",
+      "displayName": "Minerva eSports MISTO",
+      "org": "Universidade Federal do Rio de Janeiro",
+      "orgTag": "UFRJ",
+      "logo": "",
+      "state": "RJ",
+      "stateName": "Rio de Janeiro",
+      "stateFlag": "assets/state-flags/rj.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#23299f",
+        "#592f18"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "minerva_esports_ufrj_inclusivo_2024",
+      "sourceId": "2920",
+      "slug": "minerva_esports_ufrj_inclusivo_2024",
+      "tag": "UFRJ",
+      "displayName": "Minerva eSports UFRJ INCLUSIVO",
+      "org": "Universidade Federal do Rio de Janeiro",
+      "orgTag": "UFRJ",
+      "logo": "",
+      "state": "RJ",
+      "stateName": "Rio de Janeiro",
+      "stateFlag": "assets/state-flags/rj.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#46239f",
+        "#594518"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "minerva_thunders",
@@ -3608,6 +4444,72 @@
       ]
     },
     {
+      "id": "ods_force_ufla_mg_2024",
+      "sourceId": "2971",
+      "slug": "ods_force_ufla_mg_2024",
+      "tag": "Ods",
+      "displayName": "Ods Force - UFLA",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "MG",
+      "stateName": "Minas Gerais",
+      "stateFlag": "assets/state-flags/mg.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f2346",
+        "#185920"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "oktoplus_gaming_cefet_mg_2024",
+      "sourceId": "2921",
+      "slug": "oktoplus_gaming_cefet_mg_2024",
+      "tag": "CEFET/MG",
+      "displayName": "Oktoplus Gaming - CEFET",
+      "org": "Centro Federal de Educação Tecnológica de Minas Gerais",
+      "orgTag": "CEFET/MG",
+      "logo": "",
+      "state": "MG",
+      "stateName": "Minas Gerais",
+      "stateFlag": "assets/state-flags/mg.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#789f23",
+        "#182959"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "ovb_purple_2024",
+      "sourceId": "2936",
+      "slug": "ovb_purple_2024",
+      "tag": "OVB",
+      "displayName": "OVB Purple",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#9f2346",
+        "#185920"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "overbite_espm",
       "sourceId": "2870",
       "slug": "overbite_espm",
@@ -3699,6 +4601,28 @@
       "lineup": []
     },
     {
+      "id": "pesadelo_renegadas_unb_2024",
+      "sourceId": "2958",
+      "slug": "pesadelo_renegadas_unb_2024",
+      "tag": "UnB",
+      "displayName": "Pesadelo Renegadas - UnB",
+      "org": "Universidade de Brasília",
+      "orgTag": "UnB",
+      "logo": "",
+      "state": "DF",
+      "stateName": "Distrito Federal",
+      "stateFlag": "assets/state-flags/df.webp",
+      "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#238c9f",
+        "#591834"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "poli_plague",
       "sourceId": "2798",
       "slug": "poli_plague",
@@ -3744,6 +4668,94 @@
           "name": "Lukako"
         }
       ]
+    },
+    {
+      "id": "poli_plague_gold_2024",
+      "sourceId": "2918",
+      "slug": "poli_plague_gold_2024",
+      "tag": "USP",
+      "displayName": "Poli Plague Gold",
+      "org": "Universidade de São Paulo",
+      "orgTag": "USP",
+      "logo": "assets/team-logos/poli_plague.png",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#299f23",
+        "#2f1859"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "poli_plague_silver_delta_2024",
+      "sourceId": "2939",
+      "slug": "poli_plague_silver_delta_2024",
+      "tag": "USP",
+      "displayName": "POLI Plague Silver Delta",
+      "org": "Universidade de São Paulo",
+      "orgTag": "USP",
+      "logo": "assets/team-logos/poli_plague.png",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f2395",
+        "#385918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "poli_plague_silver_delta_c6f948a0_2024",
+      "sourceId": "2960",
+      "slug": "poli_plague_silver_delta_c6f948a0_2024",
+      "tag": "USP",
+      "displayName": "POLI Plague Silver Delta",
+      "org": "Universidade de São Paulo",
+      "orgTag": "USP",
+      "logo": "assets/team-logos/poli_plague.png",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#42239f",
+        "#594318"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "poli_plague_silver_echo_2024",
+      "sourceId": "2924",
+      "slug": "poli_plague_silver_echo_2024",
+      "tag": "USP",
+      "displayName": "POLI Plague Silver Echo",
+      "org": "Universidade de São Paulo",
+      "orgTag": "USP",
+      "logo": "assets/team-logos/poli_plague.png",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#829f23",
+        "#182e59"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "puc_clerigos",
@@ -4105,6 +5117,28 @@
       "lineup": []
     },
     {
+      "id": "senais_falcons_ba_2024",
+      "sourceId": "2972",
+      "slug": "senais_falcons_ba_2024",
+      "tag": "SENAIS",
+      "displayName": "SENAIS Falcons",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "BA",
+      "stateName": "Bahia",
+      "stateFlag": "assets/state-flags/ba.webp",
+      "stateRegion": "Nordeste",
+      "colors": [
+        "#9f235b",
+        "#1a5918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "sheriff_iff",
       "sourceId": "2843",
       "slug": "sheriff_iff",
@@ -4253,6 +5287,50 @@
       ]
     },
     {
+      "id": "stings_ba_valorant_2024",
+      "sourceId": "2943",
+      "slug": "stings_ba_valorant_2024",
+      "tag": "Febasp",
+      "displayName": "Stings BA Valorant",
+      "org": "Centro Universitário Belas Artes de São Paulo",
+      "orgTag": "Febasp",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f2399",
+        "#3a5918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "stings_belas_artes_2024",
+      "sourceId": "2961",
+      "slug": "stings_belas_artes_2024",
+      "tag": "Febasp",
+      "displayName": "STINGS BELAS ARTES",
+      "org": "Centro Universitário Belas Artes de São Paulo",
+      "orgTag": "Febasp",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f8423",
+        "#184c59"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "stings_yellow",
       "sourceId": "2889",
       "slug": "stings_yellow",
@@ -4290,6 +5368,28 @@
       "colors": [
         "#9f4423",
         "#185944"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "team_valorant_cybers_2024",
+      "sourceId": "2956",
+      "slug": "team_valorant_cybers_2024",
+      "tag": "Team",
+      "displayName": "Team Valorant Cybers",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#9f2390",
+        "#365918"
       ],
       "socials": {
         "instagram": ""
@@ -4477,6 +5577,28 @@
       ]
     },
     {
+      "id": "ucsal_aduc_ba_2024",
+      "sourceId": "2976",
+      "slug": "ucsal_aduc_ba_2024",
+      "tag": "UCSAL",
+      "displayName": "UCSAL ADUC",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "BA",
+      "stateName": "Bahia",
+      "stateFlag": "assets/state-flags/ba.webp",
+      "stateRegion": "Nordeste",
+      "colors": [
+        "#9f2325",
+        "#185932"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "ueg_hipertensa",
       "sourceId": "2801",
       "slug": "ueg_hipertensa",
@@ -4518,6 +5640,28 @@
           "name": "Elizzzeu"
         }
       ]
+    },
+    {
+      "id": "uema_cyborgues_ma_2024",
+      "sourceId": "2964",
+      "slug": "uema_cyborgues_ma_2024",
+      "tag": "UEMA",
+      "displayName": "UEMA Cyborgues",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "MA",
+      "stateName": "Maranhão",
+      "stateFlag": "assets/state-flags/ma.webp",
+      "stateRegion": "Nordeste",
+      "colors": [
+        "#236d9f",
+        "#591823"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "uema_turbulencia",
@@ -4608,6 +5752,50 @@
           "name": "Mael"
         }
       ]
+    },
+    {
+      "id": "uesc_cacaueiros_ba_2024",
+      "sourceId": "2974",
+      "slug": "uesc_cacaueiros_ba_2024",
+      "tag": "UESC",
+      "displayName": "UESC Cacaueiros",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "BA",
+      "stateName": "Bahia",
+      "stateFlag": "assets/state-flags/ba.webp",
+      "stateRegion": "Nordeste",
+      "colors": [
+        "#9f3523",
+        "#18593c"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "ufac_esports_ac_2024",
+      "sourceId": "2970",
+      "slug": "ufac_esports_ac_2024",
+      "tag": "Ufac",
+      "displayName": "Ufac eSports",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "AC",
+      "stateName": "Acre",
+      "stateFlag": "assets/state-flags/ac.webp",
+      "stateRegion": "Norte",
+      "colors": [
+        "#9b239f",
+        "#405918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "ufcg_pensaopet",
@@ -4706,6 +5894,28 @@
           "name": "Raap"
         }
       ]
+    },
+    {
+      "id": "ufg_eagles_black_2024",
+      "sourceId": "2926",
+      "slug": "ufg_eagles_black_2024",
+      "tag": "UFG",
+      "displayName": "UFG Eagles Black",
+      "org": "Universidade Federal de Goiás",
+      "orgTag": "UFG",
+      "logo": "assets/team-logos/ufg_eagles.png",
+      "state": "GO",
+      "stateName": "Goiás",
+      "stateFlag": "assets/state-flags/go.webp",
+      "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#239f99",
+        "#591841"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "ufg_eagles_blue",
@@ -4839,6 +6049,28 @@
       "colors": [
         "#2d239f",
         "#593818"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "ufma_balsas_ma_2024",
+      "sourceId": "2968",
+      "slug": "ufma_balsas_ma_2024",
+      "tag": "UFMA",
+      "displayName": "UFMA BALSAS",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "MA",
+      "stateName": "Maranhão",
+      "stateFlag": "assets/state-flags/ma.webp",
+      "stateRegion": "Nordeste",
+      "colors": [
+        "#59239f",
+        "#594f18"
       ],
       "socials": {
         "instagram": ""
@@ -5255,6 +6487,28 @@
       ]
     },
     {
+      "id": "ufrn_rn_2024",
+      "sourceId": "2965",
+      "slug": "ufrn_rn_2024",
+      "tag": "UFRN",
+      "displayName": "UFRN",
+      "org": "Universidade Federal do Rio Grande do Norte",
+      "orgTag": "UFRN",
+      "logo": "",
+      "state": "RN",
+      "stateName": "Rio Grande do Norte",
+      "stateFlag": "assets/state-flags/rn.webp",
+      "stateRegion": "Nordeste",
+      "colors": [
+        "#239f99",
+        "#591841"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "ufrn_tirana",
       "sourceId": "2848",
       "slug": "ufrn_tirana",
@@ -5373,6 +6627,28 @@
       ],
       "socials": {
         "instagram": "https://www.instagram.com/ufswarriowls/"
+      },
+      "lineup": []
+    },
+    {
+      "id": "ufsc_titans_sc_2024",
+      "sourceId": "2973",
+      "slug": "ufsc_titans_sc_2024",
+      "tag": "UFSC",
+      "displayName": "UFSC TItans",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "SC",
+      "stateName": "Santa Catarina",
+      "stateFlag": "assets/state-flags/sc.webp",
+      "stateRegion": "Sul",
+      "colors": [
+        "#809f23",
+        "#182d59"
+      ],
+      "socials": {
+        "instagram": ""
       },
       "lineup": []
     },
@@ -5697,6 +6973,28 @@
       "lineup": []
     },
     {
+      "id": "unb_green_olws_line_red_2024",
+      "sourceId": "2912",
+      "slug": "unb_green_olws_line_red_2024",
+      "tag": "UnB",
+      "displayName": "UnB Green Olws Line RED",
+      "org": "Universidade de Brasília",
+      "orgTag": "UnB",
+      "logo": "",
+      "state": "DF",
+      "stateName": "Distrito Federal",
+      "stateFlag": "assets/state-flags/df.webp",
+      "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#9f237c",
+        "#2b5918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "undb_turing",
       "sourceId": "2909",
       "slug": "undb_turing",
@@ -5938,6 +7236,28 @@
       "lineup": []
     },
     {
+      "id": "unifei_calango_2024",
+      "sourceId": "2942",
+      "slug": "unifei_calango_2024",
+      "tag": "UNIFEI",
+      "displayName": "UNIFEI Calango",
+      "org": "Universidade Federal de Itajubá",
+      "orgTag": "UNIFEI",
+      "logo": "",
+      "state": "MG",
+      "stateName": "Minas Gerais",
+      "stateFlag": "assets/state-flags/mg.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f2384",
+        "#2f5918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "unifesp_erex",
       "sourceId": "2827",
       "slug": "unifesp_erex",
@@ -5985,6 +7305,28 @@
       ]
     },
     {
+      "id": "unifesp_knights_2024",
+      "sourceId": "2935",
+      "slug": "unifesp_knights_2024",
+      "tag": "UNIFESP",
+      "displayName": "Unifesp Knights",
+      "org": "Universidade Federal de São Paulo",
+      "orgTag": "UNIFESP",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#233c9f",
+        "#592618"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "unifor",
       "sourceId": "97",
       "slug": "unifor",
@@ -6026,6 +7368,28 @@
           "name": "Binks"
         }
       ]
+    },
+    {
+      "id": "unigran_sarristas_ms_2024",
+      "sourceId": "2966",
+      "slug": "unigran_sarristas_ms_2024",
+      "tag": "UNIGRAN",
+      "displayName": "UNIGRAN Sarristas",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "MS",
+      "stateName": "Mato Grosso do Sul",
+      "stateFlag": "assets/state-flags/ms.webp",
+      "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#9f2352",
+        "#18591a"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "uninassau_griffins",
@@ -6084,6 +7448,28 @@
           "role": "titular"
         }
       ]
+    },
+    {
+      "id": "unioeste_rino_pr_2024",
+      "sourceId": "2963",
+      "slug": "unioeste_rino_pr_2024",
+      "tag": "UNIOESTE",
+      "displayName": "UNIOESTE RINO",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "PR",
+      "stateName": "Paraná",
+      "stateFlag": "assets/state-flags/pr.webp",
+      "stateRegion": "Sul",
+      "colors": [
+        "#9f9923",
+        "#184159"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "unir_sentinelas",
@@ -6159,6 +7545,28 @@
           "role": "titular"
         }
       ]
+    },
+    {
+      "id": "unirv_e_sports_go_2024",
+      "sourceId": "2981",
+      "slug": "unirv_e_sports_go_2024",
+      "tag": "UniRV",
+      "displayName": "UNIRV E-SPORTS",
+      "org": "Universidade de Rio Verde",
+      "orgTag": "UniRV",
+      "logo": "",
+      "state": "GO",
+      "stateName": "Goiás",
+      "stateFlag": "assets/state-flags/go.webp",
+      "stateRegion": "Centro-Oeste",
+      "colors": [
+        "#9f5d23",
+        "#185951"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "unirv_rushone",
@@ -6417,10 +7825,6 @@
           "name": "GregoZin"
         },
         {
-          "slot": 7,
-          "name": "YanF99"
-        },
-        {
           "slot": 8,
           "name": "GorTzin"
         }
@@ -6488,6 +7892,94 @@
           "role": "titular"
         }
       ]
+    },
+    {
+      "id": "usf_e_sports_2024",
+      "sourceId": "2929",
+      "slug": "usf_e_sports_2024",
+      "tag": "Usf",
+      "displayName": "Usf E-sports",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#259f23",
+        "#321859"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "usf_paragons_2024",
+      "sourceId": "2932",
+      "slug": "usf_paragons_2024",
+      "tag": "USF",
+      "displayName": "USF Paragons",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#239f8c",
+        "#591847"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "usf_sports_2024",
+      "sourceId": "2944",
+      "slug": "usf_sports_2024",
+      "tag": "USF",
+      "displayName": "USF Sports",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#9f5223",
+        "#18594c"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "usp_cronos_2024",
+      "sourceId": "2927",
+      "slug": "usp_cronos_2024",
+      "tag": "USP",
+      "displayName": "USP Cronos",
+      "org": "Universidade de São Paulo",
+      "orgTag": "USP",
+      "logo": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
+      "colors": [
+        "#9f2397",
+        "#395918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "usp_stars",
@@ -6674,6 +8166,28 @@
           "role": "titular"
         }
       ]
+    },
+    {
+      "id": "xarada_riddlers_ufla_2024",
+      "sourceId": "2930",
+      "slug": "xarada_riddlers_ufla_2024",
+      "tag": "XARADA",
+      "displayName": "XARADA RIDDLERS - UFLA",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "",
+      "stateName": "",
+      "stateFlag": "",
+      "stateRegion": "",
+      "colors": [
+        "#8c239f",
+        "#475918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "xxii_setembro_fatec",
@@ -7209,7 +8723,9 @@
         "univasf"
       ],
       "nickHistory": [
-        "Falcão#0604"
+        "Falcão#0604",
+        "YanF99",
+        "YanF 99#VASF"
       ],
       "photo": ""
     },
@@ -7262,19 +8778,6 @@
       ],
       "nickHistory": [
         "GregoZin#six"
-      ],
-      "photo": ""
-    },
-    {
-      "id": "YanF99",
-      "name": "YanF99",
-      "puuid": "",
-      "currentTeam": "univasf",
-      "teamHistory": [
-        "univasf"
-      ],
-      "nickHistory": [
-        "YanF 99#VASF"
       ],
       "photo": ""
     },
@@ -9330,12 +10833,17 @@
       "id": "1nmhN0S2u4JzoKP73lIbGT0enWuVOWXo3SIzSsV0xiWvMYmxEv9xHfS1mneIj2zSm0iUc7RM6KrKEg",
       "name": "Raap",
       "puuid": "1nmhN0S2u4JzoKP73lIbGT0enWuVOWXo3SIzSsV0xiWvMYmxEv9xHfS1mneIj2zSm0iUc7RM6KrKEg",
+      "accounts": [
+        "1nmhN0S2u4JzoKP73lIbGT0enWuVOWXo3SIzSsV0xiWvMYmxEv9xHfS1mneIj2zSm0iUc7RM6KrKEg",
+        "ty3NhgpIaClrHVBUEpUosQHXYwnHSnJIH06FqgNTPo6fT_7H1GdiIb5499eAgLGCCNOLmfv1nX2pag"
+      ],
       "currentTeam": "ufg_eagles",
       "teamHistory": [
         "ufg_eagles"
       ],
       "nickHistory": [
-        "RaaP#barbs"
+        "RaaP#barbs",
+        "wow#dada"
       ],
       "photo": ""
     },
@@ -13820,7 +15328,8 @@
       "puuid": "6Ny-jKzYdIG6NNcruXAnjCT3wMCc3SUoJh6cAYPPFxD483ZkQLzZ1k8cEqgnmB5ZmtkjBhcFQ7tJ3A",
       "accounts": [
         "6Ny-jKzYdIG6NNcruXAnjCT3wMCc3SUoJh6cAYPPFxD483ZkQLzZ1k8cEqgnmB5ZmtkjBhcFQ7tJ3A",
-        "HP4bJimjIloPUdKaUbwD2w8GWxV5sEzIqKA_1lbu_r-GYuUYTN8xGccPtJUQXbKfCo2i6Tt-748fLw"
+        "HP4bJimjIloPUdKaUbwD2w8GWxV5sEzIqKA_1lbu_r-GYuUYTN8xGccPtJUQXbKfCo2i6Tt-748fLw",
+        "JAShDH59aK-5Pu2LlHTCf-K6q47HXDoKbybr5_dYsHQxUsqlmbq86nafQXY-2FlUHTDrOAbXqvzFOw"
       ],
       "currentTeam": "azure_bears_golden",
       "teamHistory": [
@@ -13828,7 +15337,9 @@
       ],
       "nickHistory": [
         "greiN#quel",
-        "AZR greinzera#quel"
+        "AZR greinzera#quel",
+        "japa918",
+        "japa918#ysl"
       ],
       "photo": "assets/player-photos/azure_bears/greinzera_new.png"
     },
@@ -20157,19 +21668,6 @@
       "photo": ""
     },
     {
-      "id": "JAShDH59aK-5Pu2LlHTCf-K6q47HXDoKbybr5_dYsHQxUsqlmbq86nafQXY-2FlUHTDrOAbXqvzFOw",
-      "name": "japa918",
-      "puuid": "JAShDH59aK-5Pu2LlHTCf-K6q47HXDoKbybr5_dYsHQxUsqlmbq86nafQXY-2FlUHTDrOAbXqvzFOw",
-      "currentTeam": "",
-      "teamHistory": [
-        "azure_bears_golden"
-      ],
-      "nickHistory": [
-        "japa918#ysl"
-      ],
-      "photo": ""
-    },
-    {
       "id": "QKmCek2jBgMX5t0JTgWy-2nETUYXciLnK-VPyrT3JJicl1Yg7QYyvDB9sHqHmdeaBV3_wn9Rzpw4Bg",
       "name": "Joapp10",
       "puuid": "QKmCek2jBgMX5t0JTgWy-2nETUYXciLnK-VPyrT3JJicl1Yg7QYyvDB9sHqHmdeaBV3_wn9Rzpw4Bg",
@@ -22162,6 +23660,17 @@
         "Barry Allen#LDJ"
       ],
       "photo": ""
+    },
+    {
+      "id": "KüruK",
+      "name": "KüruK",
+      "puuid": "",
+      "currentTeam": "",
+      "teamHistory": [
+        "unesa_cyborgs"
+      ],
+      "nickHistory": [],
+      "photo": ""
     }
   ],
   "states": [
@@ -22645,200 +24154,200 @@
       "state": "1v1",
       "allies": 1,
       "enemies": 1,
-      "occurrences": "11412",
-      "wins": "5706",
+      "occurrences": "14750",
+      "wins": "7375",
       "winRate": 0.5
     },
     {
       "state": "1v2",
       "allies": 1,
       "enemies": 2,
-      "occurrences": "14214",
-      "wins": "2232",
-      "winRate": 0.1570282819755171
+      "occurrences": "18391",
+      "wins": "2951",
+      "winRate": 0.16045892012397367
     },
     {
       "state": "1v3",
       "allies": 1,
       "enemies": 3,
-      "occurrences": "14927",
-      "wins": "550",
-      "winRate": 0.036845983787767135
+      "occurrences": "19313",
+      "wins": "725",
+      "winRate": 0.03753948117848081
     },
     {
       "state": "1v4",
       "allies": 1,
       "enemies": 4,
-      "occurrences": "11955",
-      "wins": "98",
-      "winRate": 0.008197406942701798
+      "occurrences": "15372",
+      "wins": "131",
+      "winRate": 0.008521988030184752
     },
     {
       "state": "1v5",
       "allies": 1,
       "enemies": 5,
-      "occurrences": "5517",
-      "wins": "15",
-      "winRate": 0.0027188689505165853
+      "occurrences": "7082",
+      "wins": "16",
+      "winRate": 0.0022592487997740753
     },
     {
       "state": "2v1",
       "allies": 2,
       "enemies": 1,
-      "occurrences": "14214",
-      "wins": "11982",
-      "winRate": 0.8429717180244829
+      "occurrences": "18391",
+      "wins": "15440",
+      "winRate": 0.8395410798760263
     },
     {
       "state": "2v2",
       "allies": 2,
       "enemies": 2,
-      "occurrences": "17274",
-      "wins": "8637",
+      "occurrences": "22392",
+      "wins": "11196",
       "winRate": 0.5
     },
     {
       "state": "2v3",
       "allies": 2,
       "enemies": 3,
-      "occurrences": "19222",
-      "wins": "4106",
-      "winRate": 0.21360940588908542
+      "occurrences": "24877",
+      "wins": "5306",
+      "winRate": 0.21328938376813925
     },
     {
       "state": "2v4",
       "allies": 2,
       "enemies": 4,
-      "occurrences": "17539",
-      "wins": "1307",
-      "winRate": 0.0745196419408176
+      "occurrences": "22529",
+      "wins": "1683",
+      "winRate": 0.07470371521150516
     },
     {
       "state": "2v5",
       "allies": 2,
       "enemies": 5,
-      "occurrences": "9785",
-      "wins": "215",
-      "winRate": 0.021972406745017884
+      "occurrences": "12581",
+      "wins": "277",
+      "winRate": 0.022017327716397743
     },
     {
       "state": "3v1",
       "allies": 3,
       "enemies": 1,
-      "occurrences": "14927",
-      "wins": "14377",
-      "winRate": 0.9631540162122328
+      "occurrences": "19313",
+      "wins": "18588",
+      "winRate": 0.9624605188215192
     },
     {
       "state": "3v2",
       "allies": 3,
       "enemies": 2,
-      "occurrences": "19222",
-      "wins": "15116",
-      "winRate": 0.7863905941109146
+      "occurrences": "24877",
+      "wins": "19571",
+      "winRate": 0.7867106162318608
     },
     {
       "state": "3v3",
       "allies": 3,
       "enemies": 3,
-      "occurrences": "23350",
-      "wins": "11675",
+      "occurrences": "30328",
+      "wins": "15164",
       "winRate": 0.5
     },
     {
       "state": "3v4",
       "allies": 3,
       "enemies": 4,
-      "occurrences": "25091",
-      "wins": "6438",
-      "winRate": 0.25658602686222154
+      "occurrences": "32375",
+      "wins": "8300",
+      "winRate": 0.25637065637065637
     },
     {
       "state": "3v5",
       "allies": 3,
       "enemies": 5,
-      "occurrences": "18071",
-      "wins": "1952",
-      "winRate": 0.10801837197720104
+      "occurrences": "23242",
+      "wins": "2529",
+      "winRate": 0.10881163411066173
     },
     {
       "state": "4v1",
       "allies": 4,
       "enemies": 1,
-      "occurrences": "11955",
-      "wins": "11857",
-      "winRate": 0.9918025930572982
+      "occurrences": "15372",
+      "wins": "15241",
+      "winRate": 0.9914780119698152
     },
     {
       "state": "4v2",
       "allies": 4,
       "enemies": 2,
-      "occurrences": "17539",
-      "wins": "16232",
-      "winRate": 0.9254803580591824
+      "occurrences": "22529",
+      "wins": "20846",
+      "winRate": 0.9252962847884948
     },
     {
       "state": "4v3",
       "allies": 4,
       "enemies": 3,
-      "occurrences": "25091",
-      "wins": "18653",
-      "winRate": 0.7434139731377785
+      "occurrences": "32375",
+      "wins": "24075",
+      "winRate": 0.7436293436293436
     },
     {
       "state": "4v4",
       "allies": 4,
       "enemies": 4,
-      "occurrences": "33762",
-      "wins": "16881",
+      "occurrences": "43600",
+      "wins": "21800",
       "winRate": 0.5
     },
     {
       "state": "4v5",
       "allies": 4,
       "enemies": 5,
-      "occurrences": "34957",
-      "wins": "9966",
-      "winRate": 0.2850931143976886
+      "occurrences": "45047",
+      "wins": "12840",
+      "winRate": 0.2850356294536817
     },
     {
       "state": "5v1",
       "allies": 5,
       "enemies": 1,
-      "occurrences": "5517",
-      "wins": "5502",
-      "winRate": 0.9972811310494835
+      "occurrences": "7082",
+      "wins": "7066",
+      "winRate": 0.9977407512002259
     },
     {
       "state": "5v2",
       "allies": 5,
       "enemies": 2,
-      "occurrences": "9785",
-      "wins": "9570",
-      "winRate": 0.9780275932549821
+      "occurrences": "12581",
+      "wins": "12304",
+      "winRate": 0.9779826722836023
     },
     {
       "state": "5v3",
       "allies": 5,
       "enemies": 3,
-      "occurrences": "18071",
-      "wins": "16119",
-      "winRate": 0.891981628022799
+      "occurrences": "23242",
+      "wins": "20713",
+      "winRate": 0.8911883658893383
     },
     {
       "state": "5v4",
       "allies": 5,
       "enemies": 4,
-      "occurrences": "34957",
-      "wins": "24991",
-      "winRate": 0.7149068856023114
+      "occurrences": "45047",
+      "wins": "32207",
+      "winRate": 0.7149643705463183
     },
     {
       "state": "5v5",
       "allies": 5,
       "enemies": 5,
-      "occurrences": "69928",
-      "wins": "34964",
+      "occurrences": "90140",
+      "wins": "45070",
       "winRate": 0.5
     }
   ]

@@ -264,6 +264,8163 @@ const FILENAME_TEAM_ALIASES = {
 };
 
 const TOURNAMENT_OVERRIDES = {
+  "alianca-2024-classificatoria-1": {
+    "name": "Copa Aliança 2024.1 - Classificatória 1",
+    "organizer": "AcadArena",
+    "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
+    "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
+    "logo": "assets/tournament-icons/copa_alianca.png",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 44,
+    "teams": [
+      "azure_bears_black",
+      "unb_green_olws_line_red_2024",
+      "ufu_saints",
+      "azure_bears_golden",
+      "uninassau_griffins",
+      "macklogic_red",
+      "maua_esports_black_2024",
+      "espm_overbite_misto",
+      "fei_esports_valorant_2024",
+      "ufg_eagles",
+      "fatec_ornyx_2024",
+      "ufmt_turuna",
+      "aufa_line_b_2024",
+      "poli_plague_gold_2024",
+      "aufa_line_a_2024",
+      "minerva_esports_ufrj_inclusivo_2024",
+      "ufmg_fenix_b",
+      "oktoplus_gaming_cefet_mg_2024",
+      "caaso_hogs_usp_2024",
+      "laurp_royal_ps_orange_2024",
+      "poli_plague_silver_echo_2024",
+      "fgv_alligators_valorant_2024",
+      "caap_hellhounds",
+      "ufg_eagles_black_2024",
+      "usp_cronos_2024",
+      "minerva_esports_misto_2024",
+      "usf_e_sports_2024",
+      "ufscar_fire",
+      "xarada_riddlers_ufla_2024",
+      "ibtec_2024",
+      "ufpr_bbn",
+      "usf_paragons_2024",
+      "unirio_krakens",
+      "madness_ufop_2024",
+      "unicamp_tritons_black",
+      "furia_utfpr",
+      "unb_black",
+      "unifesp_knights_2024",
+      "raposa_e_sports",
+      "ovb_purple_2024",
+      "inatel_white",
+      "cyber_kongs_dourada_2024",
+      "liga_atletica_unisinos_lau_2024",
+      "poli_plague_silver_delta_2024"
+    ],
+    "teamNames": {
+      "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
+      "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
+      "ufu_saints": "UFU Saints",
+      "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
+      "uninassau_griffins": "Uninassau Griffins",
+      "macklogic_red": "MackLogic",
+      "maua_esports_black_2024": "Mauá Esports Black",
+      "espm_overbite_misto": "ESPM Overbite Valorant M.",
+      "fei_esports_valorant_2024": "FEI eSports Valorant",
+      "ufg_eagles": "UFG Eagles",
+      "fatec_ornyx_2024": "FATEC Ornyx",
+      "ufmt_turuna": "UFMT Turuna",
+      "aufa_line_b_2024": "AUFA LINE B",
+      "poli_plague_gold_2024": "Poli Plague Gold",
+      "aufa_line_a_2024": "AUFA LINE A",
+      "minerva_esports_ufrj_inclusivo_2024": "Minerva eSports UFRJ INCLUSIVO",
+      "ufmg_fenix_b": "UFMG Fênix Valorant",
+      "oktoplus_gaming_cefet_mg_2024": "Oktoplus Gaming - CEFET-MG",
+      "caaso_hogs_usp_2024": "Caaso Hogs - USP",
+      "laurp_royal_ps_orange_2024": "LAURP Royal PS Orange",
+      "poli_plague_silver_echo_2024": "POLI Plague Silver Echo",
+      "fgv_alligators_valorant_2024": "FGV Alligators Valorant",
+      "caap_hellhounds": "CAAP Hellhounds",
+      "ufg_eagles_black_2024": "UFG Eagles Black",
+      "usp_cronos_2024": "USP Cronos",
+      "minerva_esports_misto_2024": "Minerva eSports MISTO",
+      "usf_e_sports_2024": "Usf E-sports",
+      "ufscar_fire": "UFSCar FIRE VALORANT",
+      "xarada_riddlers_ufla_2024": "XARADA RIDDLERS - UFLA",
+      "ibtec_2024": "IBTEC",
+      "ufpr_bbn": "Burning Bunnies UFPR",
+      "usf_paragons_2024": "USF Paragons",
+      "unirio_krakens": "Kraken - Unirio",
+      "madness_ufop_2024": "MADNESS - UFOP",
+      "unicamp_tritons_black": "UNICAMP Tritons",
+      "furia_utfpr": "FURIA VALORANT",
+      "unb_black": "UNB Green Owls Black",
+      "unifesp_knights_2024": "Unifesp Knights",
+      "raposa_e_sports": "Raposa eSports",
+      "ovb_purple_2024": "OVB Purple",
+      "inatel_white": "Inatel White",
+      "cyber_kongs_dourada_2024": "Cyber Kongs Dourada",
+      "liga_atletica_unisinos_lau_2024": "Liga Atlética Unisinos - LAU",
+      "poli_plague_silver_delta_2024": "POLI Plague Silver Delta"
+    },
+    "mapPool": [
+      "Ascent",
+      "Bind",
+      "Breeze",
+      "Icebox",
+      "Lotus",
+      "Split",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Eliminação dupla classificatória",
+      "details": [
+        "Classificatória em eliminação dupla.",
+        "Resultados da plataforma preservados nas séries sem estatísticas."
+      ],
+      "standings": "Classificação oficial"
+    },
+    "placements": [],
+    "seriesResults": {},
+    "startAt": "2024-04-20T16:13:50.878Z",
+    "endAt": "2024-04-22T14:38:44.44Z",
+    "bracket": {
+      "title": "Eliminação dupla classificatória",
+      "regions": [
+        {
+          "name": "Final",
+          "layout": "linked",
+          "stage": "playoffs",
+          "columns": [
+            {
+              "title": "Final - Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 1",
+                  "seriesCode": 1,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_golden",
+                  "b": "caaso_hogs_usp_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Chave superior",
+          "layout": "linked",
+          "stage": "playoffs",
+          "columns": [
+            {
+              "title": "Chave superior - Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 2",
+                  "seriesCode": 2,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_golden",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 3",
+                  "seriesCode": 3,
+                  "bestOf": "MD1",
+                  "a": "aufa_line_b_2024",
+                  "b": "aufa_line_a_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "aufa_line_a_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 4",
+                  "seriesCode": 4,
+                  "bestOf": "MD1",
+                  "a": "ufu_saints",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 5",
+                  "seriesCode": 5,
+                  "bestOf": "MD1",
+                  "a": "laurp_royal_ps_orange_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 6",
+                  "seriesCode": 6,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 7",
+                  "seriesCode": 7,
+                  "bestOf": "MD1",
+                  "a": "unifesp_knights_2024",
+                  "b": "fei_esports_valorant_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "fei_esports_valorant_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 8",
+                  "seriesCode": 8,
+                  "bestOf": "MD1",
+                  "a": "usf_e_sports_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 9",
+                  "seriesCode": 9,
+                  "bestOf": "MD1",
+                  "a": "ufscar_fire",
+                  "b": "minerva_esports_misto_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufscar_fire"
+                },
+                {
+                  "code": "Partida 10",
+                  "seriesCode": 10,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 11",
+                  "seriesCode": 11,
+                  "bestOf": "MD1",
+                  "a": "fgv_alligators_valorant_2024",
+                  "b": "ovb_purple_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "fgv_alligators_valorant_2024"
+                },
+                {
+                  "code": "Partida 12",
+                  "seriesCode": 12,
+                  "bestOf": "MD1",
+                  "a": "fatec_ornyx_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 13",
+                  "seriesCode": 13,
+                  "bestOf": "MD1",
+                  "a": "unb_green_olws_line_red_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 14",
+                  "seriesCode": 14,
+                  "bestOf": "MD1",
+                  "a": "maua_esports_black_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 15",
+                  "seriesCode": 15,
+                  "bestOf": "MD1",
+                  "a": "poli_plague_silver_echo_2024",
+                  "b": "ibtec_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "ibtec_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 16",
+                  "seriesCode": 16,
+                  "bestOf": "MD1",
+                  "a": "uninassau_griffins",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 17",
+                  "seriesCode": 17,
+                  "bestOf": "MD1",
+                  "a": "usp_cronos_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 18",
+                  "seriesCode": 18,
+                  "bestOf": "MD1",
+                  "a": "xarada_riddlers_ufla_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 19",
+                  "seriesCode": 19,
+                  "bestOf": "MD1",
+                  "a": "raposa_e_sports",
+                  "b": "unirio_krakens",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "raposa_e_sports",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 20",
+                  "seriesCode": 20,
+                  "bestOf": "MD1",
+                  "a": "furia_utfpr",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 21",
+                  "seriesCode": 21,
+                  "bestOf": "MD1",
+                  "a": "macklogic_red",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 22",
+                  "seriesCode": 22,
+                  "bestOf": "MD1",
+                  "a": "caap_hellhounds",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 23",
+                  "seriesCode": 23,
+                  "bestOf": "MD1",
+                  "a": "minerva_esports_ufrj_inclusivo_2024",
+                  "b": "ufpr_bbn",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "minerva_esports_ufrj_inclusivo_2024"
+                },
+                {
+                  "code": "Partida 24",
+                  "seriesCode": 24,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_black",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 25",
+                  "seriesCode": 25,
+                  "bestOf": "MD1",
+                  "a": "usf_paragons_2024",
+                  "b": "ufmt_turuna",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "ufmt_turuna"
+                },
+                {
+                  "code": "Partida 26",
+                  "seriesCode": 26,
+                  "bestOf": "MD1",
+                  "a": "unb_black",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 27",
+                  "seriesCode": 27,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles_black_2024",
+                  "b": "madness_ufop_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufg_eagles_black_2024"
+                },
+                {
+                  "code": "Partida 28",
+                  "seriesCode": 28,
+                  "bestOf": "MD1",
+                  "a": "unicamp_tritons_black",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 29",
+                  "seriesCode": 29,
+                  "bestOf": "MD1",
+                  "a": "poli_plague_gold_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 30",
+                  "seriesCode": 30,
+                  "bestOf": "MD1",
+                  "a": "cyber_kongs_dourada_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 31",
+                  "seriesCode": 31,
+                  "bestOf": "MD1",
+                  "a": "ufmg_fenix_b",
+                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "oktoplus_gaming_cefet_mg_2024"
+                },
+                {
+                  "code": "Partida 32",
+                  "seriesCode": 32,
+                  "bestOf": "MD1",
+                  "a": "caaso_hogs_usp_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 33",
+                  "seriesCode": 33,
+                  "bestOf": "MD1",
+                  "a": "espm_overbite_misto",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 2",
+              "matches": [
+                {
+                  "code": "Partida 34",
+                  "seriesCode": 34,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_golden",
+                  "b": "aufa_line_a_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden"
+                },
+                {
+                  "code": "Partida 35",
+                  "seriesCode": 35,
+                  "bestOf": "MD1",
+                  "a": "ufu_saints",
+                  "b": "laurp_royal_ps_orange_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufu_saints"
+                },
+                {
+                  "code": "Partida 36",
+                  "seriesCode": 36,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles",
+                  "b": "fei_esports_valorant_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufg_eagles"
+                },
+                {
+                  "code": "Partida 37",
+                  "seriesCode": 37,
+                  "bestOf": "MD1",
+                  "a": "usf_e_sports_2024",
+                  "b": "ufscar_fire",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "ufscar_fire",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 38",
+                  "seriesCode": 38,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "b": "fgv_alligators_valorant_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "inatel_white"
+                },
+                {
+                  "code": "Partida 39",
+                  "seriesCode": 39,
+                  "bestOf": "MD1",
+                  "a": "fatec_ornyx_2024",
+                  "b": "unb_green_olws_line_red_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "unb_green_olws_line_red_2024"
+                },
+                {
+                  "code": "Partida 40",
+                  "seriesCode": 40,
+                  "bestOf": "MD1",
+                  "a": "maua_esports_black_2024",
+                  "b": "ibtec_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "maua_esports_black_2024"
+                },
+                {
+                  "code": "Partida 41",
+                  "seriesCode": 41,
+                  "bestOf": "MD1",
+                  "a": "uninassau_griffins",
+                  "b": "usp_cronos_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 42",
+                  "seriesCode": 42,
+                  "bestOf": "MD1",
+                  "a": "xarada_riddlers_ufla_2024",
+                  "b": "raposa_e_sports",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "raposa_e_sports"
+                },
+                {
+                  "code": "Partida 43",
+                  "seriesCode": 43,
+                  "bestOf": "MD1",
+                  "a": "furia_utfpr",
+                  "b": "macklogic_red",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "macklogic_red"
+                },
+                {
+                  "code": "Partida 44",
+                  "seriesCode": 44,
+                  "bestOf": "MD1",
+                  "a": "caap_hellhounds",
+                  "b": "minerva_esports_ufrj_inclusivo_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds"
+                },
+                {
+                  "code": "Partida 45",
+                  "seriesCode": 45,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_black",
+                  "b": "ufmt_turuna",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "azure_bears_black"
+                },
+                {
+                  "code": "Partida 46",
+                  "seriesCode": 46,
+                  "bestOf": "MD1",
+                  "a": "unb_black",
+                  "b": "ufg_eagles_black_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "ufg_eagles_black_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 47",
+                  "seriesCode": 47,
+                  "bestOf": "MD1",
+                  "a": "unicamp_tritons_black",
+                  "b": "poli_plague_gold_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "unicamp_tritons_black"
+                },
+                {
+                  "code": "Partida 48",
+                  "seriesCode": 48,
+                  "bestOf": "MD1",
+                  "a": "cyber_kongs_dourada_2024",
+                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "cyber_kongs_dourada_2024"
+                },
+                {
+                  "code": "Partida 49",
+                  "seriesCode": 49,
+                  "bestOf": "MD1",
+                  "a": "caaso_hogs_usp_2024",
+                  "b": "espm_overbite_misto",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "caaso_hogs_usp_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 3",
+              "matches": [
+                {
+                  "code": "Partida 50",
+                  "seriesCode": 50,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_golden",
+                  "b": "ufu_saints",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden"
+                },
+                {
+                  "code": "Partida 51",
+                  "seriesCode": 51,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles",
+                  "b": "ufscar_fire",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufg_eagles"
+                },
+                {
+                  "code": "Partida 52",
+                  "seriesCode": 52,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "b": "unb_green_olws_line_red_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "inatel_white"
+                },
+                {
+                  "code": "Partida 53",
+                  "seriesCode": 53,
+                  "bestOf": "MD1",
+                  "a": "maua_esports_black_2024",
+                  "b": "uninassau_griffins",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "maua_esports_black_2024"
+                },
+                {
+                  "code": "Partida 54",
+                  "seriesCode": 54,
+                  "bestOf": "MD1",
+                  "a": "raposa_e_sports",
+                  "b": "macklogic_red",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "macklogic_red"
+                },
+                {
+                  "code": "Partida 55",
+                  "seriesCode": 55,
+                  "bestOf": "MD1",
+                  "a": "caap_hellhounds",
+                  "b": "azure_bears_black",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds"
+                },
+                {
+                  "code": "Partida 56",
+                  "seriesCode": 56,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles_black_2024",
+                  "b": "unicamp_tritons_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "unicamp_tritons_black"
+                },
+                {
+                  "code": "Partida 57",
+                  "seriesCode": 57,
+                  "bestOf": "MD1",
+                  "a": "cyber_kongs_dourada_2024",
+                  "b": "caaso_hogs_usp_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "caaso_hogs_usp_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 4",
+              "matches": [
+                {
+                  "code": "Partida 58",
+                  "seriesCode": 58,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_golden",
+                  "b": "ufg_eagles",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden"
+                },
+                {
+                  "code": "Partida 59",
+                  "seriesCode": 59,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "b": "maua_esports_black_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "maua_esports_black_2024"
+                },
+                {
+                  "code": "Partida 60",
+                  "seriesCode": 60,
+                  "bestOf": "MD1",
+                  "a": "macklogic_red",
+                  "b": "caap_hellhounds",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "caap_hellhounds"
+                },
+                {
+                  "code": "Partida 61",
+                  "seriesCode": 61,
+                  "bestOf": "MD1",
+                  "a": "unicamp_tritons_black",
+                  "b": "caaso_hogs_usp_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "caaso_hogs_usp_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 5",
+              "matches": [
+                {
+                  "code": "Partida 62",
+                  "seriesCode": 62,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_golden",
+                  "b": "maua_esports_black_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden"
+                },
+                {
+                  "code": "Partida 63",
+                  "seriesCode": 63,
+                  "bestOf": "MD1",
+                  "a": "caap_hellhounds",
+                  "b": "caaso_hogs_usp_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds"
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 6",
+              "matches": [
+                {
+                  "code": "Partida 64",
+                  "seriesCode": 64,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_golden",
+                  "b": "caap_hellhounds",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Chave inferior",
+          "layout": "linked",
+          "stage": "playoffs",
+          "columns": [
+            {
+              "title": "Chave inferior - Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 65",
+                  "seriesCode": 65,
+                  "bestOf": "MD1",
+                  "b": "aufa_line_b_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 67",
+                  "seriesCode": 67,
+                  "bestOf": "MD1",
+                  "b": "unifesp_knights_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 68",
+                  "seriesCode": 68,
+                  "bestOf": "MD1",
+                  "b": "minerva_esports_misto_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 69",
+                  "seriesCode": 69,
+                  "bestOf": "MD1",
+                  "b": "ovb_purple_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 71",
+                  "seriesCode": 71,
+                  "bestOf": "MD1",
+                  "b": "poli_plague_silver_echo_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 73",
+                  "seriesCode": 73,
+                  "bestOf": "MD1",
+                  "b": "unirio_krakens",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 75",
+                  "seriesCode": 75,
+                  "bestOf": "MD1",
+                  "b": "ufpr_bbn",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 76",
+                  "seriesCode": 76,
+                  "bestOf": "MD1",
+                  "b": "usf_paragons_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 77",
+                  "seriesCode": 77,
+                  "bestOf": "MD1",
+                  "b": "madness_ufop_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 79",
+                  "seriesCode": 79,
+                  "bestOf": "MD1",
+                  "b": "ufmg_fenix_b",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 2",
+              "matches": [
+                {
+                  "code": "Partida 81",
+                  "seriesCode": 81,
+                  "bestOf": "MD1",
+                  "a": "espm_overbite_misto",
+                  "b": "aufa_line_b_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "espm_overbite_misto"
+                },
+                {
+                  "code": "Partida 82",
+                  "seriesCode": 82,
+                  "bestOf": "MD1",
+                  "a": "oktoplus_gaming_cefet_mg_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 83",
+                  "seriesCode": 83,
+                  "bestOf": "MD1",
+                  "a": "poli_plague_gold_2024",
+                  "b": "unifesp_knights_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "poli_plague_gold_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 84",
+                  "seriesCode": 84,
+                  "bestOf": "MD1",
+                  "a": "unb_black",
+                  "b": "minerva_esports_misto_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "minerva_esports_misto_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 85",
+                  "seriesCode": 85,
+                  "bestOf": "MD1",
+                  "a": "ufmt_turuna",
+                  "b": "ovb_purple_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufmt_turuna"
+                },
+                {
+                  "code": "Partida 86",
+                  "seriesCode": 86,
+                  "bestOf": "MD1",
+                  "a": "minerva_esports_ufrj_inclusivo_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 87",
+                  "seriesCode": 87,
+                  "bestOf": "MD1",
+                  "a": "furia_utfpr",
+                  "b": "poli_plague_silver_echo_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "furia_utfpr",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 88",
+                  "seriesCode": 88,
+                  "bestOf": "MD1",
+                  "a": "xarada_riddlers_ufla_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 89",
+                  "seriesCode": 89,
+                  "bestOf": "MD1",
+                  "a": "usp_cronos_2024",
+                  "b": "unirio_krakens",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "usp_cronos_2024"
+                },
+                {
+                  "code": "Partida 90",
+                  "seriesCode": 90,
+                  "bestOf": "MD1",
+                  "a": "ibtec_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 91",
+                  "seriesCode": 91,
+                  "bestOf": "MD1",
+                  "a": "fatec_ornyx_2024",
+                  "b": "ufpr_bbn",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "fatec_ornyx_2024"
+                },
+                {
+                  "code": "Partida 92",
+                  "seriesCode": 92,
+                  "bestOf": "MD1",
+                  "a": "fgv_alligators_valorant_2024",
+                  "b": "usf_paragons_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "fgv_alligators_valorant_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 93",
+                  "seriesCode": 93,
+                  "bestOf": "MD1",
+                  "a": "usf_e_sports_2024",
+                  "b": "madness_ufop_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "madness_ufop_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 94",
+                  "seriesCode": 94,
+                  "bestOf": "MD1",
+                  "a": "fei_esports_valorant_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 95",
+                  "seriesCode": 95,
+                  "bestOf": "MD1",
+                  "a": "laurp_royal_ps_orange_2024",
+                  "b": "ufmg_fenix_b",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "laurp_royal_ps_orange_2024"
+                },
+                {
+                  "code": "Partida 96",
+                  "seriesCode": 96,
+                  "bestOf": "MD1",
+                  "a": "aufa_line_a_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 3",
+              "matches": [
+                {
+                  "code": "Partida 97",
+                  "seriesCode": 97,
+                  "bestOf": "MD1",
+                  "a": "espm_overbite_misto",
+                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "espm_overbite_misto"
+                },
+                {
+                  "code": "Partida 98",
+                  "seriesCode": 98,
+                  "bestOf": "MD1",
+                  "a": "poli_plague_gold_2024",
+                  "b": "minerva_esports_misto_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "poli_plague_gold_2024"
+                },
+                {
+                  "code": "Partida 99",
+                  "seriesCode": 99,
+                  "bestOf": "MD1",
+                  "a": "ufmt_turuna",
+                  "b": "minerva_esports_ufrj_inclusivo_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufmt_turuna"
+                },
+                {
+                  "code": "Partida 100",
+                  "seriesCode": 100,
+                  "bestOf": "MD1",
+                  "a": "furia_utfpr",
+                  "b": "xarada_riddlers_ufla_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "xarada_riddlers_ufla_2024"
+                },
+                {
+                  "code": "Partida 101",
+                  "seriesCode": 101,
+                  "bestOf": "MD1",
+                  "a": "usp_cronos_2024",
+                  "b": "ibtec_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "usp_cronos_2024"
+                },
+                {
+                  "code": "Partida 102",
+                  "seriesCode": 102,
+                  "bestOf": "MD1",
+                  "a": "fatec_ornyx_2024",
+                  "b": "fgv_alligators_valorant_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "fatec_ornyx_2024"
+                },
+                {
+                  "code": "Partida 103",
+                  "seriesCode": 103,
+                  "bestOf": "MD1",
+                  "a": "madness_ufop_2024",
+                  "b": "fei_esports_valorant_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "fei_esports_valorant_2024"
+                },
+                {
+                  "code": "Partida 104",
+                  "seriesCode": 104,
+                  "bestOf": "MD1",
+                  "a": "laurp_royal_ps_orange_2024",
+                  "b": "aufa_line_a_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "laurp_royal_ps_orange_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 4",
+              "matches": [
+                {
+                  "code": "Partida 105",
+                  "seriesCode": 105,
+                  "bestOf": "MD1",
+                  "a": "ufu_saints",
+                  "b": "espm_overbite_misto",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufu_saints"
+                },
+                {
+                  "code": "Partida 106",
+                  "seriesCode": 106,
+                  "bestOf": "MD1",
+                  "a": "ufscar_fire",
+                  "b": "poli_plague_gold_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "poli_plague_gold_2024"
+                },
+                {
+                  "code": "Partida 107",
+                  "seriesCode": 107,
+                  "bestOf": "MD1",
+                  "a": "unb_green_olws_line_red_2024",
+                  "b": "ufmt_turuna",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "unb_green_olws_line_red_2024"
+                },
+                {
+                  "code": "Partida 108",
+                  "seriesCode": 108,
+                  "bestOf": "MD1",
+                  "a": "uninassau_griffins",
+                  "b": "xarada_riddlers_ufla_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 109",
+                  "seriesCode": 109,
+                  "bestOf": "MD1",
+                  "a": "raposa_e_sports",
+                  "b": "usp_cronos_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "usp_cronos_2024"
+                },
+                {
+                  "code": "Partida 110",
+                  "seriesCode": 110,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_black",
+                  "b": "fatec_ornyx_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "azure_bears_black"
+                },
+                {
+                  "code": "Partida 111",
+                  "seriesCode": 111,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles_black_2024",
+                  "b": "fei_esports_valorant_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "fei_esports_valorant_2024"
+                },
+                {
+                  "code": "Partida 112",
+                  "seriesCode": 112,
+                  "bestOf": "MD1",
+                  "a": "cyber_kongs_dourada_2024",
+                  "b": "laurp_royal_ps_orange_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "cyber_kongs_dourada_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 5",
+              "matches": [
+                {
+                  "code": "Partida 113",
+                  "seriesCode": 113,
+                  "bestOf": "MD1",
+                  "a": "ufu_saints",
+                  "b": "poli_plague_gold_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "poli_plague_gold_2024"
+                },
+                {
+                  "code": "Partida 114",
+                  "seriesCode": 114,
+                  "bestOf": "MD1",
+                  "a": "unb_green_olws_line_red_2024",
+                  "b": "uninassau_griffins",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "unb_green_olws_line_red_2024"
+                },
+                {
+                  "code": "Partida 115",
+                  "seriesCode": 115,
+                  "bestOf": "MD1",
+                  "a": "usp_cronos_2024",
+                  "b": "azure_bears_black",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "usp_cronos_2024"
+                },
+                {
+                  "code": "Partida 116",
+                  "seriesCode": 116,
+                  "bestOf": "MD1",
+                  "a": "fei_esports_valorant_2024",
+                  "b": "cyber_kongs_dourada_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "cyber_kongs_dourada_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 6",
+              "matches": [
+                {
+                  "code": "Partida 117",
+                  "seriesCode": 117,
+                  "bestOf": "MD1",
+                  "a": "unicamp_tritons_black",
+                  "b": "poli_plague_gold_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "unicamp_tritons_black"
+                },
+                {
+                  "code": "Partida 118",
+                  "seriesCode": 118,
+                  "bestOf": "MD1",
+                  "a": "macklogic_red",
+                  "b": "unb_green_olws_line_red_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "unb_green_olws_line_red_2024"
+                },
+                {
+                  "code": "Partida 119",
+                  "seriesCode": 119,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "b": "usp_cronos_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "usp_cronos_2024"
+                },
+                {
+                  "code": "Partida 120",
+                  "seriesCode": 120,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles",
+                  "b": "cyber_kongs_dourada_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufg_eagles"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 7",
+              "matches": [
+                {
+                  "code": "Partida 121",
+                  "seriesCode": 121,
+                  "bestOf": "MD1",
+                  "a": "unicamp_tritons_black",
+                  "b": "unb_green_olws_line_red_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "unb_green_olws_line_red_2024"
+                },
+                {
+                  "code": "Partida 122",
+                  "seriesCode": 122,
+                  "bestOf": "MD1",
+                  "a": "usp_cronos_2024",
+                  "b": "ufg_eagles",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "ufg_eagles"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 8",
+              "matches": [
+                {
+                  "code": "Partida 123",
+                  "seriesCode": 123,
+                  "bestOf": "MD1",
+                  "a": "maua_esports_black_2024",
+                  "b": "unb_green_olws_line_red_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "unb_green_olws_line_red_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 124",
+                  "seriesCode": 124,
+                  "bestOf": "MD1",
+                  "a": "caaso_hogs_usp_2024",
+                  "b": "ufg_eagles",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "caaso_hogs_usp_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 9",
+              "matches": [
+                {
+                  "code": "Partida 125",
+                  "seriesCode": 125,
+                  "bestOf": "MD1",
+                  "a": "unb_green_olws_line_red_2024",
+                  "b": "caaso_hogs_usp_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "caaso_hogs_usp_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 10",
+              "matches": [
+                {
+                  "code": "Partida 126",
+                  "seriesCode": 126,
+                  "bestOf": "MD1",
+                  "a": "caap_hellhounds",
+                  "b": "caaso_hogs_usp_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "caaso_hogs_usp_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "alianca-2024-classificatoria-2": {
+    "name": "Copa Aliança 2024.1 - Classificatória 2",
+    "organizer": "AcadArena",
+    "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
+    "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
+    "logo": "assets/tournament-icons/copa_alianca.png",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 42,
+    "teams": [
+      "macklogic_red",
+      "azure_bears_black",
+      "azure_bears_white",
+      "inatel_white",
+      "unirio_krakens",
+      "unb_black",
+      "uninassau_griffins",
+      "ufu_saints",
+      "oktoplus_gaming_cefet_mg_2024",
+      "liga_atletica_unisinos_lau_2024",
+      "axis_anteaters_valorant_2024",
+      "ufscar_fire",
+      "raposa_e_sports",
+      "fatec_ornyx_2024",
+      "poli_plague_silver_echo_2024",
+      "furia_utfpr",
+      "fei_esports_valorant_2024",
+      "ufmg_fenix_b",
+      "puc_priests",
+      "puc_clerigos",
+      "poli_plague_gold_2024",
+      "laurp_royal_ps_orange_2024",
+      "atletica_unifei_2024",
+      "ufpr_bbn",
+      "ufmt_turuna",
+      "minerva_esports_ufrj_inclusivo_2024",
+      "unifei_calango_2024",
+      "atletica_unifei",
+      "unifesp_knights_2024",
+      "xarada_riddlers_ufla_2024",
+      "stings_ba_valorant_2024",
+      "ibtec_2024",
+      "usf_sports_2024",
+      "caap_hellhounds_black_2024",
+      "fgv_alligators_valorant_2024",
+      "atletica_unifei_6f52b4a1_2024",
+      "maua_rubi_2024",
+      "cyber_kongs_dourada_2024",
+      "espm_overbite_misto",
+      "facens_night_owls_2024",
+      "aufa_line_b_2024",
+      "minerva_esports_misto_2024"
+    ],
+    "teamNames": {
+      "macklogic_red": "MackLogic",
+      "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
+      "azure_bears_white": "Azure Bears UTFPR - White [VAL]",
+      "inatel_white": "Inatel White",
+      "unirio_krakens": "Kraken - Unirio",
+      "unb_black": "UNB Green Owls Black",
+      "uninassau_griffins": "Uninassau Griffins",
+      "ufu_saints": "UFU Saints",
+      "oktoplus_gaming_cefet_mg_2024": "Oktoplus Gaming - CEFET-MG",
+      "liga_atletica_unisinos_lau_2024": "Liga Atlética Unisinos - LAU",
+      "axis_anteaters_valorant_2024": "AXIS Anteaters - Valorant",
+      "ufscar_fire": "UFSCar FIRE VALORANT",
+      "raposa_e_sports": "Raposa eSports",
+      "fatec_ornyx_2024": "FATEC Ornyx",
+      "poli_plague_silver_echo_2024": "POLI Plague Silver Echo",
+      "furia_utfpr": "FURIA VALORANT",
+      "fei_esports_valorant_2024": "FEI eSports Valorant",
+      "ufmg_fenix_b": "UFMG Fênix Valorant",
+      "puc_priests": "Puc Priests Valorant",
+      "puc_clerigos": "Clérigos - PUC-Rio",
+      "poli_plague_gold_2024": "Poli Plague Gold",
+      "laurp_royal_ps_orange_2024": "LAURP Royal PS Orange",
+      "atletica_unifei_2024": "Atlética UNIFEI",
+      "ufpr_bbn": "Burning Bunnies UFPR",
+      "ufmt_turuna": "UFMT Turuna",
+      "minerva_esports_ufrj_inclusivo_2024": "Minerva eSports UFRJ INCLUSIVO",
+      "unifei_calango_2024": "UNIFEI Calango",
+      "atletica_unifei": "Atlética UNIFEI",
+      "unifesp_knights_2024": "Unifesp Knights",
+      "xarada_riddlers_ufla_2024": "XARADA RIDDLERS - UFLA",
+      "stings_ba_valorant_2024": "Stings BA Valorant",
+      "ibtec_2024": "IBTEC",
+      "usf_sports_2024": "USF Sports",
+      "caap_hellhounds_black_2024": "CAAP Hellhounds Black",
+      "fgv_alligators_valorant_2024": "FGV Alligators Valorant",
+      "atletica_unifei_6f52b4a1_2024": "Atlética UNIFEI",
+      "maua_rubi_2024": "Mauá Rubi",
+      "cyber_kongs_dourada_2024": "Cyber Kongs Dourada",
+      "espm_overbite_misto": "ESPM Overbite Valorant M.",
+      "facens_night_owls_2024": "FACENS NIGHT OWLS",
+      "aufa_line_b_2024": "AUFA LINE B",
+      "minerva_esports_misto_2024": "Minerva eSports MISTO"
+    },
+    "mapPool": [
+      "Ascent",
+      "Bind",
+      "Icebox",
+      "Lotus",
+      "Split",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Eliminação dupla classificatória",
+      "details": [
+        "Classificatória em eliminação dupla.",
+        "Resultados da plataforma preservados nas séries sem estatísticas."
+      ],
+      "standings": "Classificação oficial"
+    },
+    "placements": [],
+    "seriesResults": {},
+    "startAt": "2024-05-04T16:08:18.970Z",
+    "endAt": "2024-05-05T22:12:52.787Z",
+    "bracket": {
+      "title": "Eliminação dupla classificatória",
+      "regions": [
+        {
+          "name": "Final",
+          "layout": "linked",
+          "stage": "playoffs",
+          "columns": [
+            {
+              "title": "Final - Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 1",
+                  "seriesCode": 1,
+                  "bestOf": "MD1",
+                  "a": "macklogic_red",
+                  "b": "unb_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "unb_black"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Chave superior",
+          "layout": "linked",
+          "stage": "playoffs",
+          "columns": [
+            {
+              "title": "Chave superior - Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 2",
+                  "seriesCode": 2,
+                  "bestOf": "MD1",
+                  "a": "puc_priests",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 3",
+                  "seriesCode": 3,
+                  "bestOf": "MD1",
+                  "a": "raposa_e_sports",
+                  "b": "fei_esports_valorant_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "raposa_e_sports"
+                },
+                {
+                  "code": "Partida 4",
+                  "seriesCode": 4,
+                  "bestOf": "MD1",
+                  "a": "xarada_riddlers_ufla_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 5",
+                  "seriesCode": 5,
+                  "bestOf": "MD1",
+                  "a": "maua_rubi_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 6",
+                  "seriesCode": 6,
+                  "bestOf": "MD1",
+                  "a": "fgv_alligators_valorant_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 7",
+                  "seriesCode": 7,
+                  "bestOf": "MD1",
+                  "a": "oktoplus_gaming_cefet_mg_2024",
+                  "b": "azure_bears_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "azure_bears_black"
+                },
+                {
+                  "code": "Partida 8",
+                  "seriesCode": 8,
+                  "bestOf": "MD1",
+                  "a": "furia_utfpr",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 9",
+                  "seriesCode": 9,
+                  "bestOf": "MD1",
+                  "a": "laurp_royal_ps_orange_2024",
+                  "b": "axis_anteaters_valorant_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "laurp_royal_ps_orange_2024"
+                },
+                {
+                  "code": "Partida 10",
+                  "seriesCode": 10,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 11",
+                  "seriesCode": 11,
+                  "bestOf": "MD1",
+                  "a": "atletica_unifei_2024",
+                  "b": "poli_plague_gold_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "poli_plague_gold_2024"
+                },
+                {
+                  "code": "Partida 12",
+                  "seriesCode": 12,
+                  "bestOf": "MD1",
+                  "a": "ufu_saints",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 13",
+                  "seriesCode": 13,
+                  "bestOf": "MD1",
+                  "a": "atletica_unifei",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 14",
+                  "seriesCode": 14,
+                  "bestOf": "MD1",
+                  "a": "unb_black",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 15",
+                  "seriesCode": 15,
+                  "bestOf": "MD1",
+                  "a": "fatec_ornyx_2024",
+                  "b": "uninassau_griffins",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 16",
+                  "seriesCode": 16,
+                  "bestOf": "MD1",
+                  "a": "ufmt_turuna",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 17",
+                  "seriesCode": 17,
+                  "bestOf": "MD1",
+                  "a": "ufscar_fire",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 18",
+                  "seriesCode": 18,
+                  "bestOf": "MD1",
+                  "a": "espm_overbite_misto",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 19",
+                  "seriesCode": 19,
+                  "bestOf": "MD1",
+                  "a": "minerva_esports_misto_2024",
+                  "b": "poli_plague_silver_echo_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "minerva_esports_misto_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 20",
+                  "seriesCode": 20,
+                  "bestOf": "MD1",
+                  "a": "puc_clerigos",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 21",
+                  "seriesCode": 21,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_white",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 22",
+                  "seriesCode": 22,
+                  "bestOf": "MD1",
+                  "a": "liga_atletica_unisinos_lau_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 23",
+                  "seriesCode": 23,
+                  "bestOf": "MD1",
+                  "a": "atletica_unifei_6f52b4a1_2024",
+                  "b": "aufa_line_b_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "aufa_line_b_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 24",
+                  "seriesCode": 24,
+                  "bestOf": "MD1",
+                  "a": "ibtec_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 25",
+                  "seriesCode": 25,
+                  "bestOf": "MD1",
+                  "a": "ufpr_bbn",
+                  "b": "unifesp_knights_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufpr_bbn"
+                },
+                {
+                  "code": "Partida 26",
+                  "seriesCode": 26,
+                  "bestOf": "MD1",
+                  "a": "cyber_kongs_dourada_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 27",
+                  "seriesCode": 27,
+                  "bestOf": "MD1",
+                  "a": "minerva_esports_ufrj_inclusivo_2024",
+                  "b": "stings_ba_valorant_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "stings_ba_valorant_2024"
+                },
+                {
+                  "code": "Partida 28",
+                  "seriesCode": 28,
+                  "bestOf": "MD1",
+                  "a": "unifei_calango_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 29",
+                  "seriesCode": 29,
+                  "bestOf": "MD1",
+                  "a": "macklogic_red",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 30",
+                  "seriesCode": 30,
+                  "bestOf": "MD1",
+                  "a": "ufmg_fenix_b",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 31",
+                  "seriesCode": 31,
+                  "bestOf": "MD1",
+                  "a": "usf_sports_2024",
+                  "b": "unirio_krakens",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "usf_sports_2024"
+                },
+                {
+                  "code": "Partida 32",
+                  "seriesCode": 32,
+                  "bestOf": "MD1",
+                  "a": "facens_night_owls_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 33",
+                  "seriesCode": 33,
+                  "bestOf": "MD1",
+                  "a": "caap_hellhounds_black_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 2",
+              "matches": [
+                {
+                  "code": "Partida 34",
+                  "seriesCode": 34,
+                  "bestOf": "MD1",
+                  "a": "puc_priests",
+                  "b": "raposa_e_sports",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "puc_priests"
+                },
+                {
+                  "code": "Partida 35",
+                  "seriesCode": 35,
+                  "bestOf": "MD1",
+                  "a": "xarada_riddlers_ufla_2024",
+                  "b": "maua_rubi_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "xarada_riddlers_ufla_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 36",
+                  "seriesCode": 36,
+                  "bestOf": "MD1",
+                  "a": "fgv_alligators_valorant_2024",
+                  "b": "azure_bears_black",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "fgv_alligators_valorant_2024"
+                },
+                {
+                  "code": "Partida 37",
+                  "seriesCode": 37,
+                  "bestOf": "MD1",
+                  "a": "furia_utfpr",
+                  "b": "laurp_royal_ps_orange_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "laurp_royal_ps_orange_2024"
+                },
+                {
+                  "code": "Partida 38",
+                  "seriesCode": 38,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "b": "poli_plague_gold_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "inatel_white"
+                },
+                {
+                  "code": "Partida 39",
+                  "seriesCode": 39,
+                  "bestOf": "MD1",
+                  "a": "ufu_saints",
+                  "b": "atletica_unifei",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufu_saints"
+                },
+                {
+                  "code": "Partida 40",
+                  "seriesCode": 40,
+                  "bestOf": "MD1",
+                  "a": "unb_black",
+                  "b": "uninassau_griffins",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "unb_black"
+                },
+                {
+                  "code": "Partida 41",
+                  "seriesCode": 41,
+                  "bestOf": "MD1",
+                  "a": "ufmt_turuna",
+                  "b": "ufscar_fire",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "ufscar_fire"
+                },
+                {
+                  "code": "Partida 42",
+                  "seriesCode": 42,
+                  "bestOf": "MD1",
+                  "a": "espm_overbite_misto",
+                  "b": "minerva_esports_misto_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "minerva_esports_misto_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 43",
+                  "seriesCode": 43,
+                  "bestOf": "MD1",
+                  "a": "puc_clerigos",
+                  "b": "azure_bears_white",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "puc_clerigos"
+                },
+                {
+                  "code": "Partida 44",
+                  "seriesCode": 44,
+                  "bestOf": "MD1",
+                  "a": "liga_atletica_unisinos_lau_2024",
+                  "b": "aufa_line_b_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "aufa_line_b_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 45",
+                  "seriesCode": 45,
+                  "bestOf": "MD1",
+                  "a": "ibtec_2024",
+                  "b": "ufpr_bbn",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "ufpr_bbn"
+                },
+                {
+                  "code": "Partida 46",
+                  "seriesCode": 46,
+                  "bestOf": "MD1",
+                  "a": "cyber_kongs_dourada_2024",
+                  "b": "stings_ba_valorant_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "cyber_kongs_dourada_2024"
+                },
+                {
+                  "code": "Partida 47",
+                  "seriesCode": 47,
+                  "bestOf": "MD1",
+                  "a": "unifei_calango_2024",
+                  "b": "macklogic_red",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "macklogic_red"
+                },
+                {
+                  "code": "Partida 48",
+                  "seriesCode": 48,
+                  "bestOf": "MD1",
+                  "a": "ufmg_fenix_b",
+                  "b": "usf_sports_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "usf_sports_2024"
+                },
+                {
+                  "code": "Partida 49",
+                  "seriesCode": 49,
+                  "bestOf": "MD1",
+                  "a": "facens_night_owls_2024",
+                  "b": "caap_hellhounds_black_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "caap_hellhounds_black_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 3",
+              "matches": [
+                {
+                  "code": "Partida 50",
+                  "seriesCode": 50,
+                  "bestOf": "MD1",
+                  "a": "puc_priests",
+                  "b": "xarada_riddlers_ufla_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "puc_priests"
+                },
+                {
+                  "code": "Partida 51",
+                  "seriesCode": 51,
+                  "bestOf": "MD1",
+                  "a": "fgv_alligators_valorant_2024",
+                  "b": "laurp_royal_ps_orange_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "laurp_royal_ps_orange_2024"
+                },
+                {
+                  "code": "Partida 52",
+                  "seriesCode": 52,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "b": "ufu_saints",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "ufu_saints"
+                },
+                {
+                  "code": "Partida 53",
+                  "seriesCode": 53,
+                  "bestOf": "MD1",
+                  "a": "unb_black",
+                  "b": "ufscar_fire",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "unb_black"
+                },
+                {
+                  "code": "Partida 54",
+                  "seriesCode": 54,
+                  "bestOf": "MD1",
+                  "a": "minerva_esports_misto_2024",
+                  "b": "puc_clerigos",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "puc_clerigos"
+                },
+                {
+                  "code": "Partida 55",
+                  "seriesCode": 55,
+                  "bestOf": "MD1",
+                  "a": "aufa_line_b_2024",
+                  "b": "ufpr_bbn",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "ufpr_bbn"
+                },
+                {
+                  "code": "Partida 56",
+                  "seriesCode": 56,
+                  "bestOf": "MD1",
+                  "a": "cyber_kongs_dourada_2024",
+                  "b": "macklogic_red",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "macklogic_red"
+                },
+                {
+                  "code": "Partida 57",
+                  "seriesCode": 57,
+                  "bestOf": "MD1",
+                  "a": "usf_sports_2024",
+                  "b": "caap_hellhounds_black_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "caap_hellhounds_black_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 4",
+              "matches": [
+                {
+                  "code": "Partida 58",
+                  "seriesCode": 58,
+                  "bestOf": "MD1",
+                  "a": "puc_priests",
+                  "b": "laurp_royal_ps_orange_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "laurp_royal_ps_orange_2024"
+                },
+                {
+                  "code": "Partida 59",
+                  "seriesCode": 59,
+                  "bestOf": "MD1",
+                  "a": "ufu_saints",
+                  "b": "unb_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "unb_black"
+                },
+                {
+                  "code": "Partida 60",
+                  "seriesCode": 60,
+                  "bestOf": "MD1",
+                  "a": "puc_clerigos",
+                  "b": "ufpr_bbn",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "puc_clerigos"
+                },
+                {
+                  "code": "Partida 61",
+                  "seriesCode": 61,
+                  "bestOf": "MD1",
+                  "a": "macklogic_red",
+                  "b": "caap_hellhounds_black_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "macklogic_red"
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 5",
+              "matches": [
+                {
+                  "code": "Partida 62",
+                  "seriesCode": 62,
+                  "bestOf": "MD1",
+                  "a": "laurp_royal_ps_orange_2024",
+                  "b": "unb_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "unb_black"
+                },
+                {
+                  "code": "Partida 63",
+                  "seriesCode": 63,
+                  "bestOf": "MD1",
+                  "a": "puc_clerigos",
+                  "b": "macklogic_red",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "macklogic_red"
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 6",
+              "matches": [
+                {
+                  "code": "Partida 64",
+                  "seriesCode": 64,
+                  "bestOf": "MD1",
+                  "a": "unb_black",
+                  "b": "macklogic_red",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "macklogic_red"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Chave inferior",
+          "layout": "linked",
+          "stage": "playoffs",
+          "columns": [
+            {
+              "title": "Chave inferior - Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 65",
+                  "seriesCode": 65,
+                  "bestOf": "MD1",
+                  "b": "fei_esports_valorant_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 67",
+                  "seriesCode": 67,
+                  "bestOf": "MD1",
+                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 68",
+                  "seriesCode": 68,
+                  "bestOf": "MD1",
+                  "b": "axis_anteaters_valorant_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 69",
+                  "seriesCode": 69,
+                  "bestOf": "MD1",
+                  "b": "atletica_unifei_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 71",
+                  "seriesCode": 71,
+                  "bestOf": "MD1",
+                  "b": "fatec_ornyx_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 73",
+                  "seriesCode": 73,
+                  "bestOf": "MD1",
+                  "b": "poli_plague_silver_echo_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 75",
+                  "seriesCode": 75,
+                  "bestOf": "MD1",
+                  "b": "atletica_unifei_6f52b4a1_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 76",
+                  "seriesCode": 76,
+                  "bestOf": "MD1",
+                  "b": "unifesp_knights_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 77",
+                  "seriesCode": 77,
+                  "bestOf": "MD1",
+                  "b": "minerva_esports_ufrj_inclusivo_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 79",
+                  "seriesCode": 79,
+                  "bestOf": "MD1",
+                  "b": "unirio_krakens",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 2",
+              "matches": [
+                {
+                  "code": "Partida 81",
+                  "seriesCode": 81,
+                  "bestOf": "MD1",
+                  "a": "facens_night_owls_2024",
+                  "b": "fei_esports_valorant_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "fei_esports_valorant_2024"
+                },
+                {
+                  "code": "Partida 82",
+                  "seriesCode": 82,
+                  "bestOf": "MD1",
+                  "a": "ufmg_fenix_b",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 83",
+                  "seriesCode": 83,
+                  "bestOf": "MD1",
+                  "a": "unifei_calango_2024",
+                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "oktoplus_gaming_cefet_mg_2024"
+                },
+                {
+                  "code": "Partida 84",
+                  "seriesCode": 84,
+                  "bestOf": "MD1",
+                  "a": "stings_ba_valorant_2024",
+                  "b": "axis_anteaters_valorant_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "axis_anteaters_valorant_2024"
+                },
+                {
+                  "code": "Partida 85",
+                  "seriesCode": 85,
+                  "bestOf": "MD1",
+                  "a": "ibtec_2024",
+                  "b": "atletica_unifei_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ibtec_2024"
+                },
+                {
+                  "code": "Partida 86",
+                  "seriesCode": 86,
+                  "bestOf": "MD1",
+                  "a": "liga_atletica_unisinos_lau_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 87",
+                  "seriesCode": 87,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_white",
+                  "b": "fatec_ornyx_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "fatec_ornyx_2024"
+                },
+                {
+                  "code": "Partida 88",
+                  "seriesCode": 88,
+                  "bestOf": "MD1",
+                  "a": "espm_overbite_misto",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 89",
+                  "seriesCode": 89,
+                  "bestOf": "MD1",
+                  "a": "ufmt_turuna",
+                  "b": "poli_plague_silver_echo_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufmt_turuna"
+                },
+                {
+                  "code": "Partida 90",
+                  "seriesCode": 90,
+                  "bestOf": "MD1",
+                  "a": "uninassau_griffins",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 91",
+                  "seriesCode": 91,
+                  "bestOf": "MD1",
+                  "a": "atletica_unifei",
+                  "b": "atletica_unifei_6f52b4a1_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "atletica_unifei",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 92",
+                  "seriesCode": 92,
+                  "bestOf": "MD1",
+                  "a": "poli_plague_gold_2024",
+                  "b": "unifesp_knights_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "poli_plague_gold_2024"
+                },
+                {
+                  "code": "Partida 93",
+                  "seriesCode": 93,
+                  "bestOf": "MD1",
+                  "a": "furia_utfpr",
+                  "b": "minerva_esports_ufrj_inclusivo_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "furia_utfpr"
+                },
+                {
+                  "code": "Partida 94",
+                  "seriesCode": 94,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_black",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 95",
+                  "seriesCode": 95,
+                  "bestOf": "MD1",
+                  "a": "maua_rubi_2024",
+                  "b": "unirio_krakens",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "unirio_krakens",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 96",
+                  "seriesCode": 96,
+                  "bestOf": "MD1",
+                  "a": "raposa_e_sports",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 3",
+              "matches": [
+                {
+                  "code": "Partida 97",
+                  "seriesCode": 97,
+                  "bestOf": "MD1",
+                  "a": "fei_esports_valorant_2024",
+                  "b": "ufmg_fenix_b",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "fei_esports_valorant_2024"
+                },
+                {
+                  "code": "Partida 98",
+                  "seriesCode": 98,
+                  "bestOf": "MD1",
+                  "a": "oktoplus_gaming_cefet_mg_2024",
+                  "b": "axis_anteaters_valorant_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "oktoplus_gaming_cefet_mg_2024"
+                },
+                {
+                  "code": "Partida 99",
+                  "seriesCode": 99,
+                  "bestOf": "MD1",
+                  "a": "ibtec_2024",
+                  "b": "liga_atletica_unisinos_lau_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "liga_atletica_unisinos_lau_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 100",
+                  "seriesCode": 100,
+                  "bestOf": "MD1",
+                  "a": "fatec_ornyx_2024",
+                  "b": "espm_overbite_misto",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "fatec_ornyx_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 101",
+                  "seriesCode": 101,
+                  "bestOf": "MD1",
+                  "a": "ufmt_turuna",
+                  "b": "uninassau_griffins",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 102",
+                  "seriesCode": 102,
+                  "bestOf": "MD1",
+                  "a": "atletica_unifei",
+                  "b": "poli_plague_gold_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "poli_plague_gold_2024"
+                },
+                {
+                  "code": "Partida 103",
+                  "seriesCode": 103,
+                  "bestOf": "MD1",
+                  "a": "furia_utfpr",
+                  "b": "azure_bears_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "azure_bears_black"
+                },
+                {
+                  "code": "Partida 104",
+                  "seriesCode": 104,
+                  "bestOf": "MD1",
+                  "a": "unirio_krakens",
+                  "b": "raposa_e_sports",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "raposa_e_sports"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 4",
+              "matches": [
+                {
+                  "code": "Partida 105",
+                  "seriesCode": 105,
+                  "bestOf": "MD1",
+                  "a": "xarada_riddlers_ufla_2024",
+                  "b": "fei_esports_valorant_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "fei_esports_valorant_2024"
+                },
+                {
+                  "code": "Partida 106",
+                  "seriesCode": 106,
+                  "bestOf": "MD1",
+                  "a": "fgv_alligators_valorant_2024",
+                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "oktoplus_gaming_cefet_mg_2024"
+                },
+                {
+                  "code": "Partida 107",
+                  "seriesCode": 107,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "b": "liga_atletica_unisinos_lau_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "inatel_white",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 108",
+                  "seriesCode": 108,
+                  "bestOf": "MD1",
+                  "a": "ufscar_fire",
+                  "b": "fatec_ornyx_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufscar_fire"
+                },
+                {
+                  "code": "Partida 109",
+                  "seriesCode": 109,
+                  "bestOf": "MD1",
+                  "a": "minerva_esports_misto_2024",
+                  "b": "uninassau_griffins",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 110",
+                  "seriesCode": 110,
+                  "bestOf": "MD1",
+                  "a": "aufa_line_b_2024",
+                  "b": "poli_plague_gold_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "poli_plague_gold_2024"
+                },
+                {
+                  "code": "Partida 111",
+                  "seriesCode": 111,
+                  "bestOf": "MD1",
+                  "a": "cyber_kongs_dourada_2024",
+                  "b": "azure_bears_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "azure_bears_black",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 112",
+                  "seriesCode": 112,
+                  "bestOf": "MD1",
+                  "a": "usf_sports_2024",
+                  "b": "raposa_e_sports",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "usf_sports_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 5",
+              "matches": [
+                {
+                  "code": "Partida 113",
+                  "seriesCode": 113,
+                  "bestOf": "MD1",
+                  "a": "fei_esports_valorant_2024",
+                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "fei_esports_valorant_2024"
+                },
+                {
+                  "code": "Partida 114",
+                  "seriesCode": 114,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "b": "ufscar_fire",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "inatel_white"
+                },
+                {
+                  "code": "Partida 115",
+                  "seriesCode": 115,
+                  "bestOf": "MD1",
+                  "a": "uninassau_griffins",
+                  "b": "poli_plague_gold_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 116",
+                  "seriesCode": 116,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_black",
+                  "b": "usf_sports_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "azure_bears_black"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 6",
+              "matches": [
+                {
+                  "code": "Partida 117",
+                  "seriesCode": 117,
+                  "bestOf": "MD1",
+                  "a": "caap_hellhounds_black_2024",
+                  "b": "fei_esports_valorant_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "fei_esports_valorant_2024"
+                },
+                {
+                  "code": "Partida 118",
+                  "seriesCode": 118,
+                  "bestOf": "MD1",
+                  "a": "ufpr_bbn",
+                  "b": "inatel_white",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "inatel_white"
+                },
+                {
+                  "code": "Partida 119",
+                  "seriesCode": 119,
+                  "bestOf": "MD1",
+                  "a": "ufu_saints",
+                  "b": "uninassau_griffins",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 120",
+                  "seriesCode": 120,
+                  "bestOf": "MD1",
+                  "a": "puc_priests",
+                  "b": "azure_bears_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "azure_bears_black"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 7",
+              "matches": [
+                {
+                  "code": "Partida 121",
+                  "seriesCode": 121,
+                  "bestOf": "MD1",
+                  "a": "fei_esports_valorant_2024",
+                  "b": "inatel_white",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "inatel_white"
+                },
+                {
+                  "code": "Partida 122",
+                  "seriesCode": 122,
+                  "bestOf": "MD1",
+                  "a": "uninassau_griffins",
+                  "b": "azure_bears_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "azure_bears_black",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 8",
+              "matches": [
+                {
+                  "code": "Partida 123",
+                  "seriesCode": 123,
+                  "bestOf": "MD1",
+                  "a": "laurp_royal_ps_orange_2024",
+                  "b": "inatel_white",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "inatel_white"
+                },
+                {
+                  "code": "Partida 124",
+                  "seriesCode": 124,
+                  "bestOf": "MD1",
+                  "a": "puc_clerigos",
+                  "b": "azure_bears_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "azure_bears_black"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 9",
+              "matches": [
+                {
+                  "code": "Partida 125",
+                  "seriesCode": 125,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "b": "azure_bears_black",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "inatel_white"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 10",
+              "matches": [
+                {
+                  "code": "Partida 126",
+                  "seriesCode": 126,
+                  "bestOf": "MD1",
+                  "a": "unb_black",
+                  "b": "inatel_white",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "unb_black",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "alianca-2024-grupos-playoffs": {
+    "name": "Copa Aliança 2024.1 - Grupos e playoffs",
+    "organizer": "AcadArena",
+    "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
+    "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
+    "logo": "assets/tournament-icons/copa_alianca.png",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 16,
+    "teams": [
+      "puc_clerigos",
+      "unb_black",
+      "azure_bears_golden",
+      "ufg_eagles",
+      "maua_esports_black_2024",
+      "inatel_white",
+      "azure_bears_black",
+      "macklogic_red",
+      "uninassau_griffins",
+      "fei_esports_valorant_2024",
+      "usp_cronos_2024",
+      "unb_green_olws_line_red_2024",
+      "caaso_hogs_usp_2024",
+      "caap_hellhounds",
+      "laurp_royal_ps_orange_2024",
+      "unicamp_tritons_black"
+    ],
+    "teamNames": {
+      "puc_clerigos": "Clérigos - PUC-Rio",
+      "unb_black": "UNB Green Owls Black",
+      "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
+      "ufg_eagles": "UFG Eagles",
+      "maua_esports_black_2024": "Mauá Esports Black",
+      "inatel_white": "Inatel White",
+      "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
+      "macklogic_red": "MackLogic",
+      "uninassau_griffins": "Uninassau Griffins",
+      "fei_esports_valorant_2024": "FEI eSports Valorant",
+      "usp_cronos_2024": "USP Cronos",
+      "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
+      "caaso_hogs_usp_2024": "Caaso Hogs - USP",
+      "caap_hellhounds": "CAAP Hellhounds",
+      "laurp_royal_ps_orange_2024": "LAURP Royal PS Orange",
+      "unicamp_tritons_black": "UNICAMP Tritons"
+    },
+    "mapPool": [
+      "Ascent",
+      "Bind",
+      "Breeze",
+      "Icebox",
+      "Lotus",
+      "Split",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Suíço e playoffs",
+      "details": [
+        "16 equipes disputam o sistema suíço. Oito avançam aos playoffs.",
+        "Playoffs em eliminação simples.",
+        "Placares oficiais preservados nas séries com estatísticas parciais."
+      ],
+      "standings": "Classificação oficial"
+    },
+    "placements": [
+      {
+        "id": "azure_bears_golden",
+        "range": "1",
+        "note": "Campeão"
+      },
+      {
+        "id": "unicamp_tritons_black",
+        "range": "2",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unb_black",
+        "range": "3-4",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "caap_hellhounds",
+        "range": "3-4",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "usp_cronos_2024",
+        "range": "5-8",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufg_eagles",
+        "range": "5-8",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "maua_esports_black_2024",
+        "range": "5-8",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unb_green_olws_line_red_2024",
+        "range": "5-8",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "azure_bears_black",
+        "range": "9-11",
+        "note": "2-3 na fase suíça"
+      },
+      {
+        "id": "macklogic_red",
+        "range": "9-11",
+        "note": "2-3 na fase suíça"
+      },
+      {
+        "id": "puc_clerigos",
+        "range": "9-11",
+        "note": "2-3 na fase suíça"
+      },
+      {
+        "id": "caaso_hogs_usp_2024",
+        "range": "12-14",
+        "note": "1-3 na fase suíça"
+      },
+      {
+        "id": "inatel_white",
+        "range": "12-14",
+        "note": "1-3 na fase suíça"
+      },
+      {
+        "id": "laurp_royal_ps_orange_2024",
+        "range": "12-14",
+        "note": "1-3 na fase suíça"
+      },
+      {
+        "id": "fei_esports_valorant_2024",
+        "range": "15-16",
+        "note": "0-3 na fase suíça"
+      },
+      {
+        "id": "uninassau_griffins",
+        "range": "15-16",
+        "note": "0-3 na fase suíça"
+      }
+    ],
+    "seriesResults": {},
+    "startAt": "2024-05-18T16:05:41.187Z",
+    "endAt": "2024-07-20T19:37:04.18Z",
+    "swiss": {
+      "rounds": [
+        {
+          "title": "Suíço - Rodada 1",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 1",
+              "seriesCode": 1,
+              "bestOf": "MD1",
+              "a": "azure_bears_golden",
+              "b": "uninassau_griffins",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "azure_bears_golden",
+              "status": "Sem estatísticas",
+              "previewNote": "Sem estatísticas"
+            },
+            {
+              "code": "Partida 3",
+              "seriesCode": 3,
+              "bestOf": "MD1",
+              "a": "caaso_hogs_usp_2024",
+              "b": "fei_esports_valorant_2024",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "caaso_hogs_usp_2024"
+            },
+            {
+              "code": "Partida 5",
+              "seriesCode": 5,
+              "bestOf": "MD1",
+              "a": "caap_hellhounds",
+              "b": "puc_clerigos",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 7",
+              "seriesCode": 7,
+              "bestOf": "MD1",
+              "a": "unb_green_olws_line_red_2024",
+              "b": "laurp_royal_ps_orange_2024",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "unb_green_olws_line_red_2024"
+            },
+            {
+              "code": "Partida 9",
+              "seriesCode": 9,
+              "bestOf": "MD1",
+              "a": "ufg_eagles",
+              "b": "azure_bears_black",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 11",
+              "seriesCode": 11,
+              "bestOf": "MD1",
+              "a": "maua_esports_black_2024",
+              "b": "inatel_white",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "maua_esports_black_2024"
+            },
+            {
+              "code": "Partida 13",
+              "seriesCode": 13,
+              "bestOf": "MD1",
+              "a": "unicamp_tritons_black",
+              "b": "macklogic_red",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "macklogic_red"
+            },
+            {
+              "code": "Partida 15",
+              "seriesCode": 15,
+              "bestOf": "MD1",
+              "a": "unb_black",
+              "b": "usp_cronos_2024",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "unb_black"
+            }
+          ]
+        },
+        {
+          "title": "Suíço - Rodada 2",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 16",
+              "seriesCode": 16,
+              "bestOf": "MD1",
+              "a": "azure_bears_golden",
+              "b": "macklogic_red",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 17",
+              "seriesCode": 17,
+              "bestOf": "MD1",
+              "a": "caaso_hogs_usp_2024",
+              "b": "unb_black",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "unb_black"
+            },
+            {
+              "code": "Partida 18",
+              "seriesCode": 18,
+              "bestOf": "MD1",
+              "a": "caap_hellhounds",
+              "b": "maua_esports_black_2024",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "maua_esports_black_2024"
+            },
+            {
+              "code": "Partida 19",
+              "seriesCode": 19,
+              "bestOf": "MD1",
+              "a": "ufg_eagles",
+              "b": "unb_green_olws_line_red_2024",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 20",
+              "seriesCode": 20,
+              "bestOf": "MD1",
+              "a": "unicamp_tritons_black",
+              "b": "uninassau_griffins",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "unicamp_tritons_black",
+              "status": "Sem estatísticas",
+              "previewNote": "Sem estatísticas"
+            },
+            {
+              "code": "Partida 21",
+              "seriesCode": 21,
+              "bestOf": "MD1",
+              "a": "usp_cronos_2024",
+              "b": "fei_esports_valorant_2024",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "usp_cronos_2024"
+            },
+            {
+              "code": "Partida 22",
+              "seriesCode": 22,
+              "bestOf": "MD1",
+              "a": "inatel_white",
+              "b": "puc_clerigos",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "inatel_white"
+            },
+            {
+              "code": "Partida 23",
+              "seriesCode": 23,
+              "bestOf": "MD1",
+              "a": "azure_bears_black",
+              "b": "laurp_royal_ps_orange_2024",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "azure_bears_black"
+            }
+          ]
+        },
+        {
+          "title": "Suíço - Rodada 3",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 24",
+              "seriesCode": 24,
+              "bestOf": "MD3",
+              "a": "azure_bears_golden",
+              "b": "unb_black",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 25",
+              "seriesCode": 25,
+              "bestOf": "MD3",
+              "a": "ufg_eagles",
+              "b": "maua_esports_black_2024",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "maua_esports_black_2024"
+            },
+            {
+              "code": "Partida 26",
+              "seriesCode": 26,
+              "bestOf": "MD1",
+              "a": "caaso_hogs_usp_2024",
+              "b": "azure_bears_black",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "azure_bears_black"
+            },
+            {
+              "code": "Partida 27",
+              "seriesCode": 27,
+              "bestOf": "MD1",
+              "a": "caap_hellhounds",
+              "b": "inatel_white",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 28",
+              "seriesCode": 28,
+              "bestOf": "MD1",
+              "a": "unb_green_olws_line_red_2024",
+              "b": "macklogic_red",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "unb_green_olws_line_red_2024"
+            },
+            {
+              "code": "Partida 29",
+              "seriesCode": 29,
+              "bestOf": "MD1",
+              "a": "unicamp_tritons_black",
+              "b": "usp_cronos_2024",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "unicamp_tritons_black"
+            },
+            {
+              "code": "Partida 30",
+              "seriesCode": 30,
+              "bestOf": "MD3",
+              "a": "laurp_royal_ps_orange_2024",
+              "b": "uninassau_griffins",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "laurp_royal_ps_orange_2024",
+              "status": "Sem estatísticas",
+              "previewNote": "Sem estatísticas"
+            },
+            {
+              "code": "Partida 31",
+              "seriesCode": 31,
+              "bestOf": "MD3",
+              "a": "puc_clerigos",
+              "b": "fei_esports_valorant_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "puc_clerigos"
+            }
+          ]
+        },
+        {
+          "title": "Suíço - Rodada 4",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 32",
+              "seriesCode": 32,
+              "bestOf": "MD3",
+              "a": "caap_hellhounds",
+              "b": "azure_bears_black",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 33",
+              "seriesCode": 33,
+              "bestOf": "MD3",
+              "a": "unb_green_olws_line_red_2024",
+              "b": "unb_black",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "unb_black"
+            },
+            {
+              "code": "Partida 34",
+              "seriesCode": 34,
+              "bestOf": "MD3",
+              "a": "ufg_eagles",
+              "b": "unicamp_tritons_black",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 35",
+              "seriesCode": 35,
+              "bestOf": "MD3",
+              "a": "caaso_hogs_usp_2024",
+              "b": "puc_clerigos",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "puc_clerigos"
+            },
+            {
+              "code": "Partida 36",
+              "seriesCode": 36,
+              "bestOf": "MD3",
+              "a": "usp_cronos_2024",
+              "b": "laurp_royal_ps_orange_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "usp_cronos_2024"
+            },
+            {
+              "code": "Partida 37",
+              "seriesCode": 37,
+              "bestOf": "MD3",
+              "a": "macklogic_red",
+              "b": "inatel_white",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "macklogic_red"
+            }
+          ]
+        },
+        {
+          "title": "Suíço - Rodada 5",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 38",
+              "seriesCode": 38,
+              "bestOf": "MD3",
+              "a": "usp_cronos_2024",
+              "b": "macklogic_red",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "usp_cronos_2024"
+            },
+            {
+              "code": "Partida 39",
+              "seriesCode": 39,
+              "bestOf": "MD3",
+              "a": "azure_bears_black",
+              "b": "unicamp_tritons_black",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "unicamp_tritons_black"
+            },
+            {
+              "code": "Partida 40",
+              "seriesCode": 40,
+              "bestOf": "MD3",
+              "a": "puc_clerigos",
+              "b": "unb_green_olws_line_red_2024",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "unb_green_olws_line_red_2024"
+            }
+          ]
+        },
+        {
+          "title": "Playoffs - Rodada 1",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 2",
+              "seriesCode": 2,
+              "bestOf": "MD3",
+              "a": "azure_bears_golden",
+              "b": "usp_cronos_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 4",
+              "seriesCode": 4,
+              "bestOf": "MD3",
+              "a": "ufg_eagles",
+              "b": "unb_black",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unb_black"
+            },
+            {
+              "code": "Partida 6",
+              "seriesCode": 6,
+              "bestOf": "MD3",
+              "a": "maua_esports_black_2024",
+              "b": "unicamp_tritons_black",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "unicamp_tritons_black"
+            },
+            {
+              "code": "Partida 8",
+              "seriesCode": 8,
+              "bestOf": "MD3",
+              "a": "caap_hellhounds",
+              "b": "unb_green_olws_line_red_2024",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "caap_hellhounds"
+            }
+          ]
+        },
+        {
+          "title": "Playoffs - Rodada 2",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 10",
+              "seriesCode": 10,
+              "bestOf": "MD3",
+              "a": "azure_bears_golden",
+              "b": "unb_black",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 12",
+              "seriesCode": 12,
+              "bestOf": "MD3",
+              "a": "unicamp_tritons_black",
+              "b": "caap_hellhounds",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "unicamp_tritons_black"
+            }
+          ]
+        },
+        {
+          "title": "Playoffs - Rodada 3",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 14",
+              "seriesCode": 14,
+              "bestOf": "MD3",
+              "a": "azure_bears_golden",
+              "b": "unicamp_tritons_black",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "azure_bears_golden"
+            }
+          ]
+        }
+      ],
+      "seriesCount": 40,
+      "finalStandings": true,
+      "standingsLabel": "Classificação da fase suíça",
+      "standings": [
+        {
+          "id": "azure_bears_golden",
+          "wins": 3,
+          "losses": 0,
+          "points": 3,
+          "range": "1",
+          "status": "Playoffs"
+        },
+        {
+          "id": "maua_esports_black_2024",
+          "wins": 3,
+          "losses": 0,
+          "points": 3,
+          "range": "2",
+          "status": "Playoffs"
+        },
+        {
+          "id": "caap_hellhounds",
+          "wins": 3,
+          "losses": 1,
+          "points": 3,
+          "range": "3",
+          "status": "Playoffs"
+        },
+        {
+          "id": "ufg_eagles",
+          "wins": 3,
+          "losses": 1,
+          "points": 3,
+          "range": "4",
+          "status": "Playoffs"
+        },
+        {
+          "id": "unb_black",
+          "wins": 3,
+          "losses": 1,
+          "points": 3,
+          "range": "5",
+          "status": "Playoffs"
+        },
+        {
+          "id": "unb_green_olws_line_red_2024",
+          "wins": 3,
+          "losses": 2,
+          "points": 3,
+          "range": "6",
+          "status": "Playoffs"
+        },
+        {
+          "id": "unicamp_tritons_black",
+          "wins": 3,
+          "losses": 2,
+          "points": 3,
+          "range": "7",
+          "status": "Playoffs"
+        },
+        {
+          "id": "usp_cronos_2024",
+          "wins": 3,
+          "losses": 2,
+          "points": 3,
+          "range": "8",
+          "status": "Playoffs"
+        },
+        {
+          "id": "azure_bears_black",
+          "wins": 2,
+          "losses": 3,
+          "points": 2,
+          "range": "9",
+          "status": "Eliminado"
+        },
+        {
+          "id": "macklogic_red",
+          "wins": 2,
+          "losses": 3,
+          "points": 2,
+          "range": "10",
+          "status": "Eliminado"
+        },
+        {
+          "id": "puc_clerigos",
+          "wins": 2,
+          "losses": 3,
+          "points": 2,
+          "range": "11",
+          "status": "Eliminado"
+        },
+        {
+          "id": "caaso_hogs_usp_2024",
+          "wins": 1,
+          "losses": 3,
+          "points": 1,
+          "range": "12",
+          "status": "Eliminado"
+        },
+        {
+          "id": "inatel_white",
+          "wins": 1,
+          "losses": 3,
+          "points": 1,
+          "range": "13",
+          "status": "Eliminado"
+        },
+        {
+          "id": "laurp_royal_ps_orange_2024",
+          "wins": 1,
+          "losses": 3,
+          "points": 1,
+          "range": "14",
+          "status": "Eliminado"
+        },
+        {
+          "id": "fei_esports_valorant_2024",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "15",
+          "status": "Eliminado"
+        },
+        {
+          "id": "uninassau_griffins",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "16",
+          "status": "Eliminado"
+        }
+      ]
+    },
+    "bracket": {
+      "title": "Suíço e playoffs"
+    }
+  },
+  "alianca-2024-2-classificatoria": {
+    "name": "Copa Aliança 2024.2 - Classificatória",
+    "organizer": "AcadArena",
+    "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
+    "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
+    "logo": "assets/tournament-icons/copa_alianca.png",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 46,
+    "teams": [
+      "inatel_white",
+      "oktoplus_gaming_cefet_mg_2024",
+      "ufg_eagles",
+      "unb_green_olws_line_red_2024",
+      "maua_esports_imt_2024",
+      "maua_esports_imt_e15688a9_2024",
+      "ufmt_turuna",
+      "azure_bears_black",
+      "espm_overbite_misto",
+      "ufu_saints",
+      "pucc_cardinals",
+      "usp_stars",
+      "azure_bears_golden",
+      "fei_esports_valorant_2024",
+      "caap_void_2024",
+      "caap_hellhounds",
+      "unb_black",
+      "macklogic_red",
+      "puc_priests",
+      "furia_utfpr",
+      "puc_clerigos",
+      "unicamp_tritons_black",
+      "atletica_unifei",
+      "burning_bunnies_ufpr_white_2024",
+      "uninassau_griffins",
+      "ufmg_fenix_b",
+      "ufg_eagles_blue",
+      "axis_anteaters_black_valorant_2024",
+      "unifei_calango_2024",
+      "canis_valorant_inclusivo_2024",
+      "poli_plague_gold_2024",
+      "team_valorant_cybers_2024",
+      "ibmec_sharks",
+      "poli_plague_silver_echo_2024",
+      "ufs_warriowls",
+      "each_griffins_valorant_2024",
+      "pesadelo_renegadas_unb_2024",
+      "azure_bears_white",
+      "axis_anteaters_green_valorant_2024",
+      "hunter_esports",
+      "brutal_esports",
+      "poli_plague_silver_delta_c6f948a0_2024",
+      "unirio_krakens",
+      "wolf_gaming",
+      "ufrj_canis_b",
+      "stings_belas_artes_2024"
+    ],
+    "teamNames": {
+      "inatel_white": "Inatel White",
+      "oktoplus_gaming_cefet_mg_2024": "Oktoplus Gaming - CEFET-MG",
+      "ufg_eagles": "UFG Eagles Black",
+      "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
+      "maua_esports_imt_2024": "Mauá Esports - IMT",
+      "maua_esports_imt_e15688a9_2024": "Mauá Esports - IMT",
+      "ufmt_turuna": "UFMT Turuna",
+      "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
+      "espm_overbite_misto": "ESPM Overbite - Valorant Misto",
+      "ufu_saints": "UFU Saints",
+      "pucc_cardinals": "PUCC CARDNALS",
+      "usp_stars": "USP Stars",
+      "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
+      "fei_esports_valorant_2024": "FEI eSports Valorant",
+      "caap_void_2024": "CAAP Void",
+      "caap_hellhounds": "CAAP Hellhounds",
+      "unb_black": "UNB Green Owls Black",
+      "macklogic_red": "MackLogic",
+      "puc_priests": "Puc Priests Valorant",
+      "furia_utfpr": "FURIA VALORANT",
+      "puc_clerigos": "Clérigos - PUC-Rio",
+      "unicamp_tritons_black": "UNICAMP Tritons",
+      "atletica_unifei": "Atlética UNIFEI",
+      "burning_bunnies_ufpr_white_2024": "Burning Bunnies UFPR - White",
+      "uninassau_griffins": "Uninassau Griffins",
+      "ufmg_fenix_b": "UFMG Fênix Valorant",
+      "ufg_eagles_blue": "UFG Eagles Blue",
+      "axis_anteaters_black_valorant_2024": "AXIS Anteaters Black - Valorant",
+      "unifei_calango_2024": "UNIFEI Calango",
+      "canis_valorant_inclusivo_2024": "Canis - Valorant Inclusivo",
+      "poli_plague_gold_2024": "Poli Plague Gold",
+      "team_valorant_cybers_2024": "Team Valorant Cybers",
+      "ibmec_sharks": "SharkS Ibmec",
+      "poli_plague_silver_echo_2024": "POLI Plague Silver Echo",
+      "ufs_warriowls": "UFS Warriowls - Valorant",
+      "each_griffins_valorant_2024": "EACH Griffins VALORANT",
+      "pesadelo_renegadas_unb_2024": "Pesadelo Renegadas - UnB",
+      "azure_bears_white": "Azure Bears UTFPR - White [VAL]",
+      "axis_anteaters_green_valorant_2024": "AXIS Anteaters Green - Valorant",
+      "hunter_esports": "Hunter E-sports - Valorant Black",
+      "brutal_esports": "Brutal eSports - UFSJ",
+      "poli_plague_silver_delta_c6f948a0_2024": "POLI Plague Silver Delta",
+      "unirio_krakens": "UNIRIO Kraken",
+      "wolf_gaming": "Wolf Gaming Valorant",
+      "ufrj_canis_b": "CANIS Line B",
+      "stings_belas_artes_2024": "STINGS BELAS ARTES"
+    },
+    "mapPool": [
+      "Abyss",
+      "Ascent",
+      "Bind",
+      "Haven",
+      "Icebox",
+      "Lotus",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Eliminação dupla classificatória",
+      "details": [
+        "Classificatória em eliminação dupla.",
+        "Resultados da plataforma preservados nas séries sem estatísticas.",
+        "A chave encerra a disputa pelas vagas. Os 14 preenchimentos posteriores à definição dos classificados não contam como confrontos."
+      ],
+      "standings": "Classificação oficial"
+    },
+    "placements": [],
+    "seriesResults": {
+      "60": {
+        "a": "poli_plague_gold_2024",
+        "b": "azure_bears_black",
+        "scoreA": 2,
+        "scoreB": 0,
+        "bestOf": "MD3",
+        "note": "Estatísticas de 1 mapa"
+      }
+    },
+    "startAt": "2024-09-28T16:08:53.231Z",
+    "endAt": "2024-10-08T01:49:38.147Z",
+    "bracket": {
+      "title": "Eliminação dupla classificatória",
+      "regions": [
+        {
+          "name": "Chave superior",
+          "layout": "linked",
+          "stage": "playoffs",
+          "columns": [
+            {
+              "title": "Chave superior - Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 2",
+                  "seriesCode": 2,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_golden",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 3",
+                  "seriesCode": 3,
+                  "bestOf": "MD1",
+                  "a": "team_valorant_cybers_2024",
+                  "b": "ibmec_sharks",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "team_valorant_cybers_2024"
+                },
+                {
+                  "code": "Partida 4",
+                  "seriesCode": 4,
+                  "bestOf": "MD1",
+                  "a": "ufmt_turuna",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 5",
+                  "seriesCode": 5,
+                  "bestOf": "MD1",
+                  "a": "espm_overbite_misto",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 6",
+                  "seriesCode": 6,
+                  "bestOf": "MD1",
+                  "a": "macklogic_red",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 7",
+                  "seriesCode": 7,
+                  "bestOf": "MD1",
+                  "a": "burning_bunnies_ufpr_white_2024",
+                  "b": "wolf_gaming",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "wolf_gaming"
+                },
+                {
+                  "code": "Partida 8",
+                  "seriesCode": 8,
+                  "bestOf": "MD1",
+                  "a": "puc_clerigos",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 9",
+                  "seriesCode": 9,
+                  "bestOf": "MD1",
+                  "a": "atletica_unifei",
+                  "b": "stings_belas_artes_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "atletica_unifei"
+                },
+                {
+                  "code": "Partida 10",
+                  "seriesCode": 10,
+                  "bestOf": "MD1",
+                  "a": "unb_black",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 11",
+                  "seriesCode": 11,
+                  "bestOf": "MD1",
+                  "a": "unifei_calango_2024",
+                  "b": "each_griffins_valorant_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "unifei_calango_2024"
+                },
+                {
+                  "code": "Partida 12",
+                  "seriesCode": 12,
+                  "bestOf": "MD1",
+                  "a": "oktoplus_gaming_cefet_mg_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 13",
+                  "seriesCode": 13,
+                  "bestOf": "MD1",
+                  "a": "usp_stars",
+                  "b": "poli_plague_silver_delta_c6f948a0_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "usp_stars",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 14",
+                  "seriesCode": 14,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 15",
+                  "seriesCode": 15,
+                  "bestOf": "MD1",
+                  "a": "axis_anteaters_black_valorant_2024",
+                  "b": "pesadelo_renegadas_unb_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "axis_anteaters_black_valorant_2024"
+                },
+                {
+                  "code": "Partida 16",
+                  "seriesCode": 16,
+                  "bestOf": "MD1",
+                  "a": "uninassau_griffins",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 17",
+                  "seriesCode": 17,
+                  "bestOf": "MD1",
+                  "a": "caap_void_2024",
+                  "b": "ufrj_canis_b",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "caap_void_2024"
+                },
+                {
+                  "code": "Partida 18",
+                  "seriesCode": 18,
+                  "bestOf": "MD1",
+                  "a": "unicamp_tritons_black",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 19",
+                  "seriesCode": 19,
+                  "bestOf": "MD1",
+                  "a": "poli_plague_gold_2024",
+                  "b": "poli_plague_silver_echo_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "poli_plague_gold_2024"
+                },
+                {
+                  "code": "Partida 20",
+                  "seriesCode": 20,
+                  "bestOf": "MD1",
+                  "a": "maua_esports_imt_e15688a9_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 21",
+                  "seriesCode": 21,
+                  "bestOf": "MD1",
+                  "a": "ufu_saints",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 22",
+                  "seriesCode": 22,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_black",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 23",
+                  "seriesCode": 23,
+                  "bestOf": "MD1",
+                  "a": "ufmg_fenix_b",
+                  "b": "axis_anteaters_green_valorant_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufmg_fenix_b"
+                },
+                {
+                  "code": "Partida 24",
+                  "seriesCode": 24,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 25",
+                  "seriesCode": 25,
+                  "bestOf": "MD1",
+                  "a": "furia_utfpr",
+                  "b": "hunter_esports",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "hunter_esports"
+                },
+                {
+                  "code": "Partida 26",
+                  "seriesCode": 26,
+                  "bestOf": "MD1",
+                  "a": "caap_hellhounds",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 27",
+                  "seriesCode": 27,
+                  "bestOf": "MD1",
+                  "a": "canis_valorant_inclusivo_2024",
+                  "b": "ufs_warriowls",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "canis_valorant_inclusivo_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Vitória da Canis confirmada. Estatísticas do lobby curto não são contabilizadas."
+                },
+                {
+                  "code": "Partida 28",
+                  "seriesCode": 28,
+                  "bestOf": "MD1",
+                  "a": "maua_esports_imt_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 29",
+                  "seriesCode": 29,
+                  "bestOf": "MD1",
+                  "a": "pucc_cardinals",
+                  "b": "unirio_krakens",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "pucc_cardinals",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 30",
+                  "seriesCode": 30,
+                  "bestOf": "MD1",
+                  "a": "unb_green_olws_line_red_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 31",
+                  "seriesCode": 31,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles_blue",
+                  "b": "azure_bears_white",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufg_eagles_blue"
+                },
+                {
+                  "code": "Partida 32",
+                  "seriesCode": 32,
+                  "bestOf": "MD1",
+                  "a": "fei_esports_valorant_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 33",
+                  "seriesCode": 33,
+                  "bestOf": "MD1",
+                  "a": "puc_priests",
+                  "b": "brutal_esports",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "puc_priests"
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 2",
+              "matches": [
+                {
+                  "code": "Partida 34",
+                  "seriesCode": 34,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_golden",
+                  "b": "team_valorant_cybers_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden"
+                },
+                {
+                  "code": "Partida 35",
+                  "seriesCode": 35,
+                  "bestOf": "MD1",
+                  "a": "ufmt_turuna",
+                  "b": "espm_overbite_misto",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufmt_turuna"
+                },
+                {
+                  "code": "Partida 36",
+                  "seriesCode": 36,
+                  "bestOf": "MD1",
+                  "a": "macklogic_red",
+                  "b": "wolf_gaming",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "macklogic_red"
+                },
+                {
+                  "code": "Partida 37",
+                  "seriesCode": 37,
+                  "bestOf": "MD1",
+                  "a": "puc_clerigos",
+                  "b": "atletica_unifei",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "atletica_unifei"
+                },
+                {
+                  "code": "Partida 38",
+                  "seriesCode": 38,
+                  "bestOf": "MD1",
+                  "a": "unb_black",
+                  "b": "unifei_calango_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "unb_black"
+                },
+                {
+                  "code": "Partida 39",
+                  "seriesCode": 39,
+                  "bestOf": "MD1",
+                  "a": "oktoplus_gaming_cefet_mg_2024",
+                  "b": "usp_stars",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "usp_stars",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 40",
+                  "seriesCode": 40,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles",
+                  "b": "axis_anteaters_black_valorant_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufg_eagles"
+                },
+                {
+                  "code": "Partida 41",
+                  "seriesCode": 41,
+                  "bestOf": "MD1",
+                  "a": "uninassau_griffins",
+                  "b": "caap_void_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 42",
+                  "seriesCode": 42,
+                  "bestOf": "MD1",
+                  "a": "unicamp_tritons_black",
+                  "b": "poli_plague_gold_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "poli_plague_gold_2024"
+                },
+                {
+                  "code": "Partida 43",
+                  "seriesCode": 43,
+                  "bestOf": "MD1",
+                  "a": "maua_esports_imt_e15688a9_2024",
+                  "b": "ufu_saints",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "maua_esports_imt_e15688a9_2024"
+                },
+                {
+                  "code": "Partida 44",
+                  "seriesCode": 44,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_black",
+                  "b": "ufmg_fenix_b",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "azure_bears_black"
+                },
+                {
+                  "code": "Partida 45",
+                  "seriesCode": 45,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "b": "hunter_esports",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "hunter_esports"
+                },
+                {
+                  "code": "Partida 46",
+                  "seriesCode": 46,
+                  "bestOf": "MD1",
+                  "a": "caap_hellhounds",
+                  "b": "canis_valorant_inclusivo_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds"
+                },
+                {
+                  "code": "Partida 47",
+                  "seriesCode": 47,
+                  "bestOf": "MD1",
+                  "a": "maua_esports_imt_2024",
+                  "b": "pucc_cardinals",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "maua_esports_imt_2024"
+                },
+                {
+                  "code": "Partida 48",
+                  "seriesCode": 48,
+                  "bestOf": "MD1",
+                  "a": "unb_green_olws_line_red_2024",
+                  "b": "ufg_eagles_blue",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "unb_green_olws_line_red_2024"
+                },
+                {
+                  "code": "Partida 49",
+                  "seriesCode": 49,
+                  "bestOf": "MD1",
+                  "a": "fei_esports_valorant_2024",
+                  "b": "puc_priests",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "puc_priests"
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 3",
+              "matches": [
+                {
+                  "code": "Partida 50",
+                  "seriesCode": 50,
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "ufmt_turuna",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden"
+                },
+                {
+                  "code": "Partida 51",
+                  "seriesCode": 51,
+                  "bestOf": "MD3",
+                  "a": "macklogic_red",
+                  "b": "atletica_unifei",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "macklogic_red"
+                },
+                {
+                  "code": "Partida 52",
+                  "seriesCode": 52,
+                  "bestOf": "MD3",
+                  "a": "unb_black",
+                  "b": "usp_stars",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "usp_stars"
+                },
+                {
+                  "code": "Partida 53",
+                  "seriesCode": 53,
+                  "bestOf": "MD3",
+                  "a": "ufg_eagles",
+                  "b": "uninassau_griffins",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "ufg_eagles"
+                },
+                {
+                  "code": "Partida 54",
+                  "seriesCode": 54,
+                  "bestOf": "MD3",
+                  "a": "poli_plague_gold_2024",
+                  "b": "maua_esports_imt_e15688a9_2024",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "poli_plague_gold_2024"
+                },
+                {
+                  "code": "Partida 55",
+                  "seriesCode": 55,
+                  "bestOf": "MD3",
+                  "a": "azure_bears_black",
+                  "b": "hunter_esports",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "azure_bears_black"
+                },
+                {
+                  "code": "Partida 56",
+                  "seriesCode": 56,
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "b": "maua_esports_imt_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds"
+                },
+                {
+                  "code": "Partida 57",
+                  "seriesCode": 57,
+                  "bestOf": "MD3",
+                  "a": "unb_green_olws_line_red_2024",
+                  "b": "puc_priests",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "unb_green_olws_line_red_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave superior - Rodada 4",
+              "matches": [
+                {
+                  "code": "Partida 58",
+                  "seriesCode": 58,
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "macklogic_red",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden"
+                },
+                {
+                  "code": "Partida 59",
+                  "seriesCode": 59,
+                  "bestOf": "MD3",
+                  "a": "usp_stars",
+                  "b": "ufg_eagles",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "usp_stars",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 60",
+                  "seriesCode": 60,
+                  "bestOf": "MD3",
+                  "a": "poli_plague_gold_2024",
+                  "b": "azure_bears_black",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "poli_plague_gold_2024",
+                  "status": "Estatísticas parciais",
+                  "previewNote": "Estatísticas de 1 mapa"
+                },
+                {
+                  "code": "Partida 61",
+                  "seriesCode": 61,
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "b": "unb_green_olws_line_red_2024",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "caap_hellhounds"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Chave inferior",
+          "layout": "linked",
+          "stage": "playoffs",
+          "columns": [
+            {
+              "title": "Chave inferior - Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 65",
+                  "seriesCode": 65,
+                  "bestOf": "MD1",
+                  "b": "ibmec_sharks",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 67",
+                  "seriesCode": 67,
+                  "bestOf": "MD1",
+                  "b": "burning_bunnies_ufpr_white_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 68",
+                  "seriesCode": 68,
+                  "bestOf": "MD1",
+                  "b": "stings_belas_artes_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 69",
+                  "seriesCode": 69,
+                  "bestOf": "MD1",
+                  "b": "each_griffins_valorant_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 70",
+                  "seriesCode": 70,
+                  "bestOf": "MD1",
+                  "b": "poli_plague_silver_delta_c6f948a0_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 71",
+                  "seriesCode": 71,
+                  "bestOf": "MD1",
+                  "b": "pesadelo_renegadas_unb_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 72",
+                  "seriesCode": 72,
+                  "bestOf": "MD1",
+                  "b": "ufrj_canis_b",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 73",
+                  "seriesCode": 73,
+                  "bestOf": "MD1",
+                  "b": "poli_plague_silver_echo_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 75",
+                  "seriesCode": 75,
+                  "bestOf": "MD1",
+                  "b": "axis_anteaters_green_valorant_2024",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 76",
+                  "seriesCode": 76,
+                  "bestOf": "MD1",
+                  "b": "furia_utfpr",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 77",
+                  "seriesCode": 77,
+                  "bestOf": "MD1",
+                  "b": "ufs_warriowls",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 78",
+                  "seriesCode": 78,
+                  "bestOf": "MD1",
+                  "b": "unirio_krakens",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 79",
+                  "seriesCode": 79,
+                  "bestOf": "MD1",
+                  "b": "azure_bears_white",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 80",
+                  "seriesCode": 80,
+                  "bestOf": "MD1",
+                  "b": "brutal_esports",
+                  "aLabel": "Sem equipe",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 2",
+              "matches": [
+                {
+                  "code": "Partida 81",
+                  "seriesCode": 81,
+                  "bestOf": "MD1",
+                  "a": "fei_esports_valorant_2024",
+                  "b": "ibmec_sharks",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "ibmec_sharks"
+                },
+                {
+                  "code": "Partida 82",
+                  "seriesCode": 82,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles_blue",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 83",
+                  "seriesCode": 83,
+                  "bestOf": "MD1",
+                  "a": "pucc_cardinals",
+                  "b": "burning_bunnies_ufpr_white_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "pucc_cardinals"
+                },
+                {
+                  "code": "Partida 84",
+                  "seriesCode": 84,
+                  "bestOf": "MD1",
+                  "a": "canis_valorant_inclusivo_2024",
+                  "b": "stings_belas_artes_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "stings_belas_artes_2024"
+                },
+                {
+                  "code": "Partida 85",
+                  "seriesCode": 85,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "b": "each_griffins_valorant_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "inatel_white"
+                },
+                {
+                  "code": "Partida 86",
+                  "seriesCode": 86,
+                  "bestOf": "MD1",
+                  "a": "ufmg_fenix_b",
+                  "b": "poli_plague_silver_delta_c6f948a0_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufmg_fenix_b"
+                },
+                {
+                  "code": "Partida 87",
+                  "seriesCode": 87,
+                  "bestOf": "MD1",
+                  "a": "ufu_saints",
+                  "b": "pesadelo_renegadas_unb_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufu_saints"
+                },
+                {
+                  "code": "Partida 88",
+                  "seriesCode": 88,
+                  "bestOf": "MD1",
+                  "a": "unicamp_tritons_black",
+                  "b": "ufrj_canis_b",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "unicamp_tritons_black"
+                },
+                {
+                  "code": "Partida 89",
+                  "seriesCode": 89,
+                  "bestOf": "MD1",
+                  "a": "caap_void_2024",
+                  "b": "poli_plague_silver_echo_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "caap_void_2024"
+                },
+                {
+                  "code": "Partida 90",
+                  "seriesCode": 90,
+                  "bestOf": "MD1",
+                  "a": "axis_anteaters_black_valorant_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 91",
+                  "seriesCode": 91,
+                  "bestOf": "MD1",
+                  "a": "oktoplus_gaming_cefet_mg_2024",
+                  "b": "axis_anteaters_green_valorant_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "axis_anteaters_green_valorant_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 92",
+                  "seriesCode": 92,
+                  "bestOf": "MD1",
+                  "a": "unifei_calango_2024",
+                  "b": "furia_utfpr",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "furia_utfpr"
+                },
+                {
+                  "code": "Partida 93",
+                  "seriesCode": 93,
+                  "bestOf": "MD1",
+                  "a": "puc_clerigos",
+                  "b": "ufs_warriowls",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "puc_clerigos"
+                },
+                {
+                  "code": "Partida 94",
+                  "seriesCode": 94,
+                  "bestOf": "MD1",
+                  "a": "wolf_gaming",
+                  "b": "unirio_krakens",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "wolf_gaming",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 95",
+                  "seriesCode": 95,
+                  "bestOf": "MD1",
+                  "a": "espm_overbite_misto",
+                  "b": "azure_bears_white",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "espm_overbite_misto"
+                },
+                {
+                  "code": "Partida 96",
+                  "seriesCode": 96,
+                  "bestOf": "MD1",
+                  "a": "team_valorant_cybers_2024",
+                  "b": "brutal_esports",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "team_valorant_cybers_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 3",
+              "matches": [
+                {
+                  "code": "Partida 97",
+                  "seriesCode": 97,
+                  "bestOf": "MD1",
+                  "a": "ibmec_sharks",
+                  "b": "ufg_eagles_blue",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "ufg_eagles_blue"
+                },
+                {
+                  "code": "Partida 98",
+                  "seriesCode": 98,
+                  "bestOf": "MD1",
+                  "a": "pucc_cardinals",
+                  "b": "stings_belas_artes_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "stings_belas_artes_2024"
+                },
+                {
+                  "code": "Partida 99",
+                  "seriesCode": 99,
+                  "bestOf": "MD1",
+                  "a": "inatel_white",
+                  "b": "ufmg_fenix_b",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "ufmg_fenix_b"
+                },
+                {
+                  "code": "Partida 100",
+                  "seriesCode": 100,
+                  "bestOf": "MD1",
+                  "a": "ufu_saints",
+                  "b": "unicamp_tritons_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "unicamp_tritons_black"
+                },
+                {
+                  "code": "Partida 101",
+                  "seriesCode": 101,
+                  "bestOf": "MD1",
+                  "a": "caap_void_2024",
+                  "b": "axis_anteaters_black_valorant_2024",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "caap_void_2024"
+                },
+                {
+                  "code": "Partida 102",
+                  "seriesCode": 102,
+                  "bestOf": "MD1",
+                  "a": "axis_anteaters_green_valorant_2024",
+                  "b": "furia_utfpr",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "furia_utfpr"
+                },
+                {
+                  "code": "Partida 103",
+                  "seriesCode": 103,
+                  "bestOf": "MD1",
+                  "a": "puc_clerigos",
+                  "b": "wolf_gaming",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "puc_clerigos"
+                },
+                {
+                  "code": "Partida 104",
+                  "seriesCode": 104,
+                  "bestOf": "MD1",
+                  "a": "espm_overbite_misto",
+                  "b": "team_valorant_cybers_2024",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "team_valorant_cybers_2024"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 4",
+              "matches": [
+                {
+                  "code": "Partida 105",
+                  "seriesCode": 105,
+                  "bestOf": "MD3",
+                  "a": "ufmt_turuna",
+                  "b": "ufg_eagles_blue",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufg_eagles_blue"
+                },
+                {
+                  "code": "Partida 106",
+                  "seriesCode": 106,
+                  "bestOf": "MD3",
+                  "a": "atletica_unifei",
+                  "b": "stings_belas_artes_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "atletica_unifei"
+                },
+                {
+                  "code": "Partida 107",
+                  "seriesCode": 107,
+                  "bestOf": "MD3",
+                  "a": "unb_black",
+                  "b": "ufmg_fenix_b",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufmg_fenix_b",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 108",
+                  "seriesCode": 108,
+                  "bestOf": "MD3",
+                  "a": "uninassau_griffins",
+                  "b": "unicamp_tritons_black",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 109",
+                  "seriesCode": 109,
+                  "bestOf": "MD3",
+                  "a": "maua_esports_imt_e15688a9_2024",
+                  "b": "caap_void_2024",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "maua_esports_imt_e15688a9_2024"
+                },
+                {
+                  "code": "Partida 110",
+                  "seriesCode": 110,
+                  "bestOf": "MD3",
+                  "a": "hunter_esports",
+                  "b": "furia_utfpr",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "furia_utfpr"
+                },
+                {
+                  "code": "Partida 111",
+                  "seriesCode": 111,
+                  "bestOf": "MD3",
+                  "a": "maua_esports_imt_2024",
+                  "b": "puc_clerigos",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "puc_clerigos"
+                },
+                {
+                  "code": "Partida 112",
+                  "seriesCode": 112,
+                  "bestOf": "MD3",
+                  "a": "puc_priests",
+                  "b": "team_valorant_cybers_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "puc_priests"
+                }
+              ]
+            },
+            {
+              "title": "Chave inferior - Rodada 5",
+              "matches": [
+                {
+                  "code": "Partida 113",
+                  "seriesCode": 113,
+                  "bestOf": "MD3",
+                  "a": "ufg_eagles_blue",
+                  "b": "atletica_unifei",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "ufg_eagles_blue"
+                },
+                {
+                  "code": "Partida 114",
+                  "seriesCode": 114,
+                  "bestOf": "MD3",
+                  "a": "ufmg_fenix_b",
+                  "b": "uninassau_griffins",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "uninassau_griffins",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 115",
+                  "seriesCode": 115,
+                  "bestOf": "MD3",
+                  "a": "maua_esports_imt_e15688a9_2024",
+                  "b": "furia_utfpr",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "maua_esports_imt_e15688a9_2024"
+                },
+                {
+                  "code": "Partida 116",
+                  "seriesCode": 116,
+                  "bestOf": "MD3",
+                  "a": "puc_clerigos",
+                  "b": "puc_priests",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "puc_clerigos",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "alianca-2024-2-grupos-playoffs": {
+    "name": "Copa Aliança 2024.2 - Grupos e playoffs",
+    "organizer": "AcadArena",
+    "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
+    "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
+    "logo": "assets/tournament-icons/copa_alianca.png",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 16,
+    "teams": [
+      "unb_green_olws_line_red_2024",
+      "ufg_eagles_blue",
+      "azure_bears_golden",
+      "ufg_eagles",
+      "maua_esports_imt_e15688a9_2024",
+      "furia_utfpr",
+      "macklogic_red",
+      "usp_stars",
+      "azure_bears_black",
+      "uninassau_griffins",
+      "ufmg_fenix_b",
+      "puc_priests",
+      "caap_hellhounds",
+      "poli_plague_gold_2024",
+      "puc_clerigos",
+      "atletica_unifei"
+    ],
+    "teamNames": {
+      "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
+      "ufg_eagles_blue": "UFG Eagles Blue",
+      "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
+      "ufg_eagles": "UFG Eagles Black",
+      "maua_esports_imt_e15688a9_2024": "Mauá Esports - IMT",
+      "furia_utfpr": "FURIA VALORANT",
+      "macklogic_red": "MackLogic",
+      "usp_stars": "USP Stars",
+      "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
+      "uninassau_griffins": "Uninassau Griffins",
+      "ufmg_fenix_b": "UFMG Fênix Valorant",
+      "puc_priests": "Puc Priests Valorant",
+      "caap_hellhounds": "CAAP Hellhounds",
+      "poli_plague_gold_2024": "Poli Plague Gold",
+      "puc_clerigos": "Clérigos - PUC-Rio",
+      "atletica_unifei": "Atlética UNIFEI"
+    },
+    "mapPool": [
+      "Abyss",
+      "Ascent",
+      "Bind",
+      "Haven",
+      "Icebox",
+      "Lotus",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Suíço e playoffs",
+      "details": [
+        "16 equipes disputam o sistema suíço. Oito avançam aos playoffs.",
+        "Playoffs em eliminação dupla.",
+        "Placares oficiais preservados nas séries com estatísticas parciais."
+      ],
+      "standings": "Classificação oficial"
+    },
+    "placements": [
+      {
+        "id": "caap_hellhounds",
+        "range": "1",
+        "note": "Resultado final registrado no CM"
+      },
+      {
+        "id": "uninassau_griffins",
+        "range": "2",
+        "note": "Resultado final registrado no CM"
+      },
+      {
+        "id": "ufg_eagles",
+        "range": "3",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unb_green_olws_line_red_2024",
+        "range": "4",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "usp_stars",
+        "range": "5-6",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "azure_bears_golden",
+        "range": "5-6",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "macklogic_red",
+        "range": "7-8",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "azure_bears_black",
+        "range": "7-8",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "puc_clerigos",
+        "range": "9-11",
+        "note": "2-3 na fase suíça"
+      },
+      {
+        "id": "ufmg_fenix_b",
+        "range": "9-11",
+        "note": "2-3 na fase suíça"
+      },
+      {
+        "id": "furia_utfpr",
+        "range": "9-11",
+        "note": "2-3 na fase suíça"
+      },
+      {
+        "id": "poli_plague_gold_2024",
+        "range": "12-14",
+        "note": "1-3 na fase suíça"
+      },
+      {
+        "id": "ufg_eagles_blue",
+        "range": "12-14",
+        "note": "1-3 na fase suíça"
+      },
+      {
+        "id": "maua_esports_imt_e15688a9_2024",
+        "range": "12-14",
+        "note": "1-3 na fase suíça"
+      },
+      {
+        "id": "puc_priests",
+        "range": "15-16",
+        "note": "0-3 na fase suíça"
+      },
+      {
+        "id": "atletica_unifei",
+        "range": "15-16",
+        "note": "0-3 na fase suíça"
+      }
+    ],
+    "seriesResults": {},
+    "startAt": "2024-10-05T16:04:03.489Z",
+    "endAt": "2024-12-07T16:10:07.66Z",
+    "swiss": {
+      "rounds": [
+        {
+          "title": "Suíço - Rodada 1",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 1",
+              "seriesCode": 1,
+              "bestOf": "MD1",
+              "a": "puc_clerigos",
+              "b": "unb_green_olws_line_red_2024",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "unb_green_olws_line_red_2024"
+            },
+            {
+              "code": "Partida 3",
+              "seriesCode": 3,
+              "bestOf": "MD1",
+              "a": "ufg_eagles_blue",
+              "b": "ufg_eagles",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 5",
+              "seriesCode": 5,
+              "bestOf": "MD1",
+              "a": "uninassau_griffins",
+              "b": "azure_bears_black",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "azure_bears_black"
+            },
+            {
+              "code": "Partida 7",
+              "seriesCode": 7,
+              "bestOf": "MD1",
+              "a": "maua_esports_imt_e15688a9_2024",
+              "b": "macklogic_red",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "maua_esports_imt_e15688a9_2024"
+            },
+            {
+              "code": "Partida 9",
+              "seriesCode": 9,
+              "bestOf": "MD1",
+              "a": "ufmg_fenix_b",
+              "b": "usp_stars",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "usp_stars"
+            },
+            {
+              "code": "Partida 11",
+              "seriesCode": 11,
+              "bestOf": "MD1",
+              "a": "puc_priests",
+              "b": "azure_bears_golden",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 13",
+              "seriesCode": 13,
+              "bestOf": "MD1",
+              "a": "atletica_unifei",
+              "b": "poli_plague_gold_2024",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "poli_plague_gold_2024"
+            },
+            {
+              "code": "Partida 15",
+              "seriesCode": 15,
+              "bestOf": "MD1",
+              "a": "furia_utfpr",
+              "b": "caap_hellhounds",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "caap_hellhounds"
+            }
+          ]
+        },
+        {
+          "title": "Suíço - Rodada 2",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 17",
+              "seriesCode": 17,
+              "bestOf": "MD1",
+              "a": "caap_hellhounds",
+              "b": "maua_esports_imt_e15688a9_2024",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 19",
+              "seriesCode": 19,
+              "bestOf": "MD1",
+              "a": "poli_plague_gold_2024",
+              "b": "unb_green_olws_line_red_2024",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "unb_green_olws_line_red_2024"
+            },
+            {
+              "code": "Partida 21",
+              "seriesCode": 21,
+              "bestOf": "MD1",
+              "a": "azure_bears_golden",
+              "b": "ufg_eagles",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 23",
+              "seriesCode": 23,
+              "bestOf": "MD1",
+              "a": "usp_stars",
+              "b": "azure_bears_black",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "usp_stars"
+            },
+            {
+              "code": "Partida 25",
+              "seriesCode": 25,
+              "bestOf": "MD1",
+              "a": "macklogic_red",
+              "b": "furia_utfpr",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "furia_utfpr"
+            },
+            {
+              "code": "Partida 27",
+              "seriesCode": 27,
+              "bestOf": "MD1",
+              "a": "puc_clerigos",
+              "b": "atletica_unifei",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "puc_clerigos"
+            },
+            {
+              "code": "Partida 29",
+              "seriesCode": 29,
+              "bestOf": "MD1",
+              "a": "ufg_eagles_blue",
+              "b": "puc_priests",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "ufg_eagles_blue"
+            },
+            {
+              "code": "Partida 30",
+              "seriesCode": 30,
+              "bestOf": "MD1",
+              "a": "uninassau_griffins",
+              "b": "ufmg_fenix_b",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "uninassau_griffins"
+            }
+          ]
+        },
+        {
+          "title": "Suíço - Rodada 3",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 31",
+              "seriesCode": 31,
+              "bestOf": "MD3",
+              "a": "azure_bears_golden",
+              "b": "usp_stars",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "usp_stars"
+            },
+            {
+              "code": "Partida 32",
+              "seriesCode": 32,
+              "bestOf": "MD3",
+              "a": "caap_hellhounds",
+              "b": "unb_green_olws_line_red_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 33",
+              "seriesCode": 33,
+              "bestOf": "MD1",
+              "a": "poli_plague_gold_2024",
+              "b": "furia_utfpr",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "furia_utfpr"
+            },
+            {
+              "code": "Partida 34",
+              "seriesCode": 34,
+              "bestOf": "MD1",
+              "a": "azure_bears_black",
+              "b": "maua_esports_imt_e15688a9_2024",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "azure_bears_black"
+            },
+            {
+              "code": "Partida 35",
+              "seriesCode": 35,
+              "bestOf": "MD1",
+              "a": "ufg_eagles",
+              "b": "uninassau_griffins",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 36",
+              "seriesCode": 36,
+              "bestOf": "MD1",
+              "a": "puc_clerigos",
+              "b": "ufg_eagles_blue",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "puc_clerigos"
+            },
+            {
+              "code": "Partida 37",
+              "seriesCode": 37,
+              "bestOf": "MD3",
+              "a": "macklogic_red",
+              "b": "atletica_unifei",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "macklogic_red"
+            },
+            {
+              "code": "Partida 38",
+              "seriesCode": 38,
+              "bestOf": "MD3",
+              "a": "ufmg_fenix_b",
+              "b": "puc_priests",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufmg_fenix_b"
+            }
+          ]
+        },
+        {
+          "title": "Suíço - Rodada 4",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 39",
+              "seriesCode": 39,
+              "bestOf": "MD3",
+              "a": "azure_bears_golden",
+              "b": "furia_utfpr",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "azure_bears_golden"
+            },
+            {
+              "code": "Partida 40",
+              "seriesCode": 40,
+              "bestOf": "MD3",
+              "a": "azure_bears_black",
+              "b": "puc_clerigos",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "azure_bears_black"
+            },
+            {
+              "code": "Partida 41",
+              "seriesCode": 41,
+              "bestOf": "MD3",
+              "a": "unb_green_olws_line_red_2024",
+              "b": "uninassau_griffins",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 42",
+              "seriesCode": 42,
+              "bestOf": "MD3",
+              "a": "poli_plague_gold_2024",
+              "b": "ufmg_fenix_b",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "ufmg_fenix_b"
+            },
+            {
+              "code": "Partida 43",
+              "seriesCode": 43,
+              "bestOf": "MD3",
+              "a": "macklogic_red",
+              "b": "ufg_eagles_blue",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "macklogic_red"
+            },
+            {
+              "code": "Partida 44",
+              "seriesCode": 44,
+              "bestOf": "MD3",
+              "a": "ufg_eagles",
+              "b": "maua_esports_imt_e15688a9_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufg_eagles"
+            }
+          ]
+        },
+        {
+          "title": "Suíço - Rodada 5",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 45",
+              "seriesCode": 45,
+              "bestOf": "MD3",
+              "a": "unb_green_olws_line_red_2024",
+              "b": "furia_utfpr",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unb_green_olws_line_red_2024",
+              "status": "Sem estatísticas",
+              "previewNote": "Sem estatísticas"
+            },
+            {
+              "code": "Partida 46",
+              "seriesCode": 46,
+              "bestOf": "MD3",
+              "a": "macklogic_red",
+              "b": "ufmg_fenix_b",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "macklogic_red",
+              "status": "Sem estatísticas",
+              "previewNote": "Sem estatísticas"
+            },
+            {
+              "code": "Partida 47",
+              "seriesCode": 47,
+              "bestOf": "MD3",
+              "a": "puc_clerigos",
+              "b": "ufg_eagles",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufg_eagles"
+            }
+          ]
+        },
+        {
+          "title": "Final - Rodada 1",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 2",
+              "seriesCode": 2,
+              "bestOf": "MD1",
+              "a": "caap_hellhounds",
+              "b": "uninassau_griffins",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "caap_hellhounds",
+              "status": "Sem estatísticas",
+              "previewNote": "Sem estatísticas"
+            }
+          ]
+        },
+        {
+          "title": "Chave superior - Rodada 1",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 4",
+              "seriesCode": 4,
+              "bestOf": "MD3",
+              "a": "caap_hellhounds",
+              "b": "unb_green_olws_line_red_2024",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 6",
+              "seriesCode": 6,
+              "bestOf": "MD3",
+              "a": "azure_bears_black",
+              "b": "uninassau_griffins",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 8",
+              "seriesCode": 8,
+              "bestOf": "MD3",
+              "a": "usp_stars",
+              "b": "ufg_eagles",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "ufg_eagles"
+            },
+            {
+              "code": "Partida 10",
+              "seriesCode": 10,
+              "bestOf": "MD3",
+              "a": "azure_bears_golden",
+              "b": "macklogic_red",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "azure_bears_golden"
+            }
+          ]
+        },
+        {
+          "title": "Chave superior - Rodada 2",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 12",
+              "seriesCode": 12,
+              "bestOf": "MD3",
+              "a": "caap_hellhounds",
+              "b": "uninassau_griffins",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "caap_hellhounds"
+            },
+            {
+              "code": "Partida 14",
+              "seriesCode": 14,
+              "bestOf": "MD3",
+              "a": "ufg_eagles",
+              "b": "azure_bears_golden",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufg_eagles",
+              "status": "Sem estatísticas",
+              "previewNote": "Sem estatísticas"
+            }
+          ]
+        },
+        {
+          "title": "Chave superior - Rodada 3",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 16",
+              "seriesCode": 16,
+              "bestOf": "MD3",
+              "a": "caap_hellhounds",
+              "b": "ufg_eagles",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "caap_hellhounds",
+              "status": "Sem estatísticas",
+              "previewNote": "Sem estatísticas"
+            }
+          ]
+        },
+        {
+          "title": "Chave inferior - Rodada 1",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 18",
+              "seriesCode": 18,
+              "bestOf": "MD3",
+              "a": "usp_stars",
+              "b": "macklogic_red",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "usp_stars"
+            },
+            {
+              "code": "Partida 20",
+              "seriesCode": 20,
+              "bestOf": "MD3",
+              "a": "unb_green_olws_line_red_2024",
+              "b": "azure_bears_black",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unb_green_olws_line_red_2024"
+            }
+          ]
+        },
+        {
+          "title": "Chave inferior - Rodada 2",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 22",
+              "seriesCode": 22,
+              "bestOf": "MD3",
+              "a": "uninassau_griffins",
+              "b": "usp_stars",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "uninassau_griffins"
+            },
+            {
+              "code": "Partida 24",
+              "seriesCode": 24,
+              "bestOf": "MD3",
+              "a": "azure_bears_golden",
+              "b": "unb_green_olws_line_red_2024",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unb_green_olws_line_red_2024",
+              "status": "Sem estatísticas",
+              "previewNote": "Sem estatísticas"
+            }
+          ]
+        },
+        {
+          "title": "Chave inferior - Rodada 3",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 26",
+              "seriesCode": 26,
+              "bestOf": "MD3",
+              "a": "uninassau_griffins",
+              "b": "unb_green_olws_line_red_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "uninassau_griffins"
+            }
+          ]
+        },
+        {
+          "title": "Chave inferior - Rodada 4",
+          "status": "Concluída",
+          "matches": [
+            {
+              "code": "Partida 28",
+              "seriesCode": 28,
+              "bestOf": "MD3",
+              "a": "ufg_eagles",
+              "b": "uninassau_griffins",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "uninassau_griffins",
+              "status": "Sem estatísticas",
+              "previewNote": "Sem estatísticas"
+            }
+          ]
+        }
+      ],
+      "seriesCount": 47,
+      "finalStandings": true,
+      "standingsLabel": "Classificação da fase suíça",
+      "standings": [
+        {
+          "id": "caap_hellhounds",
+          "wins": 3,
+          "losses": 0,
+          "points": 3,
+          "range": "1",
+          "status": "Playoffs"
+        },
+        {
+          "id": "usp_stars",
+          "wins": 3,
+          "losses": 0,
+          "points": 3,
+          "range": "2",
+          "status": "Playoffs"
+        },
+        {
+          "id": "azure_bears_golden",
+          "wins": 3,
+          "losses": 1,
+          "points": 3,
+          "range": "3",
+          "status": "Playoffs"
+        },
+        {
+          "id": "azure_bears_black",
+          "wins": 3,
+          "losses": 1,
+          "points": 3,
+          "range": "4",
+          "status": "Playoffs"
+        },
+        {
+          "id": "uninassau_griffins",
+          "wins": 3,
+          "losses": 1,
+          "points": 3,
+          "range": "5",
+          "status": "Playoffs"
+        },
+        {
+          "id": "macklogic_red",
+          "wins": 3,
+          "losses": 2,
+          "points": 3,
+          "range": "6",
+          "status": "Playoffs"
+        },
+        {
+          "id": "ufg_eagles",
+          "wins": 3,
+          "losses": 2,
+          "points": 3,
+          "range": "7",
+          "status": "Playoffs"
+        },
+        {
+          "id": "unb_green_olws_line_red_2024",
+          "wins": 3,
+          "losses": 2,
+          "points": 3,
+          "range": "8",
+          "status": "Playoffs"
+        },
+        {
+          "id": "puc_clerigos",
+          "wins": 2,
+          "losses": 3,
+          "points": 2,
+          "range": "9",
+          "status": "Eliminado"
+        },
+        {
+          "id": "ufmg_fenix_b",
+          "wins": 2,
+          "losses": 3,
+          "points": 2,
+          "range": "10",
+          "status": "Eliminado"
+        },
+        {
+          "id": "furia_utfpr",
+          "wins": 2,
+          "losses": 3,
+          "points": 2,
+          "range": "11",
+          "status": "Eliminado"
+        },
+        {
+          "id": "poli_plague_gold_2024",
+          "wins": 1,
+          "losses": 3,
+          "points": 1,
+          "range": "12",
+          "status": "Eliminado"
+        },
+        {
+          "id": "ufg_eagles_blue",
+          "wins": 1,
+          "losses": 3,
+          "points": 1,
+          "range": "13",
+          "status": "Eliminado"
+        },
+        {
+          "id": "maua_esports_imt_e15688a9_2024",
+          "wins": 1,
+          "losses": 3,
+          "points": 1,
+          "range": "14",
+          "status": "Eliminado"
+        },
+        {
+          "id": "puc_priests",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "15",
+          "status": "Eliminado"
+        },
+        {
+          "id": "atletica_unifei",
+          "wins": 0,
+          "losses": 3,
+          "points": 0,
+          "range": "16",
+          "status": "Eliminado"
+        }
+      ]
+    },
+    "bracket": {
+      "title": "Suíço e playoffs"
+    }
+  },
+  "jubs-2024-qualify-1": {
+    "name": "JUBS 2024 - Qualify 1",
+    "organizer": "CBDU",
+    "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
+    "banner": "",
+    "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 42,
+    "teams": [
+      "unb_black",
+      "furia_utfpr",
+      "ufrj_canis_b",
+      "rahnag",
+      "ufmt_turuna",
+      "unioeste_rino_pr_2024",
+      "uninassau_griffins",
+      "ufg_eagles",
+      "ufs_warriowls",
+      "uema_cyborgues_ma_2024",
+      "ufrn_rn_2024",
+      "ufpe_virtus",
+      "unigran_sarristas_ms_2024",
+      "univasf",
+      "puc_clerigos",
+      "azure_bears_golden",
+      "pato",
+      "unesa_cyborgs",
+      "ufma_balsas_ma_2024",
+      "fusve_barao_rj_2024",
+      "ufac_esports_ac_2024",
+      "caap_hellhounds",
+      "ufu_saints",
+      "maua_esports_black_2024",
+      "lunatica_ufms",
+      "ods_force_ufla_mg_2024",
+      "senais_falcons_ba_2024",
+      "inatel",
+      "caaso_hogs_usp_2024",
+      "ufsc_titans_sc_2024",
+      "xarada_riddlers_ufla_2024",
+      "uesc_cacaueiros_ba_2024",
+      "anhanguera_the_dream_team_df_2024",
+      "ucsal_aduc_ba_2024",
+      "fametro_berserkers",
+      "imperador_uvv_2024",
+      "iesb_cesb_ieb_df_2024",
+      "asces_unita_pe_2024",
+      "unirv_e_sports_go_2024",
+      "eng_ufes_es_2024",
+      "bot_s_academy_pb_2024",
+      "calango_team_fametro_am_2024"
+    ],
+    "teamNames": {
+      "unb_black": "UNB Green OWLS Black - DF",
+      "furia_utfpr": "UTFPR FÚRIA XV - PR",
+      "ufrj_canis_b": "UFRJ Noctua - RJ",
+      "rahnag": "UDF Thunder Fusion - DF",
+      "ufmt_turuna": "UFMT TURUNA - MT",
+      "unioeste_rino_pr_2024": "UNIOESTE RINO - PR",
+      "uninassau_griffins": "Uninassau Griffins - PE",
+      "ufg_eagles": "UFG Eagles - GO",
+      "ufs_warriowls": "UFS Warriowls - SE",
+      "uema_cyborgues_ma_2024": "UEMA Cyborgues - MA",
+      "ufrn_rn_2024": "UFRN - RN",
+      "ufpe_virtus": "UFPE VIRTUS - PE",
+      "unigran_sarristas_ms_2024": "UNIGRAN Sarristas - MS",
+      "univasf": "UNIVASF - PE",
+      "puc_clerigos": "Clérigos PUC - RJ",
+      "azure_bears_golden": "UTFPR Azure Bears - PR",
+      "pato": "UTFPR Pato E-sports - PR",
+      "unesa_cyborgs": "ESTÁCIO CYBERS  - RJ",
+      "ufma_balsas_ma_2024": "UFMA BALSAS - MA",
+      "fusve_barao_rj_2024": "FUSVE Barão - RJ",
+      "ufac_esports_ac_2024": "Ufac eSports - AC",
+      "caap_hellhounds": "UFABC CAAP Hellhounds - SP",
+      "ufu_saints": "UFU Saints - MG",
+      "maua_esports_black_2024": "Maua Black - SP",
+      "lunatica_ufms": "UFMS aaacomp Lunatica - MS",
+      "ods_force_ufla_mg_2024": "Ods Force - UFLA - MG",
+      "senais_falcons_ba_2024": "SENAIS Falcons - BA",
+      "inatel": "Inatel - MG",
+      "caaso_hogs_usp_2024": "USP CAASO Hogs - SP",
+      "ufsc_titans_sc_2024": "UFSC TItans - SC",
+      "xarada_riddlers_ufla_2024": "UFLA Xarada Riddlers - MG",
+      "uesc_cacaueiros_ba_2024": "UESC Cacaueiros - BA",
+      "anhanguera_the_dream_team_df_2024": "ANHANGUERA The Dream Team - DF",
+      "ucsal_aduc_ba_2024": "UCSAL ADUC - BA",
+      "fametro_berserkers": "FAMETRO Codify Team - AM",
+      "imperador_uvv_2024": "IMPERADOR - UVV",
+      "iesb_cesb_ieb_df_2024": "IESB/CESB IEB - DF",
+      "asces_unita_pe_2024": "Asces-unita - PE",
+      "unirv_e_sports_go_2024": "UNIRV E-SPORTS - GO",
+      "eng_ufes_es_2024": "Eng. UFES - ES",
+      "bot_s_academy_pb_2024": "Bot's academy - PB",
+      "calango_team_fametro_am_2024": "Calango Team - FAMETRO -AM"
+    },
+    "mapPool": [
+      "Ascent",
+      "Bind",
+      "Haven",
+      "Icebox",
+      "Lotus",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Classificatória para oito vagas",
+      "details": [
+        "Classificatória eliminatória para oito vagas no playoff online.",
+        "Avanços diretos são preservados na chave. Séries sem estatísticas mantêm o resultado oficial.",
+        "UTFPR Azure Bears corresponde à Azure Bears Golden nesta edição.",
+        "FAMETRO Codify Team integra o histórico da atual FAMETRO Berserkers."
+      ],
+      "standings": "Classificação oficial"
+    },
+    "placements": [
+      {
+        "id": "unb_black",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "ufu_saints",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "uninassau_griffins",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "azure_bears_golden",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "ufrj_canis_b",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "caaso_hogs_usp_2024",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "ufg_eagles",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "fametro_berserkers",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "ufac_esports_ac_2024",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "inatel",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufpe_virtus",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufmt_turuna",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "puc_clerigos",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "maua_esports_black_2024",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unirv_e_sports_go_2024",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "eng_ufes_es_2024",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "iesb_cesb_ieb_df_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "anhanguera_the_dream_team_df_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ods_force_ufla_mg_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "xarada_riddlers_ufla_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "univasf",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "asces_unita_pe_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unioeste_rino_pr_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "pato",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unesa_cyborgs",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "fusve_barao_rj_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "caap_hellhounds",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufs_warriowls",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "senais_falcons_ba_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "uesc_cacaueiros_ba_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "calango_team_fametro_am_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "imperador_uvv_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "rahnag",
+        "range": "33-42",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "lunatica_ufms",
+        "range": "33-42",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unigran_sarristas_ms_2024",
+        "range": "33-42",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "bot_s_academy_pb_2024",
+        "range": "33-42",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "furia_utfpr",
+        "range": "33-42",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufrn_rn_2024",
+        "range": "33-42",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "uema_cyborgues_ma_2024",
+        "range": "33-42",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufma_balsas_ma_2024",
+        "range": "33-42",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ucsal_aduc_ba_2024",
+        "range": "33-42",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufsc_titans_sc_2024",
+        "range": "33-42",
+        "note": "Resultado da chave oficial"
+      }
+    ],
+    "seriesResults": {},
+    "startAt": "2024-07-07T17:00:52.854Z",
+    "endAt": "2024-07-14T20:05:08.257Z",
+    "bracket": {
+      "title": "Classificatória para oito vagas",
+      "regions": [
+        {
+          "name": "Qualify 1",
+          "layout": "linked",
+          "stage": "playoffs",
+          "columns": [
+            {
+              "title": "Qualify 1 - Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 1",
+                  "seriesCode": 1,
+                  "bestOf": "MD3",
+                  "a": "iesb_cesb_ieb_df_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 2",
+                  "seriesCode": 2,
+                  "bestOf": "MD3",
+                  "a": "ufac_esports_ac_2024",
+                  "b": "rahnag",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "ufac_esports_ac_2024"
+                },
+                {
+                  "code": "Partida 3",
+                  "seriesCode": 3,
+                  "bestOf": "MD3",
+                  "a": "unb_black",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 4",
+                  "seriesCode": 4,
+                  "bestOf": "MD3",
+                  "a": "anhanguera_the_dream_team_df_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 5",
+                  "seriesCode": 5,
+                  "bestOf": "MD3",
+                  "a": "inatel",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 6",
+                  "seriesCode": 6,
+                  "bestOf": "MD3",
+                  "a": "lunatica_ufms",
+                  "b": "ods_force_ufla_mg_2024",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ods_force_ufla_mg_2024"
+                },
+                {
+                  "code": "Partida 7",
+                  "seriesCode": 7,
+                  "bestOf": "MD3",
+                  "a": "xarada_riddlers_ufla_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 8",
+                  "seriesCode": 8,
+                  "bestOf": "MD3",
+                  "a": "unigran_sarristas_ms_2024",
+                  "b": "ufu_saints",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufu_saints"
+                },
+                {
+                  "code": "Partida 9",
+                  "seriesCode": 9,
+                  "bestOf": "MD3",
+                  "a": "ufpe_virtus",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 10",
+                  "seriesCode": 10,
+                  "bestOf": "MD3",
+                  "a": "bot_s_academy_pb_2024",
+                  "b": "univasf",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "univasf"
+                },
+                {
+                  "code": "Partida 11",
+                  "seriesCode": 11,
+                  "bestOf": "MD3",
+                  "a": "uninassau_griffins",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 12",
+                  "seriesCode": 12,
+                  "bestOf": "MD3",
+                  "a": "asces_unita_pe_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 13",
+                  "seriesCode": 13,
+                  "bestOf": "MD3",
+                  "a": "unioeste_rino_pr_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 14",
+                  "seriesCode": 14,
+                  "bestOf": "MD3",
+                  "a": "ufmt_turuna",
+                  "b": "furia_utfpr",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "ufmt_turuna"
+                },
+                {
+                  "code": "Partida 15",
+                  "seriesCode": 15,
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 16",
+                  "seriesCode": 16,
+                  "bestOf": "MD3",
+                  "a": "pato",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 17",
+                  "seriesCode": 17,
+                  "bestOf": "MD3",
+                  "a": "ufrj_canis_b",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 18",
+                  "seriesCode": 18,
+                  "bestOf": "MD3",
+                  "a": "ufrn_rn_2024",
+                  "b": "unesa_cyborgs",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "unesa_cyborgs"
+                },
+                {
+                  "code": "Partida 19",
+                  "seriesCode": 19,
+                  "bestOf": "MD3",
+                  "a": "fusve_barao_rj_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 20",
+                  "seriesCode": 20,
+                  "bestOf": "MD3",
+                  "a": "puc_clerigos",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 21",
+                  "seriesCode": 21,
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 22",
+                  "seriesCode": 22,
+                  "bestOf": "MD3",
+                  "a": "uema_cyborgues_ma_2024",
+                  "b": "maua_esports_black_2024",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "maua_esports_black_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 23",
+                  "seriesCode": 23,
+                  "bestOf": "MD3",
+                  "a": "ufs_warriowls",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 24",
+                  "seriesCode": 24,
+                  "bestOf": "MD3",
+                  "a": "caaso_hogs_usp_2024",
+                  "b": "ufma_balsas_ma_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "caaso_hogs_usp_2024"
+                },
+                {
+                  "code": "Partida 25",
+                  "seriesCode": 25,
+                  "bestOf": "MD3",
+                  "a": "senais_falcons_ba_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 26",
+                  "seriesCode": 26,
+                  "bestOf": "MD3",
+                  "a": "ufg_eagles",
+                  "b": "ucsal_aduc_ba_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "ufg_eagles"
+                },
+                {
+                  "code": "Partida 27",
+                  "seriesCode": 27,
+                  "bestOf": "MD3",
+                  "a": "unirv_e_sports_go_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 28",
+                  "seriesCode": 28,
+                  "bestOf": "MD3",
+                  "a": "uesc_cacaueiros_ba_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 29",
+                  "seriesCode": 29,
+                  "bestOf": "MD3",
+                  "a": "calango_team_fametro_am_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 30",
+                  "seriesCode": 30,
+                  "bestOf": "MD3",
+                  "a": "eng_ufes_es_2024",
+                  "b": "ufsc_titans_sc_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "eng_ufes_es_2024"
+                },
+                {
+                  "code": "Partida 31",
+                  "seriesCode": 31,
+                  "bestOf": "MD3",
+                  "a": "imperador_uvv_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 32",
+                  "seriesCode": 32,
+                  "bestOf": "MD3",
+                  "a": "fametro_berserkers",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                }
+              ]
+            },
+            {
+              "title": "Qualify 1 - Rodada 2",
+              "matches": [
+                {
+                  "code": "Partida 33",
+                  "seriesCode": 33,
+                  "bestOf": "MD3",
+                  "a": "iesb_cesb_ieb_df_2024",
+                  "b": "ufac_esports_ac_2024",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "ufac_esports_ac_2024"
+                },
+                {
+                  "code": "Partida 34",
+                  "seriesCode": 34,
+                  "bestOf": "MD3",
+                  "a": "unb_black",
+                  "b": "anhanguera_the_dream_team_df_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "unb_black",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 35",
+                  "seriesCode": 35,
+                  "bestOf": "MD3",
+                  "a": "inatel",
+                  "b": "ods_force_ufla_mg_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "inatel"
+                },
+                {
+                  "code": "Partida 36",
+                  "seriesCode": 36,
+                  "bestOf": "MD3",
+                  "a": "xarada_riddlers_ufla_2024",
+                  "b": "ufu_saints",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufu_saints"
+                },
+                {
+                  "code": "Partida 37",
+                  "seriesCode": 37,
+                  "bestOf": "MD3",
+                  "a": "ufpe_virtus",
+                  "b": "univasf",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "ufpe_virtus"
+                },
+                {
+                  "code": "Partida 38",
+                  "seriesCode": 38,
+                  "bestOf": "MD3",
+                  "a": "uninassau_griffins",
+                  "b": "asces_unita_pe_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 39",
+                  "seriesCode": 39,
+                  "bestOf": "MD3",
+                  "a": "unioeste_rino_pr_2024",
+                  "b": "ufmt_turuna",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufmt_turuna"
+                },
+                {
+                  "code": "Partida 40",
+                  "seriesCode": 40,
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "pato",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 41",
+                  "seriesCode": 41,
+                  "bestOf": "MD3",
+                  "a": "ufrj_canis_b",
+                  "b": "unesa_cyborgs",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "ufrj_canis_b"
+                },
+                {
+                  "code": "Partida 42",
+                  "seriesCode": 42,
+                  "bestOf": "MD3",
+                  "a": "fusve_barao_rj_2024",
+                  "b": "puc_clerigos",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "puc_clerigos"
+                },
+                {
+                  "code": "Partida 43",
+                  "seriesCode": 43,
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "b": "maua_esports_black_2024",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "maua_esports_black_2024"
+                },
+                {
+                  "code": "Partida 44",
+                  "seriesCode": 44,
+                  "bestOf": "MD3",
+                  "a": "ufs_warriowls",
+                  "b": "caaso_hogs_usp_2024",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "caaso_hogs_usp_2024"
+                },
+                {
+                  "code": "Partida 45",
+                  "seriesCode": 45,
+                  "bestOf": "MD3",
+                  "a": "senais_falcons_ba_2024",
+                  "b": "ufg_eagles",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufg_eagles"
+                },
+                {
+                  "code": "Partida 46",
+                  "seriesCode": 46,
+                  "bestOf": "MD3",
+                  "a": "unirv_e_sports_go_2024",
+                  "b": "uesc_cacaueiros_ba_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "unirv_e_sports_go_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 47",
+                  "seriesCode": 47,
+                  "bestOf": "MD3",
+                  "a": "calango_team_fametro_am_2024",
+                  "b": "eng_ufes_es_2024",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "eng_ufes_es_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 48",
+                  "seriesCode": 48,
+                  "bestOf": "MD3",
+                  "a": "imperador_uvv_2024",
+                  "b": "fametro_berserkers",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "fametro_berserkers"
+                }
+              ]
+            },
+            {
+              "title": "Qualify 1 - Rodada 3",
+              "matches": [
+                {
+                  "code": "Partida 49",
+                  "seriesCode": 49,
+                  "bestOf": "MD3",
+                  "a": "ufac_esports_ac_2024",
+                  "b": "unb_black",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "unb_black"
+                },
+                {
+                  "code": "Partida 50",
+                  "seriesCode": 50,
+                  "bestOf": "MD3",
+                  "a": "inatel",
+                  "b": "ufu_saints",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufu_saints"
+                },
+                {
+                  "code": "Partida 51",
+                  "seriesCode": 51,
+                  "bestOf": "MD3",
+                  "a": "ufpe_virtus",
+                  "b": "uninassau_griffins",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 52",
+                  "seriesCode": 52,
+                  "bestOf": "MD3",
+                  "a": "ufmt_turuna",
+                  "b": "azure_bears_golden",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "azure_bears_golden"
+                },
+                {
+                  "code": "Partida 53",
+                  "seriesCode": 53,
+                  "bestOf": "MD3",
+                  "a": "ufrj_canis_b",
+                  "b": "puc_clerigos",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "ufrj_canis_b"
+                },
+                {
+                  "code": "Partida 54",
+                  "seriesCode": 54,
+                  "bestOf": "MD3",
+                  "a": "maua_esports_black_2024",
+                  "b": "caaso_hogs_usp_2024",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "caaso_hogs_usp_2024"
+                },
+                {
+                  "code": "Partida 55",
+                  "seriesCode": 55,
+                  "bestOf": "MD3",
+                  "a": "ufg_eagles",
+                  "b": "unirv_e_sports_go_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "ufg_eagles"
+                },
+                {
+                  "code": "Partida 56",
+                  "seriesCode": 56,
+                  "bestOf": "MD3",
+                  "a": "eng_ufes_es_2024",
+                  "b": "fametro_berserkers",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "fametro_berserkers"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "jubs-2024-qualify-2": {
+    "name": "JUBS 2024 - Qualify 2",
+    "organizer": "CBDU",
+    "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
+    "banner": "",
+    "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 35,
+    "teams": [
+      "furia_utfpr",
+      "rahnag",
+      "ufmt_turuna",
+      "unioeste_rino_pr_2024",
+      "ufs_warriowls",
+      "uema_cyborgues_ma_2024",
+      "ufrn_rn_2024",
+      "ufpe_virtus",
+      "unigran_sarristas_ms_2024",
+      "univasf",
+      "puc_clerigos",
+      "pato",
+      "unesa_cyborgs",
+      "ufma_balsas_ma_2024",
+      "fusve_barao_rj_2024",
+      "ufac_esports_ac_2024",
+      "caap_hellhounds",
+      "maua_esports_black_2024",
+      "lunatica_ufms",
+      "ods_force_ufla_mg_2024",
+      "senais_falcons_ba_2024",
+      "inatel",
+      "ufsc_titans_sc_2024",
+      "xarada_riddlers_ufla_2024",
+      "uesc_cacaueiros_ba_2024",
+      "anhanguera_the_dream_team_df_2024",
+      "ucsal_aduc_ba_2024",
+      "imperador_uvv_2024",
+      "iesb_cesb_ieb_df_2024",
+      "asces_unita_pe_2024",
+      "unirv_e_sports_go_2024",
+      "eng_ufes_es_2024",
+      "bot_s_academy_pb_2024",
+      "calango_team_fametro_am_668459eb_2024",
+      "calango_team_manaus_am_2024"
+    ],
+    "teamNames": {
+      "furia_utfpr": "UTFPR FÚRIA XV - PR",
+      "rahnag": "UDF Thunder Fusion - DF",
+      "ufmt_turuna": "UFMT TURUNA - MT",
+      "unioeste_rino_pr_2024": "UNIOESTE RINO - PR",
+      "ufs_warriowls": "UFS Warriowls - SE",
+      "uema_cyborgues_ma_2024": "UEMA Cyborgues - MA",
+      "ufrn_rn_2024": "UFRN - RN",
+      "ufpe_virtus": "UFPE VIRTUS - PE",
+      "unigran_sarristas_ms_2024": "UNIGRAN Sarristas - MS",
+      "univasf": "UNIVASF - PE",
+      "puc_clerigos": "Clérigos PUC - RJ",
+      "pato": "UTFPR Pato E-sports - PR",
+      "unesa_cyborgs": "ESTÁCIO CYBERS  - RJ",
+      "ufma_balsas_ma_2024": "UFMA BALSAS - MA",
+      "fusve_barao_rj_2024": "FUSVE Barão - RJ",
+      "ufac_esports_ac_2024": "Ufac eSports - AC",
+      "caap_hellhounds": "UFABC CAAP Hellhounds - SP",
+      "maua_esports_black_2024": "Maua Black - SP",
+      "lunatica_ufms": "UFMS aaacomp Lunatica - MS",
+      "ods_force_ufla_mg_2024": "Ods Force - UFLA - MG",
+      "senais_falcons_ba_2024": "SENAIS Falcons - BA",
+      "inatel": "Inatel - MG",
+      "ufsc_titans_sc_2024": "UFSC TItans - SC",
+      "xarada_riddlers_ufla_2024": "UFLA Xarada Riddlers - MG",
+      "uesc_cacaueiros_ba_2024": "UESC Cacaueiros - BA",
+      "anhanguera_the_dream_team_df_2024": "ANHANGUERA The Dream Team - DF",
+      "ucsal_aduc_ba_2024": "UCSAL ADUC - BA",
+      "imperador_uvv_2024": "IMPERADOR - UVV",
+      "iesb_cesb_ieb_df_2024": "IESB/CESB IEB - DF",
+      "asces_unita_pe_2024": "Asces-unita - PE",
+      "unirv_e_sports_go_2024": "UNIRV E-SPORTS - GO",
+      "eng_ufes_es_2024": "Eng. UFES - ES",
+      "bot_s_academy_pb_2024": "Bot's academy - PB",
+      "calango_team_fametro_am_668459eb_2024": "Calango Team - FAMETRO -AM",
+      "calango_team_manaus_am_2024": "Calango Team - Manaus/AM"
+    },
+    "mapPool": [
+      "Ascent",
+      "Bind",
+      "Haven",
+      "Icebox",
+      "Lotus",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Classificatória para oito vagas",
+      "details": [
+        "Classificatória eliminatória para oito vagas no playoff online.",
+        "Avanços diretos são preservados na chave. Séries sem estatísticas mantêm o resultado oficial."
+      ],
+      "standings": "Classificação oficial"
+    },
+    "placements": [
+      {
+        "id": "puc_clerigos",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "ufpe_virtus",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "inatel",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "ufrn_rn_2024",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "ufs_warriowls",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "ufmt_turuna",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "caap_hellhounds",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "unigran_sarristas_ms_2024",
+        "range": "Classificado",
+        "note": "Vaga no playoff online"
+      },
+      {
+        "id": "fusve_barao_rj_2024",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufac_esports_ac_2024",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ods_force_ufla_mg_2024",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "rahnag",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unirv_e_sports_go_2024",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "uesc_cacaueiros_ba_2024",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "maua_esports_black_2024",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "lunatica_ufms",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unesa_cyborgs",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufsc_titans_sc_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "asces_unita_pe_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "univasf",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "bot_s_academy_pb_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "xarada_riddlers_ufla_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "iesb_cesb_ieb_df_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "anhanguera_the_dream_team_df_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "furia_utfpr",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "pato",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "senais_falcons_ba_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ucsal_aduc_ba_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "eng_ufes_es_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "imperador_uvv_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "uema_cyborgues_ma_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufma_balsas_ma_2024",
+        "range": "17-32",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "calango_team_fametro_am_668459eb_2024",
+        "range": "33-35",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unioeste_rino_pr_2024",
+        "range": "33-35",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "calango_team_manaus_am_2024",
+        "range": "33-35",
+        "note": "Resultado da chave oficial"
+      }
+    ],
+    "seriesResults": {
+      "38": {
+        "a": "ods_force_ufla_mg_2024",
+        "b": "xarada_riddlers_ufla_2024",
+        "scoreA": 2,
+        "scoreB": 0,
+        "bestOf": "MD3",
+        "note": "Estatísticas de 1 mapa"
+      },
+      "48": {
+        "a": "ufma_balsas_ma_2024",
+        "b": "lunatica_ufms",
+        "scoreA": 0,
+        "scoreB": 2,
+        "bestOf": "MD3",
+        "note": "Estatísticas de 1 mapa"
+      }
+    },
+    "startAt": "2024-07-17T20:21:57.077Z",
+    "endAt": "2024-08-03T16:35:21.076Z",
+    "bracket": {
+      "title": "Classificatória para oito vagas",
+      "regions": [
+        {
+          "name": "Qualify 2",
+          "layout": "linked",
+          "stage": "playoffs",
+          "columns": [
+            {
+              "title": "Qualify 2 - Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 1",
+                  "seriesCode": 1,
+                  "bestOf": "MD3",
+                  "a": "unesa_cyborgs",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 2",
+                  "seriesCode": 2,
+                  "bestOf": "MD3",
+                  "a": "fusve_barao_rj_2024",
+                  "b": "calango_team_fametro_am_668459eb_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "fusve_barao_rj_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 3",
+                  "seriesCode": 3,
+                  "bestOf": "MD3",
+                  "a": "ufsc_titans_sc_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 4",
+                  "seriesCode": 4,
+                  "bestOf": "MD3",
+                  "a": "puc_clerigos",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 5",
+                  "seriesCode": 5,
+                  "bestOf": "MD3",
+                  "a": "ufpe_virtus",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 6",
+                  "seriesCode": 6,
+                  "bestOf": "MD3",
+                  "a": "asces_unita_pe_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 7",
+                  "seriesCode": 7,
+                  "bestOf": "MD3",
+                  "a": "univasf",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 8",
+                  "seriesCode": 8,
+                  "bestOf": "MD3",
+                  "a": "ufac_esports_ac_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 9",
+                  "seriesCode": 9,
+                  "bestOf": "MD3",
+                  "a": "inatel",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 10",
+                  "seriesCode": 10,
+                  "bestOf": "MD3",
+                  "a": "bot_s_academy_pb_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 11",
+                  "seriesCode": 11,
+                  "bestOf": "MD3",
+                  "a": "ods_force_ufla_mg_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 12",
+                  "seriesCode": 12,
+                  "bestOf": "MD3",
+                  "a": "xarada_riddlers_ufla_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 13",
+                  "seriesCode": 13,
+                  "bestOf": "MD3",
+                  "a": "iesb_cesb_ieb_df_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 14",
+                  "seriesCode": 14,
+                  "bestOf": "MD3",
+                  "a": "ufrn_rn_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 15",
+                  "seriesCode": 15,
+                  "bestOf": "MD3",
+                  "a": "anhanguera_the_dream_team_df_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 16",
+                  "seriesCode": 16,
+                  "bestOf": "MD3",
+                  "a": "rahnag",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 17",
+                  "seriesCode": 17,
+                  "bestOf": "MD3",
+                  "a": "furia_utfpr",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 18",
+                  "seriesCode": 18,
+                  "bestOf": "MD3",
+                  "a": "unioeste_rino_pr_2024",
+                  "b": "unirv_e_sports_go_2024",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "unirv_e_sports_go_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 19",
+                  "seriesCode": 19,
+                  "bestOf": "MD3",
+                  "a": "pato",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 20",
+                  "seriesCode": 20,
+                  "bestOf": "MD3",
+                  "a": "ufs_warriowls",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 21",
+                  "seriesCode": 21,
+                  "bestOf": "MD3",
+                  "a": "uesc_cacaueiros_ba_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 22",
+                  "seriesCode": 22,
+                  "bestOf": "MD3",
+                  "a": "senais_falcons_ba_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 23",
+                  "seriesCode": 23,
+                  "bestOf": "MD3",
+                  "a": "ucsal_aduc_ba_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 24",
+                  "seriesCode": 24,
+                  "bestOf": "MD3",
+                  "a": "ufmt_turuna",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 25",
+                  "seriesCode": 25,
+                  "bestOf": "MD3",
+                  "a": "maua_esports_black_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 26",
+                  "seriesCode": 26,
+                  "bestOf": "MD3",
+                  "a": "calango_team_manaus_am_2024",
+                  "b": "eng_ufes_es_2024",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "eng_ufes_es_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 27",
+                  "seriesCode": 27,
+                  "bestOf": "MD3",
+                  "a": "imperador_uvv_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 28",
+                  "seriesCode": 28,
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 29",
+                  "seriesCode": 29,
+                  "bestOf": "MD3",
+                  "a": "unigran_sarristas_ms_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 30",
+                  "seriesCode": 30,
+                  "bestOf": "MD3",
+                  "a": "uema_cyborgues_ma_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 31",
+                  "seriesCode": 31,
+                  "bestOf": "MD3",
+                  "a": "ufma_balsas_ma_2024",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                },
+                {
+                  "code": "Partida 32",
+                  "seriesCode": 32,
+                  "bestOf": "MD3",
+                  "a": "lunatica_ufms",
+                  "bLabel": "Sem adversário",
+                  "status": "Bye",
+                  "previewNote": "Avanço direto registrado na chave."
+                }
+              ]
+            },
+            {
+              "title": "Qualify 2 - Rodada 2",
+              "matches": [
+                {
+                  "code": "Partida 33",
+                  "seriesCode": 33,
+                  "bestOf": "MD3",
+                  "a": "unesa_cyborgs",
+                  "b": "fusve_barao_rj_2024",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "fusve_barao_rj_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 34",
+                  "seriesCode": 34,
+                  "bestOf": "MD3",
+                  "a": "ufsc_titans_sc_2024",
+                  "b": "puc_clerigos",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "puc_clerigos"
+                },
+                {
+                  "code": "Partida 35",
+                  "seriesCode": 35,
+                  "bestOf": "MD3",
+                  "a": "ufpe_virtus",
+                  "b": "asces_unita_pe_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "ufpe_virtus"
+                },
+                {
+                  "code": "Partida 36",
+                  "seriesCode": 36,
+                  "bestOf": "MD3",
+                  "a": "univasf",
+                  "b": "ufac_esports_ac_2024",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufac_esports_ac_2024"
+                },
+                {
+                  "code": "Partida 37",
+                  "seriesCode": 37,
+                  "bestOf": "MD3",
+                  "a": "inatel",
+                  "b": "bot_s_academy_pb_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "inatel"
+                },
+                {
+                  "code": "Partida 38",
+                  "seriesCode": 38,
+                  "bestOf": "MD3",
+                  "a": "ods_force_ufla_mg_2024",
+                  "b": "xarada_riddlers_ufla_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "ods_force_ufla_mg_2024",
+                  "status": "Estatísticas parciais",
+                  "previewNote": "Estatísticas de 1 mapa"
+                },
+                {
+                  "code": "Partida 39",
+                  "seriesCode": 39,
+                  "bestOf": "MD3",
+                  "a": "iesb_cesb_ieb_df_2024",
+                  "b": "ufrn_rn_2024",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "ufrn_rn_2024"
+                },
+                {
+                  "code": "Partida 40",
+                  "seriesCode": 40,
+                  "bestOf": "MD3",
+                  "a": "anhanguera_the_dream_team_df_2024",
+                  "b": "rahnag",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "rahnag",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 41",
+                  "seriesCode": 41,
+                  "bestOf": "MD3",
+                  "a": "furia_utfpr",
+                  "b": "unirv_e_sports_go_2024",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "unirv_e_sports_go_2024"
+                },
+                {
+                  "code": "Partida 42",
+                  "seriesCode": 42,
+                  "bestOf": "MD3",
+                  "a": "pato",
+                  "b": "ufs_warriowls",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufs_warriowls"
+                },
+                {
+                  "code": "Partida 43",
+                  "seriesCode": 43,
+                  "bestOf": "MD3",
+                  "a": "uesc_cacaueiros_ba_2024",
+                  "b": "senais_falcons_ba_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "uesc_cacaueiros_ba_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 44",
+                  "seriesCode": 44,
+                  "bestOf": "MD3",
+                  "a": "ucsal_aduc_ba_2024",
+                  "b": "ufmt_turuna",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufmt_turuna"
+                },
+                {
+                  "code": "Partida 45",
+                  "seriesCode": 45,
+                  "bestOf": "MD3",
+                  "a": "maua_esports_black_2024",
+                  "b": "eng_ufes_es_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "maua_esports_black_2024"
+                },
+                {
+                  "code": "Partida 46",
+                  "seriesCode": 46,
+                  "bestOf": "MD3",
+                  "a": "imperador_uvv_2024",
+                  "b": "caap_hellhounds",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "caap_hellhounds"
+                },
+                {
+                  "code": "Partida 47",
+                  "seriesCode": 47,
+                  "bestOf": "MD3",
+                  "a": "unigran_sarristas_ms_2024",
+                  "b": "uema_cyborgues_ma_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "unigran_sarristas_ms_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 48",
+                  "seriesCode": 48,
+                  "bestOf": "MD3",
+                  "a": "ufma_balsas_ma_2024",
+                  "b": "lunatica_ufms",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "lunatica_ufms",
+                  "status": "Estatísticas parciais",
+                  "previewNote": "Estatísticas de 1 mapa"
+                }
+              ]
+            },
+            {
+              "title": "Qualify 2 - Rodada 3",
+              "matches": [
+                {
+                  "code": "Partida 49",
+                  "seriesCode": 49,
+                  "bestOf": "MD3",
+                  "a": "fusve_barao_rj_2024",
+                  "b": "puc_clerigos",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "puc_clerigos",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                },
+                {
+                  "code": "Partida 50",
+                  "seriesCode": 50,
+                  "bestOf": "MD3",
+                  "a": "ufpe_virtus",
+                  "b": "ufac_esports_ac_2024",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "ufpe_virtus"
+                },
+                {
+                  "code": "Partida 51",
+                  "seriesCode": 51,
+                  "bestOf": "MD3",
+                  "a": "inatel",
+                  "b": "ods_force_ufla_mg_2024",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "inatel"
+                },
+                {
+                  "code": "Partida 52",
+                  "seriesCode": 52,
+                  "bestOf": "MD3",
+                  "a": "ufrn_rn_2024",
+                  "b": "rahnag",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "ufrn_rn_2024"
+                },
+                {
+                  "code": "Partida 53",
+                  "seriesCode": 53,
+                  "bestOf": "MD3",
+                  "a": "unirv_e_sports_go_2024",
+                  "b": "ufs_warriowls",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "ufs_warriowls"
+                },
+                {
+                  "code": "Partida 54",
+                  "seriesCode": 54,
+                  "bestOf": "MD3",
+                  "a": "uesc_cacaueiros_ba_2024",
+                  "b": "ufmt_turuna",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufmt_turuna"
+                },
+                {
+                  "code": "Partida 55",
+                  "seriesCode": 55,
+                  "bestOf": "MD3",
+                  "a": "maua_esports_black_2024",
+                  "b": "caap_hellhounds",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "caap_hellhounds"
+                },
+                {
+                  "code": "Partida 56",
+                  "seriesCode": 56,
+                  "bestOf": "MD3",
+                  "a": "unigran_sarristas_ms_2024",
+                  "b": "lunatica_ufms",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "unigran_sarristas_ms_2024"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "jubs-2024-playoffs-online": {
+    "name": "JUBS 2024 - Playoffs online",
+    "organizer": "CBDU",
+    "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
+    "banner": "",
+    "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 16,
+    "teams": [
+      "unb_black",
+      "ufrj_canis_b",
+      "ufmt_turuna",
+      "uninassau_griffins",
+      "ufg_eagles",
+      "ufs_warriowls",
+      "ufrn_rn_2024",
+      "ufpe_virtus",
+      "unigran_sarristas_ms_2024",
+      "puc_clerigos",
+      "azure_bears_golden",
+      "caap_hellhounds",
+      "ufu_saints",
+      "inatel",
+      "caaso_hogs_usp_2024",
+      "fametro_berserkers"
+    ],
+    "teamNames": {
+      "unb_black": "UNB Green OWLS Black - DF",
+      "ufrj_canis_b": "UFRJ Noctua - RJ",
+      "ufmt_turuna": "UFMT TURUNA - MT",
+      "uninassau_griffins": "Uninassau Griffins - PE",
+      "ufg_eagles": "UFG Eagles - GO",
+      "ufs_warriowls": "UFS Warriowls - SE",
+      "ufrn_rn_2024": "UFRN - RN",
+      "ufpe_virtus": "UFPE VIRTUS - PE",
+      "unigran_sarristas_ms_2024": "UNIGRAN Sarristas - MS",
+      "puc_clerigos": "Clérigos PUC - RJ",
+      "azure_bears_golden": "UTFPR Azure Bears - PR",
+      "caap_hellhounds": "UFABC CAAP Hellhounds - SP",
+      "ufu_saints": "UFU Saints - MG",
+      "inatel": "Inatel - MG",
+      "caaso_hogs_usp_2024": "USP CAASO Hogs - SP",
+      "fametro_berserkers": "FAMETRO Codify Team - AM"
+    },
+    "mapPool": [
+      "Abyss",
+      "Ascent",
+      "Bind",
+      "Haven",
+      "Icebox",
+      "Lotus",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "16 equipes, oito vagas presenciais; uma representante de cada estado",
+      "details": [
+        "16 equipes disputam oito vagas na etapa presencial.",
+        "No máximo uma representante de cada estado avança ao presencial.",
+        "USP CAASO e FAMETRO venceram no online; CAAP e UFMT participaram do presencial, conforme o boletim.",
+        "UTFPR Azure Bears corresponde à Azure Bears Golden nesta edição.",
+        "FAMETRO Codify Team integra o histórico da atual FAMETRO Berserkers."
+      ],
+      "standings": "Classificação oficial"
+    },
+    "placements": [
+      {
+        "id": "inatel",
+        "range": "Classificado",
+        "note": "Vaga conquistada no playoff online"
+      },
+      {
+        "id": "caaso_hogs_usp_2024",
+        "range": "Classificado",
+        "note": "Vaga conquistada no playoff online"
+      },
+      {
+        "id": "uninassau_griffins",
+        "range": "Classificado",
+        "note": "Vaga conquistada no playoff online"
+      },
+      {
+        "id": "unb_black",
+        "range": "Classificado",
+        "note": "Vaga conquistada no playoff online"
+      },
+      {
+        "id": "ufg_eagles",
+        "range": "Classificado",
+        "note": "Vaga conquistada no playoff online"
+      },
+      {
+        "id": "fametro_berserkers",
+        "range": "Classificado",
+        "note": "Vaga conquistada no playoff online"
+      },
+      {
+        "id": "azure_bears_golden",
+        "range": "Classificado",
+        "note": "Vaga conquistada no playoff online"
+      },
+      {
+        "id": "ufrj_canis_b",
+        "range": "Classificado",
+        "note": "Vaga conquistada no playoff online"
+      },
+      {
+        "id": "ufu_saints",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "caap_hellhounds",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufpe_virtus",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufmt_turuna",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unigran_sarristas_ms_2024",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufs_warriowls",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufrn_rn_2024",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "puc_clerigos",
+        "range": "9-16",
+        "note": "Resultado da chave oficial"
+      }
+    ],
+    "seriesResults": {},
+    "startAt": "2024-08-03T18:19:41.775Z",
+    "endAt": "2024-08-10T22:50:31.596Z",
+    "bracket": {
+      "title": "16 equipes, oito vagas presenciais; uma representante de cada estado",
+      "regions": [
+        {
+          "name": "Playoffs online",
+          "layout": "linked",
+          "stage": "playoffs",
+          "columns": [
+            {
+              "title": "Playoffs online - Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 1",
+                  "seriesCode": 1,
+                  "bestOf": "MD3",
+                  "a": "ufu_saints",
+                  "b": "inatel",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "inatel"
+                },
+                {
+                  "code": "Partida 2",
+                  "seriesCode": 2,
+                  "bestOf": "MD3",
+                  "a": "caaso_hogs_usp_2024",
+                  "b": "caap_hellhounds",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "caaso_hogs_usp_2024"
+                },
+                {
+                  "code": "Partida 3",
+                  "seriesCode": 3,
+                  "bestOf": "MD3",
+                  "a": "uninassau_griffins",
+                  "b": "ufpe_virtus",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins"
+                },
+                {
+                  "code": "Partida 4",
+                  "seriesCode": 4,
+                  "bestOf": "MD3",
+                  "a": "unb_black",
+                  "b": "ufmt_turuna",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "unb_black"
+                },
+                {
+                  "code": "Partida 5",
+                  "seriesCode": 5,
+                  "bestOf": "MD3",
+                  "a": "ufg_eagles",
+                  "b": "unigran_sarristas_ms_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "ufg_eagles"
+                },
+                {
+                  "code": "Partida 6",
+                  "seriesCode": 6,
+                  "bestOf": "MD3",
+                  "a": "fametro_berserkers",
+                  "b": "ufs_warriowls",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "fametro_berserkers"
+                },
+                {
+                  "code": "Partida 7",
+                  "seriesCode": 7,
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "ufrn_rn_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden"
+                },
+                {
+                  "code": "Partida 8",
+                  "seriesCode": 8,
+                  "bestOf": "MD3",
+                  "a": "ufrj_canis_b",
+                  "b": "puc_clerigos",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "ufrj_canis_b",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "jubs-2024-presencial": {
+    "name": "JUBS 2024 - Etapa presencial",
+    "organizer": "CBDU",
+    "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
+    "banner": "",
+    "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+    "type": "Presencial",
+    "status": "Finalizado",
+    "teamCount": 8,
+    "teams": [
+      "unb_black",
+      "ufmt_turuna",
+      "uninassau_griffins",
+      "ufg_eagles",
+      "azure_bears_golden",
+      "caap_hellhounds",
+      "inatel",
+      "ufrj_canis_b"
+    ],
+    "teamNames": {
+      "unb_black": "UNB Green OWLS Black - DF",
+      "ufmt_turuna": "UFMT TURUNA - MT",
+      "uninassau_griffins": "Uninassau Griffins - PE",
+      "ufg_eagles": "UFG Eagles - GO",
+      "azure_bears_golden": "UTFPR Azure Bears - PR",
+      "caap_hellhounds": "UFABC CAAP Hellhounds - SP",
+      "inatel": "Inatel - MG",
+      "ufrj_canis_b": "UFRJ CANIS / UFRJ-RJ"
+    },
+    "mapPool": [
+      "Abyss",
+      "Ascent",
+      "Bind",
+      "Haven",
+      "Icebox",
+      "Lotus",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Dois grupos GSL e playoffs",
+      "details": [
+        "Dois grupos de quatro em eliminação dupla (GSL), com partidas MD1.",
+        "Dois classificados por grupo. Semifinais, disputa de terceiro lugar e final em MD3.",
+        "Resultados e classificação da etapa presencial conforme o Boletim 05 da CBDU.",
+        "UTFPR Azure Bears corresponde à Azure Bears Golden nesta edição."
+      ],
+      "standings": "Classificação oficial"
+    },
+    "placements": [
+      {
+        "id": "azure_bears_golden",
+        "range": "1",
+        "note": "1º lugar no boletim"
+      },
+      {
+        "id": "unb_black",
+        "range": "2",
+        "note": "2º lugar no boletim"
+      },
+      {
+        "id": "uninassau_griffins",
+        "range": "3",
+        "note": "3º lugar no boletim"
+      },
+      {
+        "id": "ufrj_canis_b",
+        "range": "4",
+        "note": "4º lugar no boletim"
+      },
+      {
+        "id": "ufg_eagles",
+        "range": "5",
+        "note": "5º lugar no boletim"
+      },
+      {
+        "id": "caap_hellhounds",
+        "range": "6",
+        "note": "6º lugar no boletim"
+      },
+      {
+        "id": "inatel",
+        "range": "7",
+        "note": "7º lugar no boletim"
+      },
+      {
+        "id": "ufmt_turuna",
+        "range": "8",
+        "note": "8º lugar no boletim"
+      }
+    ],
+    "seriesResults": {},
+    "startAt": "2024-10-14T12:21:31.248Z",
+    "endAt": "2024-10-17T16:09:07.677Z",
+    "bracket": {
+      "title": "Grupos GSL e playoffs",
+      "regions": [
+        {
+          "name": "Grupo A",
+          "stage": "groups",
+          "className": "group-stage gsl-group",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Abertura",
+              "matches": [
+                {
+                  "code": "Partida 1",
+                  "seriesCode": 1,
+                  "bestOf": "MD1",
+                  "a": "uninassau_griffins",
+                  "b": "caap_hellhounds",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins",
+                  "band": 0
+                },
+                {
+                  "code": "Partida 2",
+                  "seriesCode": 2,
+                  "bestOf": "MD1",
+                  "a": "ufrj_canis_b",
+                  "b": "inatel",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufrj_canis_b",
+                  "band": 1
+                }
+              ]
+            },
+            {
+              "title": "Vencedores / Eliminação",
+              "matches": [
+                {
+                  "code": "Partida 3",
+                  "seriesCode": 3,
+                  "bestOf": "MD1",
+                  "a": "uninassau_griffins",
+                  "b": "ufrj_canis_b",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins",
+                  "band": 0,
+                  "label": "Vencedores",
+                  "from": [
+                    "Partida 1",
+                    "Partida 2"
+                  ]
+                },
+                {
+                  "code": "Partida 7",
+                  "seriesCode": 7,
+                  "bestOf": "MD1",
+                  "a": "caap_hellhounds",
+                  "b": "inatel",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds",
+                  "band": 1,
+                  "label": "Eliminação",
+                  "from": [
+                    "Partida 1",
+                    "Partida 2"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Decisiva",
+              "matches": [
+                {
+                  "code": "Partida 8",
+                  "seriesCode": 8,
+                  "bestOf": "MD1",
+                  "a": "ufrj_canis_b",
+                  "b": "caap_hellhounds",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufrj_canis_b",
+                  "band": 1,
+                  "from": [
+                    "Partida 3",
+                    "Partida 7"
+                  ]
+                }
+              ]
+            }
+          ],
+          "terminalColumn": {
+            "title": "Classificados",
+            "cards": [
+              {
+                "id": "uninassau_griffins",
+                "note": "1º do grupo",
+                "band": 0,
+                "from": [
+                  "Partida 3"
+                ]
+              },
+              {
+                "id": "ufrj_canis_b",
+                "note": "2º do grupo",
+                "band": 1,
+                "from": [
+                  "Partida 8"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "Grupo B",
+          "stage": "groups",
+          "className": "group-stage gsl-group",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Abertura",
+              "matches": [
+                {
+                  "code": "Partida 4",
+                  "seriesCode": 4,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles",
+                  "b": "ufmt_turuna",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "ufg_eagles",
+                  "band": 0
+                },
+                {
+                  "code": "Partida 5",
+                  "seriesCode": 5,
+                  "bestOf": "MD1",
+                  "a": "azure_bears_golden",
+                  "b": "unb_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "unb_black",
+                  "band": 1
+                }
+              ]
+            },
+            {
+              "title": "Vencedores / Eliminação",
+              "matches": [
+                {
+                  "code": "Partida 6",
+                  "seriesCode": 6,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles",
+                  "b": "unb_black",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "unb_black",
+                  "band": 0,
+                  "label": "Vencedores",
+                  "from": [
+                    "Partida 4",
+                    "Partida 5"
+                  ]
+                },
+                {
+                  "code": "Partida 9",
+                  "seriesCode": 9,
+                  "bestOf": "MD1",
+                  "a": "ufmt_turuna",
+                  "b": "azure_bears_golden",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "azure_bears_golden",
+                  "band": 1,
+                  "label": "Eliminação",
+                  "from": [
+                    "Partida 4",
+                    "Partida 5"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Decisiva",
+              "matches": [
+                {
+                  "code": "Partida 10",
+                  "seriesCode": 10,
+                  "bestOf": "MD1",
+                  "a": "ufg_eagles",
+                  "b": "azure_bears_golden",
+                  "scoreA": 0,
+                  "scoreB": 1,
+                  "winner": "azure_bears_golden",
+                  "band": 1,
+                  "from": [
+                    "Partida 6",
+                    "Partida 9"
+                  ]
+                }
+              ]
+            }
+          ],
+          "terminalColumn": {
+            "title": "Classificados",
+            "cards": [
+              {
+                "id": "unb_black",
+                "note": "1º do grupo",
+                "band": 0,
+                "from": [
+                  "Partida 6"
+                ]
+              },
+              {
+                "id": "azure_bears_golden",
+                "note": "2º do grupo",
+                "band": 1,
+                "from": [
+                  "Partida 10"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "Playoffs",
+          "stage": "playoffs",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Semifinais",
+              "matches": [
+                {
+                  "code": "Partida 11",
+                  "seriesCode": 11,
+                  "bestOf": "MD3",
+                  "a": "uninassau_griffins",
+                  "b": "azure_bears_golden",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "azure_bears_golden",
+                  "band": 0
+                },
+                {
+                  "code": "Partida 12",
+                  "seriesCode": 12,
+                  "bestOf": "MD3",
+                  "a": "unb_black",
+                  "b": "ufrj_canis_b",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "unb_black",
+                  "band": 1
+                }
+              ]
+            },
+            {
+              "title": "Final",
+              "matches": [
+                {
+                  "code": "Partida 14",
+                  "seriesCode": 14,
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "unb_black",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden",
+                  "band": 0,
+                  "from": [
+                    "Partida 11",
+                    "Partida 12"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Terceiro lugar",
+          "stage": "playoffs",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Terceiro lugar",
+              "matches": [
+                {
+                  "code": "Partida 13",
+                  "seriesCode": 13,
+                  "bestOf": "MD3",
+                  "a": "uninassau_griffins",
+                  "b": "ufrj_canis_b",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins",
+                  "band": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
   "cpue-2025": {
     "name": "CPUE 2025",
     "organizer": "FUPE-SP",
@@ -10972,7 +19129,7 @@ const TOURNAMENT_OVERRIDES = {
               title: "Quartas de final superior",
               matches: [
                 { code: "Partida 116", bestOf: "MD3", a: "azure_bears_red", scoreA: 1, b: "azure_bears_black", scoreB: 2, winner: "azure_bears_black" },
-                { a: "unifesp_erex", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "unifesp_erex" },
+                { code: "Avanço direto Chave superior 1-2", a: "unifesp_erex", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "unifesp_erex" },
                 { code: "Partida 117", bestOf: "MD3", a: "macklogic_white", scoreA: 2, b: "espm_overbite_misto", scoreB: 0, winner: "macklogic_white" },
                 { code: "Partida 119", bestOf: "MD3", a: "fei_darkowls", scoreA: 2, b: "sheriff_iff", scoreB: 0, winner: "fei_darkowls" },
               ],
@@ -11000,7 +19157,7 @@ const TOURNAMENT_OVERRIDES = {
               title: "Rodada de 4 inferior",
               matches: [
                 { code: "Partida 120", bestOf: "MD3", a: "azure_bears_red", scoreA: 2, b: "sheriff_iff", scoreB: 0, winner: "azure_bears_red" },
-                { a: "espm_overbite_misto", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "espm_overbite_misto" },
+                { code: "Avanço direto Chave inferior 1-2", a: "espm_overbite_misto", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "espm_overbite_misto" },
               ],
             },
             {
@@ -11071,10 +19228,10 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Quartas de final superior",
               matches: [
-                { a: "maua_blue", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "maua_blue" },
+                { code: "Avanço direto Chave superior 1-1", a: "maua_blue", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "maua_blue" },
                 { code: "Partida 124", bestOf: "MD3", a: "totale_umc", scoreA: 2, b: "azure_bears_white", scoreB: 0, winner: "totale_umc" },
-                { a: "ifsp_midas", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "ifsp_midas" },
-                { a: "ufpr_bbn", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "ufpr_bbn" },
+                { code: "Avanço direto Chave superior 1-3", a: "ifsp_midas", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "ifsp_midas" },
+                { code: "Avanço direto Chave superior 1-4", a: "ufpr_bbn", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "ufpr_bbn" },
               ],
             },
             {
@@ -11099,14 +19256,14 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 4 inferior",
               matches: [
-                { a: "azure_bears_white", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "azure_bears_white" },
+                { code: "Avanço direto Chave inferior 1-1", a: "azure_bears_white", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "azure_bears_white" },
               ],
             },
             {
               title: "Quartas de final inferior",
               matches: [
                 { code: "Partida 127", bestOf: "MD3", a: "ifsp_midas", scoreA: 2, b: "azure_bears_white", scoreB: 0, winner: "ifsp_midas" },
-                { a: "totale_umc", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "totale_umc" },
+                { code: "Avanço direto Chave inferior 2-2", a: "totale_umc", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "totale_umc" },
               ],
             },
             {
@@ -12659,7 +20816,7 @@ function parseMatchFile(file, metadata) {
         player,
         matchRoundStats.get(player.puuid) || emptyPlayerRoundStats(),
         metadata,
-        accountOverrides.has(player.puuid) ? metadata.playersByPuuid.get(accountOverrides.get(player.puuid)) : null,
+        accountOverrides.has(player.puuid) ? (metadata.playersByPuuid.get(accountOverrides.get(player.puuid)) || HISTORICAL_PEOPLE_2024[accountOverrides.get(player.puuid)] || null) : resolveHistoricalPlayer2024(player, metadata, raw.matchInfo?.matchId),
       ),
     );
   assertOnePersonPerMatch(players, raw.matchInfo?.matchId, file.path);
@@ -12940,6 +21097,30 @@ function teamIdMatchesAlias(registeredId, targetId) {
 // Cada regra abaixo cobre um par que só coexiste nesse cenário e diz de quem
 // era cada conta naquela partida. Par que ninguém descreveu derruba o build em
 // assertOnePersonPerMatch, em vez de virar número errado publicado.
+// Identificações históricas: conta usada preservada e escopo por UUID.
+const HISTORICAL_PEOPLE_2024 = {
+  "historico:jubs-2024:kuruk": {
+    "name": "KüruK",
+    "currentTeam": "",
+    "teamHistory": [
+      "unesa_cyborgs"
+    ],
+    "nickHistory": []
+  }
+};
+const HISTORICAL_MATCH_IDS_2024 = new Set(["876299e5-217b-45a1-b767-4c018605c752","5e56f8f6-154d-49c8-8f84-a7dd7588230b","59efe0cd-096b-4a96-a843-42e9904b17f4","992ab46a-3c96-4be9-8009-23a5de5f5ac8","3aaaff42-dac3-45b1-b4de-916270874ce4","08cd102d-4b63-457f-a59a-fec3b18df2a5","3cd82ded-0a64-4833-af6d-0e058448fb51","eafbf9cf-c7d3-4b78-9c14-50da663fb1b9","e8dc3a4c-9a8f-4760-b7cb-53980f122347","1356bb69-becd-4a7f-9a5f-94c4107b9789","609d8497-4b4c-418c-be5b-7a811e292707","320a8b7e-7adb-4832-b020-32736f22a1c1","81eabe50-a747-498c-b596-91b1433329c6","6671bb3c-2a96-499c-a42d-e6b8e8f82fcc","c81637d7-887d-447f-9985-c7eee9a457c9","5bbd17e5-8696-48e3-95b4-324c2e9aab11","f9438b5b-d506-4ac4-b038-e4bd3c7c76fc","8a296290-1da3-45c4-af87-45d7ee5ff314","55a58384-6eb9-4f0e-8033-5d6e6b210447","38a9c413-503f-43ea-853d-cc26b2b7f37a","eb3e3e39-2e24-45e6-88ff-4be0da05ba2a","7bbd1375-9134-4312-8646-1af7f11e0ae6","3a569d62-aea5-437a-a855-e64ab8e44ce0","e2e79070-49ef-4a67-bde0-694eba0b0741","f86c2a94-e24d-433c-8a04-602b408b8d41","c3f991bf-6a75-4d9d-813c-d0a050822c9e","baab53e6-c9a6-48f5-b39c-9012f2215f35","dc02b212-60ed-4043-946a-ef4d0cb206fa","4050dc8e-4d9d-4dc8-83a4-d8f4491fe7ae","0893f944-5234-4b10-a5c8-e5e233dbe969","72bfc87d-5102-4839-a1fd-82914e8f2e0c","902c69f8-71d3-4e8b-916f-3623129d0028","044fce23-8093-449e-a229-bc986c3e54dd","d5a52050-9c9b-43e9-8fbc-200d618c50ea","90786b15-67d6-4ff1-a9c2-d2556fe2f317","4b39fd75-c8c0-424e-8910-f7c227d6df84","7dddba05-0f28-4edd-8149-c427d0d98c8f","1e13d7e2-53ec-49eb-b1b9-726697b6f0fb","dc0a2349-2b93-4e29-8356-d23d72c9ab3b","b92f8dbe-70d6-4c81-b9bc-15476762af5d","575106f7-2fab-4a46-9833-9015393bff6f","1e78764a-b196-4478-8aa9-114999fe414b","2e4c6ac3-52fe-4495-9508-f275fc37d2f6","e0a10497-ad6c-48a4-a8f8-8b5f7ea3523a","eee12020-5b76-4f15-a56f-2214ece74dc8","bffe5eb2-15cc-48c1-b70e-ca86c44a36f3","2ee18510-e463-4b1f-8bbe-eb694a3df6fe","e603cbf3-2194-41bf-93cd-b9158ee6a81c","775966d7-ef49-4279-a855-3d7c911dc56b","42780b0b-d874-428f-8430-4fdc425a57ba","d006aeb3-817f-4157-99e0-744891cda115","fb80b9d1-cc0c-490a-94e2-3f6936a31fa6","e5d47b11-f647-4f65-b250-2467010540a8","79e867c0-5b7c-4807-aa97-e7172660ffb0","879d9a3d-e2b8-4ec2-bf3b-79a5cd11705e","d56c9e38-870d-4a6b-a25f-3e7bab64e39e","4cc8504b-7e49-45c1-bef1-879159a7ff21","2ed4f91e-ab35-4d13-84f9-089fafde26a9","0de57fb7-6a8e-433b-96d3-de5df238053c","79b36888-0afb-49ec-afcd-432f747a158e","2dd36e15-aa18-41ec-9890-66484f347359","746a5b01-7ea7-4651-b500-c4205ded67e0","369b098e-556b-4308-934d-6a604fe82b21","b819a104-ccb6-467a-afbf-8a145ef9c503","834c6ee2-85f3-49a2-bc34-92a9e344f836","3d9e3e6d-2ebd-449a-a788-9a723dd5b2f3","195b7c16-3d4c-4f49-bf1d-08da931c1bb5","4f92ccb9-73fe-443e-b21f-623ca350de8a","66a69b21-640e-4c8d-80b5-5df0d7319b40","894d535d-df58-44d0-8ae6-bd7f06a08b0d","cb84790a-cc18-4087-b732-e0021a41b907","f1ce7092-3cf6-4556-82f5-8c5b02865142","679adb43-56ba-4a13-b90e-8f5ff0ffbc80","850eb77e-d703-441e-9b60-71679edfdf93","588d6244-033a-450f-af35-f99ff39f4166","8b2962f0-488b-4ddc-8df9-cca7c9391596","35f52f26-4b81-4b78-a247-6eb3740519e7","0ffc1056-3a32-460a-83c5-b4a31123e011","d50eca90-1138-4863-bd4c-c5acc946b705","1cfa39e6-4924-4115-84ca-8aad6566c01f","cd5df1c1-1423-430d-ba0b-eec06ed6b01f","0b176e87-f255-41a8-8745-563c22bc1475","f07923aa-4eb5-43d4-a5f5-c070be03413f","07f1a884-25af-4ff9-8caa-7b5cf81963f0","4087b0b9-eb10-4ba7-9bbf-2a8cf5e559a9","0e4db5e5-c6f1-4e62-a0d9-acc9f9567c89","b3faa7b2-cc9d-4c4c-a43a-d3e63b838fae","feed8220-63af-47b8-94ee-26ca26e6d9cc","932329c3-114c-4e3a-8139-51b8dc352edf","ad52968d-418f-49ae-b4e2-6227b3afb3e5","ee4b72f2-33d5-4616-86c9-e34605f31d43","f0b9be8b-fc3e-45f2-86d7-fc5f8d538b87","57aaf725-4f4c-4cda-8dcf-2ceca0f51572","6d9dbcee-3050-47c5-a234-c0f0120cfaf9","513d3dc1-d392-40dc-873b-a7376cc32dbd","e4d3f914-41df-413f-a2b9-a483bda160f6","43ddebc1-acc5-4657-bdcd-383f46d6879d","af703da7-0b4f-42d5-9069-0f2547b08f3f","8a5f2827-6f99-4b14-bf6b-9b3cd2979758","eed4b418-b5b0-4e88-a119-93d4f656181a","c7c2eefd-e1bd-4581-a428-cbfb0a9716db","9a14a3e5-ea90-48fa-bd35-b7c517b71e0a","358c3b24-69c5-4f9f-a993-5d929633b93b","a0b7bbc4-b345-40ab-a32b-e66162e591b5","c9da4422-4821-43a9-85bc-c6192cc3508f","3aae49ed-ffa1-4460-97cb-d13a53bb46d6","696dfd68-7376-4d6d-851e-9a89868593d1","d70d65e7-4c88-4b43-a4d1-252f5cc663d6","9a3f6ee8-5ffb-4699-8c2b-5af3eaccf138","2b52d000-5f32-443b-81fa-d34c15306a6e","feec4645-0338-4eae-8d11-c33934a20c55","009f6f06-a16e-4549-a708-f7c1eea38602","15c5fbf0-2d8a-4734-b008-3e371d5d1a1f","72ac5d8f-8880-42c1-a859-de43ea26f4ce","318194ee-e633-4045-a66b-5ff022a6072a","98a69fe8-d72b-425b-9e31-073086bb3bab","42a859eb-1620-42c7-ba89-6555b44dd557","c668601b-d464-4515-949d-566170624ade","b8e21bbd-f26f-44cc-b990-5c21a18db806","1e5e21cb-5f49-4262-a406-f236a8a44ba5","0f61d0e0-7cac-4ecc-bb01-e1eebd5fb72e","71c83ede-9925-4a8b-8ca2-21eb956a2c0c","449612bd-44ef-42a4-a458-b8f7428fe254","2982ea4f-28fa-49f3-9f1d-af7431dce4af","d8993f42-ef45-4901-b222-125c2c2df190","bb2a6638-b813-433a-8508-2b00a9022a29","32f60fd8-4180-4c11-9f21-c97809475d78","a2744523-ec8a-483e-98e3-41339074e74c","6b7ed897-5820-460c-9800-6298921581e3","9356682e-8da5-4757-8f57-4cc0cdf6fb71","4fe9e684-56e7-48ae-8681-499fc2f256c3","9c5f28de-040a-439c-a1c1-9cf3f2a7f3ac","5b6c4d07-935f-4de1-b6fe-125d6ac3dcb0","b1e268fc-2939-497a-9f21-9de154806cdd","fdb029ef-cb5d-49fc-a8a5-21965d7f2b9c","a098db70-39e7-4916-89ac-51641febe1a0","58823c95-9278-448d-96bf-01777c272a1f","ad28b561-d3d6-4587-95dc-7f879937507f","d2e3a648-a0f0-446a-a429-7a1e18e965d2","b186e7d0-d676-4782-ad87-5ae2abd51ace","6e3d8269-b347-49fc-8eff-16bc30dedc0b","0683a96c-1b96-4380-9cdd-c2b7f14bd11c","2e8919f6-4877-4c26-8ef1-619a74b01b34","47ee8bbf-1f53-4913-bf16-feb729653b92","1f7d21b5-62b7-4668-80d5-4619c3dbac4d","49d061de-32c0-4032-9820-ee4d73fec6cf","c258a36d-3d88-4632-8346-5d2e3ba79af5","073077f3-b21a-4107-95bb-f4ccd2ba92b9","fa8ce6b8-d4b8-4b2b-af0f-2d092636aeae","27b83778-780e-4be0-aed8-7de1c2bbccd8","dcca61d8-60e9-469d-b90e-973baae6bcb4","5db4bb84-7fc8-4e53-9da5-d6739190bbe3","8bca0e62-08d7-4985-9d8a-7e94b6bc9834","628ae9ee-66d3-41e8-b5bb-b88cfaf2f5f4","10f344ad-bdb6-464f-b3bb-992a75dc401b","55047f57-a096-45a4-bd61-66823bf4ba2f","e83bdabd-d63a-4651-b315-ae428c1a1c30","0241bb11-a6b8-45be-bad4-bf09e6d60f3e","6be0c01d-744c-4aa0-afe2-7f0e3f814989","39446532-fddd-4b92-a190-9fde56bee034","f80aad66-83ef-45b1-8e7b-d3ce768645cc","252d07d4-fc5f-49ba-9191-8723d69288af","da61f53f-21b2-416d-8507-4d132365f12b","3a553161-dfcc-4315-b049-781c03287a05","4a8305cc-9975-443f-8de1-dc64ca643249","7dda7d42-a323-4ec5-999d-5691be6e1fdb","1b1a61a0-65da-4dbd-b2ba-f04e73fa1bc7","fc3d16c9-02b5-41d7-92c8-9de400880bbd","5df6c707-9a3d-41b5-a4d1-115bff3d8adc","e082774d-4ecb-40e5-97e0-39ef6d5bd504","ef1438bf-be54-40aa-94e7-4ec1708bc6cb","866eb2e4-1400-4eba-862a-ac423b5ebab5","6858eb96-fdbb-411b-acf4-747defeef08e","4858391c-f6e9-48db-a243-75c6eb85b8f4","e2f8f49a-2374-4f72-a9a9-24b565917c44","05f4ab58-64d7-4c96-a37f-4f8b03bdbd84","84bea0c7-8eaa-4e3a-be2f-4200d5687546","976b9ace-11d0-4a08-9c9b-1b355a0d84c8","ee4f65ea-009f-4bda-9c65-778f3eda6c88","33d4485e-032f-4bd7-a671-f779155b72db","346c3e0c-a812-48e5-929d-9b71857faaa3","90d2424d-ee86-4b0b-a227-4b222fb44bfd","5a470e1a-6850-4f17-a281-b604908c7de3","0b594be5-d489-4dc5-86f8-5cb50aebe853","ef527393-dce5-474f-a9a2-70d16774aad4","bb91a6cb-a6a3-4c07-a241-ae7f2f0ff1e1","a605cd10-7474-4f74-893c-fa41092dbf39","2a7a6fbc-6ea5-434e-8a52-dad81bd20528","7f543eb4-72be-4676-a600-5470dc2f25e3","17f945bc-ba8e-4a40-a234-eb8d04697a1f","85b726ec-2bbb-48a8-ab3f-bd6134a24c56","c144a931-1cc3-4375-a55b-ab7bc9d12aaa","fbae6516-6d59-4518-ba16-02c4a875b584","aeb2c72f-1ec5-4243-9a20-6846531418e2","15c01edf-64d3-4c22-8075-3b0cec218d8d","f4b70663-bcc8-4af8-a5c0-8ff38732dddd","13d0f2b1-abb6-4178-9a98-428c43a149d3","d51948e6-4a7f-4e5f-9422-1b17e6a15180","523a0863-91a9-4133-86f3-90cb58a9fa29","2afd1150-32a1-40c3-9eed-8c76fab899d5","2b0138bc-85d6-4950-95fa-c7d2f6849c47","856b1691-aefd-46f7-9171-17600e9a25e3","319765f3-1eff-4c9d-8365-169859d5f1f2","e9d08e5b-683b-48f0-aa81-4adc3e0e9eb8","ecb2cf13-4391-49d9-9cf3-16a934429754","bf0b9ed6-7a3f-41c4-9c17-0f653b877649","7e42478c-34a3-448e-8229-d0d953163511","51d59d8c-5e1a-421a-ae9f-22278f39638f","04bbbe79-6151-412b-b653-098821552a18","189ab7b7-b8e0-4514-ab29-306cd0656e84","e60363f8-6f89-4366-8d4d-978714ecccaa","c48c10da-db61-4957-a09a-c8cd5ec87f99","4d763551-2a73-4fb5-b989-665da241f4e2","9166ff02-77a2-461d-9401-545d243c4506","6b3e2009-0c0b-4cce-a44b-0aae442d0fbd","52dd1048-4bde-4bfc-ba6d-59c927ccb826","6f950bcf-cb64-400b-8687-5d1b37f35662","fef036f6-0cfd-4494-aaa2-2a03f581c68d","cc87cc9f-5e54-43fb-a27b-ad93f3b32a26","5c993983-2116-475c-a71b-2c4e46691b12","c6714cd4-6c56-439f-997a-c467de42465b","7e4010cb-e28d-48ca-8ada-d30cba8b0855","ea035b38-e968-4256-a352-9a5d4019ef69","57c00e96-efc4-4683-977a-8fe1d5dd4579","e0b0ced2-1ea7-475e-8266-0435dc5f0b40","d8633e84-1715-4fc1-809d-9ea46e54e657","86547e77-dc94-4907-b1c9-157fb59f5fb3","89d4b148-6082-4fc6-9634-66e427a1815b","6304d4ae-e85b-4511-8e2f-965b34e523db","c4713ff8-d19a-4a8c-96f8-4edc7da8a528","51c8703a-abe1-4100-98db-e6a4233472af","491da87a-6c0f-4aa0-b9a6-6ea75b0eaee5","c8adea45-4b89-4276-b273-bb9542539678","a26fa7bf-c32f-4744-99c2-3013a71f1faf","c71e206f-4dbc-4718-b42f-6bff1def430c","0c7e1ae0-18e9-4c83-b37b-a828c30b02b0","658cfe13-ff9d-48cb-be28-456d2e7df675","abd86b41-c5a6-4789-b8bb-cd2ecac108b7","5e006803-dd06-4f8b-8edd-46d1a6d7d039","a02399ff-1869-49be-b1c5-d36101c8acc8","eb0ad4b1-a8e6-41aa-803a-f573706292e2","f16a5995-776f-42c9-b07e-053685096727","d9cbd1ac-749f-46d0-ab62-71dad317fe7f","79d65905-5de5-4664-866b-671179546d87","2eee9645-bb05-4cf0-98a3-c05652d06b87","08e92dc7-8db0-4553-b210-e994d6d09ef3","6b289758-bce3-4a62-8886-90aedddb43d8","7bf1baad-eafd-459e-a01a-ce4cec23861b","3131cd92-7c52-4cdd-b79f-0fb0c995bb40","2aef5fc4-5bd3-4aaa-ba5d-54674a22ae74","cf371668-67fd-4dbe-bbc5-01779e28e83c","ad2f6443-9f09-4214-8496-2b38d887f60f","6a0a732c-d23e-4be8-ae6d-9a6aad9d438b","ecea155b-a764-419f-aec8-78ea7df8f0ec","ab3cce3b-931e-4cef-b2d4-84d6ef35c2b3","e6772865-7c68-4f3b-8e9e-5c5eac7dacb0","7635cb29-b8f5-40db-a982-2f5eb7adc068","277835c2-9056-4f9d-948c-4a26751caa2e","41fabde5-e045-41f1-a817-6e01e94d17cf","9e03d232-6448-425e-a6cd-805b772d01e8","436e9974-a5f9-4cf3-b98e-16489ddbedca","3af9228c-e681-4f6d-9621-97f27d894c5c","fc042e83-9752-4da9-bda9-e04076811d6f","8fd19a72-2f83-4cd8-b2d0-6905236bb67f","5cefa914-6888-4a77-9633-e211e9de74ea","8571d0a6-a3fa-4e0a-92be-5d76ecebf202","7f6d1a54-1c78-4331-83a5-6526979c57da","4d01517e-cedf-409e-a037-ec5667f529ee","b3ea6243-03c7-4aa4-b086-399d75d6ebd3","ad896abe-8c2c-4052-81c3-d81055760d75","3620a03a-a849-4d0e-bf85-d175987d6edd","ebc56ee3-6cc8-423c-8a39-2ec641a9562e","1ec6fcf6-54be-4e29-a849-c9af4d1499ec","c898915d-4a57-49fb-9455-d705fdda6d3b","806ba94a-3655-4327-aed1-def1a25d9377","1d847718-1302-4b18-ba6f-cc152582d369","3497b92a-d02f-4d3c-b894-8fd9f6a0315f","3741e362-f03f-4b27-b715-d572cc7af98c","03ca167e-597a-4b82-8a06-4865aa4fa11c","c2959736-f3be-469c-a929-89706273484c","ee90211d-5c49-44c7-9f4f-a696499271ec","17e72f0a-3a01-4d94-a39f-d369eb4b5531","265b704e-1cd6-4865-beb5-c21ee76e6a0f","431e906b-89d9-4245-8145-c5450f059fb3","0e3f6928-d0ca-4118-a2a5-15325124178e","9b370410-53b4-4ea4-ac5a-71b284e3386a","72565e97-9c42-415a-a1e0-50cb5bf20d4d","fea47831-8742-44ac-b942-1cb59cf4eb27","4154fbe4-9c09-4e16-8d13-7359f0a2aa7a","91847d9b-2ead-4e7f-954e-8d0b6637190a","986afe9b-de1b-449e-858c-7a9d21b25c12","62dbd74e-a5e2-48cc-b424-a18876b5cc1e","563c05ef-9233-4444-b8eb-5f3d2d77b615","29767ad9-74a1-4560-b63d-7e0e63238d01","2070c122-acdf-4e93-80be-f4c54834350f","5e6cdbf3-a7b6-4426-82cf-212894a977b2","744b605a-7832-4e2d-a0c8-6b79d035cf73","4f13263a-3a1d-4041-a4e2-187ee7cacd23","edf974f2-f710-4baf-a9c1-98de234f5ed4","f5562dd9-ac28-4e6d-8046-481724cc00e5","9ebc351b-0085-4999-8b8b-8ada32503e3a","00048140-5e5a-49fe-94d7-275f85db0075","853f6c6c-0366-4635-bca9-3c4112303e68","e3b544de-2f12-421a-8068-2016e2131fb5","d9900396-9b95-43bb-88b1-1ef1cb41995d","414c726d-9bd3-4db7-8750-50939cd408c7","255a5998-ef10-4de3-a1f6-68ad65f4617b","32304b6f-f0d4-40fc-a90d-3cab0337158c","a5d3fefa-ae6f-4db2-91fd-c495a65eb836","35c17fb0-852c-4b4a-81e1-86862a9790d6","72fb3545-7a49-416e-b4b0-664f699bd1ae","57b4de5c-6988-4ac8-9041-5a4a3bd07fe0","372ab97e-ec23-4c42-9c3b-71ae1f5e1468","cec15ecb-a794-40f5-a7eb-96e12cf3df34","7797d377-7355-44c6-aca0-7a7b05fc5835","30fc1418-4214-4336-9339-7d4a746dd6af","26d4eb2a-cd70-473d-868f-5a97607c73ca","f990a840-d2b2-457c-985e-1304157d6a54","ad4f9975-6c11-4de7-aefc-70b2720a15af","cf704c71-d591-42e5-ae95-059c7ae025a1","5789ef49-65e0-419e-bbf7-e71f3156f9ee","2bbababc-d452-47ee-8873-c98d3e87cfef","6a69328e-de55-4292-a1ba-2ea5473ecb39","daf5e30f-b200-43d0-935e-8bc2b559d9e5","8d69fb2d-08e3-4519-bd75-6f298fc65b4f","6eb16355-2f35-4b3c-94ba-687a77c34e23","ed99dd98-3acf-4721-b98c-3ebf0f17a1aa","d7a5aef0-566e-4fdf-814a-a669b283a5c4","0f20ae21-6dd2-4f67-9aa3-737140cdefd6","3f74750e-ad6b-462c-aa97-784db4d31c0b","26db0fd3-26c5-45a9-90eb-97a99401d58e","8478ba28-1777-4f9e-b33f-ea70dec4872c","96b04f37-1b7f-4ec0-9bf9-3546c05c36e4","fea08710-f035-4bb3-80f6-9a5dfc7b89f0","370ada48-5238-4d12-be2f-efd2890cc90d","eb8745e8-a5ee-4d5a-ac27-1e2a96e89132","4b5572e2-f272-4559-af79-09968efecccb","bb67ac05-5456-46da-892c-47350a33dd3a","6f786a23-c132-492e-b6f9-57a0bdcaef95","2a13932a-a5c4-4277-8910-bb3e91b92671","88f2f531-d77f-44e4-b50e-e276d4077f55","8d1baa9d-8857-499b-9fd1-83fbd609d3a1","be01b2e6-d42a-4878-b6a9-b26be965068b","350b57db-a80b-4bb0-b207-531fe602cdef","bf72ddab-44d8-4589-ad87-027d6e9bfb20","8449258b-ce52-4300-ad27-0c30bcc8ec2a","aed6b400-8306-4f99-b5af-8ebe425227bb","6c454a8d-d8af-4283-901e-594ab9303846","d57f20a3-7d5e-4fa8-9080-16f5efefd53f","1230d7df-e9b0-4d58-80f2-acb00b80afc8","33c61b8c-00bc-4863-9dad-2e02de473e69","c4d08340-567f-4fe0-beda-43de6493fa5e","468baa1c-2249-4ba5-8cf8-03a3e0e47b00","69eac9ef-ef2d-4d6c-a0c4-f50e3dd081eb","489d58ac-8167-46ba-a856-1738c100e08d","2fcd4df0-4a76-471f-83b2-7189c3a68fb7","8c629642-3e0f-413b-a8c0-10a6f30be66d","459070c0-d534-42ca-b039-a07af32026a5","5410b41c-7a3b-4b2e-8d81-7f71936ea6b0","ab57b9fc-7b46-49a1-9d1c-509cc691b076","b2d5b890-faa2-4ff0-b5fb-ccf6c5a619b8","ef26773d-1448-47ce-bf75-ff697f39132e","9439d167-b71d-4f28-a943-abe0d80abd4f","03af0585-90cf-40e1-8440-b05ca0e5fe63","0658b4df-f7e7-44c6-b27e-0981089108e6","1542bdf5-f466-4874-b9a9-7fc54cf09269","146960b4-1f31-48f0-9138-c469fd460790","bc163495-ca44-4c4f-a327-72b3cc51ebd1","91f3edec-e7d0-48ec-b49c-d9b28cf75289","018e4df2-e228-4303-8199-67df3f1bcbd6","1ef2d19e-013b-4c60-9f7a-a78558def85f","5a7480da-c911-4cac-b341-91df417f72ed","88887ee8-51fb-450c-a4bd-518e52467cef","f0f77aff-4a85-48de-b728-e8c8bd107654","318cbf3b-2e7b-4562-9e9d-664c7919678a","222a8f6c-a743-4525-8cc6-b7c4999c686a","1208a5b3-3ef8-4818-ab67-060922b0962d","a4b6fc87-31c9-4b42-a3e5-e09381a1bea4","0bb32d3d-e0a0-4169-8abc-4cae889077db","4c4bb286-9a71-4b34-8c9f-5cc90fcc6ac7","f4dc25f6-0412-4ea9-95d1-65f9e4f1e66f","a64e946b-22c4-4e3a-8c55-3edc8b79dbcd","2cc90a21-c0fc-422d-8d98-537c898203a9","2d1e6c0c-b97a-4af5-b938-b383b3cd9555","1446525a-c9d9-4152-8b71-af4aeffac6b8","efe69ecd-24ec-4dc3-a263-de67bab0b210","a23bad20-cc61-4702-9ecc-c88790c822dd","eabce190-5b2a-4e7d-9cb0-35a9b5dcfbf4","4ffcd5db-b485-4f7b-af21-902b674b7a21","4283fd39-b26d-4d1f-acad-df2145ea492a","2fe5cfe0-b932-4721-8218-e8d56aa0750d","3c8d2e54-ad3f-4186-9ed3-aa2742415ca4","40736658-a1f2-411f-8610-0d52f9b74234","7d4919f9-48fb-40ac-8bf4-d9f0be53106c","56a8b505-f968-41ac-93fb-2adeacfe431d","f797466c-e2cf-4db9-b774-ec6c517a80df","e381f3cb-a592-43df-815a-ccb38e915984","086e316c-ff11-4f4e-bdfa-0d29c9c96401","0a40bd06-f567-43e5-afe4-ea73d36101df","537562a4-9c0c-4cd9-ae33-26dc9ef38dc0","3a5c2b4e-0305-4972-bb35-c323c4360434","082f9290-dd5e-47bc-be26-ed716d3bf592","2ce699a3-8679-4118-99de-faefb0587f28","00af3ab0-aa4d-440c-a723-0c6d3fd5075d","7f6bea73-5705-4a86-9cf8-9e73b1dc4b81","ac695c59-3520-487b-9392-e2e41a93a43e","40029bae-9ce6-40b3-bd86-bb0e5c90c955","37461b04-93a7-40fe-99cf-725ed6428c76","33f3ff0f-bf44-4c16-b851-7881b6299801","cc3fc1d4-b6bf-457f-8b8c-c47b5221ce5c","0ff362b7-8944-425b-841d-b579c7d6b33d","3df3b615-1d5e-4b4b-8dc2-ca31fb277379","a6fb8ecf-6781-4573-942f-8f4ce65b18d0","23c94d3b-c168-464b-b5ac-d73f98b42784","2504c636-3b3d-4d8a-98f7-ee0f6bd4a87a","9790f3b7-42d1-48bf-8bc6-e8fcdd1dce89","1dc28959-8b23-45b0-9153-6c1badc8c6aa","e3b57cc6-18b6-42ca-b3a3-03df9b93f8e3","66695121-bd82-46f1-b04f-8786a3aa3e7e","419f496f-b3d8-4cf9-8f03-fd4a66c57014","9a8b9df2-8318-40ee-a66f-a04e05c62cf4","99dbf525-1fe1-4fab-96cc-b99d89a4e00d","84be44aa-3a6b-4888-aeec-fa377f1a2b74","db1c9eab-f026-486e-bf39-d62682c5928d","c7e933cd-68c6-4204-b01a-c9c1822d1e7b","0bfb1c32-07ce-4f87-a7ef-571c542b8707","085cb422-b936-418a-9d0b-9e8dbbeabe90","1f4e5d91-4362-48d6-85f7-26762062ebd3","e1cf31b5-0239-4c64-b009-cf52a5684123","b502ae3e-4782-4663-9802-6b01b43bb430","2440ded1-d10f-44cd-9c8c-05d24df31f2d","2ebbd35c-190c-4f6e-8f15-a89c715b95ea","841d0f58-b1ae-47bd-a250-f7226309c22c","76eccca7-6104-4915-8860-2d67965f662e","6f1ad155-d857-442e-b96a-3e12691989a1","74aaadc6-afc2-4876-886c-9c00ed10fb9a","1da8ad62-d934-4f3d-a638-62389c065abf","e3d2e380-1592-46e3-b7ec-8e6286fc70ad","957f7ff2-af2e-424d-9d5c-5677478dd5b3","6b5ca876-0b2a-4776-9968-d54fd60f20bd","ae87fc25-ad64-423a-b89b-403ea40c7f83","bb989b15-54f6-419f-85fa-95e204d79ef1","09d5cfcc-7b01-493f-bf38-67fd722d5774","b4120c3a-e61d-421d-bbdb-dfc796fbe91e","6f583cea-9a4b-44f3-a86d-5a437d17dcb8","c394034a-b6db-444c-816e-3ba125788e5e","7f121dc9-df15-4a75-b987-43083f709686","30f00323-04f5-4dc9-ba3c-fd29df7da91a","de545f07-2891-4875-aea6-e8c8d8b97a8f","2fbec7c2-3597-4221-9601-e9fd8fc5bb6c","99cfb9a5-6281-4b87-bdd1-51b5ff0d5adc","6e2efad5-6da9-452b-ac0f-e1b5ec2ef22b","205fd5c1-716b-4937-9136-5145568870cb","563871d8-c615-4da1-86cb-ba00232db1ed","b36b06d7-bdda-47c5-ad84-e41ad8bd7820","1d5566d2-5476-4d26-a2a9-477084c3f76a","a2a89e7f-57c2-458b-bd8c-ed1b5120a9d2","fa34d80a-65ac-4492-bd22-dda5d23d8ef5","60873f66-2f27-4fc5-8c8a-63ba93c01c9a","e9f2cea5-ec77-4c9e-87df-462c1b31f23d","68d9cd75-0e89-4e79-85cb-459a198cde20","28487ef0-3aee-452a-b842-d75c2e80109e","f68cd508-ce8a-4cdc-9cb6-dd37c83f826b","f4581cca-a236-417f-94f0-61654e608437","aad210c4-08af-4c14-bf6c-18069b3de23f","5c1c5dcf-5c79-457e-85f1-f8f2cba985dd","dd4e8272-cff5-44d3-bd0d-832fe5c6c0cf","38498444-a031-4128-b5f7-581d88f3f2f1","c66900d6-1468-4894-b769-491f39ad704c","effb7d88-78ba-4ad7-9b1f-64b5b033c83a","25268034-7c21-4c20-a97e-8e975f60b8ff","3a58c41d-d736-431d-9743-8b36f754b6f1","4a03759b-58c2-41bc-bb79-72ca0ab845c4","499be652-ad00-467b-8482-d4c06f54901c","4f634d8c-6db6-41b7-ae41-a440e4af4916","532d1d43-0a60-4d60-a5e4-657c5bfe0671","f06a90f6-a48a-46e7-8dad-991252a44da7","e1793d4d-0e9e-45b3-bdc6-2ae6d11ae2a3","dc5fcec1-8cfe-4594-b98c-5552a4280e7c","b5e1d1dc-7f1e-4f69-acd3-b9c80f54404c","5761dab6-8d6b-4e8e-aa17-fec8bb873093","bbaf0ddb-1118-420b-aa10-b7505e594757","82fdc3db-f37e-4a20-98fc-ffd65a187128","07f5509d-d644-4d2b-9b46-c9268bcf34b6","8051645b-f231-41d2-ae30-ec9e1e78b9db","4b69804b-6e3b-4d75-ae8c-2a66c517963d","f4a9a5c9-b8d4-4307-9aa0-9ccc67845249","b331fdc5-d73c-4af3-a62e-b3f9aea946c2","87933bfa-06ee-4863-92e3-794102e5e20d","7b9759b7-d597-4481-b5c4-a3bbe1540338","898596fa-1c28-4bbd-86e1-4b299c713f6a","c8f2f4df-f33f-4bf5-b978-1b2b8c42849d","8c0ada63-2808-42bb-a77f-4c13982455f3","661fc3a7-e197-492a-b1bc-6d2a7cdd7c7c","24fe2875-b2de-4b5b-bb87-8f0c316e341c","38591cda-9b9a-4e67-986c-31ff754cb654","5d2cc855-b483-4224-875f-e860344cb79e","04b4c144-c1c3-47f3-8b75-821ed02cdca8","ef55b86e-12bb-4a7a-9074-e7f02c5390b1","d1408af9-d584-4eda-bc6a-0ab824d93b75","7e1c1793-bc8d-4455-912b-079935393bea","baaabe1a-d8d5-472d-9c8d-65aa87c8c695"]);
+function resolveHistoricalPlayer2024(player, metadata, matchId) {
+  if (!HISTORICAL_MATCH_IDS_2024.has(matchId)) return null;
+  const direct = metadata.playersByPuuid.get(player.puuid);
+  if (direct) return direct;
+  const key = value => String(value || '').normalize('NFKC').trim().toLowerCase();
+  const handle = key(player.gameName + '#' + player.tagLine);
+  const aliases = metadata.players.filter(p => (p.nickHistory || []).some(n => n.includes('#') && key(n) === handle));
+  if (aliases.length === 1) return aliases[0];
+  // Sem prova de pessoa: manter a conta, sem fusão pelo nome base.
+  return { puuid: player.puuid, name: player.gameName, currentTeam: '', teamHistory: [], nickHistory: [], unconfirmedAccount: true };
+}
+
 const SHARED_ACCOUNT_RULES = [
   {
     // Uninassau Griffins. No dia a dia o Mendes joga da mndeuS e o Laves joga
@@ -13297,6 +21478,59 @@ const SHARED_ACCOUNT_RULES = [
       "nCp74gGzvx_PxXQESLoJ_wKeWE2OrB6BuAsUbV67IkBrloP4TWZUikHaZGYdPJ-IFhRK34KyQhM34w": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"
     }
   },
+  // Atribuições confirmadas da Copa Aliança e do JUBS 2024.
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["894d535d-df58-44d0-8ae6-bd7f06a08b0d"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["07f1a884-25af-4ff9-8caa-7b5cf81963f0"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA","_lm4wvldJGlh78VM9JgUKkiiYRyBRTumTVFUQJuFfdVsG4VTA90i_xrF5x_ulA95T6enfThFjr5VLQ":"9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ","tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["6d9dbcee-3050-47c5-a234-c0f0120cfaf9"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["eed4b418-b5b0-4e88-a119-93d4f656181a"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["358c3b24-69c5-4f9f-a993-5d929633b93b"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["c9da4422-4821-43a9-85bc-c6192cc3508f"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["c258a36d-3d88-4632-8346-5d2e3ba79af5"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["fa8ce6b8-d4b8-4b2b-af0f-2d092636aeae"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["10f344ad-bdb6-464f-b3bb-992a75dc401b"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["f80aad66-83ef-45b1-8e7b-d3ce768645cc"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["252d07d4-fc5f-49ba-9191-8723d69288af"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["05f4ab58-64d7-4c96-a37f-4f8b03bdbd84"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["84bea0c7-8eaa-4e3a-be2f-4200d5687546"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["0b594be5-d489-4dc5-86f8-5cb50aebe853"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["ef527393-dce5-474f-a9a2-70d16774aad4"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["bb91a6cb-a6a3-4c07-a241-ae7f2f0ff1e1"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["85b726ec-2bbb-48a8-ab3f-bd6134a24c56"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["c144a931-1cc3-4375-a55b-ab7bc9d12aaa"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["d51948e6-4a7f-4e5f-9422-1b17e6a15180"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["5c993983-2116-475c-a71b-2c4e46691b12"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["3741e362-f03f-4b27-b715-d572cc7af98c"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["03ca167e-597a-4b82-8a06-4865aa4fa11c"],"accounts":{"Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A":"8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["6671bb3c-2a96-499c-a42d-e6b8e8f82fcc"],"accounts":{"_lm4wvldJGlh78VM9JgUKkiiYRyBRTumTVFUQJuFfdVsG4VTA90i_xrF5x_ulA95T6enfThFjr5VLQ":"9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ","tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["f86c2a94-e24d-433c-8a04-602b408b8d41"],"accounts":{"_lm4wvldJGlh78VM9JgUKkiiYRyBRTumTVFUQJuFfdVsG4VTA90i_xrF5x_ulA95T6enfThFjr5VLQ":"9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ","tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["e5d47b11-f647-4f65-b250-2467010540a8"],"accounts":{"_lm4wvldJGlh78VM9JgUKkiiYRyBRTumTVFUQJuFfdVsG4VTA90i_xrF5x_ulA95T6enfThFjr5VLQ":"9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ","tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["0de57fb7-6a8e-433b-96d3-de5df238053c"],"accounts":{"_lm4wvldJGlh78VM9JgUKkiiYRyBRTumTVFUQJuFfdVsG4VTA90i_xrF5x_ulA95T6enfThFjr5VLQ":"9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ","tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["588d6244-033a-450f-af35-f99ff39f4166"],"accounts":{"_lm4wvldJGlh78VM9JgUKkiiYRyBRTumTVFUQJuFfdVsG4VTA90i_xrF5x_ulA95T6enfThFjr5VLQ":"9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ","tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["98a69fe8-d72b-425b-9e31-073086bb3bab"],"accounts":{"_lm4wvldJGlh78VM9JgUKkiiYRyBRTumTVFUQJuFfdVsG4VTA90i_xrF5x_ulA95T6enfThFjr5VLQ":"9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ","tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["449612bd-44ef-42a4-a458-b8f7428fe254"],"accounts":{"_lm4wvldJGlh78VM9JgUKkiiYRyBRTumTVFUQJuFfdVsG4VTA90i_xrF5x_ulA95T6enfThFjr5VLQ":"9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ","tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["a2744523-ec8a-483e-98e3-41339074e74c"],"accounts":{"_lm4wvldJGlh78VM9JgUKkiiYRyBRTumTVFUQJuFfdVsG4VTA90i_xrF5x_ulA95T6enfThFjr5VLQ":"9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ","tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["9c5f28de-040a-439c-a1c1-9cf3f2a7f3ac"],"accounts":{"_lm4wvldJGlh78VM9JgUKkiiYRyBRTumTVFUQJuFfdVsG4VTA90i_xrF5x_ulA95T6enfThFjr5VLQ":"9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ","tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["3497b92a-d02f-4d3c-b894-8fd9f6a0315f"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["c2959736-f3be-469c-a929-89706273484c"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["ee90211d-5c49-44c7-9f4f-a696499271ec"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["17e72f0a-3a01-4d94-a39f-d369eb4b5531"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["4154fbe4-9c09-4e16-8d13-7359f0a2aa7a"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["91847d9b-2ead-4e7f-954e-8d0b6637190a"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["f5562dd9-ac28-4e6d-8046-481724cc00e5"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["9ebc351b-0085-4999-8b8b-8ada32503e3a"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["00048140-5e5a-49fe-94d7-275f85db0075"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["26d4eb2a-cd70-473d-868f-5a97607c73ca"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["f990a840-d2b2-457c-985e-1304157d6a54"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["6a69328e-de55-4292-a1ba-2ea5473ecb39"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["0f20ae21-6dd2-4f67-9aa3-737140cdefd6"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["4b5572e2-f272-4559-af79-09968efecccb"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["bb67ac05-5456-46da-892c-47350a33dd3a"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["6f786a23-c132-492e-b6f9-57a0bdcaef95"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["33c61b8c-00bc-4863-9dad-2e02de473e69"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["c4d08340-567f-4fe0-beda-43de6493fa5e"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["489d58ac-8167-46ba-a856-1738c100e08d"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["2fcd4df0-4a76-471f-83b2-7189c3a68fb7"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  {"label":"JUBS 2024: gbzïnNn e KüruK, identificação confirmada por UUID","matchIds":["018e4df2-e228-4303-8199-67df3f1bcbd6","1ef2d19e-013b-4c60-9f7a-a78558def85f","5a7480da-c911-4cac-b341-91df417f72ed","4283fd39-b26d-4d1f-acad-df2145ea492a","2fe5cfe0-b932-4721-8218-e8d56aa0750d","3c8d2e54-ad3f-4186-9ed3-aa2742415ca4"],"accounts":{"I1wipv7H5O9qrj-EL3S4vDJfzcRPy6GdiYYTHz01g6hB-A0gWizTk1uU_Bb8TE5RJLvvo2__MobL5g":"I1wipv7H5O9qrj-EL3S4vDJfzcRPy6GdiYYTHz01g6hB-A0gWizTk1uU_Bb8TE5RJLvvo2__MobL5g","2r_fEwFxq4nk_X8TzcMS94eHABPhLpWe4MJSh4rQv47Kct3-6-E8sQaYZxMCiyVp8xROF0MJATsu1g":"historico:jubs-2024:kuruk"}},
 ];
 
 // Uma regra só vale quando TODAS as contas que ela descreve estão na partida:
@@ -13365,7 +21599,7 @@ function normalizeMatchPlayer(player, roundAgg, metadata, personOverride = null)
     apiNick: player.gameName || "Jogador",
     tagLine: player.tagLine || "",
     handle: `${player.gameName || "Jogador"}#${player.tagLine || ""}`,
-    registered: Boolean(registered),
+    registered: Boolean(registered) && !registered?.unconfirmedAccount,
     currentTeam: registered?.currentTeam || "",
     teamHistory: registered?.teamHistory || [],
     nickHistory: registered?.nickHistory || [],
@@ -19702,8 +27936,14 @@ function tournamentBracketEntries(event, matches) {
 }
 
 function tournamentSeriesForBracketMatch(matches, match) {
+  // Avanços diretos não têm partida disputada para abrir nas estatísticas.
+  if (!match.a || !match.b) return null;
   const codeNumber = tournamentMatchCodeNumber(match.code);
-  const ranked = matches
+  // Chaves com referência explícita não podem reutilizar outro encontro do par.
+  const candidates = match.seriesCode == null
+    ? matches
+    : matches.filter((series) => Number(series.seriesCode) === Number(match.seriesCode));
+  const ranked = candidates
     .map((series) => ({ series, score: tournamentBracketSeriesFit(series, match, codeNumber) }))
     .filter((candidate) => candidate.score > 0)
     .sort((a, b) => b.score - a.score || Number(b.series.sortAt || 0) - Number(a.series.sortAt || 0));
@@ -27830,12 +36070,30 @@ function mapLogo(id, extra = "") {
   return imageLogo(art?.src || "", label, map?.colors || mapColors(id), `map-logo ${extra}`.trim(), `Mapa ${map?.name || id}`);
 }
 
+const HISTORICAL_TEAM_ROUTE_ALIASES = {
+  "utfpr_azure_bears_pr_2024": "azure_bears_golden",
+  "fametro_codify_team_am_2024": "fametro_berserkers",
+  "ufg_eagles_black_7712cb48_2024": "ufg_eagles",
+  "unicamp_tritons_2024": "unicamp_tritons_black",
+  "macklogic_2024": "macklogic_red",
+  "udf_thunder_fusion_df_2024": "rahnag"
+};
+
 function teamById(id) {
-  return state.db?.teams.find((team) => team.id === id);
+  const canonicalId = HISTORICAL_TEAM_ROUTE_ALIASES[id] || id;
+  return state.db?.teams.find((team) => team.id === canonicalId);
 }
 
+const HISTORICAL_PLAYER_ROUTE_ALIASES = {
+  "japa918": "greinzera",
+  "wow": "raap",
+  "yanf99": "falcao",
+  "registered-yanf99": "falcao",
+};
+
 function playerById(id) {
-  const key = String(id || "");
+  const requested = String(id || "");
+  const key = HISTORICAL_PLAYER_ROUTE_ALIASES[requested] || requested;
   if (!key) return null;
   const routeKey = slugify(key);
   const players = state.db?.players;

@@ -12312,7 +12312,7 @@ const TOURNAMENT_OVERRIDES = {
         "Etapa 1: turno único, as 8 equipes se enfrentam uma vez (7 rodadas, 28 partidas)",
         "Etapa 2: eliminação simples com as 4 primeiras da Etapa 1",
         "Etapa 1 em MD3",
-        "Semifinais em 01/11: Wolf Gaming x UFRJ Minerva e A2E UFF x Minerva Thunders. Final em 07/11",
+        "Semifinais em MD3 em 01/11. Final em 07/11",
       ],
       standings: "Classificação da Etapa 1",
     },
@@ -12435,18 +12435,48 @@ const TOURNAMENT_OVERRIDES = {
       ],
     },
     // Os eliminados na Etapa 1 ja tem colocacao (rotulos de ranking-weights.json).
-    // Do 1o ao 4o, depois dos playoffs.
+    // 1o e 2o depois da final.
     placements: [
+      { range: "3-4", id: "ufrj_minerva", note: "Semifinal" },
+      { range: "3-4", id: "a2e_uff", note: "Semifinal" },
       { range: "5", id: "a2e_uff_shadows", note: "3-4 na Etapa 1" },
       { range: "6", id: "sheriff_iff", note: "2-5 na Etapa 1" },
       { range: "7", id: "unirio_krakens", note: "1-6 na Etapa 1" },
       { range: "8", id: "minerva_artemis", note: "0-7 na Etapa 1" },
     ],
-    // A Etapa 2 (eliminacao simples com as 4 primeiras) NAO entra como
-    // `bracket` aqui: `tournamentBracketSection` faz curto-circuito na
-    // primeira linha - havendo `swiss.rounds`, ele nunca chega a desenhar a
-    // chave curada, entao o dado ficaria morto no app.js E no database.json.
-    // Enquanto os playoffs nao comecam, a Etapa 2 vive no `format.details`.
+    // Etapa 2. As partidas seguem a numeracao da Etapa 1 (29 a 31), que e a dos
+    // arquivos LUCE_ e a das `phaseRules` do ranking-weights.json.
+    // Com a final: placar na Partida 31 e as colocacoes 1 e 2.
+    bracket: {
+      title: "Pontos corridos + eliminação simples",
+      regions: [
+        {
+          name: "Final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Final",
+              matches: [
+                { code: "Partida 31", a: "wolf_gaming", b: "minerva_thunders" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Etapa 2",
+          className: "upper-bracket single-elimination",
+          columns: [
+            {
+              title: "Semifinais",
+              matches: [
+                { code: "Partida 29", bestOf: "MD3", a: "wolf_gaming", scoreA: 2, b: "ufrj_minerva", scoreB: 0, winner: "wolf_gaming" },
+                { code: "Partida 30", bestOf: "MD3", a: "a2e_uff", scoreA: 1, b: "minerva_thunders", scoreB: 2, winner: "minerva_thunders" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   },
   // E-Tusca, os Inters de e-sports da TUSCA. Montado em 21/10/2026 a partir do
   // Challengermode (5dba489e-2e54-48ed-3794-08df10190155). A plataforma recomeca a

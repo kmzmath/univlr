@@ -100,6 +100,15 @@ def publish(through, preview):
         details = json.loads(process.stdout)
     else:
         details = {}
+    # Quem estava em cada arquivo na edicao anterior. Quando o calendario muda a
+    # posicao de alguem, o NNN.webp passa a ser de outra pessoa, e a imagem velha
+    # e mais nova que o PNG de origem: so pela data ela nunca seria regravada.
+    previous_owner = {}
+    previous_manifest = destination / "manifest.json"
+    if previous_manifest.is_file():
+        for entry in json.loads(previous_manifest.read_text(encoding="utf-8")).get("days", []):
+            for card in entry.get("cards", []):
+                previous_owner[Path(card["image"]).name] = card.get("thread")
     released = {}
     for row in rows:
         day = date.fromisoformat(row["Data"])
@@ -108,7 +117,9 @@ def publish(through, preview):
         filename = f"{posicao(row, len(rows)):03d}.webp"
         source = IMAGES / exported_name(row["Time"]) / f'{exported_name(row["Jogador"])}.png'
         target = image_dir / filename
-        if not target.is_file() or source.stat().st_mtime_ns > target.stat().st_mtime_ns:
+        owner = f'2026:{ids[(row["Jogador"], row["Time"])]}'
+        moved = previous_owner.get(filename) not in (None, owner)
+        if moved or not target.is_file() or source.stat().st_mtime_ns > target.stat().st_mtime_ns:
             with Image.open(source) as card:
                 card.save(target, "WEBP", quality=92, method=6)
         released[filename] = True

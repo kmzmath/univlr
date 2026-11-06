@@ -1485,6 +1485,15 @@ def load_players_from_xlsx(
             if not s:
                 continue
 
+            # Nick historico sem tag (ex.: vindo do tracker) nao e Riot ID
+            # consultavel; avisa e segue, em vez de derrubar a leitura toda.
+            if "#" not in s:
+                print(
+                    f"[WARNING] Valor ignorado na coluna {_hname} para {player_key}: "
+                    f"{s}. Riot ID sem '#'."
+                )
+                continue
+
             add_riotid(s)
 
         if not existing_puuid and not riotids:

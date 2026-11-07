@@ -2186,7 +2186,14 @@ body {
   background: none;
 }
 
+/* A caixa da imagem passa 14% da celula para baixo e o overflow do retrato
+   corta: e o mesmo corte do perfil e da home. Os 14% de baixo das fotos nunca
+   aparecem em lugar nenhum, e scripts/padronizar_fotos.py conta com isso para
+   assentar no chao a foto tirada de perto. */
 .vp-quem .player-portrait img {
+  top: auto;
+  bottom: -16.3%;
+  height: 116.3%;
   object-fit: contain;
   object-position: bottom;
 }

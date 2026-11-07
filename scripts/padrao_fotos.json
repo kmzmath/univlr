@@ -1,0 +1,824 @@
+{
+ "a2e_uff/davizao.png": {
+  "sha": "7cd01aea549ffde9c7300013d27ef02c67fd45722cff0143a1e5639e04dfc663",
+  "escala": 1.231,
+  "intacta": false,
+  "chao": false
+ },
+ "a2e_uff/mth.png": {
+  "sha": "630f652ab6499f1e4b65e28a4a9759af3dd02879d261df3e82c4cecdd4e7f91e",
+  "escala": 1.135,
+  "intacta": false,
+  "chao": false
+ },
+ "a2e_uff/ninker.png": {
+  "sha": "36941be24a6689fe1ddc87c2330edd9e06f77c69f79549f98282631348c5f280",
+  "escala": 1.339,
+  "intacta": false,
+  "chao": false
+ },
+ "a2e_uff/racflu.png": {
+  "sha": "40ac9db88317547a03f155bc178b4f4a55bb155b6a42ef28577a84c3370315e6",
+  "escala": 1.163,
+  "intacta": false,
+  "chao": false
+ },
+ "a2e_uff/tgzin.png": {
+  "sha": "1ca0f7e6ccbb5c3bfbd20a53ea0e07284b9e2b8a03c294d08535362fdafa1f71",
+  "escala": 1.146,
+  "intacta": false,
+  "chao": false
+ },
+ "axis_anteaters/Bodo-Glimt.png": {
+  "sha": "d545d08f427e9188030e8c953c0316244d570e8a017e6e94a65b9be1f00a1b03",
+  "escala": 0.911,
+  "intacta": false,
+  "chao": false
+ },
+ "axis_anteaters/akrasia.png": {
+  "sha": "21568afb3c2412f05e5c10553e49bc962020ee1c2d4f17a997315ee70243af8a",
+  "escala": 0.918,
+  "intacta": false,
+  "chao": false
+ },
+ "axis_anteaters/dnk.png": {
+  "sha": "ba8d9315a8d89bdaab377d50643c821aa9b53f3eeee51839f0bcafce6c0ab66f",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "axis_anteaters/duduka.png": {
+  "sha": "904c46a7c6d8479aca31f0cb2bc3e5bbfa31fa617420322162b517b4783ee113",
+  "escala": 1.08,
+  "intacta": false,
+  "chao": false
+ },
+ "axis_anteaters/luqueta.png": {
+  "sha": "ba844b3dca68d51e8e5a1ecdac1b99efc65c03581af6c9855e997f4cea5643f1",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "axis_anteaters/vladi.png": {
+  "sha": "616ab3e9330c1936d80b76f368327abeb8904b592cd28be3ce8b5f77635aabfa",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "axis_anteaters/vladi_new.png": {
+  "sha": "b025c10a08301e97465452d1c053ba2941f28efd44f1f247c2406fb34bfabfb4",
+  "escala": 1.112,
+  "intacta": false,
+  "chao": false
+ },
+ "axis_anteaters/ze_gotas.png": {
+  "sha": "e6ed95ce1487b23c6048e94a25854f132d7335152a73ef5a16b8426df639f0b2",
+  "escala": 0.817,
+  "intacta": false,
+  "chao": true
+ },
+ "azure_bears/Aldeath.png": {
+  "sha": "bfcbb8e2a46f25be811f2d010759770dbf0d2c98155966c146e0624828f51b21",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "azure_bears/Omega.png": {
+  "sha": "889e494d7e74ea1a1a1a2f7451e80886884f4c5faecec3526e01eafadaa05b31",
+  "escala": 0.928,
+  "intacta": false,
+  "chao": false
+ },
+ "azure_bears/andre.png": {
+  "sha": "6cac69c61a94a2695df86218318998330d536873fe6ab114d767f47229bb6539",
+  "escala": 0.935,
+  "intacta": false,
+  "chao": false
+ },
+ "azure_bears/andre_new.png": {
+  "sha": "2cc81f759b5174ee93074ac49fc1772afe3cca5ddcbb6fcad506fcf457a7f0dc",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "azure_bears/droga_e_o_pedro.png": {
+  "sha": "569fd6ecbdd539a215f9bc6213eeaeb6985fddbeb6d3874febf88b3ed4193ba3",
+  "escala": 0.832,
+  "intacta": false,
+  "chao": true
+ },
+ "azure_bears/greinzera.png": {
+  "sha": "ad8c9e5eb7ca9d0e7bab0e492011ae707a80932e431bc6b558f9054fba9ddc95",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "azure_bears/greinzera_new.png": {
+  "sha": "5a3462aa16b0595d80011dbe14f9449a7d359d8726ef7d541c1f38be72048419",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "azure_bears/kick.png": {
+  "sha": "0b8d3e76a40bafebbbdfa954400bdc69857ced09513b0a8978b4fb2a4ca25dd4",
+  "escala": 0.864,
+  "intacta": false,
+  "chao": false
+ },
+ "azure_bears/lacerdao.png": {
+  "sha": "3765915ab3905852c24347fcff35c547b674630420f39df4beff06e6ae0bfc88",
+  "escala": 0.766,
+  "intacta": false,
+  "chao": true
+ },
+ "azure_bears/pim.png": {
+  "sha": "110fb61005488e8bf65bf6e3de36ca0697e8324967de146bec064ab8eeabd1ee",
+  "escala": 0.927,
+  "intacta": false,
+  "chao": false
+ },
+ "azure_bears/pim_new.png": {
+  "sha": "af676703affda9618183cfe4b6b879e9639e4f7693151460b2aae5f93a6f6b84",
+  "escala": 0.906,
+  "intacta": false,
+  "chao": false
+ },
+ "azure_bears/scherbi.png": {
+  "sha": "760e7524aca7389d71734d771db4cef5fa0edafa48514618aaa3f9b123b64ebb",
+  "escala": 0.918,
+  "intacta": false,
+  "chao": false
+ },
+ "azure_bears/skydvjj.png": {
+  "sha": "65b21cea5b5df821eb8e2ecbddfbaa67fab9550290a0a085b28039247b31d7e3",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "azure_bears/stockao.png": {
+  "sha": "94ecd4ca182d86b1d859a8e4f2cce87f1de2e23a07ac72c5a207a79b907df393",
+  "escala": 0.93,
+  "intacta": false,
+  "chao": false
+ },
+ "azure_bears/stockao_new.png": {
+  "sha": "7d6e42da02a8e8942b378aa3f6c2a3c096515e64f5ee895f2fa1aa1ab47b9454",
+  "escala": 1.168,
+  "intacta": false,
+  "chao": false
+ },
+ "azure_bears/taek.png": {
+  "sha": "c81490c0794443e31e47f94e262d5a6584e6f8062162874c831d7ede55a0abd5",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "azure_bears/taek_new.png": {
+  "sha": "59e3b08eb079e34a9d6cd91b8651a69273c508f4774c09f36d37f12359c9bce0",
+  "escala": 1.346,
+  "intacta": false,
+  "chao": false
+ },
+ "azure_bears/washin.png": {
+  "sha": "ce9b9b2502ab367c7f3443458c8f7c61eba5ff7b01248ad71babeea351f42c09",
+  "escala": 1.255,
+  "intacta": false,
+  "chao": false
+ },
+ "caap_hellhounds/Luqueta.png": {
+  "sha": "dd129da57673b732d821e46c939f3927df4c15297ad554e9ac9c65d7faac0063",
+  "escala": 0.884,
+  "intacta": false,
+  "chao": false
+ },
+ "caap_hellhounds/burrito.png": {
+  "sha": "4e0a5e7bf0c99d4cb27c6f82688e2b7bf9a3fa1c696b8a0227a8f814b778f2a7",
+  "escala": 0.849,
+  "intacta": false,
+  "chao": true
+ },
+ "caap_hellhounds/burrito_new.png": {
+  "sha": "00fffda7228fd4f1dc0cc428d01c554ea3c60bf6755eb29c82d13f6d96861170",
+  "escala": 0.909,
+  "intacta": false,
+  "chao": false
+ },
+ "caap_hellhounds/coutinho.png": {
+  "sha": "9103a61f21f435ec85628171cc3ef41bf603d9cfa58a2c0999dd993139560bab",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "caap_hellhounds/coutinho_new.png": {
+  "sha": "4eba705bf74c6105e6d65536c342a4d78a50000912402239052ac842e3db5eb6",
+  "escala": 0.895,
+  "intacta": false,
+  "chao": false
+ },
+ "caap_hellhounds/klouzz.png": {
+  "sha": "8a79acc329b5c91cd11e967f4b24093f73a3d3022d222c97892ada2b2bd80603",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "caap_hellhounds/lopes.png": {
+  "sha": "751a8cf6c1116a3e9e40be185735e91d2ed458771b8d2ce76358106220f5d409",
+  "escala": 0.656,
+  "intacta": false,
+  "chao": true
+ },
+ "caap_hellhounds/medina.png": {
+  "sha": "ee18eb3114a5ab01e5d5975d5de3b5e732d667e5df48ea527362c332733aad50",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "caap_hellhounds/medina_new.png": {
+  "sha": "321a86e7b9c52cd7ca4e49d4c07fe1031369513307e75050e74f9d4a45b8fc70",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "caap_hellhounds/metal.png": {
+  "sha": "6f9c3bc1f933f7458eaffc95347f996a8a86849369482aa3d8e03c1db0feba97",
+  "escala": 0.893,
+  "intacta": false,
+  "chao": false
+ },
+ "caap_hellhounds/metal_new.png": {
+  "sha": "89941dd5956a6bbe7c3ff932056f939c75e568eab9b099327914fa7d4bcfda48",
+  "escala": 1.11,
+  "intacta": false,
+  "chao": false
+ },
+ "caap_hellhounds/sobrunin.png": {
+  "sha": "1b225a21096777d098a184a40af5f4d643eda6359502dad2b9b5a10723c14cbb",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "caap_hellhounds/superpedrin.png": {
+  "sha": "da1405da5053e3596290dacee905aba08debbd3f0c5504c2ac926aeb9e24f933",
+  "escala": 0.934,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus/Jotave.png": {
+  "sha": "aa4b9c0c086bd4ee8e4b6aabd0df83876c3c53e8ecb7595669651f293c6b0ad8",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus/chadu.png": {
+  "sha": "dd7b35c760fbc26dfee7aebb6c289d83db3274d869244afad93d276671d4ab4e",
+  "escala": 1.085,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus/chadu_new.png": {
+  "sha": "35fa2a0fccf270e33bfa4f6bebf94579656ec055cdb50104df64bdad12ecb244",
+  "escala": 1.174,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus/gbz.png": {
+  "sha": "8eb0cd8aab93ffa073601d5ee8038fb9d6a1fca088cc86254beec5a56a826d33",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus/gbz_new.png": {
+  "sha": "884e41705fffb1f0aa84b8ef0a9ece67a63145c543eee4e109f3366ab411f043",
+  "escala": 1.236,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus/kzr.png": {
+  "sha": "3094da40bc9bf61cc83bfda43d1e679a85062d4bc16d4be7b9587d7dcd96718d",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus/kzr_new.png": {
+  "sha": "cdc50d2a3f349ff0f2220ec3beb8d87c94ab48de28e2c315284f8440b9c9686b",
+  "escala": 1.292,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus/reyblock.png": {
+  "sha": "451bcdb2241917f917291b7e678e8e38b1b990d9cf01aa6aec6d468425e6eeda",
+  "escala": 1.068,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus/reyblock_new.png": {
+  "sha": "2e0e649612c45a5734a646c9a707253f351593e4f2be7ee403640fb1c17b27c0",
+  "escala": 1.171,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus/seki.png": {
+  "sha": "5c6e81b864c9a96d9223469b8b7d0b554c1e8b2065f1c07c9afbaf6717977eb8",
+  "escala": 0.904,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus/seki_new.png": {
+  "sha": "e363ed591a6771ac391b085ec43a61735540303b1a7c4f3e3100469975961211",
+  "escala": 1.205,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus_vulgaris/DANTE.png": {
+  "sha": "457fd1d38332d5162605ec56da7f0ee5b42b8b5aa7b0910f0d5ee925597ab3f0",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "ceub_octopus_vulgaris/JEYP.png": {
+  "sha": "99fd504beb136d88d576c1237956467d7922988e8ba1d401ce8b1b34495978fa",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "ceub_octopus_vulgaris/NOWAY.png": {
+  "sha": "7c7181653a95a6308cdfb8850bbead66e228629139dc0e4c948967c87ce9a1fc",
+  "escala": 0.92,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus_vulgaris/POCKAUS.png": {
+  "sha": "10630ac71751d42f8b6c10f049f53b1390b109a2c58da340341ea1ce281badc1",
+  "escala": 0.896,
+  "intacta": false,
+  "chao": false
+ },
+ "ceub_octopus_vulgaris/TANIZAKI.png": {
+  "sha": "716dc51150a342b699172dc6aa8aa38d93507d0faaae237b5940115481c54718",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "fametro_berserkers/maranguape.png": {
+  "sha": "d11bf1f062c51badbe36338fb1d8764dd337016b60e0f2e044e4a0f23715c3d4",
+  "escala": 1.129,
+  "intacta": false,
+  "chao": false
+ },
+ "fametro_berserkers/mrk.png": {
+  "sha": "04e267e55a51edff46420f640765b8ee3522df9c3bcda85947d6b7b58c086ccc",
+  "escala": 0.864,
+  "intacta": false,
+  "chao": true
+ },
+ "fametro_berserkers/neguzera69.png": {
+  "sha": "e624c70524933ae7980feecf825c6dac78aa354dcf22c9752c3ea69aaf3d800f",
+  "escala": 0.885,
+  "intacta": false,
+  "chao": false
+ },
+ "fametro_berserkers/suino.png": {
+  "sha": "380b5fe76173b0c9c36ca1825559c9712cecaa5ae0e42fed11f9ef9b797ca54c",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "fametro_berserkers/targ1no.png": {
+  "sha": "176ace2794ce56eef0f4ee5d54d9a9f3e2d9fdbca09589b14d40acc8ec21d250",
+  "escala": 0.937,
+  "intacta": false,
+  "chao": true
+ },
+ "fei_darkowls/lario.png": {
+  "sha": "08da9876e8cf5b4e41dc6fe26738ae89e619e3b53ccf1e201da72a328f31effc",
+  "escala": 0.866,
+  "intacta": false,
+  "chao": false
+ },
+ "macklogic/Katojin.png": {
+  "sha": "de870545fb7042052066ddef3387694a09afa98454d304dae45715113a19899c",
+  "escala": 0.906,
+  "intacta": false,
+  "chao": false
+ },
+ "macklogic/Katojin_new.png": {
+  "sha": "065eef509cf2bd9e49838bfeb28cbd7fe536f94f5dfc5dd42e3f6458ba76974f",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "macklogic/Lule.png": {
+  "sha": "dbcfa40699481081020e533d859ac82a24cd45932740025db0de763acbe9b81f",
+  "escala": 1.088,
+  "intacta": false,
+  "chao": false
+ },
+ "macklogic/Sick.png": {
+  "sha": "2b2523d992fcf8ff87340c4cc2320289c3b8e1f9430ca184b5e4e2c808a0b5ed",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "macklogic/Sick_new.png": {
+  "sha": "03e391358299429b822ea154129552251d3fbd54a855ab1504537b3dea49d885",
+  "escala": 1.095,
+  "intacta": false,
+  "chao": false
+ },
+ "macklogic/Tapita.png": {
+  "sha": "e9dad60983ecb786b4a938aa195c2c881878023dc54c54580c17c325c3fa4b8d",
+  "escala": 0.907,
+  "intacta": false,
+  "chao": false
+ },
+ "macklogic/chocolate.png": {
+  "sha": "31fb447584974062fcf8e6d2142adde6c4fee16586271ebdfff0b4c61f980d11",
+  "escala": 1.061,
+  "intacta": false,
+  "chao": false
+ },
+ "macklogic/gubert.png": {
+  "sha": "77b36eb1892d147d7d56dd216e421c504848809dbd789282c3e9c81bbb019576",
+  "escala": 1.079,
+  "intacta": false,
+  "chao": false
+ },
+ "macklogic/hirama.png": {
+  "sha": "741559fd4c1951116373b799954a5bbe5d18abce7d170cffceaeec03e1d8cbfd",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "macklogic/lule_new.png": {
+  "sha": "f869616218cd26e6135a3855491bc7f7bf8472e874a01c35f37154bded2f977f",
+  "escala": 1.084,
+  "intacta": false,
+  "chao": false
+ },
+ "pucc_cardinals/apo.png": {
+  "sha": "548b808c1fa7e909bd70d7729ef9da6c50d5ba4a635cf925de54544e5f0da6df",
+  "escala": 0.936,
+  "intacta": false,
+  "chao": false
+ },
+ "pucc_cardinals/fr0st.png": {
+  "sha": "6cf9e1de8f6bc1007846f14e0648820c3099086c1bd415fa58869603f4096eb2",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "pucc_cardinals/gugutin.png": {
+  "sha": "a7c06b23b04f56ee1aaa1ce61fb298602a34fcbf0eabcf5241f97898d8295ac8",
+  "escala": 1.07,
+  "intacta": false,
+  "chao": false
+ },
+ "pucc_cardinals/htttps.png": {
+  "sha": "de7ed75a97ce19499bd1b04846fa4f62399b38caa8ea259fc143f3b7589e0039",
+  "escala": 0.886,
+  "intacta": false,
+  "chao": true
+ },
+ "ufmt_turuna/1zt.png": {
+  "sha": "2d6d2f584f354e6cf537784b2b4b299c83d052029561eee1496f0ebe23666d71",
+  "escala": 0.909,
+  "intacta": false,
+  "chao": false
+ },
+ "ufmt_turuna/balalov3.png": {
+  "sha": "9e84aa392e31e1afe1599f05da46640085e74aabad068933b064a973bf6e743f",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "ufmt_turuna/balalov3_new.png": {
+  "sha": "b4f9957ae0966c5a94538412d04527036b11bc971fec9bf961e02d1c597057cf",
+  "escala": 1.072,
+  "intacta": false,
+  "chao": false
+ },
+ "ufmt_turuna/ddz.png": {
+  "sha": "1fef740238fe87f912c5e41d07e9f703b33c3ce4992c237aafa68487d4310e2a",
+  "escala": 1.153,
+  "intacta": false,
+  "chao": false
+ },
+ "ufmt_turuna/fafa.png": {
+  "sha": "233502a72e4472081b289b71946e549d8b45891b26d31a1673c12bdddadcfde6",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "ufmt_turuna/fafa_new.png": {
+  "sha": "e1e4f66a1596f19046d0f9ff210fab06a699c2cc49184e938a12a07fda72379d",
+  "escala": 1.12,
+  "intacta": false,
+  "chao": false
+ },
+ "ufmt_turuna/kaytoh.png": {
+  "sha": "4d6e77fde1824ecc8e794e7fa1898ceef44af7a0d91f1ebe6c638c54f25bb73c",
+  "escala": 1.212,
+  "intacta": false,
+  "chao": false
+ },
+ "ufmt_turuna/kaytoh_new.png": {
+  "sha": "26407fb695733df2c78a2b6c1d79f5175859ce0a01ffd4a82266e26c9384f22c",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "ufmt_turuna/onezera.png": {
+  "sha": "d7848c097e63b10eb1860ca210e2d5c1534527796f0fe39c0737011e13ad79d5",
+  "escala": 0.877,
+  "intacta": false,
+  "chao": false
+ },
+ "ufmt_turuna/onezera_new.png": {
+  "sha": "414e6f80767b972b0d92ebc1f1e7d7acffbbe55fd2dedac4efa3b8c9af670db1",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "ufmt_turuna/pulga.png": {
+  "sha": "0ddb0d7d9cf2b4f2464f7697eb9a3cb216370bc8810a9d52cf345ab4d8a025db",
+  "escala": 0.922,
+  "intacta": false,
+  "chao": false
+ },
+ "ufpr_bbn/Biel.png": {
+  "sha": "cafffda2e5cbefcb688f1d37ab8c3765f07c0fb4b07a7737e21c31d7878ddfd9",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "ufpr_bbn/Ishima.png": {
+  "sha": "b417874c27c3cdbde9a453b789dc179471c92a79380785d113b74e7d01818e75",
+  "escala": 0.885,
+  "intacta": false,
+  "chao": false
+ },
+ "ufpr_bbn/Lucky.png": {
+  "sha": "d95a00bb527520ae9345b10462cbcf86160d17d9302e37308316db0f8e620659",
+  "escala": 0.933,
+  "intacta": false,
+  "chao": true
+ },
+ "ufpr_bbn/MrMago.png": {
+  "sha": "ae55abcf0819173049cb8232bf9413330d52f61d66f39de960ba68cfe0bfd3cd",
+  "escala": 0.864,
+  "intacta": false,
+  "chao": false
+ },
+ "ufpr_bbn/Tazyg.png": {
+  "sha": "5fa8846bbbb0a32a6036caa675ac331c1a9c6ddfd55c44ca14444e7c43d03805",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "ufpr_bbn/Yuri.png": {
+  "sha": "215f1684ff594b3800489c86ae00371b6f984fb1c61651a92150c94479ca8f55",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "ufpr_bbn/mocejogafofo.png": {
+  "sha": "aa7376cde159ec62f490a1e90b2f9ee311cf224a36b803e058af3f2fa5a06812",
+  "escala": 0.938,
+  "intacta": false,
+  "chao": false
+ },
+ "ufpr_bbn/wonDer.png": {
+  "sha": "33f57c11020ef14286d961d596009389c272edd80fc45c707d274edbc83dade7",
+  "escala": 1.086,
+  "intacta": false,
+  "chao": false
+ },
+ "ufu_saints/cks.png": {
+  "sha": "3639e29a59477a22b6c113b3368734ad26ebfbc6352c8c3bf154a136283d6b59",
+  "escala": 0.855,
+  "intacta": false,
+  "chao": false
+ },
+ "ufu_saints/cks_new.png": {
+  "sha": "c13a095ed9edbed5f8e4596f832ad0ad7ee620cb6c348d213b245e961a32e713",
+  "escala": 1.274,
+  "intacta": false,
+  "chao": false
+ },
+ "ufu_saints/fijora.png": {
+  "sha": "e18040713a9a19a376e1db2c6ee2cd1386f57abd15845f0daa200fac328cd781",
+  "escala": 0.923,
+  "intacta": false,
+  "chao": false
+ },
+ "ufu_saints/fijora_new.png": {
+  "sha": "9ad609d394170d520775836f52e6044b25b595f28cf4e238cfe736df4e1f186d",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "ufu_saints/filip1n.png": {
+  "sha": "13835c42095e892d7f4929dca486d2837c924c752d88b375cb2758643295f485",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "ufu_saints/gutoso.png": {
+  "sha": "d352b0c17657d5306060ca7b5ab58ab9553ebb041008f47a27bad93d466fffae",
+  "escala": 0.846,
+  "intacta": false,
+  "chao": false
+ },
+ "ufu_saints/gutoso_new.png": {
+  "sha": "d067cdb3381d73539c7e73cf85f4568d0a57fadb81ce8a8d83ebcae5fa5e5758",
+  "escala": 1.31,
+  "intacta": false,
+  "chao": false
+ },
+ "ufu_saints/marelo.png": {
+  "sha": "41256417ae0be0d9cb0d2797ebac28fcd66ef18f6fe909b2d26310da02bd0df8",
+  "escala": 0.879,
+  "intacta": false,
+  "chao": true
+ },
+ "ufu_saints/marelo_new.png": {
+  "sha": "2b2be0592177e691d1fe0eaf8877bd407dc214dbdd0093d2ddf09fa69122c1ce",
+  "escala": 1.143,
+  "intacta": false,
+  "chao": false
+ },
+ "ufu_saints/obigze.png": {
+  "sha": "48c3ab9896b3a9513df76a71b412fee11ddd72d9fc6990d1d7259ddc6b72b6d7",
+  "escala": 1.199,
+  "intacta": false,
+  "chao": false
+ },
+ "ufu_saints/obigze_new.png": {
+  "sha": "60bcab6c7a1bcc64fa68b419b14be5411446e4e1369db8a9b60c2f80e2957bea",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "uninassau_griffins/jayj.png": {
+  "sha": "5a027ec506fafff2ea6624398409b1fcbdae5e28057cafb40dc464dbd0579263",
+  "escala": 1.262,
+  "intacta": false,
+  "chao": false
+ },
+ "uninassau_griffins/jv.png": {
+  "sha": "4fb50ce143c468d426cd567a471fdd1d4138660dd574a1100a6a34d2062aa8e4",
+  "escala": 0.86,
+  "intacta": false,
+  "chao": true
+ },
+ "uninassau_griffins/jv_new.png": {
+  "sha": "35f54888af882dbd2922655feb53409573170dbf79733f19007444f8753ed870",
+  "escala": 1.11,
+  "intacta": false,
+  "chao": false
+ },
+ "uninassau_griffins/laves.png": {
+  "sha": "4fcc6ecb090022d172ca8c0a0e90a66901f988f35fdd656bddbeb4a28bc53994",
+  "escala": 0.916,
+  "intacta": false,
+  "chao": false
+ },
+ "uninassau_griffins/mendes.png": {
+  "sha": "f61bf8f99ccaea17fa99c746390cb92571d5f81580e6bdbd550329e0f333638d",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "uninassau_griffins/mendes_new.png": {
+  "sha": "e228fdd5e07de71dbf8aa781d2073e6aad3800e1bbbae9bea422214fd35ef881",
+  "escala": 1.192,
+  "intacta": false,
+  "chao": false
+ },
+ "uninassau_griffins/odysseys.png": {
+  "sha": "cfd91ad90d9a86277d1765d3e368a68ca4cce48dc613924f5f6a4c6b045f0a58",
+  "escala": 1.281,
+  "intacta": false,
+  "chao": false
+ },
+ "uninassau_griffins/peso.png": {
+  "sha": "c1b39dc94fc381f8241a5ad20201616d830283540cd39610e89d15d75744d6af",
+  "escala": 0.907,
+  "intacta": false,
+  "chao": false
+ },
+ "uninassau_griffins/peso_new.png": {
+  "sha": "62451afacd09c618b6cbcc2f0952d358f2b71f6f0395dfea3447672c81483e49",
+  "escala": 1.134,
+  "intacta": false,
+  "chao": false
+ },
+ "uninassau_griffins/suflah.png": {
+  "sha": "b1e74c76db3f8e277ba66fa2c950769c38edb97fbb30c7369022aecc50bb5352",
+  "escala": 0.888,
+  "intacta": false,
+  "chao": false
+ },
+ "usp_stars/dagn1.png": {
+  "sha": "d821e79550ad217ff604ebecfc10a5eed47fd855ce2aa412424198ed5ec1f5a7",
+  "escala": 1.067,
+  "intacta": false,
+  "chao": false
+ },
+ "usp_stars/dioguera.png": {
+  "sha": "8eb8a972b766dcfa3d3658dea737f4ebe1b205eec3319643aa58e83c54365ca7",
+  "escala": 1.0,
+  "intacta": false,
+  "chao": false
+ },
+ "usp_stars/eizo.png": {
+  "sha": "4efc13ff5e449e8e996071e58170f5ba643c5040b431c65bf77c4af612b2bf81",
+  "escala": 1.121,
+  "intacta": false,
+  "chao": false
+ },
+ "usp_stars/gallobill.png": {
+  "sha": "84e19c33446f4e8c1e68c2b5be03e364b92240f97a039e1904a668ce8c54b76e",
+  "escala": 0.926,
+  "intacta": false,
+  "chao": false
+ },
+ "usp_stars/pagod.png": {
+  "sha": "db93028f62df16ffa923be64d490ed1dbf5f9159a216d2cd642222967fd8f408",
+  "escala": 1.073,
+  "intacta": false,
+  "chao": false
+ },
+ "usp_stars/rype.png": {
+  "sha": "ea815e93ffe20ae35b81f2757fdaf0c4e2e1a00f42b6f68723b2390d536df733",
+  "escala": 0.698,
+  "intacta": false,
+  "chao": true
+ },
+ "wolf_gaming/bielmonster.png": {
+  "sha": "762f9c7706eec14d9caa81e0e3ea479466c7273829725756457c65e3a39e017f",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "wolf_gaming/dav1.png": {
+  "sha": "f1d4bb00ded71e133e6c76a0e2ef8648c6cea829edaf234b436a568e893f156e",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "wolf_gaming/entropy.png": {
+  "sha": "610cd9198367c50d88dd51edb8fce2afb4558d2004fed58a5734de81297ef79d",
+  "escala": 0.771,
+  "intacta": false,
+  "chao": true
+ },
+ "wolf_gaming/filiceta.png": {
+  "sha": "e0707c1a6819c16d2822c55fb6c3ee44e055912070b19b31767503c8a9f0dfc4",
+  "escala": 1.15,
+  "intacta": false,
+  "chao": false
+ },
+ "wolf_gaming/nizk.png": {
+  "sha": "6fdfa28318877f59b025ebff721c5ca4a516d5daf7a412cc3fb3f0159e9921a2",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "wolf_gaming/nizk_new.png": {
+  "sha": "f59a7f0fe309c5adf872012d22601d3f737ca3ae0df1532940f6ed9828e007c6",
+  "escala": 1.081,
+  "intacta": false,
+  "chao": false
+ },
+ "wolf_gaming/salem.png": {
+  "sha": "2280d4fce5ec7cd89d30847af7686c648402fa948dda7bab948de6749a09a67c",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "wolf_gaming/spx_new.png": {
+  "sha": "3a76a6fefd1f5a83fc2fc64cdfffc5ae6d0c82a968941c23a1918ac6ce90ac46",
+  "escala": 1.139,
+  "intacta": false,
+  "chao": false
+ },
+ "wolf_gaming/tayhihi.png": {
+  "sha": "8faa0ecb88bdb3d4d7514e378afdc3f74d3e60a212a4738204dc39f7edaf4993",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "wolf_gaming/tayhihi_new.png": {
+  "sha": "3d1ebee756af72653d9f4e9f90e1e71fe2d7a55493a9c06ca8f6a0daad07fb50",
+  "escala": 1.0,
+  "intacta": true,
+  "chao": false
+ },
+ "wolf_gaming/wpv.png": {
+  "sha": "aa745b329f3859228cf6156f780fc9c25c6cd42374088952c5575d1b2f9d98b3",
+  "escala": 0.893,
+  "intacta": false,
+  "chao": false
+ }
+}

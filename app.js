@@ -27516,15 +27516,20 @@ function renderTournamentDetail(id) {
   if (!campeonatoGeral && !etapa) return renderNotFound("Campeonato");
   const campeonato = campeonatoGeral || campeonatoDaEtapa(etapa);
   const event = campeonatoGeral ? eventoDoGeral(campeonatoGeral) : etapa;
-  const cabeca = campeonato ? (campeonatoGeral ? event : eventoDoGeral(campeonato)) : event;
+  // O topo de uma etapa usa o agregado (nome, datas, status, capa): montar o Geral
+  // inteiro so para o topo custava a colocacao e um ranking historico por abertura.
+  const cabeca = campeonatoGeral ? event : campeonato || event;
   const matches = matchSeriesForEvent(event.id);
   const standings = tournamentStandingsRows(event, matches);
   const activeTab = tournamentActiveTab();
+  // Dentro de um campeonato, trocar de etapa (ou ir ao Geral) tambem desliza: o
+  // escopo e o campeonato e a chave e etapa + aba, na ordem da faixa.
+  const paginas = campeonato ? [campeonato.id, ...campeonato.etapas.map((item) => item.id)] : [event.id];
   const tabTransition = panelSlideSnapshot("tournament-tabs", {
     selector: ".tournament-tab-panel",
-    scope: event.id,
-    key: activeTab,
-    order: TOURNAMENT_TAB_KEYS,
+    scope: campeonato ? campeonato.id : event.id,
+    key: `${event.id}|${activeTab}`,
+    order: paginas.flatMap((pagina) => TOURNAMENT_TAB_KEYS.map((aba) => `${pagina}|${aba}`)),
   });
   Shell(`
     <article class="tournament-hub">
@@ -27957,7 +27962,28 @@ function tournamentRotuloDaColocacao(event, range) {
 }
 
 function tournamentCampanhas(event, matches) {
+  if (event.isGeral) return campanhasDoGeral(event.campeonato);
   return campanhasDoCampeonato({ ...event, bracket: tournamentBracketDefinition(event, matches) || event.bracket });
+}
+
+// A campanha no campeonato inteiro e a soma das etapas. Etapa com chave ou suico
+// curados conta pela chave (W.O. incluso, como na pagina dela); etapa sem curadoria
+// conta pelas series com arquivo. A chave estimada (as 7 ultimas series) nunca entra:
+// no Geral ela juntava series de etapas diferentes e mostrava 2-0 para o campeao.
+function campanhasDoGeral(campeonato) {
+  const total = new Map();
+  campeonato.etapas.forEach((etapa) => {
+    const series = matchSeriesForEvent(etapa.id);
+    const curada = etapa.bracket?.regions?.length || etapa.swiss?.rounds?.length || etapa.swiss?.groups?.length;
+    const daChave = curada ? tournamentCampanhas(etapa, series) : new Map();
+    const daTabela = new Map(eventStandings(series).map((row) => [row.id, [row.seriesWins || 0, row.seriesLosses || 0]]));
+    new Set([...daChave.keys(), ...daTabela.keys()]).forEach((teamId) => {
+      const [vitorias, derrotas] = daChave.get(teamId) || daTabela.get(teamId);
+      const atual = total.get(teamId) || [0, 0];
+      total.set(teamId, [atual[0] + vitorias, atual[1] + derrotas]);
+    });
+  });
+  return total;
 }
 
 // Uma entrada por colocacao, com todas as equipes que dividem a posicao. O podio vem
@@ -35027,8 +35053,11 @@ function campeonatoDaEtapa(event) {
 
 // Colocacao do campeonato inteiro. Primeiro a da etapa que decide; depois quem nao
 // chegou la, pelo degrau em que caiu, do mais alto para o mais baixo. Degrau de uma
-// etapa so usa a colocacao dela (9-11, 12-14); degrau de varias (as classificatorias)
-// vira um grupo so, com a faixa contada. Cada equipe aparece uma vez, no degrau mais
+// etapa so segue os grupos da colocacao dela, na ordem dela, mas com a faixa contada
+// a partir de onde o degrau de cima parou: "Off Season" e "Practice" (o suico do
+// LBEU manda as eliminadas para as divisoes) viram numeros, e quem jogou sem linha
+// de colocacao (ou se classificou e nao jogou a etapa seguinte) vem no fim do degrau.
+// Degrau de varias etapas (as classificatorias) vira um grupo so. Cada equipe aparece uma vez, no degrau mais
 // alto que alcancou, e paralela nao entra. Quem ainda disputa a etapa que decide fica
 // fora ate ter colocacao, como na propria etapa (o podio mostra as vagas em aberto).
 function colocacaoFinal(campeonato) {
@@ -35052,7 +35081,10 @@ function colocacaoFinal(campeonato) {
     // nao tem linha, mas as duas finalistas ja estao acima de todo mundo.
     const n = reservadas.size;
     const range = ids.length === 1 ? String(n + 1) : `${n + 1}-${n + ids.length}`;
-    ids.sort(porRanking).forEach((id) => linhas.push({ range, id, etapaId }));
+    ids.sort(porRanking).forEach((id) => {
+      linhas.push({ range, id, etapaId });
+      reservadas.add(id);
+    });
   };
 
   const decide = campeonato.decide;
@@ -35071,13 +35103,16 @@ function colocacaoFinal(campeonato) {
     etapas.forEach((etapa) => equipesDaEtapa(etapa).forEach((id) => !reservadas.has(id) && doNivel.add(id)));
     if (!doNivel.size) return;
     if (etapas.length === 1) {
+      const grupos = [];
       const vistas = new Set();
       trophyPlacementRows(etapas[0]).forEach((row) => {
         const id = row.id || row.teamId;
         if (!doNivel.has(id) || vistas.has(id) || placementIsQualified(placementRawValue(row))) return;
         vistas.add(id);
-        linhas.push({ ...row, range: row.range, id, etapaId: etapas[0].id });
+        if (grupos.at(-1)?.rotulo !== row.range) grupos.push({ rotulo: row.range, ids: [] });
+        grupos.at(-1).ids.push(id);
       });
+      grupos.forEach((grupo) => grupoContado(grupo.ids, etapas[0].id));
       const sobra = [...doNivel].filter((id) => !vistas.has(id));
       if (sobra.length) grupoContado(sobra, etapas[0].id);
     } else {
@@ -36240,6 +36275,13 @@ function eventTierBadge(event) {
   return `<span class="event-tier tier-${key} vp-tier vp-tier-${key}" title="Tier ${escapeHtml(tier)}" aria-label="Tier ${escapeHtml(tier)}" role="img">${escapeHtml(tier)}</span>`;
 }
 
+// Comentarios do campeonato inteiro: a conversa do Geral e as de cada etapa. A
+// linha de Eventos e uma so, entao o selo soma tudo.
+function conversasDoCampeonato(campeonato) {
+  const contar = (id) => Number(window.Community?.contagem("event", id) || 0);
+  return [campeonato.id, ...campeonato.etapas.map((etapa) => etapa.id)].reduce((soma, id) => soma + contar(id), 0);
+}
+
 // As etapas escritas na propria linha do campeonato, cada uma levando a etapa.
 function etapasNaLinha(campeonato) {
   return `<span class="event-row-etapas">${campeonato.etapas.map((etapa) => `<a href="#/events/${escapeHtml(etapa.id)}">${escapeHtml(etapa.etapaNome)}</a>`).join("")}</span>`;
@@ -36261,7 +36303,7 @@ function eventDirectoryRowCampeonato(campeonato) {
         <span class="row-main event-row-title">
           <a class="event-row-link" href="#/events/${escapeHtml(campeonato.id)}"><strong>${escapeHtml(campeonato.nome)}</strong></a>
           <small>${escapeHtml(eventTimeRange(campeonato))}</small>
-          <span class="event-status ${eventStatusClass(campeonato.status)}">${escapeHtml(campeonato.status || "Evento")}</span>${window.Comments ? window.Comments.selo("event", campeonato.id) : ""}
+          <span class="event-status ${eventStatusClass(campeonato.status)}">${escapeHtml(campeonato.status || "Evento")}</span>${window.Comments ? window.Comments.selo("event", campeonato.id, conversasDoCampeonato(campeonato)) : ""}
         </span>
       </span>
       ${eventTierCell(campeonato)}

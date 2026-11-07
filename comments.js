@@ -682,7 +682,11 @@
       }
       if (kind === "event") {
         const e = state.db.tournaments.find((x) => x.id === id);
-        return e ? { href: `#/tournaments/${id}`, nome: e.name } : null;
+        if (e) return { href: `#/tournaments/${id}`, nome: e.name };
+        // A conversa do Geral de um campeonato com etapas ("univava") nao tem
+        // evento no banco: o assunto e o proprio campeonato.
+        const campeonato = typeof window.campeonatoPorId === "function" ? window.campeonatoPorId(id) : null;
+        return campeonato ? { href: `#/tournaments/${id}`, nome: campeonato.nome } : null;
       }
       if (kind === "team") {
         const t = state.db.teams.find((x) => x.id === id);

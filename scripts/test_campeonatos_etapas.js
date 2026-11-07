@@ -296,5 +296,95 @@ const renderiza = (hash) => {
   assert((playoffs.match(/linked-region/g) || []).length >= 2, "os playoffs da 2024.2 viram chave encadeada");
 }
 
+// ---------------------------------------------------------------- Revisao de 07/11
+// 1. Colocacao final de todos os campeonatos: faixas numericas, crescentes e
+// contiguas. So pode haver vao no topo, para quem ainda disputa a etapa que decide.
+for (const camp of cadastro) {
+  const agregado = context.campeonatoPorId(camp.id);
+  const final = [...context.colocacaoFinal(agregado)];
+  const naDecide = new Set();
+  seriesDe(agregado.decide.id).forEach((s) => [s.teamA?.id, s.teamB?.id].forEach((t) => t && naDecide.add(t)));
+  [...context.trophyPlacementRows(agregado.decide)].forEach((row) => naDecide.add(row.id || row.teamId));
+  const grupos = [];
+  final.forEach((row) => {
+    if (grupos.at(-1)?.range !== row.range) grupos.push({ range: row.range, n: 0, decide: row.etapaId === agregado.decide.id });
+    grupos.at(-1).n += 1;
+  });
+  let fim = 0;
+  grupos.forEach((grupo, i) => {
+    const m = /^(\d+)(?:-(\d+))?$/.exec(grupo.range);
+    assert(m, `${camp.id}: faixa numerica (achei "${grupo.range}")`);
+    const inicio = Number(m[1]);
+    const ate = Number(m[2] || m[1]);
+    assert.strictEqual(ate - inicio + 1, grupo.n, `${camp.id}: a faixa ${grupo.range} tem ${grupo.n} equipes`);
+    const primeiroForaDaDecide = !grupo.decide && (i === 0 || grupos[i - 1].decide);
+    if (primeiroForaDaDecide) assert.strictEqual(inicio, naDecide.size + 1, `${camp.id}: depois da etapa que decide vem ${naDecide.size + 1} (achei ${grupo.range})`);
+    else if (!grupo.decide) assert.strictEqual(inicio, fim + 1, `${camp.id}: ${grupo.range} continua de ${fim}`);
+    fim = ate;
+  });
+  assert.strictEqual(new Set(final.map((row) => row.id)).size, final.length, `${camp.id}: cada equipe uma vez`);
+}
+
+// 2. Coluna Series da colocacao no Geral: a campanha do campeonato inteiro.
+{
+  const campanha = (campId, teamId) => {
+    const geral = context.eventoDoGeral(context.campeonatoPorId(campId));
+    const linha = context.tournamentCampanhas(geral, seriesDe(campId)).get(teamId);
+    return linha ? `${linha[0]}-${linha[1]}` : "";
+  };
+  assert.strictEqual(campanha("jubs-2026", "ceub_octopus"), "11-0", "CEUB Octopus no JUBS 2026 inteiro");
+  // A soma das campanhas das paginas das etapas: W.O. e series sem arquivo contam,
+  // como na chave de cada etapa (CAAP 4-0 nos playoffs com duas finais sem arquivo).
+  assert.strictEqual(campanha("alianca-2024-2", "caap_hellhounds"), "10-0", "CAAP na Aliança 2024.2 inteira");
+  assert.strictEqual(campanha("univava", "ufu_saints"), "12-4", "UFU no UNIVAVÁ inteiro");
+}
+
+// 3. A conversa do Geral tem assunto, para aparecer na atividade e no perfil.
+{
+  vm.runInContext(ler("comments.js"), context);
+  const assunto = context.Comments.assuntoDaThread("event", "univava");
+  assert(assunto && assunto.href === "#/tournaments/univava" && assunto.nome === "UNIVAVÁ", "assunto da conversa do Geral");
+  assert(context.Comments.assuntoDaThread("event", "univava-playoffs"), "controle: a conversa da etapa continua com assunto");
+  // O resto do arquivo desenha paginas sem a comunidade carregada.
+  vm.runInContext("window.Comments = undefined;", context);
+}
+
+// 4. Nenhum perfil de equipe aponta para campeonato que nao existe.
+{
+  const ids = new Set(db.tournaments.map((item) => item.id));
+  const orfaos = [];
+  const varre = (no, onde) => {
+    if (Array.isArray(no)) return no.forEach((x, i) => varre(x, `${onde}[${i}]`));
+    if (!no || typeof no !== "object") return;
+    Object.entries(no).forEach(([chave, valor]) => {
+      if (chave === "eventos" && Array.isArray(valor)) valor.forEach((id) => !ids.has(id) && orfaos.push(`${onde}: ${id}`));
+      else varre(valor, `${onde}.${chave}`);
+    });
+  };
+  varre(JSON.parse(ler("team-profiles.json")), "team-profiles");
+  varre(db.teams.map((team) => team.profile || {}), "database.teams");
+  assert.deepStrictEqual(orfaos, [], "eventos orfaos nos perfis de equipe");
+}
+
+// 5. Trocar de etapa (ou ir ao Geral) desliza: o escopo do slide e o campeonato.
+{
+  renderiza("#/events/univava");
+  const antes = vm.runInContext('panelSlideViews["tournament-tabs"]', context);
+  renderiza("#/events/univava-playoffs");
+  const depois = vm.runInContext('panelSlideViews["tournament-tabs"]', context);
+  assert.strictEqual(antes.scope, depois.scope, "Geral e etapa no mesmo escopo de slide");
+  assert.notStrictEqual(antes.key, depois.key, "chaves diferentes: o slide roda");
+}
+
+// 6. Abrir uma etapa nao calcula a colocacao do campeonato inteiro.
+{
+  const original = context.colocacaoFinal;
+  let chamadas = 0;
+  context.colocacaoFinal = (...args) => { chamadas += 1; return original(...args); };
+  renderiza("#/events/jubs-etapa-presencial");
+  context.colocacaoFinal = original;
+  assert.strictEqual(chamadas, 0, "a etapa nao calcula a colocacao do Geral");
+}
+
 console.log("campeonatos com etapas: ok");
 

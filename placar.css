@@ -3280,6 +3280,62 @@ body {
   box-shadow: inset 0 -2px var(--brand);
 }
 
+/* Os nomes da mesma line na pagina da equipe: o mesmo desenho das etapas, com o
+   escudo e o periodo de cada fase. Mora no vao entre o menu do site e a capa (o
+   respiro do .main), entao a capa nao desce: a faixa sobe para dentro do respiro
+   e a margem de baixo devolve o gap da pagina. */
+.team-page.team-page {
+  position: relative;
+}
+
+.team-page.team-page > .vp-equipe-fases {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  min-height: calc(clamp(20px, 2vw, 34px) - 4px);
+  padding-block: 0;
+  gap: 2px 10px;
+}
+
+/* No celular os nomes quebram em duas linhas e nao cabem no respiro: a faixa
+   volta para o fluxo, acima da capa. */
+@media (max-width: 760px) {
+  .team-page.team-page > .vp-equipe-fases {
+    position: static;
+    padding-block: 6px;
+  }
+}
+
+.vp-equipe-fases a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+}
+
+.vp-equipe-fases .vp-fase-logo {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.vp-equipe-fases .vp-fase-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vp-equipe-fases small {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-fase-seta {
+  color: var(--muted);
+}
+
 .tournament-hub .tournament-page-tabs {
   flex-wrap: wrap;
   align-items: center;
@@ -3630,6 +3686,15 @@ a.vp-col-equipe:hover .vp-col-nome > span:last-child {
 .vp-eq:hover,
 .vp-eq:focus-visible {
   box-shadow: inset 0 0 0 2px var(--placa-tinta);
+}
+
+/* Equipe sem cadastro: so o nome, nada para abrir. */
+.vp-eq.vp-eq-sem-perfil {
+  cursor: default;
+}
+
+.vp-eq.vp-eq-sem-perfil:hover {
+  box-shadow: none;
 }
 
 .vp-eq > b {
@@ -7937,7 +8002,7 @@ a.vp-tabela-linha:hover strong {
   gap: 0;
 }
 
-:is(.vp-ranking, .vp-jogadores) .ranking-details-toggle {
+:is(.vp-ranking, .vp-jogadores, .vp-equipes) .ranking-details-toggle {
   gap: 8px;
   min-height: 44px;
   padding: 0 14px;
@@ -7952,12 +8017,12 @@ a.vp-tabela-linha:hover strong {
   border-left: 1px solid var(--line);
 }
 
-:is(.vp-ranking, .vp-jogadores) .ranking-details-toggle:has(input:checked) {
+:is(.vp-ranking, .vp-jogadores, .vp-equipes) .ranking-details-toggle:has(input:checked) {
   background: none;
   color: var(--ink);
 }
 
-:is(.vp-ranking, .vp-jogadores) .ranking-details-toggle input {
+:is(.vp-ranking, .vp-jogadores, .vp-equipes) .ranking-details-toggle input {
   appearance: none;
   flex: none;
   box-sizing: border-box;
@@ -7971,13 +8036,13 @@ a.vp-tabela-linha:hover strong {
   cursor: pointer;
 }
 
-:is(.vp-ranking, .vp-jogadores) .ranking-details-toggle input:checked {
+:is(.vp-ranking, .vp-jogadores, .vp-equipes) .ranking-details-toggle input:checked {
   background: var(--ink);
   border-color: var(--ink);
   box-shadow: inset 0 0 0 3px var(--surface);
 }
 
-:is(.vp-ranking, .vp-jogadores) .ranking-details-toggle input:focus-visible {
+:is(.vp-ranking, .vp-jogadores, .vp-equipes) .ranking-details-toggle input:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 1px;
 }
@@ -8379,7 +8444,7 @@ a.vp-tabela-linha:hover strong {
     justify-content: space-between;
   }
 
-  :is(.vp-ranking, .vp-jogadores) .ranking-details-toggle {
+  :is(.vp-ranking, .vp-jogadores, .vp-equipes) .ranking-details-toggle {
     justify-content: flex-start;
   }
 
@@ -8638,7 +8703,7 @@ a.vp-tabela-linha:hover strong {
   margin-inline: auto;
 }
 
-.vp-jogadores .vp-sec h1 {
+:is(.vp-jogadores, .vp-equipes) .vp-sec h1 {
   margin: 0;
   font: 600 30px/1 var(--font-display);
   letter-spacing: 0;
@@ -8646,7 +8711,7 @@ a.vp-tabela-linha:hover strong {
   color: var(--ink);
 }
 
-.vp-jogadores .vp-sec .lista-contagem {
+:is(.vp-jogadores, .vp-equipes) .vp-sec .lista-contagem {
   margin: 0 0 0 auto;
   padding: 0;
   color: var(--muted);
@@ -9008,6 +9073,309 @@ a.vp-tabela-linha:hover strong {
   .vp-jg-funcao,
   .vp-jg-numero { grid-column: 2; margin-left: 0; text-align: left; font: 500 12px/1.2 var(--font-text); }
   .vp-jg-numero::after { content: " " attr(data-rotulo); }
+}
+
+/* Equipes: os quadrados das Equipes Participantes, ou as tiras de Jogadores com a
+   logo no lugar da foto. Mesma largura e mesma barra de filtros de Jogadores. */
+.vp-equipes {
+  --jg-foto: 104px;
+  --jg-dados: 370px;
+  --jg-colunas: minmax(0, 1fr) 76px 72px 104px 56px;
+  width: 100%;
+  max-width: 922px;
+  margin-inline: auto;
+}
+
+.vp-eqs-filtros .vp-eqs-estado-filtro {
+  flex-basis: 170px;
+}
+
+/* A grade de estados flutua sob o gatilho, como a lista de equipes em Jogadores. */
+.vp-eqs-ufs {
+  position: absolute;
+  z-index: 35;
+  top: calc(100% + 6px);
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2px;
+  width: min(340px, calc(100vw - 32px));
+  padding: 6px;
+  background: var(--surface);
+  border-radius: 2px;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.36);
+}
+
+.vp-eqs-ufs button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 8px;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  font: 600 13px/1 var(--font-text);
+  text-align: left;
+}
+
+.vp-eqs-ufs button:first-child {
+  grid-column: 1 / -1;
+}
+
+.vp-eqs-ufs button:hover {
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
+.vp-eqs-ufs button[aria-pressed="true"] {
+  color: var(--ink);
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+.vp-eqs-ufs small {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-equipes .state-flag {
+  flex: none;
+  width: 20px;
+  height: 14px;
+  object-fit: cover;
+}
+
+.vp-eqs-ver {
+  display: flex;
+  margin-left: auto;
+  border-left: 1px solid var(--line);
+}
+
+.vp-eqs-ver button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.vp-eqs-ver button:hover {
+  color: var(--ink);
+}
+
+.vp-eqs-ver button[aria-pressed="true"] {
+  color: var(--ink);
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+.vp-eqs-ver svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.vp-eqs-ordem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font: 600 12px/1 var(--font-text);
+}
+
+.vp-eqs-ordem > span {
+  margin-right: 4px;
+}
+
+.vp-eqs-ordem .vp-jg-toggle {
+  min-height: 36px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.vp-eqs-ordem i {
+  font-style: normal;
+}
+
+.vp-eqs-grade {
+  --por-linha: 6;
+}
+
+.vp-eq.vp-eqs {
+  color: var(--placa-tinta);
+  text-decoration: none;
+}
+
+.vp-eq > .vp-eqs-uf {
+  font-size: clamp(13px, 9cqw, 18px);
+}
+
+.vp-eq > .vp-eqs-texto {
+  font-size: clamp(12px, 8cqw, 15px);
+}
+
+/* A sigla quebra linha em vez de virar reticencias: "UTFPR Cornelio Procopio" cortado
+   escondia a cidade. */
+.vp-eqs .vp-eq-txt small {
+  opacity: 0.86;
+  overflow: visible;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.vp-eqs-linha.vp-slide {
+  color: var(--placa-tinta);
+  text-decoration: none;
+}
+
+/* A logo pisa no campo com o contorno da tinta, como nos quadrados: logo na cor
+   da propria equipe sumiria. */
+.vp-eqs-logo {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 22px;
+  width: 60px;
+  height: 60px;
+  transform: translateY(-50%);
+}
+
+.vp-eqs-logo .team-logo.large {
+  --borda: var(--placa-campo-tinta);
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(1.5px 0 0 var(--borda)) drop-shadow(-1.5px 0 0 var(--borda)) drop-shadow(0 1.5px 0 var(--borda)) drop-shadow(0 -1.5px 0 var(--borda));
+}
+
+.vp-eqs-logo .team-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vp-eqs-linha .vp-eqs-texto {
+  font: 600 13px/1 var(--font-text);
+}
+
+/* No desktop a instituicao por extenso; na tira do celular, de altura fixa, a sigla. */
+.vp-eqs-linha .vp-eqs-sigla {
+  display: none;
+}
+
+.vp-eqs-estado {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  font: 600 13px/1 var(--font-text);
+}
+
+.vp-eqs-data {
+  text-align: right;
+  font: 600 13px/1 var(--font-text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (max-width: 860px) {
+  .vp-equipes {
+    --jg-foto: 76px;
+    --jg-dados: 112px;
+  }
+
+  .vp-eqs-grade {
+    --por-linha: 4;
+  }
+
+  .vp-jg-filtros.vp-eqs-filtros {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  .vp-eqs-filtros .vp-jg-busca,
+  .vp-eqs-filtros .vp-eqs-estado-filtro {
+    grid-column: 1 / -1;
+  }
+
+  .vp-eqs-linha.vp-slide {
+    grid-template-columns: minmax(0, 1fr) 92px;
+    grid-template-rows: repeat(4, auto);
+    row-gap: 4px;
+    column-gap: 36px;
+    height: 112px;
+    align-content: center;
+    padding-block: 0;
+    padding-right: 10px;
+  }
+
+  .vp-eqs-logo {
+    left: 10px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .vp-eqs-linha .vp-jg-nome {
+    grid-column: 1;
+    grid-row: 1 / 5;
+    align-self: center;
+  }
+
+  .vp-eqs-linha .vp-eqs-inst {
+    display: none;
+  }
+
+  .vp-eqs-linha .vp-eqs-sigla {
+    display: block;
+  }
+
+  .vp-eqs-linha .vp-eqs-rank,
+  .vp-eqs-linha .vp-eqs-estado,
+  .vp-eqs-linha .vp-eqs-data,
+  .vp-eqs-linha .vp-eqs-mapas {
+    grid-column: 2;
+    justify-content: flex-start;
+    text-align: left;
+    font: 500 12px/1.2 var(--font-text);
+  }
+
+  .vp-eqs-linha .vp-eqs-rank {
+    font: 600 16px/1 var(--fonte-carta);
+  }
+
+  .vp-eqs-linha .vp-eqs-rank.vp-eqs-texto {
+    font: 600 12px/1.2 var(--font-text);
+  }
+}
+
+@media (max-width: 760px) {
+  .vp-eqs-ultimo span {
+    display: none;
+  }
+}
+
+/* Em 320px os nomes de 27 letras com sigla longa passavam da tira. */
+@media (max-width: 360px) {
+  .vp-eqs-linha.vp-slide {
+    grid-template-columns: minmax(0, 1fr) 84px;
+    column-gap: 26px;
+  }
+
+  .vp-equipes {
+    --jg-dados: 100px;
+  }
+
+  /* Com tres por fileira, nome de 31 letras, sigla e data deixavam 12px para a logo. */
+  .vp-eq-grade.vp-eqs-grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* Noticias */

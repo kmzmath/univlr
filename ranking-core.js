@@ -115,8 +115,8 @@
 
   function calculateTeamRankings(input = {}) {
     const teams = Array.isArray(input.teams) ? input.teams : [];
-    const teamIds = teams.map((team) => team.id).filter(Boolean);
-    const teamIdSet = new Set(teamIds);
+    const allTeamIds = teams.map((team) => team.id).filter(Boolean);
+    const teamIdSet = new Set(allTeamIds);
     const weights = mergeConfig(DEFAULT_WEIGHTS, input.weights || {});
     const now = finiteNumber(input.now, Date.now());
     const teamsById = new Map(teams.map((team) => [team.id, team]));
@@ -124,7 +124,13 @@
     const tournamentsById = new Map(tournaments.map((event) => [event.id, event]));
     const seriesByKey = new Map((input.matchSeries || []).map((series) => [series.seriesKey || series.id, series]));
     const observations = createObservations(input.matches || [], seriesByKey, tournamentsById, weights, now).filter((item) => teamIdSet.has(item.teamAId) && teamIdSet.has(item.teamBId));
-    const basicStats = aggregateBasicStats(teamIds, observations);
+    const basicStats = aggregateBasicStats(allTeamIds, observations);
+    // Só entra na conta quem tem jogo até a data (decisão de 06/11/2026). As notas
+    // são esticadas entre os percentis 5 e 95 de quem está na conta: com as equipes
+    // sem jogo dentro, a régua mudava conforme o número de cadastradas que ainda não
+    // tinham estreado (176 de 214 na semana de 23/04/2024), e elas ganhavam nota.
+    const teamIds = allTeamIds.filter((id) => basicStats.get(id).matches > 0);
+    const semJogo = allTeamIds.filter((id) => basicStats.get(id).matches === 0);
     const modelBundle = calculateStatisticalModels(teamIds, observations, weights);
     const modelScores = modelBundle.statisticalModels;
     const sosBundle = calculateStrengthOfSchedule(teamIds, observations, modelScores, weights);
@@ -153,7 +159,7 @@
       },
     );
 
-    const rows = teamIds.map((id) => {
+    const rows = [...teamIds.map((id) => {
       const basic = basicStats.get(id) || emptyBasicStats();
       const blocks = {
         competitive: safeScore(competitive[id]),
@@ -189,7 +195,7 @@
         rosterSize,
         inactive,
       };
-    });
+    }), ...semJogo.map((id) => rowSemJogo(id, teamsById.get(id), weights))];
 
     rows.sort((a, b) => Number(b.matches > 0) - Number(a.matches > 0) || b.score - a.score || b.wins - a.wins || b.roundDiff - a.roundDiff || a.id.localeCompare(b.id));
     rows.forEach((row, index) => {
@@ -217,6 +223,32 @@
         modelNames: modelBundle.modelNames,
         observationCount: observations.length,
       },
+    };
+  }
+
+  // Equipe sem jogo até a data: fica na lista, provisória e com nota zero, fora de
+  // toda conta (modelos, régua, conquistas, forma e elenco).
+  function rowSemJogo(id, team, weights) {
+    const rosterSize = teamRosterSize(team);
+    return {
+      id,
+      score: 0,
+      blocks: { competitive: 0, achievements: 0, recentForm: 0, rosterStrength: 0 },
+      components: { statisticalModels: 0, strengthOfSchedule: 0, dominance: 0 },
+      models: {},
+      sos: { general: 50, wins: 50 },
+      achievements: [],
+      recent: { matches: 0 },
+      roster: {},
+      matches: 0,
+      wins: 0,
+      losses: 0,
+      roundsWon: 0,
+      roundsLost: 0,
+      roundDiff: 0,
+      provisional: true,
+      rosterSize,
+      inactive: rosterSize !== null && rosterSize < finiteNumber(weights.minimumRosterSize, 5),
     };
   }
 

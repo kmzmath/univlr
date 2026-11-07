@@ -35,6 +35,7 @@ const context = {
   Promise,
   Set,
   String,
+  URLSearchParams,
   clearInterval: noop,
   clearTimeout: noop,
   setInterval: () => 0,
@@ -459,7 +460,22 @@ const topoEquipe = paginaEquipe.slice(0, paginaEquipe.indexOf("team-tabs"));
 assert(topoEquipe.includes("vp-capa-fotos"), "o topo da equipe e a faixa de fotos");
 assert(!paginaEquipe.includes("team-trophy-panel"), "o painel de trofeus sai do topo");
 assert(/class="vp-capa-numeros"[\s\S]*Ranking/.test(topoEquipe) && !topoEquipe.includes("Na semana"), "a capa fica so com ranking e nota");
+assert(!paginaEquipe.includes("vp-equipe-fases"), "equipe que nunca trocou de nome nao tem linha do tempo");
 context.location.hash = "";
+
+// Perfil unico da sucessao: as fases antigas vem de `nomes`, a atual e o resto.
+const comFases = { ...azr, profile: { ...azr.profile, nomes: [{ id: "antiga", nome: "Nome Antigo", logo: "", eventos: ["e-antigo"], desde: "2025-03-01", ate: "2025-05-20" }] } };
+const fases = context.teamFases(comFases, [{ eventId: "e-antigo", sortAt: Date.parse("2025-03-01") }, { eventId: "e-novo", sortAt: Date.parse("2026-07-30") }]);
+assert.strictEqual(fases.map((fase) => fase.id).join(","), `antiga,${azr.id}`, "a fase antiga vem antes da atual");
+assert.strictEqual(context.teamFasePeriodo(fases[0]), "mar/25 - mai/25", "o periodo da fase em meses");
+assert(fases[1].eventos.has("e-novo") && !fases[1].eventos.has("e-antigo"), "a fase atual fica com o que nao e das antigas");
+const navFases = context.teamFasesNav(comFases, fases, fases[0], "matches");
+assert(navFases.includes(`href="#/teams/${azr.id}/matches?fase=antiga" aria-current="page"`), "o nome antigo aberto fica marcado e mantem a aba");
+assert(navFases.includes(`href="#/teams/${azr.id}/matches"`) && !navFases.includes(`?fase=${azr.id}`) && navFases.includes("vp-fase-seta"), "o nome atual e a pagina sem fase, e os nomes sao ligados por seta");
+assert(context.teamFasesNav(comFases, fases, null, "resumo").includes(`href="#/teams/${azr.id}" aria-current="page"`), "sem fase, o nome atual fica marcado");
+const perfilAntigo = context.teamPerfilDaFase(comFases, { ...fases[0], cores: ["#5c59c5", "#fafbfc"], tag: "ANT" }, []);
+assert.strictEqual(`${perfilAntigo.name}|${perfilAntigo.sourceTag}|${perfilAntigo.colors[0]}|${perfilAntigo.currentLineup.length}|${perfilAntigo.matches}`, "Nome Antigo|ANT|#5c59c5|0|0", "o perfil da fase antiga troca nome, sigla e cores, sem elenco atual e com a ficha so da fase");
+assert.strictEqual(context.teamFasesNav(azr, context.teamFases(azr, []), null, "resumo"), "", "sem nomes antigos, sem linha do tempo");
 
 // ---------------------------------------------------------------- Tarefa 9
 // Pagina de jogador: os numeros viram uma ficha em Placa com tres grupos, a composicao
@@ -643,7 +659,12 @@ const andamento = visaoGeral({ ...rush, status: "Em andamento" });
 assert(andamento.includes("Equipes Participantes"), "campeonato em andamento mostra a lista de participantes");
 const encerrado = visaoGeral(rush);
 assert(encerrado.includes("Equipes Participantes"), "encerrado tambem mostra quem jogou");
-assert(encerrado.includes("vp-eq-grade") && encerrado.includes("data-tournament-team="), "as equipes sao quadrados que abrem o menu");
+assert(encerrado.includes("vp-eq-grade"), "as equipes sao quadrados");
+// Regra de 06/11/2026: equipe sem cadastro (sem nenhum mapa na base) e so o nome.
+// A base sintetica so cadastra azr, ceub, mack e nova; as da Rush ficam sem cadastro.
+const mista = visaoGeral({ ...rush, teams: ["azr", "sem_cadastro_x"], teamNames: { ...(rush.teamNames || {}), sem_cadastro_x: "Sem Cadastro X" } });
+assert(mista.includes('data-tournament-team="azr"'), "equipe cadastrada abre o menu");
+assert(!mista.includes('data-tournament-team="sem_cadastro_x"') && /vp-eq-sem-perfil[^>]*title="Sem Cadastro X"/.test(mista), "equipe sem cadastro e so o nome, sem menu");
 assert(encerrado.includes("Colocação") && encerrado.includes("vp-colocacao"), "a colocacao substitui o podio e a classificacao final");
 assert(encerrado.includes('class="vp-col-equipe"'), "cada equipe e uma linha da colocacao");
 assert(encerrado.includes(">8-1<"), "a colocacao traz a campanha de cada equipe");

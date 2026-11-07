@@ -283,14 +283,14 @@ const TOURNAMENT_OVERRIDES = {
       "macklogic_red",
       "maua_esports_black_2024",
       "espm_overbite_misto",
-      "fei_esports_valorant_2024",
+      "fei_darkowls",
       "ufg_eagles",
       "fatec_ornyx_2024",
       "ufmt_turuna",
       "aufa_line_b_2024",
-      "poli_plague_gold_2024",
-      "aufa_line_a_2024",
-      "minerva_esports_ufrj_inclusivo_2024",
+      "poli_plague",
+      "aufa_faesa",
+      "minerva_artemis",
       "ufmg_fenix_b",
       "oktoplus_gaming_cefet_mg_2024",
       "caaso_hogs_usp_2024",
@@ -298,13 +298,13 @@ const TOURNAMENT_OVERRIDES = {
       "poli_plague_silver_echo_2024",
       "fgv_alligators_valorant_2024",
       "caap_hellhounds",
-      "ufg_eagles_black_2024",
+      "ufg_eagles_blue",
       "usp_cronos_2024",
-      "minerva_esports_misto_2024",
+      "ufrj_minerva",
       "usf_e_sports_2024",
       "ufscar_fire",
       "xarada_riddlers_ufla_2024",
-      "ibtec_2024",
+      "ibmec_sharks",
       "ufpr_bbn",
       "usf_paragons_2024",
       "unirio_krakens",
@@ -315,8 +315,8 @@ const TOURNAMENT_OVERRIDES = {
       "unifesp_knights_2024",
       "raposa_e_sports",
       "ovb_purple_2024",
-      "inatel_white",
-      "cyber_kongs_dourada_2024",
+      "inatel",
+      "cyberkongs",
       "liga_atletica_unisinos_lau_2024",
       "poli_plague_silver_delta_2024"
     ],
@@ -329,14 +329,14 @@ const TOURNAMENT_OVERRIDES = {
       "macklogic_red": "MackLogic",
       "maua_esports_black_2024": "Mauá Esports Black",
       "espm_overbite_misto": "ESPM Overbite Valorant M.",
-      "fei_esports_valorant_2024": "FEI eSports Valorant",
+      "fei_darkowls": "FEI eSports Valorant",
       "ufg_eagles": "UFG Eagles",
       "fatec_ornyx_2024": "FATEC Ornyx",
       "ufmt_turuna": "UFMT Turuna",
       "aufa_line_b_2024": "AUFA LINE B",
-      "poli_plague_gold_2024": "Poli Plague Gold",
-      "aufa_line_a_2024": "AUFA LINE A",
-      "minerva_esports_ufrj_inclusivo_2024": "Minerva eSports UFRJ INCLUSIVO",
+      "poli_plague": "Poli Plague Gold",
+      "aufa_faesa": "AUFA LINE A",
+      "minerva_artemis": "Minerva eSports UFRJ INCLUSIVO",
       "ufmg_fenix_b": "UFMG Fênix Valorant",
       "oktoplus_gaming_cefet_mg_2024": "Oktoplus Gaming - CEFET-MG",
       "caaso_hogs_usp_2024": "Caaso Hogs - USP",
@@ -344,13 +344,13 @@ const TOURNAMENT_OVERRIDES = {
       "poli_plague_silver_echo_2024": "POLI Plague Silver Echo",
       "fgv_alligators_valorant_2024": "FGV Alligators Valorant",
       "caap_hellhounds": "CAAP Hellhounds",
-      "ufg_eagles_black_2024": "UFG Eagles Black",
+      "ufg_eagles_blue": "UFG Eagles Black",
       "usp_cronos_2024": "USP Cronos",
-      "minerva_esports_misto_2024": "Minerva eSports MISTO",
+      "ufrj_minerva": "Minerva eSports MISTO",
       "usf_e_sports_2024": "Usf E-sports",
       "ufscar_fire": "UFSCar FIRE VALORANT",
       "xarada_riddlers_ufla_2024": "XARADA RIDDLERS - UFLA",
-      "ibtec_2024": "IBTEC",
+      "ibmec_sharks": "IBTEC",
       "ufpr_bbn": "Burning Bunnies UFPR",
       "usf_paragons_2024": "USF Paragons",
       "unirio_krakens": "Kraken - Unirio",
@@ -361,8 +361,8 @@ const TOURNAMENT_OVERRIDES = {
       "unifesp_knights_2024": "Unifesp Knights",
       "raposa_e_sports": "Raposa eSports",
       "ovb_purple_2024": "OVB Purple",
-      "inatel_white": "Inatel White",
-      "cyber_kongs_dourada_2024": "Cyber Kongs Dourada",
+      "inatel": "Inatel White",
+      "cyberkongs": "Cyber Kongs Dourada",
       "liga_atletica_unisinos_lau_2024": "Liga Atlética Unisinos - LAU",
       "poli_plague_silver_delta_2024": "POLI Plague Silver Delta"
     },
@@ -392,30 +392,30 @@ const TOURNAMENT_OVERRIDES = {
       {"range": "Classificado", "id": "unb_green_olws_line_red_2024", "note": "Chave inferior"},
       {"range": "Classificado", "id": "usp_cronos_2024", "note": "Chave inferior"},
       {"range": "Classificado", "id": "ufg_eagles", "note": "Chave inferior"},
-      {"range": "9-12", "id": "poli_plague_gold_2024"},
+      {"range": "9-12", "id": "poli_plague"},
       {"range": "9-12", "id": "macklogic_red"},
-      {"range": "9-12", "id": "inatel_white"},
-      {"range": "9-12", "id": "cyber_kongs_dourada_2024"},
+      {"range": "9-12", "id": "inatel"},
+      {"range": "9-12", "id": "cyberkongs"},
       {"range": "13-16", "id": "ufu_saints"},
       {"range": "13-16", "id": "uninassau_griffins"},
       {"range": "13-16", "id": "azure_bears_black"},
-      {"range": "13-16", "id": "fei_esports_valorant_2024"},
+      {"range": "13-16", "id": "fei_darkowls"},
       {"range": "17-24", "id": "espm_overbite_misto"},
       {"range": "17-24", "id": "ufscar_fire"},
       {"range": "17-24", "id": "ufmt_turuna"},
       {"range": "17-24", "id": "xarada_riddlers_ufla_2024"},
       {"range": "17-24", "id": "raposa_e_sports"},
       {"range": "17-24", "id": "fatec_ornyx_2024"},
-      {"range": "17-24", "id": "ufg_eagles_black_2024"},
+      {"range": "17-24", "id": "ufg_eagles_blue"},
       {"range": "17-24", "id": "laurp_royal_ps_orange_2024"},
       {"range": "25-32", "id": "oktoplus_gaming_cefet_mg_2024"},
-      {"range": "25-32", "id": "minerva_esports_misto_2024"},
-      {"range": "25-32", "id": "minerva_esports_ufrj_inclusivo_2024"},
+      {"range": "25-32", "id": "ufrj_minerva"},
+      {"range": "25-32", "id": "minerva_artemis"},
       {"range": "25-32", "id": "furia_utfpr"},
-      {"range": "25-32", "id": "ibtec_2024"},
+      {"range": "25-32", "id": "ibmec_sharks"},
       {"range": "25-32", "id": "fgv_alligators_valorant_2024"},
       {"range": "25-32", "id": "madness_ufop_2024"},
-      {"range": "25-32", "id": "aufa_line_a_2024"},
+      {"range": "25-32", "id": "aufa_faesa"},
       {"range": "33-44", "id": "aufa_line_b_2024"},
       {"range": "33-44", "id": "unifesp_knights_2024"},
       {"range": "33-44", "id": "unb_black"},
@@ -479,10 +479,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 3,
                   "bestOf": "MD1",
                   "a": "aufa_line_b_2024",
-                  "b": "aufa_line_a_2024",
+                  "b": "aufa_faesa",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "aufa_line_a_2024",
+                  "winner": "aufa_faesa",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -518,10 +518,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 7,
                   "bestOf": "MD1",
                   "a": "unifesp_knights_2024",
-                  "b": "fei_esports_valorant_2024",
+                  "b": "fei_darkowls",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "fei_esports_valorant_2024",
+                  "winner": "fei_darkowls",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -539,7 +539,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 9,
                   "bestOf": "MD1",
                   "a": "ufscar_fire",
-                  "b": "minerva_esports_misto_2024",
+                  "b": "ufrj_minerva",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "ufscar_fire"
@@ -548,7 +548,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 10",
                   "seriesCode": 10,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -595,10 +595,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 15,
                   "bestOf": "MD1",
                   "a": "poli_plague_silver_echo_2024",
-                  "b": "ibtec_2024",
+                  "b": "ibmec_sharks",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "ibtec_2024",
+                  "winner": "ibmec_sharks",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -672,11 +672,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 23",
                   "seriesCode": 23,
                   "bestOf": "MD1",
-                  "a": "minerva_esports_ufrj_inclusivo_2024",
+                  "a": "minerva_artemis",
                   "b": "ufpr_bbn",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "minerva_esports_ufrj_inclusivo_2024"
+                  "winner": "minerva_artemis"
                 },
                 {
                   "code": "Partida 24",
@@ -710,11 +710,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 27",
                   "seriesCode": 27,
                   "bestOf": "MD1",
-                  "a": "ufg_eagles_black_2024",
+                  "a": "ufg_eagles_blue",
                   "b": "madness_ufop_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "ufg_eagles_black_2024"
+                  "winner": "ufg_eagles_blue"
                 },
                 {
                   "code": "Partida 28",
@@ -729,7 +729,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 29",
                   "seriesCode": 29,
                   "bestOf": "MD1",
-                  "a": "poli_plague_gold_2024",
+                  "a": "poli_plague",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -738,7 +738,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 30",
                   "seriesCode": 30,
                   "bestOf": "MD1",
-                  "a": "cyber_kongs_dourada_2024",
+                  "a": "cyberkongs",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -781,7 +781,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 34,
                   "bestOf": "MD1",
                   "a": "azure_bears_golden",
-                  "b": "aufa_line_a_2024",
+                  "b": "aufa_faesa",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "azure_bears_golden"
@@ -801,7 +801,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 36,
                   "bestOf": "MD1",
                   "a": "ufg_eagles",
-                  "b": "fei_esports_valorant_2024",
+                  "b": "fei_darkowls",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "ufg_eagles"
@@ -822,11 +822,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 38",
                   "seriesCode": 38,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "b": "fgv_alligators_valorant_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "inatel_white"
+                  "winner": "inatel"
                 },
                 {
                   "code": "Partida 39",
@@ -843,7 +843,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 40,
                   "bestOf": "MD1",
                   "a": "maua_esports_black_2024",
-                  "b": "ibtec_2024",
+                  "b": "ibmec_sharks",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "maua_esports_black_2024"
@@ -883,7 +883,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 44,
                   "bestOf": "MD1",
                   "a": "caap_hellhounds",
-                  "b": "minerva_esports_ufrj_inclusivo_2024",
+                  "b": "minerva_artemis",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "caap_hellhounds"
@@ -903,10 +903,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 46,
                   "bestOf": "MD1",
                   "a": "unb_black",
-                  "b": "ufg_eagles_black_2024",
+                  "b": "ufg_eagles_blue",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "ufg_eagles_black_2024",
+                  "winner": "ufg_eagles_blue",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -915,7 +915,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 47,
                   "bestOf": "MD1",
                   "a": "unicamp_tritons_black",
-                  "b": "poli_plague_gold_2024",
+                  "b": "poli_plague",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "unicamp_tritons_black"
@@ -924,11 +924,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 48",
                   "seriesCode": 48,
                   "bestOf": "MD1",
-                  "a": "cyber_kongs_dourada_2024",
+                  "a": "cyberkongs",
                   "b": "oktoplus_gaming_cefet_mg_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "cyber_kongs_dourada_2024"
+                  "winner": "cyberkongs"
                 },
                 {
                   "code": "Partida 49",
@@ -969,11 +969,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 52",
                   "seriesCode": 52,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "b": "unb_green_olws_line_red_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "inatel_white"
+                  "winner": "inatel"
                 },
                 {
                   "code": "Partida 53",
@@ -1009,7 +1009,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 56",
                   "seriesCode": 56,
                   "bestOf": "MD1",
-                  "a": "ufg_eagles_black_2024",
+                  "a": "ufg_eagles_blue",
                   "b": "unicamp_tritons_black",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -1019,7 +1019,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 57",
                   "seriesCode": 57,
                   "bestOf": "MD1",
-                  "a": "cyber_kongs_dourada_2024",
+                  "a": "cyberkongs",
                   "b": "caaso_hogs_usp_2024",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -1044,7 +1044,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 59",
                   "seriesCode": 59,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "b": "maua_esports_black_2024",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -1144,7 +1144,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 68",
                   "seriesCode": 68,
                   "bestOf": "MD1",
-                  "b": "minerva_esports_misto_2024",
+                  "b": "ufrj_minerva",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -1240,11 +1240,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 83",
                   "seriesCode": 83,
                   "bestOf": "MD1",
-                  "a": "poli_plague_gold_2024",
+                  "a": "poli_plague",
                   "b": "unifesp_knights_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "poli_plague_gold_2024",
+                  "winner": "poli_plague",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -1253,10 +1253,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 84,
                   "bestOf": "MD1",
                   "a": "unb_black",
-                  "b": "minerva_esports_misto_2024",
+                  "b": "ufrj_minerva",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "minerva_esports_misto_2024",
+                  "winner": "ufrj_minerva",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -1274,7 +1274,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 86",
                   "seriesCode": 86,
                   "bestOf": "MD1",
-                  "a": "minerva_esports_ufrj_inclusivo_2024",
+                  "a": "minerva_artemis",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -1314,7 +1314,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 90",
                   "seriesCode": 90,
                   "bestOf": "MD1",
-                  "a": "ibtec_2024",
+                  "a": "ibmec_sharks",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -1357,7 +1357,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 94",
                   "seriesCode": 94,
                   "bestOf": "MD1",
-                  "a": "fei_esports_valorant_2024",
+                  "a": "fei_darkowls",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -1376,7 +1376,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 96",
                   "seriesCode": 96,
                   "bestOf": "MD1",
-                  "a": "aufa_line_a_2024",
+                  "a": "aufa_faesa",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -1400,18 +1400,18 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 98",
                   "seriesCode": 98,
                   "bestOf": "MD1",
-                  "a": "poli_plague_gold_2024",
-                  "b": "minerva_esports_misto_2024",
+                  "a": "poli_plague",
+                  "b": "ufrj_minerva",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "poli_plague_gold_2024"
+                  "winner": "poli_plague"
                 },
                 {
                   "code": "Partida 99",
                   "seriesCode": 99,
                   "bestOf": "MD1",
                   "a": "ufmt_turuna",
-                  "b": "minerva_esports_ufrj_inclusivo_2024",
+                  "b": "minerva_artemis",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "ufmt_turuna"
@@ -1431,7 +1431,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 101,
                   "bestOf": "MD1",
                   "a": "usp_cronos_2024",
-                  "b": "ibtec_2024",
+                  "b": "ibmec_sharks",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "usp_cronos_2024"
@@ -1451,17 +1451,17 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 103,
                   "bestOf": "MD1",
                   "a": "madness_ufop_2024",
-                  "b": "fei_esports_valorant_2024",
+                  "b": "fei_darkowls",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "fei_esports_valorant_2024"
+                  "winner": "fei_darkowls"
                 },
                 {
                   "code": "Partida 104",
                   "seriesCode": 104,
                   "bestOf": "MD1",
                   "a": "laurp_royal_ps_orange_2024",
-                  "b": "aufa_line_a_2024",
+                  "b": "aufa_faesa",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "laurp_royal_ps_orange_2024"
@@ -1486,10 +1486,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 106,
                   "bestOf": "MD1",
                   "a": "ufscar_fire",
-                  "b": "poli_plague_gold_2024",
+                  "b": "poli_plague",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "poli_plague_gold_2024"
+                  "winner": "poli_plague"
                 },
                 {
                   "code": "Partida 107",
@@ -1535,21 +1535,21 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 111",
                   "seriesCode": 111,
                   "bestOf": "MD1",
-                  "a": "ufg_eagles_black_2024",
-                  "b": "fei_esports_valorant_2024",
+                  "a": "ufg_eagles_blue",
+                  "b": "fei_darkowls",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "fei_esports_valorant_2024"
+                  "winner": "fei_darkowls"
                 },
                 {
                   "code": "Partida 112",
                   "seriesCode": 112,
                   "bestOf": "MD1",
-                  "a": "cyber_kongs_dourada_2024",
+                  "a": "cyberkongs",
                   "b": "laurp_royal_ps_orange_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "cyber_kongs_dourada_2024"
+                  "winner": "cyberkongs"
                 }
               ]
             },
@@ -1561,10 +1561,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 113,
                   "bestOf": "MD1",
                   "a": "ufu_saints",
-                  "b": "poli_plague_gold_2024",
+                  "b": "poli_plague",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "poli_plague_gold_2024"
+                  "winner": "poli_plague"
                 },
                 {
                   "code": "Partida 114",
@@ -1590,11 +1590,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 116",
                   "seriesCode": 116,
                   "bestOf": "MD1",
-                  "a": "fei_esports_valorant_2024",
-                  "b": "cyber_kongs_dourada_2024",
+                  "a": "fei_darkowls",
+                  "b": "cyberkongs",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "cyber_kongs_dourada_2024"
+                  "winner": "cyberkongs"
                 }
               ]
             },
@@ -1606,7 +1606,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 117,
                   "bestOf": "MD1",
                   "a": "unicamp_tritons_black",
-                  "b": "poli_plague_gold_2024",
+                  "b": "poli_plague",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "unicamp_tritons_black"
@@ -1625,7 +1625,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 119",
                   "seriesCode": 119,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "b": "usp_cronos_2024",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -1636,7 +1636,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 120,
                   "bestOf": "MD1",
                   "a": "ufg_eagles",
-                  "b": "cyber_kongs_dourada_2024",
+                  "b": "cyberkongs",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "ufg_eagles"
@@ -1746,89 +1746,89 @@ const TOURNAMENT_OVERRIDES = {
       "macklogic_red",
       "azure_bears_black",
       "azure_bears_white",
-      "inatel_white",
+      "inatel",
       "unirio_krakens",
       "unb_black",
       "uninassau_griffins",
       "ufu_saints",
       "oktoplus_gaming_cefet_mg_2024",
       "liga_atletica_unisinos_lau_2024",
-      "axis_anteaters_valorant_2024",
+      "axis_anteaters",
       "ufscar_fire",
       "raposa_e_sports",
       "fatec_ornyx_2024",
       "poli_plague_silver_echo_2024",
       "furia_utfpr",
-      "fei_esports_valorant_2024",
+      "fei_darkowls",
       "ufmg_fenix_b",
       "puc_priests",
       "puc_clerigos",
-      "poli_plague_gold_2024",
+      "poli_plague",
       "laurp_royal_ps_orange_2024",
       "atletica_unifei_2024",
       "ufpr_bbn",
       "ufmt_turuna",
-      "minerva_esports_ufrj_inclusivo_2024",
+      "minerva_artemis",
       "unifei_calango_2024",
       "atletica_unifei",
       "unifesp_knights_2024",
       "xarada_riddlers_ufla_2024",
-      "stings_ba_valorant_2024",
-      "ibtec_2024",
+      "stings_yellow",
+      "ibmec_sharks",
       "usf_sports_2024",
       "caap_hellhounds_black_2024",
       "fgv_alligators_valorant_2024",
       "atletica_unifei_6f52b4a1_2024",
       "maua_rubi_2024",
-      "cyber_kongs_dourada_2024",
+      "cyberkongs",
       "espm_overbite_misto",
       "facens_night_owls_2024",
       "aufa_line_b_2024",
-      "minerva_esports_misto_2024"
+      "ufrj_minerva"
     ],
     "teamNames": {
       "macklogic_red": "MackLogic",
       "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
       "azure_bears_white": "Azure Bears UTFPR - White [VAL]",
-      "inatel_white": "Inatel White",
+      "inatel": "Inatel White",
       "unirio_krakens": "Kraken - Unirio",
       "unb_black": "UNB Green Owls Black",
       "uninassau_griffins": "Uninassau Griffins",
       "ufu_saints": "UFU Saints",
       "oktoplus_gaming_cefet_mg_2024": "Oktoplus Gaming - CEFET-MG",
       "liga_atletica_unisinos_lau_2024": "Liga Atlética Unisinos - LAU",
-      "axis_anteaters_valorant_2024": "AXIS Anteaters - Valorant",
+      "axis_anteaters": "AXIS Anteaters - Valorant",
       "ufscar_fire": "UFSCar FIRE VALORANT",
       "raposa_e_sports": "Raposa eSports",
       "fatec_ornyx_2024": "FATEC Ornyx",
       "poli_plague_silver_echo_2024": "POLI Plague Silver Echo",
       "furia_utfpr": "FURIA VALORANT",
-      "fei_esports_valorant_2024": "FEI eSports Valorant",
+      "fei_darkowls": "FEI eSports Valorant",
       "ufmg_fenix_b": "UFMG Fênix Valorant",
       "puc_priests": "Puc Priests Valorant",
       "puc_clerigos": "Clérigos - PUC-Rio",
-      "poli_plague_gold_2024": "Poli Plague Gold",
+      "poli_plague": "Poli Plague Gold",
       "laurp_royal_ps_orange_2024": "LAURP Royal PS Orange",
       "atletica_unifei_2024": "Atlética UNIFEI",
       "ufpr_bbn": "Burning Bunnies UFPR",
       "ufmt_turuna": "UFMT Turuna",
-      "minerva_esports_ufrj_inclusivo_2024": "Minerva eSports UFRJ INCLUSIVO",
+      "minerva_artemis": "Minerva eSports UFRJ INCLUSIVO",
       "unifei_calango_2024": "UNIFEI Calango",
       "atletica_unifei": "Atlética UNIFEI",
       "unifesp_knights_2024": "Unifesp Knights",
       "xarada_riddlers_ufla_2024": "XARADA RIDDLERS - UFLA",
-      "stings_ba_valorant_2024": "Stings BA Valorant",
-      "ibtec_2024": "IBTEC",
+      "stings_yellow": "Stings BA Valorant",
+      "ibmec_sharks": "IBTEC",
       "usf_sports_2024": "USF Sports",
       "caap_hellhounds_black_2024": "CAAP Hellhounds Black",
       "fgv_alligators_valorant_2024": "FGV Alligators Valorant",
       "atletica_unifei_6f52b4a1_2024": "Atlética UNIFEI",
       "maua_rubi_2024": "Mauá Rubi",
-      "cyber_kongs_dourada_2024": "Cyber Kongs Dourada",
+      "cyberkongs": "Cyber Kongs Dourada",
       "espm_overbite_misto": "ESPM Overbite Valorant M.",
       "facens_night_owls_2024": "FACENS NIGHT OWLS",
       "aufa_line_b_2024": "AUFA LINE B",
-      "minerva_esports_misto_2024": "Minerva eSports MISTO"
+      "ufrj_minerva": "Minerva eSports MISTO"
     },
     "mapPool": [
       "Ascent",
@@ -1851,8 +1851,8 @@ const TOURNAMENT_OVERRIDES = {
       {"range": "Classificado", "id": "unb_black", "note": "Chave superior"},
       {"range": "Classificado", "id": "puc_clerigos", "note": "Chave superior"},
       {"range": "Classificado", "id": "macklogic_red", "note": "Chave superior"},
-      {"range": "Classificado", "id": "fei_esports_valorant_2024", "note": "Chave inferior"},
-      {"range": "Classificado", "id": "inatel_white", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "fei_darkowls", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "inatel", "note": "Chave inferior"},
       {"range": "Classificado", "id": "uninassau_griffins", "note": "Chave inferior"},
       {"range": "Classificado", "id": "azure_bears_black", "note": "Chave inferior"},
       {"range": "9-12", "id": "caap_hellhounds_black_2024"},
@@ -1861,19 +1861,19 @@ const TOURNAMENT_OVERRIDES = {
       {"range": "9-12", "id": "puc_priests"},
       {"range": "13-16", "id": "oktoplus_gaming_cefet_mg_2024"},
       {"range": "13-16", "id": "ufscar_fire"},
-      {"range": "13-16", "id": "poli_plague_gold_2024"},
+      {"range": "13-16", "id": "poli_plague"},
       {"range": "13-16", "id": "usf_sports_2024"},
       {"range": "17-24", "id": "xarada_riddlers_ufla_2024"},
       {"range": "17-24", "id": "fgv_alligators_valorant_2024"},
       {"range": "17-24", "id": "liga_atletica_unisinos_lau_2024"},
       {"range": "17-24", "id": "fatec_ornyx_2024"},
-      {"range": "17-24", "id": "minerva_esports_misto_2024"},
+      {"range": "17-24", "id": "ufrj_minerva"},
       {"range": "17-24", "id": "aufa_line_b_2024"},
-      {"range": "17-24", "id": "cyber_kongs_dourada_2024"},
+      {"range": "17-24", "id": "cyberkongs"},
       {"range": "17-24", "id": "raposa_e_sports"},
       {"range": "25-32", "id": "ufmg_fenix_b"},
-      {"range": "25-32", "id": "axis_anteaters_valorant_2024"},
-      {"range": "25-32", "id": "ibtec_2024"},
+      {"range": "25-32", "id": "axis_anteaters"},
+      {"range": "25-32", "id": "ibmec_sharks"},
       {"range": "25-32", "id": "espm_overbite_misto"},
       {"range": "25-32", "id": "ufmt_turuna"},
       {"range": "25-32", "id": "atletica_unifei"},
@@ -1881,13 +1881,13 @@ const TOURNAMENT_OVERRIDES = {
       {"range": "25-32", "id": "unirio_krakens"},
       {"range": "33-42", "id": "facens_night_owls_2024"},
       {"range": "33-42", "id": "unifei_calango_2024"},
-      {"range": "33-42", "id": "stings_ba_valorant_2024"},
+      {"range": "33-42", "id": "stings_yellow"},
       {"range": "33-42", "id": "atletica_unifei_2024"},
       {"range": "33-42", "id": "azure_bears_white"},
       {"range": "33-42", "id": "poli_plague_silver_echo_2024"},
       {"range": "33-42", "id": "atletica_unifei_6f52b4a1_2024"},
       {"range": "33-42", "id": "unifesp_knights_2024"},
-      {"range": "33-42", "id": "minerva_esports_ufrj_inclusivo_2024"},
+      {"range": "33-42", "id": "minerva_artemis"},
       {"range": "33-42", "id": "maua_rubi_2024"}
     ],
     "seriesResults": {},
@@ -1940,7 +1940,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 3,
                   "bestOf": "MD1",
                   "a": "raposa_e_sports",
-                  "b": "fei_esports_valorant_2024",
+                  "b": "fei_darkowls",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "raposa_e_sports"
@@ -1996,7 +1996,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 9,
                   "bestOf": "MD1",
                   "a": "laurp_royal_ps_orange_2024",
-                  "b": "axis_anteaters_valorant_2024",
+                  "b": "axis_anteaters",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "laurp_royal_ps_orange_2024"
@@ -2005,7 +2005,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 10",
                   "seriesCode": 10,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -2015,10 +2015,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 11,
                   "bestOf": "MD1",
                   "a": "atletica_unifei_2024",
-                  "b": "poli_plague_gold_2024",
+                  "b": "poli_plague",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "poli_plague_gold_2024"
+                  "winner": "poli_plague"
                 },
                 {
                   "code": "Partida 12",
@@ -2088,11 +2088,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 19",
                   "seriesCode": 19,
                   "bestOf": "MD1",
-                  "a": "minerva_esports_misto_2024",
+                  "a": "ufrj_minerva",
                   "b": "poli_plague_silver_echo_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "minerva_esports_misto_2024",
+                  "winner": "ufrj_minerva",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -2139,7 +2139,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 24",
                   "seriesCode": 24,
                   "bestOf": "MD1",
-                  "a": "ibtec_2024",
+                  "a": "ibmec_sharks",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -2158,7 +2158,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 26",
                   "seriesCode": 26,
                   "bestOf": "MD1",
-                  "a": "cyber_kongs_dourada_2024",
+                  "a": "cyberkongs",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -2167,11 +2167,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 27",
                   "seriesCode": 27,
                   "bestOf": "MD1",
-                  "a": "minerva_esports_ufrj_inclusivo_2024",
-                  "b": "stings_ba_valorant_2024",
+                  "a": "minerva_artemis",
+                  "b": "stings_yellow",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "stings_ba_valorant_2024"
+                  "winner": "stings_yellow"
                 },
                 {
                   "code": "Partida 28",
@@ -2279,11 +2279,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 38",
                   "seriesCode": 38,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
-                  "b": "poli_plague_gold_2024",
+                  "a": "inatel",
+                  "b": "poli_plague",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "inatel_white"
+                  "winner": "inatel"
                 },
                 {
                   "code": "Partida 39",
@@ -2320,10 +2320,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 42,
                   "bestOf": "MD1",
                   "a": "espm_overbite_misto",
-                  "b": "minerva_esports_misto_2024",
+                  "b": "ufrj_minerva",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "minerva_esports_misto_2024",
+                  "winner": "ufrj_minerva",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -2353,7 +2353,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 45",
                   "seriesCode": 45,
                   "bestOf": "MD1",
-                  "a": "ibtec_2024",
+                  "a": "ibmec_sharks",
                   "b": "ufpr_bbn",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -2363,11 +2363,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 46",
                   "seriesCode": 46,
                   "bestOf": "MD1",
-                  "a": "cyber_kongs_dourada_2024",
-                  "b": "stings_ba_valorant_2024",
+                  "a": "cyberkongs",
+                  "b": "stings_yellow",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "cyber_kongs_dourada_2024"
+                  "winner": "cyberkongs"
                 },
                 {
                   "code": "Partida 47",
@@ -2430,7 +2430,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 52",
                   "seriesCode": 52,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "b": "ufu_saints",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -2450,7 +2450,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 54",
                   "seriesCode": 54,
                   "bestOf": "MD1",
-                  "a": "minerva_esports_misto_2024",
+                  "a": "ufrj_minerva",
                   "b": "puc_clerigos",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -2470,7 +2470,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 56",
                   "seriesCode": 56,
                   "bestOf": "MD1",
-                  "a": "cyber_kongs_dourada_2024",
+                  "a": "cyberkongs",
                   "b": "macklogic_red",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -2587,7 +2587,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 65",
                   "seriesCode": 65,
                   "bestOf": "MD1",
-                  "b": "fei_esports_valorant_2024",
+                  "b": "fei_darkowls",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -2605,7 +2605,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 68",
                   "seriesCode": 68,
                   "bestOf": "MD1",
-                  "b": "axis_anteaters_valorant_2024",
+                  "b": "axis_anteaters",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -2659,7 +2659,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 77",
                   "seriesCode": 77,
                   "bestOf": "MD1",
-                  "b": "minerva_esports_ufrj_inclusivo_2024",
+                  "b": "minerva_artemis",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -2683,10 +2683,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 81,
                   "bestOf": "MD1",
                   "a": "facens_night_owls_2024",
-                  "b": "fei_esports_valorant_2024",
+                  "b": "fei_darkowls",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "fei_esports_valorant_2024"
+                  "winner": "fei_darkowls"
                 },
                 {
                   "code": "Partida 82",
@@ -2711,21 +2711,21 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 84",
                   "seriesCode": 84,
                   "bestOf": "MD1",
-                  "a": "stings_ba_valorant_2024",
-                  "b": "axis_anteaters_valorant_2024",
+                  "a": "stings_yellow",
+                  "b": "axis_anteaters",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "axis_anteaters_valorant_2024"
+                  "winner": "axis_anteaters"
                 },
                 {
                   "code": "Partida 85",
                   "seriesCode": 85,
                   "bestOf": "MD1",
-                  "a": "ibtec_2024",
+                  "a": "ibmec_sharks",
                   "b": "atletica_unifei_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "ibtec_2024"
+                  "winner": "ibmec_sharks"
                 },
                 {
                   "code": "Partida 86",
@@ -2790,18 +2790,18 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 92",
                   "seriesCode": 92,
                   "bestOf": "MD1",
-                  "a": "poli_plague_gold_2024",
+                  "a": "poli_plague",
                   "b": "unifesp_knights_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "poli_plague_gold_2024"
+                  "winner": "poli_plague"
                 },
                 {
                   "code": "Partida 93",
                   "seriesCode": 93,
                   "bestOf": "MD1",
                   "a": "furia_utfpr",
-                  "b": "minerva_esports_ufrj_inclusivo_2024",
+                  "b": "minerva_artemis",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "furia_utfpr"
@@ -2845,18 +2845,18 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 97",
                   "seriesCode": 97,
                   "bestOf": "MD1",
-                  "a": "fei_esports_valorant_2024",
+                  "a": "fei_darkowls",
                   "b": "ufmg_fenix_b",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "fei_esports_valorant_2024"
+                  "winner": "fei_darkowls"
                 },
                 {
                   "code": "Partida 98",
                   "seriesCode": 98,
                   "bestOf": "MD1",
                   "a": "oktoplus_gaming_cefet_mg_2024",
-                  "b": "axis_anteaters_valorant_2024",
+                  "b": "axis_anteaters",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "oktoplus_gaming_cefet_mg_2024"
@@ -2865,7 +2865,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 99",
                   "seriesCode": 99,
                   "bestOf": "MD1",
-                  "a": "ibtec_2024",
+                  "a": "ibmec_sharks",
                   "b": "liga_atletica_unisinos_lau_2024",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -2900,10 +2900,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 102,
                   "bestOf": "MD1",
                   "a": "atletica_unifei",
-                  "b": "poli_plague_gold_2024",
+                  "b": "poli_plague",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "poli_plague_gold_2024"
+                  "winner": "poli_plague"
                 },
                 {
                   "code": "Partida 103",
@@ -2935,10 +2935,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 105,
                   "bestOf": "MD1",
                   "a": "xarada_riddlers_ufla_2024",
-                  "b": "fei_esports_valorant_2024",
+                  "b": "fei_darkowls",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "fei_esports_valorant_2024"
+                  "winner": "fei_darkowls"
                 },
                 {
                   "code": "Partida 106",
@@ -2954,11 +2954,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 107",
                   "seriesCode": 107,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "b": "liga_atletica_unisinos_lau_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "inatel_white",
+                  "winner": "inatel",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -2976,7 +2976,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 109",
                   "seriesCode": 109,
                   "bestOf": "MD1",
-                  "a": "minerva_esports_misto_2024",
+                  "a": "ufrj_minerva",
                   "b": "uninassau_griffins",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -2987,16 +2987,16 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 110,
                   "bestOf": "MD1",
                   "a": "aufa_line_b_2024",
-                  "b": "poli_plague_gold_2024",
+                  "b": "poli_plague",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "poli_plague_gold_2024"
+                  "winner": "poli_plague"
                 },
                 {
                   "code": "Partida 111",
                   "seriesCode": 111,
                   "bestOf": "MD1",
-                  "a": "cyber_kongs_dourada_2024",
+                  "a": "cyberkongs",
                   "b": "azure_bears_black",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -3023,28 +3023,28 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 113",
                   "seriesCode": 113,
                   "bestOf": "MD1",
-                  "a": "fei_esports_valorant_2024",
+                  "a": "fei_darkowls",
                   "b": "oktoplus_gaming_cefet_mg_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "fei_esports_valorant_2024"
+                  "winner": "fei_darkowls"
                 },
                 {
                   "code": "Partida 114",
                   "seriesCode": 114,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "b": "ufscar_fire",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "inatel_white"
+                  "winner": "inatel"
                 },
                 {
                   "code": "Partida 115",
                   "seriesCode": 115,
                   "bestOf": "MD1",
                   "a": "uninassau_griffins",
-                  "b": "poli_plague_gold_2024",
+                  "b": "poli_plague",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "uninassau_griffins"
@@ -3069,20 +3069,20 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 117,
                   "bestOf": "MD1",
                   "a": "caap_hellhounds_black_2024",
-                  "b": "fei_esports_valorant_2024",
+                  "b": "fei_darkowls",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "fei_esports_valorant_2024"
+                  "winner": "fei_darkowls"
                 },
                 {
                   "code": "Partida 118",
                   "seriesCode": 118,
                   "bestOf": "MD1",
                   "a": "ufpr_bbn",
-                  "b": "inatel_white",
+                  "b": "inatel",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "inatel_white"
+                  "winner": "inatel"
                 },
                 {
                   "code": "Partida 119",
@@ -3113,11 +3113,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 121",
                   "seriesCode": 121,
                   "bestOf": "MD1",
-                  "a": "fei_esports_valorant_2024",
-                  "b": "inatel_white",
+                  "a": "fei_darkowls",
+                  "b": "inatel",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "inatel_white"
+                  "winner": "inatel"
                 },
                 {
                   "code": "Partida 122",
@@ -3141,10 +3141,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 123,
                   "bestOf": "MD1",
                   "a": "laurp_royal_ps_orange_2024",
-                  "b": "inatel_white",
+                  "b": "inatel",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "inatel_white"
+                  "winner": "inatel"
                 },
                 {
                   "code": "Partida 124",
@@ -3165,11 +3165,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 125",
                   "seriesCode": 125,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "b": "azure_bears_black",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "inatel_white"
+                  "winner": "inatel"
                 }
               ]
             },
@@ -3181,7 +3181,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 126,
                   "bestOf": "MD1",
                   "a": "unb_black",
-                  "b": "inatel_white",
+                  "b": "inatel",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "unb_black",
@@ -3211,11 +3211,11 @@ const TOURNAMENT_OVERRIDES = {
       "azure_bears_golden",
       "ufg_eagles",
       "maua_esports_black_2024",
-      "inatel_white",
+      "inatel",
       "azure_bears_black",
       "macklogic_red",
       "uninassau_griffins",
-      "fei_esports_valorant_2024",
+      "fei_darkowls",
       "usp_cronos_2024",
       "unb_green_olws_line_red_2024",
       "caaso_hogs_usp_2024",
@@ -3229,11 +3229,11 @@ const TOURNAMENT_OVERRIDES = {
       "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
       "ufg_eagles": "UFG Eagles",
       "maua_esports_black_2024": "Mauá Esports Black",
-      "inatel_white": "Inatel White",
+      "inatel": "Inatel White",
       "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
       "macklogic_red": "MackLogic",
       "uninassau_griffins": "Uninassau Griffins",
-      "fei_esports_valorant_2024": "FEI eSports Valorant",
+      "fei_darkowls": "FEI eSports Valorant",
       "usp_cronos_2024": "USP Cronos",
       "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
       "caaso_hogs_usp_2024": "Caaso Hogs - USP",
@@ -3321,7 +3321,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "1-3 na fase suíça"
       },
       {
-        "id": "inatel_white",
+        "id": "inatel",
         "range": "12-14",
         "note": "1-3 na fase suíça"
       },
@@ -3331,7 +3331,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "1-3 na fase suíça"
       },
       {
-        "id": "fei_esports_valorant_2024",
+        "id": "fei_darkowls",
         "range": "15-16",
         "note": "0-3 na fase suíça"
       },
@@ -3367,7 +3367,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 3,
               "bestOf": "MD1",
               "a": "caaso_hogs_usp_2024",
-              "b": "fei_esports_valorant_2024",
+              "b": "fei_darkowls",
               "scoreA": 1,
               "scoreB": 0,
               "winner": "caaso_hogs_usp_2024"
@@ -3407,7 +3407,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 11,
               "bestOf": "MD1",
               "a": "maua_esports_black_2024",
-              "b": "inatel_white",
+              "b": "inatel",
               "scoreA": 1,
               "scoreB": 0,
               "winner": "maua_esports_black_2024"
@@ -3495,7 +3495,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 21,
               "bestOf": "MD1",
               "a": "usp_cronos_2024",
-              "b": "fei_esports_valorant_2024",
+              "b": "fei_darkowls",
               "scoreA": 1,
               "scoreB": 0,
               "winner": "usp_cronos_2024"
@@ -3504,11 +3504,11 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 22",
               "seriesCode": 22,
               "bestOf": "MD1",
-              "a": "inatel_white",
+              "a": "inatel",
               "b": "puc_clerigos",
               "scoreA": 1,
               "scoreB": 0,
-              "winner": "inatel_white"
+              "winner": "inatel"
             },
             {
               "code": "Partida 23",
@@ -3561,7 +3561,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 27,
               "bestOf": "MD1",
               "a": "caap_hellhounds",
-              "b": "inatel_white",
+              "b": "inatel",
               "scoreA": 1,
               "scoreB": 0,
               "winner": "caap_hellhounds"
@@ -3603,7 +3603,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 31,
               "bestOf": "MD3",
               "a": "puc_clerigos",
-              "b": "fei_esports_valorant_2024",
+              "b": "fei_darkowls",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "puc_clerigos"
@@ -3669,7 +3669,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 37,
               "bestOf": "MD3",
               "a": "macklogic_red",
-              "b": "inatel_white",
+              "b": "inatel",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "macklogic_red"
@@ -3902,7 +3902,7 @@ const TOURNAMENT_OVERRIDES = {
           "status": "Eliminado"
         },
         {
-          "id": "inatel_white",
+          "id": "inatel",
           "wins": 1,
           "losses": 3,
           "points": 1,
@@ -3918,7 +3918,7 @@ const TOURNAMENT_OVERRIDES = {
           "status": "Eliminado"
         },
         {
-          "id": "fei_esports_valorant_2024",
+          "id": "fei_darkowls",
           "wins": 0,
           "losses": 3,
           "points": 0,
@@ -3950,12 +3950,12 @@ const TOURNAMENT_OVERRIDES = {
     "status": "Finalizado",
     "teamCount": 46,
     "teams": [
-      "inatel_white",
+      "inatel",
       "oktoplus_gaming_cefet_mg_2024",
       "ufg_eagles",
       "unb_green_olws_line_red_2024",
-      "maua_esports_imt_2024",
-      "maua_esports_imt_e15688a9_2024",
+      "maua_b",
+      "maua_blue",
       "ufmt_turuna",
       "azure_bears_black",
       "espm_overbite_misto",
@@ -3963,8 +3963,8 @@ const TOURNAMENT_OVERRIDES = {
       "pucc_cardinals",
       "usp_stars",
       "azure_bears_golden",
-      "fei_esports_valorant_2024",
-      "caap_void_2024",
+      "fei_darkowls",
+      "caap_hellhounds_black_2024",
       "caap_hellhounds",
       "unb_black",
       "macklogic_red",
@@ -3973,15 +3973,15 @@ const TOURNAMENT_OVERRIDES = {
       "puc_clerigos",
       "unicamp_tritons_black",
       "atletica_unifei",
-      "burning_bunnies_ufpr_white_2024",
+      "ufpr_bbn",
       "uninassau_griffins",
       "ufmg_fenix_b",
       "ufg_eagles_blue",
-      "axis_anteaters_black_valorant_2024",
+      "axis_anteaters",
       "unifei_calango_2024",
       "canis_valorant_inclusivo_2024",
-      "poli_plague_gold_2024",
-      "team_valorant_cybers_2024",
+      "poli_plague",
+      "unesa_cyborgs",
       "ibmec_sharks",
       "poli_plague_silver_echo_2024",
       "ufs_warriowls",
@@ -3995,15 +3995,15 @@ const TOURNAMENT_OVERRIDES = {
       "unirio_krakens",
       "wolf_gaming",
       "ufrj_canis_b",
-      "stings_belas_artes_2024"
+      "stings_yellow"
     ],
     "teamNames": {
-      "inatel_white": "Inatel White",
+      "inatel": "Inatel White",
       "oktoplus_gaming_cefet_mg_2024": "Oktoplus Gaming - CEFET-MG",
       "ufg_eagles": "UFG Eagles Black",
       "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
-      "maua_esports_imt_2024": "Mauá Esports - IMT",
-      "maua_esports_imt_e15688a9_2024": "Mauá Esports - IMT",
+      "maua_b": "Mauá Esports - IMT",
+      "maua_blue": "Mauá Esports - IMT",
       "ufmt_turuna": "UFMT Turuna",
       "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
       "espm_overbite_misto": "ESPM Overbite - Valorant Misto",
@@ -4011,8 +4011,8 @@ const TOURNAMENT_OVERRIDES = {
       "pucc_cardinals": "PUCC CARDNALS",
       "usp_stars": "USP Stars",
       "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
-      "fei_esports_valorant_2024": "FEI eSports Valorant",
-      "caap_void_2024": "CAAP Void",
+      "fei_darkowls": "FEI eSports Valorant",
+      "caap_hellhounds_black_2024": "CAAP Void",
       "caap_hellhounds": "CAAP Hellhounds",
       "unb_black": "UNB Green Owls Black",
       "macklogic_red": "MackLogic",
@@ -4021,15 +4021,15 @@ const TOURNAMENT_OVERRIDES = {
       "puc_clerigos": "Clérigos - PUC-Rio",
       "unicamp_tritons_black": "UNICAMP Tritons",
       "atletica_unifei": "Atlética UNIFEI",
-      "burning_bunnies_ufpr_white_2024": "Burning Bunnies UFPR - White",
+      "ufpr_bbn": "Burning Bunnies UFPR - White",
       "uninassau_griffins": "Uninassau Griffins",
       "ufmg_fenix_b": "UFMG Fênix Valorant",
       "ufg_eagles_blue": "UFG Eagles Blue",
-      "axis_anteaters_black_valorant_2024": "AXIS Anteaters Black - Valorant",
+      "axis_anteaters": "AXIS Anteaters Black - Valorant",
       "unifei_calango_2024": "UNIFEI Calango",
       "canis_valorant_inclusivo_2024": "Canis - Valorant Inclusivo",
-      "poli_plague_gold_2024": "Poli Plague Gold",
-      "team_valorant_cybers_2024": "Team Valorant Cybers",
+      "poli_plague": "Poli Plague Gold",
+      "unesa_cyborgs": "Team Valorant Cybers",
       "ibmec_sharks": "SharkS Ibmec",
       "poli_plague_silver_echo_2024": "POLI Plague Silver Echo",
       "ufs_warriowls": "UFS Warriowls - Valorant",
@@ -4043,7 +4043,7 @@ const TOURNAMENT_OVERRIDES = {
       "unirio_krakens": "UNIRIO Kraken",
       "wolf_gaming": "Wolf Gaming Valorant",
       "ufrj_canis_b": "CANIS Line B",
-      "stings_belas_artes_2024": "STINGS BELAS ARTES"
+      "stings_yellow": "STINGS BELAS ARTES"
     },
     "mapPool": [
       "Abyss",
@@ -4068,7 +4068,7 @@ const TOURNAMENT_OVERRIDES = {
       {"range": "Classificado", "id": "macklogic_red", "note": "Chave superior"},
       {"range": "Classificado", "id": "usp_stars", "note": "Chave superior"},
       {"range": "Classificado", "id": "ufg_eagles", "note": "Chave superior"},
-      {"range": "Classificado", "id": "poli_plague_gold_2024", "note": "Chave superior"},
+      {"range": "Classificado", "id": "poli_plague", "note": "Chave superior"},
       {"range": "Classificado", "id": "azure_bears_black", "note": "Chave superior"},
       {"range": "Classificado", "id": "caap_hellhounds", "note": "Chave superior"},
       {"range": "Classificado", "id": "unb_green_olws_line_red_2024", "note": "Chave superior"},
@@ -4076,28 +4076,28 @@ const TOURNAMENT_OVERRIDES = {
       {"range": "Classificado", "id": "atletica_unifei", "note": "Chave inferior"},
       {"range": "Classificado", "id": "ufmg_fenix_b", "note": "Chave inferior"},
       {"range": "Classificado", "id": "uninassau_griffins", "note": "Chave inferior"},
-      {"range": "Classificado", "id": "maua_esports_imt_e15688a9_2024", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "maua_blue", "note": "Chave inferior"},
       {"range": "Classificado", "id": "furia_utfpr", "note": "Chave inferior"},
       {"range": "Classificado", "id": "puc_clerigos", "note": "Chave inferior"},
       {"range": "Classificado", "id": "puc_priests", "note": "Chave inferior"},
       {"range": "17-24", "id": "ufmt_turuna"},
-      {"range": "17-24", "id": "stings_belas_artes_2024"},
+      {"range": "17-24", "id": "stings_yellow"},
       {"range": "17-24", "id": "unb_black"},
       {"range": "17-24", "id": "unicamp_tritons_black"},
-      {"range": "17-24", "id": "caap_void_2024"},
+      {"range": "17-24", "id": "caap_hellhounds_black_2024"},
       {"range": "17-24", "id": "hunter_esports"},
-      {"range": "17-24", "id": "maua_esports_imt_2024"},
-      {"range": "17-24", "id": "team_valorant_cybers_2024"},
+      {"range": "17-24", "id": "maua_b"},
+      {"range": "17-24", "id": "unesa_cyborgs"},
       {"range": "25-32", "id": "ibmec_sharks"},
       {"range": "25-32", "id": "pucc_cardinals"},
-      {"range": "25-32", "id": "inatel_white"},
+      {"range": "25-32", "id": "inatel"},
       {"range": "25-32", "id": "ufu_saints"},
-      {"range": "25-32", "id": "axis_anteaters_black_valorant_2024"},
+      {"range": "25-32", "id": "axis_anteaters"},
       {"range": "25-32", "id": "axis_anteaters_green_valorant_2024"},
       {"range": "25-32", "id": "wolf_gaming"},
       {"range": "25-32", "id": "espm_overbite_misto"},
-      {"range": "33-46", "id": "fei_esports_valorant_2024"},
-      {"range": "33-46", "id": "burning_bunnies_ufpr_white_2024"},
+      {"range": "33-46", "id": "fei_darkowls"},
+      {"range": "33-46", "id": "ufpr_bbn"},
       {"range": "33-46", "id": "canis_valorant_inclusivo_2024"},
       {"range": "33-46", "id": "each_griffins_valorant_2024"},
       {"range": "33-46", "id": "poli_plague_silver_delta_c6f948a0_2024"},
@@ -4113,7 +4113,7 @@ const TOURNAMENT_OVERRIDES = {
     ],
     "seriesResults": {
       "60": {
-        "a": "poli_plague_gold_2024",
+        "a": "poli_plague",
         "b": "azure_bears_black",
         "scoreA": 2,
         "scoreB": 0,
@@ -4147,11 +4147,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 3",
                   "seriesCode": 3,
                   "bestOf": "MD1",
-                  "a": "team_valorant_cybers_2024",
+                  "a": "unesa_cyborgs",
                   "b": "ibmec_sharks",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "team_valorant_cybers_2024"
+                  "winner": "unesa_cyborgs"
                 },
                 {
                   "code": "Partida 4",
@@ -4184,7 +4184,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 7",
                   "seriesCode": 7,
                   "bestOf": "MD1",
-                  "a": "burning_bunnies_ufpr_white_2024",
+                  "a": "ufpr_bbn",
                   "b": "wolf_gaming",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -4204,7 +4204,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 9,
                   "bestOf": "MD1",
                   "a": "atletica_unifei",
-                  "b": "stings_belas_artes_2024",
+                  "b": "stings_yellow",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "atletica_unifei"
@@ -4262,11 +4262,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 15",
                   "seriesCode": 15,
                   "bestOf": "MD1",
-                  "a": "axis_anteaters_black_valorant_2024",
+                  "a": "axis_anteaters",
                   "b": "pesadelo_renegadas_unb_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "axis_anteaters_black_valorant_2024"
+                  "winner": "axis_anteaters"
                 },
                 {
                   "code": "Partida 16",
@@ -4281,11 +4281,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 17",
                   "seriesCode": 17,
                   "bestOf": "MD1",
-                  "a": "caap_void_2024",
+                  "a": "caap_hellhounds_black_2024",
                   "b": "ufrj_canis_b",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "caap_void_2024"
+                  "winner": "caap_hellhounds_black_2024"
                 },
                 {
                   "code": "Partida 18",
@@ -4300,17 +4300,17 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 19",
                   "seriesCode": 19,
                   "bestOf": "MD1",
-                  "a": "poli_plague_gold_2024",
+                  "a": "poli_plague",
                   "b": "poli_plague_silver_echo_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "poli_plague_gold_2024"
+                  "winner": "poli_plague"
                 },
                 {
                   "code": "Partida 20",
                   "seriesCode": 20,
                   "bestOf": "MD1",
-                  "a": "maua_esports_imt_e15688a9_2024",
+                  "a": "maua_blue",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -4347,7 +4347,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 24",
                   "seriesCode": 24,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -4387,7 +4387,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 28",
                   "seriesCode": 28,
                   "bestOf": "MD1",
-                  "a": "maua_esports_imt_2024",
+                  "a": "maua_b",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -4427,7 +4427,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 32",
                   "seriesCode": 32,
                   "bestOf": "MD1",
-                  "a": "fei_esports_valorant_2024",
+                  "a": "fei_darkowls",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -4452,7 +4452,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 34,
                   "bestOf": "MD1",
                   "a": "azure_bears_golden",
-                  "b": "team_valorant_cybers_2024",
+                  "b": "unesa_cyborgs",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "azure_bears_golden"
@@ -4514,7 +4514,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 40,
                   "bestOf": "MD1",
                   "a": "ufg_eagles",
-                  "b": "axis_anteaters_black_valorant_2024",
+                  "b": "axis_anteaters",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "ufg_eagles"
@@ -4524,7 +4524,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 41,
                   "bestOf": "MD1",
                   "a": "uninassau_griffins",
-                  "b": "caap_void_2024",
+                  "b": "caap_hellhounds_black_2024",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "uninassau_griffins"
@@ -4534,20 +4534,20 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 42,
                   "bestOf": "MD1",
                   "a": "unicamp_tritons_black",
-                  "b": "poli_plague_gold_2024",
+                  "b": "poli_plague",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "poli_plague_gold_2024"
+                  "winner": "poli_plague"
                 },
                 {
                   "code": "Partida 43",
                   "seriesCode": 43,
                   "bestOf": "MD1",
-                  "a": "maua_esports_imt_e15688a9_2024",
+                  "a": "maua_blue",
                   "b": "ufu_saints",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "maua_esports_imt_e15688a9_2024"
+                  "winner": "maua_blue"
                 },
                 {
                   "code": "Partida 44",
@@ -4563,7 +4563,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 45",
                   "seriesCode": 45,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "b": "hunter_esports",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -4583,11 +4583,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 47",
                   "seriesCode": 47,
                   "bestOf": "MD1",
-                  "a": "maua_esports_imt_2024",
+                  "a": "maua_b",
                   "b": "pucc_cardinals",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "maua_esports_imt_2024"
+                  "winner": "maua_b"
                 },
                 {
                   "code": "Partida 48",
@@ -4603,7 +4603,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 49",
                   "seriesCode": 49,
                   "bestOf": "MD1",
-                  "a": "fei_esports_valorant_2024",
+                  "a": "fei_darkowls",
                   "b": "puc_priests",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -4658,11 +4658,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 54",
                   "seriesCode": 54,
                   "bestOf": "MD3",
-                  "a": "poli_plague_gold_2024",
-                  "b": "maua_esports_imt_e15688a9_2024",
+                  "a": "poli_plague",
+                  "b": "maua_blue",
                   "scoreA": 2,
                   "scoreB": 1,
-                  "winner": "poli_plague_gold_2024"
+                  "winner": "poli_plague"
                 },
                 {
                   "code": "Partida 55",
@@ -4679,7 +4679,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 56,
                   "bestOf": "MD3",
                   "a": "caap_hellhounds",
-                  "b": "maua_esports_imt_2024",
+                  "b": "maua_b",
                   "scoreA": 2,
                   "scoreB": 0,
                   "winner": "caap_hellhounds"
@@ -4725,11 +4725,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 60",
                   "seriesCode": 60,
                   "bestOf": "MD3",
-                  "a": "poli_plague_gold_2024",
+                  "a": "poli_plague",
                   "b": "azure_bears_black",
                   "scoreA": 2,
                   "scoreB": 0,
-                  "winner": "poli_plague_gold_2024",
+                  "winner": "poli_plague",
                   "status": "Estatísticas parciais",
                   "previewNote": "Estatísticas de 1 mapa"
                 },
@@ -4768,7 +4768,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 67",
                   "seriesCode": 67,
                   "bestOf": "MD1",
-                  "b": "burning_bunnies_ufpr_white_2024",
+                  "b": "ufpr_bbn",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -4777,7 +4777,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 68",
                   "seriesCode": 68,
                   "bestOf": "MD1",
-                  "b": "stings_belas_artes_2024",
+                  "b": "stings_yellow",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -4890,7 +4890,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 81",
                   "seriesCode": 81,
                   "bestOf": "MD1",
-                  "a": "fei_esports_valorant_2024",
+                  "a": "fei_darkowls",
                   "b": "ibmec_sharks",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -4910,7 +4910,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 83,
                   "bestOf": "MD1",
                   "a": "pucc_cardinals",
-                  "b": "burning_bunnies_ufpr_white_2024",
+                  "b": "ufpr_bbn",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "pucc_cardinals"
@@ -4920,20 +4920,20 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 84,
                   "bestOf": "MD1",
                   "a": "canis_valorant_inclusivo_2024",
-                  "b": "stings_belas_artes_2024",
+                  "b": "stings_yellow",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "stings_belas_artes_2024"
+                  "winner": "stings_yellow"
                 },
                 {
                   "code": "Partida 85",
                   "seriesCode": 85,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "b": "each_griffins_valorant_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "inatel_white"
+                  "winner": "inatel"
                 },
                 {
                   "code": "Partida 86",
@@ -4969,17 +4969,17 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 89",
                   "seriesCode": 89,
                   "bestOf": "MD1",
-                  "a": "caap_void_2024",
+                  "a": "caap_hellhounds_black_2024",
                   "b": "poli_plague_silver_echo_2024",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "caap_void_2024"
+                  "winner": "caap_hellhounds_black_2024"
                 },
                 {
                   "code": "Partida 90",
                   "seriesCode": 90,
                   "bestOf": "MD1",
-                  "a": "axis_anteaters_black_valorant_2024",
+                  "a": "axis_anteaters",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -5042,11 +5042,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 96",
                   "seriesCode": 96,
                   "bestOf": "MD1",
-                  "a": "team_valorant_cybers_2024",
+                  "a": "unesa_cyborgs",
                   "b": "brutal_esports",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "team_valorant_cybers_2024"
+                  "winner": "unesa_cyborgs"
                 }
               ]
             },
@@ -5068,16 +5068,16 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 98,
                   "bestOf": "MD1",
                   "a": "pucc_cardinals",
-                  "b": "stings_belas_artes_2024",
+                  "b": "stings_yellow",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "stings_belas_artes_2024"
+                  "winner": "stings_yellow"
                 },
                 {
                   "code": "Partida 99",
                   "seriesCode": 99,
                   "bestOf": "MD1",
-                  "a": "inatel_white",
+                  "a": "inatel",
                   "b": "ufmg_fenix_b",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -5097,11 +5097,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 101",
                   "seriesCode": 101,
                   "bestOf": "MD1",
-                  "a": "caap_void_2024",
-                  "b": "axis_anteaters_black_valorant_2024",
+                  "a": "caap_hellhounds_black_2024",
+                  "b": "axis_anteaters",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "caap_void_2024"
+                  "winner": "caap_hellhounds_black_2024"
                 },
                 {
                   "code": "Partida 102",
@@ -5128,10 +5128,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 104,
                   "bestOf": "MD1",
                   "a": "espm_overbite_misto",
-                  "b": "team_valorant_cybers_2024",
+                  "b": "unesa_cyborgs",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "team_valorant_cybers_2024"
+                  "winner": "unesa_cyborgs"
                 }
               ]
             },
@@ -5153,7 +5153,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 106,
                   "bestOf": "MD3",
                   "a": "atletica_unifei",
-                  "b": "stings_belas_artes_2024",
+                  "b": "stings_yellow",
                   "scoreA": 2,
                   "scoreB": 0,
                   "winner": "atletica_unifei"
@@ -5184,11 +5184,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 109",
                   "seriesCode": 109,
                   "bestOf": "MD3",
-                  "a": "maua_esports_imt_e15688a9_2024",
-                  "b": "caap_void_2024",
+                  "a": "maua_blue",
+                  "b": "caap_hellhounds_black_2024",
                   "scoreA": 2,
                   "scoreB": 1,
-                  "winner": "maua_esports_imt_e15688a9_2024"
+                  "winner": "maua_blue"
                 },
                 {
                   "code": "Partida 110",
@@ -5204,7 +5204,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 111",
                   "seriesCode": 111,
                   "bestOf": "MD3",
-                  "a": "maua_esports_imt_2024",
+                  "a": "maua_b",
                   "b": "puc_clerigos",
                   "scoreA": 0,
                   "scoreB": 2,
@@ -5215,7 +5215,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 112,
                   "bestOf": "MD3",
                   "a": "puc_priests",
-                  "b": "team_valorant_cybers_2024",
+                  "b": "unesa_cyborgs",
                   "scoreA": 2,
                   "scoreB": 0,
                   "winner": "puc_priests"
@@ -5251,11 +5251,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 115",
                   "seriesCode": 115,
                   "bestOf": "MD3",
-                  "a": "maua_esports_imt_e15688a9_2024",
+                  "a": "maua_blue",
                   "b": "furia_utfpr",
                   "scoreA": 2,
                   "scoreB": 1,
-                  "winner": "maua_esports_imt_e15688a9_2024"
+                  "winner": "maua_blue"
                 },
                 {
                   "code": "Partida 116",
@@ -5291,7 +5291,7 @@ const TOURNAMENT_OVERRIDES = {
       "ufg_eagles_blue",
       "azure_bears_golden",
       "ufg_eagles",
-      "maua_esports_imt_e15688a9_2024",
+      "maua_blue",
       "furia_utfpr",
       "macklogic_red",
       "usp_stars",
@@ -5300,7 +5300,7 @@ const TOURNAMENT_OVERRIDES = {
       "ufmg_fenix_b",
       "puc_priests",
       "caap_hellhounds",
-      "poli_plague_gold_2024",
+      "poli_plague",
       "puc_clerigos",
       "atletica_unifei"
     ],
@@ -5309,7 +5309,7 @@ const TOURNAMENT_OVERRIDES = {
       "ufg_eagles_blue": "UFG Eagles Blue",
       "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
       "ufg_eagles": "UFG Eagles Black",
-      "maua_esports_imt_e15688a9_2024": "Mauá Esports - IMT",
+      "maua_blue": "Mauá Esports - IMT",
       "furia_utfpr": "FURIA VALORANT",
       "macklogic_red": "MackLogic",
       "usp_stars": "USP Stars",
@@ -5318,7 +5318,7 @@ const TOURNAMENT_OVERRIDES = {
       "ufmg_fenix_b": "UFMG Fênix Valorant",
       "puc_priests": "Puc Priests Valorant",
       "caap_hellhounds": "CAAP Hellhounds",
-      "poli_plague_gold_2024": "Poli Plague Gold",
+      "poli_plague": "Poli Plague Gold",
       "puc_clerigos": "Clérigos - PUC-Rio",
       "atletica_unifei": "Atlética UNIFEI"
     },
@@ -5397,7 +5397,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "2-3 na fase suíça"
       },
       {
-        "id": "poli_plague_gold_2024",
+        "id": "poli_plague",
         "range": "12-14",
         "note": "1-3 na fase suíça"
       },
@@ -5407,7 +5407,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "1-3 na fase suíça"
       },
       {
-        "id": "maua_esports_imt_e15688a9_2024",
+        "id": "maua_blue",
         "range": "12-14",
         "note": "1-3 na fase suíça"
       },
@@ -5465,11 +5465,11 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 7",
               "seriesCode": 7,
               "bestOf": "MD1",
-              "a": "maua_esports_imt_e15688a9_2024",
+              "a": "maua_blue",
               "b": "macklogic_red",
               "scoreA": 1,
               "scoreB": 0,
-              "winner": "maua_esports_imt_e15688a9_2024"
+              "winner": "maua_blue"
             },
             {
               "code": "Partida 9",
@@ -5496,10 +5496,10 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 13,
               "bestOf": "MD1",
               "a": "atletica_unifei",
-              "b": "poli_plague_gold_2024",
+              "b": "poli_plague",
               "scoreA": 0,
               "scoreB": 1,
-              "winner": "poli_plague_gold_2024"
+              "winner": "poli_plague"
             },
             {
               "code": "Partida 15",
@@ -5522,7 +5522,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 17,
               "bestOf": "MD1",
               "a": "caap_hellhounds",
-              "b": "maua_esports_imt_e15688a9_2024",
+              "b": "maua_blue",
               "scoreA": 1,
               "scoreB": 0,
               "winner": "caap_hellhounds"
@@ -5531,7 +5531,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 19",
               "seriesCode": 19,
               "bestOf": "MD1",
-              "a": "poli_plague_gold_2024",
+              "a": "poli_plague",
               "b": "unb_green_olws_line_red_2024",
               "scoreA": 0,
               "scoreB": 1,
@@ -5627,7 +5627,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 33",
               "seriesCode": 33,
               "bestOf": "MD1",
-              "a": "poli_plague_gold_2024",
+              "a": "poli_plague",
               "b": "furia_utfpr",
               "scoreA": 0,
               "scoreB": 1,
@@ -5638,7 +5638,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 34,
               "bestOf": "MD1",
               "a": "azure_bears_black",
-              "b": "maua_esports_imt_e15688a9_2024",
+              "b": "maua_blue",
               "scoreA": 1,
               "scoreB": 0,
               "winner": "azure_bears_black"
@@ -5723,7 +5723,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 42",
               "seriesCode": 42,
               "bestOf": "MD3",
-              "a": "poli_plague_gold_2024",
+              "a": "poli_plague",
               "b": "ufmg_fenix_b",
               "scoreA": 1,
               "scoreB": 2,
@@ -5744,7 +5744,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 44,
               "bestOf": "MD3",
               "a": "ufg_eagles",
-              "b": "maua_esports_imt_e15688a9_2024",
+              "b": "maua_blue",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "ufg_eagles"
@@ -6083,7 +6083,7 @@ const TOURNAMENT_OVERRIDES = {
           "status": "Eliminado"
         },
         {
-          "id": "poli_plague_gold_2024",
+          "id": "poli_plague",
           "wins": 1,
           "losses": 3,
           "points": 1,
@@ -6099,7 +6099,7 @@ const TOURNAMENT_OVERRIDES = {
           "status": "Eliminado"
         },
         {
-          "id": "maua_esports_imt_e15688a9_2024",
+          "id": "maua_blue",
           "wins": 1,
           "losses": 3,
           "points": 1,
@@ -6149,8 +6149,8 @@ const TOURNAMENT_OVERRIDES = {
       "ufg_eagles",
       "ufs_warriowls",
       "uema_cyborgues_ma_2024",
-      "ufrn_rn_2024",
-      "ufpe_virtus",
+      "ufrn_tirana",
+      "incinera_esports",
       "unigran_sarristas_ms_2024",
       "univasf",
       "puc_clerigos",
@@ -6167,7 +6167,7 @@ const TOURNAMENT_OVERRIDES = {
       "ods_force_ufla_mg_2024",
       "senais_falcons_ba_2024",
       "inatel",
-      "caaso_hogs_usp_2024",
+      "usp_stars",
       "ufsc_titans_sc_2024",
       "xarada_riddlers_ufla_2024",
       "uesc_cacaueiros_ba_2024",
@@ -6177,8 +6177,8 @@ const TOURNAMENT_OVERRIDES = {
       "imperador_uvv_2024",
       "iesb_cesb_ieb_df_2024",
       "asces_unita_pe_2024",
-      "unirv_e_sports_go_2024",
-      "eng_ufes_es_2024",
+      "unirv_rushone",
+      "castor_vai",
       "bot_s_academy_pb_2024",
       "calango_team_fametro_am_2024"
     ],
@@ -6193,8 +6193,8 @@ const TOURNAMENT_OVERRIDES = {
       "ufg_eagles": "UFG Eagles - GO",
       "ufs_warriowls": "UFS Warriowls - SE",
       "uema_cyborgues_ma_2024": "UEMA Cyborgues - MA",
-      "ufrn_rn_2024": "UFRN - RN",
-      "ufpe_virtus": "UFPE VIRTUS - PE",
+      "ufrn_tirana": "UFRN - RN",
+      "incinera_esports": "UFPE VIRTUS - PE",
       "unigran_sarristas_ms_2024": "UNIGRAN Sarristas - MS",
       "univasf": "UNIVASF - PE",
       "puc_clerigos": "Clérigos PUC - RJ",
@@ -6211,7 +6211,7 @@ const TOURNAMENT_OVERRIDES = {
       "ods_force_ufla_mg_2024": "Ods Force - UFLA - MG",
       "senais_falcons_ba_2024": "SENAIS Falcons - BA",
       "inatel": "Inatel - MG",
-      "caaso_hogs_usp_2024": "USP CAASO Hogs - SP",
+      "usp_stars": "USP CAASO Hogs - SP",
       "ufsc_titans_sc_2024": "UFSC TItans - SC",
       "xarada_riddlers_ufla_2024": "UFLA Xarada Riddlers - MG",
       "uesc_cacaueiros_ba_2024": "UESC Cacaueiros - BA",
@@ -6221,8 +6221,8 @@ const TOURNAMENT_OVERRIDES = {
       "imperador_uvv_2024": "IMPERADOR - UVV",
       "iesb_cesb_ieb_df_2024": "IESB/CESB IEB - DF",
       "asces_unita_pe_2024": "Asces-unita - PE",
-      "unirv_e_sports_go_2024": "UNIRV E-SPORTS - GO",
-      "eng_ufes_es_2024": "Eng. UFES - ES",
+      "unirv_rushone": "UNIRV E-SPORTS - GO",
+      "castor_vai": "Eng. UFES - ES",
       "bot_s_academy_pb_2024": "Bot's academy - PB",
       "calango_team_fametro_am_2024": "Calango Team - FAMETRO -AM"
     },
@@ -6271,7 +6271,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "Vaga no playoff online"
       },
       {
-        "id": "caaso_hogs_usp_2024",
+        "id": "usp_stars",
         "range": "Classificado",
         "note": "Vaga no playoff online"
       },
@@ -6296,7 +6296,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "Resultado da chave oficial"
       },
       {
-        "id": "ufpe_virtus",
+        "id": "incinera_esports",
         "range": "9-16",
         "note": "Resultado da chave oficial"
       },
@@ -6316,12 +6316,12 @@ const TOURNAMENT_OVERRIDES = {
         "note": "Resultado da chave oficial"
       },
       {
-        "id": "unirv_e_sports_go_2024",
+        "id": "unirv_rushone",
         "range": "9-16",
         "note": "Resultado da chave oficial"
       },
       {
-        "id": "eng_ufes_es_2024",
+        "id": "castor_vai",
         "range": "9-16",
         "note": "Resultado da chave oficial"
       },
@@ -6431,7 +6431,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "Resultado da chave oficial"
       },
       {
-        "id": "ufrn_rn_2024",
+        "id": "ufrn_tirana",
         "range": "33-42",
         "note": "Resultado da chave oficial"
       },
@@ -6549,7 +6549,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 9",
                   "seriesCode": 9,
                   "bestOf": "MD3",
-                  "a": "ufpe_virtus",
+                  "a": "incinera_esports",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -6632,7 +6632,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 18",
                   "seriesCode": 18,
                   "bestOf": "MD3",
-                  "a": "ufrn_rn_2024",
+                  "a": "ufrn_tirana",
                   "b": "unesa_cyborgs",
                   "scoreA": 1,
                   "scoreB": 2,
@@ -6690,11 +6690,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 24",
                   "seriesCode": 24,
                   "bestOf": "MD3",
-                  "a": "caaso_hogs_usp_2024",
+                  "a": "usp_stars",
                   "b": "ufma_balsas_ma_2024",
                   "scoreA": 2,
                   "scoreB": 0,
-                  "winner": "caaso_hogs_usp_2024"
+                  "winner": "usp_stars"
                 },
                 {
                   "code": "Partida 25",
@@ -6719,7 +6719,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 27",
                   "seriesCode": 27,
                   "bestOf": "MD3",
-                  "a": "unirv_e_sports_go_2024",
+                  "a": "unirv_rushone",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -6746,11 +6746,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 30",
                   "seriesCode": 30,
                   "bestOf": "MD3",
-                  "a": "eng_ufes_es_2024",
+                  "a": "castor_vai",
                   "b": "ufsc_titans_sc_2024",
                   "scoreA": 2,
                   "scoreB": 0,
-                  "winner": "eng_ufes_es_2024"
+                  "winner": "castor_vai"
                 },
                 {
                   "code": "Partida 31",
@@ -6821,11 +6821,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 37",
                   "seriesCode": 37,
                   "bestOf": "MD3",
-                  "a": "ufpe_virtus",
+                  "a": "incinera_esports",
                   "b": "univasf",
                   "scoreA": 2,
                   "scoreB": 0,
-                  "winner": "ufpe_virtus"
+                  "winner": "incinera_esports"
                 },
                 {
                   "code": "Partida 38",
@@ -6894,10 +6894,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 44,
                   "bestOf": "MD3",
                   "a": "ufs_warriowls",
-                  "b": "caaso_hogs_usp_2024",
+                  "b": "usp_stars",
                   "scoreA": 0,
                   "scoreB": 2,
-                  "winner": "caaso_hogs_usp_2024"
+                  "winner": "usp_stars"
                 },
                 {
                   "code": "Partida 45",
@@ -6913,11 +6913,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 46",
                   "seriesCode": 46,
                   "bestOf": "MD3",
-                  "a": "unirv_e_sports_go_2024",
+                  "a": "unirv_rushone",
                   "b": "uesc_cacaueiros_ba_2024",
                   "scoreA": 2,
                   "scoreB": 0,
-                  "winner": "unirv_e_sports_go_2024",
+                  "winner": "unirv_rushone",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -6926,10 +6926,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 47,
                   "bestOf": "MD3",
                   "a": "calango_team_fametro_am_2024",
-                  "b": "eng_ufes_es_2024",
+                  "b": "castor_vai",
                   "scoreA": 0,
                   "scoreB": 2,
-                  "winner": "eng_ufes_es_2024",
+                  "winner": "castor_vai",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -6972,7 +6972,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 51",
                   "seriesCode": 51,
                   "bestOf": "MD3",
-                  "a": "ufpe_virtus",
+                  "a": "incinera_esports",
                   "b": "uninassau_griffins",
                   "scoreA": 0,
                   "scoreB": 2,
@@ -7003,17 +7003,17 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 54,
                   "bestOf": "MD3",
                   "a": "maua_esports_black_2024",
-                  "b": "caaso_hogs_usp_2024",
+                  "b": "usp_stars",
                   "scoreA": 0,
                   "scoreB": 2,
-                  "winner": "caaso_hogs_usp_2024"
+                  "winner": "usp_stars"
                 },
                 {
                   "code": "Partida 55",
                   "seriesCode": 55,
                   "bestOf": "MD3",
                   "a": "ufg_eagles",
-                  "b": "unirv_e_sports_go_2024",
+                  "b": "unirv_rushone",
                   "scoreA": 2,
                   "scoreB": 0,
                   "winner": "ufg_eagles"
@@ -7022,7 +7022,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 56",
                   "seriesCode": 56,
                   "bestOf": "MD3",
-                  "a": "eng_ufes_es_2024",
+                  "a": "castor_vai",
                   "b": "fametro_berserkers",
                   "scoreA": 0,
                   "scoreB": 2,
@@ -7052,8 +7052,8 @@ const TOURNAMENT_OVERRIDES = {
       "unioeste_rino_pr_2024",
       "ufs_warriowls",
       "uema_cyborgues_ma_2024",
-      "ufrn_rn_2024",
-      "ufpe_virtus",
+      "ufrn_tirana",
+      "incinera_esports",
       "unigran_sarristas_ms_2024",
       "univasf",
       "puc_clerigos",
@@ -7076,10 +7076,10 @@ const TOURNAMENT_OVERRIDES = {
       "imperador_uvv_2024",
       "iesb_cesb_ieb_df_2024",
       "asces_unita_pe_2024",
-      "unirv_e_sports_go_2024",
-      "eng_ufes_es_2024",
+      "unirv_rushone",
+      "castor_vai",
       "bot_s_academy_pb_2024",
-      "calango_team_fametro_am_668459eb_2024",
+      "calango_team_fametro_am_2024",
       "calango_team_manaus_am_2024"
     ],
     "teamNames": {
@@ -7089,8 +7089,8 @@ const TOURNAMENT_OVERRIDES = {
       "unioeste_rino_pr_2024": "UNIOESTE RINO - PR",
       "ufs_warriowls": "UFS Warriowls - SE",
       "uema_cyborgues_ma_2024": "UEMA Cyborgues - MA",
-      "ufrn_rn_2024": "UFRN - RN",
-      "ufpe_virtus": "UFPE VIRTUS - PE",
+      "ufrn_tirana": "UFRN - RN",
+      "incinera_esports": "UFPE VIRTUS - PE",
       "unigran_sarristas_ms_2024": "UNIGRAN Sarristas - MS",
       "univasf": "UNIVASF - PE",
       "puc_clerigos": "Clérigos PUC - RJ",
@@ -7113,10 +7113,10 @@ const TOURNAMENT_OVERRIDES = {
       "imperador_uvv_2024": "IMPERADOR - UVV",
       "iesb_cesb_ieb_df_2024": "IESB/CESB IEB - DF",
       "asces_unita_pe_2024": "Asces-unita - PE",
-      "unirv_e_sports_go_2024": "UNIRV E-SPORTS - GO",
-      "eng_ufes_es_2024": "Eng. UFES - ES",
+      "unirv_rushone": "UNIRV E-SPORTS - GO",
+      "castor_vai": "Eng. UFES - ES",
       "bot_s_academy_pb_2024": "Bot's academy - PB",
-      "calango_team_fametro_am_668459eb_2024": "Calango Team - FAMETRO -AM",
+      "calango_team_fametro_am_2024": "Calango Team - FAMETRO -AM",
       "calango_team_manaus_am_2024": "Calango Team - Manaus/AM"
     },
     "mapPool": [
@@ -7142,7 +7142,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "Vaga no playoff online"
       },
       {
-        "id": "ufpe_virtus",
+        "id": "incinera_esports",
         "range": "Classificado",
         "note": "Vaga no playoff online"
       },
@@ -7152,7 +7152,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "Vaga no playoff online"
       },
       {
-        "id": "ufrn_rn_2024",
+        "id": "ufrn_tirana",
         "range": "Classificado",
         "note": "Vaga no playoff online"
       },
@@ -7197,7 +7197,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "Resultado da chave oficial"
       },
       {
-        "id": "unirv_e_sports_go_2024",
+        "id": "unirv_rushone",
         "range": "9-16",
         "note": "Resultado da chave oficial"
       },
@@ -7277,7 +7277,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "Resultado da chave oficial"
       },
       {
-        "id": "eng_ufes_es_2024",
+        "id": "castor_vai",
         "range": "17-32",
         "note": "Resultado da chave oficial"
       },
@@ -7297,7 +7297,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "Resultado da chave oficial"
       },
       {
-        "id": "calango_team_fametro_am_668459eb_2024",
+        "id": "calango_team_fametro_am_2024",
         "range": "33-35",
         "note": "Resultado da chave oficial"
       },
@@ -7357,7 +7357,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 2,
                   "bestOf": "MD3",
                   "a": "fusve_barao_rj_2024",
-                  "b": "calango_team_fametro_am_668459eb_2024",
+                  "b": "calango_team_fametro_am_2024",
                   "scoreA": 2,
                   "scoreB": 0,
                   "winner": "fusve_barao_rj_2024",
@@ -7386,7 +7386,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 5",
                   "seriesCode": 5,
                   "bestOf": "MD3",
-                  "a": "ufpe_virtus",
+                  "a": "incinera_esports",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -7467,7 +7467,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 14",
                   "seriesCode": 14,
                   "bestOf": "MD3",
-                  "a": "ufrn_rn_2024",
+                  "a": "ufrn_tirana",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -7504,10 +7504,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 18,
                   "bestOf": "MD3",
                   "a": "unioeste_rino_pr_2024",
-                  "b": "unirv_e_sports_go_2024",
+                  "b": "unirv_rushone",
                   "scoreA": 0,
                   "scoreB": 2,
-                  "winner": "unirv_e_sports_go_2024",
+                  "winner": "unirv_rushone",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -7579,10 +7579,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 26,
                   "bestOf": "MD3",
                   "a": "calango_team_manaus_am_2024",
-                  "b": "eng_ufes_es_2024",
+                  "b": "castor_vai",
                   "scoreA": 0,
                   "scoreB": 2,
-                  "winner": "eng_ufes_es_2024",
+                  "winner": "castor_vai",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 },
@@ -7671,11 +7671,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 35",
                   "seriesCode": 35,
                   "bestOf": "MD3",
-                  "a": "ufpe_virtus",
+                  "a": "incinera_esports",
                   "b": "asces_unita_pe_2024",
                   "scoreA": 2,
                   "scoreB": 0,
-                  "winner": "ufpe_virtus"
+                  "winner": "incinera_esports"
                 },
                 {
                   "code": "Partida 36",
@@ -7714,10 +7714,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 39,
                   "bestOf": "MD3",
                   "a": "iesb_cesb_ieb_df_2024",
-                  "b": "ufrn_rn_2024",
+                  "b": "ufrn_tirana",
                   "scoreA": 1,
                   "scoreB": 2,
-                  "winner": "ufrn_rn_2024"
+                  "winner": "ufrn_tirana"
                 },
                 {
                   "code": "Partida 40",
@@ -7736,10 +7736,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 41,
                   "bestOf": "MD3",
                   "a": "furia_utfpr",
-                  "b": "unirv_e_sports_go_2024",
+                  "b": "unirv_rushone",
                   "scoreA": 1,
                   "scoreB": 2,
-                  "winner": "unirv_e_sports_go_2024"
+                  "winner": "unirv_rushone"
                 },
                 {
                   "code": "Partida 42",
@@ -7778,7 +7778,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 45,
                   "bestOf": "MD3",
                   "a": "maua_esports_black_2024",
-                  "b": "eng_ufes_es_2024",
+                  "b": "castor_vai",
                   "scoreA": 2,
                   "scoreB": 0,
                   "winner": "maua_esports_black_2024"
@@ -7838,11 +7838,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 50",
                   "seriesCode": 50,
                   "bestOf": "MD3",
-                  "a": "ufpe_virtus",
+                  "a": "incinera_esports",
                   "b": "ufac_esports_ac_2024",
                   "scoreA": 2,
                   "scoreB": 1,
-                  "winner": "ufpe_virtus"
+                  "winner": "incinera_esports"
                 },
                 {
                   "code": "Partida 51",
@@ -7858,17 +7858,17 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 52",
                   "seriesCode": 52,
                   "bestOf": "MD3",
-                  "a": "ufrn_rn_2024",
+                  "a": "ufrn_tirana",
                   "b": "rahnag",
                   "scoreA": 2,
                   "scoreB": 1,
-                  "winner": "ufrn_rn_2024"
+                  "winner": "ufrn_tirana"
                 },
                 {
                   "code": "Partida 53",
                   "seriesCode": 53,
                   "bestOf": "MD3",
-                  "a": "unirv_e_sports_go_2024",
+                  "a": "unirv_rushone",
                   "b": "ufs_warriowls",
                   "scoreA": 1,
                   "scoreB": 2,
@@ -7928,15 +7928,15 @@ const TOURNAMENT_OVERRIDES = {
       "uninassau_griffins",
       "ufg_eagles",
       "ufs_warriowls",
-      "ufrn_rn_2024",
-      "ufpe_virtus",
+      "ufrn_tirana",
+      "incinera_esports",
       "unigran_sarristas_ms_2024",
       "puc_clerigos",
       "azure_bears_golden",
       "caap_hellhounds",
       "ufu_saints",
       "inatel",
-      "caaso_hogs_usp_2024",
+      "usp_stars",
       "fametro_berserkers"
     ],
     "teamNames": {
@@ -7946,15 +7946,15 @@ const TOURNAMENT_OVERRIDES = {
       "uninassau_griffins": "Uninassau Griffins - PE",
       "ufg_eagles": "UFG Eagles - GO",
       "ufs_warriowls": "UFS Warriowls - SE",
-      "ufrn_rn_2024": "UFRN - RN",
-      "ufpe_virtus": "UFPE VIRTUS - PE",
+      "ufrn_tirana": "UFRN - RN",
+      "incinera_esports": "UFPE VIRTUS - PE",
       "unigran_sarristas_ms_2024": "UNIGRAN Sarristas - MS",
       "puc_clerigos": "Clérigos PUC - RJ",
       "azure_bears_golden": "UTFPR Azure Bears - PR",
       "caap_hellhounds": "UFABC CAAP Hellhounds - SP",
       "ufu_saints": "UFU Saints - MG",
       "inatel": "Inatel - MG",
-      "caaso_hogs_usp_2024": "USP CAASO Hogs - SP",
+      "usp_stars": "USP CAASO Hogs - SP",
       "fametro_berserkers": "FAMETRO Codify Team - AM"
     },
     "mapPool": [
@@ -7984,7 +7984,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "Vaga conquistada no playoff online"
       },
       {
-        "id": "caaso_hogs_usp_2024",
+        "id": "usp_stars",
         "range": "Classificado",
         "note": "Vaga conquistada no playoff online"
       },
@@ -8029,7 +8029,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "Resultado da chave oficial"
       },
       {
-        "id": "ufpe_virtus",
+        "id": "incinera_esports",
         "range": "9-16",
         "note": "Resultado da chave oficial"
       },
@@ -8049,7 +8049,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "Resultado da chave oficial"
       },
       {
-        "id": "ufrn_rn_2024",
+        "id": "ufrn_tirana",
         "range": "9-16",
         "note": "Resultado da chave oficial"
       },
@@ -8087,18 +8087,18 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 2",
                   "seriesCode": 2,
                   "bestOf": "MD3",
-                  "a": "caaso_hogs_usp_2024",
+                  "a": "usp_stars",
                   "b": "caap_hellhounds",
                   "scoreA": 2,
                   "scoreB": 1,
-                  "winner": "caaso_hogs_usp_2024"
+                  "winner": "usp_stars"
                 },
                 {
                   "code": "Partida 3",
                   "seriesCode": 3,
                   "bestOf": "MD3",
                   "a": "uninassau_griffins",
-                  "b": "ufpe_virtus",
+                  "b": "incinera_esports",
                   "scoreA": 2,
                   "scoreB": 0,
                   "winner": "uninassau_griffins"
@@ -8138,7 +8138,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 7,
                   "bestOf": "MD3",
                   "a": "azure_bears_golden",
-                  "b": "ufrn_rn_2024",
+                  "b": "ufrn_tirana",
                   "scoreA": 2,
                   "scoreB": 0,
                   "winner": "azure_bears_golden"
@@ -9190,7 +9190,7 @@ const TOURNAMENT_OVERRIDES = {
       "crotalus_ufersa",
       "nassau",
       "ggg_sports",
-      "ufrj_canis",
+      "minerva_thunders",
       "aufa_faesa",
       "wolf_gaming",
       "nexus",
@@ -9209,11 +9209,11 @@ const TOURNAMENT_OVERRIDES = {
       "ceuma",
       "notapixel",
       "undbala",
-      "ufrn_carcaras",
+      "ufrn_tirana",
       "ufg_eagles",
       "unirv_rushone",
       "ufs_warriowls",
-      "inatel_white",
+      "inatel",
       "undb_turing",
       "caap_hellhounds",
       "team_nyx_ufersa",
@@ -9294,7 +9294,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "14º na classificação on-line"
       },
       {
-        "id": "inatel_white",
+        "id": "inatel",
         "range": "9-16",
         "note": "15º na classificação on-line"
       },
@@ -9309,7 +9309,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "17º na classificação on-line"
       },
       {
-        "id": "ufrj_canis",
+        "id": "minerva_thunders",
         "range": "17-20",
         "note": "18º na classificação on-line"
       },
@@ -9334,7 +9334,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "22º na classificação on-line"
       },
       {
-        "id": "ufrn_carcaras",
+        "id": "ufrn_tirana",
         "range": "21-28",
         "note": "23º na classificação on-line"
       },
@@ -9564,19 +9564,19 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 11",
               "bestOf": "MD3",
               "a": "ggg_sports",
-              "b": "ufrj_canis",
+              "b": "minerva_thunders",
               "scoreA": 0,
               "scoreB": 2,
-              "winner": "ufrj_canis"
+              "winner": "minerva_thunders"
             },
             {
               "code": "Partida 12",
               "bestOf": "MD3",
-              "a": "inatel_white",
+              "a": "inatel",
               "b": "univasf",
               "scoreA": 2,
               "scoreB": 0,
-              "winner": "inatel_white",
+              "winner": "inatel",
               "status": "W.O.",
               "previewNote": "W.O. Sem estatísticas de partida."
             },
@@ -9594,7 +9594,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 14",
               "bestOf": "MD3",
-              "a": "ufrn_carcaras",
+              "a": "ufrn_tirana",
               "b": "castor_vai",
               "scoreA": 0,
               "scoreB": 2,
@@ -9786,7 +9786,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 33",
               "bestOf": "MD3",
-              "a": "inatel_white",
+              "a": "inatel",
               "b": "uninassau_griffins",
               "scoreA": 0,
               "scoreB": 2,
@@ -9795,11 +9795,11 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 34",
               "bestOf": "MD3",
-              "a": "ufrj_canis",
+              "a": "minerva_thunders",
               "b": "team_nyx_ufersa",
               "scoreA": 2,
               "scoreB": 0,
-              "winner": "ufrj_canis",
+              "winner": "minerva_thunders",
               "playedAt": "2025-07-12T17:10:52Z",
               "previewNote": "Placar oficial. Os 2 mapas tiveram menos de dez jogadores e ficam fora das estatísticas.",
               "status": "Sem estatísticas"
@@ -9874,10 +9874,10 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 42",
               "bestOf": "MD3",
               "a": "ggg_sports",
-              "b": "ufrn_carcaras",
+              "b": "ufrn_tirana",
               "scoreA": 0,
               "scoreB": 2,
-              "winner": "ufrn_carcaras"
+              "winner": "ufrn_tirana"
             },
             {
               "code": "Partida 43",
@@ -10038,10 +10038,10 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 58",
               "bestOf": "MD3",
               "a": "unit_troianos_trojan",
-              "b": "inatel_white",
+              "b": "inatel",
               "scoreA": 0,
               "scoreB": 2,
-              "winner": "inatel_white"
+              "winner": "inatel"
             },
             {
               "code": "Partida 59",
@@ -10056,7 +10056,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 60",
               "bestOf": "MD3",
               "a": "unifor",
-              "b": "ufrn_carcaras",
+              "b": "ufrn_tirana",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "unifor"
@@ -10065,7 +10065,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 61",
               "bestOf": "MD3",
               "a": "ufg_eagles",
-              "b": "ufrj_canis",
+              "b": "minerva_thunders",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "ufg_eagles"
@@ -10136,11 +10136,11 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 68",
               "bestOf": "MD3",
-              "a": "ufrn_carcaras",
+              "a": "ufrn_tirana",
               "bLabel": "Sem adversário",
               "scoreA": 2,
               "scoreB": 0,
-              "winner": "ufrn_carcaras",
+              "winner": "ufrn_tirana",
               "status": "Bye",
               "previewNote": "Avanço direto."
             },
@@ -10198,10 +10198,10 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 74",
               "bestOf": "MD3",
               "a": "ufs_warriowls",
-              "b": "inatel_white",
+              "b": "inatel",
               "scoreA": 1,
               "scoreB": 2,
-              "winner": "inatel_white"
+              "winner": "inatel"
             },
             {
               "code": "Partida 75",
@@ -10305,7 +10305,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 85",
               "bestOf": "MD3",
               "a": "wolf_gaming",
-              "b": "ufrj_canis",
+              "b": "minerva_thunders",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "wolf_gaming"
@@ -10415,10 +10415,10 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 96",
               "bestOf": "MD3",
               "a": "compressora_cangaceiros",
-              "b": "ufrj_canis",
+              "b": "minerva_thunders",
               "scoreA": 0,
               "scoreB": 2,
-              "winner": "ufrj_canis"
+              "winner": "minerva_thunders"
             },
             {
               "code": "Partida 97",
@@ -10442,7 +10442,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 99",
               "bestOf": "MD3",
               "a": "ufg_eagles",
-              "b": "inatel_white",
+              "b": "inatel",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "ufg_eagles"
@@ -10460,7 +10460,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 101",
               "bestOf": "MD3",
               "a": "unirv_rushone",
-              "b": "ufrn_carcaras",
+              "b": "ufrn_tirana",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "unirv_rushone",
@@ -10494,7 +10494,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 104",
               "bestOf": "MD3",
-              "a": "inatel_white",
+              "a": "inatel",
               "b": "unirv_rushone",
               "scoreA": 0,
               "scoreB": 2,
@@ -10531,10 +10531,10 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 108",
               "bestOf": "MD3",
               "a": "ufs_warriowls",
-              "b": "ufrj_canis",
+              "b": "minerva_thunders",
               "scoreA": 0,
               "scoreB": 2,
-              "winner": "ufrj_canis"
+              "winner": "minerva_thunders"
             },
             {
               "code": "Partida 109",
@@ -10601,7 +10601,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 115",
               "bestOf": "MD3",
               "a": "ufu_saints",
-              "b": "inatel_white",
+              "b": "inatel",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "ufu_saints"
@@ -10744,7 +10744,7 @@ const TOURNAMENT_OVERRIDES = {
           "status": "Classificatório"
         },
         {
-          "id": "ufrj_canis",
+          "id": "minerva_thunders",
           "wins": 4,
           "losses": 2,
           "points": 12,
@@ -10784,7 +10784,7 @@ const TOURNAMENT_OVERRIDES = {
           "status": "Classificatório"
         },
         {
-          "id": "inatel_white",
+          "id": "inatel",
           "wins": 3,
           "losses": 3,
           "points": 9,
@@ -10832,7 +10832,7 @@ const TOURNAMENT_OVERRIDES = {
           "status": "Eliminado"
         },
         {
-          "id": "ufrn_carcaras",
+          "id": "ufrn_tirana",
           "wins": 2,
           "losses": 3,
           "points": 6,
@@ -11033,7 +11033,7 @@ const TOURNAMENT_OVERRIDES = {
       "crotalus_ufersa": "Crotalus UFERSA",
       "nassau": "NASSAU UNIVERSITY E-SPORTS",
       "ggg_sports": "GGG Sports IFBA",
-      "ufrj_canis": "UFRJ Canis A",
+      "minerva_thunders": "UFRJ Canis A",
       "aufa_faesa": "AUFA FAESA",
       "wolf_gaming": "Wolf Gaming CEFET",
       "nexus": "Nexus UERR",
@@ -11052,11 +11052,11 @@ const TOURNAMENT_OVERRIDES = {
       "ceuma": "CEUMA E-sports",
       "notapixel": "NOTaPixel.py UFCG",
       "undbala": "UNDB Reapers",
-      "ufrn_carcaras": "UFRN Carcarás",
+      "ufrn_tirana": "UFRN Carcarás",
       "ufg_eagles": "UFG Eagles",
       "unirv_rushone": "UNIRV RUSH ONE",
       "ufs_warriowls": "UFS Warriowls",
-      "inatel_white": "Inatel",
+      "inatel": "Inatel",
       "undb_turing": "UNDB Turing",
       "caap_hellhounds": "UFABC CAAP Hellhounds",
       "team_nyx_ufersa": "Team Nyx UFERSA",
@@ -11126,7 +11126,7 @@ const TOURNAMENT_OVERRIDES = {
       },
       "101": {
         "a": "unirv_rushone",
-        "b": "ufrn_carcaras",
+        "b": "ufrn_tirana",
         "scoreA": 2,
         "scoreB": 0,
         "bestOf": "MD3",
@@ -11543,11 +11543,11 @@ const TOURNAMENT_OVERRIDES = {
       "ceuma": "CEUMA E-sports",
       "notapixel": "NOTaPixel.py UFCG",
       "undbala": "UNDB Reapers",
-      "ufrn_carcaras": "UFRN Carcarás",
+      "ufrn_tirana": "UFRN Carcarás",
       "ufg_eagles": "UFG Eagles",
       "unirv_rushone": "UNIRV RUSH ONE",
       "ufs_warriowls": "UFS Warriowls",
-      "inatel_white": "Inatel",
+      "inatel": "Inatel",
       "undb_turing": "UNDB Turing",
       "caap_hellhounds": "UFABC CAAP Hellhounds",
       "team_nyx_ufersa": "Team Nyx UFERSA",
@@ -11568,6 +11568,7 @@ const TOURNAMENT_OVERRIDES = {
     "endAt": "2025-10-10T22:33:23.713Z"
   },
   "lbeu-2025-1-split-fase-suica": {
+    "teamNames": { "minerva_thunders": "UFRJ Canis" },
     name: "LBEU 2025 - 1\u00ba Split - Fase Su\u00ed\u00e7a",
     organizer: "LigaGG",
     prizePool: "-",
@@ -11576,7 +11577,7 @@ const TOURNAMENT_OVERRIDES = {
     status: "Finalizado",
     teamCount: 28,
     teams: [
-      "axis_anteaters_shadow",
+      "axis_anteaters",
       "axis_blossom",
       "azure_bears_black",
       "azure_bears_golden",
@@ -11587,7 +11588,7 @@ const TOURNAMENT_OVERRIDES = {
       "furia_utfpr",
       "hunter_esports",
       "ifsp_midas",
-      "inatel_white",
+      "inatel",
       "macklogic_red",
       "macklogic_white",
       "pato",
@@ -11596,7 +11597,7 @@ const TOURNAMENT_OVERRIDES = {
       "stings_yellow",
       "totale_umc",
       "ufpr_bbn",
-      "ufrj_canis",
+      "minerva_thunders",
       "ufu_insane",
       "ufu_saints",
       "unb_black",
@@ -11617,10 +11618,10 @@ const TOURNAMENT_OVERRIDES = {
       standings: "Campanha e divis\u00e3o dos playoffs",
     },
     placements: [
-      { id: "axis_anteaters_shadow", range: "Classificado", note: "3-3" },
+      { id: "axis_anteaters", range: "Classificado", note: "3-3" },
       { id: "azure_bears_black", range: "Classificado", note: "6-2" },
       { id: "azure_bears_golden", range: "Classificado", note: "7-1" },
-      { id: "inatel_white", range: "Classificado", note: "5-4" },
+      { id: "inatel", range: "Classificado", note: "5-4" },
       { id: "macklogic_red", range: "Classificado", note: "8-2" },
       { id: "ufu_insane", range: "Classificado", note: "6-3" },
       { id: "ufu_saints", range: "Classificado", note: "8-1" },
@@ -11641,8 +11642,8 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 3", a: "hunter_esports", scoreA: 13, b: "fm_alligators", scoreB: 2, winner: "hunter_esports", bestOf: "MD1" },
             { code: "Partida 4", a: "unicamp_tritons_black", scoreA: 13, b: "ifsp_midas", scoreB: 4, winner: "unicamp_tritons_black", bestOf: "MD1" },
             { code: "Partida 5", a: "caap_hellhounds", scoreA: 14, b: "axis_blossom", scoreB: 12, winner: "caap_hellhounds", bestOf: "MD1" },
-            { code: "Partida 6", a: "ufrj_canis", scoreA: 16, b: "azure_bears_black", scoreB: 14, winner: "ufrj_canis", bestOf: "MD1" },
-            { code: "Partida 7", a: "inatel_white", scoreA: 13, b: "wolf_gaming", scoreB: 8, winner: "inatel_white", bestOf: "MD1" },
+            { code: "Partida 6", a: "minerva_thunders", scoreA: 16, b: "azure_bears_black", scoreB: 14, winner: "minerva_thunders", bestOf: "MD1" },
+            { code: "Partida 7", a: "inatel", scoreA: 13, b: "wolf_gaming", scoreB: 8, winner: "inatel", bestOf: "MD1" },
             { code: "Partida 8", a: "pato", scoreA: 13, b: "ufpr_bbn", scoreB: 11, winner: "pato", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Sem estatísticas." },
             { code: "Partida 9", a: "fei_darkowls", scoreA: 13, b: "white_cyber", scoreB: 4, winner: "fei_darkowls", bestOf: "MD1" },
             { code: "Partida 10", a: "ufu_insane", scoreA: 13, b: "furia_utfpr", scoreB: 4, winner: "ufu_insane", bestOf: "MD1" },
@@ -11661,10 +11662,10 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 16", scoreA: 13, b: "fm_alligators", scoreB: 9, bestOf: "MD1", status: "Sem estatísticas", previewNote: "13x9 para a FM Alligators contra adversário desconhecido, sem estatísticas.", aLabel: "Equipe desconhecida" },
             { code: "Partida 17", a: "ufu_saints", scoreA: 13, b: "axis_blossom", scoreB: 5, winner: "ufu_saints", bestOf: "MD1" },
             { code: "Partida 18", a: "unesa_cyborgs", scoreA: 13, b: "macklogic_white", scoreB: 6, winner: "unesa_cyborgs", bestOf: "MD1" },
-            { code: "Partida 19", a: "unicamp_tritons_black", scoreA: 13, b: "inatel_white", scoreB: 4, winner: "unicamp_tritons_black", bestOf: "MD1" },
+            { code: "Partida 19", a: "unicamp_tritons_black", scoreA: 13, b: "inatel", scoreB: 4, winner: "unicamp_tritons_black", bestOf: "MD1" },
             { code: "Partida 20", a: "unb_black", scoreA: 13, b: "azure_bears_black", scoreB: 4, winner: "unb_black", bestOf: "MD1" },
             { code: "Partida 21", a: "wolf_gaming", scoreA: 13, b: "ifsp_midas", scoreB: 5, winner: "wolf_gaming", bestOf: "MD1" },
-            { code: "Partida 22", a: "azure_bears_golden", scoreA: 13, b: "ufrj_canis", scoreB: 9, winner: "azure_bears_golden", bestOf: "MD1" },
+            { code: "Partida 22", a: "azure_bears_golden", scoreA: 13, b: "minerva_thunders", scoreB: 9, winner: "azure_bears_golden", bestOf: "MD1" },
             { code: "Partida 23", a: "ufu_insane", scoreA: 13, b: "puc_priests", scoreB: 9, winner: "ufu_insane", bestOf: "MD1" },
             { code: "Partida 24", a: "stings_yellow", scoreA: 13, b: "white_cyber", scoreB: 5, winner: "stings_yellow", bestOf: "MD1" },
             { code: "Partida 25", a: "furia_utfpr", scoreA: 13, b: "ufpr_bbn", scoreB: 5, winner: "furia_utfpr", bestOf: "MD1" },
@@ -11681,8 +11682,8 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 29", a: "unesa_cyborgs", scoreA: 13, b: "axis_blossom", scoreB: 6, winner: "unesa_cyborgs", bestOf: "MD1" },
             { code: "Partida 30", a: "macklogic_white", scoreA: 13, b: "fm_alligators", scoreB: 6, winner: "macklogic_white", bestOf: "MD1" },
             { code: "Partida 31", a: "ufu_saints", scoreA: 13, b: "unicamp_tritons_black", scoreB: 6, winner: "ufu_saints", bestOf: "MD1" },
-            { code: "Partida 32", a: "wolf_gaming", scoreA: 13, b: "axis_anteaters_shadow", scoreB: 10, winner: "wolf_gaming", bestOf: "MD1" },
-            { code: "Partida 33", a: "ufrj_canis", scoreA: 13, b: "inatel_white", scoreB: 5, winner: "ufrj_canis", bestOf: "MD1" },
+            { code: "Partida 32", a: "wolf_gaming", scoreA: 13, b: "axis_anteaters", scoreB: 10, winner: "wolf_gaming", bestOf: "MD1" },
+            { code: "Partida 33", a: "minerva_thunders", scoreA: 13, b: "inatel", scoreB: 5, winner: "minerva_thunders", bestOf: "MD1" },
             { code: "Partida 34", a: "azure_bears_black", scoreA: 13, b: "ifsp_midas", scoreB: 4, winner: "azure_bears_black", bestOf: "MD1" },
             { code: "Partida 35", a: "ufpr_bbn", scoreA: 13, b: "white_cyber", scoreB: 7, winner: "ufpr_bbn", bestOf: "MD1" },
             { code: "Partida 36", a: "fei_darkowls", scoreA: 13, b: "puc_priests", scoreB: 9, winner: "fei_darkowls", bestOf: "MD1" },
@@ -11698,12 +11699,12 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 39", a: "azure_bears_black", scoreA: 13, b: "pato", scoreB: 6, winner: "azure_bears_black", bestOf: "MD1" },
             { code: "Partida 40", a: "unb_black", scoreA: 13, b: "furia_utfpr", scoreB: 7, winner: "unb_black", bestOf: "MD1" },
             { code: "Partida 41", a: "puc_priests", scoreA: 13, b: "totale_umc", scoreB: 2, winner: "puc_priests", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Sem estatísticas." },
-            { code: "Partida 42", a: "macklogic_white", scoreA: 14, b: "axis_anteaters_shadow", scoreB: 12, winner: "macklogic_white", bestOf: "MD1" },
+            { code: "Partida 42", a: "macklogic_white", scoreA: 14, b: "axis_anteaters", scoreB: 12, winner: "macklogic_white", bestOf: "MD1" },
             { code: "Partida 43", a: "azure_bears_golden", scoreA: 13, b: "caap_hellhounds", scoreB: 8, winner: "azure_bears_golden", bestOf: "MD1" },
             { code: "Partida 44", a: "white_cyber", scoreA: 18, b: "fm_alligators", scoreB: 16, winner: "white_cyber", bestOf: "MD1" },
             { code: "Partida 45", a: "unicamp_tritons_black", scoreA: 13, b: "unesa_cyborgs", scoreB: 6, winner: "unicamp_tritons_black", bestOf: "MD1" },
-            { code: "Partida 46", a: "ufrj_canis", scoreA: 13, b: "wolf_gaming", scoreB: 10, winner: "ufrj_canis", bestOf: "MD1" },
-            { code: "Partida 47", a: "inatel_white", scoreA: 13, b: "axis_blossom", scoreB: 11, winner: "inatel_white", bestOf: "MD1" },
+            { code: "Partida 46", a: "minerva_thunders", scoreA: 13, b: "wolf_gaming", scoreB: 10, winner: "minerva_thunders", bestOf: "MD1" },
+            { code: "Partida 47", a: "inatel", scoreA: 13, b: "axis_blossom", scoreB: 11, winner: "inatel", bestOf: "MD1" },
             { code: "Partida 48", a: "ufu_insane", scoreA: 13, b: "fei_darkowls", scoreB: 10, winner: "ufu_insane", bestOf: "MD1" },
             { code: "Partida 49", a: "macklogic_red", scoreA: 13, b: "black_cyber", scoreB: 7, winner: "macklogic_red", bestOf: "MD1" },
             { code: "Partida 50", a: "ufpr_bbn", scoreA: 13, b: "stings_yellow", scoreB: 3, winner: "ufpr_bbn", bestOf: "MD1" },
@@ -11719,10 +11720,10 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 53", a: "unb_black", scoreA: 13, b: "caap_hellhounds", scoreB: 10, winner: "unb_black", bestOf: "MD1" },
             { code: "Partida 54", a: "unesa_cyborgs", scoreA: 13, b: "wolf_gaming", scoreB: 8, winner: "unesa_cyborgs", bestOf: "MD1" },
             { code: "Partida 55", a: "furia_utfpr", scoreA: 13, b: "pato", scoreB: 7, winner: "furia_utfpr", bestOf: "MD1" },
-            { code: "Partida 56", a: "axis_anteaters_shadow", scoreA: 13, b: "ifsp_midas", scoreB: 5, winner: "axis_anteaters_shadow", bestOf: "MD1" },
+            { code: "Partida 56", a: "axis_anteaters", scoreA: 13, b: "ifsp_midas", scoreB: 5, winner: "axis_anteaters", bestOf: "MD1" },
             { code: "Partida 57", a: "ufu_saints", scoreA: 13, b: "azure_bears_golden", scoreB: 11, winner: "ufu_saints", bestOf: "MD1" },
-            { code: "Partida 58", a: "unicamp_tritons_black", scoreA: 13, b: "ufrj_canis", scoreB: 11, winner: "unicamp_tritons_black", bestOf: "MD1" },
-            { code: "Partida 59", a: "inatel_white", scoreA: 13, b: "macklogic_white", scoreB: 10, winner: "inatel_white", bestOf: "MD1" },
+            { code: "Partida 58", a: "unicamp_tritons_black", scoreA: 13, b: "minerva_thunders", scoreB: 11, winner: "unicamp_tritons_black", bestOf: "MD1" },
+            { code: "Partida 59", a: "inatel", scoreA: 13, b: "macklogic_white", scoreB: 10, winner: "inatel", bestOf: "MD1" },
             { code: "Partida 60", a: "azure_bears_black", scoreA: 13, b: "puc_priests", scoreB: 8, winner: "azure_bears_black", bestOf: "MD1" },
             { code: "Partida 61", a: "macklogic_red", scoreA: 13, b: "fm_alligators", scoreB: 1, winner: "macklogic_red", bestOf: "MD1" },
             { code: "Partida 62", a: "fei_darkowls", scoreA: 13, b: "ufpr_bbn", scoreB: 3, winner: "fei_darkowls", bestOf: "MD1" },
@@ -11738,13 +11739,13 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 65", a: "caap_hellhounds", scoreA: 13, b: "furia_utfpr", scoreB: 10, winner: "caap_hellhounds", bestOf: "MD1" },
             { code: "Partida 66", a: "axis_blossom", scoreA: 13, b: "stings_yellow", scoreB: 10, winner: "axis_blossom", bestOf: "MD1" },
             { code: "Partida 68", a: "ifsp_midas", scoreA: 13, b: "fm_alligators", scoreB: 2, winner: "ifsp_midas", bestOf: "MD1" },
-            { code: "Partida 69", a: "inatel_white", scoreA: 13, b: "unb_black", scoreB: 9, winner: "inatel_white", bestOf: "MD1" },
+            { code: "Partida 69", a: "inatel", scoreA: 13, b: "unb_black", scoreB: 9, winner: "inatel", bestOf: "MD1" },
             { code: "Partida 70", a: "macklogic_red", scoreA: 13, b: "ufu_saints", scoreB: 9, winner: "macklogic_red", bestOf: "MD1" },
             { code: "Partida 71", a: "azure_bears_black", scoreA: 13, b: "unesa_cyborgs", scoreB: 7, winner: "azure_bears_black", bestOf: "MD1" },
-            { code: "Partida 72", a: "ufu_insane", scoreA: 13, b: "ufrj_canis", scoreB: 9, winner: "ufu_insane", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Sem estatísticas." },
+            { code: "Partida 72", a: "ufu_insane", scoreA: 13, b: "minerva_thunders", scoreB: 9, winner: "ufu_insane", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Sem estatísticas." },
             { code: "Partida 73", a: "black_cyber", scoreA: 13, b: "ufpr_bbn", scoreB: 4, winner: "black_cyber", bestOf: "MD1" },
             { code: "Partida 74", a: "unicamp_tritons_black", scoreA: 13, b: "fei_darkowls", scoreB: 10, winner: "unicamp_tritons_black", bestOf: "MD1" },
-            { code: "Partida 75", a: "axis_anteaters_shadow", scoreA: 13, b: "puc_priests", scoreB: 11, winner: "axis_anteaters_shadow", bestOf: "MD1" },
+            { code: "Partida 75", a: "axis_anteaters", scoreA: 13, b: "puc_priests", scoreB: 11, winner: "axis_anteaters", bestOf: "MD1" },
           ],
         },
         {
@@ -11755,11 +11756,11 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 76", a: "macklogic_white", scoreA: 13, b: "furia_utfpr", scoreB: 10, winner: "macklogic_white", bestOf: "MD1" },
             { code: "Partida 77", a: "totale_umc", scoreA: 13, b: "stings_yellow", scoreB: 11, winner: "totale_umc", bestOf: "MD1" },
             { code: "Partida 79", a: "unesa_cyborgs", scoreA: 13, b: "axis_blossom", scoreB: 10, winner: "unesa_cyborgs", bestOf: "MD1" },
-            { code: "Partida 80", a: "ufu_saints", scoreA: 13, b: "inatel_white", scoreB: 1, winner: "ufu_saints", bestOf: "MD1" },
+            { code: "Partida 80", a: "ufu_saints", scoreA: 13, b: "inatel", scoreB: 1, winner: "ufu_saints", bestOf: "MD1" },
             { code: "Partida 81", a: "caap_hellhounds", scoreA: 13, b: "ufu_insane", scoreB: 7, winner: "caap_hellhounds", bestOf: "MD1" },
             { code: "Partida 82", a: "azure_bears_golden", scoreA: 13, b: "macklogic_red", scoreB: 4, winner: "azure_bears_golden", bestOf: "MD1" },
             { code: "Partida 83", a: "ifsp_midas", scoreA: 13, b: "white_cyber", scoreB: 9, winner: "ifsp_midas", bestOf: "MD1" },
-            { code: "Partida 84", a: "axis_anteaters_shadow", scoreA: 13, b: "wolf_gaming", scoreB: 11, winner: "axis_anteaters_shadow", bestOf: "MD1" },
+            { code: "Partida 84", a: "axis_anteaters", scoreA: 13, b: "wolf_gaming", scoreB: 11, winner: "axis_anteaters", bestOf: "MD1" },
             { code: "Partida 85", a: "ufpr_bbn", scoreA: 13, b: "fm_alligators", scoreB: 1, winner: "ufpr_bbn", bestOf: "MD1" },
           ],
         },
@@ -11769,13 +11770,13 @@ const TOURNAMENT_OVERRIDES = {
           bestOf: "MD1",
           matches: [
             { code: "Partida 86", a: "ufpr_bbn", scoreA: 13, b: "totale_umc", scoreB: 10, winner: "ufpr_bbn", bestOf: "MD1" },
-            { code: "Partida 87", a: "ufrj_canis", scoreA: 13, b: "macklogic_white", scoreB: 5, winner: "ufrj_canis", bestOf: "MD1" },
+            { code: "Partida 87", a: "minerva_thunders", scoreA: 13, b: "macklogic_white", scoreB: 5, winner: "minerva_thunders", bestOf: "MD1" },
             { code: "Partida 88", a: "ufu_saints", scoreA: 13, b: "black_cyber", scoreB: 6, winner: "ufu_saints", bestOf: "MD1" },
             { code: "Partida 89", a: "azure_bears_golden", scoreA: 13, b: "unicamp_tritons_black", scoreB: 6, winner: "azure_bears_golden", bestOf: "MD1" },
             { code: "Partida 90", a: "azure_bears_black", scoreA: 20, b: "caap_hellhounds", scoreB: 18, winner: "azure_bears_black", bestOf: "MD1" },
             { code: "Partida 91", a: "axis_blossom", scoreA: 17, b: "ifsp_midas", scoreB: 15, winner: "axis_blossom", bestOf: "MD1" },
             { code: "Partida 92", a: "wolf_gaming", scoreA: 13, b: "stings_yellow", scoreB: 5, winner: "wolf_gaming", bestOf: "MD1" },
-            { code: "Partida 93", a: "ufu_insane", scoreA: 13, b: "axis_anteaters_shadow", scoreB: 5, winner: "ufu_insane", bestOf: "MD1" },
+            { code: "Partida 93", a: "ufu_insane", scoreA: 13, b: "axis_anteaters", scoreB: 5, winner: "ufu_insane", bestOf: "MD1" },
             { code: "Partida 94", a: "macklogic_red", scoreA: 13, b: "white_cyber", scoreB: 5, winner: "macklogic_red", bestOf: "MD1" },
             { code: "Partida 95", a: "unesa_cyborgs", scoreA: 13, b: "fm_alligators", scoreB: 2, winner: "unesa_cyborgs", bestOf: "MD1" },
           ],
@@ -11786,8 +11787,8 @@ const TOURNAMENT_OVERRIDES = {
           bestOf: "MD1",
           matches: [
             { code: "Partida 96", a: "azure_bears_black", scoreA: 13, b: "hunter_esports", scoreB: 6, winner: "azure_bears_black", bestOf: "MD1" },
-            { code: "Partida 97", a: "ufu_saints", scoreA: 13, b: "ufrj_canis", scoreB: 6, winner: "ufu_saints", bestOf: "MD1" },
-            { code: "Partida 98", a: "inatel_white", scoreA: 13, b: "unesa_cyborgs", scoreB: 8, winner: "inatel_white", bestOf: "MD1" },
+            { code: "Partida 97", a: "ufu_saints", scoreA: 13, b: "minerva_thunders", scoreB: 6, winner: "ufu_saints", bestOf: "MD1" },
+            { code: "Partida 98", a: "inatel", scoreA: 13, b: "unesa_cyborgs", scoreB: 8, winner: "inatel", bestOf: "MD1" },
             { code: "Partida 99", a: "caap_hellhounds", scoreA: 13, b: "fei_darkowls", scoreB: 10, winner: "caap_hellhounds", bestOf: "MD1" },
             { code: "Partida 100", a: "axis_blossom", scoreA: 13, b: "ufpr_bbn", scoreB: 7, winner: "axis_blossom", bestOf: "MD1" },
             { code: "Partida 101", a: "macklogic_white", scoreA: 13, b: "ifsp_midas", scoreB: 3, winner: "macklogic_white", bestOf: "MD1" },
@@ -11804,7 +11805,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 105", a: "unicamp_tritons_black", scoreA: 16, b: "hunter_esports", scoreB: 14, winner: "unicamp_tritons_black", bestOf: "MD1" },
             { code: "Partida 106", a: "axis_blossom", scoreA: 14, b: "black_cyber", scoreB: 12, winner: "axis_blossom", bestOf: "MD1" },
             { code: "Partida 107", a: "ufu_saints", scoreA: 13, b: "caap_hellhounds", scoreB: 4, winner: "ufu_saints", bestOf: "MD1" },
-            { code: "Partida 108", a: "ufu_insane", scoreA: 13, b: "inatel_white", scoreB: 4, winner: "ufu_insane", bestOf: "MD1" },
+            { code: "Partida 108", a: "ufu_insane", scoreA: 13, b: "inatel", scoreB: 4, winner: "ufu_insane", bestOf: "MD1" },
             { code: "Partida 109", a: "wolf_gaming", scoreA: 13, b: "macklogic_white", scoreB: 9, winner: "wolf_gaming", bestOf: "MD1" },
             { code: "Partida 111", a: "macklogic_red", scoreA: 13, b: "ufpr_bbn", scoreB: 7, winner: "macklogic_red", bestOf: "MD1" },
             { code: "Partida 112", a: "azure_bears_golden", scoreA: 13, b: "fm_alligators", scoreB: 4, winner: "azure_bears_golden", bestOf: "MD1" },
@@ -11815,12 +11816,12 @@ const TOURNAMENT_OVERRIDES = {
           status: "Conclu\u00edda",
           bestOf: "MD3",
           matches: [
-            { code: "Partida 113", a: "axis_blossom", scoreA: 1, b: "inatel_white", scoreB: 2, winner: "inatel_white", bestOf: "MD3" },
+            { code: "Partida 113", a: "axis_blossom", scoreA: 1, b: "inatel", scoreB: 2, winner: "inatel", bestOf: "MD3" },
           ],
         },
       ],
       standings: [
-        { id: "axis_anteaters_shadow", wins: 3, losses: 3, range: "-", status: "Championship" },
+        { id: "axis_anteaters", wins: 3, losses: 3, range: "-", status: "Championship" },
         { id: "axis_blossom", wins: 4, losses: 5, range: "-", status: "Off Season" },
         { id: "azure_bears_black", wins: 6, losses: 2, range: "-", status: "Championship" },
         { id: "azure_bears_golden", wins: 7, losses: 1, range: "-", status: "Championship" },
@@ -11831,7 +11832,7 @@ const TOURNAMENT_OVERRIDES = {
         { id: "furia_utfpr", wins: 2, losses: 4, range: "-", status: "Sem divis\u00e3o" },
         { id: "hunter_esports", wins: 3, losses: 2, range: "-", status: "Off Season" },
         { id: "ifsp_midas", wins: 3, losses: 6, range: "-", status: "Practice" },
-        { id: "inatel_white", wins: 5, losses: 4, range: "-", status: "Championship" },
+        { id: "inatel", wins: 5, losses: 4, range: "-", status: "Championship" },
         { id: "macklogic_red", wins: 8, losses: 2, range: "-", status: "Championship" },
         { id: "macklogic_white", wins: 4, losses: 5, range: "-", status: "Practice" },
         { id: "pato", wins: 1, losses: 3, range: "-", status: "Sem divis\u00e3o" },
@@ -11840,7 +11841,7 @@ const TOURNAMENT_OVERRIDES = {
         { id: "stings_yellow", wins: 2, losses: 6, range: "-", status: "Sem divis\u00e3o" },
         { id: "totale_umc", wins: 2, losses: 5, range: "-", status: "Practice" },
         { id: "ufpr_bbn", wins: 4, losses: 6, range: "-", status: "Practice" },
-        { id: "ufrj_canis", wins: 4, losses: 4, range: "-", status: "Sem divis\u00e3o" },
+        { id: "minerva_thunders", wins: 4, losses: 4, range: "-", status: "Sem divis\u00e3o" },
         { id: "ufu_insane", wins: 6, losses: 3, range: "-", status: "Championship" },
         { id: "ufu_saints", wins: 8, losses: 1, range: "-", status: "Championship" },
         { id: "unb_black", wins: 3, losses: 2, range: "-", status: "Sem divis\u00e3o" },
@@ -11860,10 +11861,10 @@ const TOURNAMENT_OVERRIDES = {
     status: "Finalizado",
     teamCount: 8,
     teams: [
-      "axis_anteaters_shadow",
+      "axis_anteaters",
       "azure_bears_black",
       "azure_bears_golden",
-      "inatel_white",
+      "inatel",
       "macklogic_red",
       "ufu_insane",
       "ufu_saints",
@@ -11884,8 +11885,8 @@ const TOURNAMENT_OVERRIDES = {
       { range: "4", id: "unicamp_tritons_black" },
       { range: "5-6", id: "azure_bears_black" },
       { range: "5-6", id: "ufu_insane" },
-      { range: "7-8", id: "inatel_white" },
-      { range: "7-8", id: "axis_anteaters_shadow" },
+      { range: "7-8", id: "inatel" },
+      { range: "7-8", id: "axis_anteaters" },
     ],
     bracket: {
       title: "Elimina\u00e7\u00e3o dupla",
@@ -11909,9 +11910,9 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Quartas de final superior",
               matches: [
-                { code: "Partida 115", a: "inatel_white", scoreA: 1, b: "ufu_saints", scoreB: 2, winner: "ufu_saints", bestOf: "MD3" },
+                { code: "Partida 115", a: "inatel", scoreA: 1, b: "ufu_saints", scoreB: 2, winner: "ufu_saints", bestOf: "MD3" },
                 { code: "Partida 116", a: "azure_bears_black", scoreA: 2, b: "ufu_insane", scoreB: 0, winner: "azure_bears_black", bestOf: "MD3" },
-                { code: "Partida 117", a: "azure_bears_golden", scoreA: 2, b: "axis_anteaters_shadow", scoreB: 0, winner: "azure_bears_golden", bestOf: "MD3" },
+                { code: "Partida 117", a: "azure_bears_golden", scoreA: 2, b: "axis_anteaters", scoreB: 0, winner: "azure_bears_golden", bestOf: "MD3" },
                 { code: "Partida 118", a: "unicamp_tritons_black", scoreA: 2, b: "macklogic_red", scoreB: 0, winner: "unicamp_tritons_black", bestOf: "MD3" },
               ],
             },
@@ -11937,8 +11938,8 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 4 inferior",
               matches: [
-                { code: "Partida 119", a: "ufu_insane", scoreA: 2, b: "inatel_white", scoreB: 0, winner: "ufu_insane", bestOf: "MD3" },
-                { code: "Partida 122", a: "macklogic_red", scoreA: 2, b: "axis_anteaters_shadow", scoreB: 0, winner: "macklogic_red", bestOf: "MD3" },
+                { code: "Partida 119", a: "ufu_insane", scoreA: 2, b: "inatel", scoreB: 0, winner: "ufu_insane", bestOf: "MD3" },
+                { code: "Partida 122", a: "macklogic_red", scoreA: 2, b: "axis_anteaters", scoreB: 0, winner: "macklogic_red", bestOf: "MD3" },
               ],
             },
             {
@@ -12188,6 +12189,7 @@ const TOURNAMENT_OVERRIDES = {
     },
   },
   aoc: {
+    teamNames: { minerva_thunders: "Dark UFRJ" },
     organizerLogo: "assets/organizers-logos/logo_aoc.png",
     prizePool: "5x Monitores AGON CS24A/P",
     tier: "A",
@@ -12195,7 +12197,7 @@ const TOURNAMENT_OVERRIDES = {
     teamCount: 10,
     mapPool: ["Haven", "Ascent", "Pearl", "Lotus", "Split", "Breeze", "Fracture"],
     teams: [
-      "dark_ufrj",
+      "minerva_thunders",
       "uninassau_griffins",
       "caap_hellhounds",
       "azure_bears_golden",
@@ -12211,7 +12213,7 @@ const TOURNAMENT_OVERRIDES = {
       { range: "2", id: "macklogic_red" },
       { range: "3", id: "azure_bears_golden" },
       { range: "4", id: "uninassau_griffins" },
-      { range: "5-8", id: "dark_ufrj" },
+      { range: "5-8", id: "minerva_thunders" },
       { range: "5-8", id: "caap_hellhounds" },
       { range: "5-8", id: "ufu_saints" },
       { range: "5-8", id: "azure_bears_black" },
@@ -12245,7 +12247,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Oitavas de final",
               matches: [
-                { code: "Partida 1", a: "dark_ufrj", scoreA: 1, bLabel: "Bye", scoreB: 0, winner: "dark_ufrj" },
+                { code: "Partida 1", a: "minerva_thunders", scoreA: 1, bLabel: "Bye", scoreB: 0, winner: "minerva_thunders" },
                 { code: "Partida 2", a: "uninassau_griffins", scoreA: 1, bLabel: "Bye", scoreB: 0, winner: "uninassau_griffins" },
                 { code: "Partida 3", a: "caap_hellhounds", scoreA: 1, bLabel: "Bye", scoreB: 0, winner: "caap_hellhounds" },
                 { code: "Partida 4", a: "azure_bears_golden", scoreA: 1, bLabel: "Bye", scoreB: 0, winner: "azure_bears_golden" },
@@ -12258,7 +12260,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Quartas de final",
               matches: [
-                { code: "Partida 9", bestOf: "MD3", a: "dark_ufrj", scoreA: 0, b: "uninassau_griffins", scoreB: 2, winner: "uninassau_griffins" },
+                { code: "Partida 9", bestOf: "MD3", a: "minerva_thunders", scoreA: 0, b: "uninassau_griffins", scoreB: 2, winner: "uninassau_griffins" },
                 { code: "Partida 10", bestOf: "MD3", a: "caap_hellhounds", scoreA: 0, b: "azure_bears_golden", scoreB: 2, winner: "azure_bears_golden" },
                 { code: "Partida 11", bestOf: "MD3", a: "ufu_saints", scoreA: 1, b: "macklogic_red", scoreB: 2, winner: "macklogic_red" },
                 { code: "Partida 12", bestOf: "MD3", a: "ceub_octopus", scoreA: 2, b: "azure_bears_black", scoreB: 0, winner: "ceub_octopus" },
@@ -12716,6 +12718,8 @@ const TOURNAMENT_OVERRIDES = {
     hidden: true,
   },
   "jubs-fase-inicial": {
+    "teamNames": { "ufrn_tirana": "UFRN Carcarás" },
+    "teamNames": { "incinera_esports": "UFPE Virtus" },
     "name": "JUBS Goiás 2026 - Fase inicial",
     "organizer": "CBDU",
     "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
@@ -12766,7 +12770,7 @@ const TOURNAMENT_OVERRIDES = {
       "furia_utfpr",
       "ufg_eagles",
       "ufpr_bbn",
-      "ufrn_carcaras",
+      "ufrn_tirana",
       "acucarados",
       "unit_troianos",
       "ufrj_minerva",
@@ -12774,7 +12778,7 @@ const TOURNAMENT_OVERRIDES = {
       "rahnag",
       "undbala",
       "uepa_imperadores",
-      "ufpe_virtus",
+      "incinera_esports",
       "milionaria_ufam",
       "unifor",
       "uema_turbulencia",
@@ -12860,7 +12864,7 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "9-16",
-        "id": "ufpe_virtus",
+        "id": "incinera_esports",
         "note": "3-4",
         "reason": "Perdeu a decisiva da Rodada 7"
       },
@@ -12927,7 +12931,7 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "21-28",
-        "id": "ufrn_carcaras",
+        "id": "ufrn_tirana",
         "note": "2-3"
       },
       {
@@ -13053,11 +13057,11 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 6",
-              "a": "ufrn_carcaras",
+              "a": "ufrn_tirana",
               "scoreA": 2,
               "b": "ufma_naotemclutch",
               "scoreB": 0,
-              "winner": "ufrn_carcaras"
+              "winner": "ufrn_tirana"
             },
             {
               "code": "Partida 7",
@@ -13079,7 +13083,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 9",
               "a": "pucc_cardinals",
               "scoreA": 2,
-              "b": "ufpe_virtus",
+              "b": "incinera_esports",
               "scoreB": 0,
               "winner": "pucc_cardinals"
             },
@@ -13249,7 +13253,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 29",
               "a": "green_owls_noctua",
               "scoreA": 2,
-              "b": "ufrn_carcaras",
+              "b": "ufrn_tirana",
               "scoreB": 0,
               "winner": "green_owls_noctua"
             },
@@ -13274,9 +13278,9 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 32",
               "a": "carrascos_fd8j",
               "scoreA": 0,
-              "b": "ufpe_virtus",
+              "b": "incinera_esports",
               "scoreB": 2,
-              "winner": "ufpe_virtus"
+              "winner": "incinera_esports"
             },
             {
               "code": "Partida 33",
@@ -13377,7 +13381,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 44",
               "a": "ufpr_bbn",
               "scoreA": 2,
-              "b": "ufpe_virtus",
+              "b": "incinera_esports",
               "scoreB": 0,
               "winner": "ufpr_bbn"
             },
@@ -13449,7 +13453,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 53",
               "a": "caap_hellhounds",
               "scoreA": 2,
-              "b": "ufrn_carcaras",
+              "b": "ufrn_tirana",
               "scoreB": 0,
               "winner": "caap_hellhounds"
             },
@@ -13518,11 +13522,11 @@ const TOURNAMENT_OVERRIDES = {
           "matches": [
             {
               "code": "Partida 61",
-              "a": "ufpe_virtus",
+              "a": "incinera_esports",
               "scoreA": 1,
               "bLabel": "BYE",
               "scoreB": 0,
-              "winner": "ufpe_virtus"
+              "winner": "incinera_esports"
             },
             {
               "code": "Partida 62",
@@ -13615,11 +13619,11 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 73",
-              "a": "ufrn_carcaras",
+              "a": "ufrn_tirana",
               "scoreA": 2,
               "b": "unirio_krakens",
               "scoreB": 1,
-              "winner": "ufrn_carcaras"
+              "winner": "ufrn_tirana"
             },
             {
               "code": "Partida 74",
@@ -13745,11 +13749,11 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 88",
-              "a": "ufrn_carcaras",
+              "a": "ufrn_tirana",
               "scoreA": 0,
-              "b": "ufpe_virtus",
+              "b": "incinera_esports",
               "scoreB": 2,
-              "winner": "ufpe_virtus"
+              "winner": "incinera_esports"
             },
             {
               "code": "Partida 89",
@@ -13808,7 +13812,7 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 95",
-              "a": "ufpe_virtus",
+              "a": "incinera_esports",
               "scoreA": 0,
               "b": "ufrj_minerva",
               "scoreB": 2,
@@ -13914,7 +13918,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 107",
               "a": "uninassau_griffins",
               "scoreA": 2,
-              "b": "ufpe_virtus",
+              "b": "incinera_esports",
               "scoreB": 0,
               "winner": "uninassau_griffins",
               "status": "W.O."
@@ -14047,7 +14051,7 @@ const TOURNAMENT_OVERRIDES = {
           "note": "Perdeu a decisiva da Rodada 7"
         },
         {
-          "id": "ufpe_virtus",
+          "id": "incinera_esports",
           "wins": 3,
           "losses": 4,
           "points": 9,
@@ -14138,7 +14142,7 @@ const TOURNAMENT_OVERRIDES = {
           "range": "21º - 28º lugar"
         },
         {
-          "id": "ufrn_carcaras",
+          "id": "ufrn_tirana",
           "wins": 2,
           "losses": 3,
           "points": 6,
@@ -14434,13 +14438,14 @@ const TOURNAMENT_OVERRIDES = {
     teamCount: 6,
     mapPool: ["Ascent", "Breeze", "Fracture", "Haven", "Lotus", "Pearl", "Split"],
     teamNames: {
+      "caap_momentum": "Axis Ego",
       unicamp_tritons_black: "Unicamp Tritons",
     },
-    teams: ["axis_ego", "poli_plague", "totale_umc", "unicamp_tritons_black", "caap_hellhounds", "pucc_cardinals"],
+    teams: ["caap_momentum", "poli_plague", "totale_umc", "unicamp_tritons_black", "caap_hellhounds", "pucc_cardinals"],
     placements: [
       { range: "1", id: "pucc_cardinals", note: "Campe\u00e3o" },
       { range: "2", id: "caap_hellhounds", note: "Vice" },
-      { range: "3", id: "axis_ego", note: "3\u00ba lugar" },
+      { range: "3", id: "caap_momentum", note: "3\u00ba lugar" },
       { range: "4", id: "unicamp_tritons_black", note: "4\u00ba lugar" },
       { range: "5-6", id: "totale_umc", note: "5-6" },
       { range: "5-6", id: "poli_plague", note: "5-6" },
@@ -14472,7 +14477,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Partidas UB 1-4",
               matches: [
-                { code: "Partida UB 1", a: "axis_ego", scoreA: 1, bLabel: "Bye", scoreB: 0, winner: "axis_ego" },
+                { code: "Partida UB 1", a: "caap_momentum", scoreA: 1, bLabel: "Bye", scoreB: 0, winner: "caap_momentum" },
                 { code: "Partida UB 2", bestOf: "MD3", a: "poli_plague", scoreA: 0, b: "totale_umc", scoreB: 2, winner: "totale_umc" },
                 { code: "Partida UB 3", a: "unicamp_tritons_black", scoreA: 1, bLabel: "Bye", scoreB: 0, winner: "unicamp_tritons_black" },
                 { code: "Partida UB 4", bestOf: "MD3", a: "caap_hellhounds", scoreA: 1, b: "pucc_cardinals", scoreB: 2, winner: "pucc_cardinals" },
@@ -14481,14 +14486,14 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Partidas UB 5-6",
               matches: [
-                { code: "Partida UB 5", bestOf: "MD3", a: "axis_ego", scoreA: 2, b: "totale_umc", scoreB: 0, winner: "axis_ego" },
+                { code: "Partida UB 5", bestOf: "MD3", a: "caap_momentum", scoreA: 2, b: "totale_umc", scoreB: 0, winner: "caap_momentum" },
                 { code: "Partida UB 6", bestOf: "MD3", a: "unicamp_tritons_black", scoreA: 0, b: "pucc_cardinals", scoreB: 2, winner: "pucc_cardinals" },
               ],
             },
             {
               title: "Final superior",
               matches: [
-                { code: "Partida UB 7", bestOf: "MD3", a: "axis_ego", scoreA: 1, b: "pucc_cardinals", scoreB: 2, winner: "pucc_cardinals" },
+                { code: "Partida UB 7", bestOf: "MD3", a: "caap_momentum", scoreA: 1, b: "pucc_cardinals", scoreB: 2, winner: "pucc_cardinals" },
               ],
             },
           ],
@@ -14520,7 +14525,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Jogo LB 6",
               matches: [
-                { code: "Jogo LB 6", bestOf: "MD3", a: "axis_ego", scoreA: 0, b: "caap_hellhounds", scoreB: 2, winner: "caap_hellhounds" },
+                { code: "Jogo LB 6", bestOf: "MD3", a: "caap_momentum", scoreA: 0, b: "caap_hellhounds", scoreB: 2, winner: "caap_hellhounds" },
               ],
             },
           ],
@@ -15603,6 +15608,7 @@ const TOURNAMENT_OVERRIDES = {
     },
   },
   "univava-classificatoria-4": {
+    "teamNames": { "ufu_saints_onyx": "UFU Saints Trigons" },
     "name": "UNIVAVÁ - Classificatória 4",
     "organizer": "AcadArena",
     "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
@@ -15644,7 +15650,7 @@ const TOURNAMENT_OVERRIDES = {
       "liga_vulkanica",
       "unifesp_erex",
       "macklogic_white",
-      "ufu_saints_trigons",
+      "ufu_saints_onyx",
       "fei_darkowls",
       "inatel_gray",
       "brutal_esports",
@@ -15757,7 +15763,7 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "17-24",
-        "id": "ufu_saints_trigons",
+        "id": "ufu_saints_onyx",
         "note": "Rodada de 16 inferior"
       },
       {
@@ -15978,7 +15984,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 42",
                   "a": "macklogic_white",
                   "scoreA": 13,
-                  "b": "ufu_saints_trigons",
+                  "b": "ufu_saints_onyx",
                   "scoreB": 5,
                   "winner": "macklogic_white"
                 },
@@ -16239,11 +16245,11 @@ const TOURNAMENT_OVERRIDES = {
                 },
                 {
                   "code": "Partida 99",
-                  "a": "ufu_saints_trigons",
+                  "a": "ufu_saints_onyx",
                   "scoreA": 13,
                   "b": "liga_vulkanica",
                   "scoreB": 10,
-                  "winner": "ufu_saints_trigons"
+                  "winner": "ufu_saints_onyx"
                 },
                 {
                   "code": "Partida 100",
@@ -16310,7 +16316,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 107",
                   "a": "a2e_uff",
                   "scoreA": 13,
-                  "b": "ufu_saints_trigons",
+                  "b": "ufu_saints_onyx",
                   "scoreB": 5,
                   "winner": "a2e_uff"
                 },
@@ -17141,7 +17147,7 @@ const TOURNAMENT_OVERRIDES = {
       "ifsp_midas",
       "maua_blue",
       "brutal_esports",
-      "inatel_white",
+      "inatel",
       "unicamp_tritons_black",
       "maua_b",
       "raposa_e_sports",
@@ -17160,7 +17166,7 @@ const TOURNAMENT_OVERRIDES = {
       { range: "7-8", id: "brutal_esports", note: "Rodada de 4 inferior" },
       { range: "9-12", id: "pucc_cardinals", note: "Rodada de 8 inferior" },
       { range: "9-12", id: "atletica_unifei", note: "Rodada de 8 inferior" },
-      { range: "9-12", id: "inatel_white", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "inatel", note: "Rodada de 8 inferior" },
       { range: "9-12", id: "unicamp_tritons_black", note: "Rodada de 8 inferior" },
       { range: "13-16", id: "unit_troianos", note: "Rodada de 8 inferior" },
       { range: "13-16", id: "ufg_eagles", note: "Rodada de 8 inferior" },
@@ -17224,7 +17230,7 @@ const TOURNAMENT_OVERRIDES = {
                 { code: "Partida 44", a: "ufrj_canis_b", scoreA: 9, b: "furia_utfpr", scoreB: 13, winner: "furia_utfpr" },
                 { code: "Partida 45", a: "usp_stars", scoreA: 13, b: "raposa_e_sports", scoreB: 2, winner: "usp_stars" },
                 { code: "Partida 46", a: "unirv_rushone", scoreA: 0, b: "ufpr_bbn", scoreB: 1, winner: "ufpr_bbn", status: "W.O." },
-                { code: "Partida 47", a: "azure_bears_black", scoreA: 13, b: "inatel_white", scoreB: 8, winner: "azure_bears_black" },
+                { code: "Partida 47", a: "azure_bears_black", scoreA: 13, b: "inatel", scoreB: 8, winner: "azure_bears_black" },
                 { code: "Partida 48", a: "pucc_cardinals", scoreA: 13, b: "univap_carrascos", scoreB: 10, winner: "pucc_cardinals" },
               ],
             },
@@ -17272,7 +17278,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 16 inferior",
               matches: [
-                { code: "Partida 95", a: "univap_carrascos", scoreA: 10, b: "inatel_white", scoreB: 13, winner: "inatel_white" },
+                { code: "Partida 95", a: "univap_carrascos", scoreA: 10, b: "inatel", scoreB: 13, winner: "inatel" },
                 { code: "Partida 96", a: "unirv_rushone", scoreA: 13, b: "raposa_e_sports", scoreB: 2, winner: "unirv_rushone" },
                 { code: "Partida 97", a: "ufrj_canis_b", scoreA: 13, b: "acca_e_sports", scoreB: 3, winner: "ufrj_canis_b" },
                 { code: "Partida 98", a: "ufgd_duendes", scoreA: 6, b: "espm_overbite_misto", scoreB: 13, winner: "espm_overbite_misto" },
@@ -17285,7 +17291,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 16 inferior",
               matches: [
-                { code: "Partida 103", a: "caap_hellhounds", scoreA: 11, b: "inatel_white", scoreB: 13, winner: "inatel_white" },
+                { code: "Partida 103", a: "caap_hellhounds", scoreA: 11, b: "inatel", scoreB: 13, winner: "inatel" },
                 { code: "Partida 104", a: "maua_blue", scoreA: 14, b: "unirv_rushone", scoreB: 12, winner: "maua_blue" },
                 { code: "Partida 105", a: "ufg_eagles", scoreA: 13, b: "ufrj_canis_b", scoreB: 4, winner: "ufg_eagles" },
                 { code: "Partida 106", a: "atletica_unifei", scoreA: 13, b: "espm_overbite_misto", scoreB: 6, winner: "atletica_unifei" },
@@ -17298,7 +17304,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 8 inferior",
               matches: [
-                { code: "Partida 111", a: "inatel_white", scoreA: 13, b: "maua_blue", scoreB: 9, winner: "inatel_white" },
+                { code: "Partida 111", a: "inatel", scoreA: 13, b: "maua_blue", scoreB: 9, winner: "inatel" },
                 { code: "Partida 112", a: "ufg_eagles", scoreA: 0, b: "atletica_unifei", scoreB: 1, winner: "atletica_unifei", status: "W.O." },
                 { code: "Partida 113", a: "macklogic_red", scoreA: 13, b: "maua_b", scoreB: 9, winner: "macklogic_red" },
                 { code: "Partida 114", a: "unit_troianos", scoreA: 9, b: "pucc_cardinals", scoreB: 13, winner: "pucc_cardinals" },
@@ -17307,7 +17313,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 8 inferior",
               matches: [
-                { code: "Partida 115", a: "azure_bears_black", scoreA: 13, b: "inatel_white", scoreB: 7, winner: "azure_bears_black" },
+                { code: "Partida 115", a: "azure_bears_black", scoreA: 13, b: "inatel", scoreB: 7, winner: "azure_bears_black" },
                 { code: "Partida 116", a: "brutal_esports", scoreA: 16, b: "atletica_unifei", scoreB: 14, winner: "brutal_esports" },
                 { code: "Partida 117", a: "unicamp_tritons_black", scoreA: 11, b: "macklogic_red", scoreB: 13, winner: "macklogic_red" },
                 { code: "Partida 118", a: "hunter_esports", scoreA: 13, b: "pucc_cardinals", scoreB: 5, winner: "hunter_esports" },
@@ -17333,6 +17339,7 @@ const TOURNAMENT_OVERRIDES = {
     },
   },
   "copa-alianca-2025-classificatoria-2": {
+    "teamNames": { "minerva_thunders": "UFRJ Canis" },
     name: "Copa Alian\u00e7a 2025 - Classificat\u00f3ria 2",
     organizer: "AcadArena",
     organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
@@ -17358,7 +17365,7 @@ const TOURNAMENT_OVERRIDES = {
       "ufu_insane",
       "unicamp_tritons_black",
       "ufpr_bbn",
-      "axis_anteaters_shadow",
+      "axis_anteaters",
       "unit_troianos",
       "axis_blossom",
       "maua_blue",
@@ -17368,7 +17375,7 @@ const TOURNAMENT_OVERRIDES = {
       "raposa_e_sports",
       "unit_troianos_trojan",
       "uninassau_griffins",
-      "ufrj_canis",
+      "minerva_thunders",
       "ufgd_duendes",
       "univap_carrascos_academy",
       "ufs_warriowls",
@@ -17402,10 +17409,10 @@ const TOURNAMENT_OVERRIDES = {
       { range: "17-24", id: "agronomia_ufg", note: "Rodada de 16 inferior" },
       { range: "17-24", id: "fei_darkowls", note: "Rodada de 16 inferior" },
       { range: "17-24", id: "unicamp_tritons_red", note: "Rodada de 16 inferior" },
-      { range: "17-24", id: "axis_anteaters_shadow", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "axis_anteaters", note: "Rodada de 16 inferior" },
       { range: "17-24", id: "axis_blossom", note: "Rodada de 16 inferior" },
       { range: "17-24", id: "unit_troianos_trojan", note: "Rodada de 16 inferior" },
-      { range: "17-24", id: "ufrj_canis", note: "Rodada de 16 inferior" },
+      { range: "17-24", id: "minerva_thunders", note: "Rodada de 16 inferior" },
       { range: "25-32", id: "ufpr_bbn_academy", note: "Rodada de 16 inferior" },
       { range: "25-32", id: "ufpr_bbn", note: "Rodada de 16 inferior" },
       { range: "25-32", id: "unit_troianos", note: "Rodada de 16 inferior" },
@@ -17451,7 +17458,7 @@ const TOURNAMENT_OVERRIDES = {
               title: "Rodada de 32 superior",
               matches: [
                 { code: "Partida 33", a: "ufg_eagles", scoreA: 5, b: "furia_utfpr", scoreB: 13, winner: "furia_utfpr" },
-                { code: "Partida 34", a: "axis_anteaters_shadow", scoreA: 13, b: "unit_troianos", scoreB: 2, winner: "axis_anteaters_shadow" },
+                { code: "Partida 34", a: "axis_anteaters", scoreA: 13, b: "unit_troianos", scoreB: 2, winner: "axis_anteaters" },
                 { code: "Partida 35", a: "ufpr_bbn_academy", scoreA: 0, b: "uninassau_griffins", scoreB: 13, winner: "uninassau_griffins" },
                 { code: "Partida 36", a: "fei_darkowls", scoreA: 12, b: "unit_troianos_trojan", scoreB: 14, winner: "unit_troianos_trojan" },
                 { code: "Partida 37", a: "brutal_esports", scoreA: 13, b: "caap_hellhounds", scoreB: 9, winner: "brutal_esports" },
@@ -17460,7 +17467,7 @@ const TOURNAMENT_OVERRIDES = {
                 { code: "Partida 40", a: "maua_b", scoreA: 13, b: "univap_carrascos", scoreB: 7, winner: "maua_b" },
                 { code: "Partida 41", a: "azure_bears_black", scoreA: 13, b: "puc_priests", scoreB: 11, winner: "azure_bears_black" },
                 { code: "Partida 42", a: "ufpr_bbn", scoreA: 9, b: "axis_blossom", scoreB: 13, winner: "axis_blossom" },
-                { code: "Partida 43", a: "macklogic_white", scoreA: 13, b: "ufrj_canis", scoreB: 9, winner: "macklogic_white" },
+                { code: "Partida 43", a: "macklogic_white", scoreA: 13, b: "minerva_thunders", scoreB: 9, winner: "macklogic_white" },
                 { code: "Partida 44", a: "unicamp_tritons_red", scoreA: 13, b: "raposa_e_sports", scoreB: 2, winner: "unicamp_tritons_red" },
                 { code: "Partida 45", a: "ufmt_turuna", scoreA: 13, b: "ufmg_fenix_b", scoreB: 4, winner: "ufmt_turuna" },
                 { code: "Partida 46", a: "unicamp_tritons_black", scoreA: 13, b: "maua_blue", scoreB: 7, winner: "unicamp_tritons_black" },
@@ -17471,7 +17478,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 16 superior",
               matches: [
-                { code: "Partida 49", a: "furia_utfpr", scoreA: 13, b: "axis_anteaters_shadow", scoreB: 10, winner: "furia_utfpr" },
+                { code: "Partida 49", a: "furia_utfpr", scoreA: 13, b: "axis_anteaters", scoreB: 10, winner: "furia_utfpr" },
                 { code: "Partida 50", a: "uninassau_griffins", scoreA: 13, b: "unit_troianos_trojan", scoreB: 3, winner: "uninassau_griffins" },
                 { code: "Partida 51", a: "brutal_esports", scoreA: 8, b: "ufu_insane", scoreB: 13, winner: "ufu_insane" },
                 { code: "Partida 52", a: "hunter_esports", scoreA: 11, b: "maua_b", scoreB: 13, winner: "maua_b" },
@@ -17518,7 +17525,7 @@ const TOURNAMENT_OVERRIDES = {
               matches: [
                 { code: "Partida 95", a: "a2e_uff", scoreA: 13, b: "ufgd_duendes", scoreB: 11, winner: "a2e_uff" },
                 { code: "Partida 96", a: "maua_blue", scoreA: 5, b: "ufmg_fenix_b", scoreB: 13, winner: "ufmg_fenix_b" },
-                { code: "Partida 97", a: "raposa_e_sports", scoreA: 1, b: "ufrj_canis", scoreB: 13, winner: "ufrj_canis" },
+                { code: "Partida 97", a: "raposa_e_sports", scoreA: 1, b: "minerva_thunders", scoreB: 13, winner: "minerva_thunders" },
                 { code: "Partida 98", a: "ufpr_bbn", scoreA: 6, b: "puc_priests", scoreB: 13, winner: "puc_priests" },
                 { code: "Partida 99", a: "cyberkongs", scoreA: 5, b: "aaicei_pinguins", scoreB: 13, winner: "aaicei_pinguins" },
                 { code: "Partida 100", a: "pucc_cardinals", scoreA: 14, b: "caap_hellhounds", scoreB: 12, winner: "pucc_cardinals" },
@@ -17529,9 +17536,9 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 16 inferior",
               matches: [
-                { code: "Partida 103", a: "axis_anteaters_shadow", scoreA: 5, b: "a2e_uff", scoreB: 13, winner: "a2e_uff" },
+                { code: "Partida 103", a: "axis_anteaters", scoreA: 5, b: "a2e_uff", scoreB: 13, winner: "a2e_uff" },
                 { code: "Partida 104", a: "unit_troianos_trojan", scoreA: 9, b: "ufmg_fenix_b", scoreB: 13, winner: "ufmg_fenix_b" },
-                { code: "Partida 105", a: "brutal_esports", scoreA: 18, b: "ufrj_canis", scoreB: 16, winner: "brutal_esports" },
+                { code: "Partida 105", a: "brutal_esports", scoreA: 18, b: "minerva_thunders", scoreB: 16, winner: "brutal_esports" },
                 { code: "Partida 106", a: "hunter_esports", scoreA: 7, b: "puc_priests", scoreB: 13, winner: "puc_priests" },
                 { code: "Partida 107", a: "axis_blossom", scoreA: 10, b: "aaicei_pinguins", scoreB: 13, winner: "aaicei_pinguins" },
                 { code: "Partida 108", a: "unicamp_tritons_red", scoreA: 7, b: "pucc_cardinals", scoreB: 13, winner: "pucc_cardinals" },
@@ -17577,6 +17584,7 @@ const TOURNAMENT_OVERRIDES = {
     },
   },
   "copa-alianca-2025-classificatoria-3": {
+    "teamNames": { "minerva_thunders": "UFRJ Canis" },
     "name": "Copa Aliança 2025 - Classificatória 3",
     "organizer": "AcadArena",
     "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
@@ -17614,11 +17622,11 @@ const TOURNAMENT_OVERRIDES = {
       "maua_blue",
       "macklogic_white",
       "green_owls_noctua",
-      "axis_anteaters_shadow",
+      "axis_anteaters",
       "ufs_warriowls",
-      "inatel_white",
+      "inatel",
       "a2e_uff",
-      "ufrj_canis",
+      "minerva_thunders",
       "univap_carrascos",
       "cyberkongs",
       "fsa_hopshots",
@@ -17630,7 +17638,7 @@ const TOURNAMENT_OVERRIDES = {
     "placements": [
       {
         "range": "Classificado",
-        "id": "ufrj_canis",
+        "id": "minerva_thunders",
         "note": "Chave superior"
       },
       {
@@ -17655,7 +17663,7 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "5-6",
-        "id": "axis_anteaters_shadow",
+        "id": "axis_anteaters",
         "note": "Decisão de vaga inferior"
       },
       {
@@ -17740,7 +17748,7 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "17-24",
-        "id": "inatel_white",
+        "id": "inatel",
         "note": "Rodada de 16 inferior"
       },
       {
@@ -17832,9 +17840,9 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 4",
                   "a": "unirv_rushone",
                   "scoreA": 5,
-                  "b": "ufrj_canis",
+                  "b": "minerva_thunders",
                   "scoreB": 13,
-                  "winner": "ufrj_canis"
+                  "winner": "minerva_thunders"
                 },
                 {
                   "code": "Partida 5",
@@ -17849,9 +17857,9 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 6",
                   "a": "ufmg_fenix_b",
                   "scoreA": 11,
-                  "b": "axis_anteaters_shadow",
+                  "b": "axis_anteaters",
                   "scoreB": 13,
-                  "winner": "axis_anteaters_shadow"
+                  "winner": "axis_anteaters"
                 },
                 {
                   "code": "Partida 7",
@@ -17935,7 +17943,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 16",
                   "a": "furia_utfpr",
                   "scoreA": 13,
-                  "b": "inatel_white",
+                  "b": "inatel",
                   "scoreB": 10,
                   "winner": "furia_utfpr"
                 }
@@ -17956,17 +17964,17 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 18",
                   "a": "hunter_esports",
                   "scoreA": 8,
-                  "b": "ufrj_canis",
+                  "b": "minerva_thunders",
                   "scoreB": 13,
-                  "winner": "ufrj_canis"
+                  "winner": "minerva_thunders"
                 },
                 {
                   "code": "Partida 19",
                   "a": "ufu_insane",
                   "scoreA": 9,
-                  "b": "axis_anteaters_shadow",
+                  "b": "axis_anteaters",
                   "scoreB": 13,
-                  "winner": "axis_anteaters_shadow"
+                  "winner": "axis_anteaters"
                 },
                 {
                   "code": "Partida 20",
@@ -18017,17 +18025,17 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 25",
                   "a": "puc_priests",
                   "scoreA": 6,
-                  "b": "ufrj_canis",
+                  "b": "minerva_thunders",
                   "scoreB": 13,
-                  "winner": "ufrj_canis"
+                  "winner": "minerva_thunders"
                 },
                 {
                   "code": "Partida 26",
-                  "a": "axis_anteaters_shadow",
+                  "a": "axis_anteaters",
                   "scoreA": 13,
                   "b": "ufs_warriowls",
                   "scoreB": 7,
-                  "winner": "axis_anteaters_shadow"
+                  "winner": "axis_anteaters"
                 },
                 {
                   "code": "Partida 27",
@@ -18052,11 +18060,11 @@ const TOURNAMENT_OVERRIDES = {
               "matches": [
                 {
                   "code": "Partida 29",
-                  "a": "ufrj_canis",
+                  "a": "minerva_thunders",
                   "scoreA": 13,
-                  "b": "axis_anteaters_shadow",
+                  "b": "axis_anteaters",
                   "scoreB": 9,
-                  "winner": "ufrj_canis"
+                  "winner": "minerva_thunders"
                 },
                 {
                   "code": "Partida 30",
@@ -18081,9 +18089,9 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 31",
                   "a": "fsa_hopshots",
                   "scoreA": 0,
-                  "b": "inatel_white",
+                  "b": "inatel",
                   "scoreB": 1,
-                  "winner": "inatel_white",
+                  "winner": "inatel",
                   "status": "W.O."
                 },
                 {
@@ -18156,7 +18164,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 39",
                   "a": "maua_blue",
                   "scoreA": 15,
-                  "b": "inatel_white",
+                  "b": "inatel",
                   "scoreB": 13,
                   "winner": "maua_blue"
                 },
@@ -18319,7 +18327,7 @@ const TOURNAMENT_OVERRIDES = {
               "matches": [
                 {
                   "code": "Partida 57",
-                  "a": "axis_anteaters_shadow",
+                  "a": "axis_anteaters",
                   "scoreA": 9,
                   "b": "ufu_insane",
                   "scoreB": 13,
@@ -18345,6 +18353,7 @@ const TOURNAMENT_OVERRIDES = {
   },
   "copa-alianca-2025-classificatoria-4": {
     name: "Copa Alian\u00e7a 2025 - Classificat\u00f3ria 4",
+    teamNames: { ifsp_icare: "IFSP Icar\u00e9" },
     organizer: "AcadArena",
     organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
     prizePool: "-",
@@ -18354,7 +18363,7 @@ const TOURNAMENT_OVERRIDES = {
     teamCount: 29,
     mapPool: ["Ascent", "Bind", "Haven", "Icebox", "Lotus", "Sunset"],
     teams: [
-      "axis_anteaters_shadow",
+      "axis_anteaters",
       "fei_darkowls",
       "unirv_rushone",
       "furia_utfpr",
@@ -18379,7 +18388,7 @@ const TOURNAMENT_OVERRIDES = {
       "pucc_cardinals",
       "wolf_gaming",
       "caap_hellhounds",
-      "inatel_white",
+      "inatel",
       "ifsp_icare",
       "raposa_e_sports",
       "ufgd_duendes",
@@ -18393,7 +18402,7 @@ const TOURNAMENT_OVERRIDES = {
       { range: "5-6", id: "wolf_gaming", note: "Decis\u00e3o de vaga inferior" },
       { range: "7-8", id: "brutal_esports", note: "Rodada de 4 inferior" },
       { range: "7-8", id: "black_cyber", note: "Rodada de 4 inferior" },
-      { range: "9-12", id: "axis_anteaters_shadow", note: "Rodada de 8 inferior" },
+      { range: "9-12", id: "axis_anteaters", note: "Rodada de 8 inferior" },
       { range: "9-12", id: "macklogic_white", note: "Rodada de 8 inferior" },
       { range: "9-12", id: "green_owls_noctua", note: "Rodada de 8 inferior" },
       { range: "9-12", id: "pucc_cardinals", note: "Rodada de 8 inferior" },
@@ -18410,7 +18419,7 @@ const TOURNAMENT_OVERRIDES = {
       { range: "17-24", id: "maua_blue", note: "Rodada de 16 inferior" },
       { range: "17-24", id: "univap_carrascos", note: "Rodada de 16 inferior" },
       { range: "25-29", id: "a2e_uff", note: "Rodada de 16 inferior" },
-      { range: "25-29", id: "inatel_white", note: "Rodada de 16 inferior" },
+      { range: "25-29", id: "inatel", note: "Rodada de 16 inferior" },
       { range: "25-29", id: "ifsp_icare", note: "Rodada de 16 inferior" },
       { range: "25-29", id: "raposa_e_sports", note: "Rodada de 16 inferior" },
       { range: "25-29", id: "ufgd_duendes", note: "Rodada de 16 inferior" },
@@ -18435,7 +18444,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 32 superior",
               matches: [
-                { code: "Partida 1", a: "axis_anteaters_shadow", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "axis_anteaters_shadow" },
+                { code: "Partida 1", a: "axis_anteaters", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "axis_anteaters" },
                 { code: "Partida 2", a: "green_owls_pulsatrix", scoreA: 7, b: "ufmg_fenix_b", scoreB: 13, winner: "ufmg_fenix_b" },
                 { code: "Partida 3", a: "aaicei_pinguins", scoreA: 9, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
                 { code: "Partida 4", a: "a2e_uff", scoreA: 8, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
@@ -18445,7 +18454,7 @@ const TOURNAMENT_OVERRIDES = {
                 { code: "Partida 8", a: "brutal_esports", scoreA: 15, b: "univap_carrascos", scoreB: 13, winner: "brutal_esports" },
                 { code: "Partida 9", a: "fei_darkowls", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "fei_darkowls" },
                 { code: "Partida 10", a: "agronomia_ufg", scoreA: 13, b: "maua_blue", scoreB: 2, winner: "agronomia_ufg" },
-                { code: "Partida 11", a: "ufpr_bbn", scoreA: 1, b: "inatel_white", scoreB: 0, winner: "ufpr_bbn", status: "W.O." },
+                { code: "Partida 11", a: "ufpr_bbn", scoreA: 1, b: "inatel", scoreB: 0, winner: "ufpr_bbn", status: "W.O." },
                 { code: "Partida 12", a: "fsa_hopshots", scoreA: 7, b: "pucc_cardinals", scoreB: 13, winner: "pucc_cardinals" },
                 { code: "Partida 13", a: "unirv_rushone", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "unirv_rushone" },
                 { code: "Partida 14", a: "axis_blossom", scoreA: 10, b: "green_owls_noctua", scoreB: 13, winner: "green_owls_noctua" },
@@ -18456,7 +18465,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 16 superior",
               matches: [
-                { code: "Partida 17", a: "axis_anteaters_shadow", scoreA: 13, b: "ufmg_fenix_b", scoreB: 2, winner: "axis_anteaters_shadow" },
+                { code: "Partida 17", a: "axis_anteaters", scoreA: 13, b: "ufmg_fenix_b", scoreB: 2, winner: "axis_anteaters" },
                 { code: "Partida 18", a: "caap_hellhounds", scoreA: 13, b: "wolf_gaming", scoreB: 8, winner: "caap_hellhounds" },
                 { code: "Partida 19", a: "furia_utfpr", scoreA: 7, b: "black_cyber", scoreB: 13, winner: "black_cyber" },
                 { code: "Partida 20", a: "ufrj_canis_b", scoreA: 13, b: "brutal_esports", scoreB: 7, winner: "ufrj_canis_b" },
@@ -18469,7 +18478,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Quartas de final superior",
               matches: [
-                { code: "Partida 25", a: "axis_anteaters_shadow", scoreA: 8, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
+                { code: "Partida 25", a: "axis_anteaters", scoreA: 8, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
                 { code: "Partida 26", a: "black_cyber", scoreA: 8, b: "ufrj_canis_b", scoreB: 13, winner: "ufrj_canis_b" },
                 { code: "Partida 27", a: "fei_darkowls", scoreA: 13, b: "pucc_cardinals", scoreB: 8, winner: "fei_darkowls" },
                 { code: "Partida 28", a: "green_owls_noctua", scoreA: 8, b: "hunter_esports", scoreB: 13, winner: "hunter_esports" },
@@ -18493,7 +18502,7 @@ const TOURNAMENT_OVERRIDES = {
               matches: [
                 { code: "Partida 31", a: "ifsp_icare", scoreA: 0, b: "cyberkongs", scoreB: 1, winner: "cyberkongs", status: "W.O." },
                 { code: "Partida 32", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "axis_blossom", scoreB: 1, winner: "axis_blossom" },
-                { code: "Partida 33", a: "inatel_white", scoreA: 0, b: "fsa_hopshots", scoreB: 1, winner: "fsa_hopshots", status: "W.O." },
+                { code: "Partida 33", a: "inatel", scoreA: 0, b: "fsa_hopshots", scoreB: 1, winner: "fsa_hopshots", status: "W.O." },
                 { code: "Partida 34", aLabel: "Sem advers\u00e1rio", scoreA: 0, b: "maua_blue", scoreB: 1, winner: "maua_blue" },
                 { code: "Partida 35", a: "raposa_e_sports", scoreA: 0, b: "univap_carrascos", scoreB: 1, winner: "univap_carrascos", status: "W.O." },
                 { code: "Partida 36", a: "ufgd_duendes", scoreA: 0, b: "macklogic_white", scoreB: 1, winner: "macklogic_white", status: "W.O." },
@@ -18529,7 +18538,7 @@ const TOURNAMENT_OVERRIDES = {
                 { code: "Partida 51", a: "green_owls_noctua", scoreA: 9, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
                 { code: "Partida 52", a: "pucc_cardinals", scoreA: 8, b: "brutal_esports", scoreB: 13, winner: "brutal_esports" },
                 { code: "Partida 53", a: "black_cyber", scoreA: 13, b: "macklogic_white", scoreB: 3, winner: "black_cyber" },
-                { code: "Partida 54", a: "axis_anteaters_shadow", scoreA: 5, b: "aaicei_pinguins", scoreB: 13, winner: "aaicei_pinguins" },
+                { code: "Partida 54", a: "axis_anteaters", scoreA: 5, b: "aaicei_pinguins", scoreB: 13, winner: "aaicei_pinguins" },
               ],
             },
             {
@@ -18552,6 +18561,7 @@ const TOURNAMENT_OVERRIDES = {
     },
   },
   "copa-alianca-2025-fase-de-grupos": {
+    "teamNames": { "minerva_thunders": "UFRJ Canis" },
     name: "Copa Alian\u00e7a 2025 - Fase de Grupos",
     organizer: "AcadArena",
     organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
@@ -18580,7 +18590,7 @@ const TOURNAMENT_OVERRIDES = {
       "azure_bears_black",
       "ufg_eagles",
       "maua_b",
-      "ufrj_canis",
+      "minerva_thunders",
       "unicamp_tritons_black",
       "ufu_insane",
       "ufmt_turuna",
@@ -18601,7 +18611,7 @@ const TOURNAMENT_OVERRIDES = {
       { range: "9-11", id: "ufmt_turuna", note: "7-8" },
       { range: "9-11", id: "ufu_insane", note: "7-8" },
       { range: "9-11", id: "ufrj_canis_b", note: "6-9" },
-      { range: "12-14", id: "ufrj_canis", note: "5-10" },
+      { range: "12-14", id: "minerva_thunders", note: "5-10" },
       { range: "12-14", id: "azure_bears_black", note: "4-11" },
       { range: "12-14", id: "usp_stars", note: "4-11" },
       { range: "15-16", id: "aaicei_pinguins", note: "3-12" },
@@ -18617,7 +18627,7 @@ const TOURNAMENT_OVERRIDES = {
           status: "Conclu\u00edda",
           bestOf: "MD1",
           matches: [
-            { code: "Partida 1", a: "ufrj_canis", scoreA: 1, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
+            { code: "Partida 1", a: "minerva_thunders", scoreA: 1, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
             { code: "Partida 2", a: "unicamp_tritons_black", scoreA: 13, b: "usp_stars", scoreB: 8, winner: "unicamp_tritons_black" },
             { code: "Partida 3", a: "ufu_insane", scoreA: 1, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
             { code: "Partida 4", a: "ufmt_turuna", scoreA: 13, b: "macklogic_red", scoreB: 8, winner: "ufmt_turuna" },
@@ -18633,7 +18643,7 @@ const TOURNAMENT_OVERRIDES = {
           bestOf: "MD1",
           matches: [
             { code: "Partida 9", a: "unicamp_tritons_black", scoreA: 9, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
-            { code: "Partida 10", a: "ufu_insane", scoreA: 13, b: "ufrj_canis", scoreB: 11, winner: "ufu_insane" },
+            { code: "Partida 10", a: "ufu_insane", scoreA: 13, b: "minerva_thunders", scoreB: 11, winner: "ufu_insane" },
             { code: "Partida 11", a: "ufmt_turuna", scoreA: 10, b: "usp_stars", scoreB: 13, winner: "usp_stars" },
             { code: "Partida 12", a: "hunter_esports", scoreA: 3, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
             { code: "Partida 13", a: "ufrj_canis_b", scoreA: 13, b: "macklogic_red", scoreB: 10, winner: "ufrj_canis_b" },
@@ -18649,7 +18659,7 @@ const TOURNAMENT_OVERRIDES = {
           matches: [
             { code: "Partida 17", a: "ufu_insane", scoreA: 3, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
             { code: "Partida 18", a: "ufmt_turuna", scoreA: 6, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
-            { code: "Partida 19", a: "hunter_esports", scoreA: 0, b: "ufrj_canis", scoreB: 1, winner: "ufrj_canis", status: "W.O." },
+            { code: "Partida 19", a: "hunter_esports", scoreA: 0, b: "minerva_thunders", scoreB: 1, winner: "minerva_thunders", status: "W.O." },
             { code: "Partida 20", a: "ufrj_canis_b", scoreA: 17, b: "usp_stars", scoreB: 15, winner: "ufrj_canis_b" },
             { code: "Partida 21", a: "caap_hellhounds", scoreA: 13, b: "ufu_saints", scoreB: 5, winner: "caap_hellhounds" },
             { code: "Partida 22", a: "aaicei_pinguins", scoreA: 8, b: "macklogic_red", scoreB: 13, winner: "macklogic_red" },
@@ -18665,7 +18675,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 25", a: "ufmt_turuna", scoreA: 13, b: "azure_bears_golden", scoreB: 8, winner: "ufmt_turuna" },
             { code: "Partida 26", a: "hunter_esports", scoreA: 13, b: "ufu_insane", scoreB: 10, winner: "hunter_esports" },
             { code: "Partida 27", a: "ufrj_canis_b", scoreA: 13, b: "unicamp_tritons_black", scoreB: 9, winner: "ufrj_canis_b" },
-            { code: "Partida 28", a: "caap_hellhounds", scoreA: 13, b: "ufrj_canis", scoreB: 10, winner: "caap_hellhounds" },
+            { code: "Partida 28", a: "caap_hellhounds", scoreA: 13, b: "minerva_thunders", scoreB: 10, winner: "caap_hellhounds" },
             { code: "Partida 29", a: "aaicei_pinguins", scoreA: 7, b: "usp_stars", scoreB: 13, winner: "usp_stars" },
             { code: "Partida 30", a: "maua_b", scoreA: 11, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
             { code: "Partida 31", a: "ufg_eagles", scoreA: 8, b: "macklogic_red", scoreB: 13, winner: "macklogic_red" },
@@ -18681,7 +18691,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 34", a: "ufrj_canis_b", scoreA: 13, b: "ufmt_turuna", scoreB: 11, winner: "ufrj_canis_b" },
             { code: "Partida 35", a: "caap_hellhounds", scoreA: 1, b: "ufu_insane", scoreB: 13, winner: "ufu_insane" },
             { code: "Partida 36", a: "aaicei_pinguins", scoreA: 11, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
-            { code: "Partida 37", a: "maua_b", scoreA: 13, b: "ufrj_canis", scoreB: 9, winner: "maua_b" },
+            { code: "Partida 37", a: "maua_b", scoreA: 13, b: "minerva_thunders", scoreB: 9, winner: "maua_b" },
             { code: "Partida 38", a: "ufg_eagles", scoreA: 13, b: "usp_stars", scoreB: 5, winner: "ufg_eagles" },
             { code: "Partida 39", a: "azure_bears_black", scoreA: 8, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
             { code: "Partida 40", a: "uninassau_griffins", scoreA: 13, b: "macklogic_red", scoreB: 6, winner: "uninassau_griffins" },
@@ -18697,7 +18707,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 43", a: "aaicei_pinguins", scoreA: 2, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
             { code: "Partida 44", a: "maua_b", scoreA: 13, b: "ufu_insane", scoreB: 10, winner: "maua_b" },
             { code: "Partida 45", a: "ufg_eagles", scoreA: 13, b: "unicamp_tritons_black", scoreB: 11, winner: "ufg_eagles" },
-            { code: "Partida 46", a: "azure_bears_black", scoreA: 4, b: "ufrj_canis", scoreB: 13, winner: "ufrj_canis" },
+            { code: "Partida 46", a: "azure_bears_black", scoreA: 4, b: "minerva_thunders", scoreB: 13, winner: "minerva_thunders" },
             { code: "Partida 47", a: "uninassau_griffins", scoreA: 13, b: "usp_stars", scoreB: 10, winner: "uninassau_griffins" },
             { code: "Partida 48", a: "macklogic_red", scoreA: 13, b: "ufu_saints", scoreB: 6, winner: "macklogic_red" },
           ],
@@ -18713,7 +18723,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 52", a: "ufg_eagles", scoreA: 15, b: "ufmt_turuna", scoreB: 13, winner: "ufg_eagles" },
             { code: "Partida 53", a: "azure_bears_black", scoreA: 2, b: "ufu_insane", scoreB: 13, winner: "ufu_insane" },
             { code: "Partida 54", a: "uninassau_griffins", scoreA: 11, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
-            { code: "Partida 55", a: "macklogic_red", scoreA: 13, b: "ufrj_canis", scoreB: 4, winner: "macklogic_red" },
+            { code: "Partida 55", a: "macklogic_red", scoreA: 13, b: "minerva_thunders", scoreB: 4, winner: "macklogic_red" },
             { code: "Partida 56", a: "ufu_saints", scoreA: 1, b: "usp_stars", scoreB: 0, winner: "ufu_saints" },
           ],
         },
@@ -18729,7 +18739,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 61", a: "uninassau_griffins", scoreA: 6, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
             { code: "Partida 62", a: "macklogic_red", scoreA: 13, b: "ufu_insane", scoreB: 9, winner: "macklogic_red" },
             { code: "Partida 63", a: "ufu_saints", scoreA: 11, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
-            { code: "Partida 64", a: "usp_stars", scoreA: 0, b: "ufrj_canis", scoreB: 1, winner: "ufrj_canis", status: "W.O." },
+            { code: "Partida 64", a: "usp_stars", scoreA: 0, b: "minerva_thunders", scoreB: 1, winner: "minerva_thunders", status: "W.O." },
           ],
         },
         {
@@ -18744,7 +18754,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 69", a: "macklogic_red", scoreA: 13, b: "hunter_esports", scoreB: 2, winner: "macklogic_red" },
             { code: "Partida 70", a: "ufu_saints", scoreA: 13, b: "ufmt_turuna", scoreB: 8, winner: "ufu_saints" },
             { code: "Partida 71", a: "usp_stars", scoreA: 11, b: "ufu_insane", scoreB: 13, winner: "ufu_insane" },
-            { code: "Partida 72", a: "ufrj_canis", scoreA: 4, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
+            { code: "Partida 72", a: "minerva_thunders", scoreA: 4, b: "unicamp_tritons_black", scoreB: 13, winner: "unicamp_tritons_black" },
           ],
         },
         {
@@ -18758,7 +18768,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 76", a: "macklogic_red", scoreA: 7, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
             { code: "Partida 77", a: "ufu_saints", scoreA: 13, b: "ufrj_canis_b", scoreB: 4, winner: "ufu_saints" },
             { code: "Partida 78", a: "usp_stars", scoreA: 13, b: "hunter_esports", scoreB: 9, winner: "usp_stars" },
-            { code: "Partida 79", a: "ufrj_canis", scoreA: 9, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
+            { code: "Partida 79", a: "minerva_thunders", scoreA: 9, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
             { code: "Partida 80", a: "unicamp_tritons_black", scoreA: 13, b: "ufu_insane", scoreB: 9, winner: "unicamp_tritons_black" },
           ],
         },
@@ -18772,7 +18782,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 83", a: "macklogic_red", scoreA: 13, b: "maua_b", scoreB: 5, winner: "macklogic_red" },
             { code: "Partida 84", a: "ufu_saints", scoreA: 13, b: "aaicei_pinguins", scoreB: 9, winner: "ufu_saints" },
             { code: "Partida 85", a: "usp_stars", scoreA: 15, b: "caap_hellhounds", scoreB: 13, winner: "usp_stars" },
-            { code: "Partida 86", a: "ufrj_canis", scoreA: 13, b: "ufrj_canis_b", scoreB: 10, winner: "ufrj_canis" },
+            { code: "Partida 86", a: "minerva_thunders", scoreA: 13, b: "ufrj_canis_b", scoreB: 10, winner: "minerva_thunders" },
             { code: "Partida 87", a: "unicamp_tritons_black", scoreA: 13, b: "hunter_esports", scoreB: 3, winner: "unicamp_tritons_black" },
             { code: "Partida 88", a: "ufu_insane", scoreA: 9, b: "ufmt_turuna", scoreB: 13, winner: "ufmt_turuna" },
           ],
@@ -18786,7 +18796,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 90", a: "macklogic_red", scoreA: 13, b: "azure_bears_black", scoreB: 8, winner: "macklogic_red" },
             { code: "Partida 91", a: "ufu_saints", scoreA: 13, b: "ufg_eagles", scoreB: 9, winner: "ufu_saints" },
             { code: "Partida 92", a: "usp_stars", scoreA: 0, b: "maua_b", scoreB: 1, winner: "maua_b", status: "W.O." },
-            { code: "Partida 93", a: "ufrj_canis", scoreA: 1, b: "aaicei_pinguins", scoreB: 0, winner: "ufrj_canis", status: "W.O." },
+            { code: "Partida 93", a: "minerva_thunders", scoreA: 1, b: "aaicei_pinguins", scoreB: 0, winner: "minerva_thunders", status: "W.O." },
             { code: "Partida 94", a: "unicamp_tritons_black", scoreA: 13, b: "caap_hellhounds", scoreB: 7, winner: "unicamp_tritons_black" },
             { code: "Partida 95", a: "ufu_insane", scoreA: 1, b: "ufrj_canis_b", scoreB: 0, winner: "ufu_insane", status: "W.O." },
             { code: "Partida 96", a: "ufmt_turuna", scoreA: 13, b: "hunter_esports", scoreB: 5, winner: "ufmt_turuna" },
@@ -18800,7 +18810,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 97", a: "macklogic_red", scoreA: 7, b: "azure_bears_golden", scoreB: 13, winner: "azure_bears_golden" },
             { code: "Partida 98", a: "ufu_saints", scoreA: 1, b: "uninassau_griffins", scoreB: 0, winner: "ufu_saints", status: "W.O." },
             { code: "Partida 99", a: "usp_stars", scoreA: 0, b: "azure_bears_black", scoreB: 1, winner: "azure_bears_black", status: "W.O." },
-            { code: "Partida 100", a: "ufrj_canis", scoreA: 0, b: "ufg_eagles", scoreB: 1, winner: "ufg_eagles" },
+            { code: "Partida 100", a: "minerva_thunders", scoreA: 0, b: "ufg_eagles", scoreB: 1, winner: "ufg_eagles" },
             { code: "Partida 101", a: "unicamp_tritons_black", scoreA: 5, b: "maua_b", scoreB: 13, winner: "maua_b" },
             { code: "Partida 102", a: "ufu_insane", scoreA: 1, b: "aaicei_pinguins", scoreB: 0, winner: "ufu_insane", status: "W.O." },
             { code: "Partida 103", a: "ufmt_turuna", scoreA: 11, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
@@ -18814,7 +18824,7 @@ const TOURNAMENT_OVERRIDES = {
           matches: [
             { code: "Partida 105", a: "ufu_saints", scoreA: 13, b: "azure_bears_golden", scoreB: 8, winner: "ufu_saints" },
             { code: "Partida 106", a: "usp_stars", scoreA: 8, b: "macklogic_red", scoreB: 13, winner: "macklogic_red" },
-            { code: "Partida 107", a: "ufrj_canis", scoreA: 15, b: "uninassau_griffins", scoreB: 17, winner: "uninassau_griffins" },
+            { code: "Partida 107", a: "minerva_thunders", scoreA: 15, b: "uninassau_griffins", scoreB: 17, winner: "uninassau_griffins" },
             { code: "Partida 108", a: "unicamp_tritons_black", scoreA: 13, b: "azure_bears_black", scoreB: 10, winner: "unicamp_tritons_black" },
             { code: "Partida 109", a: "ufu_insane", scoreA: 8, b: "ufg_eagles", scoreB: 13, winner: "ufg_eagles" },
             { code: "Partida 110", a: "ufmt_turuna", scoreA: 9, b: "maua_b", scoreB: 13, winner: "maua_b" },
@@ -18828,7 +18838,7 @@ const TOURNAMENT_OVERRIDES = {
           bestOf: "MD1",
           matches: [
             { code: "Partida 113", a: "usp_stars", scoreA: 0, b: "azure_bears_golden", scoreB: 1, winner: "azure_bears_golden", status: "W.O." },
-            { code: "Partida 114", a: "ufrj_canis", scoreA: 10, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
+            { code: "Partida 114", a: "minerva_thunders", scoreA: 10, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
             { code: "Partida 115", a: "unicamp_tritons_black", scoreA: 13, b: "macklogic_red", scoreB: 10, winner: "unicamp_tritons_black" },
             { code: "Partida 116", a: "ufu_insane", scoreA: 1, b: "uninassau_griffins", scoreB: 0, winner: "ufu_insane", status: "W.O." },
             { code: "Partida 117", a: "ufmt_turuna", scoreA: 0, b: "azure_bears_black", scoreB: 1, winner: "azure_bears_black", status: "W.O." },
@@ -18852,7 +18862,7 @@ const TOURNAMENT_OVERRIDES = {
         { id: "ufmt_turuna", wins: 7, losses: 8, range: "9\u00ba" },
         { id: "ufu_insane", wins: 7, losses: 8, range: "10\u00ba" },
         { id: "ufrj_canis_b", wins: 6, losses: 9, range: "11\u00ba" },
-        { id: "ufrj_canis", wins: 5, losses: 10, range: "12\u00ba" },
+        { id: "minerva_thunders", wins: 5, losses: 10, range: "12\u00ba" },
         { id: "azure_bears_black", wins: 4, losses: 11, range: "13\u00ba" },
         { id: "usp_stars", wins: 4, losses: 11, range: "14\u00ba" },
         { id: "aaicei_pinguins", wins: 3, losses: 12, range: "15\u00ba" },
@@ -18901,7 +18911,7 @@ const TOURNAMENT_OVERRIDES = {
       "azure_bears_white",
       "maua_blue",
       "totale_umc",
-      "inatel_white",
+      "inatel",
       "ufmt_turuna",
       "ufu_insane",
       "unirv_rushone",
@@ -18942,7 +18952,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 2", a: "ufu_insane", scoreA: 13, b: "azure_bears_red", scoreB: 9, winner: "ufu_insane" },
             { code: "Partida 3", a: "azure_bears_black", scoreA: 13, b: "ufmt_turuna", scoreB: 5, winner: "azure_bears_black" },
             { code: "Partida 4", a: "black_cyber", scoreA: 13, b: "unir_sentinelas", scoreB: 3, winner: "black_cyber" },
-            { code: "Partida 5", a: "inatel_white", scoreA: 13, b: "axis_anteaters", scoreB: 8, winner: "inatel_white" },
+            { code: "Partida 5", a: "inatel", scoreA: 13, b: "axis_anteaters", scoreB: 8, winner: "inatel" },
             { code: "Partida 6", a: "ufrj_canis_b", scoreA: 13, b: "sheriff_iff", scoreB: 1, winner: "ufrj_canis_b" },
             { code: "Partida 7", a: "fei_darkowls", scoreA: 13, b: "unirv_rushone", scoreB: 6, winner: "fei_darkowls" },
             { code: "Partida 8", a: "ufpr_bbn", scoreA: 13, b: "totale_umc", scoreB: 8, winner: "ufpr_bbn" },
@@ -18982,7 +18992,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 28", a: "ufmt_turuna", scoreA: 13, b: "ufpr_bbn", scoreB: 6, winner: "ufmt_turuna" },
             { code: "Partida 29", a: "black_cyber", scoreA: 13, b: "ifsp_midas", scoreB: 7, winner: "black_cyber" },
             { code: "Partida 30", a: "macklogic_white", scoreA: 13, b: "maua_blue", scoreB: 8, winner: "macklogic_white" },
-            { code: "Partida 31", a: "unifesp_erex", scoreA: 13, b: "inatel_white", scoreB: 11, winner: "unifesp_erex" },
+            { code: "Partida 31", a: "unifesp_erex", scoreA: 13, b: "inatel", scoreB: 11, winner: "unifesp_erex" },
             { code: "Partida 32", a: "wolf_gaming", scoreA: 13, b: "ufrj_canis_b", scoreB: 5, winner: "wolf_gaming" },
           ],
         },
@@ -18998,7 +19008,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 37", a: "wolf_gaming", scoreA: 13, b: "ufmt_turuna", scoreB: 9, winner: "wolf_gaming" },
             { code: "Partida 38", a: "black_cyber", scoreA: 13, b: "fei_darkowls", scoreB: 5, winner: "black_cyber" },
             { code: "Partida 39", a: "azure_bears_white", scoreA: 13, b: "sheriff_iff", scoreB: 11, winner: "azure_bears_white" },
-            { code: "Partida 40", a: "inatel_white", scoreA: 13, b: "espm_overbite_misto", scoreB: 4, winner: "inatel_white" },
+            { code: "Partida 40", a: "inatel", scoreA: 13, b: "espm_overbite_misto", scoreB: 4, winner: "inatel" },
             { code: "Partida 41", a: "axis_anteaters", scoreA: 13, b: "ufrj_canis_b", scoreB: 6, winner: "axis_anteaters" },
             { code: "Partida 42", a: "unirv_rushone", scoreA: 13, b: "ufpr_bbn", scoreB: 9, winner: "unirv_rushone" },
           ],
@@ -19041,7 +19051,7 @@ const TOURNAMENT_OVERRIDES = {
           status: "Conclu\u00edda",
           bestOf: "MD1",
           matches: [
-            { code: "Partida 65", a: "inatel_white", scoreA: 13, b: "totale_umc", scoreB: 7, winner: "inatel_white" },
+            { code: "Partida 65", a: "inatel", scoreA: 13, b: "totale_umc", scoreB: 7, winner: "inatel" },
             { code: "Partida 67", a: "axis_anteaters", scoreA: 13, b: "azure_bears_black", scoreB: 10, winner: "axis_anteaters" },
             { code: "Partida 68", a: "wolf_gaming", scoreA: 13, b: "ufpr_bbn", scoreB: 2, winner: "wolf_gaming" },
             { code: "Partida 69", a: "maua_b", scoreA: 13, b: "sheriff_iff", scoreB: 10, winner: "maua_b" },
@@ -19064,7 +19074,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 81", a: "espm_overbite_misto", scoreA: 14, b: "ifsp_midas", scoreB: 12, winner: "espm_overbite_misto" },
             { code: "Partida 82", a: "macklogic_white", scoreA: 13, b: "sheriff_iff", scoreB: 2, winner: "macklogic_white" },
             { code: "Partida 83", a: "unifesp_erex", scoreA: 13, b: "ufpr_bbn", scoreB: 1, winner: "unifesp_erex" },
-            { code: "Partida 84", a: "inatel_white", scoreA: 13, b: "azure_bears_white", scoreB: 3, winner: "inatel_white" },
+            { code: "Partida 84", a: "inatel", scoreA: 13, b: "azure_bears_white", scoreB: 3, winner: "inatel" },
           ],
         },
         {
@@ -19078,7 +19088,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 88", a: "ifsp_midas", scoreA: 13, b: "azure_bears_white", scoreB: 10, winner: "ifsp_midas" },
             { code: "Partida 89", a: "sheriff_iff", scoreA: 13, b: "totale_umc", scoreB: 9, winner: "sheriff_iff" },
             { code: "Partida 90", a: "maua_blue", scoreA: 13, b: "azure_bears_black", scoreB: 6, winner: "maua_blue" },
-            { code: "Partida 91", a: "a2e_uff", scoreA: 13, b: "inatel_white", scoreB: 10, winner: "a2e_uff" },
+            { code: "Partida 91", a: "a2e_uff", scoreA: 13, b: "inatel", scoreB: 10, winner: "a2e_uff" },
             { code: "Partida 92", a: "axis_anteaters", scoreA: 13, b: "azure_bears_red", scoreB: 4, winner: "axis_anteaters" },
             { code: "Partida 93", a: "macklogic_white", scoreA: 13, b: "unifesp_erex", scoreB: 7, winner: "macklogic_white" },
           ],
@@ -19095,7 +19105,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 98", a: "axis_anteaters", scoreA: 13, b: "macklogic_white", scoreB: 5, winner: "axis_anteaters" },
             { code: "Partida 99", a: "totale_umc", scoreA: 13, b: "maua_blue", scoreB: 10, winner: "totale_umc" },
             { code: "Partida 100", a: "azure_bears_black", scoreA: 13, b: "ufpr_bbn", scoreB: 8, winner: "azure_bears_black" },
-            { code: "Partida 101", a: "inatel_white", scoreA: 13, b: "azure_bears_red", scoreB: 6, winner: "inatel_white" },
+            { code: "Partida 101", a: "inatel", scoreA: 13, b: "azure_bears_red", scoreB: 6, winner: "inatel" },
             { code: "Partida 102", a: "unifesp_erex", scoreA: 13, b: "ifsp_midas", scoreB: 6, winner: "unifesp_erex" },
             { code: "Partida 103", a: "espm_overbite_misto", scoreA: 13, b: "azure_bears_white", scoreB: 3, winner: "espm_overbite_misto" },
           ],
@@ -19122,7 +19132,7 @@ const TOURNAMENT_OVERRIDES = {
         { id: "azure_bears_white", wins: 2, losses: 7, range: "-", status: "Practice" },
         { id: "maua_blue", wins: 1, losses: 5, range: "-", status: "Practice" },
         { id: "totale_umc", wins: 1, losses: 7, range: "-", status: "Practice" },
-        { id: "inatel_white", wins: 5, losses: 2, range: "-", status: "Fora dos playoffs" },
+        { id: "inatel", wins: 5, losses: 2, range: "-", status: "Fora dos playoffs" },
         { id: "ufmt_turuna", wins: 4, losses: 2, range: "-", status: "Fora dos playoffs" },
         { id: "ufu_insane", wins: 3, losses: 1, range: "-", status: "Fora dos playoffs" },
         { id: "unirv_rushone", wins: 2, losses: 2, range: "-", status: "Fora dos playoffs" },
@@ -19703,6 +19713,8 @@ const TOURNAMENT_OVERRIDES = {
       standings: "Colocação oficial do campeonato",
     },
     teamNames: {
+      "minerva_thunders": "Dark UFRJ",
+      "caap_momentum": "Axis Ego",
       sixa_eaters: "sixA Eaters",
     },
     teams: [
@@ -19710,13 +19722,13 @@ const TOURNAMENT_OVERRIDES = {
       "aaeu_cerberus",
       "a2e_uff",
       "xxii_setembro_fatec",
-      "axis_ego",
+      "caap_momentum",
       "azure_bears_black",
       "azure_bears_golden",
       "caap_hellhounds",
       "ceub_octopus",
       "ceub_octopus_vulgaris",
-      "dark_ufrj",
+      "minerva_thunders",
       "fei_darkowls",
       "fei_whiteowls",
       "unifacens_fodens",
@@ -19736,8 +19748,8 @@ const TOURNAMENT_OVERRIDES = {
       { range: "2", id: "azure_bears_golden" },
       { range: "3", id: "caap_hellhounds" },
       { range: "4", id: "ufu_saints" },
-      { range: "5-6", id: "dark_ufrj" },
-      { range: "5-6", id: "axis_ego" },
+      { range: "5-6", id: "minerva_thunders" },
+      { range: "5-6", id: "caap_momentum" },
       { range: "7-8", id: "unicamp_tritons_black" },
       { range: "7-8", id: "fei_darkowls" },
       { range: "9-12", id: "octacore_python" },
@@ -19781,7 +19793,7 @@ const TOURNAMENT_OVERRIDES = {
               matches: [
                 { code: "Partida 1", a: "azure_bears_golden", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "azure_bears_golden" },
                 { code: "Partida 2", a: "octacore_python", scoreA: 13, b: "green_owls_pulsatrix", scoreB: 9, winner: "octacore_python" },
-                { code: "Partida 3", a: "axis_ego", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "axis_ego" },
+                { code: "Partida 3", a: "caap_momentum", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "caap_momentum" },
                 { code: "Partida 4", a: "azure_bears_black", scoreA: 13, b: "unirv_rushone", scoreB: 10, winner: "azure_bears_black" },
                 { code: "Partida 5", a: "a2e_uff", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "a2e_uff" },
                 { code: "Partida 6", a: "fei_darkowls", scoreA: 13, b: "xxii_setembro_fatec", scoreB: 1, winner: "fei_darkowls" },
@@ -19791,7 +19803,7 @@ const TOURNAMENT_OVERRIDES = {
                 { code: "Partida 10", a: "pucc_cardinals", scoreA: 13, b: "pucgo_sistematica", scoreB: 5, winner: "pucc_cardinals" },
                 { code: "Partida 11", a: "unicamp_tritons_black", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "unicamp_tritons_black" },
                 { code: "Partida 12", a: "fei_whiteowls", scoreA: 13, b: "gambiarra_ufg", scoreB: 8, winner: "fei_whiteowls" },
-                { code: "Partida 13", a: "dark_ufrj", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "dark_ufrj" },
+                { code: "Partida 13", a: "minerva_thunders", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "minerva_thunders" },
                 { code: "Partida 14", a: "unifacens_fodens", scoreA: 13, b: "aaeu_cerberus", scoreB: 2, winner: "unifacens_fodens" },
                 { code: "Partida 15", a: "caap_hellhounds", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "caap_hellhounds" },
                 { code: "Partida 16", a: "green_owls_noctua", scoreA: 13, b: "totale_umc", scoreB: 11, winner: "green_owls_noctua" },
@@ -19801,22 +19813,22 @@ const TOURNAMENT_OVERRIDES = {
               title: "Rodada de 16 superior",
               matches: [
                 { code: "Partida 17", a: "azure_bears_golden", scoreA: 15, b: "octacore_python", scoreB: 13, winner: "azure_bears_golden" },
-                { code: "Partida 18", a: "axis_ego", scoreA: 16, b: "azure_bears_black", scoreB: 14, winner: "axis_ego" },
+                { code: "Partida 18", a: "caap_momentum", scoreA: 16, b: "azure_bears_black", scoreB: 14, winner: "caap_momentum" },
                 { code: "Partida 19", a: "a2e_uff", scoreA: 10, b: "fei_darkowls", scoreB: 13, winner: "fei_darkowls" },
                 { code: "Partida 20", a: "ufu_saints", scoreA: 13, b: "ceub_octopus_vulgaris", scoreB: 10, winner: "ufu_saints" },
                 { code: "Partida 21", a: "ceub_octopus", scoreA: 13, b: "pucc_cardinals", scoreB: 9, winner: "ceub_octopus" },
                 { code: "Partida 22", a: "unicamp_tritons_black", scoreA: 14, b: "fei_whiteowls", scoreB: 12, winner: "unicamp_tritons_black" },
-                { code: "Partida 23", a: "dark_ufrj", scoreA: 13, b: "unifacens_fodens", scoreB: 10, winner: "dark_ufrj" },
+                { code: "Partida 23", a: "minerva_thunders", scoreA: 13, b: "unifacens_fodens", scoreB: 10, winner: "minerva_thunders" },
                 { code: "Partida 24", a: "caap_hellhounds", scoreA: 13, b: "green_owls_noctua", scoreB: 5, winner: "caap_hellhounds" },
               ],
             },
             {
               title: "Quartas de final superior",
               matches: [
-                { code: "Partida 25", a: "azure_bears_golden", scoreA: 13, b: "axis_ego", scoreB: 9, winner: "azure_bears_golden" },
+                { code: "Partida 25", a: "azure_bears_golden", scoreA: 13, b: "caap_momentum", scoreB: 9, winner: "azure_bears_golden" },
                 { code: "Partida 26", a: "fei_darkowls", scoreA: 8, b: "ufu_saints", scoreB: 13, winner: "ufu_saints" },
                 { code: "Partida 27", a: "ceub_octopus", scoreA: 13, b: "unicamp_tritons_black", scoreB: 2, winner: "ceub_octopus" },
-                { code: "Partida 28", a: "dark_ufrj", scoreA: 7, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
+                { code: "Partida 28", a: "minerva_thunders", scoreA: 7, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
               ],
             },
             {
@@ -19863,24 +19875,24 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Rodada de 8 inferior",
               matches: [
-                { code: "Partida 52", a: "dark_ufrj", scoreA: 13, b: "octacore_python", scoreB: 4, winner: "dark_ufrj" },
+                { code: "Partida 52", a: "minerva_thunders", scoreA: 13, b: "octacore_python", scoreB: 4, winner: "minerva_thunders" },
                 { code: "Partida 53", a: "unicamp_tritons_black", scoreA: 13, b: "a2e_uff", scoreB: 6, winner: "unicamp_tritons_black" },
                 { code: "Partida 54", a: "fei_darkowls", scoreA: 13, b: "pucc_cardinals", scoreB: 8, winner: "fei_darkowls" },
-                { code: "Partida 55", a: "axis_ego", scoreA: 13, b: "unirv_rushone", scoreB: 11, winner: "axis_ego" },
+                { code: "Partida 55", a: "caap_momentum", scoreA: 13, b: "unirv_rushone", scoreB: 11, winner: "caap_momentum" },
               ],
             },
             {
               title: "Rodada de 4 inferior",
               matches: [
-                { code: "Partida 56", a: "dark_ufrj", scoreA: 15, b: "unicamp_tritons_black", scoreB: 13, winner: "dark_ufrj" },
-                { code: "Partida 57", a: "fei_darkowls", scoreA: 0, b: "axis_ego", scoreB: 1, winner: "axis_ego" },
+                { code: "Partida 56", a: "minerva_thunders", scoreA: 15, b: "unicamp_tritons_black", scoreB: 13, winner: "minerva_thunders" },
+                { code: "Partida 57", a: "fei_darkowls", scoreA: 0, b: "caap_momentum", scoreB: 1, winner: "caap_momentum" },
               ],
             },
             {
               title: "Quartas de final inferior",
               matches: [
-                { code: "Partida 58", a: "ufu_saints", scoreA: 13, b: "dark_ufrj", scoreB: 4, winner: "ufu_saints" },
-                { code: "Partida 59", a: "ceub_octopus", scoreA: 13, b: "axis_ego", scoreB: 6, winner: "ceub_octopus" },
+                { code: "Partida 58", a: "ufu_saints", scoreA: 13, b: "minerva_thunders", scoreB: 4, winner: "ufu_saints" },
+                { code: "Partida 59", a: "ceub_octopus", scoreA: 13, b: "caap_momentum", scoreB: 6, winner: "ceub_octopus" },
               ],
             },
             {
@@ -19908,7 +19920,19 @@ const navItems = [
   ["matches", "Partidas"],
   ["events", "Eventos"],
   ["players", "Players"],
+  ["teams", "Equipes"],
   ["ranking", "Ranking"],
+];
+
+// Lista de equipes: 48 fecha as fileiras de 6, 4 e 3 quadrados sem sobra.
+// Declarada aqui porque init() renderiza antes do fim do arquivo.
+const TEAM_LISTA_PAGINA = 48;
+const TEAM_LISTA_ORDENS = [
+  { id: "ranking", rotulo: "Ranking" },
+  { id: "ultimo", rotulo: "Último jogo" },
+  { id: "nome", rotulo: "Nome" },
+  { id: "mapas", rotulo: "Mapas" },
+  { id: "estado", rotulo: "Estado" },
 ];
 
 // Transicao padrao de troca de conteudo (ver playPanelSlide). Declarada aqui em
@@ -23160,6 +23184,11 @@ function render() {
   // Cada navegacao avisa os comentarios: e assim que eles sabem que a pessoa
   // saiu da pagina e, na volta, buscam a conversa de novo (comments.js).
   window.Comments?.novaRender?.();
+  // Na pagina de um campeonato, a equipe que trocou de nome aparece com o escudo
+  // da epoca (teamLogo le isto), como o nome que ja vem do teamNames do evento.
+  state.eventoDaPagina = (section === "events" || section === "tournaments") && id ? id : null;
+  // O perfil de uma fase antiga liga isto em renderTeamDetail; qualquer outra pagina o desliga.
+  state.faseDaPagina = null;
   const pages = {
     home: renderHomeCompact,
     matches: renderMatchesCompact,
@@ -23188,12 +23217,6 @@ function normalizeCanonicalRoute() {
 }
 
 function canonicalHashForRoute(currentRoute) {
-  // A lista de equipes E o ranking. Sem esta linha, #/teams sem id caia num 404
-  // com o titulo "Equipes": STATIC_DOCUMENT_TITLES conhecia a secao e o render
-  // nao tinha ramo de lista. Entra aqui, e nao no mapa de paginas, porque
-  // normalizeCanonicalRoute() roda antes de route() em render() - a URL vira
-  // #/ranking e titulo e corpo passam a concordar de uma vez.
-  if (currentRoute.section === "teams" && !currentRoute.id) return "#/ranking";
   // /stats e o indice /maps sairam em 29/08/2026. Redireciono em vez de dar
   // 404 porque /stats esteve na navegacao e pode estar em link salvo. So o
   // indice cai aqui: #/maps/<id> tem id e segue para a pagina do mapa.
@@ -23206,9 +23229,319 @@ function canonicalHashForRoute(currentRoute) {
   return canonicalHash === currentRouteKey() ? "" : canonicalHash;
 }
 
+// Equipes: a Camisa em pe das Equipes Participantes, uma por equipe cadastrada, ou
+// a lista em tiras como a de Jogadores. Filtro, ordem e visualizacao vivem na URL.
 function renderTeamsCompact(id) {
   if (id) return renderTeamDetail(id);
-  return renderNotFound("Recurso");
+  applyTeamListFiltersFromQuery(routeQuery());
+  const { contagem, lista } = resultadoDasEquipes();
+  Shell(`
+    <section class="vp-lista-pagina vp-equipes">
+      <header class="vp-sec">
+        <h1>Equipes</h1>
+        <p class="lista-contagem" role="status" aria-live="polite">${contagem}</p>
+      </header>
+      <div class="vp-jg-filtros vp-eqs-filtros">${filtrosDasEquipes()}</div>
+      <div data-equipe-resultado>${lista}</div>
+    </section>
+  `);
+  bindListaDeEquipes();
+}
+
+function teamListFiltersToQuery() {
+  const p = new URLSearchParams();
+  if (state.teamListQuery) p.set("q", state.teamListQuery);
+  if (state.teamListEstado) p.set("estado", state.teamListEstado);
+  if (state.teamListInativas) p.set("inativas", "1");
+  if (state.teamListOrdem && state.teamListOrdem !== "ranking") p.set("ordem", state.teamListOrdem);
+  if (state.teamListInversa) p.set("inverter", "1");
+  if (state.teamListVer === "lista") p.set("ver", "lista");
+  return p;
+}
+
+function applyTeamListFiltersFromQuery(p) {
+  state.teamListQuery = p.get("q") || "";
+  const estado = String(p.get("estado") || "").toUpperCase();
+  state.teamListEstado = state.db.teams.some((team) => team.profile?.state === estado) ? estado : "";
+  state.teamListInativas = p.get("inativas") === "1";
+  const ordem = p.get("ordem");
+  state.teamListOrdem = TEAM_LISTA_ORDENS.some((item) => item.id === ordem) ? ordem : "ranking";
+  state.teamListInversa = p.get("inverter") === "1";
+  state.teamListVer = p.get("ver") === "lista" ? "lista" : "quadrados";
+}
+
+function filtrosDasEquipesAtivos() {
+  return Boolean(state.teamListQuery || state.teamListEstado || state.teamListInativas);
+}
+
+// O dia do ultimo jogo, pela mesma conta da regra de inatividade do ranking.
+function teamUltimoJogo(team) {
+  if (state.teamUltimoJogoCache?.db !== state.db) {
+    const datas = rankingDatasDeJogo(state.db.matches, allMatchSeries());
+    state.teamUltimoJogoCache = { db: state.db, porEquipe: new Map([...datas].map(([teamId, lista]) => [teamId, lista[lista.length - 1] || 0])) };
+  }
+  return state.teamUltimoJogoCache.porEquipe.get(team.id) || 0;
+}
+
+function teamListRankLabel(team) {
+  const valida = teamValidRank(team);
+  if (valida) return `#${valida}`;
+  return rankingIsInactive(team.ranking) ? "inativa" : "prov";
+}
+
+function teamListGrupo(team) {
+  if (teamValidRank(team)) return 0;
+  return rankingIsInactive(team.ranking) ? 2 : 1;
+}
+
+function teamListSigla(team) {
+  const profile = team.profile || {};
+  const sigla = profile.orgTag || team.orgTag || profile.org || team.org || "";
+  return /n[aã]o informad/i.test(sigla) ? "" : sigla;
+}
+
+// Texto inteiro em nome, tag e instituicao; as letras na ordem, como em Jogadores,
+// so em nome e tag: numa instituicao por extenso "usp" acharia quase todas.
+function equipeCasaBusca(team, busca) {
+  const curtos = [team.name, team.sourceTag, team.tag, team.shortTag].filter(Boolean).map(normalize);
+  const longos = [teamListSigla(team), team.profile?.org, team.org].filter(Boolean).map(normalize);
+  const inteiro = [...curtos, ...longos].some((texto) => texto.includes(busca));
+  const letras = curtos.some((texto) => {
+    let achadas = 0;
+    for (const letra of texto) if (letra === busca[achadas]) achadas += 1;
+    return achadas === busca.length;
+  });
+  return { inteiro, letras };
+}
+
+function equipesFiltradas({ ignorarEstado = false, inativas = state.teamListInativas } = {}) {
+  const busca = normalize(state.teamListQuery).trim();
+  const linhas = state.db.teams
+    .filter((team) => inativas || !rankingIsInactive(team.ranking))
+    .filter((team) => ignorarEstado || !state.teamListEstado || team.profile?.state === state.teamListEstado)
+    .map((team) => ({ team, casa: busca ? equipeCasaBusca(team, busca) : null }))
+    .filter((linha) => !linha.casa || linha.casa.inteiro || linha.casa.letras);
+  const porNome = (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "pt-BR", { numeric: true, sensitivity: "base" });
+  const posicao = (team) => teamValidRank(team) || teamOverallRank(team) || 9999;
+  const porRanking = (a, b) => teamListGrupo(a) - teamListGrupo(b) || posicao(a) - posicao(b) || porNome(a, b);
+  const sinal = state.teamListInversa ? -1 : 1;
+  const comparar = {
+    ranking: (a, b) => sinal * porRanking(a, b),
+    ultimo: (a, b) => sinal * (teamUltimoJogo(b) - teamUltimoJogo(a)) || porRanking(a, b),
+    nome: (a, b) => sinal * porNome(a, b),
+    mapas: (a, b) => sinal * (Number(b.matches || 0) - Number(a.matches || 0)) || porRanking(a, b),
+    estado: (a, b) => sinal * String(a.profile?.state || "￿").localeCompare(String(b.profile?.state || "￿"), "pt-BR") || porRanking(a, b),
+  };
+  const ordem = comparar[state.teamListOrdem] || comparar.ranking;
+  linhas.sort((a, b) => ordem(a.team, b.team));
+  // Quem tem o texto inteiro vem antes de quem so tem as letras espalhadas.
+  if (busca) linhas.sort((a, b) => Number(b.casa.inteiro) - Number(a.casa.inteiro));
+  return linhas.map((linha) => linha.team);
+}
+
+function resultadoDasEquipes() {
+  const equipes = equipesFiltradas();
+  const totalDePaginas = Math.max(1, Math.ceil(equipes.length / TEAM_LISTA_PAGINA));
+  const pagina = Math.min(paginaDaLista(routeQuery()), totalDePaginas);
+  const inicio = (pagina - 1) * TEAM_LISTA_PAGINA;
+  const visiveis = equipes.slice(inicio, inicio + TEAM_LISTA_PAGINA);
+  const quadrados = state.teamListVer !== "lista";
+  return {
+    contagem: visiveis.length ? `Mostrando ${inicio + 1} a ${inicio + visiveis.length} de ${equipes.length} equipes.` : "Nenhuma equipe.",
+    lista: `
+      ${quadrados ? ordemDasEquipes() : cabecalhoDasEquipes()}
+      ${
+        visiveis.length
+          ? quadrados
+            ? `<div class="vp-eq-grade vp-eqs-grade">${visiveis.map(quadradoDaEquipe).join("")}</div>`
+            : `<div class="vp-jg-lista vp-eqs-lista">${visiveis.map(linhaDaEquipe).join("")}</div>`
+          : equipesVazio()
+      }
+      ${paginacaoDaLista("teams", pagina, totalDePaginas, teamListFiltersToQuery())}
+    `,
+  };
+}
+
+// Quem procura uma equipe antiga com as inativas escondidas precisa saber que ela existe.
+function equipesVazio() {
+  const escondidas = state.teamListInativas ? 0 : equipesFiltradas({ inativas: true }).length;
+  if (escondidas) return `<p class="empty-state">Nenhuma equipe ativa com esses filtros. ${escondidas === 1 ? "1 equipe inativa aparece" : `${escondidas} equipes inativas aparecem`} em Mostrar inativas.</p>`;
+  return `<p class="empty-state">Nenhuma equipe com esses filtros. Tire um filtro para ver mais.</p>`;
+}
+
+function estadosDasEquipes() {
+  const contagem = new Map();
+  equipesFiltradas({ ignorarEstado: true }).forEach((team) => {
+    const uf = team.profile?.state;
+    if (uf) contagem.set(uf, { uf, nome: team.profile.stateName || uf, flag: team.profile.flag || "", n: (contagem.get(uf)?.n || 0) + 1 });
+  });
+  if (state.teamListEstado && !contagem.has(state.teamListEstado)) {
+    const team = state.db.teams.find((item) => item.profile?.state === state.teamListEstado);
+    contagem.set(state.teamListEstado, { uf: state.teamListEstado, nome: team?.profile?.stateName || state.teamListEstado, flag: team?.profile?.flag || "", n: 0 });
+  }
+  return [...contagem.values()].sort((a, b) => a.uf.localeCompare(b.uf, "pt-BR"));
+}
+
+function bandeiraDoEstado(flag, uf) {
+  return flag ? `<img class="state-flag" src="${escapeHtml(assetPath(flag))}" alt="" loading="lazy" onerror="this.remove()" />` : "";
+}
+
+function filtrosDasEquipes() {
+  const estado = state.teamListEstado;
+  const botaoVer = (ver, rotulo, icone) => {
+    const ativo = (state.teamListVer === "lista") === (ver === "lista");
+    return `<button type="button" data-equipe-ver="${ver}" aria-pressed="${ativo}" title="${rotulo}" aria-label="${rotulo}">${icone}</button>`;
+  };
+  return `
+    <input id="team-list-query" class="vp-jg-busca" type="search" placeholder="Buscar equipe ou instituição" aria-label="Buscar equipe ou instituição" autocomplete="off" value="${escapeHtml(state.teamListQuery)}" />
+    <details class="filter-dropdown player-team-dropdown vp-eqs-estado-filtro">
+      <summary>${filterIcon()}<span>Estado</span><strong>${escapeHtml(estado || "Todos")}</strong>${chevronIcon()}</summary>
+      <div class="filter-dropdown-body">
+        <div class="vp-eqs-ufs">
+          <button type="button" data-equipe-estado="" aria-pressed="${!estado}">Todos</button>
+          ${estadosDasEquipes().map((item) => `<button type="button" data-equipe-estado="${escapeHtml(item.uf)}" aria-pressed="${item.uf === estado}" title="${escapeHtml(item.nome)}">${bandeiraDoEstado(item.flag)}<span>${escapeHtml(item.uf)}</span><small>${item.n}</small></button>`).join("")}
+        </div>
+      </div>
+    </details>
+    <label class="ranking-details-toggle">
+      <input type="checkbox" data-equipe-inativas ${state.teamListInativas ? "checked" : ""} />
+      <span>Mostrar inativas</span>
+    </label>
+    <button type="button" class="vp-jg-toggle" data-equipe-limpar ${filtrosDasEquipesAtivos() ? "" : "hidden"}>Limpar filtros</button>
+    <span class="vp-eqs-ver" role="group" aria-label="Visualização">
+      ${botaoVer("quadrados", "Quadrados", `<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>`)}
+      ${botaoVer("lista", "Lista", `<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="2" width="14" height="3"/><rect x="1" y="7" width="14" height="3"/><rect x="1" y="12" width="14" height="3"/></svg>`)}
+    </span>
+  `;
+}
+
+function setaDaOrdemDasEquipes(chave) {
+  if (state.teamListOrdem !== chave) return "";
+  const descendo = chave === "ultimo" || chave === "mapas";
+  return descendo !== state.teamListInversa ? "↓" : "↑";
+}
+
+function ordemDasEquipes() {
+  return `
+    <div class="vp-eqs-ordem" role="group" aria-label="Ordem das equipes">
+      <span>Ordenar por</span>
+      ${TEAM_LISTA_ORDENS.map((ordem) => {
+        const ativa = state.teamListOrdem === ordem.id;
+        const seta = setaDaOrdemDasEquipes(ordem.id);
+        return `<button type="button" class="vp-jg-toggle" data-equipe-ordem="${ordem.id}" aria-pressed="${ativa}">${escapeHtml(ordem.rotulo)}${seta ? ` <i aria-hidden="true">${seta}</i>` : ""}</button>`;
+      }).join("")}
+    </div>
+  `;
+}
+
+function cabecalhoDasEquipes() {
+  const coluna = (chave, rotulo, classe = "") => {
+    const ativa = state.teamListOrdem === chave;
+    const seta = setaDaOrdemDasEquipes(chave);
+    return `<button type="button" class="${classe}${ativa ? " ativa" : ""}" data-equipe-ordem="${chave}" aria-pressed="${ativa}">${rotulo}${seta ? ` <i aria-hidden="true">${seta}</i>` : ""}</button>`;
+  };
+  return `
+    <div class="vp-jg-cabeca vp-eqs-cabeca">
+      ${coluna("nome", "Equipe")}
+      ${coluna("ranking", "Ranking", "num")}
+      ${coluna("estado", "Estado", "num")}
+      ${coluna("ultimo", "Último jogo", "num")}
+      ${coluna("mapas", "Mapas", "num")}
+    </div>
+  `;
+}
+
+// Sem logo, o quadrado fica so com as cores (escolha do dono, 06/11/2026).
+function quadradoDaEquipe(team) {
+  const ultimo = teamUltimoJogo(team);
+  const uf = team.profile?.state || "";
+  const sigla = teamListSigla(team);
+  return `
+    <a class="vp-slide vp-eq vp-eqs" href="#/teams/${escapeHtml(team.id)}" style="${escapeHtml(teamPlateStyle(team))}" title="${escapeHtml(team.name)}">
+      <span class="vp-slide-campo"><i></i></span>
+      <b class="vp-eq-atual${teamValidRank(team) ? "" : " vp-eqs-texto"}">${escapeHtml(teamListRankLabel(team))}</b>
+      ${uf ? `<b class="vp-eqs-uf">${escapeHtml(uf)}</b>` : ""}
+      <span class="vp-eq-logo">${teamLogo(team.id, "large")}</span>
+      <span class="vp-eq-txt">
+        <strong>${escapeHtml(team.name)}</strong>
+        ${sigla ? `<small>${escapeHtml(sigla)}</small>` : ""}
+        ${ultimo ? `<small class="vp-eqs-ultimo"><span>Último jogo </span>${escapeHtml(formatShortDate(ultimo))}</small>` : ""}
+      </span>
+    </a>
+  `;
+}
+
+function linhaDaEquipe(team) {
+  const ultimo = teamUltimoJogo(team);
+  const profile = team.profile || {};
+  const instituicao = teamInstitutionLabel(team);
+  return `
+    <a class="vp-slide vp-jg-linha vp-eqs-linha" href="#/teams/${escapeHtml(team.id)}" style="${escapeHtml(teamPlateStyle(team))}">
+      <span class="vp-slide-campo"><i></i></span>
+      <span class="vp-eqs-logo">${teamLogo(team.id, "large")}</span>
+      <span class="vp-jg-nome"><strong>${escapeHtml(team.name)}</strong>${/n[aã]o informad/i.test(instituicao) ? "" : `<small class="vp-eqs-inst">${escapeHtml(instituicao)}</small>`}${teamListSigla(team) ? `<small class="vp-eqs-sigla">${escapeHtml(teamListSigla(team))}</small>` : ""}</span>
+      <span class="vp-jg-numero vp-eqs-rank${teamValidRank(team) ? "" : " vp-eqs-texto"}">${escapeHtml(teamListRankLabel(team))}</span>
+      <span class="vp-eqs-estado">${bandeiraDoEstado(profile.flag)}<span>${escapeHtml(profile.state || "-")}</span></span>
+      <span class="vp-eqs-data">${ultimo ? escapeHtml(formatShortDate(ultimo)) : "-"}</span>
+      <span class="vp-jg-numero vp-eqs-mapas" data-rotulo="mapas">${escapeHtml(String(team.matches || 0))}</span>
+    </a>
+  `;
+}
+
+// A busca troca so o resultado, como em Jogadores: recriar o campo focado a cada
+// tecla inverteria o texto digitado.
+function atualizarBuscaDeEquipes() {
+  const q = teamListFiltersToQuery().toString();
+  window.history.replaceState(null, "", `#/teams${q ? `?${q}` : ""}`);
+  const { contagem, lista } = resultadoDasEquipes();
+  document.querySelector(".vp-equipes .lista-contagem").textContent = contagem;
+  document.querySelector("[data-equipe-resultado]").innerHTML = lista;
+  document.querySelector("[data-equipe-limpar]").hidden = !filtrosDasEquipesAtivos();
+  bindResultadoDasEquipes();
+}
+
+function bindResultadoDasEquipes() {
+  document.querySelectorAll("[data-equipe-ordem]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      const chave = botao.dataset.equipeOrdem;
+      state.teamListInversa = state.teamListOrdem === chave ? !state.teamListInversa : false;
+      state.teamListOrdem = chave;
+      pushFilterState("teams", teamListFiltersToQuery(), `[data-equipe-ordem="${chave}"]`);
+    });
+  });
+  document.querySelectorAll(".vp-equipes .vp-paginas a").forEach((link) => {
+    link.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "instant" }));
+  });
+}
+
+function bindListaDeEquipes() {
+  bindResultadoDasEquipes();
+  document.getElementById("team-list-query")?.addEventListener("input", (event) => {
+    state.teamListQuery = event.target.value;
+    atualizarBuscaDeEquipes();
+  });
+  document.querySelector("[data-equipe-inativas]")?.addEventListener("change", (event) => {
+    state.teamListInativas = event.currentTarget.checked;
+    pushFilterState("teams", teamListFiltersToQuery(), "[data-equipe-inativas]");
+  });
+  document.querySelectorAll("[data-equipe-estado]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      state.teamListEstado = botao.dataset.equipeEstado || "";
+      pushFilterState("teams", teamListFiltersToQuery(), ".vp-eqs-estado-filtro summary");
+    });
+  });
+  document.querySelectorAll("[data-equipe-ver]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      state.teamListVer = botao.dataset.equipeVer === "lista" ? "lista" : "quadrados";
+      pushFilterState("teams", teamListFiltersToQuery(), `[data-equipe-ver="${state.teamListVer}"]`);
+    });
+  });
+  document.querySelector("[data-equipe-limpar]")?.addEventListener("click", () => {
+    state.teamListQuery = "";
+    state.teamListEstado = "";
+    state.teamListInativas = false;
+    pushFilterState("teams", teamListFiltersToQuery(), "#team-list-query");
+  });
 }
 
 // O indice /maps saiu em 29/08/2026 junto com /stats. A pagina de UM mapa
@@ -27402,6 +27735,12 @@ function tournamentDurationLabel(event) {
 function tournamentTeamById(event, teamId) {
   const team = teamById(teamId);
   const overrideName = event.teamNames?.[teamId];
+  // Campeonato de uma fase antiga (Dark UFRJ, hoje Minerva Thunders): escudo e
+  // cores da época, como o nome que já vem do teamNames.
+  const fase = team?.profile?.nomes?.find((item) => (item.eventos || []).includes(event.id));
+  if (team && fase) {
+    return { ...team, name: overrideName || fase.nome, tag: fase.tag || team.tag, logo: fase.logo || team.logo, colors: fase.cores?.length ? fase.cores : team.colors, profile: { ...team.profile, logo: fase.logo || team.profile?.logo } };
+  }
   if (team) return overrideName ? { ...team, name: overrideName } : team;
   if (!teamId) return null;
   return {
@@ -28617,14 +28956,18 @@ function compareTournamentTeamByRank(a, b) {
   return String(a.team?.name || "").localeCompare(String(b.team?.name || ""), "pt-BR");
 }
 
+// Equipe sem cadastro (nenhuma partida na base, so o nome na chave): o quadrado
+// fica so com o nome, sem painel e sem ranking, como a chave ja mostra.
 function tournamentEquipeQuadrado(row, origem) {
   const team = row.team;
-  return `
-    <button type="button" class="vp-slide vp-eq" data-tournament-team="${escapeHtml(team.id)}" style="${escapeHtml(teamPlateStyle(team))}" title="${escapeHtml(team.name)}" aria-label="${escapeHtml(`Ver elenco, desempenho e partidas de ${team.name}`)}">
+  const miolo = `
       <span class="vp-slide-campo"><i></i></span>
-      ${tournamentEquipeRanking(row)}
+      ${team.missing ? "" : tournamentEquipeRanking(row)}
       <span class="vp-eq-logo">${teamLogo(team.id, "large")}</span>
-      <span class="vp-eq-txt"><strong>${escapeHtml(team.name)}</strong>${origem ? `<small>Via ${escapeHtml(origem)}</small>` : ""}</span>
+      <span class="vp-eq-txt"><strong>${escapeHtml(team.name)}</strong>${origem ? `<small>Via ${escapeHtml(origem)}</small>` : ""}</span>`;
+  if (team.missing) return `<div class="vp-slide vp-eq vp-eq-sem-perfil" style="${escapeHtml(teamPlateStyle(team))}" title="${escapeHtml(team.name)}">${miolo}</div>`;
+  return `
+    <button type="button" class="vp-slide vp-eq" data-tournament-team="${escapeHtml(team.id)}" style="${escapeHtml(teamPlateStyle(team))}" title="${escapeHtml(team.name)}" aria-label="${escapeHtml(`Ver elenco, desempenho e partidas de ${team.name}`)}">${miolo}
     </button>
   `;
 }
@@ -30302,38 +30645,53 @@ function renderTeamDetail(id) {
   const team = teamById(id);
   if (!team) return renderNotFound("Equipe");
   id = team.id;
-  const matches = matchSeriesForTeam(id);
-  const currentLineup = team.currentLineup || [];
+  const todasAsSeries = matchSeriesForTeam(id);
+  // Cada nome da linha do tempo e um perfil. O atual e a pagina da equipe com a
+  // historia inteira; um nome antigo (`?fase=dark_ufrj`) troca a pagina toda para
+  // aquela epoca: nome, escudo, cores, quem jogou, trofeus, ranking e abas.
+  const fases = teamFases(team, todasAsSeries);
+  const pedida = teamFaseAtiva(fases);
+  const fase = pedida && !pedida.atual ? pedida : null;
+  state.faseDaPagina = fase ? { teamId: team.id, nome: fase.nome, logo: fase.logo } : null;
+  const naFase = (eventId) => !fase || fase.eventos.has(eventId);
+  const matches = todasAsSeries.filter((series) => naFase(series.eventId));
+  const perfil = teamPerfilDaFase(team, fase, matches);
+  const currentLineup = fase ? [] : team.currentLineup || [];
   const observedPlayers = state.db.players
     .filter((player) => player.observedTeamId === id && player.matches > 0)
     .sort((a, b) => Number(officialRatingValue(playerStatsForTeam(b, id)) || 0) - Number(officialRatingValue(playerStatsForTeam(a, id)) || 0));
-  const historicalPlayers = teamHistoricalPlayers(team).filter((player) => !currentLineup.some((entry) => entry.playerId === player.id));
-  const trophies = teamTrophyAchievements(team);
-  const tournaments = teamCampeonatos(team, matches, trophies);
-  const jogos = teamJogos(team, tournaments, matches);
   const quemJogou = teamQuemJogou(team, matches);
+  const naEpoca = new Set(quemJogou.map((player) => player.id));
+  const historicalPlayers = teamHistoricalPlayers(team)
+    .filter((player) => !currentLineup.some((entry) => entry.playerId === player.id))
+    .filter((player) => !fase || naEpoca.has(player.id));
+  const trophies = teamTrophyAchievements(team).filter((trophy) => naFase(trophy.event.id));
+  const tournaments = teamCampeonatos(team, matches, trophies).filter((event) => naFase(event.id));
+  const jogos = teamJogos(team, tournaments, matches);
   const abas = teamAbasVisiveis({ currentLineup, quemJogou, historicalPlayers, jogos, matches });
   const activeTab = abas.includes(route().tab) ? route().tab : "resumo";
   const tabSlide = panelSlideSnapshot("team-tabs", {
     selector: ".team-tab-panel",
     scope: team.id,
-    key: activeTab,
-    order: TEAM_TAB_KEYS,
+    key: `${activeTab}:${fase?.id || ""}`,
+    order: TEAM_TAB_KEYS.flatMap((tab) => ["", ...fases.map((item) => item.id)].map((item) => `${tab}:${item}`)),
   });
   Shell(`
-    <section class="team-page" ${teamAccentStyle(team)}>
+    <section class="team-page" ${teamAccentStyle(perfil)}>
+      ${teamFasesNav(team, fases, fase, activeTab)}
       <div class="vp-capa-cabeca">
-        ${teamCapa(team, { currentLineup, quemJogou, trophies })}
+        ${teamCapa(perfil, { currentLineup, quemJogou, trophies })}
         <nav class="team-tabs" aria-label="Abas da equipe">
-          ${abas.map((tab) => teamTabLink(team, tab, TEAM_TAB_ROTULOS[tab], activeTab)).join("")}
+          ${abas.map((tab) => teamTabLink(team, tab, TEAM_TAB_ROTULOS[tab], activeTab, fase)).join("")}
         </nav>
       </div>
       <section class="team-tab-panel">
-        ${renderTeamTab(activeTab, team, { matches, currentLineup, observedPlayers, historicalPlayers, quemJogou, tournaments, trophies, jogos })}
+        ${renderTeamTab(activeTab, perfil, { matches, currentLineup, observedPlayers, historicalPlayers, quemJogou, tournaments, trophies, jogos })}
       </section>
       ${window.Comments ? window.Comments.shell("team", team.id) : ""}
     </section>
   `);
+  if (fase) document.title = `${perfil.name} - UNIVLR`;
   window.Comments?.montar("team", team.id);
   ajustaTituloDaEquipe();
   bindAbaDaEquipe(team.id);
@@ -30654,8 +31012,135 @@ function trophyMonthLabel(value) {
   return new Date(quando).toLocaleDateString("pt-BR", { month: "short", year: "numeric" }).replace(".", "");
 }
 
-function teamTabLink(team, tab, label, activeTab) {
-  return `<a class="team-tab ${activeTab === tab ? "active" : ""}" href="#/teams/${team.id}/${tab}">${escapeHtml(label)}</a>`;
+function teamTabLink(team, tab, label, activeTab, fase = null) {
+  const query = fase ? `?fase=${encodeURIComponent(fase.id)}` : "";
+  return `<a class="team-tab ${activeTab === tab ? "active" : ""}" href="#/teams/${team.id}/${tab}${query}">${escapeHtml(label)}</a>`;
+}
+
+// Os nomes que a mesma line usou, do mais antigo ao atual (Dark UFRJ, depois
+// Minerva Thunders). As fases antigas vêm de `nomes` no team-profiles.json, gravado
+// quando a sucessão virou uma equipe só; cada uma lista os campeonatos que jogou com
+// aquele nome, e o resto é da fase atual. Equipe que nunca trocou de nome não tem fase.
+function teamFases(team, matches) {
+  const antigas = (team.profile?.nomes || []).filter((fase) => fase?.id && fase.nome);
+  if (!antigas.length) return [];
+  const dasAntigas = new Set(antigas.flatMap((fase) => fase.eventos || []));
+  const atuais = matches.filter((series) => !dasAntigas.has(series.eventId));
+  const quando = (lista) => lista.map((series) => Number(series.sortAt || series.startedAt || 0)).filter(Boolean);
+  const datasAtuais = quando(atuais);
+  // "2026-04-01" sozinho e meia-noite UTC, que no Brasil ainda e o dia 31 do mes
+  // anterior: o dia gravado e lido ao meio-dia local.
+  const dia = (texto) => (/^\d{4}-\d{2}-\d{2}$/.test(String(texto || "")) ? Date.parse(`${texto}T12:00:00`) : Date.parse(texto));
+  return [
+    ...antigas.map((fase) => ({
+      id: fase.id,
+      nome: fase.nome,
+      tag: fase.tag || "",
+      logo: fase.logo || "",
+      cores: fase.cores || [],
+      eventos: new Set(fase.eventos || []),
+      desde: dia(fase.desde),
+      ate: dia(fase.ate),
+    })),
+    {
+      id: team.id,
+      nome: team.name,
+      logo: team.profile?.logo || team.logo || "",
+      cores: team.colors || [],
+      eventos: new Set(atuais.map((series) => series.eventId)),
+      atual: true,
+      desde: datasAtuais.length ? Math.min(...datasAtuais) : 0,
+      ate: datasAtuais.length ? Math.max(...datasAtuais) : 0,
+    },
+  ].sort((a, b) => (a.atual ? 1 : 0) - (b.atual ? 1 : 0) || a.desde - b.desde)
+    .map((fase, indice, lista) => ({ ...fase, proxima: lista[indice + 1]?.desde }));
+}
+
+// A equipe vestida como na epoca de uma fase antiga: nome, sigla, escudo e cores
+// daquele nome, sem redes (sao as de hoje) e com o ranking da semana em que a fase
+// acabou. Sem fase, e a propria equipe.
+function teamPerfilDaFase(team, fase, series = []) {
+  if (!fase) return team;
+  // O nome vale ate o proximo estrear: a Canis seguiu ranqueada ate fev/26 sem
+  // jogar. A capa mostra a ultima posicao valida dessa janela.
+  const limite = Number.isFinite(fase.proxima) ? fase.proxima : Infinity;
+  const semanas = (state.db?.rankingSnapshots || [])
+    .filter((semana) => Number(semana.cutoffAt || 0) >= fase.desde && Number(semana.cutoffAt || 0) < limite && semana.byTeamId?.[team.id]?.matches)
+    .sort((a, b) => Number(b.cutoffAt || 0) - Number(a.cutoffAt || 0));
+  const fim = semanas.find((semana) => rankingIsValid(semana.byTeamId[team.id])) || semanas[0];
+  const ranking = fim?.byTeamId?.[team.id] || { inactive: true };
+  // A ficha (mapas, saldo, ataque, defesa, pistol) conta so os mapas da fase.
+  const soma = { matches: 0, wins: 0, losses: 0, roundDiff: 0, attackWins: 0, attackRounds: 0, defenseWins: 0, defenseRounds: 0, pistolWins: 0, pistolRounds: 0 };
+  series.forEach((item) => (item.maps || []).forEach((match) => {
+    const nosso = match.teamA?.id === team.id ? match.teamA : match.teamB?.id === team.id ? match.teamB : null;
+    if (!nosso) return;
+    const deles = nosso === match.teamA ? match.teamB : match.teamA;
+    const venceu = match.winnerId === team.id;
+    const rounds = match.teamStats?.[team.id] || {};
+    soma.matches += 1;
+    soma.wins += venceu ? 1 : 0;
+    soma.losses += venceu ? 0 : 1;
+    soma.roundDiff += Number(nosso.score || 0) - Number(deles?.score || 0);
+    ["attackWins", "attackRounds", "defenseWins", "defenseRounds", "pistolWins", "pistolRounds"].forEach((chave) => { soma[chave] += Number(rounds[chave] || 0); });
+  }));
+  return {
+    ...team,
+    ...soma,
+    attackWinRate: pctValue(soma.attackWins, soma.attackRounds),
+    defenseWinRate: pctValue(soma.defenseWins, soma.defenseRounds),
+    pistolWinRate: pctValue(soma.pistolWins, soma.pistolRounds),
+    rankingJanela: [fase.desde, Math.min(limite - 1, Number(semanas[0]?.cutoffAt || fase.ate))],
+    name: fase.nome,
+    tag: fase.tag || team.tag,
+    sourceTag: fase.tag || team.sourceTag,
+    logo: fase.logo || team.logo,
+    colors: fase.cores?.length ? fase.cores : team.colors,
+    currentLineup: [],
+    ranking,
+    rankingScore: ranking.score ?? 0,
+    validRank: ranking.validRank ?? null,
+    rankingSemana: fim?.cutoffAt || null,
+    profile: { ...team.profile, logo: fase.logo || team.profile?.logo, socials: {} },
+  };
+}
+
+// A fase da URL (`?fase=dark_ufrj`). O id da equipe também vale, e é a fase atual.
+function teamFaseAtiva(fases) {
+  const pedida = routeQuery().get("fase");
+  return pedida ? fases.find((fase) => fase.id === pedida) || null : null;
+}
+
+const TEAM_FASE_MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+
+function teamFaseMes(valor) {
+  const data = new Date(valor);
+  return `${TEAM_FASE_MESES[data.getMonth()]}/${String(data.getFullYear()).slice(2)}`;
+}
+
+function teamFasePeriodo(fase) {
+  if (!fase.desde) return "";
+  const inicio = teamFaseMes(fase.desde);
+  const fim = teamFaseMes(fase.ate || fase.desde);
+  return inicio === fim ? inicio : `${inicio} - ${fim}`;
+}
+
+// A linha do tempo no topo da pagina, acima da capa, no desenho das etapas do
+// campeonato. Cada nome e um perfil: o atual e a pagina sem `fase`, e um antigo
+// troca a pagina inteira para aquela epoca, mantendo a aba aberta.
+function teamFasesNav(team, fases, ativa, activeTab) {
+  if (fases.length < 2) return "";
+  const aba = activeTab && activeTab !== "resumo" ? `/${activeTab}` : "";
+  return `
+    <nav class="vp-camp-etapas vp-equipe-fases" aria-label="${escapeHtml(`Nomes de ${team.name}`)}">
+      ${fases.map((fase, indice) => {
+        const marcada = fase.atual ? !ativa : ativa?.id === fase.id;
+        const href = `#/teams/${team.id}${aba}${fase.atual ? "" : `?fase=${encodeURIComponent(fase.id)}`}`;
+        const src = assetPath(fase.logo);
+        const logo = src ? `<span class="team-logo clean-logo vp-fase-logo"><img src="${escapeHtml(src)}" alt="" loading="lazy" onerror="this.closest('.team-logo').remove()" /></span>` : "";
+        return `${indice ? `<span class="vp-fase-seta" aria-hidden="true">&rarr;</span>` : ""}<a href="${escapeHtml(href)}"${marcada ? ` aria-current="page"` : ""}>${logo}<span>${escapeHtml(fase.nome)}</span><small>${escapeHtml(teamFasePeriodo(fase))}</small></a>`;
+      }).join("")}
+    </nav>
+  `;
 }
 
 // Sucessao de equipe (ver rankingSuccessionAliases): a pagina da antiga diz para
@@ -32430,7 +32915,11 @@ function trophyImageIsGeneric(src) {
 // So as semanas do ranking oficial. O historico cadastrado a mao e a conta por pontos
 // que existiam aqui nao eram o ranking oficial, e nenhuma equipe chegava neles.
 function teamRankingHistory(team) {
-  return teamRankingSnapshotHistory(team.id);
+  const historico = teamRankingSnapshotHistory(team.id);
+  // Perfil de uma fase antiga: so as semanas daquele nome.
+  if (!team.rankingJanela) return historico;
+  const [inicio, fim] = team.rankingJanela;
+  return historico.filter((row) => dateValue(row.date) >= inicio && dateValue(row.date) <= fim);
 }
 
 function teamRankingSnapshotHistory(teamId) {
@@ -36235,8 +36724,10 @@ function organizerLogo(event, extra = "") {
 
 function teamLogo(id, extra = "") {
   const team = teamById(id);
-  const src = assetPath(team?.profile?.logo || team?.logo || "");
-  const label = `Logo ${team?.name || id}`;
+  const fase = (state.faseDaPagina?.teamId === team?.id && state.faseDaPagina) ||
+    (state.eventoDaPagina && team?.profile?.nomes?.find((item) => (item.eventos || []).includes(state.eventoDaPagina)));
+  const src = assetPath(fase?.logo || team?.profile?.logo || team?.logo || "");
+  const label = `Logo ${fase?.nome || team?.name || id}`;
   if (!src) return `<span class="team-logo clean-logo logo-empty ${escapeHtml(extra)}" aria-label="${escapeHtml(label)}"></span>`;
   return `<span class="team-logo clean-logo ${escapeHtml(extra)}"><img src="${escapeHtml(src)}" alt="${escapeHtml(label)}" loading="lazy" onerror="this.closest('.team-logo').classList.add('logo-empty'); this.remove()" /></span>`;
 }
@@ -36278,7 +36769,35 @@ const HISTORICAL_TEAM_ROUTE_ALIASES = {
   "ufg_eagles_black_7712cb48_2024": "ufg_eagles",
   "unicamp_tritons_2024": "unicamp_tritons_black",
   "macklogic_2024": "macklogic_red",
-  "udf_thunder_fusion_df_2024": "rahnag"
+  "udf_thunder_fusion_df_2024": "rahnag",
+  "unirv_e_sports_go_2024": "unirv_rushone",
+  "eng_ufes_es_2024": "castor_vai",
+  "cyber_kongs_dourada_2024": "cyberkongs",
+  "ufg_eagles_black_2024": "ufg_eagles_blue",
+  "maua_esports_imt_e15688a9_2024": "maua_blue",
+  "maua_esports_imt_2024": "maua_b",
+  "fei_esports_valorant_2024": "fei_darkowls",
+  "team_valorant_cybers_2024": "unesa_cyborgs",
+  "calango_team_fametro_am_668459eb_2024": "calango_team_fametro_am_2024",
+  "aufa_line_a_2024": "aufa_faesa",
+  "burning_bunnies_ufpr_white_2024": "ufpr_bbn",
+  "ibtec_2024": "ibmec_sharks",
+  "inatel_white": "inatel",
+  "minerva_esports_misto_2024": "ufrj_minerva",
+  "minerva_esports_ufrj_inclusivo_2024": "minerva_artemis",
+  "poli_plague_gold_2024": "poli_plague",
+  "stings_ba_valorant_2024": "stings_yellow",
+  "stings_belas_artes_2024": "stings_yellow",
+  "ufrn_rn_2024": "ufrn_tirana",
+  "caap_void_2024": "caap_hellhounds_black_2024",
+  "axis_anteaters_valorant_2024": "axis_anteaters",
+  "axis_anteaters_black_valorant_2024": "axis_anteaters",
+  "axis_anteaters_shadow": "axis_anteaters",
+  "axis_ego": "caap_momentum",
+  "ufpe_virtus": "incinera_esports",
+  "dark_ufrj": "minerva_thunders",
+  "ufrn_carcaras": "ufrn_tirana",
+  "ufu_saints_trigons": "ufu_saints_onyx"
 };
 
 function teamById(id) {

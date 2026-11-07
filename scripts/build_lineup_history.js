@@ -29,6 +29,39 @@ const LEGACY_TEAM_ID_ALIASES = {
   unicamp_tritons_2024: "unicamp_tritons_black",
   macklogic_2024: "macklogic_red",
   udf_thunder_fusion_df_2024: "rahnag",
+  // 06/11/2026: as duas Calango FAMETRO são a mesma inscrição (responsável).
+  calango_team_fametro_am_668459eb_2024: "calango_team_fametro_am_2024",
+  // 06/11/2026: Team Valorant Cybers é a UNESA Cyborgs (responsável).
+  team_valorant_cybers_2024: "unesa_cyborgs",
+  // Revisão de 06/11/2026, confirmadas pelo responsável.
+  unirv_e_sports_go_2024: "unirv_rushone",
+  eng_ufes_es_2024: "castor_vai",
+  cyber_kongs_dourada_2024: "cyberkongs",
+  ufg_eagles_black_2024: "ufg_eagles_blue",
+  maua_esports_imt_e15688a9_2024: "maua_blue",
+  maua_esports_imt_2024: "maua_b",
+  // Perfil único das sucessões, 06/11/2026.
+  axis_ego: "caap_momentum",
+  ufpe_virtus: "incinera_esports",
+  dark_ufrj: "minerva_thunders",
+  ufrn_carcaras: "ufrn_tirana",
+  ufu_saints_trigons: "ufu_saints_onyx",
+  fei_esports_valorant_2024: "fei_darkowls",
+  // Planilha de revisão v3 (06/11/2026), confirmadas pelo responsável.
+  aufa_line_a_2024: "aufa_faesa",
+  burning_bunnies_ufpr_white_2024: "ufpr_bbn",
+  ibtec_2024: "ibmec_sharks",
+  inatel_white: "inatel",
+  minerva_esports_misto_2024: "ufrj_minerva",
+  minerva_esports_ufrj_inclusivo_2024: "minerva_artemis",
+  poli_plague_gold_2024: "poli_plague",
+  stings_ba_valorant_2024: "stings_yellow",
+  stings_belas_artes_2024: "stings_yellow",
+  ufrn_rn_2024: "ufrn_tirana",
+  caap_void_2024: "caap_hellhounds_black_2024",
+  axis_anteaters_valorant_2024: "axis_anteaters",
+  axis_anteaters_black_valorant_2024: "axis_anteaters",
+  axis_anteaters_shadow: "axis_anteaters",
 };
 
 function readJson(file) {

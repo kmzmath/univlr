@@ -52,6 +52,9 @@ const matches = [
   match("m5", 25, "gamma", 13, "beta", 9),
   match("m6", 40, "alpha", 13, "gamma", 6),
 ];
+// Desde 06/11/2026 so entra na conta quem tem jogo ate a data. Os testes de
+// conquista usam estes jogos para que as quatro equipes estejam na conta.
+const presenca = [...matches, match("m7", 30, "delta", 13, "gamma", 9)];
 
 const result = RankingCore.calculateTeamRankings({
   teams,
@@ -93,6 +96,28 @@ assert.equal(result.byTeamId.alpha.validRank, null, "provisional teams do not re
 assert(Number.isFinite(result.byTeamId.alpha.overallRank), "all teams receive an overall rank for the Todos view");
 assert.equal(result.byTeamId.delta.provisional, true, "team with few matches is provisional");
 assert(result.byTeamId.alpha.score > result.byTeamId.gamma.score, "collective wins and dominance drive ranking order");
+
+// Regra de 06/11/2026: equipe sem jogo ate a data fica fora da conta. Antes ela
+// entrava na regua dos percentis 5-95 e mudava a nota de todas as outras.
+const comSemJogo = RankingCore.calculateTeamRankings({
+  teams: [...teams, team("sem-jogo-1"), team("sem-jogo-2"), team("sem-jogo-3")],
+  matches,
+  matchSeries: matches.map(seriesFromMatch),
+  tournaments: [],
+  players: [],
+  weights: { achievements: { inferFromEventResults: false, manualResults: [] } },
+  now,
+});
+for (const row of result.teams) {
+  assert.equal(comSemJogo.byTeamId[row.id].score, row.score, `${row.id}: teams without games do not change anyone else's score`);
+}
+for (const id of ["sem-jogo-1", "sem-jogo-2", "sem-jogo-3", "delta"]) {
+  const row = comSemJogo.byTeamId[id];
+  assert.equal(row.score, 0, `${id}: a team without games scores 0`);
+  assert.equal(row.provisional, true, `${id}: a team without games is provisional`);
+  assert.equal(row.validRank, null, `${id}: a team without games has no rank`);
+  assert.equal(row.matches, 0, `${id}: a team without games keeps a row with 0 matches`);
+}
 
 const noInventedAchievements = RankingCore.calculateTeamRankings({
   teams,
@@ -149,7 +174,7 @@ assert.equal(incompleteRosterResult.byTeamId.beta.validRank, 1, "canonical ranki
 
 const achievementResult = RankingCore.calculateTeamRankings({
   teams,
-  matches: [],
+  matches: presenca,
   matchSeries: [],
   tournaments: [],
   players: [],
@@ -208,7 +233,9 @@ for (const row of achievementResult.teams) {
   const expected = Object.entries(finalWeights).reduce((sum, [key, weight]) => sum + weight * row.blocks[key], 0);
   assert(Math.abs(row.score - expected) < 1e-9, `${row.id} final score is the weighted sum of the four blocks, achievements included`);
 }
-assert(achievementResult.byTeamId.alpha.score > achievementResult.byTeamId.beta.score, "a title moves the final score when everything else is equal");
+const semConquista = RankingCore.calculateTeamRankings({ teams, matches: presenca, matchSeries: [], tournaments: [], players: [], weights: { achievements: { inferFromEventResults: false } }, now });
+const ganho = (id) => achievementResult.byTeamId[id].score - semConquista.byTeamId[id].score;
+assert(ganho("alpha") > ganho("beta"), "a title moves the final score more than a runner-up place, with the same games");
 
 const qualifierEvent = {
   id: "qual-cup",
@@ -228,7 +255,7 @@ const qualifierWeights = {
     sizeWeights: [{ minTeams: 1, weight: 1 }],
   },
 };
-const qualifierResult = RankingCore.calculateTeamRankings({ teams, matches: [], matchSeries: [], tournaments: [qualifierEvent], players: [], weights: qualifierWeights, now });
+const qualifierResult = RankingCore.calculateTeamRankings({ teams, matches: presenca, matchSeries: [], tournaments: [qualifierEvent], players: [], weights: qualifierWeights, now });
 const qualified = qualifierResult.byTeamId.alpha.achievements[0];
 assert(qualified, "an event whose qualified teams are labelled Classificado still counts");
 assert.equal(qualified.placementStart, 1, "Classificado takes the first positions the numbered ranges leave free");
@@ -238,7 +265,7 @@ assert.equal(qualified.score, 85, "Classificado scores the average of the positi
 
 const tableResult = RankingCore.calculateTeamRankings({
   teams,
-  matches: [],
+  matches: presenca,
   matchSeries: [],
   tournaments: [qualifierEvent],
   players: [],
@@ -268,7 +295,7 @@ const bigCup = cupEvent("big", ["beta", "delta", "alpha", "gamma"]);
 const table = (first, second = 0) => ({ placementPoints: { "1": first, "2": second, "3": 0, "4": 0 } });
 const accumulated = RankingCore.calculateTeamRankings({
   teams,
-  matches: [],
+  matches: presenca,
   matchSeries: [],
   tournaments: [...smallCups, bigCup, cupEvent("half-life", ["alpha", "beta", "gamma", "delta"], 152), cupEvent("expired", ["gamma", "alpha", "beta", "delta"], 320), cupEvent("ignored", ["gamma", "alpha", "beta", "delta"])],
   players: [],
@@ -297,7 +324,7 @@ assert(!accumulated.byTeamId.gamma.achievements.some((row) => row.eventId === "i
 
 const decayCheck = RankingCore.calculateTeamRankings({
   teams,
-  matches: [],
+  matches: presenca,
   matchSeries: [],
   tournaments: [cupEvent("half-life", ["alpha", "beta", "gamma", "delta"], 152)],
   players: [],
@@ -327,7 +354,7 @@ const groupTables = {
 };
 const grouped = (config) => Object.fromEntries(Object.entries(config).map(([id, row]) => [id, id === "solo" ? row : { ...row, bestOfGroup: "quali" }]));
 const groupRun = (tournamentWeights, at = now) =>
-  RankingCore.calculateTeamRankings({ teams, matches: [], matchSeries: [], tournaments: groupEvents, players: [], weights: { tournaments: tournamentWeights }, now: at });
+  RankingCore.calculateTeamRankings({ teams, matches: presenca, matchSeries: [], tournaments: groupEvents, players: [], weights: { tournaments: tournamentWeights }, now: at });
 const campaignOf = (run, teamId, eventId) => run.byTeamId[teamId].achievements.find((row) => row.eventId === eventId);
 
 const bestOf = groupRun(grouped(groupTables));
@@ -443,7 +470,8 @@ const masseyForward = masseyFor(splitTeams);
 for (const order of [splitTeams.slice().reverse(), [...splitTeams.slice(3), ...splitTeams.slice(0, 3)]]) {
   const other = masseyFor(order);
   for (const row of splitTeams) {
-    assert(Math.abs(other[row.id] - masseyForward[row.id]) < 1e-9, `massey of ${row.id} does not depend on the team order (${masseyForward[row.id]} vs ${other[row.id]})`);
+    // Equipe sem jogo (idle) fica fora da conta desde 06/11/2026: sem massey nas duas ordens.
+    assert(other[row.id] === masseyForward[row.id] || Math.abs(other[row.id] - masseyForward[row.id]) < 1e-9, `massey of ${row.id} does not depend on the team order (${masseyForward[row.id]} vs ${other[row.id]})`);
   }
 }
 

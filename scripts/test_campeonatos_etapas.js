@@ -386,5 +386,43 @@ for (const camp of cadastro) {
   assert.strictEqual(chamadas, 0, "a etapa nao calcula a colocacao do Geral");
 }
 
+// ---------------------------------------------------------------- Pontos menores da revisao
+// Titulo da aba do navegador no Geral: o nome do campeonato.
+assert.strictEqual(context.tournamentDocumentTitle("univava"), "UNIVAVÁ", "titulo da aba no Geral");
+assert.strictEqual(context.tournamentDocumentTitle("univava-playoffs"), "UNIVAVÁ: Playoffs", "controle: titulo da etapa");
+
+// Linha de campeonato em Eventos: pelo teclado a capa aparece e o foco contorna a linha.
+{
+  const css = ler("placar.css");
+  assert(/\.vp-eventos \.event-row-camp\.tem-capa:focus-within::before/.test(css), "a capa aparece com o foco dentro da linha");
+  assert(/\.event-row-camp:has\(\.event-row-link:focus-visible\)/.test(css), "o foco do nome contorna a linha inteira");
+}
+
+// Escudo e cores de epoca no Geral: a UFRJ Canis (hoje Minerva Thunders) no JUBS 2025.
+{
+  const geral = context.eventoDoGeral(context.campeonatoPorId("jubs-2025"));
+  const equipe = context.tournamentTeamById(geral, "minerva_thunders");
+  assert.strictEqual(equipe.logo, "assets/team-logos/ufrj_canis.png", "escudo da epoca no Geral");
+  assert.strictEqual(equipe.name, context.tournamentTeamById(ev("jubs-2025-fase-inicial"), "minerva_thunders").name, "mesmo nome da etapa");
+  assert.notStrictEqual(context.teamById("minerva_thunders").logo, equipe.logo, "controle: o escudo de hoje e outro");
+  // O escudo pequeno (teamLogo) da colocacao e das listas le a epoca da rota.
+  vm.runInContext('state.eventoDaPagina = eventosDaRota("events", "jubs-2025");', context);
+  assert(context.teamLogo("minerva_thunders").includes("ufrj_canis.png"), "teamLogo com a epoca no Geral");
+  vm.runInContext('state.eventoDaPagina = eventosDaRota("teams", "minerva_thunders");', context);
+  assert(!context.teamLogo("minerva_thunders").includes("ufrj_canis.png"), "controle: fora do campeonato, o escudo de hoje");
+}
+
+// As 5 abas do Geral desenham em todos os campeonatos, com o conteudo de cada uma.
+for (const camp of cadastro) {
+  const marcas = { "": "vp-s-colocacao", "/jogos": "vp-jogos-etapa", "/estatisticas": "Estatísticas", "/mapas": "Mapas", "/agentes": "Agentes" };
+  for (const [aba, marca] of Object.entries(marcas)) {
+    const html = renderiza(`#/events/${camp.id}${aba}`);
+    assert(html.includes(marca), `${camp.id}${aba}: desenhou (${marca})`);
+  }
+  const jogos = renderiza(`#/events/${camp.id}/jogos`);
+  const comSerie = context.campeonatoPorId(camp.id).etapas.filter((etapa) => context.tournamentJogos(etapa, seriesDe(etapa.id)).length).length;
+  assert.strictEqual((jogos.match(/class="vp-jogos-etapa"/g) || []).length, comSerie, `${camp.id}: um bloco de jogos por etapa com jogos`);
+}
+
 console.log("campeonatos com etapas: ok");
 

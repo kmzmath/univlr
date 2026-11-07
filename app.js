@@ -23569,7 +23569,7 @@ function render() {
   window.Comments?.novaRender?.();
   // Na pagina de um campeonato, a equipe que trocou de nome aparece com o escudo
   // da epoca (teamLogo le isto), como o nome que ja vem do teamNames do evento.
-  state.eventoDaPagina = (section === "events" || section === "tournaments") && id ? id : null;
+  state.eventoDaPagina = eventosDaRota(section, id);
   // O perfil de uma fase antiga liga isto em renderTeamDetail; qualquer outra pagina o desliga.
   state.faseDaPagina = null;
   const pages = {
@@ -28201,8 +28201,12 @@ function tournamentTeamById(event, teamId) {
   const team = teamById(teamId);
   const overrideName = event.teamNames?.[teamId];
   // Campeonato de uma fase antiga (Dark UFRJ, hoje Minerva Thunders): escudo e
-  // cores da época, como o nome que já vem do teamNames.
-  const fase = team?.profile?.nomes?.find((item) => (item.eventos || []).includes(event.id));
+  // cores da época, como o nome que já vem do teamNames. No Geral vale a época da
+  // etapa mais recente em que a equipe jogou com nome antigo (a faixa vem da mais
+  // recente para a mais antiga).
+  const eventos = event.isGeral ? event.campeonato.etapas.map((etapa) => etapa.id) : [event.id];
+  const nomes = team?.profile?.nomes || [];
+  const fase = eventos.map((id) => nomes.find((item) => (item.eventos || []).includes(id))).find(Boolean);
   if (team && fase) {
     return { ...team, name: overrideName || fase.nome, tag: fase.tag || team.tag, logo: fase.logo || team.logo, colors: fase.cores?.length ? fase.cores : team.colors, profile: { ...team.profile, logo: fase.logo || team.profile?.logo } };
   }
@@ -37522,10 +37526,19 @@ function organizerLogo(event, extra = "") {
   return `<span class="${escapeHtml(classes)}"><img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" loading="lazy" onerror="this.closest('.organizer-logo').classList.add('logo-empty'); this.remove()" /></span>`;
 }
 
+// Os eventos da pagina aberta, para o escudo de epoca: a etapa, ou as etapas do
+// campeonato no Geral (da mais recente para a mais antiga). Fora de campeonato, nada.
+function eventosDaRota(section, id) {
+  if ((section !== "events" && section !== "tournaments") || !id) return null;
+  const campeonato = state.db ? campeonatoPorId(id) : null;
+  return campeonato ? campeonato.etapas.map((etapa) => etapa.id) : [id];
+}
+
 function teamLogo(id, extra = "") {
   const team = teamById(id);
+  const nomes = team?.profile?.nomes || [];
   const fase = (state.faseDaPagina?.teamId === team?.id && state.faseDaPagina) ||
-    (state.eventoDaPagina && team?.profile?.nomes?.find((item) => (item.eventos || []).includes(state.eventoDaPagina)));
+    (state.eventoDaPagina || []).map((eventId) => nomes.find((item) => (item.eventos || []).includes(eventId))).find(Boolean);
   const src = assetPath(fase?.logo || team?.profile?.logo || team?.logo || "");
   const label = `Logo ${fase?.nome || team?.name || id}`;
   if (!src) return `<span class="team-logo clean-logo logo-empty ${escapeHtml(extra)}" aria-label="${escapeHtml(label)}"></span>`;
@@ -37698,7 +37711,7 @@ function matchTitleTeamTag(side) {
 }
 
 function tournamentDocumentTitle(id) {
-  return visibleTournaments().find((event) => event.id === id)?.name || STATIC_DOCUMENT_TITLES.events;
+  return campeonatoPorId(id)?.nome || visibleTournaments().find((event) => event.id === id)?.name || STATIC_DOCUMENT_TITLES.events;
 }
 
 function playerDocumentTitle(id) {

@@ -11651,9 +11651,22 @@ a.vp-cj-equipe:hover span {
 .event-row-camp .event-row-link {
   color: inherit;
   text-decoration: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+}
+
+/* O foco do nome contorna a linha inteira, como numa linha que e um <a> so. */
+.event-row-camp .event-row-link:focus-visible {
+  outline: none;
+}
+
+.event-row-camp:has(.event-row-link:focus-visible) {
+  outline: 2px solid var(--brand-text);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vp-eventos .event-row-camp.tem-capa:focus-within::before {
+    opacity: 1;
+  }
 }
 
 .event-row-camp .event-row-link::after {

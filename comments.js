@@ -859,5 +859,5 @@
     setTimeout(() => alvo.classList.remove("destacado"), 2600);
   }
 
-  window.Comments = { shell, montar, novaRender, avatar, quando, corpo, selo, atividadeHome, atividadeFaixa, atividadeLarga, assuntoDaThread };
+  window.Comments = { shell, montar, novaRender, avatar, quando, corpo, selo, selos: selosDeFa, atividadeHome, atividadeFaixa, atividadeLarga, assuntoDaThread };
 })();

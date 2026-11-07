@@ -822,4 +822,47 @@ assert.deepStrictEqual(JSON.parse(campanhaDividida), {
   trofeus: [true, false],
 }, "cada equipe do campeonato tem a propria campanha, com os proprios numeros");
 
+// ------------------------------------------------------- Threads livres
+// Aba no menu depois do Ranking, painel no trilho da esquerda embaixo do
+// ranking (opcao B, escolhida pelo dono sobre a home real).
+const itensDoMenu = JSON.parse(vm.runInContext("JSON.stringify(navItems)", context));
+const iRanking = itensDoMenu.findIndex(([k]) => k === "ranking");
+assert.deepStrictEqual(itensDoMenu[iRanking + 1], ["threads", "Threads"], "Threads entra no menu logo depois de Ranking");
+
+const recentes = (n, extra = {}) =>
+  Array.from({ length: n }, (_, i) => ({
+    id: `00000000-0000-4000-8000-00000000000${i}`, title: `Thread numero ${i}`, created_at: "2026-11-07T12:00:00Z",
+    author_username: `autor${i}`, respostas: i, ultima_atividade: "2026-11-07T12:00:00Z", ...extra,
+  }));
+let topicos = recentes(7);
+context.Community = {
+  ...context.Community,
+  topicosRecentes: () => topicos,
+  logado: () => false,
+};
+context.Comments = { quando: () => "há 4 min", atividadeFaixa: () => "", selo: () => "" };
+vm.runInContext(ler("threads.js"), context);
+const painel = () => context.Threads.painelHome();
+assert.strictEqual((painel().match(/class="th-linha"/g) || []).length, 5, "o painel mostra 5 threads");
+assert(painel().includes('href="#/threads"') && painel().includes("Ver todas"), "o painel tem Ver todas para a lista");
+assert(painel().includes("+ Nova thread"), "o painel tem o botao de nova thread");
+assert(painel().includes('title="Thread numero 0"'), "o titulo inteiro vai na dica");
+topicos = [];
+assert(painel().includes("Nenhuma thread ainda. Comece a primeira."), "sem thread, o painel diz isso");
+assert(painel().includes("+ Nova thread"), "e continua com o botao");
+topicos = recentes(1, { author_username: null });
+assert(painel().includes("conta apagada"), "autor de conta apagada aparece assim");
+assert(!painel().includes('href="#/u/'), "e sem link de perfil");
+topicos = recentes(1, { title: '<img src=x onerror=alert(1)>' });
+assert(!painel().includes("<img src=x"), "o titulo e escapado");
+
+topicos = recentes(3);
+context.renderHomeCompact();
+const homeComThreads = appElement.innerHTML;
+const esq = homeComThreads.indexOf("vp-trilho-esq");
+const rk = homeComThreads.indexOf("vp-placa-rk");
+const th = homeComThreads.indexOf("th-painel");
+const meio = homeComThreads.indexOf("vp-trilho-meio");
+assert(esq < rk && rk < th && th < meio, "o painel de threads fica no trilho da esquerda, depois do ranking");
+
 console.log("Visual Placar contract tests passed");

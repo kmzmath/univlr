@@ -179,6 +179,8 @@ O painel da home já foi aprovado. As outras três telas passam por escolha do d
 
 ### Task 4: Telas - painel da home, lista, formulário, thread, menu e rota
 
+> **Escolha do dono em 07/11/2026:** lista **A** (tabela da HLTV em 922px, bloco "Nova conversa" com o botão no trilho esquerdo; no celular, linhas compactas), thread **A** (cartão sólido com título, autor, data, texto e Editar/Apagar; outras threads e o botão no trilho esquerdo), formulário **B** (escrever no próprio cartão da thread, com Publicar e Cancelar no pé). Mockups em `.superpowers/brainstorm/threads/` (`lista-a-*`, `thread-a-*`, `form-b-*`) e o injetor em `injeta-paginas.js`.
+
 **Files:**
 - Create: `threads.js`
 - Modify: `index.html` (`<script src="threads.js?v=1">` depois de `news.js`; subir `?v=` de `app.js`, `community-core.js`, `comments.js`, `auth.js`, `profile.js` e `placar.css` quando mudarem)

@@ -651,6 +651,17 @@
       "Esse link expirou ou já foi usado. Peça um novo em \"Esqueci a senha\".",
     "New password should be different from the old password":
       "A senha nova precisa ser diferente da atual.",
+    // Threads livres: as mensagens do 0008 chegam sem acento, como todas as
+    // do banco; estas aparecem no formulario, entao saem escritas direito.
+    "titulo precisa ter entre 5 e 120 caracteres": "O título precisa ter entre 5 e 120 caracteres.",
+    "texto pode ter no maximo 2000 caracteres": "O texto pode ter no máximo 2.000 caracteres.",
+    "muitas threads seguidas, espere um pouco": "Você abriu muitas threads seguidas. Espere um pouco antes da próxima.",
+    "limite diario de threads atingido": "Você chegou ao limite de threads por hoje.",
+    "so da para editar thread propria, nos primeiros 15 minutos":
+      "Só dá para editar a própria thread, nos primeiros 15 minutos.",
+    "thread nao existe": "Esta thread não existe mais.",
+    "thread nao encontrada": "Esta thread não existe mais.",
+    "conta suspensa": "Sua conta está suspensa.",
   };
 
   function mensagemDeErro(erro) {

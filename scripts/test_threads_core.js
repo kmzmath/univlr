@@ -142,6 +142,10 @@ async function rejeita(promessa, trecho) {
   assert.ok(recentes.length >= 1 && recentes.length <= 5);
   assert.strictEqual(recentes[0].id, t2);
 
+  // A mensagem do banco chega sem acento; a tela mostra escrita direito.
+  assert.strictEqual(C.mensagemDeErro({ message: "titulo precisa ter entre 5 e 120 caracteres" }), "O título precisa ter entre 5 e 120 caracteres.");
+  assert.strictEqual(C.mensagemDeErro({ message: "thread nao existe" }), "Esta thread não existe mais.");
+
   console.log("test_threads_core: ok");
 })().catch((erro) => {
   console.error(erro);

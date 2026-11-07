@@ -20288,6 +20288,7 @@ const navItems = [
   ["players", "Players"],
   ["teams", "Equipes"],
   ["ranking", "Ranking"],
+  ["threads", "Threads"],
 ];
 
 // Lista de equipes: 48 fecha as fileiras de 6, 4 e 3 quadrados sem sobra.
@@ -20321,6 +20322,7 @@ const STATIC_DOCUMENT_TITLES = {
   teams: "Equipes",
   u: "Perfil",
   news: "Notícias",
+  threads: "Threads",
 };
 
 const state = {
@@ -23584,6 +23586,7 @@ function render() {
     maps: renderMapsCompact,
     u: (username) => window.Profile.renderProfilePage(username),
     news: (slug) => window.News.renderNews(slug),
+    threads: (id) => window.Threads.renderThreads(id),
   };
   (pages[section] || renderHomeCompact)(id);
   ajustarTextosVariaveis();
@@ -23955,6 +23958,7 @@ function renderHomeCompact() {
           <div class="vp-placa vp-placa-rk">${topTeams.map(compactRankingRow).join("")}</div>
           ${panelFooterLink("ranking", "Ranking completo")}
         </section>
+        ${window.Threads ? window.Threads.painelHome() : ""}
       </div>
       <div class="vp-trilho vp-trilho-meio">
         <section class="vp-s-partidas">

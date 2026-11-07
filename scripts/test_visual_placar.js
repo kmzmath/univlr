@@ -168,11 +168,16 @@ assert(linhaRanking.includes("data-trama="), "a trama do teamPatternFor continua
 assert(/48 partidas<\/span>\s*<span class="vp-rk-nota">99\.9<\/span>/.test(linhaRanking), "a nota vem logo depois das partidas");
 
 const diaUtc = (mes, dia) => Date.UTC(2026, mes - 1, dia, 15);
-const campeonatoVivo = { id: "copa", name: "Copa LUCE Inters", status: "Em andamento", tier: "B", start: diaUtc(9, 6), end: diaUtc(11, 7), matches: 17, teams: Array(8).fill("x"), logo: "assets/tournament-icons/copa_luce.png" };
+// Datas relativas a hoje: com o fim fixo em 07/11/2026, o teste quebrou nesse dia,
+// porque a linha passa a dizer "desde" quando o fim chega (o comportamento certo).
+const DIA_MS = 24 * 60 * 60 * 1000;
+const fimVivo = Date.now() + 10 * DIA_MS;
+const campeonatoVivo = { id: "copa", name: "Copa LUCE Inters", status: "Em andamento", tier: "B", start: Date.now() - 60 * DIA_MS, end: fimVivo, matches: 17, teams: Array(8).fill("x"), logo: "assets/tournament-icons/copa_luce.png" };
+const fimVivoTexto = `${new Date(fimVivo).getDate()} de ${new Date(fimVivo).toLocaleDateString("pt-BR", { month: "short" }).replace(".", "")}`;
 const campeonatoEncerrado = { id: "rush", name: "Rush Series 3ª Edição", status: "Finalizado", tier: "A", start: diaUtc(10, 17), end: diaUtc(10, 18), matches: 35, teams: Array(21).fill("x"), logo: "assets/tournament-icons/rushSeries.png" };
 const linhaViva = context.eventListRow(campeonatoVivo);
 assert(linhaViva.includes('class="vp-evrow"'), "a linha de campeonato e uma vp-evrow");
-assert(linhaViva.includes('class="vp-ao-vivo"') && /Em andamento<\/span> até 7 de nov/.test(linhaViva), "em andamento mostra ate quando vai");
+assert(linhaViva.includes('class="vp-ao-vivo"') && linhaViva.includes(`Em andamento</span> até ${fimVivoTexto}`), "em andamento mostra ate quando vai");
 const linhaEncerrada = context.eventListRow(campeonatoEncerrado);
 assert(!linhaEncerrada.includes("Finalizado"), "campeonato encerrado nao repete Finalizado");
 assert(linhaEncerrada.includes("17 - 18 de out"), "datas do mesmo mes juntam o mes no fim, sem ano");
@@ -581,12 +586,15 @@ const notasPublicas = [];
 (function coletarNotas(valor, chaveDoPai) {
   if (!valor || typeof valor !== "object") return;
   for (const [chave, item] of Object.entries(valor)) {
-    if (typeof item === "string" && (["previewNote", "note", "status"].includes(chave) || chaveDoPai === "details")) notasPublicas.push(item);
+    if (typeof item === "string" && (["previewNote", "note", "status", "summary", "standings", "standingsLabel", "title", "aLabel", "bLabel"].includes(chave) || chaveDoPai === "details")) notasPublicas.push(item);
     else coletarNotas(item, chave);
   }
 })(overrides);
 assert(notasPublicas.length > 0, "a varredura encontrou notas");
-const notasDeBastidor = notasPublicas.filter((nota) => /arquivo|respons[aá]vel|\bfontes?\b|boletim|mapa\(s\)|excluído\(s\)|excel|planilha|tracker|challengermode|faceit|battlefy/i.test(nota));
+// Desde 07/11/2026 tambem: plataforma, "preservado", "reconstruido", "encontrado",
+// codigo de arquivo (LB_016), CM e "registrado" (menos "Placar nao registrado",
+// o status das series de vencedor conhecido sem placar).
+const notasDeBastidor = notasPublicas.filter((nota) => /arquivo|respons[aá]vel|\bfontes?\b|boletim|mapa\(s\)|excluído\(s\)|excel|planilha|tracker|challengermode|faceit|battlefy|plataforma|preservad|reconstru|encontrad|contas de torneio|preenchiment|\b[A-Z0-9]{2,}_\d{3}|\bCM\b|(?<!não )registrad/i.test(nota));
 assert.deepStrictEqual(notasDeBastidor, [], "as notas falam de partida, nao de bastidor");
 
 const superior = rush.bracket.regions.find((region) => region.className === "upper-bracket");

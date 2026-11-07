@@ -270,6 +270,7 @@ const TOURNAMENT_OVERRIDES = {
     "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
     "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
     "logo": "assets/tournament-icons/copa_alianca.png",
+    "tier": "A",
     "type": "Online",
     "status": "Finalizado",
     "teamCount": 44,
@@ -378,11 +379,56 @@ const TOURNAMENT_OVERRIDES = {
       "summary": "Eliminação dupla classificatória",
       "details": [
         "Classificatória em eliminação dupla.",
-        "Resultados da plataforma preservados nas séries sem estatísticas."
+        "Algumas séries têm só o resultado, sem estatísticas."
       ],
       "standings": "Classificação oficial"
     },
-    "placements": [],
+    "placements": [
+      {"range": "Classificado", "id": "azure_bears_golden", "note": "Chave superior"},
+      {"range": "Classificado", "id": "maua_esports_black_2024", "note": "Chave superior"},
+      {"range": "Classificado", "id": "caap_hellhounds", "note": "Chave superior"},
+      {"range": "Classificado", "id": "caaso_hogs_usp_2024", "note": "Chave superior"},
+      {"range": "Classificado", "id": "unicamp_tritons_black", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "unb_green_olws_line_red_2024", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "usp_cronos_2024", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "ufg_eagles", "note": "Chave inferior"},
+      {"range": "9-12", "id": "poli_plague_gold_2024"},
+      {"range": "9-12", "id": "macklogic_red"},
+      {"range": "9-12", "id": "inatel_white"},
+      {"range": "9-12", "id": "cyber_kongs_dourada_2024"},
+      {"range": "13-16", "id": "ufu_saints"},
+      {"range": "13-16", "id": "uninassau_griffins"},
+      {"range": "13-16", "id": "azure_bears_black"},
+      {"range": "13-16", "id": "fei_esports_valorant_2024"},
+      {"range": "17-24", "id": "espm_overbite_misto"},
+      {"range": "17-24", "id": "ufscar_fire"},
+      {"range": "17-24", "id": "ufmt_turuna"},
+      {"range": "17-24", "id": "xarada_riddlers_ufla_2024"},
+      {"range": "17-24", "id": "raposa_e_sports"},
+      {"range": "17-24", "id": "fatec_ornyx_2024"},
+      {"range": "17-24", "id": "ufg_eagles_black_2024"},
+      {"range": "17-24", "id": "laurp_royal_ps_orange_2024"},
+      {"range": "25-32", "id": "oktoplus_gaming_cefet_mg_2024"},
+      {"range": "25-32", "id": "minerva_esports_misto_2024"},
+      {"range": "25-32", "id": "minerva_esports_ufrj_inclusivo_2024"},
+      {"range": "25-32", "id": "furia_utfpr"},
+      {"range": "25-32", "id": "ibtec_2024"},
+      {"range": "25-32", "id": "fgv_alligators_valorant_2024"},
+      {"range": "25-32", "id": "madness_ufop_2024"},
+      {"range": "25-32", "id": "aufa_line_a_2024"},
+      {"range": "33-44", "id": "aufa_line_b_2024"},
+      {"range": "33-44", "id": "unifesp_knights_2024"},
+      {"range": "33-44", "id": "unb_black"},
+      {"range": "33-44", "id": "ovb_purple_2024"},
+      {"range": "33-44", "id": "poli_plague_silver_echo_2024"},
+      {"range": "33-44", "id": "unirio_krakens"},
+      {"range": "33-44", "id": "ufpr_bbn"},
+      {"range": "33-44", "id": "usf_paragons_2024"},
+      {"range": "33-44", "id": "usf_e_sports_2024"},
+      {"range": "33-44", "id": "ufmg_fenix_b"},
+      {"range": "33-44", "id": "liga_atletica_unisinos_lau_2024"},
+      {"range": "33-44", "id": "poli_plague_silver_delta_2024"}
+    ],
     "seriesResults": {},
     "startAt": "2024-04-20T16:13:50.878Z",
     "endAt": "2024-04-22T14:38:44.44Z",
@@ -426,7 +472,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "azure_bears_golden",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 3",
@@ -447,7 +493,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufu_saints",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 5",
@@ -456,7 +502,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "laurp_royal_ps_orange_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 6",
@@ -465,7 +511,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufg_eagles",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 7",
@@ -486,7 +532,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "usf_e_sports_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 9",
@@ -505,7 +551,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "inatel_white",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 11",
@@ -524,7 +570,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "fatec_ornyx_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 13",
@@ -533,7 +579,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unb_green_olws_line_red_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 14",
@@ -542,7 +588,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "maua_esports_black_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 15",
@@ -563,7 +609,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "uninassau_griffins",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 17",
@@ -572,7 +618,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "usp_cronos_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 18",
@@ -581,7 +627,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "xarada_riddlers_ufla_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 19",
@@ -602,7 +648,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "furia_utfpr",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 21",
@@ -611,7 +657,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "macklogic_red",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 22",
@@ -620,7 +666,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "caap_hellhounds",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 23",
@@ -639,7 +685,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "azure_bears_black",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 25",
@@ -658,7 +704,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unb_black",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 27",
@@ -677,7 +723,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unicamp_tritons_black",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 29",
@@ -686,7 +732,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "poli_plague_gold_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 30",
@@ -695,7 +741,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "cyber_kongs_dourada_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 31",
@@ -714,7 +760,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "caaso_hogs_usp_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 33",
@@ -723,7 +769,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "espm_overbite_misto",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 }
               ]
             },
@@ -1083,7 +1129,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "aufa_line_b_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 67",
@@ -1092,7 +1138,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "unifesp_knights_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 68",
@@ -1101,7 +1147,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "minerva_esports_misto_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 69",
@@ -1110,7 +1156,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "ovb_purple_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 71",
@@ -1119,7 +1165,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "poli_plague_silver_echo_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 73",
@@ -1128,7 +1174,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "unirio_krakens",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 75",
@@ -1137,7 +1183,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "ufpr_bbn",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 76",
@@ -1146,7 +1192,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "usf_paragons_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 77",
@@ -1155,7 +1201,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "madness_ufop_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 79",
@@ -1164,7 +1210,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "ufmg_fenix_b",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 }
               ]
             },
@@ -1188,7 +1234,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "oktoplus_gaming_cefet_mg_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 83",
@@ -1231,7 +1277,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "minerva_esports_ufrj_inclusivo_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 87",
@@ -1252,7 +1298,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "xarada_riddlers_ufla_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 89",
@@ -1271,7 +1317,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ibtec_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 91",
@@ -1314,7 +1360,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "fei_esports_valorant_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 95",
@@ -1333,7 +1379,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "aufa_line_a_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 }
               ]
             },
@@ -1692,6 +1738,7 @@ const TOURNAMENT_OVERRIDES = {
     "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
     "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
     "logo": "assets/tournament-icons/copa_alianca.png",
+    "tier": "A",
     "type": "Online",
     "status": "Finalizado",
     "teamCount": 42,
@@ -1795,11 +1842,54 @@ const TOURNAMENT_OVERRIDES = {
       "summary": "Eliminação dupla classificatória",
       "details": [
         "Classificatória em eliminação dupla.",
-        "Resultados da plataforma preservados nas séries sem estatísticas."
+        "Algumas séries têm só o resultado, sem estatísticas."
       ],
       "standings": "Classificação oficial"
     },
-    "placements": [],
+    "placements": [
+      {"range": "Classificado", "id": "laurp_royal_ps_orange_2024", "note": "Chave superior"},
+      {"range": "Classificado", "id": "unb_black", "note": "Chave superior"},
+      {"range": "Classificado", "id": "puc_clerigos", "note": "Chave superior"},
+      {"range": "Classificado", "id": "macklogic_red", "note": "Chave superior"},
+      {"range": "Classificado", "id": "fei_esports_valorant_2024", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "inatel_white", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "uninassau_griffins", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "azure_bears_black", "note": "Chave inferior"},
+      {"range": "9-12", "id": "caap_hellhounds_black_2024"},
+      {"range": "9-12", "id": "ufpr_bbn"},
+      {"range": "9-12", "id": "ufu_saints"},
+      {"range": "9-12", "id": "puc_priests"},
+      {"range": "13-16", "id": "oktoplus_gaming_cefet_mg_2024"},
+      {"range": "13-16", "id": "ufscar_fire"},
+      {"range": "13-16", "id": "poli_plague_gold_2024"},
+      {"range": "13-16", "id": "usf_sports_2024"},
+      {"range": "17-24", "id": "xarada_riddlers_ufla_2024"},
+      {"range": "17-24", "id": "fgv_alligators_valorant_2024"},
+      {"range": "17-24", "id": "liga_atletica_unisinos_lau_2024"},
+      {"range": "17-24", "id": "fatec_ornyx_2024"},
+      {"range": "17-24", "id": "minerva_esports_misto_2024"},
+      {"range": "17-24", "id": "aufa_line_b_2024"},
+      {"range": "17-24", "id": "cyber_kongs_dourada_2024"},
+      {"range": "17-24", "id": "raposa_e_sports"},
+      {"range": "25-32", "id": "ufmg_fenix_b"},
+      {"range": "25-32", "id": "axis_anteaters_valorant_2024"},
+      {"range": "25-32", "id": "ibtec_2024"},
+      {"range": "25-32", "id": "espm_overbite_misto"},
+      {"range": "25-32", "id": "ufmt_turuna"},
+      {"range": "25-32", "id": "atletica_unifei"},
+      {"range": "25-32", "id": "furia_utfpr"},
+      {"range": "25-32", "id": "unirio_krakens"},
+      {"range": "33-42", "id": "facens_night_owls_2024"},
+      {"range": "33-42", "id": "unifei_calango_2024"},
+      {"range": "33-42", "id": "stings_ba_valorant_2024"},
+      {"range": "33-42", "id": "atletica_unifei_2024"},
+      {"range": "33-42", "id": "azure_bears_white"},
+      {"range": "33-42", "id": "poli_plague_silver_echo_2024"},
+      {"range": "33-42", "id": "atletica_unifei_6f52b4a1_2024"},
+      {"range": "33-42", "id": "unifesp_knights_2024"},
+      {"range": "33-42", "id": "minerva_esports_ufrj_inclusivo_2024"},
+      {"range": "33-42", "id": "maua_rubi_2024"}
+    ],
     "seriesResults": {},
     "startAt": "2024-05-04T16:08:18.970Z",
     "endAt": "2024-05-05T22:12:52.787Z",
@@ -1843,7 +1933,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "puc_priests",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 3",
@@ -1862,7 +1952,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "xarada_riddlers_ufla_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 5",
@@ -1871,7 +1961,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "maua_rubi_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 6",
@@ -1880,7 +1970,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "fgv_alligators_valorant_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 7",
@@ -1899,7 +1989,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "furia_utfpr",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 9",
@@ -1918,7 +2008,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "inatel_white",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 11",
@@ -1937,7 +2027,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufu_saints",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 13",
@@ -1946,7 +2036,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "atletica_unifei",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 14",
@@ -1955,7 +2045,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unb_black",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 15",
@@ -1974,7 +2064,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufmt_turuna",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 17",
@@ -1983,7 +2073,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufscar_fire",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 18",
@@ -1992,7 +2082,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "espm_overbite_misto",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 19",
@@ -2013,7 +2103,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "puc_clerigos",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 21",
@@ -2022,7 +2112,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "azure_bears_white",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 22",
@@ -2031,7 +2121,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "liga_atletica_unisinos_lau_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 23",
@@ -2052,7 +2142,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ibtec_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 25",
@@ -2071,7 +2161,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "cyber_kongs_dourada_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 27",
@@ -2090,7 +2180,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unifei_calango_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 29",
@@ -2099,7 +2189,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "macklogic_red",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 30",
@@ -2108,7 +2198,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufmg_fenix_b",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 31",
@@ -2127,7 +2217,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "facens_night_owls_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 33",
@@ -2136,7 +2226,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "caap_hellhounds_black_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 }
               ]
             },
@@ -2500,7 +2590,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "fei_esports_valorant_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 67",
@@ -2509,7 +2599,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "oktoplus_gaming_cefet_mg_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 68",
@@ -2518,7 +2608,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "axis_anteaters_valorant_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 69",
@@ -2527,7 +2617,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "atletica_unifei_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 71",
@@ -2536,7 +2626,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "fatec_ornyx_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 73",
@@ -2545,7 +2635,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "poli_plague_silver_echo_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 75",
@@ -2554,7 +2644,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "atletica_unifei_6f52b4a1_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 76",
@@ -2563,7 +2653,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "unifesp_knights_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 77",
@@ -2572,7 +2662,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "minerva_esports_ufrj_inclusivo_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 79",
@@ -2581,7 +2671,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "unirio_krakens",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 }
               ]
             },
@@ -2605,7 +2695,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufmg_fenix_b",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 83",
@@ -2644,7 +2734,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "liga_atletica_unisinos_lau_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 87",
@@ -2663,7 +2753,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "espm_overbite_misto",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 89",
@@ -2682,7 +2772,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "uninassau_griffins",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 91",
@@ -2723,7 +2813,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "azure_bears_black",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 95",
@@ -2744,7 +2834,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "raposa_e_sports",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 }
               ]
             },
@@ -3111,6 +3201,7 @@ const TOURNAMENT_OVERRIDES = {
     "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
     "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
     "logo": "assets/tournament-icons/copa_alianca.png",
+    "tier": "S",
     "type": "Online",
     "status": "Finalizado",
     "teamCount": 16,
@@ -3164,7 +3255,7 @@ const TOURNAMENT_OVERRIDES = {
       "details": [
         "16 equipes disputam o sistema suíço. Oito avançam aos playoffs.",
         "Playoffs em eliminação simples.",
-        "Placares oficiais preservados nas séries com estatísticas parciais."
+        "Algumas séries têm estatísticas de só parte dos mapas."
       ],
       "standings": "Classificação oficial"
     },
@@ -3854,6 +3945,7 @@ const TOURNAMENT_OVERRIDES = {
     "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
     "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
     "logo": "assets/tournament-icons/copa_alianca.png",
+    "tier": "A",
     "type": "Online",
     "status": "Finalizado",
     "teamCount": 46,
@@ -3966,12 +4058,59 @@ const TOURNAMENT_OVERRIDES = {
       "summary": "Eliminação dupla classificatória",
       "details": [
         "Classificatória em eliminação dupla.",
-        "Resultados da plataforma preservados nas séries sem estatísticas.",
-        "A chave encerra a disputa pelas vagas. Os 14 preenchimentos posteriores à definição dos classificados não contam como confrontos."
+        "Algumas séries têm só o resultado, sem estatísticas.",
+        "A chave termina quando as vagas são definidas."
       ],
       "standings": "Classificação oficial"
     },
-    "placements": [],
+    "placements": [
+      {"range": "Classificado", "id": "azure_bears_golden", "note": "Chave superior"},
+      {"range": "Classificado", "id": "macklogic_red", "note": "Chave superior"},
+      {"range": "Classificado", "id": "usp_stars", "note": "Chave superior"},
+      {"range": "Classificado", "id": "ufg_eagles", "note": "Chave superior"},
+      {"range": "Classificado", "id": "poli_plague_gold_2024", "note": "Chave superior"},
+      {"range": "Classificado", "id": "azure_bears_black", "note": "Chave superior"},
+      {"range": "Classificado", "id": "caap_hellhounds", "note": "Chave superior"},
+      {"range": "Classificado", "id": "unb_green_olws_line_red_2024", "note": "Chave superior"},
+      {"range": "Classificado", "id": "ufg_eagles_blue", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "atletica_unifei", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "ufmg_fenix_b", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "uninassau_griffins", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "maua_esports_imt_e15688a9_2024", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "furia_utfpr", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "puc_clerigos", "note": "Chave inferior"},
+      {"range": "Classificado", "id": "puc_priests", "note": "Chave inferior"},
+      {"range": "17-24", "id": "ufmt_turuna"},
+      {"range": "17-24", "id": "stings_belas_artes_2024"},
+      {"range": "17-24", "id": "unb_black"},
+      {"range": "17-24", "id": "unicamp_tritons_black"},
+      {"range": "17-24", "id": "caap_void_2024"},
+      {"range": "17-24", "id": "hunter_esports"},
+      {"range": "17-24", "id": "maua_esports_imt_2024"},
+      {"range": "17-24", "id": "team_valorant_cybers_2024"},
+      {"range": "25-32", "id": "ibmec_sharks"},
+      {"range": "25-32", "id": "pucc_cardinals"},
+      {"range": "25-32", "id": "inatel_white"},
+      {"range": "25-32", "id": "ufu_saints"},
+      {"range": "25-32", "id": "axis_anteaters_black_valorant_2024"},
+      {"range": "25-32", "id": "axis_anteaters_green_valorant_2024"},
+      {"range": "25-32", "id": "wolf_gaming"},
+      {"range": "25-32", "id": "espm_overbite_misto"},
+      {"range": "33-46", "id": "fei_esports_valorant_2024"},
+      {"range": "33-46", "id": "burning_bunnies_ufpr_white_2024"},
+      {"range": "33-46", "id": "canis_valorant_inclusivo_2024"},
+      {"range": "33-46", "id": "each_griffins_valorant_2024"},
+      {"range": "33-46", "id": "poli_plague_silver_delta_c6f948a0_2024"},
+      {"range": "33-46", "id": "pesadelo_renegadas_unb_2024"},
+      {"range": "33-46", "id": "ufrj_canis_b"},
+      {"range": "33-46", "id": "poli_plague_silver_echo_2024"},
+      {"range": "33-46", "id": "oktoplus_gaming_cefet_mg_2024"},
+      {"range": "33-46", "id": "unifei_calango_2024"},
+      {"range": "33-46", "id": "ufs_warriowls"},
+      {"range": "33-46", "id": "unirio_krakens"},
+      {"range": "33-46", "id": "azure_bears_white"},
+      {"range": "33-46", "id": "brutal_esports"}
+    ],
     "seriesResults": {
       "60": {
         "a": "poli_plague_gold_2024",
@@ -4002,7 +4141,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "azure_bears_golden",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 3",
@@ -4021,7 +4160,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufmt_turuna",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 5",
@@ -4030,7 +4169,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "espm_overbite_misto",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 6",
@@ -4039,7 +4178,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "macklogic_red",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 7",
@@ -4058,7 +4197,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "puc_clerigos",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 9",
@@ -4077,7 +4216,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unb_black",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 11",
@@ -4096,7 +4235,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "oktoplus_gaming_cefet_mg_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 13",
@@ -4117,7 +4256,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufg_eagles",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 15",
@@ -4136,7 +4275,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "uninassau_griffins",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 17",
@@ -4155,7 +4294,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unicamp_tritons_black",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 19",
@@ -4174,7 +4313,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "maua_esports_imt_e15688a9_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 21",
@@ -4183,7 +4322,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufu_saints",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 22",
@@ -4192,7 +4331,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "azure_bears_black",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 23",
@@ -4211,7 +4350,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "inatel_white",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 25",
@@ -4230,7 +4369,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "caap_hellhounds",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 27",
@@ -4242,7 +4381,7 @@ const TOURNAMENT_OVERRIDES = {
                   "scoreB": 0,
                   "winner": "canis_valorant_inclusivo_2024",
                   "status": "Sem estatísticas",
-                  "previewNote": "Vitória da Canis confirmada. Estatísticas do lobby curto não são contabilizadas."
+                  "previewNote": "Vitória da Canis. O mapa fica fora das estatísticas."
                 },
                 {
                   "code": "Partida 28",
@@ -4251,7 +4390,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "maua_esports_imt_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 29",
@@ -4272,7 +4411,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unb_green_olws_line_red_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 31",
@@ -4291,7 +4430,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "fei_esports_valorant_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 33",
@@ -4623,7 +4762,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "ibmec_sharks",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 67",
@@ -4632,7 +4771,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "burning_bunnies_ufpr_white_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 68",
@@ -4641,7 +4780,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "stings_belas_artes_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 69",
@@ -4650,7 +4789,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "each_griffins_valorant_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 70",
@@ -4659,7 +4798,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "poli_plague_silver_delta_c6f948a0_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 71",
@@ -4668,7 +4807,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "pesadelo_renegadas_unb_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 72",
@@ -4677,7 +4816,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "ufrj_canis_b",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 73",
@@ -4686,7 +4825,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "poli_plague_silver_echo_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 75",
@@ -4695,7 +4834,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "axis_anteaters_green_valorant_2024",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 76",
@@ -4704,7 +4843,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "furia_utfpr",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 77",
@@ -4713,7 +4852,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "ufs_warriowls",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 78",
@@ -4722,7 +4861,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "unirio_krakens",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 79",
@@ -4731,7 +4870,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "azure_bears_white",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 80",
@@ -4740,7 +4879,7 @@ const TOURNAMENT_OVERRIDES = {
                   "b": "brutal_esports",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 }
               ]
             },
@@ -4764,7 +4903,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufg_eagles_blue",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 83",
@@ -4843,7 +4982,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "axis_anteaters_black_valorant_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 91",
@@ -5143,6 +5282,7 @@ const TOURNAMENT_OVERRIDES = {
     "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
     "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
     "logo": "assets/tournament-icons/copa_alianca.png",
+    "tier": "S",
     "type": "Online",
     "status": "Finalizado",
     "teamCount": 16,
@@ -5196,7 +5336,7 @@ const TOURNAMENT_OVERRIDES = {
       "details": [
         "16 equipes disputam o sistema suíço. Oito avançam aos playoffs.",
         "Playoffs em eliminação dupla.",
-        "Placares oficiais preservados nas séries com estatísticas parciais."
+        "Algumas séries têm estatísticas de só parte dos mapas."
       ],
       "standings": "Classificação oficial"
     },
@@ -5204,12 +5344,12 @@ const TOURNAMENT_OVERRIDES = {
       {
         "id": "caap_hellhounds",
         "range": "1",
-        "note": "Resultado final registrado no CM"
+        "note": "Campeão"
       },
       {
         "id": "uninassau_griffins",
         "range": "2",
-        "note": "Resultado final registrado no CM"
+        "note": "Vice"
       },
       {
         "id": "ufg_eagles",
@@ -5994,6 +6134,7 @@ const TOURNAMENT_OVERRIDES = {
     "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
     "banner": "",
     "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+    "tier": "A",
     "type": "Online",
     "status": "Finalizado",
     "teamCount": 42,
@@ -6097,9 +6238,9 @@ const TOURNAMENT_OVERRIDES = {
       "summary": "Classificatória para oito vagas",
       "details": [
         "Classificatória eliminatória para oito vagas no playoff online.",
-        "Avanços diretos são preservados na chave. Séries sem estatísticas mantêm o resultado oficial.",
-        "UTFPR Azure Bears corresponde à Azure Bears Golden nesta edição.",
-        "FAMETRO Codify Team integra o histórico da atual FAMETRO Berserkers."
+        "Algumas equipes avançaram direto na chave. Séries sem estatísticas mostram só o resultado oficial.",
+        "Nesta edição, a Azure Bears Golden jogou como UTFPR Azure Bears.",
+        "A FAMETRO Codify Team é a atual FAMETRO Berserkers."
       ],
       "standings": "Classificação oficial"
     },
@@ -6336,7 +6477,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "iesb_cesb_ieb_df_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 2",
@@ -6355,7 +6496,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unb_black",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 4",
@@ -6364,7 +6505,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "anhanguera_the_dream_team_df_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 5",
@@ -6373,7 +6514,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "inatel",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 6",
@@ -6392,7 +6533,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "xarada_riddlers_ufla_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 8",
@@ -6411,7 +6552,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufpe_virtus",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 10",
@@ -6430,7 +6571,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "uninassau_griffins",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 12",
@@ -6439,7 +6580,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "asces_unita_pe_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 13",
@@ -6448,7 +6589,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unioeste_rino_pr_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 14",
@@ -6467,7 +6608,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "azure_bears_golden",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 16",
@@ -6476,7 +6617,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "pato",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 17",
@@ -6485,7 +6626,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufrj_canis_b",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 18",
@@ -6504,7 +6645,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "fusve_barao_rj_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 20",
@@ -6513,7 +6654,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "puc_clerigos",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 21",
@@ -6522,7 +6663,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "caap_hellhounds",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 22",
@@ -6543,7 +6684,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufs_warriowls",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 24",
@@ -6562,7 +6703,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "senais_falcons_ba_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 26",
@@ -6581,7 +6722,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unirv_e_sports_go_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 28",
@@ -6590,7 +6731,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "uesc_cacaueiros_ba_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 29",
@@ -6599,7 +6740,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "calango_team_fametro_am_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 30",
@@ -6618,7 +6759,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "imperador_uvv_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 32",
@@ -6627,7 +6768,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "fametro_berserkers",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 }
               ]
             },
@@ -6900,6 +7041,7 @@ const TOURNAMENT_OVERRIDES = {
     "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
     "banner": "",
     "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+    "tier": "A",
     "type": "Online",
     "status": "Finalizado",
     "teamCount": 35,
@@ -6989,7 +7131,7 @@ const TOURNAMENT_OVERRIDES = {
       "summary": "Classificatória para oito vagas",
       "details": [
         "Classificatória eliminatória para oito vagas no playoff online.",
-        "Avanços diretos são preservados na chave. Séries sem estatísticas mantêm o resultado oficial."
+        "Algumas equipes avançaram direto na chave. Séries sem estatísticas mostram só o resultado oficial."
       ],
       "standings": "Classificação oficial"
     },
@@ -7208,7 +7350,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unesa_cyborgs",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 2",
@@ -7229,7 +7371,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufsc_titans_sc_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 4",
@@ -7238,7 +7380,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "puc_clerigos",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 5",
@@ -7247,7 +7389,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufpe_virtus",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 6",
@@ -7256,7 +7398,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "asces_unita_pe_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 7",
@@ -7265,7 +7407,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "univasf",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 8",
@@ -7274,7 +7416,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufac_esports_ac_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 9",
@@ -7283,7 +7425,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "inatel",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 10",
@@ -7292,7 +7434,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "bot_s_academy_pb_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 11",
@@ -7301,7 +7443,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ods_force_ufla_mg_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 12",
@@ -7310,7 +7452,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "xarada_riddlers_ufla_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 13",
@@ -7319,7 +7461,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "iesb_cesb_ieb_df_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 14",
@@ -7328,7 +7470,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufrn_rn_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 15",
@@ -7337,7 +7479,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "anhanguera_the_dream_team_df_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 16",
@@ -7346,7 +7488,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "rahnag",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 17",
@@ -7355,7 +7497,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "furia_utfpr",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 18",
@@ -7376,7 +7518,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "pato",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 20",
@@ -7385,7 +7527,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufs_warriowls",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 21",
@@ -7394,7 +7536,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "uesc_cacaueiros_ba_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 22",
@@ -7403,7 +7545,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "senais_falcons_ba_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 23",
@@ -7412,7 +7554,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ucsal_aduc_ba_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 24",
@@ -7421,7 +7563,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufmt_turuna",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 25",
@@ -7430,7 +7572,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "maua_esports_black_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 26",
@@ -7451,7 +7593,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "imperador_uvv_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 28",
@@ -7460,7 +7602,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "caap_hellhounds",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 29",
@@ -7469,7 +7611,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "unigran_sarristas_ms_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 30",
@@ -7478,7 +7620,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "uema_cyborgues_ma_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 31",
@@ -7487,7 +7629,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "ufma_balsas_ma_2024",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 },
                 {
                   "code": "Partida 32",
@@ -7496,7 +7638,7 @@ const TOURNAMENT_OVERRIDES = {
                   "a": "lunatica_ufms",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
-                  "previewNote": "Avanço direto registrado na chave."
+                  "previewNote": "Avanço direto."
                 }
               ]
             },
@@ -7775,6 +7917,7 @@ const TOURNAMENT_OVERRIDES = {
     "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
     "banner": "",
     "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+    "tier": "A",
     "type": "Online",
     "status": "Finalizado",
     "teamCount": 16,
@@ -7829,8 +7972,8 @@ const TOURNAMENT_OVERRIDES = {
         "16 equipes disputam oito vagas na etapa presencial.",
         "No máximo uma representante de cada estado avança ao presencial.",
         "USP CAASO e FAMETRO venceram no online; CAAP e UFMT participaram do presencial.",
-        "UTFPR Azure Bears corresponde à Azure Bears Golden nesta edição.",
-        "FAMETRO Codify Team integra o histórico da atual FAMETRO Berserkers."
+        "Nesta edição, a Azure Bears Golden jogou como UTFPR Azure Bears.",
+        "A FAMETRO Codify Team é a atual FAMETRO Berserkers."
       ],
       "standings": "Classificação oficial"
     },
@@ -8025,6 +8168,7 @@ const TOURNAMENT_OVERRIDES = {
     "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
     "banner": "",
     "logo": "https://univlr-bucket.s3.sa-east-1.amazonaws.com/tournaments/JUBS.png",
+    "tier": "S",
     "type": "Presencial",
     "status": "Finalizado",
     "teamCount": 8,
@@ -8063,7 +8207,7 @@ const TOURNAMENT_OVERRIDES = {
         "Dois grupos de quatro em eliminação dupla (GSL), com partidas MD1.",
         "Dois classificados por grupo. Semifinais, disputa de terceiro lugar e final em MD3.",
         "Resultados e classificação oficiais da CBDU.",
-        "UTFPR Azure Bears corresponde à Azure Bears Golden nesta edição."
+        "Nesta edição, a Azure Bears Golden jogou como UTFPR Azure Bears."
       ],
       "standings": "Classificação oficial"
     },
@@ -8426,6 +8570,7 @@ const TOURNAMENT_OVERRIDES = {
   "cpue-2025": {
     "name": "CPUE 2025",
     "organizer": "FUPE-SP",
+    "tier": "B",
     "type": "Online",
     "status": "Finalizado",
     "teamCount": 10,
@@ -8497,8 +8642,7 @@ const TOURNAMENT_OVERRIDES = {
       "summary": "Eliminação dupla",
       "details": [
         "Dez equipes, com byes na chave inicial.",
-        "MD1 até as finais das chaves; finais upper/lower e grande final em MD3.",
-        "Nomes de Mauá Blue e Mauá White como usados neste campeonato."
+        "MD1 até as finais das chaves; finais upper/lower e grande final em MD3."
       ],
       "standings": "Classificação final"
     },
@@ -8811,7 +8955,7 @@ const TOURNAMENT_OVERRIDES = {
                   "scoreB": 0,
                   "winner": "macklogic_red",
                   "bestOf": "MD3",
-                  "previewNote": "A sala foi cancelada na plataforma, mas a final foi disputada e o resultado foi confirmado."
+                  "previewNote": "Final disputada, com resultado oficial e sem estatísticas."
                 }
               ]
             }
@@ -8852,7 +8996,7 @@ const TOURNAMENT_OVERRIDES = {
       "summary": "Eliminação simples",
       "details": [
         "Oito equipes, quartas de final, semifinais e final em MD3.",
-        "Final em contas de torneio, com placar registrado e sem estatísticas."
+        "Final com placar oficial e sem estatísticas."
       ],
       "standings": "Classificação final"
     },
@@ -8910,7 +9054,7 @@ const TOURNAMENT_OVERRIDES = {
                   "winner": "ufu_saints",
                   "bestOf": "MD3",
                   "status": "Sem estatísticas",
-                  "previewNote": "Placar registrado, sem estatísticas. Não há confirmação de W.O."
+                  "previewNote": "Placar oficial, sem estatísticas."
                 },
                 {
                   "code": "Partida 2",
@@ -8985,7 +9129,7 @@ const TOURNAMENT_OVERRIDES = {
                   "bestOf": "MD3",
                   "status": "Sem estatísticas",
                   "playedOn": "2025-10-04T12:00:00",
-                  "previewNote": "UFG Eagles venceu por 2x1 em 04/10/2025. Lotus: Azure 14x12 UFG; Abyss: UFG 13x4 Azure; Sunset: UFG 13x8 Azure. Disputada em contas de torneio, sem estatísticas.",
+                  "previewNote": "UFG Eagles venceu por 2x1 em 04/10/2025. Lotus: Azure 14x12 UFG; Abyss: UFG 13x4 Azure; Sunset: UFG 13x8 Azure. Sem estatísticas.",
                   "from": [
                     "Partida 5",
                     "Partida 6"
@@ -9859,7 +10003,7 @@ const TOURNAMENT_OVERRIDES = {
               "winner": "nassau",
               "status": "W.O.",
               "playedAt": "2025-07-19T17:07:22Z",
-              "previewNote": "Placar registrado. Os 2 mapas tiveram menos de dez jogadores e ficam fora das estatísticas."
+              "previewNote": "Placar oficial. Os 2 mapas tiveram menos de dez jogadores e ficam fora das estatísticas."
             },
             {
               "code": "Partida 55",
@@ -11462,15 +11606,15 @@ const TOURNAMENT_OVERRIDES = {
       "wolf_gaming",
     ],
     mapPool: ["Ascent", "Bind", "Corrode", "Haven", "Icebox", "Lotus", "Split", "Sunset"],
-    bracket: { title: "Confrontos registrados" },
+    bracket: { title: "Chave" },
     format: {
       summary: "Fase su\u00ed\u00e7a",
       details: [
-        "10 rodadas com participa\u00e7\u00e3o opcional e jogos MD1; desempate registrado em MD3.",
-        "Os confrontos registrados levaram equipes ao Championship, \u00e0 Off Season e \u00e0 Practice.",
-        "A ordem final por Elo n\u00e3o est\u00e1 dispon\u00edvel. Em LB_016, o advers\u00e1rio da FM n\u00e3o foi confirmado; a vit\u00f3ria n\u00e3o foi atribu\u00edda a uma equipe.",
+        "10 rodadas com participa\u00e7\u00e3o opcional e jogos MD1; desempate em MD3.",
+        "A fase levou as equipes ao Championship, \u00e0 Off Season e \u00e0 Practice.",
+        "A ordem final por Elo n\u00e3o foi divulgada. Em uma partida, o advers\u00e1rio da FM Alligators n\u00e3o \u00e9 conhecido, e a vit\u00f3ria n\u00e3o conta para nenhuma equipe.",
       ],
-      standings: "Campanha registrada e divis\u00e3o dos playoffs",
+      standings: "Campanha e divis\u00e3o dos playoffs",
     },
     placements: [
       { id: "axis_anteaters_shadow", range: "Classificado", note: "3-3" },
@@ -11484,7 +11628,7 @@ const TOURNAMENT_OVERRIDES = {
     ],
     swiss: {
       seriesCount: 110,
-      standingsLabel: "Campanha registrada, sem ordem oficial por Elo",
+      standingsLabel: "Campanha, sem a ordem final por Elo",
       finalStandings: false,
       rounds: [
         {
@@ -11499,7 +11643,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 5", a: "caap_hellhounds", scoreA: 14, b: "axis_blossom", scoreB: 12, winner: "caap_hellhounds", bestOf: "MD1" },
             { code: "Partida 6", a: "ufrj_canis", scoreA: 16, b: "azure_bears_black", scoreB: 14, winner: "ufrj_canis", bestOf: "MD1" },
             { code: "Partida 7", a: "inatel_white", scoreA: 13, b: "wolf_gaming", scoreB: 8, winner: "inatel_white", bestOf: "MD1" },
-            { code: "Partida 8", a: "pato", scoreA: 13, b: "ufpr_bbn", scoreB: 11, winner: "pato", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Placar registrado em 2025, sem estatísticas." },
+            { code: "Partida 8", a: "pato", scoreA: 13, b: "ufpr_bbn", scoreB: 11, winner: "pato", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Sem estatísticas." },
             { code: "Partida 9", a: "fei_darkowls", scoreA: 13, b: "white_cyber", scoreB: 4, winner: "fei_darkowls", bestOf: "MD1" },
             { code: "Partida 10", a: "ufu_insane", scoreA: 13, b: "furia_utfpr", scoreB: 4, winner: "ufu_insane", bestOf: "MD1" },
             { code: "Partida 11", a: "black_cyber", scoreA: 13, b: "puc_clerigos", scoreB: 4, winner: "black_cyber", bestOf: "MD1" },
@@ -11514,7 +11658,7 @@ const TOURNAMENT_OVERRIDES = {
           matches: [
             { code: "Partida 14", a: "hunter_esports", scoreA: 13, b: "macklogic_red", scoreB: 11, winner: "hunter_esports", bestOf: "MD1" },
             { code: "Partida 15", a: "caap_hellhounds", scoreA: 13, b: "totale_umc", scoreB: 4, winner: "caap_hellhounds", bestOf: "MD1" },
-            { code: "Partida 16", scoreA: 13, b: "fm_alligators", scoreB: 9, bestOf: "MD1", status: "Sem estatísticas", previewNote: "Placar registrado em 2025: 13x9 contra a FM Alligators. Adversário não confirmado, sem estatísticas.", aLabel: "Equipe n\u00e3o confirmada" },
+            { code: "Partida 16", scoreA: 13, b: "fm_alligators", scoreB: 9, bestOf: "MD1", status: "Sem estatísticas", previewNote: "13x9 para a FM Alligators contra adversário desconhecido, sem estatísticas.", aLabel: "Equipe desconhecida" },
             { code: "Partida 17", a: "ufu_saints", scoreA: 13, b: "axis_blossom", scoreB: 5, winner: "ufu_saints", bestOf: "MD1" },
             { code: "Partida 18", a: "unesa_cyborgs", scoreA: 13, b: "macklogic_white", scoreB: 6, winner: "unesa_cyborgs", bestOf: "MD1" },
             { code: "Partida 19", a: "unicamp_tritons_black", scoreA: 13, b: "inatel_white", scoreB: 4, winner: "unicamp_tritons_black", bestOf: "MD1" },
@@ -11553,7 +11697,7 @@ const TOURNAMENT_OVERRIDES = {
           matches: [
             { code: "Partida 39", a: "azure_bears_black", scoreA: 13, b: "pato", scoreB: 6, winner: "azure_bears_black", bestOf: "MD1" },
             { code: "Partida 40", a: "unb_black", scoreA: 13, b: "furia_utfpr", scoreB: 7, winner: "unb_black", bestOf: "MD1" },
-            { code: "Partida 41", a: "puc_priests", scoreA: 13, b: "totale_umc", scoreB: 2, winner: "puc_priests", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Placar registrado em 2025, sem estatísticas." },
+            { code: "Partida 41", a: "puc_priests", scoreA: 13, b: "totale_umc", scoreB: 2, winner: "puc_priests", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Sem estatísticas." },
             { code: "Partida 42", a: "macklogic_white", scoreA: 14, b: "axis_anteaters_shadow", scoreB: 12, winner: "macklogic_white", bestOf: "MD1" },
             { code: "Partida 43", a: "azure_bears_golden", scoreA: 13, b: "caap_hellhounds", scoreB: 8, winner: "azure_bears_golden", bestOf: "MD1" },
             { code: "Partida 44", a: "white_cyber", scoreA: 18, b: "fm_alligators", scoreB: 16, winner: "white_cyber", bestOf: "MD1" },
@@ -11597,7 +11741,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 69", a: "inatel_white", scoreA: 13, b: "unb_black", scoreB: 9, winner: "inatel_white", bestOf: "MD1" },
             { code: "Partida 70", a: "macklogic_red", scoreA: 13, b: "ufu_saints", scoreB: 9, winner: "macklogic_red", bestOf: "MD1" },
             { code: "Partida 71", a: "azure_bears_black", scoreA: 13, b: "unesa_cyborgs", scoreB: 7, winner: "azure_bears_black", bestOf: "MD1" },
-            { code: "Partida 72", a: "ufu_insane", scoreA: 13, b: "ufrj_canis", scoreB: 9, winner: "ufu_insane", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Placar registrado em 2025, sem estatísticas." },
+            { code: "Partida 72", a: "ufu_insane", scoreA: 13, b: "ufrj_canis", scoreB: 9, winner: "ufu_insane", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Sem estatísticas." },
             { code: "Partida 73", a: "black_cyber", scoreA: 13, b: "ufpr_bbn", scoreB: 4, winner: "black_cyber", bestOf: "MD1" },
             { code: "Partida 74", a: "unicamp_tritons_black", scoreA: 13, b: "fei_darkowls", scoreB: 10, winner: "unicamp_tritons_black", bestOf: "MD1" },
             { code: "Partida 75", a: "axis_anteaters_shadow", scoreA: 13, b: "puc_priests", scoreB: 11, winner: "axis_anteaters_shadow", bestOf: "MD1" },
@@ -11681,28 +11825,28 @@ const TOURNAMENT_OVERRIDES = {
         { id: "azure_bears_black", wins: 6, losses: 2, range: "-", status: "Championship" },
         { id: "azure_bears_golden", wins: 7, losses: 1, range: "-", status: "Championship" },
         { id: "black_cyber", wins: 4, losses: 4, range: "-", status: "Off Season" },
-        { id: "caap_hellhounds", wins: 6, losses: 4, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "caap_hellhounds", wins: 6, losses: 4, range: "-", status: "Sem divis\u00e3o" },
         { id: "fei_darkowls", wins: 3, losses: 4, range: "-", status: "Off Season" },
-        { id: "fm_alligators", wins: 0, losses: 10, range: "-", status: "Sem divis\u00e3o registrada" },
-        { id: "furia_utfpr", wins: 2, losses: 4, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "fm_alligators", wins: 0, losses: 10, range: "-", status: "Sem divis\u00e3o" },
+        { id: "furia_utfpr", wins: 2, losses: 4, range: "-", status: "Sem divis\u00e3o" },
         { id: "hunter_esports", wins: 3, losses: 2, range: "-", status: "Off Season" },
         { id: "ifsp_midas", wins: 3, losses: 6, range: "-", status: "Practice" },
         { id: "inatel_white", wins: 5, losses: 4, range: "-", status: "Championship" },
         { id: "macklogic_red", wins: 8, losses: 2, range: "-", status: "Championship" },
         { id: "macklogic_white", wins: 4, losses: 5, range: "-", status: "Practice" },
-        { id: "pato", wins: 1, losses: 3, range: "-", status: "Sem divis\u00e3o registrada" },
-        { id: "puc_clerigos", wins: 0, losses: 2, range: "-", status: "Sem divis\u00e3o registrada" },
-        { id: "puc_priests", wins: 2, losses: 4, range: "-", status: "Sem divis\u00e3o registrada" },
-        { id: "stings_yellow", wins: 2, losses: 6, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "pato", wins: 1, losses: 3, range: "-", status: "Sem divis\u00e3o" },
+        { id: "puc_clerigos", wins: 0, losses: 2, range: "-", status: "Sem divis\u00e3o" },
+        { id: "puc_priests", wins: 2, losses: 4, range: "-", status: "Sem divis\u00e3o" },
+        { id: "stings_yellow", wins: 2, losses: 6, range: "-", status: "Sem divis\u00e3o" },
         { id: "totale_umc", wins: 2, losses: 5, range: "-", status: "Practice" },
         { id: "ufpr_bbn", wins: 4, losses: 6, range: "-", status: "Practice" },
-        { id: "ufrj_canis", wins: 4, losses: 4, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "ufrj_canis", wins: 4, losses: 4, range: "-", status: "Sem divis\u00e3o" },
         { id: "ufu_insane", wins: 6, losses: 3, range: "-", status: "Championship" },
         { id: "ufu_saints", wins: 8, losses: 1, range: "-", status: "Championship" },
-        { id: "unb_black", wins: 3, losses: 2, range: "-", status: "Sem divis\u00e3o registrada" },
-        { id: "unesa_cyborgs", wins: 5, losses: 4, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "unb_black", wins: 3, losses: 2, range: "-", status: "Sem divis\u00e3o" },
+        { id: "unesa_cyborgs", wins: 5, losses: 4, range: "-", status: "Sem divis\u00e3o" },
         { id: "unicamp_tritons_black", wins: 6, losses: 3, range: "-", status: "Championship" },
-        { id: "white_cyber", wins: 1, losses: 6, range: "-", status: "Sem divis\u00e3o registrada" },
+        { id: "white_cyber", wins: 1, losses: 6, range: "-", status: "Sem divis\u00e3o" },
         { id: "wolf_gaming", wins: 6, losses: 4, range: "-", status: "Off Season" },
       ],
     },
@@ -11730,7 +11874,6 @@ const TOURNAMENT_OVERRIDES = {
       summary: "Elimina\u00e7\u00e3o dupla",
       details: [
         "8 equipes, s\u00e9ries MD3 e grande final MD5.",
-        "Chave reconstru\u00edda pelos confrontos registrados.",
       ],
       standings: "Coloca\u00e7\u00e3o final",
     },
@@ -11833,22 +11976,22 @@ const TOURNAMENT_OVERRIDES = {
     teams: ["axis_blossom", "black_cyber", "fei_darkowls", "hunter_esports", "wolf_gaming"],
     mapPool: ["Ascent", "Bind", "Corrode", "Haven", "Icebox", "Lotus", "Sunset"],
     seriesResults: {
-      "114": { a: "black_cyber", b: "wolf_gaming", scoreA: 1, scoreB: 2, note: "Placar registrado. 1 dos 3 mapas fica fora das estatísticas porque os dados da partida estão incompletos." },
+      "114": { a: "black_cyber", b: "wolf_gaming", scoreA: 1, scoreB: 2, note: "Placar oficial. 1 dos 3 mapas fica fora das estatísticas porque os dados da partida estão incompletos." },
     },
     format: {
-      summary: "Elimina\u00e7\u00e3o dupla - registros parciais",
+      summary: "Elimina\u00e7\u00e3o dupla",
       details: [
-        "S\u00e9ries MD3 e grande final registrada em MD5.",
-        "A chave mostra os confrontos encontrados. A liga\u00e7\u00e3o de algumas etapas n\u00e3o foi confirmada.",
+        "S\u00e9ries MD3 e grande final em MD5.",
+        "Algumas partidas da chave n\u00e3o t\u00eam resultado conhecido.",
       ],
-      standings: "Coloca\u00e7\u00f5es confirmadas pela final",
+      standings: "Coloca\u00e7\u00e3o",
     },
     placements: [
       { range: "1", id: "wolf_gaming" },
       { range: "2", id: "hunter_esports" },
     ],
     bracket: {
-      title: "Confrontos registrados",
+      title: "Chave",
       regions: [
         {
           name: "Grande final",
@@ -11863,13 +12006,13 @@ const TOURNAMENT_OVERRIDES = {
           ],
         },
         {
-          name: "Confrontos registrados",
+          name: "Chave",
           className: "upper-bracket",
           columns: [
             {
               title: "Primeiros confrontos",
               matches: [
-                { code: "Partida 114", a: "black_cyber", scoreA: 1, b: "wolf_gaming", scoreB: 2, winner: "wolf_gaming", bestOf: "MD3", playedAt: "2025-07-18T01:15:51Z", previewNote: "Placar registrado. 1 dos 3 mapas fica fora das estatísticas porque os dados da partida estão incompletos." },
+                { code: "Partida 114", a: "black_cyber", scoreA: 1, b: "wolf_gaming", scoreB: 2, winner: "wolf_gaming", bestOf: "MD3", playedAt: "2025-07-18T01:15:51Z", previewNote: "Placar oficial. 1 dos 3 mapas fica fora das estatísticas porque os dados da partida estão incompletos." },
                 { code: "Partida 120", a: "axis_blossom", scoreA: 2, b: "hunter_esports", scoreB: 0, winner: "axis_blossom", bestOf: "MD3" },
               ],
             },
@@ -11912,26 +12055,26 @@ const TOURNAMENT_OVERRIDES = {
     name: "LBEU 2025 - 1\u00ba Split - Practice",
     organizer: "LigaGG",
     prizePool: "-",
-    tier: "B",
+    tier: "C",
     type: "Online - Playoffs",
     status: "Finalizado",
     teamCount: 4,
     teams: ["ifsp_midas", "macklogic_white", "totale_umc", "ufpr_bbn"],
     mapPool: ["Ascent", "Bind", "Haven", "Icebox", "Sunset"],
     format: {
-      summary: "Elimina\u00e7\u00e3o dupla - registros parciais",
+      summary: "Elimina\u00e7\u00e3o dupla",
       details: [
-        "Quatro equipes nos registros encontrados, com s\u00e9ries MD3 e grande final MD5.",
-        "A chave mostra os confrontos encontrados. As demais s\u00e9ries n\u00e3o foram confirmadas.",
+        "Quatro equipes, com s\u00e9ries MD3 e grande final MD5.",
+        "Algumas s\u00e9ries da chave n\u00e3o t\u00eam resultado conhecido.",
       ],
-      standings: "Coloca\u00e7\u00f5es confirmadas pela final",
+      standings: "Coloca\u00e7\u00e3o",
     },
     placements: [
       { range: "1", id: "ufpr_bbn" },
       { range: "2", id: "macklogic_white" },
     ],
     bracket: {
-      title: "Confrontos registrados",
+      title: "Chave",
       regions: [
         {
           name: "Grande final",
@@ -11946,7 +12089,7 @@ const TOURNAMENT_OVERRIDES = {
           ],
         },
         {
-          name: "Confrontos registrados",
+          name: "Chave",
           className: "upper-bracket",
           columns: [
             {
@@ -11970,6 +12113,7 @@ const TOURNAMENT_OVERRIDES = {
   "copa-xv-6-2025": {
     name: "Copa XV - 6ª edição (2025)",
     organizer: "XV Buzzards",
+    tier: "C",
     status: "Finalizado",
     teamCount: 4,
     teams: ["axis_anteaters", "azure_bears_black", "azure_bears_red", "unicamp_tritons_red"],
@@ -19220,7 +19364,7 @@ const TOURNAMENT_OVERRIDES = {
     name: "LBEU 2025 - 2\u00ba Split - Practice",
     organizer: "LigaGG",
     prizePool: "-",
-    tier: "B",
+    tier: "C",
     type: "Online - Playoffs",
     status: "Finalizado",
     teamCount: 5,
@@ -20561,7 +20705,7 @@ function withSucceededRankingRows(ranking, aliases) {
 }
 
 function buildRankingSnapshots({ teams, matches, matchSeries, players, tournaments, rankingWeights }) {
-  return rankingSnapshotCutoffs(matches, matchSeries)
+  return rankingSnapshotCutoffs(matches, matchSeries, rankingWeights)
     .map((cutoffAt) => {
       const ranking = calculateRankingForCutoff({ teams, matches, matchSeries, players, tournaments, rankingWeights, cutoffAt });
       return rankingSnapshotShell(cutoffAt, ranking);
@@ -20580,14 +20724,22 @@ function rankingSnapshotShell(cutoffAt, ranking, label = "") {
   };
 }
 
-function rankingSnapshotCutoffs(matches, matchSeries) {
+// O primeiro ranking oficial e `firstRankingAt` (decisao de 07/11/2026: 23/07/2024,
+// a terca depois da final da Alianca 2024.1). As partidas de antes contam na nota;
+// so as semanas de antes nao viram ranking, porque nelas o top 10 trocava metade
+// em quatro semanas. Sem o campo, comeca na primeira terca depois do primeiro jogo.
+function rankingSnapshotCutoffs(matches, matchSeries, rankingWeights = {}) {
   const dates = [
     ...matches.map((match) => Number(match.startedAt || 0)),
     ...matchSeries.map((series) => Number(series.sortAt || series.startedAt || 0)),
   ].filter((value) => Number.isFinite(value) && value > 0);
   const latestActiveCutoff = rankingTuesdayStartOnOrBefore(Date.now());
   if (!dates.length) return [latestActiveCutoff];
-  const firstCutoff = rankingTuesdayStartOnOrAfter(Math.min(...dates));
+  const oficial = Date.parse(rankingWeights?.firstRankingAt || "");
+  const firstCutoff = Math.max(
+    rankingTuesdayStartOnOrAfter(Math.min(...dates)),
+    Number.isFinite(oficial) ? rankingTuesdayStartOnOrAfter(oficial) : -Infinity,
+  );
   const lastCutoff = Math.max(firstCutoff, latestActiveCutoff);
   const cutoffs = [];
   for (let cutoff = lastCutoff; cutoff >= firstCutoff; cutoff -= WEEK_MS) {

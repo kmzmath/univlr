@@ -206,7 +206,18 @@
     });
   }
 
+  // O auth.js redesenha a pagina inteira a cada evento de conta, inclusive a
+  // renovacao do token, que chega sozinha enquanto a pessoa digita. Sem isto
+  // o redesenho apagava o titulo e o texto (os comentarios fazem o mesmo com o
+  // rascunho deles). Guarda o que estava escrito e devolve no formulario novo.
+  function rascunhoAtual() {
+    const form = document.querySelector("[data-th-form]");
+    if (!form || !/^#\/threads\/nova\b/.test(window.location.hash)) return null;
+    return { titulo: form.titulo.value, texto: form.texto.value };
+  }
+
   function renderNova() {
+    const rascunho = rascunhoAtual();
     const perfil = window.Community.perfil();
     let principal;
     if (!logado()) {
@@ -215,7 +226,13 @@
     } else if (window.Community.banido()) {
       principal = `<div class="th-bloco th-aviso"><p>Sua conta está suspensa e não pode abrir threads agora.</p></div>`;
     } else {
-      principal = cartaoFormulario({ autor: perfil.username, botao: "Publicar", cancelar: "#/threads" });
+      principal = cartaoFormulario({
+        autor: perfil.username,
+        titulo: rascunho ? rascunho.titulo : "",
+        texto: rascunho ? rascunho.texto : "",
+        botao: "Publicar",
+        cancelar: "#/threads",
+      });
     }
     casca(outrasThreads(null), `<a class="th-voltar" href="#/threads">‹ Threads</a><h1 class="sr-only">Nova thread</h1>${principal}`, true);
     const form = document.querySelector("[data-th-form]");
@@ -223,7 +240,8 @@
       const id = await window.Community.criarTopico(titulo, texto);
       window.location.hash = hrefDaThread(id);
     });
-    form?.titulo.focus();
+    // Foco no titulo so na chegada: num redesenho a pessoa pode estar no texto.
+    if (form && !rascunho) form.titulo.focus();
   }
 
   // ------------------------------------------------------------------ thread
@@ -350,14 +368,6 @@
       ev.preventDefault();
       window.Auth?.abrir("entrar");
     }
-  });
-
-  // Entrar ou sair com a tela de nova thread aberta troca o convite pelo
-  // formulario (e vice-versa). So nesses dois eventos: a renovacao do token
-  // redesenharia e apagaria o que a pessoa esta digitando.
-  window.Community?.aoMudar?.((_sessao, _perfil, evento) => {
-    if (evento !== "SIGNED_IN" && evento !== "SIGNED_OUT") return;
-    if (/^#\/threads\/nova\b/.test(window.location.hash)) renderNova();
   });
 
   window.Threads = { painelHome, renderThreads, hrefDaThread };

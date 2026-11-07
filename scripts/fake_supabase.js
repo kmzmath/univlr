@@ -94,7 +94,13 @@
 
   function comAutor(c) {
     const p = db.profiles.find((x) => x.id === c.author_id);
-    return { ...c, profiles: p ? { username: p.username, role: p.role, fav_team: p.fav_team, fav_player: p.fav_player } : null };
+    // `threads` e o embed do perfil (comentariosDoPerfil): onde o comentario esta.
+    const th = db.threads.find((x) => x.id === c.thread_id);
+    return {
+      ...c,
+      profiles: p ? { username: p.username, role: p.role, fav_team: p.fav_team, fav_player: p.fav_player } : null,
+      threads: th ? { subject_kind: th.subject_kind, subject_id: th.subject_id } : null,
+    };
   }
 
   class Consulta {

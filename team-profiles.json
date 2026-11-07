@@ -4939,6 +4939,23 @@
           "players": [
             {
               "slot": 1,
+              "playerId": "w-WinXosN3BJybtzxt68Re-evVIlum-XK0b2KxN8Z2m1UoIOCSon5zyHzae_3ez7rXYhU4GPzg_0og",
+              "name": "BmZera",
+              "handle": "Mtr#fps",
+              "firstSeenAt": "2026-06-06",
+              "lastSeenAt": "2026-08-16",
+              "matches": 14,
+              "rounds": 268,
+              "profileMatches": 14,
+              "profileConfidence": 56,
+              "currentTeam": "inatel_legacy",
+              "teamHistory": [
+                "inatel",
+                "inatel_legacy"
+              ]
+            },
+            {
+              "slot": 2,
               "playerId": "HDzeVXWWn3Ph-f_MbVPLEdqHQbu6h9tsfpambHImI4PWay6u1tE6ENMTuMpNfLyioln7MNXXD5BNNg",
               "name": "Henrique Novinhu",
               "handle": "Novinhu#hen",
@@ -4955,7 +4972,7 @@
               ]
             },
             {
-              "slot": 2,
+              "slot": 3,
               "playerId": "g8FDiFoCPajg77-38_KY7rGkzy1JItdPWyKWVRjAo0JCKSaJNs0gdWTKm0qCgIGBzfOox_pqttq1uw",
               "name": "Psy",
               "handle": "INTL Psychovv#Mii",
@@ -4965,23 +4982,6 @@
               "rounds": 268,
               "profileMatches": 14,
               "profileConfidence": 56,
-              "currentTeam": "inatel_legacy",
-              "teamHistory": [
-                "inatel_legacy",
-                "inatel"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "4w3OWrJKpeBasc0x-2ghFy2y3-ftshuKPyu6iFCc7_peWdOgOe6CPlkrFzcyHwsAh6cpk7mDHP2aag",
-              "name": "Mtr",
-              "handle": "Mtr#fps",
-              "firstSeenAt": "2026-07-25",
-              "lastSeenAt": "2026-08-16",
-              "matches": 9,
-              "rounds": 182,
-              "profileMatches": 9,
-              "profileConfidence": 36,
               "currentTeam": "inatel_legacy",
               "teamHistory": [
                 "inatel_legacy",
@@ -5040,22 +5040,6 @@
             },
             {
               "slot": 7,
-              "playerId": "w-WinXosN3BJybtzxt68Re-evVIlum-XK0b2KxN8Z2m1UoIOCSon5zyHzae_3ez7rXYhU4GPzg_0og",
-              "name": "BmZera",
-              "handle": "BmZ#clt",
-              "firstSeenAt": "2026-06-06",
-              "lastSeenAt": "2026-06-27",
-              "matches": 5,
-              "rounds": 86,
-              "profileMatches": 5,
-              "profileConfidence": 20,
-              "currentTeam": "inatel_legacy",
-              "teamHistory": [
-                "inatel_legacy"
-              ]
-            },
-            {
-              "slot": 8,
               "playerId": "V44vc_rtOMtMRguU8KQj4w8unkC93LWbnvmG2CQxNiSBpnp1OCFhOunBzLBKaezFmgK0E-Oyof33ug",
               "name": "J0RD4N",
               "handle": "jdN#CLT",

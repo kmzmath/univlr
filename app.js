@@ -22630,6 +22630,13 @@ function aggregatePlayers(matches, teams, metadata) {
       const observedTeamId = [...player.teams.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || teamByObservedPlayer.get(player.id);
       player.observedTeamId = observedTeamId || "";
       player.teamId = player.currentTeam || observedTeamId || "";
+      // O handle saiu da partida mais recente, com o nome que a conta tinha
+      // naquele dia. Se a Riot já disse como essa MESMA conta se chama hoje
+      // (metadata.currentRiotIds, de ferramentas/riot/AtualizaNicks.py), o
+      // perfil mostra o nome de hoje; as partidas seguem com o nome da época.
+      // O `nick` (título e endereço do perfil) não muda.
+      const currentRiotId = currentRiotIdForPlayer(player, metadata);
+      if (currentRiotId) player.handle = currentRiotId;
       finalizePlayerStatRow(player);
       player.teamStats = [...(teamTotalsByRow.get(player)?.entries() || [])]
         .map(([teamId, stint]) => finalizePlayerStatRow({ teamId, ...stint }))
@@ -22649,6 +22656,14 @@ function aggregatePlayers(matches, teams, metadata) {
     .sort((a, b) => Number(b.matches > 0) - Number(a.matches > 0) || Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0) || b.kills - a.kills || a.nick.localeCompare(b.nick));
   assignPlayerRouteSlugs(players);
   return players;
+}
+
+function currentRiotIdForPlayer(player, metadata) {
+  const riotIds = metadata?.currentRiotIds;
+  if (!riotIds) return "";
+  // accounts[0] é a conta da partida mais recente; sem partida, a principal.
+  const account = player.accounts?.[0]?.puuid || player.puuid || player.id;
+  return riotIds[account] || "";
 }
 
 function findAggregatedPlayerForMetadata(playersById, registeredPlayer) {

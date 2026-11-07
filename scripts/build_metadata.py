@@ -176,6 +176,18 @@ def title_from_slug(slug):
     return " ".join(part.upper() if part.lower() in KNOWN_ACRONYMS else part.capitalize() for part in parts if part)
 
 
+# Riot ID de HOJE de cada conta, consultado na Riot por
+# ferramentas/riot/AtualizaNicks.py. O perfil mostra este nome como "nick
+# atual"; sem ele, o site so conhece o nome com que a conta jogou a ultima
+# partida registrada, que pode ter meses. Vale para conta cadastrada e para a
+# que so aparece nas partidas. Arquivo ausente = nada muda.
+def load_riot_ids_atuais():
+    path = DATA_ROOT / "riot_ids_atuais.json"
+    if not path.exists():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8")).get("contas", {})
+
+
 def load_rows(path):
     wb = load_workbook(path, read_only=True, data_only=True)
     ws = wb.active
@@ -801,6 +813,7 @@ def main():
             "dados_excel/agents.xlsx",
             "dados_excel/maps.xlsx",
             "dados_excel/round_state_winrates.xlsx",
+            "dados_excel/riot_ids_atuais.json",
             "assets/team-logos/",
             "assets/tournament-icons/",
             "assets/agent-icons/",
@@ -813,6 +826,7 @@ def main():
         "agents": read_agents(),
         "maps": read_maps(),
         "stateWinrates": read_state_winrates(),
+        "currentRiotIds": load_riot_ids_atuais(),
     }
     warn_lineups_sem_jogador(metadata["teams"], metadata["players"])
     warn_sucessoes_invalidas(metadata["teams"])

@@ -165,6 +165,11 @@ function main() {
   for (const match of db.matches) for (const player of match.players || []) stripDead(player);
   for (const player of db.players || []) stripDead(player);
 
+  // Poda: o Riot ID de hoje de cada conta (~1.500 entradas, ~110 KB no gzip)
+  // só serve para o aggregatePlayers trocar o handle do perfil, o que já
+  // aconteceu acima. No navegador ninguém mais lê o mapa.
+  if (db.metadata) delete db.metadata.currentRiotIds;
+
   // Poda: roundResults fica de fora do payload e é restaurado sob demanda na
   // página da partida (detailPending sinaliza o carregamento preguiçoso).
   let strippedMatches = 0;

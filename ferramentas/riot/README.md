@@ -43,13 +43,14 @@ continuam funcionando - só os que baixam partida é que param.
 | `PegaTeamMatch.py` | o mesmo, mirando 1 ou 2 equipes | `out_tournament/` |
 | `PegaPlayerMatch.py` | o mesmo, mirando jogadores | `out_tournament/` |
 | `AuditaNicksPartidas.py` | acha quem jogou e não bate com o cadastro | `out_auditoria_nicks/` |
+| `AtualizaNicks.py` | pergunta à Riot o Riot ID de hoje de toda conta conhecida (as da planilha e as que só aparecem em `campeonatos/`) e acha pelo nick o PUUID de quem não tem | `dados_excel/riot_ids_atuais.json` (o perfil mostra esse nome como nick atual), e no `players.xlsx` o nick novo numa coluna `nick N` e o PUUID achado; a coluna `Jogador` não muda |
 | `analiseMatches.py` | relatório por partida e por equipe, com identidade, KAST, ACS e rAAting iguais aos do site | `analiseMatches_<pasta>.xlsx` |
 | `analiseAgentes.py` | relatório de agentes com as métricas oficiais do site | `analiseAgentes_<pasta>.xlsx` |
 | `analiseMapas.py` | relatório de mapas | `analiseMapas.xlsx` |
 | `analiseWinSituations.py` | winrate por situação de round | `dados_excel/round_state_winrates.xlsx` |
 
-O `analiseWinSituations` é o único que escreve dentro do repo, e é porque a saída
-dele é **fonte** para o `analiseMatches` e o `analiseAgentes`.
+O `analiseWinSituations` e o `AtualizaNicks` são os únicos que escrevem dentro do repo, e é porque a saída
+deles é **fonte**: do `analiseMatches` e do `analiseAgentes` no primeiro caso, do build do site no segundo.
 
 O `analiseMatches.py` e o `analiseAgentes.py` requerem Node.js porque reutilizam
 `app.js` e `raating-core.js` por meio de `export_site_match_stats.js`. Assim, os

@@ -267,6 +267,125 @@ const FILENAME_TEAM_ALIASES = {
   axissupernova: "axis_anteaters",
 };
 
+// Campeonatos com etapas (docs/superpowers/specs/2026-11-07-campeonatos-com-etapas-design.md).
+// Cada etapa continua sendo um campeonato para ranking, pontos e estatistica; o
+// cadastro so diz quais etapas formam um campeonato, para a navegacao, a lista de
+// Eventos, a busca e os trofeus. A ordem das etapas e a do dono (07/11/2026): a mais
+// recente primeiro. `nivel` 1 e o degrau que decide o titulo; etapas do mesmo degrau
+// (as classificatorias) dividem o nivel. Paralela e divisao que nao leva ao titulo.
+const SEPARADOR_DE_ETAPA = ": ";
+
+const CAMPEONATOS_COM_ETAPAS = [
+  {
+    id: "univava",
+    nome: "UNIVAVÁ",
+    nomesAntigos: [],
+    decide: "univava-playoffs",
+    etapas: [
+      { id: "univava-playoffs", nome: "Playoffs", nivel: 1 },
+      { id: "univava-fase-de-grupos", nome: "Fase de Grupos", nivel: 2 },
+      { id: "univava-classificatoria-4", nome: "Classificatória 4", nivel: 3 },
+      { id: "univava-classificatoria-3", nome: "Classificatória 3", nivel: 3 },
+      { id: "univava-classificatoria-2", nome: "Classificatória 2", nivel: 3 },
+      { id: "univava-classificatoria-1", nome: "Classificatória 1", nivel: 3 },
+    ],
+  },
+  {
+    id: "jubs-2026",
+    nome: "JUBS 2026 - Goiás",
+    nomesAntigos: ["JUBS Goiás 2026"],
+    decide: "jubs-etapa-presencial",
+    etapas: [
+      { id: "jubs-etapa-presencial", nome: "Etapa Presencial", nivel: 1 },
+      { id: "jubs-fase-inicial", nome: "Fase Inicial", nivel: 2 },
+      { id: "jubs-pre-jubs-sp", nome: "Pré-JUBS SP", nivel: 1, paralela: true, artigo: "do" },
+    ],
+  },
+  {
+    id: "lbeu-2025-2-split",
+    nome: "LBEU 2025 - 2º Split",
+    nomesAntigos: ["LBEU 2025"],
+    decide: "lbeu-2025-2-split-championship",
+    etapas: [
+      { id: "lbeu-2025-2-split-championship", nome: "Championship", nivel: 1 },
+      { id: "lbeu-2025-2-split-off-season", nome: "Off Season", nivel: 1, paralela: true, artigo: "da" },
+      { id: "lbeu-2025-2-split-practice", nome: "Practice", nivel: 1, paralela: true, artigo: "da" },
+      { id: "lbeu-2025-2-split-fase-suica", nome: "Fase Suíça", nivel: 2 },
+    ],
+  },
+  {
+    id: "lbeu-2025-1-split",
+    nome: "LBEU 2025 - 1º Split",
+    nomesAntigos: ["LBEU 2025"],
+    decide: "lbeu-2025-1-split-championship",
+    etapas: [
+      { id: "lbeu-2025-1-split-championship", nome: "Championship", nivel: 1 },
+      { id: "lbeu-2025-1-split-off-season", nome: "Off Season", nivel: 1, paralela: true, artigo: "da" },
+      { id: "lbeu-2025-1-split-practice", nome: "Practice", nivel: 1, paralela: true, artigo: "da" },
+      { id: "lbeu-2025-1-split-fase-suica", nome: "Fase Suíça", nivel: 2 },
+    ],
+  },
+  {
+    id: "jubs-2025",
+    nome: "JUBS 2025 - Natal",
+    nomesAntigos: ["JUBS RN 2025"],
+    decide: "jubs-2025-etapa-presencial",
+    etapas: [
+      { id: "jubs-2025-etapa-presencial", nome: "Etapa Presencial", nivel: 1 },
+      { id: "jubs-2025-fase-inicial", nome: "Fase Inicial", nivel: 2 },
+    ],
+  },
+  {
+    id: "copa-alianca-2025",
+    nome: "Copa Aliança 2025",
+    nomesAntigos: [],
+    decide: "copa-alianca-2025-playoffs",
+    etapas: [
+      { id: "copa-alianca-2025-playoffs", nome: "Playoffs", nivel: 1 },
+      { id: "copa-alianca-2025-fase-de-grupos", nome: "Fase de Grupos", nivel: 2 },
+      { id: "copa-alianca-2025-classificatoria-4", nome: "Classificatória 4", nivel: 3 },
+      { id: "copa-alianca-2025-classificatoria-3", nome: "Classificatória 3", nivel: 3 },
+      { id: "copa-alianca-2025-classificatoria-2", nome: "Classificatória 2", nivel: 3 },
+      { id: "copa-alianca-2025-classificatoria-1", nome: "Classificatória 1", nivel: 3 },
+    ],
+  },
+  {
+    id: "jubs-2024",
+    nome: "JUBS 2024 - Brasília",
+    nomesAntigos: ["JUBS 2024"],
+    decide: "jubs-2024-presencial",
+    etapas: [
+      { id: "jubs-2024-presencial", nome: "Etapa Presencial", nivel: 1 },
+      { id: "jubs-2024-playoffs-online", nome: "Playoffs Online", nivel: 2 },
+      { id: "jubs-2024-qualify-2", nome: "Qualify 2", nivel: 3 },
+      { id: "jubs-2024-qualify-1", nome: "Qualify 1", nivel: 3 },
+    ],
+  },
+  {
+    id: "alianca-2024-2",
+    nome: "Copa Aliança 2024.2",
+    nomesAntigos: [],
+    decide: "alianca-2024-2-playoffs",
+    etapas: [
+      { id: "alianca-2024-2-playoffs", nome: "Playoffs", nivel: 1 },
+      { id: "alianca-2024-2-fase-de-grupos", nome: "Fase de Grupos", nivel: 2 },
+      { id: "alianca-2024-2-classificatoria", nome: "Classificatória", nivel: 3 },
+    ],
+  },
+  {
+    id: "alianca-2024-1",
+    nome: "Copa Aliança 2024.1",
+    nomesAntigos: [],
+    decide: "alianca-2024-playoffs",
+    etapas: [
+      { id: "alianca-2024-playoffs", nome: "Playoffs", nivel: 1 },
+      { id: "alianca-2024-grupos", nome: "Grupos", nivel: 2 },
+      { id: "alianca-2024-classificatoria-2", nome: "Classificatória 2", nivel: 3 },
+      { id: "alianca-2024-classificatoria-1", nome: "Classificatória 1", nivel: 3 },
+    ],
+  },
+];
+
 const TOURNAMENT_OVERRIDES = {
   "alianca-2024-classificatoria-1": {
     "name": "Copa Aliança 2024.1 - Classificatória 1",
@@ -3199,8 +3318,8 @@ const TOURNAMENT_OVERRIDES = {
       ]
     }
   },
-  "alianca-2024-grupos-playoffs": {
-    "name": "Copa Aliança 2024.1 - Grupos e playoffs",
+  "alianca-2024-grupos": {
+    "name": "Copa Aliança 2024.1 - Grupos",
     "organizer": "AcadArena",
     "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
     "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
@@ -3255,10 +3374,9 @@ const TOURNAMENT_OVERRIDES = {
       "Sunset"
     ],
     "format": {
-      "summary": "Suíço e playoffs",
+      "summary": "Sistema suíço",
       "details": [
         "16 equipes disputam o sistema suíço. Oito avançam aos playoffs.",
-        "Playoffs em eliminação simples.",
         "Algumas séries têm estatísticas de só parte dos mapas."
       ],
       "standings": "Classificação oficial"
@@ -3266,43 +3384,43 @@ const TOURNAMENT_OVERRIDES = {
     "placements": [
       {
         "id": "azure_bears_golden",
-        "range": "1",
-        "note": "Campeão"
-      },
-      {
-        "id": "unicamp_tritons_black",
-        "range": "2",
-        "note": "Resultado da chave oficial"
-      },
-      {
-        "id": "unb_black",
-        "range": "3-4",
-        "note": "Resultado da chave oficial"
-      },
-      {
-        "id": "caap_hellhounds",
-        "range": "3-4",
-        "note": "Resultado da chave oficial"
-      },
-      {
-        "id": "usp_cronos_2024",
-        "range": "5-8",
-        "note": "Resultado da chave oficial"
-      },
-      {
-        "id": "ufg_eagles",
-        "range": "5-8",
-        "note": "Resultado da chave oficial"
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
       },
       {
         "id": "maua_esports_black_2024",
-        "range": "5-8",
-        "note": "Resultado da chave oficial"
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
+      },
+      {
+        "id": "caap_hellhounds",
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
+      },
+      {
+        "id": "ufg_eagles",
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
+      },
+      {
+        "id": "unb_black",
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
       },
       {
         "id": "unb_green_olws_line_red_2024",
-        "range": "5-8",
-        "note": "Resultado da chave oficial"
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
+      },
+      {
+        "id": "unicamp_tritons_black",
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
+      },
+      {
+        "id": "usp_cronos_2024",
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
       },
       {
         "id": "azure_bears_black",
@@ -3347,11 +3465,11 @@ const TOURNAMENT_OVERRIDES = {
     ],
     "seriesResults": {},
     "startAt": "2024-05-18T16:05:41.187Z",
-    "endAt": "2024-07-20T19:37:04.18Z",
+    "endAt": "2024-06-09T18:27:03.005Z",
     "swiss": {
       "rounds": [
         {
-          "title": "Suíço - Rodada 1",
+          "title": "Rodada 1",
           "status": "Concluída",
           "matches": [
             {
@@ -3439,7 +3557,7 @@ const TOURNAMENT_OVERRIDES = {
           ]
         },
         {
-          "title": "Suíço - Rodada 2",
+          "title": "Rodada 2",
           "status": "Concluída",
           "matches": [
             {
@@ -3527,7 +3645,7 @@ const TOURNAMENT_OVERRIDES = {
           ]
         },
         {
-          "title": "Suíço - Rodada 3",
+          "title": "Rodada 3",
           "status": "Concluída",
           "matches": [
             {
@@ -3615,7 +3733,7 @@ const TOURNAMENT_OVERRIDES = {
           ]
         },
         {
-          "title": "Suíço - Rodada 4",
+          "title": "Rodada 4",
           "status": "Concluída",
           "matches": [
             {
@@ -3681,7 +3799,7 @@ const TOURNAMENT_OVERRIDES = {
           ]
         },
         {
-          "title": "Suíço - Rodada 5",
+          "title": "Rodada 5",
           "status": "Concluída",
           "matches": [
             {
@@ -3715,97 +3833,9 @@ const TOURNAMENT_OVERRIDES = {
               "winner": "unb_green_olws_line_red_2024"
             }
           ]
-        },
-        {
-          "title": "Playoffs - Rodada 1",
-          "status": "Concluída",
-          "matches": [
-            {
-              "code": "Partida 2",
-              "seriesCode": 2,
-              "bestOf": "MD3",
-              "a": "azure_bears_golden",
-              "b": "usp_cronos_2024",
-              "scoreA": 2,
-              "scoreB": 0,
-              "winner": "azure_bears_golden"
-            },
-            {
-              "code": "Partida 4",
-              "seriesCode": 4,
-              "bestOf": "MD3",
-              "a": "ufg_eagles",
-              "b": "unb_black",
-              "scoreA": 0,
-              "scoreB": 2,
-              "winner": "unb_black"
-            },
-            {
-              "code": "Partida 6",
-              "seriesCode": 6,
-              "bestOf": "MD3",
-              "a": "maua_esports_black_2024",
-              "b": "unicamp_tritons_black",
-              "scoreA": 1,
-              "scoreB": 2,
-              "winner": "unicamp_tritons_black"
-            },
-            {
-              "code": "Partida 8",
-              "seriesCode": 8,
-              "bestOf": "MD3",
-              "a": "caap_hellhounds",
-              "b": "unb_green_olws_line_red_2024",
-              "scoreA": 2,
-              "scoreB": 1,
-              "winner": "caap_hellhounds"
-            }
-          ]
-        },
-        {
-          "title": "Playoffs - Rodada 2",
-          "status": "Concluída",
-          "matches": [
-            {
-              "code": "Partida 10",
-              "seriesCode": 10,
-              "bestOf": "MD3",
-              "a": "azure_bears_golden",
-              "b": "unb_black",
-              "scoreA": 2,
-              "scoreB": 1,
-              "winner": "azure_bears_golden"
-            },
-            {
-              "code": "Partida 12",
-              "seriesCode": 12,
-              "bestOf": "MD3",
-              "a": "unicamp_tritons_black",
-              "b": "caap_hellhounds",
-              "scoreA": 2,
-              "scoreB": 1,
-              "winner": "unicamp_tritons_black"
-            }
-          ]
-        },
-        {
-          "title": "Playoffs - Rodada 3",
-          "status": "Concluída",
-          "matches": [
-            {
-              "code": "Partida 14",
-              "seriesCode": 14,
-              "bestOf": "MD3",
-              "a": "azure_bears_golden",
-              "b": "unicamp_tritons_black",
-              "scoreA": 2,
-              "scoreB": 0,
-              "winner": "azure_bears_golden"
-            }
-          ]
         }
       ],
-      "seriesCount": 40,
+      "seriesCount": 33,
       "finalStandings": true,
       "standingsLabel": "Classificação da fase suíça",
       "standings": [
@@ -3814,64 +3844,64 @@ const TOURNAMENT_OVERRIDES = {
           "wins": 3,
           "losses": 0,
           "points": 3,
-          "range": "1",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "maua_esports_black_2024",
           "wins": 3,
           "losses": 0,
           "points": 3,
-          "range": "2",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "caap_hellhounds",
           "wins": 3,
           "losses": 1,
           "points": 3,
-          "range": "3",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "ufg_eagles",
           "wins": 3,
           "losses": 1,
           "points": 3,
-          "range": "4",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "unb_black",
           "wins": 3,
           "losses": 1,
           "points": 3,
-          "range": "5",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "unb_green_olws_line_red_2024",
           "wins": 3,
           "losses": 2,
           "points": 3,
-          "range": "6",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "unicamp_tritons_black",
           "wins": 3,
           "losses": 2,
           "points": 3,
-          "range": "7",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "usp_cronos_2024",
           "wins": 3,
           "losses": 2,
           "points": 3,
-          "range": "8",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "azure_bears_black",
@@ -3938,9 +3968,208 @@ const TOURNAMENT_OVERRIDES = {
           "status": "Eliminado"
         }
       ]
+    }
+  },
+  "alianca-2024-playoffs": {
+    "name": "Copa Aliança 2024.1 - Playoffs",
+    "organizer": "AcadArena",
+    "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
+    "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
+    "logo": "assets/tournament-icons/copa_alianca.png",
+    "tier": "S",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 8,
+    "teams": [
+      "azure_bears_golden",
+      "maua_esports_black_2024",
+      "caap_hellhounds",
+      "ufg_eagles",
+      "unb_black",
+      "unb_green_olws_line_red_2024",
+      "unicamp_tritons_black",
+      "usp_cronos_2024"
+    ],
+    "teamNames": {
+      "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
+      "maua_esports_black_2024": "Mauá Esports Black",
+      "caap_hellhounds": "CAAP Hellhounds",
+      "ufg_eagles": "UFG Eagles",
+      "unb_black": "UNB Green Owls Black",
+      "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
+      "unicamp_tritons_black": "UNICAMP Tritons",
+      "usp_cronos_2024": "USP Cronos"
     },
+    "mapPool": [
+      "Ascent",
+      "Bind",
+      "Breeze",
+      "Icebox",
+      "Lotus",
+      "Split",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Eliminação simples",
+      "details": [
+        "As oito primeiras da fase suíça disputam os playoffs.",
+        "Algumas séries têm estatísticas de só parte dos mapas."
+      ]
+    },
+    "placements": [
+      {
+        "id": "azure_bears_golden",
+        "range": "1",
+        "note": "Campeão"
+      },
+      {
+        "id": "unicamp_tritons_black",
+        "range": "2",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unb_black",
+        "range": "3-4",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "caap_hellhounds",
+        "range": "3-4",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "usp_cronos_2024",
+        "range": "5-8",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "ufg_eagles",
+        "range": "5-8",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "maua_esports_black_2024",
+        "range": "5-8",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unb_green_olws_line_red_2024",
+        "range": "5-8",
+        "note": "Resultado da chave oficial"
+      }
+    ],
+    "seriesResults": {},
+    "startAt": "2024-06-16T14:04:40.785Z",
+    "endAt": "2024-07-20T19:37:04.18Z",
     "bracket": {
-      "title": "Suíço e playoffs"
+      "title": "Eliminação simples",
+      "regions": [
+        {
+          "name": "Playoffs",
+          "className": "playoff-bracket",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Quartas de final",
+              "matches": [
+                {
+                  "code": "Partida 2",
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "usp_cronos_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden",
+                  "band": 0
+                },
+                {
+                  "code": "Partida 4",
+                  "bestOf": "MD3",
+                  "a": "ufg_eagles",
+                  "b": "unb_black",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "unb_black",
+                  "band": 1
+                },
+                {
+                  "code": "Partida 6",
+                  "bestOf": "MD3",
+                  "a": "maua_esports_black_2024",
+                  "b": "unicamp_tritons_black",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "unicamp_tritons_black",
+                  "band": 2
+                },
+                {
+                  "code": "Partida 8",
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "b": "unb_green_olws_line_red_2024",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "caap_hellhounds",
+                  "band": 3
+                }
+              ]
+            },
+            {
+              "title": "Semifinais",
+              "matches": [
+                {
+                  "code": "Partida 10",
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "unb_black",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "azure_bears_golden",
+                  "from": [
+                    "Partida 2",
+                    "Partida 4"
+                  ],
+                  "band": 0.5
+                },
+                {
+                  "code": "Partida 12",
+                  "bestOf": "MD3",
+                  "a": "unicamp_tritons_black",
+                  "b": "caap_hellhounds",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "unicamp_tritons_black",
+                  "from": [
+                    "Partida 6",
+                    "Partida 8"
+                  ],
+                  "band": 2.5
+                }
+              ]
+            },
+            {
+              "title": "Final",
+              "matches": [
+                {
+                  "code": "Partida 14",
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "unicamp_tritons_black",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden",
+                  "from": [
+                    "Partida 10",
+                    "Partida 12"
+                  ],
+                  "band": 1.5
+                }
+              ]
+            }
+          ],
+          "terminalColumn": false
+        }
+      ]
     }
   },
   "alianca-2024-2-classificatoria": {
@@ -5280,8 +5509,8 @@ const TOURNAMENT_OVERRIDES = {
       ]
     }
   },
-  "alianca-2024-2-grupos-playoffs": {
-    "name": "Copa Aliança 2024.2 - Grupos e playoffs",
+  "alianca-2024-2-fase-de-grupos": {
+    "name": "Copa Aliança 2024.2 - Fase de Grupos",
     "organizer": "AcadArena",
     "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
     "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
@@ -5336,10 +5565,9 @@ const TOURNAMENT_OVERRIDES = {
       "Sunset"
     ],
     "format": {
-      "summary": "Suíço e playoffs",
+      "summary": "Sistema suíço",
       "details": [
         "16 equipes disputam o sistema suíço. Oito avançam aos playoffs.",
-        "Playoffs em eliminação dupla.",
         "Algumas séries têm estatísticas de só parte dos mapas."
       ],
       "standings": "Classificação oficial"
@@ -5347,43 +5575,43 @@ const TOURNAMENT_OVERRIDES = {
     "placements": [
       {
         "id": "caap_hellhounds",
-        "range": "1",
-        "note": "Campeão"
-      },
-      {
-        "id": "uninassau_griffins",
-        "range": "2",
-        "note": "Vice"
-      },
-      {
-        "id": "ufg_eagles",
-        "range": "3",
-        "note": "Resultado da chave oficial"
-      },
-      {
-        "id": "unb_green_olws_line_red_2024",
-        "range": "4",
-        "note": "Resultado da chave oficial"
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
       },
       {
         "id": "usp_stars",
-        "range": "5-6",
-        "note": "Resultado da chave oficial"
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
       },
       {
         "id": "azure_bears_golden",
-        "range": "5-6",
-        "note": "Resultado da chave oficial"
-      },
-      {
-        "id": "macklogic_red",
-        "range": "7-8",
-        "note": "Resultado da chave oficial"
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
       },
       {
         "id": "azure_bears_black",
-        "range": "7-8",
-        "note": "Resultado da chave oficial"
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
+      },
+      {
+        "id": "uninassau_griffins",
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
+      },
+      {
+        "id": "macklogic_red",
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
+      },
+      {
+        "id": "ufg_eagles",
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
+      },
+      {
+        "id": "unb_green_olws_line_red_2024",
+        "range": "Classificado",
+        "note": "Avançou aos playoffs"
       },
       {
         "id": "puc_clerigos",
@@ -5428,11 +5656,11 @@ const TOURNAMENT_OVERRIDES = {
     ],
     "seriesResults": {},
     "startAt": "2024-10-05T16:04:03.489Z",
-    "endAt": "2024-12-07T16:10:07.66Z",
+    "endAt": "2024-10-20T14:15:52.155Z",
     "swiss": {
       "rounds": [
         {
-          "title": "Suíço - Rodada 1",
+          "title": "Rodada 1",
           "status": "Concluída",
           "matches": [
             {
@@ -5518,7 +5746,7 @@ const TOURNAMENT_OVERRIDES = {
           ]
         },
         {
-          "title": "Suíço - Rodada 2",
+          "title": "Rodada 2",
           "status": "Concluída",
           "matches": [
             {
@@ -5604,7 +5832,7 @@ const TOURNAMENT_OVERRIDES = {
           ]
         },
         {
-          "title": "Suíço - Rodada 3",
+          "title": "Rodada 3",
           "status": "Concluída",
           "matches": [
             {
@@ -5690,7 +5918,7 @@ const TOURNAMENT_OVERRIDES = {
           ]
         },
         {
-          "title": "Suíço - Rodada 4",
+          "title": "Rodada 4",
           "status": "Concluída",
           "matches": [
             {
@@ -5756,7 +5984,7 @@ const TOURNAMENT_OVERRIDES = {
           ]
         },
         {
-          "title": "Suíço - Rodada 5",
+          "title": "Rodada 5",
           "status": "Concluída",
           "matches": [
             {
@@ -5794,207 +6022,9 @@ const TOURNAMENT_OVERRIDES = {
               "winner": "ufg_eagles"
             }
           ]
-        },
-        {
-          "title": "Final - Rodada 1",
-          "status": "Concluída",
-          "matches": [
-            {
-              "code": "Partida 2",
-              "seriesCode": 2,
-              "bestOf": "MD1",
-              "a": "caap_hellhounds",
-              "b": "uninassau_griffins",
-              "scoreA": 1,
-              "scoreB": 0,
-              "winner": "caap_hellhounds",
-              "status": "Sem estatísticas",
-              "previewNote": "Sem estatísticas"
-            }
-          ]
-        },
-        {
-          "title": "Chave superior - Rodada 1",
-          "status": "Concluída",
-          "matches": [
-            {
-              "code": "Partida 4",
-              "seriesCode": 4,
-              "bestOf": "MD3",
-              "a": "caap_hellhounds",
-              "b": "unb_green_olws_line_red_2024",
-              "scoreA": 2,
-              "scoreB": 1,
-              "winner": "caap_hellhounds"
-            },
-            {
-              "code": "Partida 6",
-              "seriesCode": 6,
-              "bestOf": "MD3",
-              "a": "azure_bears_black",
-              "b": "uninassau_griffins",
-              "scoreA": 0,
-              "scoreB": 2,
-              "winner": "uninassau_griffins"
-            },
-            {
-              "code": "Partida 8",
-              "seriesCode": 8,
-              "bestOf": "MD3",
-              "a": "usp_stars",
-              "b": "ufg_eagles",
-              "scoreA": 1,
-              "scoreB": 2,
-              "winner": "ufg_eagles"
-            },
-            {
-              "code": "Partida 10",
-              "seriesCode": 10,
-              "bestOf": "MD3",
-              "a": "azure_bears_golden",
-              "b": "macklogic_red",
-              "scoreA": 2,
-              "scoreB": 0,
-              "winner": "azure_bears_golden"
-            }
-          ]
-        },
-        {
-          "title": "Chave superior - Rodada 2",
-          "status": "Concluída",
-          "matches": [
-            {
-              "code": "Partida 12",
-              "seriesCode": 12,
-              "bestOf": "MD3",
-              "a": "caap_hellhounds",
-              "b": "uninassau_griffins",
-              "scoreA": 2,
-              "scoreB": 0,
-              "winner": "caap_hellhounds"
-            },
-            {
-              "code": "Partida 14",
-              "seriesCode": 14,
-              "bestOf": "MD3",
-              "a": "ufg_eagles",
-              "b": "azure_bears_golden",
-              "scoreA": 2,
-              "scoreB": 0,
-              "winner": "ufg_eagles",
-              "status": "Sem estatísticas",
-              "previewNote": "Sem estatísticas"
-            }
-          ]
-        },
-        {
-          "title": "Chave superior - Rodada 3",
-          "status": "Concluída",
-          "matches": [
-            {
-              "code": "Partida 16",
-              "seriesCode": 16,
-              "bestOf": "MD3",
-              "a": "caap_hellhounds",
-              "b": "ufg_eagles",
-              "scoreA": 2,
-              "scoreB": 1,
-              "winner": "caap_hellhounds",
-              "status": "Sem estatísticas",
-              "previewNote": "Sem estatísticas"
-            }
-          ]
-        },
-        {
-          "title": "Chave inferior - Rodada 1",
-          "status": "Concluída",
-          "matches": [
-            {
-              "code": "Partida 18",
-              "seriesCode": 18,
-              "bestOf": "MD3",
-              "a": "usp_stars",
-              "b": "macklogic_red",
-              "scoreA": 2,
-              "scoreB": 0,
-              "winner": "usp_stars"
-            },
-            {
-              "code": "Partida 20",
-              "seriesCode": 20,
-              "bestOf": "MD3",
-              "a": "unb_green_olws_line_red_2024",
-              "b": "azure_bears_black",
-              "scoreA": 2,
-              "scoreB": 0,
-              "winner": "unb_green_olws_line_red_2024"
-            }
-          ]
-        },
-        {
-          "title": "Chave inferior - Rodada 2",
-          "status": "Concluída",
-          "matches": [
-            {
-              "code": "Partida 22",
-              "seriesCode": 22,
-              "bestOf": "MD3",
-              "a": "uninassau_griffins",
-              "b": "usp_stars",
-              "scoreA": 2,
-              "scoreB": 0,
-              "winner": "uninassau_griffins"
-            },
-            {
-              "code": "Partida 24",
-              "seriesCode": 24,
-              "bestOf": "MD3",
-              "a": "azure_bears_golden",
-              "b": "unb_green_olws_line_red_2024",
-              "scoreA": 0,
-              "scoreB": 2,
-              "winner": "unb_green_olws_line_red_2024",
-              "status": "Sem estatísticas",
-              "previewNote": "Sem estatísticas"
-            }
-          ]
-        },
-        {
-          "title": "Chave inferior - Rodada 3",
-          "status": "Concluída",
-          "matches": [
-            {
-              "code": "Partida 26",
-              "seriesCode": 26,
-              "bestOf": "MD3",
-              "a": "uninassau_griffins",
-              "b": "unb_green_olws_line_red_2024",
-              "scoreA": 2,
-              "scoreB": 0,
-              "winner": "uninassau_griffins"
-            }
-          ]
-        },
-        {
-          "title": "Chave inferior - Rodada 4",
-          "status": "Concluída",
-          "matches": [
-            {
-              "code": "Partida 28",
-              "seriesCode": 28,
-              "bestOf": "MD3",
-              "a": "ufg_eagles",
-              "b": "uninassau_griffins",
-              "scoreA": 0,
-              "scoreB": 2,
-              "winner": "uninassau_griffins",
-              "status": "Sem estatísticas",
-              "previewNote": "Sem estatísticas"
-            }
-          ]
         }
       ],
-      "seriesCount": 47,
+      "seriesCount": 33,
       "finalStandings": true,
       "standingsLabel": "Classificação da fase suíça",
       "standings": [
@@ -6003,64 +6033,64 @@ const TOURNAMENT_OVERRIDES = {
           "wins": 3,
           "losses": 0,
           "points": 3,
-          "range": "1",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "usp_stars",
           "wins": 3,
           "losses": 0,
           "points": 3,
-          "range": "2",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "azure_bears_golden",
           "wins": 3,
           "losses": 1,
           "points": 3,
-          "range": "3",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "azure_bears_black",
           "wins": 3,
           "losses": 1,
           "points": 3,
-          "range": "4",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "uninassau_griffins",
           "wins": 3,
           "losses": 1,
           "points": 3,
-          "range": "5",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "macklogic_red",
           "wins": 3,
           "losses": 2,
           "points": 3,
-          "range": "6",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "ufg_eagles",
           "wins": 3,
           "losses": 2,
           "points": 3,
-          "range": "7",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "unb_green_olws_line_red_2024",
           "wins": 3,
           "losses": 2,
           "points": 3,
-          "range": "8",
-          "status": "Playoffs"
+          "range": "Classificado",
+          "status": "Classificado"
         },
         {
           "id": "puc_clerigos",
@@ -6127,9 +6157,341 @@ const TOURNAMENT_OVERRIDES = {
           "status": "Eliminado"
         }
       ]
+    }
+  },
+  "alianca-2024-2-playoffs": {
+    "name": "Copa Aliança 2024.2 - Playoffs",
+    "organizer": "AcadArena",
+    "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
+    "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
+    "logo": "assets/tournament-icons/copa_alianca.png",
+    "tier": "S",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 8,
+    "teams": [
+      "caap_hellhounds",
+      "usp_stars",
+      "azure_bears_golden",
+      "azure_bears_black",
+      "uninassau_griffins",
+      "macklogic_red",
+      "ufg_eagles",
+      "unb_green_olws_line_red_2024"
+    ],
+    "teamNames": {
+      "caap_hellhounds": "CAAP Hellhounds",
+      "usp_stars": "USP Stars",
+      "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
+      "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
+      "uninassau_griffins": "Uninassau Griffins",
+      "macklogic_red": "MackLogic",
+      "ufg_eagles": "UFG Eagles Black",
+      "unb_green_olws_line_red_2024": "UnB Green Olws Line RED"
     },
+    "mapPool": [
+      "Abyss",
+      "Ascent",
+      "Bind",
+      "Haven",
+      "Icebox",
+      "Lotus",
+      "Sunset"
+    ],
+    "format": {
+      "summary": "Eliminação dupla",
+      "details": [
+        "As oito primeiras da fase suíça disputam os playoffs.",
+        "Algumas séries têm estatísticas de só parte dos mapas."
+      ]
+    },
+    "placements": [
+      {
+        "id": "caap_hellhounds",
+        "range": "1",
+        "note": "Campeão"
+      },
+      {
+        "id": "uninassau_griffins",
+        "range": "2",
+        "note": "Vice"
+      },
+      {
+        "id": "ufg_eagles",
+        "range": "3",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "unb_green_olws_line_red_2024",
+        "range": "4",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "usp_stars",
+        "range": "5-6",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "azure_bears_golden",
+        "range": "5-6",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "macklogic_red",
+        "range": "7-8",
+        "note": "Resultado da chave oficial"
+      },
+      {
+        "id": "azure_bears_black",
+        "range": "7-8",
+        "note": "Resultado da chave oficial"
+      }
+    ],
+    "seriesResults": {},
+    "startAt": "2024-10-20T16:10:19.022Z",
+    "endAt": "2024-12-07T16:10:07.66Z",
     "bracket": {
-      "title": "Suíço e playoffs"
+      "title": "Eliminação dupla",
+      "regions": [
+        {
+          "name": "Chave superior",
+          "className": "upper-bracket",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Quartas",
+              "matches": [
+                {
+                  "code": "Partida 4",
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "b": "unb_green_olws_line_red_2024",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "caap_hellhounds",
+                  "band": 0
+                },
+                {
+                  "code": "Partida 6",
+                  "bestOf": "MD3",
+                  "a": "azure_bears_black",
+                  "b": "uninassau_griffins",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "uninassau_griffins",
+                  "band": 1
+                },
+                {
+                  "code": "Partida 8",
+                  "bestOf": "MD3",
+                  "a": "usp_stars",
+                  "b": "ufg_eagles",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "ufg_eagles",
+                  "band": 2
+                },
+                {
+                  "code": "Partida 10",
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "macklogic_red",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden",
+                  "band": 3
+                }
+              ]
+            },
+            {
+              "title": "Semifinais",
+              "matches": [
+                {
+                  "code": "Partida 12",
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "b": "uninassau_griffins",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds",
+                  "from": [
+                    "Partida 4",
+                    "Partida 6"
+                  ],
+                  "band": 0.5
+                },
+                {
+                  "code": "Partida 14",
+                  "bestOf": "MD3",
+                  "a": "ufg_eagles",
+                  "b": "azure_bears_golden",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "ufg_eagles",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas",
+                  "from": [
+                    "Partida 8",
+                    "Partida 10"
+                  ],
+                  "band": 2.5
+                }
+              ]
+            },
+            {
+              "title": "Final da superior",
+              "matches": [
+                {
+                  "code": "Partida 16",
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "b": "ufg_eagles",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "caap_hellhounds",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas",
+                  "from": [
+                    "Partida 12",
+                    "Partida 14"
+                  ],
+                  "band": 1.5
+                }
+              ]
+            }
+          ],
+          "terminalColumn": false
+        },
+        {
+          "name": "Chave inferior",
+          "className": "lower-bracket",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 18",
+                  "bestOf": "MD3",
+                  "a": "usp_stars",
+                  "b": "macklogic_red",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "usp_stars",
+                  "band": 0
+                },
+                {
+                  "code": "Partida 20",
+                  "bestOf": "MD3",
+                  "a": "unb_green_olws_line_red_2024",
+                  "b": "azure_bears_black",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "unb_green_olws_line_red_2024",
+                  "band": 1
+                }
+              ]
+            },
+            {
+              "title": "Rodada 2",
+              "matches": [
+                {
+                  "code": "Partida 22",
+                  "bestOf": "MD3",
+                  "a": "uninassau_griffins",
+                  "b": "usp_stars",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins",
+                  "from": [
+                    "Partida 18"
+                  ],
+                  "band": 0
+                },
+                {
+                  "code": "Partida 24",
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "unb_green_olws_line_red_2024",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "unb_green_olws_line_red_2024",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas",
+                  "from": [
+                    "Partida 20"
+                  ],
+                  "band": 1
+                }
+              ]
+            },
+            {
+              "title": "Rodada 3",
+              "matches": [
+                {
+                  "code": "Partida 26",
+                  "bestOf": "MD3",
+                  "a": "uninassau_griffins",
+                  "b": "unb_green_olws_line_red_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins",
+                  "from": [
+                    "Partida 24",
+                    "Partida 22"
+                  ],
+                  "band": 0.5
+                }
+              ]
+            },
+            {
+              "title": "Final da inferior",
+              "matches": [
+                {
+                  "code": "Partida 28",
+                  "bestOf": "MD3",
+                  "a": "ufg_eagles",
+                  "b": "uninassau_griffins",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "uninassau_griffins",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas",
+                  "from": [
+                    "Partida 26"
+                  ],
+                  "band": 0.5
+                }
+              ]
+            }
+          ],
+          "terminalColumn": false
+        },
+        {
+          "name": "Grande final",
+          "className": "grand-final",
+          "columns": [
+            {
+              "title": "Final",
+              "matches": [
+                {
+                  "code": "Partida 2",
+                  "bestOf": "MD1",
+                  "a": "caap_hellhounds",
+                  "b": "uninassau_griffins",
+                  "scoreA": 1,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds",
+                  "status": "Sem estatísticas",
+                  "previewNote": "Sem estatísticas",
+                  "band": 0
+                }
+              ]
+            }
+          ],
+          "terminalColumn": false
+        }
+      ]
     }
   },
   "jubs-2024-qualify-1": {
@@ -20073,6 +20435,7 @@ async function init() {
       if (summary?.format === "univlr-home@1") {
         state.homeSummary = summary;
         state.db = homeSummaryDb(summary);
+        aplicarCampeonatos(state.db);
         state.ready = true;
         render();
       }
@@ -20096,6 +20459,7 @@ async function init() {
       const loaded = await loadEventFiles(manifest.events);
       state.db = buildDatabase(manifest.events, loaded, metadata, teamProfiles, rankingWeights);
     }
+    aplicarCampeonatos(state.db);
     // O banco completo chegou: o resumo sai de cena e o que estiver na tela é
     // redesenhado a partir dele. Sem isso a home ficaria presa nos 10 itens do
     // resumo, e uma janela da semana virada durante a sessão nunca corrigiria.
@@ -23577,7 +23941,7 @@ function renderMapsCompact(id) {
 // direita desce, e abaixo de 760px fica uma coluna so, na ordem do que mais
 // importa (ver placar.css).
 function renderHomeCompact() {
-  const events = sortedEvents("recent").slice(0, HOME_EVENT_LIMIT);
+  const events = listaDeCampeonatos(sortedEvents("recent")).slice(0, HOME_EVENT_LIMIT);
   const topTeams = state.db.teams.slice(0, HOME_RANKING_LIMIT);
   const recentMatches = allMatchSeries().slice().sort(compareSeriesDateDesc).slice(0, HOME_RECENT_MATCH_LIMIT);
   const partidasPorDia = listaPorDia(recentMatches);
@@ -24346,7 +24710,7 @@ function renderEventsPage(id) {
   if (id) return renderTournamentDetail(id);
   applyEventFiltersFromQuery(routeQuery());
   const events = eventsFiltrados();
-  const total = visibleTournaments().length;
+  const total = listaDeCampeonatos(visibleTournaments()).length;
   Shell(`
     <section class="vp-lista-pagina full-list-panel vp-eventos">
       <header class="vp-sec"><h1>Eventos</h1>${contagemDaLista(events.length, total, "campeonatos")}</header>
@@ -27145,8 +27509,14 @@ function patchLabel(version) {
 }
 
 function renderTournamentDetail(id) {
-  const event = visibleTournaments().find((item) => item.id === id);
-  if (!event) return renderNotFound("Campeonato");
+  // O id do campeonato abre o Geral; o de uma etapa abre a mesma pagina com a etapa
+  // marcada na faixa. Os links antigos (todos de etapa) continuam valendo.
+  const campeonatoGeral = campeonatoPorId(id);
+  const etapa = campeonatoGeral ? null : visibleTournaments().find((item) => item.id === id);
+  if (!campeonatoGeral && !etapa) return renderNotFound("Campeonato");
+  const campeonato = campeonatoGeral || campeonatoDaEtapa(etapa);
+  const event = campeonatoGeral ? eventoDoGeral(campeonatoGeral) : etapa;
+  const cabeca = campeonato ? (campeonatoGeral ? event : eventoDoGeral(campeonato)) : event;
   const matches = matchSeriesForEvent(event.id);
   const standings = tournamentStandingsRows(event, matches);
   const activeTab = tournamentActiveTab();
@@ -27159,8 +27529,8 @@ function renderTournamentDetail(id) {
   Shell(`
     <article class="tournament-hub">
       <div class="vp-camp-cabeca">
-        ${tournamentHero(event)}
-        ${tournamentEtapasNav(event)}
+        ${tournamentHero(cabeca)}
+        ${campeonato ? tournamentEtapasNav(event, campeonato, activeTab) : ""}
         ${tournamentTabNav(event, activeTab)}
       </div>
       <div class="tournament-tab-panel">
@@ -27348,6 +27718,7 @@ function tournamentTabContent(event, matches, standings, activeTab) {
   if (activeTab === "estatisticas") return tournamentStatsSection(event, matches, standings);
   if (activeTab === "mapas") return tournamentMapsSection(event, matches);
   if (activeTab === "agentes") return tournamentAgentsSection(event, matches);
+  if (event.isGeral) return tournamentGeralVisao(event, matches, standings);
   return `
     ${tournamentOverviewSection(event, matches, standings)}
     <div class="tournament-main">
@@ -27380,36 +27751,37 @@ function tournamentHero(event) {
   `;
 }
 
-// "UNIVAVÁ - Fase de Grupos": o que vem antes do hifen e a serie, o resto e a etapa.
+// Qual campeonato e qual etapa, pelo cadastro. Antes saia do hifen do nome, e a
+// "Copa XV - 6ª edição (2025)" virava uma serie chamada Copa XV.
 function tournamentSerie(event) {
-  const partes = /^(.*?)\s+-\s+(.+)$/.exec(event?.name || "");
-  return partes ? { nome: partes[1], etapa: partes[2] } : null;
+  const campeonato = campeonatoDaEtapa(event);
+  return campeonato ? { nome: campeonato.nome, etapa: event.etapaNome } : null;
 }
 
-// As etapas da mesma serie, em ordem de data. Campeonato sozinho nao tem etapas.
+// As etapas do mesmo campeonato, na ordem do cadastro. Campeonato sozinho nao tem etapas.
 function tournamentEtapas(event) {
-  const serie = tournamentSerie(event);
-  if (!serie) return [];
-  const etapas = visibleTournaments()
-    .filter((item) => tournamentSerie(item)?.nome === serie.nome)
-    .sort((a, b) => (a.start || 0) - (b.start || 0) || a.name.localeCompare(b.name, "pt-BR", { numeric: true }));
-  return etapas.length > 1 ? etapas : [];
+  return campeonatoDaEtapa(event)?.etapas || [];
 }
 
-function tournamentEtapasNav(event) {
-  const etapas = tournamentEtapas(event);
-  if (!etapas.length) return "";
+// A faixa e a navegacao entre o campeonato inteiro (Geral) e as etapas, em blocos
+// com as datas de cada uma (modelo B, escolhido pelo dono em 07/11/2026). Trocar de
+// etapa mantem a aba aberta; os filtros de cada aba ficam para tras.
+function tournamentEtapasNav(event, campeonato, activeTab = "overview") {
+  const aba = activeTab && activeTab !== "overview" ? `/${activeTab}` : "";
+  const bloco = (id, rotulo, quando, extra = "") => `<a class="vp-etapa-bloco" href="#/events/${escapeHtml(id)}${aba}"${id === event.id ? ` aria-current="page"` : ""}><strong>${escapeHtml(rotulo)}${extra}</strong><small>${escapeHtml(quando)}</small></a>`;
   return `
-    <nav class="vp-camp-etapas" aria-label="${escapeHtml(`Etapas de ${tournamentSerie(event).nome}`)}">
-      <strong>${escapeHtml(tournamentSerie(event).nome)}</strong>
-      ${etapas.map((etapa) => `<a href="#/events/${escapeHtml(etapa.id)}"${etapa.id === event.id ? ` aria-current="page"` : ""}>${escapeHtml(tournamentSerie(etapa).etapa)}</a>`).join("")}
+    <nav class="vp-camp-etapas vp-camp-etapas-b" aria-label="${escapeHtml(`Etapas de ${campeonato.nome}`)}">
+      ${bloco(campeonato.id, "Geral", `${campeonato.etapas.length} etapas`)}
+      ${campeonato.etapas.map((etapa) => bloco(etapa.id, etapa.etapaNome, eventDatesShort(etapa), eventStatusClass(etapa.status) === "live" ? `<span class="vp-ao-vivo">Ao vivo</span>` : "")).join("")}
     </nav>
   `;
 }
 
 // De qual etapa veio a vaga de cada equipe: a mais recente em que ela se classificou.
 function tournamentOrigens(event) {
-  const anteriores = tournamentEtapas(event).filter((etapa) => etapa.id !== event.id && (etapa.start || 0) <= (event.start || 0)).reverse();
+  const anteriores = tournamentEtapas(event)
+    .filter((etapa) => etapa.id !== event.id && (etapa.start || 0) <= (event.start || 0))
+    .sort((a, b) => (b.start || 0) - (a.start || 0));
   const origens = new Map();
   (event.teams || []).forEach((teamId) => {
     const etapa = anteriores.find((item) => (item.placements || []).some((row) => (row.id || row.teamId) === teamId && placementIsQualified(placementRawValue(row))));
@@ -27442,6 +27814,54 @@ function tournamentOverviewSection(event, matches, standings) {
       </div>
       ${tournamentFicha(event, matches)}
     </div>
+  `;
+}
+
+// Visao Geral do campeonato inteiro: colocacao final, todas as equipes e as etapas.
+// Chave e tabela suica ficam em cada etapa, para nao repetir dado.
+function tournamentGeralVisao(event, matches, standings) {
+  return `
+    <div class="vp-camp-topo">
+      <div class="vp-camp-esq">
+        ${tournamentColocacaoSection(event, matches, standings)}
+        ${tournamentTeamsSection(event, standings, matches)}
+        ${tournamentEtapasSection(event.campeonato)}
+      </div>
+      ${tournamentFicha(event, matches)}
+    </div>
+  `;
+}
+
+// O desfecho de cada etapa numa frase: a campea, ou quantas passaram.
+function tournamentDesfechoDaEtapa(etapa) {
+  const linhas = trophyPlacementRows(etapa);
+  const campea = linhas.find((row, indice) => trophyPlacementInfo(row, indice)?.value === 1);
+  if (campea) return `Campeã: ${tournamentTeamById(etapa, campea.id || campea.teamId)?.name || "-"}`;
+  const vagas = linhas.filter((row) => placementIsQualified(placementRawValue(row))).length;
+  if (vagas) return `${vagas} ${vagas === 1 ? "classificada" : "classificadas"}`;
+  return etapa.status || "";
+}
+
+function tournamentEtapasSection(campeonato) {
+  return `
+    <section class="tournament-section vp-s-etapas">
+      ${sectionHead("Etapas", `${campeonato.etapas.length} etapas`)}
+      <div class="vp-geral-etapas">
+        ${campeonato.etapas.map((etapa) => {
+          const series = matchSeriesForEvent(etapa.id);
+          const equipes = Number(etapa.teamCount || 0) || (etapa.teams || []).length;
+          return `
+            <a class="vp-geral-etapa" href="#/events/${escapeHtml(etapa.id)}">
+              <strong>${escapeHtml(etapa.etapaNome)}${campeonato.paralelas.has(etapa.id) ? `<small>Paralela</small>` : ""}</strong>
+              <span>${escapeHtml(eventTimeRange(etapa))}</span>
+              <span>${escapeHtml(tournamentFormatLabel(etapa, series))}</span>
+              <span>${equipes} ${equipes === 1 ? "equipe" : "equipes"}</span>
+              <span class="vp-geral-desfecho">${escapeHtml(tournamentDesfechoDaEtapa(etapa))}</span>
+            </a>
+          `;
+        }).join("")}
+      </div>
+    </section>
   `;
 }
 
@@ -29122,6 +29542,28 @@ function tournamentJogoSemArquivo(event, jogo) {
   `;
 }
 
+// Os jogos do campeonato inteiro: os de cada etapa, como a etapa os monta (chave e
+// series), marcados com a etapa de onde vieram.
+function tournamentJogosDoGeral(campeonato) {
+  return campeonato.etapas.flatMap((etapa) => tournamentJogos(etapa, matchSeriesForEvent(etapa.id)).map((jogo) => ({ ...jogo, etapa })));
+}
+
+// No Geral a lista anda por etapa, na ordem da faixa, e dentro dela por fase.
+function tournamentJogosPorEtapa(campeonato, jogos) {
+  return campeonato.etapas
+    .map((etapa) => {
+      const daEtapa = jogos.filter((jogo) => jogo.etapa === etapa);
+      if (!daEtapa.length) return "";
+      return `
+        <section class="vp-jogos-etapa">
+          <h3 class="vp-jogos-etapa-titulo"><a href="#/events/${escapeHtml(etapa.id)}/jogos">${escapeHtml(etapa.etapaNome)}</a><span>${daEtapa.length} ${daEtapa.length === 1 ? "série" : "séries"}</span></h3>
+          ${tournamentJogosGrupos(etapa, tournamentJogosPorFase(daEtapa))}
+        </section>
+      `;
+    })
+    .join("");
+}
+
 function tournamentJogosGrupos(event, grupos) {
   return grupos
     .map((grupo) => `
@@ -29192,19 +29634,19 @@ function tournamentJogosResumo(event, jogos, filtro) {
 
 function tournamentMatchesSection(event, matches) {
   const filtro = tournamentJogosFiltro();
-  const jogos = tournamentJogos(event, matches);
+  const jogos = event.isGeral ? tournamentJogosDoGeral(event.campeonato) : tournamentJogos(event, matches);
   const visiveis = jogos.filter((jogo) => tournamentJogoPassa(jogo, filtro));
   const total = jogos.length;
   const comDados = jogos.filter((jogo) => jogo.series).length;
   const contagem = visiveis.length < total
     ? `${visiveis.length} de ${total} séries`
     : `${total} ${total === 1 ? "série" : "séries"}${comDados < total ? `, ${comDados} com estatísticas` : ""}`;
-  const grupos = tournamentJogosPorFase(visiveis);
+  const lista = event.isGeral ? tournamentJogosPorEtapa(event.campeonato, visiveis) : tournamentJogosGrupos(event, tournamentJogosPorFase(visiveis));
   return `
     <section class="tournament-section vp-jogos">
       <div class="vp-jogos-lista">
         ${sectionHead("Jogos", contagem)}
-        ${grupos.length ? tournamentJogosGrupos(event, grupos) : `<div class="empty-state">Nenhum jogo com esses filtros. Tire um filtro para ver mais.</div>`}
+        ${visiveis.length ? lista : `<div class="empty-state">Nenhum jogo com esses filtros. Tire um filtro para ver mais.</div>`}
       </div>
       ${tournamentJogosResumo(event, jogos, filtro)}
     </section>
@@ -30826,10 +31268,26 @@ function teamCapaNumeros(team) {
 // A fila de trofeus leva a cada campeonato. Quem tem mais do que cabe numa linha
 // anda pelas setas, numa lista que se repete: as copias antes e depois dos originais
 // dao a volta sem salto. Sem setas, elas ficam escondidas pelo CSS.
+// O texto do trofeu. A etapa que decide da o titulo do campeonato inteiro
+// ("Campeão, JUBS 2026 - Goiás"); as outras etapas levam o nome delas ("Campeão da
+// Off Season, LBEU 2025 - 1º Split"). O MVP segue a etapa em que foi dado.
+function rotuloDoTrofeu(trophy) {
+  const event = trophy.event;
+  const campeonato = campeonatoDaEtapa(event);
+  if (!campeonato) return { titulo: trophy.placementLabel || "", campeonato: event?.name || "Campeonato" };
+  if (campeonato.decide.id === event.id) return { titulo: trophy.placementLabel || "", campeonato: campeonato.nome };
+  return { titulo: `${trophy.placementLabel || ""} ${campeonato.artigos.get(event.id) || "da"} ${event.etapaNome}`, campeonato: campeonato.nome };
+}
+
+function rotuloDoTrofeuEmTexto(trophy) {
+  const { titulo, campeonato } = rotuloDoTrofeu(trophy);
+  return `${titulo}, ${campeonato}`;
+}
+
 function teamCapaTrofeus(trophies) {
   if (!trophies.length) return "";
   const item = (trophy, copia) => {
-    const rotulo = escapeHtml(`${trophy.placementLabel}, ${trophy.event.name}`);
+    const rotulo = escapeHtml(rotuloDoTrofeuEmTexto(trophy));
     return `<a class="vp-capa-trofeu" href="#/tournaments/${escapeHtml(trophy.event.id)}" title="${rotulo}" aria-label="${rotulo}"${copia ? ` data-copia aria-hidden="true" tabindex="-1"` : ""}>${trophyVisual(trophy)}</a>`;
   };
   const copias = trophies.map((trophy) => item(trophy, true)).join("");
@@ -31021,7 +31479,10 @@ function teamSocialLinks(team) {
 function trofeusLista(trophies) {
   if (!trophies.length) return "";
   return `<div class="vp-trofeus">${trophies
-    .map((trophy) => `<a class="vp-trofeu" href="#/tournaments/${escapeHtml(trophy.event.id)}">${trophyVisual(trophy)}<span><strong>${escapeHtml(trophy.placementLabel || "")}</strong><small>${escapeHtml([trophy.event.name || "Campeonato", trophy.detail || trophyMonthLabel(trophy.date)].filter(Boolean).join(", "))}</small></span></a>`)
+    .map((trophy) => {
+      const { titulo, campeonato } = rotuloDoTrofeu(trophy);
+      return `<a class="vp-trofeu" href="#/tournaments/${escapeHtml(trophy.event.id)}">${trophyVisual(trophy)}<span><strong>${escapeHtml(titulo)}</strong><small>${escapeHtml([campeonato, trophy.detail || trophyMonthLabel(trophy.date)].filter(Boolean).join(", "))}</small></span></a>`;
+    })
     .join("")}</div>`;
 }
 
@@ -34481,6 +34942,191 @@ function visibleTournaments() {
   return (state.db?.tournaments || []).filter(eventIsVisible);
 }
 
+// Marca cada etapa cadastrada com o campeonato e compoe o nome que o site mostra.
+// So o cliente (e o build_home, que pinta a home) chama: o database.json guarda o
+// nome de antes, e o ranking nunca ve o nome composto. Chamar de novo sobre um
+// banco ja marcado nao recompoe (o resumo da home chega com o nome pronto).
+function aplicarCampeonatos(db) {
+  cacheDosCampeonatos.db = null;
+  const porId = new Map((db?.tournaments || []).map((event) => [event.id, event]));
+  for (const campeonato of CAMPEONATOS_COM_ETAPAS) {
+    for (const etapa of campeonato.etapas) {
+      const event = porId.get(etapa.id);
+      if (!event) continue;
+      const composto = `${campeonato.nome}${SEPARADOR_DE_ETAPA}${etapa.nome}`;
+      event.campeonatoId = campeonato.id;
+      event.etapaNome = etapa.nome;
+      if (event.name === composto) continue;
+      if (!event.nomeOriginal) event.nomeOriginal = event.name;
+      event.name = composto;
+    }
+  }
+}
+
+const cacheDosCampeonatos = { db: null, porId: new Map() };
+
+function agregadoDoCampeonato(campeonato, porId) {
+  const etapas = campeonato.etapas.map((etapa) => porId.get(etapa.id)).filter((event) => event && eventIsVisible(event));
+  if (!etapas.length) return null;
+  const decide = etapas.find((event) => event.id === campeonato.decide) || etapas[0];
+  const aoVivo = etapas.find((event) => eventStatusClass(event.status) === "live");
+  const comCapa = [decide, ...etapas.slice().sort((a, b) => (b.start || 0) - (a.start || 0))].find((event) => event.banner || event.bannerPath);
+  const inicios = etapas.map((event) => Number(event.start || 0)).filter((value) => value > 0);
+  const fins = etapas.map((event) => Number(event.end || event.start || 0)).filter((value) => value > 0);
+  const equipes = new Set();
+  etapas.forEach((event) => (event.teams || []).forEach((team) => equipes.add(typeof team === "string" ? team : team?.id)));
+  equipes.delete(undefined);
+  return {
+    isCampeonato: true,
+    id: campeonato.id,
+    nome: campeonato.nome,
+    name: campeonato.nome,
+    nomesAntigos: campeonato.nomesAntigos || [],
+    etapas,
+    decide,
+    paralelas: new Set(campeonato.etapas.filter((etapa) => etapa.paralela).map((etapa) => etapa.id)),
+    niveis: new Map(campeonato.etapas.map((etapa) => [etapa.id, etapa.nivel])),
+    artigos: new Map(campeonato.etapas.map((etapa) => [etapa.id, etapa.artigo || "da"])),
+    start: inicios.length ? Math.min(...inicios) : decide.start,
+    end: fins.length ? Math.max(...fins) : decide.end,
+    status: (aoVivo || decide).status,
+    tier: decide.tier,
+    logo: decide.logo,
+    banner: comCapa ? comCapa.banner || comCapa.bannerPath : "",
+    organizer: decide.organizer,
+    type: decide.type,
+    prizePool: decide.prizePool,
+    format: { summary: `${etapas.length} etapas`, details: [] },
+    teams: [...equipes],
+    matches: etapas.reduce((soma, event) => soma + Number(event.matches || 0), 0),
+  };
+}
+
+function agregadosDosCampeonatos() {
+  if (cacheDosCampeonatos.db !== state.db) {
+    const porId = new Map((state.db?.tournaments || []).map((event) => [event.id, event]));
+    cacheDosCampeonatos.porId = new Map();
+    for (const campeonato of CAMPEONATOS_COM_ETAPAS) {
+      const agregado = agregadoDoCampeonato(campeonato, porId);
+      if (agregado) cacheDosCampeonatos.porId.set(campeonato.id, agregado);
+    }
+    cacheDosCampeonatos.db = state.db;
+  }
+  return cacheDosCampeonatos.porId;
+}
+
+function campeonatoPorId(id) {
+  return agregadosDosCampeonatos().get(id) || null;
+}
+
+function campeonatoDaEtapa(event) {
+  if (!event?.campeonatoId) return null;
+  const agregado = campeonatoPorId(event.campeonatoId);
+  return agregado && agregado.etapas.some((etapa) => etapa.id === event.id) ? agregado : null;
+}
+
+// Colocacao do campeonato inteiro. Primeiro a da etapa que decide; depois quem nao
+// chegou la, pelo degrau em que caiu, do mais alto para o mais baixo. Degrau de uma
+// etapa so usa a colocacao dela (9-11, 12-14); degrau de varias (as classificatorias)
+// vira um grupo so, com a faixa contada. Cada equipe aparece uma vez, no degrau mais
+// alto que alcancou, e paralela nao entra. Quem ainda disputa a etapa que decide fica
+// fora ate ter colocacao, como na propria etapa (o podio mostra as vagas em aberto).
+function colocacaoFinal(campeonato) {
+  const linhas = [];
+  const reservadas = new Set();
+  // Quem jogou a etapa: tem serie com arquivo ou colocacao oficial nela. A colocacao
+  // conta sozinha porque ha equipe com todos os jogos sem estatistica (Uninassau no
+  // suico da Aliança 2024.1) ou so com W.O. (UFSCar Fire na Classificatória 3 do
+  // UNIVAVÁ), e a pagina da etapa ja mostra as duas na colocacao.
+  const equipesDaEtapa = (etapa) => {
+    const ids = new Set();
+    matchSeriesForEvent(etapa.id).forEach((series) => [series.teamA?.id, series.teamB?.id].forEach((id) => id && ids.add(id)));
+    trophyPlacementRows(etapa).forEach((row) => (row.id || row.teamId) && ids.add(row.id || row.teamId));
+    return ids;
+  };
+  const snapshot = tournamentRankingSnapshot({ id: campeonato.id, start: campeonato.start, teams: campeonato.teams }, matchSeriesForEvent(campeonato.id));
+  const linhaDeOrdem = (id) => ({ eventRanking: snapshot?.byTeamId?.[id] || null, team: teamById(id) || { name: id } });
+  const porRanking = (a, b) => compareTournamentTeamByRank(linhaDeOrdem(a), linhaDeOrdem(b));
+  const grupoContado = (ids, etapaId) => {
+    // Conta as vagas ja tomadas, nao as linhas: com a final por jogar, 1º e 2º ainda
+    // nao tem linha, mas as duas finalistas ja estao acima de todo mundo.
+    const n = reservadas.size;
+    const range = ids.length === 1 ? String(n + 1) : `${n + 1}-${n + ids.length}`;
+    ids.sort(porRanking).forEach((id) => linhas.push({ range, id, etapaId }));
+  };
+
+  const decide = campeonato.decide;
+  trophyPlacementRows(decide).forEach((row) => {
+    const id = row.id || row.teamId;
+    if (!id || reservadas.has(id)) return;
+    reservadas.add(id);
+    linhas.push({ ...row, range: row.range, id, etapaId: decide.id });
+  });
+  equipesDaEtapa(decide).forEach((id) => reservadas.add(id));
+
+  const niveis = [...new Set(campeonato.etapas.map((etapa) => campeonato.niveis.get(etapa.id)))].filter((nivel) => nivel > 1).sort((a, b) => a - b);
+  niveis.forEach((nivel) => {
+    const etapas = campeonato.etapas.filter((etapa) => !campeonato.paralelas.has(etapa.id) && campeonato.niveis.get(etapa.id) === nivel);
+    const doNivel = new Set();
+    etapas.forEach((etapa) => equipesDaEtapa(etapa).forEach((id) => !reservadas.has(id) && doNivel.add(id)));
+    if (!doNivel.size) return;
+    if (etapas.length === 1) {
+      const vistas = new Set();
+      trophyPlacementRows(etapas[0]).forEach((row) => {
+        const id = row.id || row.teamId;
+        if (!doNivel.has(id) || vistas.has(id) || placementIsQualified(placementRawValue(row))) return;
+        vistas.add(id);
+        linhas.push({ ...row, range: row.range, id, etapaId: etapas[0].id });
+      });
+      const sobra = [...doNivel].filter((id) => !vistas.has(id));
+      if (sobra.length) grupoContado(sobra, etapas[0].id);
+    } else {
+      grupoContado([...doNivel], "");
+    }
+    doNivel.forEach((id) => reservadas.add(id));
+  });
+  return linhas;
+}
+
+// O campeonato inteiro como um evento so: as abas da pagina recebem isto e a uniao
+// das series das etapas (matchSeriesForEvent ja entende o id do campeonato).
+function eventoDoGeral(campeonato) {
+  const decide = campeonato.decide;
+  const nomesDasEquipes = {};
+  campeonato.etapas.slice().reverse().forEach((etapa) => Object.assign(nomesDasEquipes, etapa.teamNames || {}));
+  const mapas = new Map();
+  campeonato.etapas.forEach((etapa) => (etapa.mapPool || etapa.maps || []).forEach((nome) => {
+    if (!mapas.has(normalize(nome))) mapas.set(normalize(nome), nome);
+  }));
+  return {
+    id: campeonato.id,
+    name: campeonato.nome,
+    isGeral: true,
+    campeonato,
+    organizer: decide.organizer,
+    organizerLogo: decide.organizerLogo,
+    source: decide.source,
+    logo: campeonato.logo,
+    banner: campeonato.banner,
+    tier: campeonato.tier,
+    type: decide.type,
+    status: campeonato.status,
+    start: campeonato.start,
+    end: campeonato.end,
+    startAt: campeonato.etapas.map((etapa) => etapa.startAt).filter(Boolean).sort()[0] || decide.startAt,
+    endAt: campeonato.etapas.map((etapa) => etapa.endAt).filter(Boolean).sort().at(-1) || decide.endAt,
+    teams: campeonato.teams,
+    teamCount: campeonato.teams.length,
+    teamNames: nomesDasEquipes,
+    mapPool: [...mapas.values()],
+    matches: campeonato.matches,
+    placements: colocacaoFinal(campeonato),
+    prizePool: decide.prizePool,
+    mvp: decide.mvp,
+    format: { summary: `${campeonato.etapas.length} etapas`, details: [] },
+  };
+}
+
 function sortedEvents(sortKey = "end") {
   return visibleTournaments().slice().sort((a, b) => {
     const diff = eventSortValue(b, sortKey) - eventSortValue(a, sortKey);
@@ -34533,8 +35179,12 @@ function seriesHasPlayer(series, playerId) {
   return series.maps.some((match) => match.players.some((player) => player.id === playerId));
 }
 
+// O id de um campeonato com etapas (ex.: "univava") devolve as series de todas as
+// etapas visiveis dele: e isso que faz o Geral funcionar nas abas sem mudar cada uma.
 function matchSeriesForEvent(eventId) {
-  return allMatchSeries().filter((series) => series.eventId === eventId).sort(compareSeriesDateDesc);
+  const campeonato = state.db ? campeonatoPorId(eventId) : null;
+  const ids = campeonato ? new Set(campeonato.etapas.map((etapa) => etapa.id)) : null;
+  return allMatchSeries().filter((series) => (ids ? ids.has(series.eventId) : series.eventId === eventId)).sort(compareSeriesDateDesc);
 }
 
 function matchSeriesForTeam(teamId) {
@@ -35534,7 +36184,10 @@ function eventListRow(event) {
   // Linha da Placa de campeonatos. Encerrado nao repete "Finalizado": o normal
   // nao precisa de selo, so o em andamento ganha o ponto vermelho de ao vivo.
   const situacao = eventStatusClass(event.status);
-  const marca = situacao === "live" ? `<span class="vp-ao-vivo">Em andamento</span> ` : situacao === "scheduled" ? `${escapeHtml(event.status)}, ` : "";
+  // Campeonato com etapas diz qual etapa esta rolando.
+  const etapaAoVivo = event.isCampeonato ? event.etapas.find((etapa) => eventStatusClass(etapa.status) === "live") : null;
+  const aoVivo = etapaAoVivo ? `${etapaAoVivo.etapaNome} em andamento` : "Em andamento";
+  const marca = situacao === "live" ? `<span class="vp-ao-vivo">${escapeHtml(aoVivo)}</span> ` : situacao === "scheduled" ? `${escapeHtml(event.status)}, ` : "";
   return `
     <a class="vp-evrow" href="#/events/${event.id}"${atributosDaCapa(event)}>
       ${eventLogo(event, "small")}
@@ -35587,7 +36240,45 @@ function eventTierBadge(event) {
   return `<span class="event-tier tier-${key} vp-tier vp-tier-${key}" title="Tier ${escapeHtml(tier)}" aria-label="Tier ${escapeHtml(tier)}" role="img">${escapeHtml(tier)}</span>`;
 }
 
+// As etapas escritas na propria linha do campeonato, cada uma levando a etapa.
+function etapasNaLinha(campeonato) {
+  return `<span class="event-row-etapas">${campeonato.etapas.map((etapa) => `<a href="#/events/${escapeHtml(etapa.id)}">${escapeHtml(etapa.etapaNome)}</a>`).join("")}</span>`;
+}
+
+// A linha de um campeonato com etapas nao pode ser um <a> so: as etapas sao links
+// dentro dela. O nome leva ao campeonato e cobre a linha inteira (::after), e as
+// etapas ficam por cima, na coluna do formato (modelo B, escolha do dono em 07/11).
+function eventDirectoryRowCampeonato(campeonato) {
+  const decide = campeonato.decide;
+  const teamTotal = campeonato.teams.length;
+  const featuredTeams = eventFeaturedTeamIds(decide, matchSeriesForEvent(decide.id), 4)
+    .map((teamId) => tournamentTeamById(decide, teamId))
+    .filter(Boolean);
+  return `
+    <div class="event-row event-row-rich event-row-camp"${atributosDaCapa(campeonato)}>
+      <span class="event-row-identity">
+        ${eventLogo(campeonato, "small")}
+        <span class="row-main event-row-title">
+          <a class="event-row-link" href="#/events/${escapeHtml(campeonato.id)}"><strong>${escapeHtml(campeonato.nome)}</strong></a>
+          <small>${escapeHtml(eventTimeRange(campeonato))}</small>
+          <span class="event-status ${eventStatusClass(campeonato.status)}">${escapeHtml(campeonato.status || "Evento")}</span>${window.Comments ? window.Comments.selo("event", campeonato.id) : ""}
+        </span>
+      </span>
+      ${eventTierCell(campeonato)}
+      ${eventCell(eventPremioTexto(campeonato), "Prizepool", "premio")}
+      ${eventCell(teamTotal, "Times", "numeric")}
+      ${eventCell(campeonato.type || "-", "Tipo")}
+      <span class="event-cell event-cell-etapas" data-rotulo="Etapas">${etapasNaLinha(campeonato)}</span>
+      <span class="event-row-participants" data-rotulo="Equipes">
+        ${eventParticipantStack(featuredTeams, teamTotal)}
+        <small class="sr-only">Equipes participantes</small>
+      </span>
+    </div>
+  `;
+}
+
 function eventDirectoryRow(event) {
+  if (event.isCampeonato) return eventDirectoryRowCampeonato(event);
   const matches = matchSeriesForEvent(event.id);
   const teamTotal = Number(event.teamCount || 0) || event.teams.length;
   // Quatro escudos cabem na coluna de 170px. Com oito o mosaico media 322px numa trilha de 232 e
@@ -35879,15 +36570,31 @@ function eventFiltrosAtivos() {
   return (f.tier || []).length + (f.tipo || []).length + (f.formato || []).length + (f.premio ? 1 : 0);
 }
 
+// Uma entrada por campeonato: cada etapa vira o campeonato dela, na posicao da
+// primeira etapa que aparece; as outras etapas do mesmo campeonato saem.
+function listaDeCampeonatos(eventos) {
+  const vistos = new Set();
+  const lista = [];
+  (eventos || []).forEach((event) => {
+    const campeonato = campeonatoDaEtapa(event);
+    if (!campeonato) return lista.push(event);
+    if (vistos.has(campeonato.id)) return;
+    vistos.add(campeonato.id);
+    lista.push(campeonato);
+  });
+  return lista;
+}
+
+// Os filtros olham as etapas: o campeonato entra se qualquer etapa passou.
 function eventsFiltrados() {
   const f = state.eventFilters || {};
-  let lista = sortedEvents("end").filter((e) => {
+  let lista = listaDeCampeonatos(sortedEvents("end").filter((e) => {
     if ((f.tier || []).length && !f.tier.includes(eventTierChave(e) || "sem")) return false;
     if ((f.tipo || []).length && !f.tipo.includes(eventTipoGrupo(e) || "sem")) return false;
     if ((f.formato || []).length && !f.formato.includes(eventFormatoLabel(e) || "sem")) return false;
     if (f.premio && !eventTemPremio(e)) return false;
     return true;
-  });
+  }));
   const sort = state.eventTableSort || {};
   if (sort.key && sort.direction !== "default" && EVENT_ORDENAVEL[sort.key]) {
     const ler = EVENT_ORDENAVEL[sort.key];
@@ -36034,7 +36741,7 @@ function bindSearch() {
       results.innerHTML = "";
       return;
     }
-    const rows = searchEntities().filter((item) => normalize(item.searchText || `${item.label} ${item.meta || ""}`).includes(query)).slice(0, 10);
+    const rows = filtrarBusca(query);
     state.searchOpen = true;
     results.classList.add("open");
     input.setAttribute("aria-expanded", "true");
@@ -36137,7 +36844,7 @@ function bindSearch() {
 function searchEntities() {
   const db = state.db;
   return [
-    ...visibleTournaments().map(searchTournamentResult),
+    ...resultadosDeCampeonato(),
     ...db.teams.map(searchTeamResult),
     ...db.maps.map((map) => ({
       type: "map",
@@ -36209,6 +36916,38 @@ function searchPlayerResult(player) {
     entity: player,
     searchText: `${player.nick} ${player.handle || ""} ${(player.nickHistory || []).join(" ")} ${teamName} ${teamTag}`,
   };
+}
+
+// Um resultado por campeonato, pelo nome dele e pelos nomes antigos. A etapa so
+// aparece sozinha quando a busca vai alem do nome do campeonato: "univava" acha o
+// campeonato; "classificatoria 2" e "univava classificatoria 2" acham a etapa.
+function resultadosDeCampeonato() {
+  const itens = [];
+  listaDeCampeonatos(sortedEvents("end")).forEach((item) => {
+    if (!item.isCampeonato) {
+      itens.push(searchTournamentResult(item));
+      return;
+    }
+    const nomes = [item.nome, ...item.nomesAntigos].join(" ");
+    const nomesNormalizados = normalize(nomes);
+    itens.push({ ...searchTournamentResult(item), searchText: nomes });
+    item.etapas.forEach((etapa) => {
+      itens.push({
+        ...searchTournamentResult(etapa),
+        searchText: `${etapa.name} ${etapa.nomeOriginal || ""}`,
+        mostrarSe: (query) => !nomesNormalizados.includes(query),
+      });
+    });
+  });
+  return itens;
+}
+
+// O filtro da barra de busca: o texto inteiro dentro do pesquisavel do item, e a
+// regra propria do item quando ele tem uma.
+function filtrarBusca(query) {
+  return searchEntities()
+    .filter((item) => normalize(item.searchText || `${item.label} ${item.meta || ""}`).includes(query) && (!item.mostrarSe || item.mostrarSe(query)))
+    .slice(0, 10);
 }
 
 function searchTournamentResult(event) {

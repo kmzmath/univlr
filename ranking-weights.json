@@ -967,43 +967,27 @@
       },
       "bestOfGroup": "alianca-2024-1-classificatorias"
     },
-    "alianca-2024-grupos-playoffs": {
-      "name": "Copa Aliança 2024.1 - Grupos e playoffs",
+    "alianca-2024-grupos": {
+      "name": "Copa Aliança 2024.1 - Grupos",
       "logo": "assets/tournament-icons/copa_alianca.png",
       "teams": 16,
-      "endAt": "2024-07-20T19:37:04.18Z",
+      "endAt": "2024-06-09T18:27:03.005Z",
       "defaultPhase": "regular",
+      "placementPoints": {
+        "Classificado": 0,
+        "9-11": 25,
+        "12-14": 20,
+        "15-16": 15
+      },
+      "qualifiesTo": "alianca-2024-playoffs"
+    },
+    "alianca-2024-playoffs": {
+      "name": "Copa Aliança 2024.1 - Playoffs",
+      "logo": "assets/tournament-icons/copa_alianca.png",
+      "teams": 8,
+      "endAt": "2024-07-20T19:37:04.18Z",
+      "defaultPhase": "playoffs",
       "phaseRules": [
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 2,
-          "seriesCodeMax": 2
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 4,
-          "seriesCodeMax": 4
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 6,
-          "seriesCodeMax": 6
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 8,
-          "seriesCodeMax": 8
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 10,
-          "seriesCodeMax": 10
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 12,
-          "seriesCodeMax": 12
-        },
         {
           "phase": "final",
           "seriesCodeMin": 14,
@@ -1034,57 +1018,31 @@
         "33-46": 0
       }
     },
-    "alianca-2024-2-grupos-playoffs": {
-      "name": "Copa Aliança 2024.2 - Grupos e playoffs",
+    "alianca-2024-2-fase-de-grupos": {
+      "name": "Copa Aliança 2024.2 - Fase de Grupos",
       "logo": "assets/tournament-icons/copa_alianca.png",
       "teams": 16,
-      "endAt": "2024-12-07T16:10:07.66Z",
+      "endAt": "2024-10-20T14:15:52.155Z",
       "defaultPhase": "regular",
+      "placementPoints": {
+        "Classificado": 0,
+        "9-11": 25,
+        "12-14": 20,
+        "15-16": 15
+      },
+      "qualifiesTo": "alianca-2024-2-playoffs"
+    },
+    "alianca-2024-2-playoffs": {
+      "name": "Copa Aliança 2024.2 - Playoffs",
+      "logo": "assets/tournament-icons/copa_alianca.png",
+      "teams": 8,
+      "endAt": "2024-12-07T16:10:07.66Z",
+      "defaultPhase": "playoffs",
       "phaseRules": [
         {
-          "phase": "playoffs",
-          "seriesCodeMin": 4,
-          "seriesCodeMax": 4
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 6,
-          "seriesCodeMax": 6
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 8,
-          "seriesCodeMax": 8
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 10,
-          "seriesCodeMax": 10
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 12,
-          "seriesCodeMax": 12
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 18,
-          "seriesCodeMax": 18
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 20,
-          "seriesCodeMax": 20
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 22,
-          "seriesCodeMax": 22
-        },
-        {
-          "phase": "playoffs",
-          "seriesCodeMin": 26,
-          "seriesCodeMax": 26
+          "phase": "final",
+          "seriesCodeMin": 2,
+          "seriesCodeMax": 2
         }
       ],
       "placementPoints": {

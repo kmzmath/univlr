@@ -1,11 +1,11 @@
 {
-  "id": "alianca-2024-grupos-playoffs",
-  "name": "Copa Aliança 2024.1 - Grupos e playoffs",
+  "id": "alianca-2024-grupos",
+  "name": "Copa Aliança 2024.1 - Grupos",
   "organizer": "AcadArena",
   "source": "Challengermode",
   "sourceId": "c64f9375-7500-4918-2e58-08dc630defda",
   "logo": "assets/tournament-icons/copa_alianca.png",
   "startAt": "2024-05-18T16:05:41.187Z",
-  "endAt": "2024-07-20T19:37:04.18Z",
-  "folder": "campeonatos/Copa Aliança 2024.1/Grupos e playoffs"
+  "endAt": "2024-06-09T18:27:03.005Z",
+  "folder": "campeonatos/Copa Aliança 2024.1/Grupos"
 }

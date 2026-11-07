@@ -4728,7 +4728,7 @@
             {
               "slot": 5,
               "playerId": "11vGDAFh8KKFqQ1NJ-8-Rtv0WuQ3pPQDt820zjaW1cArxKn4nymOSRm--pqwZnL_S1aaBktSJc_ldg",
-              "name": "a042uw01v1561815",
+              "name": "intlkaisel",
               "handle": "a042uw01v1561815#x x",
               "firstSeenAt": "2024-04-20",
               "lastSeenAt": "2025-08-16",
@@ -5593,7 +5593,7 @@
             {
               "slot": 5,
               "playerId": "tnzVziBXRm42SMxeFNbT__nqo1Nwe39aPGJa8rSYq23y9M5KyyO5Hic1IYDsKx3CbmLz2M71PEHcGA",
-              "name": "Adcaenlu",
+              "name": "Catatau",
               "handle": "Catatau ツ#niwaツ",
               "firstSeenAt": "2025-05-10",
               "lastSeenAt": "2025-08-09",
@@ -6897,7 +6897,7 @@
             {
               "slot": 3,
               "playerId": "E-upr1ju9Vuj85LUSM7Qe3PXVc78myeqXJEksKnH_ecL5jRmIpNo3aNHaJXds7TbPM3234gQHrPS4w",
-              "name": "KSF 花",
+              "name": "KSF",
               "handle": "KSF 花#KSF07",
               "firstSeenAt": "2024-07-07",
               "lastSeenAt": "2025-08-12",
@@ -6927,7 +6927,7 @@
             {
               "slot": 5,
               "playerId": "yvU5BvTAJHm2Qyc8T6mfUU6pUEPsCeaTF2mTo7ORSftwyNLi15MB7gMI1Ba895nddaJM4XKMlyiKng",
-              "name": "th XTRANHO",
+              "name": "th X",
               "handle": "th XTRANHO#kobe",
               "firstSeenAt": "2024-07-07",
               "lastSeenAt": "2025-08-12",
@@ -8143,7 +8143,7 @@
             {
               "slot": 1,
               "playerId": "3ejSg4VXYIjghamJO8KyV-M1F5Hyku_PkGbRMQRbojRHuT1Gjm-ulQZurVFYu2At8arcp-4zVYcmVQ",
-              "name": "haltmm8",
+              "name": "Halt",
               "handle": "evil catboy#eth",
               "firstSeenAt": "2024-04-20",
               "lastSeenAt": "2025-10-10",
@@ -9062,6 +9062,21 @@
             },
             {
               "slot": 3,
+              "playerId": "LAsJbJD67YPsD44T9pmYviSQlo9voj_DoiZdczh119akZ9VzuTzSP1U2XHJo4ragYgGXqltPSirdVQ",
+              "name": "Naut",
+              "handle": "UFRJ Naut#Dale",
+              "firstSeenAt": "2024-04-20",
+              "lastSeenAt": "2024-04-20",
+              "matches": 2,
+              "rounds": 35,
+              "profileMatches": 0,
+              "profileConfidence": 0,
+              "teamHistory": [
+                "ufrj_canis_b"
+              ]
+            },
+            {
+              "slot": 4,
               "playerId": "ZcRjUIryFTHy7JRaX_FfzupEboZcHHEk4WDg8Sny0KqW5AbbCe3m_QJA18kltt4kNqDwSIscBp-6WQ",
               "name": "Thenker",
               "handle": "thenker#vaz",
@@ -9076,21 +9091,6 @@
                 "ufrj_canis_b",
                 "ufrj_canis",
                 "minerva_thunders"
-              ]
-            },
-            {
-              "slot": 4,
-              "playerId": "LAsJbJD67YPsD44T9pmYviSQlo9voj_DoiZdczh119akZ9VzuTzSP1U2XHJo4ragYgGXqltPSirdVQ",
-              "name": "UFRJ Naut",
-              "handle": "UFRJ Naut#Dale",
-              "firstSeenAt": "2024-04-20",
-              "lastSeenAt": "2024-04-20",
-              "matches": 2,
-              "rounds": 35,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "teamHistory": [
-                "ufrj_canis_b"
               ]
             },
             {
@@ -9121,6 +9121,21 @@
           "players": [
             {
               "slot": 1,
+              "playerId": "LAsJbJD67YPsD44T9pmYviSQlo9voj_DoiZdczh119akZ9VzuTzSP1U2XHJo4ragYgGXqltPSirdVQ",
+              "name": "Naut",
+              "handle": "UFRJ Naut#Dale",
+              "firstSeenAt": "2024-05-04",
+              "lastSeenAt": "2024-05-04",
+              "matches": 2,
+              "rounds": 47,
+              "profileMatches": 0,
+              "profileConfidence": 0,
+              "teamHistory": [
+                "ufrj_canis_b"
+              ]
+            },
+            {
+              "slot": 2,
               "playerId": "OvL9hcqmcDYEeXjUk0zgMi-p_-LnSjTVwktbjVVlSqL-xwtvtVkLW_l8JIIYGw5zgvcw9Bre6kk34Q",
               "name": "Schroud",
               "handle": "schroud 7wzz#nyc",
@@ -9137,7 +9152,7 @@
               ]
             },
             {
-              "slot": 2,
+              "slot": 3,
               "playerId": "wZIKwsRBgI9o_-ujDvsXw3WsXczwPgC6-yUJKDQkl2d8hp916fRfTTXp6l_YWd6lncnUdp1wd3w4JQ",
               "name": "spMM",
               "handle": "spMM#beca",
@@ -9152,7 +9167,7 @@
               ]
             },
             {
-              "slot": 3,
+              "slot": 4,
               "playerId": "xYuBF0GlhgT05KEYsOMSEh1oOJzThiH5TCUvJgProuHhmtLLQZ5rv79PuSaxZ07LLCtgEDp1kdmEdg",
               "name": "UFRJ fiore",
               "handle": "UFRJ fiore#biu",
@@ -9162,21 +9177,6 @@
               "rounds": 47,
               "profileMatches": 0,
               "profileConfidence": 0
-            },
-            {
-              "slot": 4,
-              "playerId": "LAsJbJD67YPsD44T9pmYviSQlo9voj_DoiZdczh119akZ9VzuTzSP1U2XHJo4ragYgGXqltPSirdVQ",
-              "name": "UFRJ Naut",
-              "handle": "UFRJ Naut#Dale",
-              "firstSeenAt": "2024-05-04",
-              "lastSeenAt": "2024-05-04",
-              "matches": 2,
-              "rounds": 47,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "teamHistory": [
-                "ufrj_canis_b"
-              ]
             },
             {
               "slot": 5,
@@ -19590,7 +19590,7 @@
             {
               "slot": 8,
               "playerId": "JcFrj-Pkz_hv9jr1eZkDPz6v-ZPGTFGoV7HqF_v3HfdCkNnX6HOPxPGWPAgkTgieuoQRlklWyYfvpA",
-              "name": "roga",
+              "name": "rogatera",
               "handle": "roga#tera",
               "firstSeenAt": "2025-07-12",
               "lastSeenAt": "2025-07-12",
@@ -20112,7 +20112,7 @@
             {
               "slot": 6,
               "playerId": "GRxSxUySdR2WO7PUJ5VQMgY5R3CoLp_59cGadgZlW22dlskDZ6sj-SufglEkeZPZwZDbFfZfgNV19g",
-              "name": "VITINGODLIKEMODE",
+              "name": "Vitingo",
               "handle": "VITINGODLIKEMODE#PEIDO",
               "firstSeenAt": "2025-05-10",
               "lastSeenAt": "2025-07-30",
@@ -20536,7 +20536,7 @@
             {
               "slot": 1,
               "playerId": "oFffIeGeumF6xUOjNneh0V-_LyYg6Hwh1ty7O5pO6zxUFGGpzh8Dc0t-CRgAkSJEy3VL8BL9dfbdjg",
-              "name": "selfish",
+              "name": "Garcia",
               "handle": "Garcia#CS2",
               "firstSeenAt": "2024-05-04",
               "lastSeenAt": "2025-06-28",
@@ -21614,7 +21614,7 @@
             {
               "slot": 8,
               "playerId": "neu7p4SFUBcH1rY3X4AatrswGLRbMQ0D_1vjkqFBxSYOxF8Qde3yOWh9SiyWk83mXvjwE2MoVjs3Pw",
-              "name": "walking on water",
+              "name": "giunardi",
               "handle": "walking on water#aim",
               "firstSeenAt": "2025-09-13",
               "lastSeenAt": "2025-11-02",
@@ -22282,7 +22282,7 @@
             {
               "slot": 3,
               "playerId": "ikQkodP89NCyr7jyd2hfKaXIVPfWOLqP2nOUa3eDivn2h25I6L7Ekemm26owiaVKKuYfm0rozk0dVg",
-              "name": "c4gu31n4sc4lç4",
+              "name": "xaxaxa",
               "handle": "c4gu31n4sc4lç4#bosta",
               "firstSeenAt": "2025-09-13",
               "lastSeenAt": "2025-12-06",
@@ -23020,9 +23020,9 @@
           "players": [
             {
               "slot": 1,
-              "playerId": "RJHhPNGMbTPLfvbdI1R99u8n0V1dqVqmTL4MfmfxzmBLKPKuNFkvu-6kyqYfE5MOJHwVIks0VocLtg",
-              "name": "Rabelo",
-              "handle": "Rabelo#777",
+              "playerId": "N14Unw3R7nEcNIQYclr1Ex8S0YcI4arwWSW2cl-x6lQAx8xKK1jc_nqGewlEqPZxQ25HWUdQV73xHA",
+              "name": "naio",
+              "handle": "ZywOo#goatt",
               "firstSeenAt": "2024-05-04",
               "lastSeenAt": "2025-06-16",
               "matches": 37,
@@ -23035,9 +23035,9 @@
             },
             {
               "slot": 2,
-              "playerId": "N14Unw3R7nEcNIQYclr1Ex8S0YcI4arwWSW2cl-x6lQAx8xKK1jc_nqGewlEqPZxQ25HWUdQV73xHA",
-              "name": "ZywOo",
-              "handle": "ZywOo#goatt",
+              "playerId": "RJHhPNGMbTPLfvbdI1R99u8n0V1dqVqmTL4MfmfxzmBLKPKuNFkvu-6kyqYfE5MOJHwVIks0VocLtg",
+              "name": "Rabelo",
+              "handle": "Rabelo#777",
               "firstSeenAt": "2024-05-04",
               "lastSeenAt": "2025-06-16",
               "matches": 37,
@@ -23378,7 +23378,7 @@
             {
               "slot": 2,
               "playerId": "2FO_hqpvcRVIEmV9qK6NZFQG7zn2tC-EkosB9EgJ4QYZPkF0X9YEMY8qwGvbmqA0yYn5lvFZOGAhSA",
-              "name": "Daudas PEEK",
+              "name": "Daudas",
               "handle": "Daudas PEEK#RENAT",
               "firstSeenAt": "2024-07-07",
               "lastSeenAt": "2025-10-08",
@@ -25284,7 +25284,7 @@
             {
               "slot": 1,
               "playerId": "d55my6jRx1x0SV3ovIb1cgzmuzla-TYNRsYGvK7I-5GwJJ7LcjplSUoG09wanQrUKIAsjPShPZnhVQ",
-              "name": "andreyy iwnl",
+              "name": "andreyy",
               "handle": "erick pulgar#157",
               "firstSeenAt": "2024-07-07",
               "lastSeenAt": "2024-07-07",
@@ -25364,7 +25364,7 @@
             {
               "slot": 1,
               "playerId": "d55my6jRx1x0SV3ovIb1cgzmuzla-TYNRsYGvK7I-5GwJJ7LcjplSUoG09wanQrUKIAsjPShPZnhVQ",
-              "name": "andreyy iwnl",
+              "name": "andreyy",
               "handle": "erick pulgar#157",
               "firstSeenAt": "2024-09-28",
               "lastSeenAt": "2024-09-29",
@@ -25465,7 +25465,7 @@
             {
               "slot": 2,
               "playerId": "d55my6jRx1x0SV3ovIb1cgzmuzla-TYNRsYGvK7I-5GwJJ7LcjplSUoG09wanQrUKIAsjPShPZnhVQ",
-              "name": "andreyy iwnl",
+              "name": "andreyy",
               "handle": "andreyy iwnl#157",
               "firstSeenAt": "2025-05-10",
               "lastSeenAt": "2025-07-04",
@@ -25525,7 +25525,7 @@
             {
               "slot": 6,
               "playerId": "1zungO_bI7Y4nA59FJhj0CD9gGHi3iWhkSpeAZtzhzDZFbn23pxlVclbNHc8tecW-DKtQVyOkSIPgw",
-              "name": "dg heartbroken실연",
+              "name": "dgHB",
               "handle": "dg heartbroken실연#tdm",
               "firstSeenAt": "2025-05-23",
               "lastSeenAt": "2025-06-27",
@@ -26044,7 +26044,7 @@
             {
               "slot": 1,
               "playerId": "TwkOwkhS8j2P_0gTKMWrhMDUPTWsq2Y1A3pLao6xSMxQdm53f9MmSqSSKiarz8MWYNEpLa8FGjLCNA",
-              "name": "AXIS CON",
+              "name": "CON",
               "handle": "AXIS CON#3370",
               "firstSeenAt": "2024-09-28",
               "lastSeenAt": "2024-09-28",

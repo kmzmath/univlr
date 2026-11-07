@@ -1,0 +1,300 @@
+// Campeonatos com etapas (docs/superpowers/specs/2026-11-07-campeonatos-com-etapas-design.md).
+// Carrega o app.js num contexto vm com o DOM em stub, como o test_visual_placar.js,
+// mas com o database.json real: o cadastro tem que bater com os ids de verdade.
+const assert = require("assert");
+const fs = require("fs");
+const path = require("path");
+const vm = require("vm");
+
+const raiz = path.join(__dirname, "..");
+const ler = (arquivo) => fs.readFileSync(path.join(raiz, arquivo), "utf8");
+const codec = require(path.join(raiz, "db-codec.js"));
+
+const noop = () => {};
+const stubElement = {
+  innerHTML: "",
+  value: "",
+  addEventListener: noop,
+  removeEventListener: noop,
+  querySelector: () => null,
+  querySelectorAll: () => [],
+  classList: { add: noop, remove: noop, toggle: noop, contains: () => false },
+  style: {},
+  dataset: {},
+  setAttribute: noop,
+  appendChild: noop,
+  focus: noop,
+};
+const context = {
+  console,
+  Date,
+  Intl,
+  JSON,
+  Map,
+  Math,
+  Number,
+  Promise,
+  Set,
+  String,
+  URLSearchParams,
+  clearInterval: noop,
+  clearTimeout: noop,
+  setInterval: () => 0,
+  setTimeout: () => 0,
+};
+context.globalThis = context;
+context.window = context;
+const appElement = { ...stubElement };
+context.document = {
+  title: "",
+  getElementById: (id) => (id === "app" ? appElement : stubElement),
+  querySelector: () => null,
+  querySelectorAll: () => [],
+  createElement: () => ({ ...stubElement }),
+  addEventListener: noop,
+  removeEventListener: noop,
+  body: stubElement,
+  documentElement: stubElement,
+};
+context.location = { hash: "" };
+context.history = { pushState: noop, replaceState: noop };
+context.requestAnimationFrame = () => 0;
+context.fetch = () => new Promise(noop);
+
+vm.createContext(context);
+vm.runInContext(ler("raating-core.js"), context);
+vm.runInContext(ler("ranking-core.js"), context);
+vm.runInContext(ler("app.js"), context);
+
+const bancoCru = () => codec.decode(JSON.parse(ler("database.json")));
+context.__banco = bancoCru();
+vm.runInContext("state.db = __banco; state.ready = true;", context);
+const db = context.__banco;
+const ev = (id) => db.tournaments.find((item) => item.id === id);
+
+// ---------------------------------------------------------------- Tarefa 1
+const cadastro = vm.runInContext("CAMPEONATOS_COM_ETAPAS", context);
+assert.strictEqual(cadastro.length, 9, "nove campeonatos com etapas");
+const idsDeEtapa = new Set(db.tournaments.map((item) => item.id));
+const vistas = new Set();
+for (const camp of cadastro) {
+  assert(!idsDeEtapa.has(camp.id), `id de campeonato ${camp.id} nao pode ser id de etapa`);
+  assert(camp.etapas.some((etapa) => etapa.id === camp.decide), `${camp.id}: decide esta nas etapas`);
+  for (const etapa of camp.etapas) {
+    assert(idsDeEtapa.has(etapa.id), `${camp.id}: a etapa ${etapa.id} existe no banco`);
+    assert(!vistas.has(etapa.id), `${etapa.id} esta em dois campeonatos`);
+    vistas.add(etapa.id);
+  }
+}
+
+// Controle: o banco gravado nao tem nome composto. Quem compoe e o cliente.
+assert(db.tournaments.every((item) => !String(item.name).includes(": ")), "o database.json nao tem nome composto");
+
+context.aplicarCampeonatos(db);
+assert.strictEqual(ev("jubs-etapa-presencial").name, "JUBS 2026 - Goiás: Etapa Presencial", "nome composto da etapa");
+assert.strictEqual(ev("jubs-etapa-presencial").nomeOriginal, "JUBS Goiás 2026 - Etapa Presencial", "o nome de antes fica guardado");
+assert.strictEqual(ev("jubs-etapa-presencial").etapaNome, "Etapa Presencial");
+assert.strictEqual(ev("jubs-etapa-presencial").campeonatoId, "jubs-2026");
+assert.strictEqual(ev("copa-xv-6-2025").name, "Copa XV - 6ª edição (2025)", "campeonato sozinho fica intacto");
+assert.deepStrictEqual([...context.tournamentEtapas(ev("copa-xv-6-2025"))], [], "o hifen da Copa XV nao vira etapa");
+context.aplicarCampeonatos(db);
+assert.strictEqual(ev("jubs-etapa-presencial").name, "JUBS 2026 - Goiás: Etapa Presencial", "aplicar duas vezes nao recompoe");
+
+const univava = context.campeonatoPorId("univava");
+assert(univava?.isCampeonato, "agregado do UNIVAVA");
+assert.deepStrictEqual(
+  [...univava.etapas.map((etapa) => etapa.id)],
+  ["univava-playoffs", "univava-fase-de-grupos", "univava-classificatoria-4", "univava-classificatoria-3", "univava-classificatoria-2", "univava-classificatoria-1"],
+  "etapas na ordem do dono",
+);
+assert.strictEqual(univava.teams.length, 62, "62 equipes inscritas no UNIVAVA");
+assert.strictEqual(univava.matches, univava.etapas.reduce((soma, etapa) => soma + Number(etapa.matches || 0), 0), "partidas somadas");
+assert.strictEqual(univava.decide.id, "univava-playoffs");
+assert.strictEqual(context.campeonatoDaEtapa(ev("univava-classificatoria-2")), univava, "a etapa acha o campeonato");
+assert.strictEqual(context.campeonatoDaEtapa(ev("aoc")), null, "campeonato sozinho nao tem agregado");
+assert.deepStrictEqual({ ...context.tournamentSerie(ev("univava-playoffs")) }, { nome: "UNIVAVÁ", etapa: "Playoffs" }, "serie pelo cadastro");
+const lbeu1 = context.campeonatoPorId("lbeu-2025-1-split");
+assert(lbeu1.paralelas.has("lbeu-2025-1-split-off-season") && lbeu1.paralelas.has("lbeu-2025-1-split-practice"), "paralelas do LBEU");
+assert(!lbeu1.paralelas.has("lbeu-2025-1-split-championship"), "controle: a que decide nao e paralela");
+
+// Review Focus 1: etapa escondida sai do agregado; sem nenhuma visivel, o campeonato some.
+{
+  const copia = bancoCru();
+  context.aplicarCampeonatos(copia);
+  context.__banco = copia;
+  vm.runInContext("state.db = __banco;", context);
+  copia.tournaments.find((item) => item.id === "univava-classificatoria-1").hidden = true;
+  context.aplicarCampeonatos(copia);
+  assert.strictEqual(context.campeonatoPorId("univava").etapas.length, 5, "etapa escondida sai");
+  copia.tournaments.filter((item) => item.campeonatoId === "univava").forEach((item) => (item.hidden = true));
+  context.aplicarCampeonatos(copia);
+  assert.strictEqual(context.campeonatoPorId("univava"), null, "sem etapa visivel, sem campeonato");
+  context.__banco = db;
+  vm.runInContext("state.db = __banco;", context);
+  context.aplicarCampeonatos(db);
+}
+
+// ---------------------------------------------------------------- Tarefa 2
+const ids = (lista) => [...lista].map((item) => item.id || item);
+const seriesDe = (id) => context.matchSeriesForEvent(id);
+const equipesComSerie = (eventIds) => {
+  const conjunto = new Set();
+  eventIds.forEach((id) => seriesDe(id).forEach((s) => [s.teamA?.id, s.teamB?.id].forEach((t) => t && conjunto.add(t))));
+  return conjunto;
+};
+{
+  const final = context.colocacaoFinal(univava);
+  const dosPlayoffs = [...context.trophyPlacementRows(ev("univava-playoffs"))];
+  assert.deepStrictEqual([...final.slice(0, dosPlayoffs.length).map((row) => row.id)], dosPlayoffs.map((row) => row.id || row.teamId), "primeiro a colocacao dos playoffs");
+  const faixas = [...new Set(final.map((row) => row.range))];
+  const depoisDosPlayoffs = faixas.slice(faixas.indexOf(final[dosPlayoffs.length].range));
+  assert.deepStrictEqual(depoisDosPlayoffs.slice(0, 3), ["9-11", "12-14", "15-16"], "depois os eliminados na fase de grupos");
+  const ultima = depoisDosPlayoffs.at(-1);
+  assert.strictEqual(ultima, "17-62", "as classificatorias num grupo so, com a faixa contada");
+  assert.strictEqual(final.filter((row) => row.range === ultima).length, 46, "46 equipes caidas nas classificatorias, a UFSCar Fire (so W.O.) inclusive");
+  assert.strictEqual(new Set(final.map((row) => row.id)).size, final.length, "cada equipe uma vez");
+  // Review Focus 2: com a final por jogar, quem disputa os playoffs sem colocacao fica fora.
+  const semColocacao = [...equipesComSerie(["univava-playoffs"])].filter((id) => !dosPlayoffs.some((row) => (row.id || row.teamId) === id));
+  const jogaram = equipesComSerie(univava.etapas.map((etapa) => etapa.id));
+  assert.strictEqual(jogaram.size, 61, "61 equipes jogaram o UNIVAVA");
+  assert.strictEqual(final.length, 62 - semColocacao.length, "todas as inscritas com resultado, menos as que ainda disputam o titulo");
+  assert(final.some((row) => row.id === "ufscar_fire" && row.range === "17-62"), "a inscrita so com W.O. aparece, como na pagina da etapa");
+  if (context.eventStatusClass(ev("univava-playoffs").status) === "live") assert.strictEqual(univava.status, ev("univava-playoffs").status, "status da etapa ao vivo");
+}
+{
+  const final = context.colocacaoFinal(lbeu1);
+  const soPractice = [...equipesComSerie(["lbeu-2025-1-split-practice"])].filter((id) => !equipesComSerie(["lbeu-2025-1-split-championship", "lbeu-2025-1-split-fase-suica"]).has(id));
+  assert(!final.some((row) => soPractice.includes(row.id)), "quem so jogou a Practice nao entra na colocacao do LBEU");
+}
+assert.strictEqual(seriesDe("univava").length, univava.etapas.reduce((soma, etapa) => soma + seriesDe(etapa.id).length, 0), "as series do Geral sao a soma das etapas");
+assert(seriesDe("univava").length > 0, "controle: o Geral tem series");
+
+const renderiza = (hash) => {
+  context.location.hash = hash;
+  appElement.innerHTML = "";
+  const id = hash.replace(/^#\/events\//, "").split(/[/?]/)[0];
+  context.renderTournamentDetail(id);
+  return appElement.innerHTML;
+};
+{
+  const geral = renderiza("#/events/univava");
+  assert(geral.includes("<h1>UNIVAVÁ</h1>"), "o Geral tem o nome do campeonato");
+  const faixa = geral.split('class="vp-camp-etapas vp-camp-etapas-b"')[1].split("</nav>")[0];
+  assert.strictEqual((faixa.match(/<a /g) || []).length, 7, "Geral e 6 etapas na faixa");
+  assert(/href="#\/events\/univava" aria-current="page"><strong>Geral<\/strong><small>6 etapas<\/small>/.test(faixa), "Geral marcado, com a contagem de etapas");
+  assert(/href="#\/events\/univava-classificatoria-1"><strong>Classificatória 1<\/strong><small>27 - 28 de jun<\/small>/.test(faixa), "cada bloco com as datas da etapa");
+  assert(geral.includes("vp-s-etapas"), "lista de etapas no Geral");
+  const etapa = renderiza("#/events/univava-playoffs");
+  assert(etapa.includes("<h1>UNIVAVÁ</h1>"), "a etapa mostra o nome do campeonato no topo");
+  assert(/href="#\/events\/univava-playoffs" aria-current="page"><strong>Playoffs/.test(etapa), "a etapa marcada na faixa");
+  // Review Focus 3: link antigo com aba e filtro.
+  const comFiltro = renderiza("#/events/univava-playoffs/estatisticas?equipe=ufu_saints");
+  assert(comFiltro.includes('href="#/events/univava/estatisticas"'), "o Geral da faixa mantem a aba");
+  assert(/class="active" href="#\/events\/univava-playoffs\/estatisticas"/.test(comFiltro), "a aba Estatisticas aberta");
+  assert(comFiltro.includes('value="ufu_saints" selected'), "o filtro de equipe do link antigo vale");
+  assert(comFiltro.includes("#/teams/ufu_saints"), "controle: a UFU aparece");
+  const jogosGeral = renderiza("#/events/univava/jogos");
+  assert.strictEqual((jogosGeral.match(/class="vp-jogos-etapa"/g) || []).length, 6, "os jogos do Geral andam por etapa");
+  renderiza("#/events/univava/estatisticas");
+  renderiza("#/events/univava/mapas");
+  renderiza("#/events/univava/agentes");
+  renderiza("#/events/lbeu-2025-1-split");
+  const sozinho = renderiza("#/events/aoc");
+  assert(!sozinho.includes("vp-camp-etapas"), "campeonato sozinho nao tem faixa");
+}
+
+// ---------------------------------------------------------------- Tarefa 3
+{
+  const lista = context.listaDeCampeonatos(context.sortedEvents("end"));
+  assert.strictEqual(lista.length, 25, "25 linhas em Eventos");
+  context.location.hash = "#/events";
+  vm.runInContext("state.eventFilters = {}; state.eventTableSort = {};", context);
+  appElement.innerHTML = "";
+  context.renderEventsPage();
+  const pagina = appElement.innerHTML;
+  assert((pagina.match(/class="event-row event-row-rich/g) || []).length === 25, "25 linhas desenhadas");
+  assert(pagina.includes("25 campeonatos"), "a contagem diz 25 campeonatos");
+  const linhaUnivava = pagina.split('href="#/events/univava"')[1].split("</div>")[0];
+  assert.strictEqual((linhaUnivava.match(/href="#\/events\/univava-/g) || []).length, 6, "as 6 etapas escritas na linha do UNIVAVA");
+  assert(linhaUnivava.includes('class="event-cell event-cell-etapas" data-rotulo="Etapas"'), "as etapas ficam na coluna do formato");
+  vm.runInContext('state.eventFilters = { tier: ["S"] };', context);
+  assert(context.eventsFiltrados().some((item) => item.id === "univava"), "filtro de tier S mantem o UNIVAVA");
+  assert(!context.eventsFiltrados().some((item) => item.id === "aoc"), "controle: o filtro tira o AOC, que e tier A");
+  vm.runInContext("state.eventFilters = {};", context);
+
+  // Review Focus 4: a home montada pelo home.json acha os mesmos campeonatos do banco inteiro.
+  const resumo = JSON.parse(ler("home.json"));
+  const primeiros = context.listaDeCampeonatos(context.sortedEvents("recent")).slice(0, vm.runInContext("HOME_EVENT_LIMIT", context));
+  const daHome = context.homeSummaryDb(resumo);
+  context.aplicarCampeonatos(daHome);
+  context.__home = daHome;
+  vm.runInContext("const __completo = state.db; state.db = __home;", context);
+  const naHome = context.listaDeCampeonatos(context.sortedEvents("recent"));
+  vm.runInContext("state.db = __completo;", context);
+  assert.deepStrictEqual(naHome.map((item) => item.id), primeiros.map((item) => item.id), "home.json com os mesmos campeonatos (rode node scripts/build_home.js)");
+  primeiros.filter((item) => item.isCampeonato).forEach((camp) => {
+    const daHomeCamp = naHome.find((item) => item.id === camp.id);
+    assert.strictEqual(daHomeCamp.teams.length, camp.teams.length, `${camp.id}: equipes iguais na home`);
+    assert.strictEqual(daHomeCamp.matches, camp.matches, `${camp.id}: partidas iguais na home`);
+  });
+  assert(primeiros.some((item) => item.isCampeonato), "controle: a home tem campeonato com etapas");
+}
+
+// ---------------------------------------------------------------- Tarefa 4
+{
+  const busca = (texto) => [...context.filtrarBusca(context.normalize(texto))].filter((item) => item.type === "tournament");
+  const so = (texto) => busca(texto).map((item) => item.label);
+  assert.deepStrictEqual(so("univava"), ["UNIVAVÁ"], "univava acha so o campeonato");
+  const classif2 = busca("classificatoria 2");
+  assert(classif2.length && classif2.every((item) => item.entity.etapaNome === "Classificatória 2"), "classificatoria 2 acha etapas");
+  assert.deepStrictEqual(classif2.map((item) => item.entity.campeonatoId).sort(), ["alianca-2024-1", "copa-alianca-2025", "univava"], "as tres Classificatorias 2");
+  assert.deepStrictEqual(so("jubs rn"), ["JUBS 2025 - Natal"], "nome antigo acha o campeonato");
+  assert.deepStrictEqual(busca("practice").map((item) => item.entity.id).sort(), ["lbeu-2025-1-split-practice", "lbeu-2025-2-split-practice"], "as duas Practice");
+  assert.deepStrictEqual(so("copa xv"), ["Copa XV - 6ª edição (2025)"], "a Copa XV sozinha");
+  // Review Focus 5
+  assert.deepStrictEqual(busca("pre-jubs").map((item) => item.entity.id), ["jubs-pre-jubs-sp"], "pre-jubs acha a etapa");
+  assert.deepStrictEqual(busca("univava classificatoria 2").map((item) => item.entity.id), ["univava-classificatoria-2"], "campeonato + etapa acha so a etapa");
+  assert(busca("univava").every((item) => item.path === "tournaments/univava"), "o resultado do campeonato leva ao Geral");
+
+  const trofeu = (teamId, eventId, extra = {}) => {
+    const lista = [...context.teamTrophyAchievements(context.teamById(teamId), { includeInherited: false })];
+    const achado = lista.find((item) => item.event.id === eventId);
+    assert(achado, `trofeu de ${teamId} em ${eventId} existe`);
+    return context.rotuloDoTrofeuEmTexto({ ...achado, ...extra });
+  };
+  assert.strictEqual(trofeu("ceub_octopus", "jubs-etapa-presencial"), "Campeão, JUBS 2026 - Goiás");
+  assert.strictEqual(trofeu("wolf_gaming", "lbeu-2025-1-split-off-season"), "Campeão da Off Season, LBEU 2025 - 1º Split");
+  assert.strictEqual(trofeu("pucc_cardinals", "jubs-pre-jubs-sp"), "Campeão do Pré-JUBS SP, JUBS 2026 - Goiás");
+  assert.strictEqual(trofeu("ceub_octopus", "aoc"), "Campeão, AOC");
+  assert.strictEqual(context.rotuloDoTrofeuEmTexto({ event: ev("jubs-etapa-presencial"), placementLabel: "MVP", trophyKey: "mvp" }), "MVP, JUBS 2026 - Goiás");
+  const capa = context.teamCapaTrofeus([...context.teamTrophyAchievements(context.teamById("ceub_octopus"), { includeInherited: false })]);
+  assert(capa.includes('title="Campeão, JUBS 2026 - Goiás"') && capa.includes('href="#/tournaments/jubs-etapa-presencial"'), "a capa usa o rotulo novo e o link da etapa");
+  const lista = context.trofeusLista([...context.teamTrophyAchievements(context.teamById("wolf_gaming"), { includeInherited: false })]);
+  assert(lista.includes("<strong>Campeão da Off Season</strong><small>LBEU 2025 - 1º Split"), "a lista de trofeus usa o rotulo novo");
+}
+
+// ---------------------------------------------------------------- Tarefa 6
+{
+  const a241 = context.campeonatoPorId("alianca-2024-1");
+  assert.deepStrictEqual([...a241.etapas.map((etapa) => etapa.id)], ["alianca-2024-playoffs", "alianca-2024-grupos", "alianca-2024-classificatoria-2", "alianca-2024-classificatoria-1"], "Aliança 2024.1: Playoffs, Grupos e as classificatórias");
+  const final = context.colocacaoFinal(a241);
+  assert.deepStrictEqual([...new Set(final.slice(0, 8).map((row) => row.range))], ["1", "2", "3-4", "5-8"], "1 a 8 dos playoffs");
+  assert.deepStrictEqual([...new Set(final.slice(8, 16).map((row) => row.range))], ["9-11", "12-14", "15-16"], "9 a 16 do suíço");
+  assert(final.slice(0, 8).every((row) => row.etapaId === "alianca-2024-playoffs") && final.slice(8, 16).every((row) => row.etapaId === "alianca-2024-grupos"), "cada faixa vem da sua etapa");
+  const a242 = context.campeonatoPorId("alianca-2024-2");
+  assert.deepStrictEqual([...a242.etapas.map((etapa) => etapa.id)], ["alianca-2024-2-playoffs", "alianca-2024-2-fase-de-grupos", "alianca-2024-2-classificatoria"], "Aliança 2024.2 em três etapas");
+  assert.strictEqual(seriesDe("alianca-2024-playoffs").length, 7, "7 séries nos playoffs da 2024.1");
+  assert.strictEqual(seriesDe("alianca-2024-grupos").length, 30, "30 séries no suíço da 2024.1");
+  assert.strictEqual(seriesDe("alianca-2024-2-playoffs").length, 9, "9 séries com arquivo nos playoffs da 2024.2");
+  assert.strictEqual(seriesDe("alianca-2024-2-fase-de-grupos").length, 31, "31 séries no suíço da 2024.2");
+  assert(!db.tournaments.some((item) => /grupos-playoffs/.test(item.id)), "os ids antigos sumiram do banco");
+  const pesos = JSON.parse(ler("ranking-weights.json")).tournaments;
+  assert.strictEqual(pesos["alianca-2024-grupos"].qualifiesTo, "alianca-2024-playoffs");
+  assert.strictEqual(pesos["alianca-2024-grupos"].placementPoints.Classificado, 0, "Classificado no suíço vale 0");
+  assert.strictEqual(pesos["alianca-2024-2-playoffs"].teams, 8);
+  const playoffs = renderiza("#/events/alianca-2024-2-playoffs");
+  assert((playoffs.match(/linked-region/g) || []).length >= 2, "os playoffs da 2024.2 viram chave encadeada");
+}
+
+console.log("campeonatos com etapas: ok");
+

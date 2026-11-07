@@ -128,6 +128,9 @@ function main() {
   const startedAt = Date.now();
   const db = codec.decode(JSON.parse(fs.readFileSync(path.join(ROOT, "database.json"), "utf8")));
   state.db = db;
+  // Nome composto das etapas e campeonatos (o mesmo do navegador). Só aqui e no
+  // init(): o database.json continua com o nome de antes.
+  aplicarCampeonatos(state.db);
   // Mesma sequência do init() do app.js. Sem isto o snapshot corrente não é
   // criado, latestRankingSnapshot() devolve outro cutoff e a janela da semana
   // sai diferente da que o navegador calcula — foi o que aconteceu na primeira
@@ -208,8 +211,14 @@ function main() {
       };
     });
 
-  const events = sortedEvents("recent")
+  const events = resumoDosEventos();
+  // Os campeonatos com etapas vão com TODAS as etapas visíveis: a home monta o
+  // campeonato a partir delas, e com etapa faltando as equipes e partidas sairiam
+  // erradas até o banco completo chegar.
+  function resumoDosEventos() {
+    return listaDeCampeonatos(sortedEvents("recent"))
     .slice(0, HOME_EVENT_LIMIT)
+    .flatMap((item) => (item.isCampeonato ? item.etapas : [item]))
     .map((event) => ({
       id: event.id,
       name: event.name,
@@ -223,6 +232,7 @@ function main() {
       // só o comprimento importa na home; os ids mantêm a forma de array
       teams: (event.teams || []).map((t) => (typeof t === "string" ? t : t?.id || "")),
     }));
+  }
 
   // Só os mapas que as séries acima citam: é o que a arte de fundo precisa.
   const usados = new Set(series.flatMap((s) => s.mapNames));

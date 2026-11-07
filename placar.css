@@ -5701,6 +5701,7 @@ a.vp-tabela-linha:hover strong {
   .vp-s-colocacao { order: 1; }
   .vp-camp-lado { order: 2; position: static; }
   .vp-s-equipes { order: 3; }
+  .vp-s-etapas { order: 4; }
 
   .vp-rodadas {
     grid-template-columns: repeat(min(var(--por-linha), 4), minmax(0, var(--celula)));
@@ -11553,4 +11554,179 @@ a.vp-cj-equipe:hover span {
 .vp-dica.visivel .vp-dica-corpo {
   opacity: 1;
   transform: none;
+}
+
+/* Campeonatos com etapas (07/11/2026). A faixa de etapas leva "Geral" na frente e
+   marca a etapa ao vivo com o ponto da marca; quebra linha, nunca rola de lado. */
+.vp-camp-etapas .vp-ao-vivo {
+  margin-left: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Etapas na Visao Geral do campeonato inteiro: uma linha por etapa, com fundo
+   solido como todo bloco de dado. */
+.vp-geral-etapas {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-geral-etapa {
+  display: grid;
+  grid-template-columns: minmax(150px, 1.3fr) minmax(150px, 1.4fr) minmax(110px, 1fr) 90px minmax(150px, 1.3fr);
+  align-items: baseline;
+  gap: 12px;
+  padding: 9px 14px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.vp-geral-etapa:hover {
+  color: var(--ink);
+}
+
+.vp-geral-etapa strong {
+  color: var(--ink);
+  font: 600 15px/1.2 var(--font-text);
+}
+
+.vp-geral-etapa strong small {
+  margin-left: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.vp-geral-desfecho {
+  color: var(--ink);
+}
+
+@media (max-width: 760px) {
+  .vp-geral-etapa {
+    grid-template-columns: 1fr auto;
+    gap: 4px 12px;
+  }
+
+  .vp-geral-etapa strong,
+  .vp-geral-desfecho {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Jogos do Geral: um titulo por etapa acima dos grupos por fase dela. */
+.vp-jogos-etapa + .vp-jogos-etapa {
+  margin-top: 28px;
+}
+
+.vp-jogos-etapa-titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 8px;
+  padding: 0 2px;
+  font: 700 20px/1.1 var(--font-display);
+  text-transform: uppercase;
+}
+
+.vp-jogos-etapa-titulo a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.vp-jogos-etapa-titulo span {
+  color: var(--muted);
+  font: 500 12px/1.2 var(--font-text);
+  text-transform: none;
+}
+
+/* Linha de campeonato com etapas em Eventos: nao e um <a> so, porque as etapas sao
+   links dentro dela. O nome cobre a linha inteira e as etapas ficam por cima. */
+.event-row-camp {
+  position: relative;
+}
+
+.event-row-camp .event-row-link {
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-row-camp .event-row-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.event-row-etapas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  font-size: 12px;
+}
+
+.event-row-etapas a {
+  position: relative;
+  z-index: 1;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.event-row-etapas a:hover,
+.event-row-etapas a:focus-visible {
+  color: var(--ink);
+  box-shadow: inset 0 -1px currentColor;
+}
+
+/* Faixa de etapas em blocos com as datas, e as etapas na coluna Formato da lista
+   de Eventos: os modelos B, escolhidos pelo dono em 07/11/2026. */
+.vp-camp-etapas-b {
+  gap: 2px;
+  padding: 0;
+}
+
+.vp-camp-etapas-b .vp-etapa-bloco {
+  display: grid;
+  gap: 2px;
+  min-width: 118px;
+  padding: 8px 14px;
+  background: var(--surface);
+}
+
+.vp-camp-etapas-b .vp-etapa-bloco strong {
+  color: inherit;
+  font-weight: 600;
+}
+
+.vp-camp-etapas-b .vp-etapa-bloco small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.vp-camp-etapas-b .vp-etapa-bloco[aria-current] {
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+.vp-eventos .event-cell.event-cell-etapas > .event-row-etapas {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0;
+  gap: 2px 10px;
+  overflow: visible;
+  white-space: normal;
+}
+
+@media (max-width: 760px) {
+  .vp-camp-etapas-b {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vp-camp-etapas-b .vp-etapa-bloco {
+    min-width: 0;
+  }
 }

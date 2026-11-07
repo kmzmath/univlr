@@ -11507,3 +11507,50 @@ a.vp-cj-equipe:hover span {
     flex: none;
   }
 }
+
+/* ==========================================================================
+   Balao de dica (dica.js): substitui o balao nativo de todo `title` do site.
+   Recorte claro: placa chapada no branco da marca, texto preto, canto de baixo
+   cortado na diagonal das fatias de mapa e sombra dura, sem desfoque. O
+   .vp-dica so posiciona (transform vem do dica.js) e carrega a sombra: a
+   sombra precisa estar no pai, porque o clip-path do corpo cortaria a dele.
+   ========================================================================== */
+.vp-dica {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  pointer-events: none;
+  filter: drop-shadow(3px 3px 0 var(--univlr-black));
+}
+
+.vp-dica-corpo {
+  display: block;
+  max-width: min(280px, calc(100vw - 32px));
+  padding: 7px 14px 8px 10px;
+  background: var(--univlr-white);
+  color: var(--univlr-black);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+  font: 600 12px/1.4 var(--font-text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: none;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vp-dica[data-lado="abaixo"] .vp-dica-corpo {
+  transform: translateY(-4px);
+}
+
+.vp-dica.visivel .vp-dica-corpo {
+  opacity: 1;
+  transform: none;
+}

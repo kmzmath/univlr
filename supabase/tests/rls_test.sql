@@ -229,6 +229,10 @@ declare
   t_apagada uuid;
   n int;
 begin
+  -- O Bruno saiu do bloco anterior suspenso; aqui ele volta a ser conta comum,
+  -- para os ataques dele baterem na regra de autoria e nao na suspensao.
+  update public.profiles set banned_until = null where id = bruno;
+
   perform set_config('request.jwt.claims', json_build_object('sub', alice)::text, true);
   set local role authenticated;
 
@@ -336,6 +340,26 @@ begin
   exception when others then
     insert into _r (teste, esperado, resultado) values ('editar thread depois de 15 min', 'bloqueado',
       case when SQLERRM like '%so da para editar thread propria%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - conta suspensa abre ou edita thread (dentro da janela de edicao).
+  reset role;
+  update public.topics set created_at = now() where id = t_alice;
+  update public.profiles set banned_until = now() + interval '1 day' where id = alice;
+  set local role authenticated;
+  begin
+    perform public.edit_topic(t_alice, 'Editada por conta suspensa', '');
+    insert into _r (teste, esperado, resultado) values ('suspensa edita thread', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('suspensa edita thread', 'bloqueado',
+      case when SQLERRM like '%conta suspensa%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+  begin
+    perform public.create_topic('Aberta por conta suspensa', '');
+    insert into _r (teste, esperado, resultado) values ('suspensa abre thread', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('suspensa abre thread', 'bloqueado',
+      case when SQLERRM like '%conta suspensa%' then 'ok' else 'FALHOU - ' || SQLERRM end);
   end;
 
   reset role;

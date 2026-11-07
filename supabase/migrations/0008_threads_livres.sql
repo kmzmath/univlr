@@ -118,6 +118,11 @@ begin
   if v_uid is null then
     raise exception 'nao autenticado' using errcode = 'P0001';
   end if;
+  -- Suspensa nao reescreve a propria thread, mesmo dentro da janela: o titulo
+  -- aparece na home, e a suspensao existe justamente para calar a conta.
+  if public.is_banned() then
+    raise exception 'conta suspensa' using errcode = 'P0001';
+  end if;
   if char_length(v_title) < 5 or char_length(v_title) > 120 then
     raise exception 'titulo precisa ter entre 5 e 120 caracteres' using errcode = 'P0001';
   end if;

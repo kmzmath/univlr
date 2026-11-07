@@ -284,6 +284,23 @@ begin
     insert into _r (teste, esperado, resultado) values ('titulo de 4 letras', 'bloqueado',
       case when SQLERRM like '%entre 5 e 120%' then 'ok' else 'FALHOU - ' || SQLERRM end);
   end;
+  -- Invisiveis: tab, quebra de linha, espaco sem quebra e espaco de largura
+  -- zero. O btrim padrao so tira o espaco ASCII, e cinco destes virariam uma
+  -- linha em branco no painel da home.
+  begin
+    perform public.create_topic(E'\t\t\n\t\t', '');
+    insert into _r (teste, esperado, resultado) values ('titulo so de tab e quebra', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('titulo so de tab e quebra', 'bloqueado',
+      case when SQLERRM like '%entre 5 e 120%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+  begin
+    perform public.create_topic(repeat(U&'\00A0', 3) || repeat(U&'\200B', 3), '');
+    insert into _r (teste, esperado, resultado) values ('titulo so de espaco invisivel', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('titulo so de espaco invisivel', 'bloqueado',
+      case when SQLERRM like '%entre 5 e 120%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
   begin
     perform public.create_topic(repeat('a', 121), '');
     insert into _r (teste, esperado, resultado) values ('titulo de 121 letras', 'bloqueado', 'FALHOU - passou');

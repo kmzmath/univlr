@@ -244,6 +244,14 @@ begin
   select title into t from public.topics where id = t1 and edited_at is not null and body = 'palpites aqui';
   insert into _p (caso, esperado, obtido) values ('editar a propria thread', 'Quem leva a Univava 2026?', coalesce(t, 'NULO'));
 
+  -- Invisiveis nas pontas saem, como o espaco comum.
+  reset role;
+  update public.topics set created_at = now() where id = t1;
+  set local role authenticated;
+  perform public.edit_topic(t1, U&'\00A0\200B' || E'\t' || 'Titulo com sobra' || U&'\00A0', '');
+  select title into t from public.topics where id = t1;
+  insert into _p (caso, esperado, obtido) values ('invisiveis nas pontas saem do titulo', 'Titulo com sobra', coalesce(t, 'NULO'));
+
   -- Apagar: some da lista, titulo e texto vao a vazio.
   perform public.delete_topic(t1);
   select count(*) into n from public.topic_list where id = t1;

@@ -342,8 +342,8 @@
         ligaCartao(alvo, t);
       });
       ligaFormulario(form, async (titulo, texto) => {
-        await window.Community.editarTopico(t.id, titulo, texto);
-        Object.assign(t, { title: String(titulo).trim(), body: String(texto || "").trim(), edited_at: new Date().toISOString() });
+        const salvo = await window.Community.editarTopico(t.id, titulo, texto);
+        if (salvo) Object.assign(t, { title: salvo.title, body: salvo.body, edited_at: salvo.edited_at });
         lugar.innerHTML = cartaoDaThread(t);
         ligaCartao(alvo, t);
       });

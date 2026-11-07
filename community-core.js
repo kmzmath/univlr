@@ -373,11 +373,15 @@
     return data;
   }
 
+  // Devolve a thread como ficou no banco. O banco apara o titulo com regra
+  // propria (invisiveis nas pontas, ver limpa_titulo no 0008); relendo, a tela
+  // mostra exatamente o que foi salvo em vez de um trim parecido.
   async function editarTopico(id, titulo, texto) {
     const { error } = await api().rpc("edit_topic", { p_topic_id: id, p_title: titulo, p_body: texto || "" });
     if (error) throw error;
-    titulos.set(id, String(titulo).trim());
+    const salvo = await topico(id);
     await depoisDeEscrever();
+    return salvo;
   }
 
   async function apagarTopico(id) {

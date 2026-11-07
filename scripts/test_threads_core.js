@@ -119,6 +119,12 @@ async function rejeita(promessa, trecho) {
   await C.editarTopico(t1, "Quem leva a Univavá 2026?", "palpites");
   assert.strictEqual((await C.topico(t1)).title, "Quem leva a Univavá 2026?");
   assert.ok((await C.topico(t1)).edited_at);
+  // Titulo so de invisiveis nao passa, e as pontas invisiveis saem; a tela
+  // mostra o que o banco guardou, nao um trim proprio.
+  await rejeita(C.criarTopico("\t ​​​ ", ""), "entre 5 e 120");
+  const editado = await C.editarTopico(t1, " ​ Univavá 2026, quem leva? ", "");
+  assert.strictEqual(editado.title, "Univavá 2026, quem leva?");
+  assert.strictEqual(C.tituloDoTopico(t1), "Univavá 2026, quem leva?");
   await C.apagarTopico(t1);
   lista = await C.listarTopicos();
   assert.ok(!lista.itens.some((x) => x.id === t1), "apagada sai da lista");

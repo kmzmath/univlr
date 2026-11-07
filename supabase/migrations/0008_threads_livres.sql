@@ -57,6 +57,29 @@ alter table public.notifications drop constraint notifications_kind_check;
 alter table public.notifications add constraint notifications_kind_check
   check (kind in ('mention', 'reply', 'topic_reply'));
 
+-- ------------------------------------------------------------ limpa_titulo
+-- O btrim padrao so tira o espaco ASCII. Tab, quebra de linha, espaco sem
+-- quebra (U+00A0) e os de largura zero (U+200B-U+200D, U+2060, U+FEFF) passavam
+-- pelo minimo de 5 e viravam uma linha em branco no painel da home. Aqui eles
+-- saem das pontas, e o que sobra precisa ter ao menos um caractere visivel.
+-- O front nao apara por conta propria: depois de editar ele rele o titulo
+-- salvo (community-core.js, editarTopico). O Supabase falso dos testes usa a
+-- mesma regra (scripts/fake_supabase.js, limpaTitulo).
+
+create or replace function public.limpa_titulo(p text)
+returns text
+language sql immutable set search_path = public as $fn$
+  select regexp_replace(coalesce(p, ''),
+    '^[[:space:] ​‌‍⁠﻿]+|[[:space:] ​‌‍⁠﻿]+$', '', 'g')
+$fn$;
+
+create or replace function public.titulo_valido(p text)
+returns boolean
+language sql immutable set search_path = public as $fn$
+  select char_length(p) between 5 and 120
+     and p ~ '[^[:space:] ​‌‍⁠﻿]'
+$fn$;
+
 -- ------------------------------------------------------------ create_topic
 
 create or replace function public.create_topic(p_title text, p_body text)
@@ -64,7 +87,7 @@ returns uuid
 language plpgsql security definer set search_path = public as $fn$
 declare
   v_uid   uuid := auth.uid();
-  v_title text := btrim(coalesce(p_title, ''));
+  v_title text := public.limpa_titulo(p_title);
   v_body  text := btrim(coalesce(p_body, ''));
   v_id    uuid;
 begin
@@ -74,7 +97,7 @@ begin
   if public.is_banned() then
     raise exception 'conta suspensa' using errcode = 'P0001';
   end if;
-  if char_length(v_title) < 5 or char_length(v_title) > 120 then
+  if not public.titulo_valido(v_title) then
     raise exception 'titulo precisa ter entre 5 e 120 caracteres' using errcode = 'P0001';
   end if;
   if char_length(v_body) > 2000 then
@@ -111,7 +134,7 @@ returns void
 language plpgsql security definer set search_path = public as $fn$
 declare
   v_uid   uuid := auth.uid();
-  v_title text := btrim(coalesce(p_title, ''));
+  v_title text := public.limpa_titulo(p_title);
   v_body  text := btrim(coalesce(p_body, ''));
   v_ok    boolean;
 begin
@@ -123,7 +146,7 @@ begin
   if public.is_banned() then
     raise exception 'conta suspensa' using errcode = 'P0001';
   end if;
-  if char_length(v_title) < 5 or char_length(v_title) > 120 then
+  if not public.titulo_valido(v_title) then
     raise exception 'titulo precisa ter entre 5 e 120 caracteres' using errcode = 'P0001';
   end if;
   if char_length(v_body) > 2000 then
@@ -325,3 +348,6 @@ revoke execute on function public.delete_topic(uuid)              from public;
 grant execute on function public.create_topic(text, text)         to authenticated;
 grant execute on function public.edit_topic(uuid, text, text)     to authenticated;
 grant execute on function public.delete_topic(uuid)               to authenticated;
+
+revoke execute on function public.limpa_titulo(text)  from public;
+revoke execute on function public.titulo_valido(text) from public;

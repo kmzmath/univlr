@@ -44,6 +44,12 @@
   db.topics.forEach((t) => db.threads.push({ id: novoId(), subject_kind: "topic", subject_id: t.id, created_at: t.created_at }));
   const usuarios = cfg.usuarios || [];
   const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+  // Mesma regra do limpa_titulo/titulo_valido do 0008.
+  const INVISIVEL = "\\s\\u00a0\\u200b\\u200c\\u200d\\u2060\\ufeff";
+  const PONTAS = new RegExp(`^[${INVISIVEL}]+|[${INVISIVEL}]+$`, "g");
+  const VISIVEL = new RegExp(`[^${INVISIVEL}]`);
+  const limpaTitulo = (t) => String(t || "").replace(PONTAS, "");
+  const tituloValido = (t) => t.length >= 5 && t.length <= 120 && VISIVEL.test(t);
   const registro = (window.__FAKE_SUPABASE_LOG__ = []);
   const anota = (oque) => registro.push(oque);
 
@@ -227,9 +233,9 @@
     create_topic({ p_title, p_body }) {
       const uid = sessao?.user.id;
       if (!uid) throw { message: "nao autenticado", code: "P0001" };
-      const title = String(p_title || "").trim();
+      const title = limpaTitulo(p_title);
       const body = String(p_body || "").trim();
-      if (title.length < 5 || title.length > 120) throw { message: "titulo precisa ter entre 5 e 120 caracteres", code: "P0001" };
+      if (!tituloValido(title)) throw { message: "titulo precisa ter entre 5 e 120 caracteres", code: "P0001" };
       if (body.length > 2000) throw { message: "texto pode ter no maximo 2000 caracteres", code: "P0001" };
       const desde = (min) => db.topics.filter((x) => x.author_id === uid && Date.parse(x.created_at) > Date.now() - min * 60000).length;
       if (desde(60) >= 3) throw { message: "muitas threads seguidas, espere um pouco", code: "P0001" };
@@ -242,9 +248,9 @@
     edit_topic({ p_topic_id, p_title, p_body }) {
       const uid = sessao?.user.id;
       if (!uid) throw { message: "nao autenticado", code: "P0001" };
-      const title = String(p_title || "").trim();
+      const title = limpaTitulo(p_title);
       const body = String(p_body || "").trim();
-      if (title.length < 5 || title.length > 120) throw { message: "titulo precisa ter entre 5 e 120 caracteres", code: "P0001" };
+      if (!tituloValido(title)) throw { message: "titulo precisa ter entre 5 e 120 caracteres", code: "P0001" };
       if (body.length > 2000) throw { message: "texto pode ter no maximo 2000 caracteres", code: "P0001" };
       const alvo = db.topics.find((x) => x.id === p_topic_id && x.author_id === uid && !x.deleted_at && Date.parse(x.created_at) > Date.now() - 15 * 60000);
       if (!alvo) throw { message: "so da para editar thread propria, nos primeiros 15 minutos", code: "P0001" };

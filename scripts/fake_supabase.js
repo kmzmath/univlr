@@ -3,7 +3,10 @@
 // community-core.js usa. O teste injeta no lugar do /supabase-js.js e define
 // window.__FAKE_SUPABASE__ antes, com os dados iniciais:
 //   { usuarios: [{ id, email, senha, username, role }], threads: [{ id, kind, subject }],
-//     comentarios: [{ id, thread, autor, body, parent, minutosAtras }], atraso: [min, max] }
+//     comentarios: [{ id, thread, autor, body, parent, minutosAtras }], atraso: [min, max],
+//     topicos: [{ id, autor, title, body, minutosAtras, apagado }] }
+// As threads livres (`topicos`) seguem as regras do 0008_threads_livres.sql,
+// com as mesmas mensagens de erro: o falso e o banco dos testes de tela.
 // Cada resposta demora um tempo sorteado dentro de `atraso`, para as respostas
 // chegarem fora de ordem como numa rede de verdade.
 (function () {
@@ -27,10 +30,20 @@
       created_at: new Date(Date.now() - (c.minutosAtras || 5) * 60000).toISOString(), edited_at: null, deleted_at: null, score: c.score || 0,
     })),
     comment_votes: [],
+    topics: (cfg.topicos || []).map((t) => {
+      const quando = new Date(Date.now() - (t.minutosAtras || 5) * 60000).toISOString();
+      return {
+        id: t.id, author_id: t.autor || null, title: t.apagado ? "" : t.title, body: t.apagado ? "" : t.body || "",
+        created_at: quando, edited_at: null, deleted_at: t.apagado ? quando : null,
+      };
+    }),
     notifications: [],
     reports: [],
   };
+  // Cada topico semeado ganha a sua thread de conversa, como o create_topic faz.
+  db.topics.forEach((t) => db.threads.push({ id: novoId(), subject_kind: "topic", subject_id: t.id, created_at: t.created_at }));
   const usuarios = cfg.usuarios || [];
+  const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
   const registro = (window.__FAKE_SUPABASE_LOG__ = []);
   const anota = (oque) => registro.push(oque);
 
@@ -50,6 +63,35 @@
     });
   }
 
+  // A view topic_list: so as vivas, com autor e contagem de comentarios vivos.
+  function topicList() {
+    return db.topics
+      .filter((t) => !t.deleted_at)
+      .map((t) => {
+        const th = db.threads.find((x) => x.subject_kind === "topic" && x.subject_id === t.id);
+        const vivos = th ? db.comments.filter((c) => c.thread_id === th.id && !c.deleted_at) : [];
+        const p = db.profiles.find((x) => x.id === t.author_id);
+        return {
+          id: t.id, title: t.title, created_at: t.created_at, edited_at: t.edited_at,
+          author_username: p ? p.username : null,
+          respostas: vivos.length,
+          ultima_atividade: vivos.reduce((max, c) => (c.created_at > max ? c.created_at : max), t.created_at),
+        };
+      });
+  }
+
+  function topicoComAutor(t) {
+    const p = db.profiles.find((x) => x.id === t.author_id);
+    return { ...t, profiles: p ? { username: p.username, role: p.role, fav_team: p.fav_team, fav_player: p.fav_player } : null };
+  }
+
+  // O embed `comments(thread_id, threads(subject_kind, subject_id))` do aviso.
+  function avisoComThread(n) {
+    const c = db.comments.find((x) => x.id === n.comment_id);
+    const th = c ? db.threads.find((x) => x.id === c.thread_id) : null;
+    return { ...n, comments: c ? { thread_id: c.thread_id, threads: th ? { subject_kind: th.subject_kind, subject_id: th.subject_id } : null } : null };
+  }
+
   function comAutor(c) {
     const p = db.profiles.find((x) => x.id === c.author_id);
     return { ...c, profiles: p ? { username: p.username, role: p.role, fav_team: p.fav_team, fav_player: p.fav_player } : null };
@@ -63,17 +105,23 @@
       this.opcoes = {};
     }
     select(_colunas, opcoes) { if (this.modo === "select") this.opcoes = opcoes || {}; return this; }
-    eq(col, val) { this.filtros.push((r) => String(r[col]) === String(val)); return this; }
+    eq(col, val) {
+      // Coluna uuid com texto qualquer: o Postgres recusa a consulta inteira.
+      if (this.tabela === "topics" && col === "id" && !UUID.test(String(val))) this.idInvalido = true;
+      this.filtros.push((r) => String(r[col]) === String(val));
+      return this;
+    }
     in(col, vals) { this.filtros.push((r) => vals.map(String).includes(String(r[col]))); return this; }
     is(col, val) { this.filtros.push((r) => (r[col] ?? null) === val); return this; }
     order(col, { ascending = true } = {}) { this.ordem = [col, ascending]; return this; }
     limit(n) { this.limite = n; return this; }
+    range(de, ate) { this.faixa = [de, ate]; return this; }
     update(valores) { this.modo = "update"; this.valores = valores; return this; }
     delete() { this.modo = "delete"; return this; }
     insert(valores) { this.modo = "insert"; this.valores = valores; return this; }
     maybeSingle() { this.unico = true; return this; }
     linhas() {
-      const base = this.tabela === "thread_counts" ? threadCounts() : db[this.tabela] || [];
+      const base = this.tabela === "thread_counts" ? threadCounts() : this.tabela === "topic_list" ? topicList() : db[this.tabela] || [];
       return base.filter((r) => this.filtros.every((f) => f(r)));
     }
     async executa() {
@@ -111,15 +159,21 @@
         db[this.tabela] = db[this.tabela].filter((r) => !fora.includes(r));
         return { data: null, error: null };
       }
+      if (this.idInvalido) return { data: null, error: { message: "invalid input syntax for type uuid", code: "22P02" } };
       let linhas = this.linhas();
       if (this.tabela === "comment_votes") linhas = linhas.filter((v) => v.user_id === uid);
       if (this.tabela === "comments") linhas = linhas.map(comAutor);
+      if (this.tabela === "topics") linhas = linhas.map(topicoComAutor);
+      if (this.tabela === "notifications") linhas = linhas.map(avisoComThread);
       if (this.ordem) {
         const [col, asc] = this.ordem;
         linhas = linhas.slice().sort((a, b) => (a[col] < b[col] ? -1 : a[col] > b[col] ? 1 : 0) * (asc ? 1 : -1));
       }
+      const total = linhas.length;
+      if (this.faixa) linhas = linhas.slice(this.faixa[0], this.faixa[1] + 1);
       if (this.limite) linhas = linhas.slice(0, this.limite);
-      if (this.opcoes.head) return { data: null, count: linhas.length, error: null };
+      if (this.opcoes.head) return { data: null, count: total, error: null };
+      if (this.opcoes.count) return { data: linhas.map((r) => ({ ...r })), count: total, error: null };
       if (this.unico) return { data: linhas[0] ? { ...linhas[0] } : null, error: null };
       return { data: linhas.map((r) => ({ ...r })), error: null };
     }
@@ -131,14 +185,25 @@
       const uid = sessao?.user.id;
       if (!uid) throw { message: "nao autenticado", code: "P0001" };
       if (cfg.recusaKinds && cfg.recusaKinds.includes(p_kind)) throw { message: 'new row for relation "threads" violates check constraint "threads_subject_kind_check"', code: "23514" };
+      let topico = null;
+      if (p_kind === "topic") {
+        topico = UUID.test(String(p_subject_id)) ? db.topics.find((x) => x.id === p_subject_id && !x.deleted_at) : null;
+        if (!topico) throw { message: "thread nao existe", code: "P0001" };
+      }
       let t = db.threads.find((x) => x.subject_kind === p_kind && x.subject_id === p_subject_id);
       if (!t) {
         t = { id: novoId(), subject_kind: p_kind, subject_id: p_subject_id, created_at: agora() };
         db.threads.push(t);
       }
-      if (p_parent_id && !db.comments.some((c) => c.id === p_parent_id && c.thread_id === t.id)) throw { message: "comentario respondido nao existe nesta thread", code: "P0001" };
+      const pai = p_parent_id ? db.comments.find((c) => c.id === p_parent_id && c.thread_id === t.id && !c.deleted_at) : null;
+      if (p_parent_id && !pai) throw { message: "comentario respondido nao existe nesta thread", code: "P0001" };
       const id = novoId();
       db.comments.push({ id, thread_id: t.id, parent_id: p_parent_id || null, author_id: uid, body: p_body.trim(), created_at: agora(), edited_at: null, deleted_at: null, score: 0 });
+      // Avisos: resposta, e o de thread livre sem repetir quem ja foi avisado.
+      const avisa = (user_id, kind) => db.notifications.push({ id: novoId(), user_id, kind, comment_id: id, created_at: agora(), read_at: null });
+      const autorPai = pai ? pai.author_id : null;
+      if (autorPai && autorPai !== uid) avisa(autorPai, "reply");
+      if (topico && topico.author_id && topico.author_id !== uid && topico.author_id !== autorPai) avisa(topico.author_id, "topic_reply");
       return id;
     },
     edit_comment({ p_comment_id, p_body }) {
@@ -152,6 +217,41 @@
       if (!c) throw { message: "comentario nao encontrado", code: "P0001" };
       c.body = "";
       c.deleted_at = agora();
+    },
+    create_topic({ p_title, p_body }) {
+      const uid = sessao?.user.id;
+      if (!uid) throw { message: "nao autenticado", code: "P0001" };
+      const title = String(p_title || "").trim();
+      const body = String(p_body || "").trim();
+      if (title.length < 5 || title.length > 120) throw { message: "titulo precisa ter entre 5 e 120 caracteres", code: "P0001" };
+      if (body.length > 2000) throw { message: "texto pode ter no maximo 2000 caracteres", code: "P0001" };
+      const desde = (min) => db.topics.filter((x) => x.author_id === uid && Date.parse(x.created_at) > Date.now() - min * 60000).length;
+      if (desde(60) >= 3) throw { message: "muitas threads seguidas, espere um pouco", code: "P0001" };
+      if (desde(1440) >= 10) throw { message: "limite diario de threads atingido", code: "P0001" };
+      const id = novoId();
+      db.topics.push({ id, author_id: uid, title, body, created_at: agora(), edited_at: null, deleted_at: null });
+      db.threads.push({ id: novoId(), subject_kind: "topic", subject_id: id, created_at: agora() });
+      return id;
+    },
+    edit_topic({ p_topic_id, p_title, p_body }) {
+      const uid = sessao?.user.id;
+      if (!uid) throw { message: "nao autenticado", code: "P0001" };
+      const title = String(p_title || "").trim();
+      const body = String(p_body || "").trim();
+      if (title.length < 5 || title.length > 120) throw { message: "titulo precisa ter entre 5 e 120 caracteres", code: "P0001" };
+      if (body.length > 2000) throw { message: "texto pode ter no maximo 2000 caracteres", code: "P0001" };
+      const alvo = db.topics.find((x) => x.id === p_topic_id && x.author_id === uid && !x.deleted_at && Date.parse(x.created_at) > Date.now() - 15 * 60000);
+      if (!alvo) throw { message: "so da para editar thread propria, nos primeiros 15 minutos", code: "P0001" };
+      Object.assign(alvo, { title, body, edited_at: agora() });
+    },
+    delete_topic({ p_topic_id }) {
+      const uid = sessao?.user.id;
+      if (!uid) throw { message: "nao autenticado", code: "P0001" };
+      const alvo = db.topics.find((x) => x.id === p_topic_id && !x.deleted_at);
+      if (!alvo) throw { message: "thread nao encontrada", code: "P0001" };
+      const admin = db.profiles.find((x) => x.id === uid)?.role === "admin";
+      if (alvo.author_id !== uid && !admin) throw { message: "sem permissao", code: "P0001" };
+      Object.assign(alvo, { title: "", body: "", deleted_at: agora() });
     },
     username_available({ candidate }) {
       return !db.profiles.some((p) => p.username.toLowerCase() === String(candidate).toLowerCase());

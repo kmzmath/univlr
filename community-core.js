@@ -306,6 +306,99 @@
     await invalidarContagens();
   }
 
+  // ---------------------------------------------------------- threads livres
+  // O assunto mora em `topics`; a conversa e a de sempre, no tipo `topic`, com
+  // o id do topico como subject_id. Escrita so pelas RPCs do 0008.
+
+  const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+  const COLUNAS_TOPICO_RESUMO = "id, title, created_at, edited_at, author_username, respostas, ultima_atividade";
+  let topicosCache = []; // as 5 mais recentes, para o painel da home (sincrono)
+  const titulos = new Map(); // id -> titulo, para assuntoDaThread (sincrono)
+
+  function guardaTitulos(itens) {
+    (itens || []).forEach((t) => {
+      if (t && t.id && t.title) titulos.set(t.id, t.title);
+    });
+  }
+
+  // Ordem pela ultima atividade, como na HLTV: a thread comentada agora sobe.
+  async function listarTopicos({ pagina = 1, porPagina = 50 } = {}) {
+    const de = (Math.max(1, pagina) - 1) * porPagina;
+    const { data, error, count } = await api()
+      .from("topic_list")
+      .select(COLUNAS_TOPICO_RESUMO, { count: "exact" })
+      .order("ultima_atividade", { ascending: false })
+      .range(de, de + porPagina - 1);
+    if (error) throw error;
+    guardaTitulos(data);
+    return { itens: data || [], total: count || 0 };
+  }
+
+  async function carregarTopicosRecentes() {
+    try {
+      topicosCache = (await listarTopicos({ pagina: 1, porPagina: 5 })).itens;
+    } catch (erro) {
+      // Mesma regra da contagem: falha de rede nao apaga o que ja estava certo.
+    }
+    return topicosCache;
+  }
+
+  const topicosRecentes = () => topicosCache;
+
+  // A thread inteira, com o autor no mesmo embed do comentario. A apagada volta
+  // assim mesmo (com titulo vazio), para a tela dizer "apagada" e nao "nao
+  // encontrada". Id que nao e uuid nem vai ao banco: o Postgres recusaria.
+  async function topico(id) {
+    if (!UUID.test(String(id || ""))) return null;
+    const { data, error } = await api()
+      .from("topics")
+      .select("id, title, body, created_at, edited_at, deleted_at, author_id, profiles(username, role, fav_team, fav_player)")
+      .eq("id", id)
+      .maybeSingle();
+    if (error) throw error;
+    if (!data) return null;
+    const { profiles, ...resto } = data;
+    if (resto.title) titulos.set(resto.id, resto.title);
+    return { ...resto, autor: profiles || null };
+  }
+
+  async function depoisDeEscrever() {
+    await Promise.all([carregarTopicosRecentes(), invalidarContagens()]);
+  }
+
+  async function criarTopico(titulo, texto) {
+    const { data, error } = await api().rpc("create_topic", { p_title: titulo, p_body: texto || "" });
+    if (error) throw error;
+    await depoisDeEscrever();
+    return data;
+  }
+
+  async function editarTopico(id, titulo, texto) {
+    const { error } = await api().rpc("edit_topic", { p_topic_id: id, p_title: titulo, p_body: texto || "" });
+    if (error) throw error;
+    titulos.set(id, String(titulo).trim());
+    await depoisDeEscrever();
+  }
+
+  async function apagarTopico(id) {
+    const { error } = await api().rpc("delete_topic", { p_topic_id: id });
+    if (error) throw error;
+    titulos.delete(id);
+    await depoisDeEscrever();
+  }
+
+  // Para o perfil: os titulos das threads onde a pessoa comentou, numa
+  // consulta so. A apagada fica de fora e vira "conteudo removido" na tela.
+  async function titulosDeTopicos(ids) {
+    const validos = [...new Set((ids || []).map(String))].filter((id) => UUID.test(id) && !titulos.has(id));
+    if (!validos.length) return;
+    const { data, error } = await api().from("topics").select("id, title").in("id", validos).is("deleted_at", null);
+    if (error) throw error;
+    guardaTitulos(data);
+  }
+
+  const tituloDoTopico = (id) => titulos.get(String(id)) || null;
+
   // `sinal` e +1, -1 ou 0 (tirar o voto). Devolve o sinal que ficou, para a
   // tela nao precisar adivinhar.
   async function votar(id, sinal) {
@@ -486,7 +579,7 @@
   // O que a home precisa saber sobre a comunidade. Duas consultas pequenas e
   // independentes de sessao, entao rodam antes de qualquer login.
   async function carregarResumo() {
-    await Promise.all([carregarContagens(), carregarUsuarios()]);
+    await Promise.all([carregarContagens(), carregarUsuarios(), carregarTopicosRecentes()]);
     return contagens;
   }
 
@@ -496,7 +589,9 @@
     if (!sessao) return [];
     const { data, error } = await api()
       .from("notifications")
-      .select("id, kind, comment_id, created_at, read_at")
+      // O embed diz onde o comentario esta, para o aviso de thread livre
+      // levar direto a ela.
+      .select("id, kind, comment_id, created_at, read_at, comments(thread_id, threads(subject_kind, subject_id))")
       .eq("user_id", sessao.user.id)
       .order("created_at", { ascending: false })
       .limit(limite);
@@ -610,6 +705,14 @@
     comentar,
     editarComentario,
     apagarComentario,
+    listarTopicos,
+    topicosRecentes,
+    topico,
+    criarTopico,
+    editarTopico,
+    apagarTopico,
+    titulosDeTopicos,
+    tituloDoTopico,
     votar,
     denunciar,
     comentariosDoPerfil,

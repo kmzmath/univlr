@@ -172,7 +172,102 @@ begin
 end;
 $p$;
 
-delete from auth.users where email in ('alice@teste.univlr', 'bruno@teste.univlr');
+-- ----------------------------------------------------------- threads livres
+-- Contas proprias, para nao esbarrar no limite de comentarios da Alice e do
+-- Bruno acima.
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
+                        email_confirmed_at, created_at, updated_at, raw_user_meta_data)
+values
+  ('33333333-3333-3333-3333-333333333333', '00000000-0000-0000-0000-000000000000',
+   'authenticated', 'authenticated', 'carla@teste.univlr', '', now(), now(), now(),
+   '{"username":"carla_teste"}'),
+  ('44444444-4444-4444-4444-444444444444', '00000000-0000-0000-0000-000000000000',
+   'authenticated', 'authenticated', 'davi@teste.univlr', '', now(), now(), now(),
+   '{"username":"davi_teste"}');
+
+do $topicos$
+declare
+  carla uuid := '33333333-3333-3333-3333-333333333333';
+  davi  uuid := '44444444-4444-4444-4444-444444444444';
+  t1 uuid; t2 uuid; c_davi uuid; c_carla uuid; c_resp uuid; c_t2 uuid;
+  n int; t text; ts1 timestamptz; ts2 timestamptz;
+begin
+  perform set_config('request.jwt.claims', json_build_object('sub', carla)::text, true);
+  set local role authenticated;
+
+  t1 := public.create_topic('  Quem leva a Univava?  ', '');
+  insert into _p (caso, esperado, obtido) values ('abrir thread devolve id', 'sim', case when t1 is not null then 'sim' else 'nao' end);
+
+  select count(*) into n from public.topic_list where id = t1 and respostas = 0
+     and author_username = 'carla_teste' and title = 'Quem leva a Univava?' and ultima_atividade = created_at;
+  insert into _p (caso, esperado, obtido) values ('thread nova na lista, titulo aparado', '1', n::text);
+
+  select count(*) into n from public.threads where subject_kind = 'topic' and subject_id = t1::text;
+  insert into _p (caso, esperado, obtido) values ('thread de conversa criada junto', '1', n::text);
+
+  -- A abertura fica uma hora no passado, para a ultima atividade ter de vir
+  -- do comentario e nao da abertura.
+  reset role;
+  update public.topics set created_at = now() - interval '1 hour' where id = t1;
+  set local role authenticated;
+
+  perform set_config('request.jwt.claims', json_build_object('sub', davi)::text, true);
+  c_davi := public.post_comment('topic', t1::text, 'eu acho que a Golden');
+
+  select respostas, ultima_atividade into n, ts1 from public.topic_list where id = t1;
+  select created_at into ts2 from public.comments where id = c_davi;
+  insert into _p (caso, esperado, obtido) values ('comentario conta resposta', '1', coalesce(n::text, 'NULO'));
+  insert into _p (caso, esperado, obtido) values ('ultima atividade vem do comentario', 'sim', case when ts1 = ts2 then 'sim' else 'nao' end);
+
+  perform set_config('request.jwt.claims', json_build_object('sub', carla)::text, true);
+  select count(*) into n from public.notifications where user_id = carla and kind = 'topic_reply' and comment_id = c_davi;
+  insert into _p (caso, esperado, obtido) values ('aviso de comentario na thread', '1', n::text);
+
+  -- Comentar na propria thread nao avisa a si mesma.
+  c_carla := public.post_comment('topic', t1::text, 'vamos ver');
+  select count(*) into n from public.notifications where comment_id = c_carla;
+  insert into _p (caso, esperado, obtido) values ('comentar na propria thread nao avisa', '0', n::text);
+
+  -- Resposta a ela, na thread dela, com mencao: um aviso so.
+  perform set_config('request.jwt.claims', json_build_object('sub', davi)::text, true);
+  c_resp := public.post_comment('topic', t1::text, 'concordo @carla_teste', c_carla);
+  perform set_config('request.jwt.claims', json_build_object('sub', carla)::text, true);
+  select count(*) into n from public.notifications where user_id = carla and comment_id = c_resp;
+  insert into _p (caso, esperado, obtido) values ('resposta, mencao e thread: um aviso so', '1', n::text);
+
+  -- Editar dentro dos 15 minutos (a janela conta da abertura; volta a abertura
+  -- para agora).
+  reset role;
+  update public.topics set created_at = now() where id = t1;
+  set local role authenticated;
+  perform public.edit_topic(t1, 'Quem leva a Univava 2026?', 'palpites aqui');
+  select title into t from public.topics where id = t1 and edited_at is not null and body = 'palpites aqui';
+  insert into _p (caso, esperado, obtido) values ('editar a propria thread', 'Quem leva a Univava 2026?', coalesce(t, 'NULO'));
+
+  -- Apagar: some da lista, titulo e texto vao a vazio.
+  perform public.delete_topic(t1);
+  select count(*) into n from public.topic_list where id = t1;
+  insert into _p (caso, esperado, obtido) values ('thread apagada sai da lista', '0', n::text);
+  select count(*) into n from public.topics where id = t1 and title = '' and body = '' and deleted_at is not null;
+  insert into _p (caso, esperado, obtido) values ('apagar zera titulo e texto', '1', n::text);
+
+  -- Conta apagada nao leva a thread.
+  t2 := public.create_topic('Procurando quinto para a LUCE', '');
+  perform set_config('request.jwt.claims', json_build_object('sub', davi)::text, true);
+  c_t2 := public.post_comment('topic', t2::text, 'eu topo');
+  reset role;
+  delete from auth.users where id = carla;
+  set local role authenticated;
+  select count(*) into n from public.topic_list where id = t2 and author_username is null;
+  insert into _p (caso, esperado, obtido) values ('thread fica sem autor quando a conta some', '1', n::text);
+  select count(*) into n from public.comments where id = c_t2;
+  insert into _p (caso, esperado, obtido) values ('comentario dos outros fica', '1', n::text);
+
+  reset role;
+end;
+$topicos$;
+
+delete from auth.users where email in ('alice@teste.univlr', 'bruno@teste.univlr', 'carla@teste.univlr', 'davi@teste.univlr');
 delete from public.threads where subject_id = 'partida-pos';
 
 select ordem, caso, esperado, obtido,

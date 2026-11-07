@@ -217,6 +217,131 @@ begin
 end;
 $teste$;
 
+-- ----------------------------------------------------------- threads livres
+-- Cada caso confere a MENSAGEM do erro, e nao so que houve erro: antes da
+-- migracao 0008 as funcoes nem existem, e "deu erro" passaria sozinho.
+
+do $topicos$
+declare
+  alice uuid := '11111111-1111-1111-1111-111111111111';
+  bruno uuid := '22222222-2222-2222-2222-222222222222';
+  t_alice uuid;
+  t_apagada uuid;
+  n int;
+begin
+  perform set_config('request.jwt.claims', json_build_object('sub', alice)::text, true);
+  set local role authenticated;
+
+  t_alice := public.create_topic('Quem leva a Univava?', '');
+
+  -- ATAQUE - comentar numa thread com assunto que nao e uuid.
+  begin
+    perform public.post_comment('topic', 'nao-e-uuid', 'x');
+    insert into _r (teste, esperado, resultado) values ('thread com id que nao e uuid', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('thread com id que nao e uuid', 'bloqueado',
+      case when SQLERRM like '%thread nao existe%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+  select count(*) into n from public.threads where subject_kind = 'topic' and subject_id = 'nao-e-uuid';
+  insert into _r (teste, esperado, resultado) values ('id invalido nao cria thread', '0', case when n = 0 then 'ok' else 'FALHOU' end);
+
+  -- ATAQUE - comentar numa thread que nunca existiu.
+  begin
+    perform public.post_comment('topic', '00000000-0000-4000-8000-000000000000', 'x');
+    insert into _r (teste, esperado, resultado) values ('thread inexistente', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('thread inexistente', 'bloqueado',
+      case when SQLERRM like '%thread nao existe%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - comentar numa thread apagada.
+  t_apagada := public.create_topic('Thread que vai sumir', '');
+  perform public.delete_topic(t_apagada);
+  begin
+    perform public.post_comment('topic', t_apagada::text, 'x');
+    insert into _r (teste, esperado, resultado) values ('comentar em thread apagada', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('comentar em thread apagada', 'bloqueado',
+      case when SQLERRM like '%thread nao existe%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - titulo curto, so de espacos e longo demais.
+  begin
+    perform public.create_topic('    ', '');
+    insert into _r (teste, esperado, resultado) values ('titulo so de espacos', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('titulo so de espacos', 'bloqueado',
+      case when SQLERRM like '%entre 5 e 120%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+  begin
+    perform public.create_topic('  abcd  ', '');
+    insert into _r (teste, esperado, resultado) values ('titulo de 4 letras', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('titulo de 4 letras', 'bloqueado',
+      case when SQLERRM like '%entre 5 e 120%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+  begin
+    perform public.create_topic(repeat('a', 121), '');
+    insert into _r (teste, esperado, resultado) values ('titulo de 121 letras', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('titulo de 121 letras', 'bloqueado',
+      case when SQLERRM like '%entre 5 e 120%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - quarta thread na mesma hora (ja abriu duas: t_alice e t_apagada,
+  -- e a apagada conta).
+  perform public.create_topic('Terceira thread da hora', '');
+  begin
+    perform public.create_topic('Quarta thread da hora', '');
+    insert into _r (teste, esperado, resultado) values ('limite de 3 threads por hora', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('limite de 3 threads por hora', 'bloqueado',
+      case when SQLERRM like '%muitas threads seguidas%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - escrever direto na tabela, sem a RPC.
+  begin
+    insert into public.topics (author_id, title) values (alice, 'por fora da RPC');
+    insert into _r (teste, esperado, resultado) values ('insert direto em topics', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('insert direto em topics', 'bloqueado',
+      case when SQLERRM like '%permission denied%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - Bruno edita e apaga a thread da Alice.
+  perform set_config('request.jwt.claims', json_build_object('sub', bruno)::text, true);
+  begin
+    perform public.edit_topic(t_alice, 'Trocado pelo bruno', '');
+    insert into _r (teste, esperado, resultado) values ('bruno edita thread da alice', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('bruno edita thread da alice', 'bloqueado',
+      case when SQLERRM like '%so da para editar thread propria%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+  begin
+    perform public.delete_topic(t_alice);
+    insert into _r (teste, esperado, resultado) values ('bruno apaga thread da alice', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('bruno apaga thread da alice', 'bloqueado',
+      case when SQLERRM like '%sem permissao%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - editar depois dos 15 minutos.
+  reset role;
+  update public.topics set created_at = now() - interval '16 minutes' where id = t_alice;
+  perform set_config('request.jwt.claims', json_build_object('sub', alice)::text, true);
+  set local role authenticated;
+  begin
+    perform public.edit_topic(t_alice, 'Editada tarde demais', '');
+    insert into _r (teste, esperado, resultado) values ('editar thread depois de 15 min', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('editar thread depois de 15 min', 'bloqueado',
+      case when SQLERRM like '%so da para editar thread propria%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  reset role;
+end;
+$topicos$;
+
 -- ------------------------------------------------------------------ limpeza
 delete from auth.users where email in ('alice@teste.univlr', 'bruno@teste.univlr');
 delete from public.threads where subject_id in ('partida-de-teste', 'outra-partida');

@@ -25,6 +25,7 @@ existe e precisa passar antes de qualquer tela.
 | `migrations/0005_contagens.sql` | View `thread_counts`, para o selo nas listas |
 | `migrations/0006_voto_com_sinal.sql` | Voto para cima e para baixo |
 | `migrations/0007_cartinhas.sql` | Conversas das cartinhas (`card`), com formato conferido |
+| `migrations/0008_threads_livres.sql` | Threads livres (`topics`, tipo `topic`), aviso `topic_reply`, view `topic_list` |
 | `tests/rls_test.sql` | Ataques que precisam falhar |
 | `tests/positive_test.sql` | Operações legítimas que precisam passar |
 
@@ -164,7 +165,7 @@ precisam ser remapeados.
 ## Onde se pode comentar
 
 `threads.subject_kind` aceita `match`, `event`, `player`, `team`, `article` e
-`card` - os seis têm tela. `article` é a notícia, e o `subject_id` é o slug do
+`card`, e desde a `0008` também `topic` - os sete têm tela. `article` é a notícia, e o `subject_id` é o slug do
 arquivo em `noticias/` (ver `noticias/README.md`).
 
 `card` são as cartinhas, em `/cartas/` (a partir da `0007`): `2026` é a
@@ -172,6 +173,13 @@ conversa da coleção da temporada e `2026:<puuid>` a de uma cartinha. O puuid,
 e não a posição, porque a posição pode mudar se os overalls forem recalculados.
 O banco recusa qualquer outro formato (`threads_card_subject_format`), já que
 `post_comment()` cria a thread com o que receber.
+
+`topic` é a thread livre (a partir da `0008`): o assunto mora em
+`public.topics` (título, texto, autor) e o `subject_id` é o id do tópico. Só
+`create_topic()` cria a thread; `post_comment()` recusa `topic` com id que não
+é uuid, que não existe ou que foi apagado. Quem apaga a conta leva os próprios
+comentários, mas a thread que abriu fica, com `author_id` nulo ("conta
+apagada" na tela). Quem abriu recebe o aviso `topic_reply` a cada comentário.
 
 Consequência de o conteúdo da notícia viver no repositório e o comentário no
 banco: apagar o `.docx` **não** apaga a thread. Ela fica órfã e invisível. Se a
@@ -205,6 +213,34 @@ Banir por 7 dias, e desbanir:
 ```sql
 update public.profiles set banned_until = now() + interval '7 days' where username = 'NOME';
 update public.profiles set banned_until = null where username = 'NOME';
+```
+
+Últimas 50 threads livres, com autor e número de respostas:
+
+```sql
+select id, title, author_username, respostas, ultima_atividade
+  from public.topic_list
+ order by ultima_atividade desc
+ limit 50;
+```
+
+Apagar uma thread livre (zera título e texto; some das listas e a conversa
+deixa de aparecer). `delete_topic()` não serve aqui, porque no SQL Editor não
+há `auth.uid()`:
+
+```sql
+update public.topics set title = '', body = '', deleted_at = now() where id = 'UUID-AQUI';
+```
+
+Comentários de uma thread livre:
+
+```sql
+select c.id, p.username, c.body, c.created_at
+  from public.comments c
+  join public.threads t on t.id = c.thread_id
+  left join public.profiles p on p.id = c.author_id
+ where t.subject_kind = 'topic' and t.subject_id = 'UUID-AQUI'
+ order by c.created_at;
 ```
 
 Marcar a denúncia como resolvida:

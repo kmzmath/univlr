@@ -125,6 +125,11 @@
           window.Community.contarComentarios(p.id),
           window.Community.comentariosDoPerfil(p.id),
         ]);
+        // Comentario em thread livre: o titulo vive no banco, nao no JSON, e
+        // o assunto so sai com ele em cache. Uma consulta para todos. Se falhar,
+        // a linha cai no "conteudo removido" de sempre em vez de derrubar o perfil.
+        const topicos = comentarios.filter((c) => c.threads?.subject_kind === "topic").map((c) => c.threads.subject_id);
+        if (topicos.length) await window.Community.titulosDeTopicos(topicos).catch(() => null);
         // A rota pode ter mudado durante o await - sem esta guarda, o perfil
         // pintaria por cima da pagina para onde a pessoa ja navegou.
         if (!document.querySelector(`[data-perfil="${CSS.escape(nome)}"]`)) return;

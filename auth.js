@@ -160,6 +160,22 @@
   const ICONE_CORACAO = `<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 14.2 2.9 9.3a3.3 3.3 0 0 1 0-4.7 3.3 3.3 0 0 1 4.7 0L8 5l.4-.4a3.3 3.3 0 0 1 4.7 0 3.3 3.3 0 0 1 0 4.7Z"/></svg>`;
   const ICONE_VOTOS = `<svg viewBox="0 0 12 12" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M6 0.6 10 5H2z"/><path fill="currentColor" d="M6 11.4 2 7h8z"/></svg>`;
 
+  // Texto e destino de cada aviso. O de thread livre leva direto ao comentario
+  // dentro dela (`?c=` destaca); os outros seguem com a ancora de sempre.
+  const TEXTO_DO_AVISO = {
+    mention: "Mencionaram você",
+    reply: "Responderam você",
+    topic_reply: "Comentaram na sua thread",
+  };
+
+  function hrefDoAviso(n) {
+    const t = n.comments && n.comments.threads;
+    if (t && t.subject_kind === "topic") {
+      return `#/threads/${encodeURIComponent(t.subject_id)}?c=${encodeURIComponent(n.comment_id)}`;
+    }
+    return `#cmt-${n.comment_id}`;
+  }
+
   const VISTAS = {
     convite: () => `
       <h2>O UNIVLR fica melhor com conta</h2>
@@ -288,8 +304,8 @@
           ${itens
             .map(
               (n) => `<li class="${n.read_at ? "" : "nova"}">
-                        <a href="#cmt-${esc(n.comment_id)}" data-lida="${esc(n.id)}" data-fechar="1">
-                          ${n.kind === "mention" ? "Mencionaram você" : "Responderam você"}
+                        <a href="${esc(hrefDoAviso(n))}" data-lida="${esc(n.id)}" data-fechar="1">
+                          ${TEXTO_DO_AVISO[n.kind] || "Responderam você"}
                         </a>
                         <time>${window.Comments.quando(n.created_at)}</time>
                       </li>`

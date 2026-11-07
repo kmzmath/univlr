@@ -27,10 +27,12 @@ function novoContexto() {
       topicos: [{ id: ORFA, autor: null, title: "Thread de conta apagada", body: "", minutosAtras: 600 }],
     },
   };
-  const context = { window, console, Date, Map, Set, Promise, URL, URLSearchParams, setTimeout, clearTimeout, JSON, Math };
+  const document = { addEventListener: () => {}, querySelector: () => null, querySelectorAll: () => [], getElementById: () => null, body: { scrollHeight: 0 } };
+  window.document = document;
+  const context = { window, document, console, Date, Map, Set, Promise, URL, URLSearchParams, setTimeout, clearTimeout, JSON, Math };
   window.window = window;
   vm.createContext(context);
-  for (const arq of ["scripts/fake_supabase.js", "community-core.js"]) {
+  for (const arq of ["scripts/fake_supabase.js", "community-core.js", "comments.js"]) {
     vm.runInContext(fs.readFileSync(path.join(raiz, arq), "utf8"), context, { filename: arq });
   }
   return window;
@@ -141,6 +143,14 @@ async function rejeita(promessa, trecho) {
   const recentes = C.topicosRecentes();
   assert.ok(recentes.length >= 1 && recentes.length <= 5);
   assert.strictEqual(recentes[0].id, t2);
+
+  // Encaixes: a thread livre vira assunto com titulo e link, mas fica fora da
+  // faixa de atividade recente (ela tem painel proprio).
+  const Cm = w.Comments;
+  assert.deepStrictEqual(JSON.parse(JSON.stringify(Cm.assuntoDaThread("topic", t2))), { href: `#/threads/${t2}`, nome: "Procurando quinto para a LUCE" });
+  assert.strictEqual(Cm.assuntoDaThread("topic", t1), null, "apagada nao vira assunto");
+  await C.carregarContagens();
+  assert.ok(!Cm.atividadeFaixa(5).includes("#/threads/"), "thread livre nao entra na atividade recente");
 
   // A mensagem do banco chega sem acento; a tela mostra escrita direito.
   assert.strictEqual(C.mensagemDeErro({ message: "titulo precisa ter entre 5 e 120 caracteres" }), "O título precisa ter entre 5 e 120 caracteres.");

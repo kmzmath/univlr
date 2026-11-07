@@ -670,6 +670,13 @@
         const p = typeof window.playerById === "function" ? window.playerById(puuid) : null;
         return { href: `/cartas/#jogador-${encodeURIComponent(puuid)}`, nome: p ? `Cartinha de ${p.nick || p.handle}` : "Cartinha" };
       }
+      // Thread livre: o assunto mora no banco, e o titulo vem do cache do
+      // community-core (lista, pagina ou titulosDeTopicos). Apagada ou ainda
+      // nao carregada fica sem assunto, como uma partida que sumiu do JSON.
+      if (kind === "topic") {
+        const titulo = window.Community?.tituloDoTopico?.(id);
+        return titulo ? { href: `#/threads/${encodeURIComponent(id)}`, nome: titulo } : null;
+      }
       if (typeof state === "undefined" || !state.db) return null;
       if (kind === "match") {
         // O assunto e a SERIE: `id` aqui e o seriesKey, nao um id de partida.
@@ -706,13 +713,18 @@
     return null;
   }
 
-  const ROTULO_TIPO = { match: "partida", event: "campeonato", team: "equipe", player: "jogador", article: "notícia", card: "cartinha" };
+  const ROTULO_TIPO = { match: "partida", event: "campeonato", team: "equipe", player: "jogador", article: "notícia", card: "cartinha", topic: "thread" };
 
+  // As threads livres ficam de fora: elas tem painel proprio na home, logo ao
+  // lado. Pede folga ao cache e corta depois do filtro, senao uma semana de
+  // threads movimentadas deixaria a faixa com menos linhas do que o limite.
   function linhasDeAtividade(limite) {
-    return (window.Community?.atividadeRecente(limite) || [])
+    return (window.Community?.atividadeRecente(limite + 20) || [])
+      .filter((r) => r.subject_kind !== "topic")
       .map((r) => ({ r, assunto: assuntoDaThread(r.subject_kind, r.subject_id) }))
       // Thread cujo assunto sumiu do JSON nao vira linha morta: ela sai.
-      .filter((x) => x.assunto);
+      .filter((x) => x.assunto)
+      .slice(0, limite);
   }
 
   function umaLinha({ r, assunto }) {

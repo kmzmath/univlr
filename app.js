@@ -7,6 +7,9 @@ const RANKING_WEIGHTS_MANIFEST = "ranking-weights.json";
 const SITE_NAME = "UNIVLR";
 const SITE_LOGO_SRC = "assets/logo_univlr.png";
 const SITE_WORDMARK_SRC = "assets/univlr_logo_longa.png";
+// Tema claro (ajustes.js): letras e capelo em preto, o U vermelho igual.
+const SITE_LOGO_CLARO_SRC = "assets/logo_univlr_claro.png";
+const SITE_WORDMARK_CLARO_SRC = "assets/univlr_logo_longa_claro.png";
 // Os tres limites da home sao calibrados JUNTOS, para os tres trilhos
 // terminarem mais ou menos na mesma altura: quem equilibra a composicao e a
 // quantidade de itens, nao o CSS. Medido no visual Placar em 23/10/2026, a
@@ -23478,7 +23481,8 @@ function Shell(content, options = {}) {
       <header class="topbar">
         <div class="topbar-inner">
           <a class="brand" href="#/home" aria-label="${SITE_NAME}">
-            <img class="brand-wordmark" src="${SITE_WORDMARK_SRC}" alt="" loading="eager" decoding="async" />
+            <img class="brand-wordmark so-tema-escuro" src="${SITE_WORDMARK_SRC}" alt="" loading="eager" decoding="async" />
+            <img class="brand-wordmark so-tema-claro" src="${SITE_WORDMARK_CLARO_SRC}" alt="" loading="lazy" decoding="async" />
             <span class="sr-only">${SITE_NAME}</span>
           </a>
           <nav class="nav" aria-label="Navegação principal">
@@ -23499,7 +23503,8 @@ function Shell(content, options = {}) {
       <footer class="footer">
         <div class="footer-inner vp-rodape">
           <a class="footer-logo-link" href="#/home" aria-label="${SITE_NAME}">
-            <img class="footer-logo" src="${SITE_LOGO_SRC}" alt="" loading="lazy" decoding="async" />
+            <img class="footer-logo so-tema-escuro" src="${SITE_LOGO_SRC}" alt="" loading="lazy" decoding="async" />
+            <img class="footer-logo so-tema-claro" src="${SITE_LOGO_CLARO_SRC}" alt="" loading="lazy" decoding="async" />
           </a>
           <span class="vp-rodape-texto">Estatísticas do cenário universitário brasileiro de VALORANT.</span>
           <nav class="vp-rodape-links" aria-label="Rodapé"><a href="#/matches">Partidas</a><a href="#/events">Eventos</a><a href="#/ranking">Ranking</a><a href="#/news">Notícias</a></nav>

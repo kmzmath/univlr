@@ -1160,11 +1160,11 @@ body {
   width: 100%;
   height: 3px;
   overflow: hidden;
-  background: rgba(245, 241, 242, 0.22);
+  background: rgba(var(--ink-rgb), 0.22);
 }
 
 .vp-passo.vp-feito i {
-  background: rgba(245, 241, 242, 0.55);
+  background: rgba(var(--ink-rgb), 0.55);
 }
 
 .vp-passo[aria-current="true"] i::after {
@@ -1701,7 +1701,7 @@ body {
 }
 
 .vp-aba-nome small {
-  color: rgba(245, 241, 242, 0.78);
+  color: rgba(var(--ink-rgb), 0.78);
   font-size: 12px;
   font-weight: 500;
 }
@@ -1771,7 +1771,7 @@ body {
   height: 25px;
   border: 0;
   border-radius: 2px;
-  background: rgba(245, 241, 242, 0.06);
+  background: rgba(var(--ink-rgb), 0.06);
 }
 
 /* ---- barras espelhadas: comparativo e historico ---- */
@@ -1825,7 +1825,7 @@ body {
 
 .vp-espelho-barras > span {
   display: flex;
-  background: rgba(245, 241, 242, 0.06);
+  background: rgba(var(--ink-rgb), 0.06);
 }
 
 .vp-espelho-barras > span:first-child {
@@ -3035,7 +3035,7 @@ body {
 
 .vp-agente-barra {
   height: 5px;
-  background: rgba(245, 241, 242, 0.06);
+  background: rgba(var(--ink-rgb), 0.06);
 }
 
 .vp-agente-barra i {
@@ -6071,7 +6071,7 @@ a.vp-tabela-linha:hover strong {
 }
 
 .vp-lista-pagina .event-list.large > .event-row.event-row-rich:hover {
-  background: rgba(245, 241, 242, 0.03);
+  background: rgba(var(--ink-rgb), 0.03);
 }
 
 /* A situacao em texto: o ponto vermelho so em "Em andamento", como na home. */
@@ -6451,7 +6451,7 @@ a.vp-tabela-linha:hover strong {
   display: flex;
   gap: 2px;
   height: 10px;
-  background: rgba(245, 241, 242, 0.06);
+  background: rgba(var(--ink-rgb), 0.06);
 }
 
 .vp-rk-soma i {
@@ -6551,7 +6551,7 @@ a.vp-tabela-linha:hover strong {
   grid-column: 1 / -1;
   display: block;
   height: 5px;
-  background: rgba(245, 241, 242, 0.06);
+  background: rgba(var(--ink-rgb), 0.06);
 }
 
 .vp-rk-barra i {
@@ -8293,7 +8293,7 @@ a.vp-tabela-linha:hover strong {
 }
 
 .vp-bump-semanas button:hover {
-  background: rgba(245, 241, 242, 0.05);
+  background: rgba(var(--ink-rgb), 0.05);
 }
 
 .vp-bump-semanas button:focus-visible {
@@ -9471,7 +9471,7 @@ a.vp-tabela-linha:hover strong {
 
 .vp-nt-linha:hover,
 .vp-nt-manchete:hover .vp-nt-texto {
-  background: rgba(245, 241, 242, 0.03);
+  background: rgba(var(--ink-rgb), 0.03);
 }
 
 .vp-nt-manchete {
@@ -9600,7 +9600,9 @@ a.vp-tabela-linha:hover strong {
   right: -1728px;
   bottom: 0;
   left: 0;
-  opacity: 0.24;
+  /* 24% ate 07/11/2026; o dono pediu os escudos mais apagados, para nao
+     disputarem atencao com os blocos. */
+  opacity: var(--escudos-opacidade, 0.14);
   background: url("assets/fundo/escudos.webp") 0 0 / 1728px 1728px;
   will-change: transform;
   animation: vp-fundo-desce 220s linear infinite;
@@ -11239,7 +11241,7 @@ a.vp-cj-equipe:hover span {
 .vp-cm-linha i {
   position: relative;
   height: 6px;
-  background: linear-gradient(90deg, transparent calc(50% - 1px), var(--muted) calc(50% - 1px), var(--muted) calc(50% + 1px), transparent calc(50% + 1px)), rgba(245, 241, 242, 0.06);
+  background: linear-gradient(90deg, transparent calc(50% - 1px), var(--muted) calc(50% - 1px), var(--muted) calc(50% + 1px), transparent calc(50% + 1px)), rgba(var(--ink-rgb), 0.06);
 }
 
 .vp-cm-linha i::after {
@@ -12013,4 +12015,385 @@ a.vp-cj-equipe:hover span {
   .th-compactas { display: block; }
   .th-dica-form { margin-left: 0; flex-basis: 100%; }
   .th-cabeca h1, .th-aviso h1 { font-size: 26px; }
+}
+
+/* ==========================================================================
+   Aparencia (ajustes.js): botao fixo no canto e painel com tema e fundo.
+   Fica fora do #app e acompanha a rolagem em toda pagina, inclusive no
+   celular. O vermelho marca a opcao escolhida do mesmo jeito que marca a aba
+   ativa do topo: um fio embaixo, e nada de chip preenchido.
+   ========================================================================== */
+.vp-ajustes {
+  position: fixed;
+  right: 20px;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  /* Abaixo das janelas (preview de partida 80, conta 90) e do balao (1000). */
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.vp-ajustes > * {
+  pointer-events: auto;
+}
+
+.vp-ajustes-botao {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  color: var(--muted);
+  box-shadow: 0 6px 18px rgba(4, 3, 6, 0.32);
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.vp-ajustes-botao:hover,
+.vp-ajustes-botao[aria-expanded="true"] {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.vp-ajustes-botao svg {
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vp-ajustes-botao[aria-expanded="true"] svg {
+  transform: rotate(90deg);
+}
+
+.vp-ajustes-painel {
+  display: grid;
+  gap: 14px;
+  width: 232px;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  transform-origin: bottom right;
+  animation: vp-ajustes-abre 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vp-ajustes-painel[hidden] {
+  display: none;
+}
+
+@keyframes vp-ajustes-abre {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+}
+
+.vp-ajustes-grupo {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.vp-ajustes-grupo legend {
+  margin-bottom: 4px;
+  padding: 0;
+  color: var(--muted);
+  font: 600 12px/1.4 var(--font-text);
+}
+
+.vp-ajustes-opcoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--line);
+}
+
+.vp-ajustes-opcao {
+  position: relative;
+  padding: 8px 0 9px;
+  color: var(--muted);
+  font: 600 14px/1.2 var(--font-text);
+  text-align: center;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+
+.vp-ajustes-opcao:hover,
+.vp-ajustes-opcao:has(input:checked) {
+  color: var(--ink);
+}
+
+.vp-ajustes-opcao::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: var(--brand);
+  content: "";
+  transform: scaleX(0);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vp-ajustes-opcao:has(input:checked)::after {
+  transform: scaleX(1);
+}
+
+/* O radio some da vista mas continua no teclado: setas trocam a opcao. */
+.vp-ajustes-opcao input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vp-ajustes-opcao:has(input:focus-visible) span {
+  outline: 2px solid var(--brand-text);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 760px) {
+  .vp-ajustes {
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Fundo solido: so a cor do tema, sem os escudos. */
+html[data-fundo="solido"] .vp-fundo {
+  display: none;
+}
+
+/* Logo: as duas versoes estao no markup e o tema escolhe uma. A do claro tem
+   letras e capelo em preto (scripts/gerar_logos_tema_claro.py). */
+html:not([data-tema="claro"]) .so-tema-claro,
+html[data-tema="claro"] .so-tema-escuro {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Tema claro. Preto e branco trocam de papel: pagina no branco da marca
+   (#f5f1f2), blocos em branco puro e texto no preto da marca. A logica e a
+   mesma do escuro, o bloco mais claro que a pagina.
+   As cores de estado escurecem ate passar 4,5:1 sobre o bloco branco (medido:
+   muted 6,6 - vermelho de texto 6,1 - verde 4,8 - ambar 5,0 - azul 5,9). O
+   vermelho da marca e as cores das equipes nao mudam.
+   ========================================================================== */
+html[data-tema="claro"] {
+  color-scheme: light;
+  --escudos-opacidade: 0.12;
+  --bg: #f5f1f2;
+  --surface: #ffffff;
+  --surface-2: #f0ecee;
+  --surface-3: #e9e5e7;
+  --ink: #040306;
+  --ink-rgb: 4, 3, 6;
+  --muted: #5b5d66;
+  --line: rgba(4, 3, 6, 0.12);
+  --line-dark: rgba(4, 3, 6, 0.2);
+  --shadow: 0 18px 48px rgba(4, 3, 6, 0.14);
+  --teal: #0d7f73;
+  --amber: #a35f00;
+  --green: #0b8445;
+  --blue: #2361c4;
+  --brand-text: #c40d20;
+  --win: #0b8445;
+  --win-soft: rgba(11, 132, 69, 0.12);
+  --win-line: rgba(11, 132, 69, 0.34);
+  --loss-surface: #ebe7e9;
+  --loss-ink: rgba(4, 3, 6, 0.62);
+  --danger: #c3243a;
+  --warn: #a35f00;
+  --info: #2361c4;
+  --tier-s: #a35f00;
+  --tier-a: #2361c4;
+  --tier-b: #6a5bb0;
+  --tier-c: #5f6475;
+  --tier-other: #62656f;
+  --perf-strong: #05692f;
+  --perf-good: #0b8445;
+  --perf-positive: #2f7d4f;
+  --perf-negative: #a6505b;
+  --perf-bad: #c3243a;
+  --perf-danger: #9e0f1f;
+}
+
+html[data-tema="claro"] .player-page {
+  --player-panel: #ffffff;
+  --player-panel-strong: #f0ecee;
+  --player-panel-soft: #f7f4f5;
+  --player-border: rgba(4, 3, 6, 0.12);
+  --player-muted: rgba(4, 3, 6, 0.64);
+  --player-faint: rgba(4, 3, 6, 0.06);
+}
+
+html[data-tema="claro"] .team-page {
+  --team-panel: #ffffff;
+  --team-panel-strong: #f0ecee;
+  --team-panel-soft: #f7f4f5;
+  --team-border: rgba(4, 3, 6, 0.12);
+  --team-muted: rgba(4, 3, 6, 0.64);
+}
+
+/* O logo do escuro clareia o que esta atras (screen); no claro isso o apagaria. */
+html[data-tema="claro"] :is(.brand-wordmark, .footer-logo) {
+  mix-blend-mode: normal;
+}
+
+html[data-tema="claro"] .vp-ajustes-botao {
+  box-shadow: 0 6px 18px rgba(4, 3, 6, 0.14);
+}
+
+html[data-tema="claro"] {
+  --surface-funda: #faf8f9;
+  --surface-menu: #ffffff;
+  --surface-menu-rgb: 255, 255, 255;
+  --frio-1-rgb: 4, 3, 6;
+  --frio-2-rgb: 4, 3, 6;
+  --frio-3-rgb: 4, 3, 6;
+}
+
+/* Filtros de Partidas e Jogadores: o kit antigo tinha um azul-marinho proprio,
+   fora dos tokens. No claro viram campos da superficie, com o mesmo verde de
+   "entra no resultado" na marca de selecao. */
+html[data-tema="claro"] :is(.filter-pill, .filter-event-button, .team-filter-button) {
+  border-color: var(--line);
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+html[data-tema="claro"] :is(.filter-pill, .filter-event-button, .team-filter-button):is(:hover, .active) {
+  border-color: var(--win-line);
+  background: var(--win-soft);
+  color: var(--ink);
+}
+
+html[data-tema="claro"] .filter-check {
+  border-color: rgba(4, 3, 6, 0.4);
+  background: #ffffff;
+}
+
+html[data-tema="claro"] :is(.filter-pill, .filter-banner, .filter-event-button, .team-filter-button).active .filter-check {
+  border-color: var(--win);
+  background: var(--win);
+}
+
+/* Projecao da materia: o campo vazio sobe para a superficie clara e o violeta
+   de texto escurece (6,9:1 sobre branco). */
+html[data-tema="claro"] :is(.news-proj-rolagem, .news-proj-cartao) {
+  --proj-clara: #5b33c9;
+  --proj-campo: #ebe7e9;
+}
+
+/* Restos de cor fixa do kit antigo que o claro apagava: valor de filtro,
+   colocacao de prata e bronze, cabecalhos de tabela a meia transparencia. */
+html[data-tema="claro"] :is(.filter-dropdown summary strong, .event-filter-toggle strong, .rank-change-cell.even, .rank-change-cell.muted) {
+  color: var(--muted);
+}
+
+html[data-tema="claro"] :is(.team-placement-badge.p2, .team-placement-badge.p3) strong {
+  color: var(--ink);
+}
+
+html[data-tema="claro"] :is(.event-sort-header, .event-head-static, .ranking-sort-header, .ranking-lineup-head, .event-filter-row-conta) {
+  color: var(--muted);
+}
+
+/* Medalhas da colocacao: o ouro aceso sumia no gelo. Escurecidas ate 4,5:1. */
+html[data-tema="claro"] .vp-colocacao {
+  --ouro: #8a6500;
+  --prata: #5f6670;
+  --bronze: #8e4f22;
+}
+
+/* As celulas mais provaveis chegavam ao violeta quase cheio, e o numero, que no
+   claro e preto, sumia nelas. A tinta para em 55%: o degrau mais forte fica
+   em ~5:1 com o preto, e a ordem das probabilidades continua legivel. */
+html[data-tema="claro"] :is(.news-proj-celula, .news-proj-fatia) {
+  background-image: linear-gradient(
+    rgb(var(--proj-cor) / calc(var(--tinta, 0) * 0.55)),
+    rgb(var(--proj-cor) / calc(var(--tinta, 0) * 0.55))
+  );
+}
+
+/* Os escudos sao silhuetas brancas: no gelo sumiam. No claro viram silhuetas
+   pretas. 12% da uma diferenca de luminosidade (L*) de ~10 sobre o gelo,
+   pouco abaixo dos ~14 do escuro, porque forma escura sobre claro pesa mais. */
+html[data-tema="claro"] .vp-fundo i {
+  filter: brightness(0);
+}
+
+/* Seletores e campo de data nativos: a lista que o navegador abre segue o
+   color-scheme, e estes quatro forcavam o escuro. */
+html[data-tema="claro"] :is(.vp-jogos-filtro select, .vp-est-filtros select, .vp-ranking .ranking-version-picker select, .vp-eq-data input) {
+  color-scheme: light;
+}
+
+/* Arte de mapa e sempre noite. A arte foi feita para o preto: no claro ela
+   ficava lavada e o texto preto por cima, com a sombra de separacao virando um
+   halo. Onde o mapa e o assunto (abas e placar da partida, barras de mapas
+   jogados, filtros de mapa, quadros de mapa da equipe, do jogador, da busca e
+   da materia), o bloco volta aos tokens do escuro: arte acesa, texto branco.
+   As linhas de partida ficam claras, com a arte de textura (escolha do dono). */
+html[data-tema="claro"] :is(.vp-abas-mapa, .vp-hero-placar, .vp-rm-lista, .vp-ma-nome, .filter-banner, .map-perf-tile, .player-map-banner-cell, .search-map-banner, .search-match-map-image, .tournament-map-banner, .tournament-map-agent-banner, .news-mappool) {
+  --bg: #040306;
+  --surface: #11131a;
+  --surface-2: #171a23;
+  --surface-3: #09090d;
+  --surface-funda: #0b0b10;
+  --ink: #f5f1f2;
+  --ink-rgb: 245, 241, 242;
+  --muted: #a3a5af;
+  --line: rgba(245, 241, 242, 0.12);
+  --line-dark: rgba(245, 241, 242, 0.18);
+  --green: #31e981;
+  --win: #31e981;
+  --loss-ink: rgba(245, 241, 242, 0.62);
+  --brand-text: #ff5f6d;
+  color: var(--ink);
+}
+
+/* Estes dois nao tem fundo proprio: a arte ficava sobre o gelo. */
+html[data-tema="claro"] :is(.vp-hero-placar, .vp-ma-nome) {
+  background-color: var(--bg);
+}
+
+/* Fora das ilhas, nenhuma sombra de texto: no claro elas viravam halo preto. */
+html[data-tema="claro"] .team-page :is(.team-title-block h1, .team-title-block .eyebrow, .state-badge),
+html[data-tema="claro"] .team-title-block h1 {
+  text-shadow: none;
+}
+
+/* Mapa de calor de agentes por mapa: a escala nasce do fundo. No escuro o
+   pouco uso e marrom quase preto e o muito uso e ambar claro; no claro a ordem
+   se inverte, senao o texto preto sumia justo nas celulas fracas. A letra
+   troca para branco nos dois degraus de cima (pior contraste: 5,0:1). */
+html[data-tema="claro"] .vp-ma-bloco {
+  --pop1: #fbeccf;
+  --pop2: #f5cf86;
+  --pop3: #e0a43a;
+  --pop4: #9a6414;
+  --pop5: #5e3d0c;
+}
+
+html[data-tema="claro"] .vp-ma-bloco :is(.vp-ma-n1, .vp-ma-n2, .vp-ma-n3) {
+  color: var(--ink);
+}
+
+html[data-tema="claro"] .vp-ma-bloco :is(.vp-ma-n4, .vp-ma-n5) {
+  color: #ffffff;
+}
+
+/* Nome do jogador nas tabelas de estatistica: era branco fixo. */
+html[data-tema="claro"] :is(.tournament-stats-player-cell, .tournament-stats-team-cell, .tournament-agent-cell) strong {
+  color: var(--ink);
 }

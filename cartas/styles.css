@@ -217,7 +217,7 @@ html {
 }
 
 .grade .fora {
-  color: rgba(245, 241, 242, 0.24);
+  color: rgba(var(--ink-rgb), 0.24);
   font-size: 12px;
 }
 
@@ -231,7 +231,7 @@ html {
 }
 
 .grade .revelado {
-  background: rgba(245, 241, 242, 0.14);
+  background: rgba(var(--ink-rgb), 0.14);
 }
 
 .grade .revelado small {
@@ -239,7 +239,7 @@ html {
 }
 
 .grade a.revelado:hover {
-  background: rgba(245, 241, 242, 0.22);
+  background: rgba(var(--ink-rgb), 0.22);
 }
 
 .legenda {
@@ -265,7 +265,7 @@ html {
 }
 
 .legenda .l-revelado::before {
-  background: rgba(245, 241, 242, 0.14);
+  background: rgba(var(--ink-rgb), 0.14);
 }
 
 .legenda .l-proximo::before {
@@ -303,7 +303,7 @@ html {
 
 .busca-item:hover,
 .busca-item:focus-visible {
-  background: rgba(245, 241, 242, 0.06);
+  background: rgba(var(--ink-rgb), 0.06);
 }
 
 .busca-resultados .aviso {
@@ -655,7 +655,7 @@ html {
 }
 
 .jogo-placar b {
-  color: rgba(245, 241, 242, 0.62);
+  color: rgba(var(--ink-rgb), 0.62);
   font: 600 16px/1.1 var(--font-display);
   font-variant-numeric: tabular-nums;
 }

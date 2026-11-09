@@ -26501,12 +26501,10 @@ function renderMatchDetail(id) {
       </header>
 
       <div class="match-tab-panel">
-        ${aggregateMode ? "" : `<section class="vp-s-rounds">${sectionHead("Rounds", `${match.mapName}, ${formatDuration(match.durationMillis)}`)}${roundTimeline(match)}</section>`}
+        ${aggregateMode ? "" : `<section class="vp-s-rounds" aria-label="Rounds">${roundTimeline(match)}</section>`}
         ${comparativoFaixa(match, selectedMatches)}
-        <section class="vp-s-sb">
-          <header class="vp-sec">
-            <h2>Scoreboard</h2>
-            <span class="vp-sec-aside">${escapeHtml(aggregateMode ? `Série inteira, ${selectedMatches.length} mapas` : match.mapName)}</span>
+        <section class="vp-s-sb" aria-label="Scoreboard">
+          <header class="vp-sb-modo">
             <div class="match-scoreboard-mode-switch vp-modo" data-scoreboard-mode="${escapeHtml(scoreboardMode)}" role="group" aria-label="Modo do scoreboard">
               <button type="button" data-match-scoreboard-mode="standard" aria-pressed="${scoreboardMode === "standard"}" class="${scoreboardMode === "standard" ? "active" : ""}">Padrão</button>
               <button type="button" data-match-scoreboard-mode="advanced" aria-pressed="${scoreboardMode === "advanced"}" class="${scoreboardMode === "advanced" ? "active" : ""}">Avançado</button>

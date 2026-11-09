@@ -1855,7 +1855,7 @@ body {
 }
 
 /* Padrao e Avancado: duas palavras, a escolhida sublinhada. */
-.vp-partida .vp-sec .vp-modo {
+.vp-partida :is(.vp-sec, .vp-sb-modo) .vp-modo {
   min-width: 0;
   margin-left: auto;
   display: inline-flex;
@@ -1865,11 +1865,11 @@ body {
   border-radius: 0;
 }
 
-.vp-partida .vp-sec .vp-modo::before {
+.vp-partida :is(.vp-sec, .vp-sb-modo) .vp-modo::before {
   display: none;
 }
 
-.vp-partida .vp-sec .vp-modo button {
+.vp-partida :is(.vp-sec, .vp-sb-modo) .vp-modo button {
   min-height: 0;
   padding: 4px 0;
   border-radius: 0;
@@ -1878,7 +1878,7 @@ body {
   font-weight: 600;
 }
 
-.vp-partida .vp-sec .vp-modo button.active {
+.vp-partida :is(.vp-sec, .vp-sb-modo) .vp-modo button.active {
   color: var(--ink);
   box-shadow: inset 0 -2px var(--brand);
 }
@@ -2473,7 +2473,7 @@ body {
    resto sai. A linha da equipe vira o cabecalho dela, com o nome das colunas
    no lugar das medias. Tocar no jogador continua escolhendo o historico. */
 @media (max-width: 640px) {
-  .vp-partida .vp-s-sb .vp-modo {
+  .vp-partida .vp-s-sb .vp-sb-modo {
     display: none;
   }
 
@@ -13215,5 +13215,64 @@ html[data-tema="claro"] :is(.tournament-stats-player-cell, .tournament-stats-tea
 
   .vp-nm-colunas {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---- partida: sem os titulos Rounds e Scoreboard, a chave de modo numa linha fina ---- */
+.vp-sb-modo {
+  display: flex;
+  justify-content: flex-end;
+  margin: -8px 0 6px;
+}
+
+/* ---- partida: a largura do site, e a grade de rounds com o comparativo ao lado.
+   Na prorrogacao a grade passa da metade e o comparativo desce para baixo dela. ---- */
+.vp-partida {
+  width: 100%;
+  max-width: 1294px;
+  margin-inline: auto;
+}
+
+.vp-partida .match-tab-panel:has(> .vp-s-rounds) {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.vp-partida .match-tab-panel:has(> .vp-s-rounds) > * {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+.vp-partida .match-tab-panel > .vp-s-rounds {
+  flex: 0 0 auto;
+  max-width: 100%;
+  padding: 12px 14px;
+  background: var(--surface);
+}
+
+.vp-partida .vp-s-rounds .round-timeline {
+  justify-content: flex-start;
+}
+
+.vp-partida .match-tab-panel > .vp-s-rounds + .vp-comparativo {
+  flex: 1 1 400px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: center;
+  row-gap: 18px;
+}
+
+/* No celular a prorrogacao longa (14 rounds) nao cabia e era cortada: as celulas
+   encolhem ate caber, no maximo os 25px de sempre. */
+@media (max-width: 760px) {
+  .vp-partida .vp-rounds .round-row {
+    grid-template-columns: var(--rotulo) repeat(var(--rounds), minmax(0, var(--celula)));
+  }
+
+  .vp-partida .vp-rounds .round-cell {
+    width: auto;
+  }
+
+  .vp-partida .vp-rounds-bloco {
+    min-width: 0;
   }
 }

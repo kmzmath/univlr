@@ -27780,13 +27780,20 @@ function tournamentEtapas(event) {
 // A faixa e a navegacao entre o campeonato inteiro (Geral) e as etapas, em blocos
 // com as datas de cada uma (modelo B, escolhido pelo dono em 07/11/2026). Trocar de
 // etapa mantem a aba aberta; os filtros de cada aba ficam para tras.
+// Faixa de etapas em setas (modelo C, escolha dele em 08/11/2026): a seta diz que da
+// para andar por ali, entao a sequencia vai da primeira etapa a ultima (o cadastro
+// lista da mais recente). Etapa paralela nao e passo da sequencia: fica no fim, reta.
 function tournamentEtapasNav(event, campeonato, activeTab = "overview") {
   const aba = activeTab && activeTab !== "overview" ? `/${activeTab}` : "";
-  const bloco = (id, rotulo, quando, extra = "") => `<a class="vp-etapa-bloco" href="#/events/${escapeHtml(id)}${aba}"${id === event.id ? ` aria-current="page"` : ""}><strong>${escapeHtml(rotulo)}${extra}</strong><small>${escapeHtml(quando)}</small></a>`;
+  const bloco = (id, rotulo, quando, extra = "", classe = "") => `<a class="vp-etapa-bloco${classe}" href="#/events/${escapeHtml(id)}${aba}"${id === event.id ? ` aria-current="page"` : ""}><strong>${escapeHtml(rotulo)}${extra}</strong><small>${escapeHtml(quando)}</small></a>`;
+  const etapaBloco = (etapa, classe = "") => bloco(etapa.id, etapa.etapaNome, eventDatesShort(etapa), eventStatusClass(etapa.status) === "live" ? `<span class="vp-ao-vivo">Ao vivo</span>` : "", classe);
+  const sequencia = campeonato.etapas.filter((etapa) => !campeonato.paralelas.has(etapa.id)).reverse();
+  const paralelas = campeonato.etapas.filter((etapa) => campeonato.paralelas.has(etapa.id)).reverse();
   return `
-    <nav class="vp-camp-etapas vp-camp-etapas-b" aria-label="${escapeHtml(`Etapas de ${campeonato.nome}`)}">
-      ${bloco(campeonato.id, "Geral", `${campeonato.etapas.length} etapas`)}
-      ${campeonato.etapas.map((etapa) => bloco(etapa.id, etapa.etapaNome, eventDatesShort(etapa), eventStatusClass(etapa.status) === "live" ? `<span class="vp-ao-vivo">Ao vivo</span>` : "")).join("")}
+    <nav class="vp-camp-etapas vp-camp-etapas-b vp-camp-etapas-setas" aria-label="${escapeHtml(`Etapas de ${campeonato.nome}`)}">
+      ${bloco(campeonato.id, "Geral", `${campeonato.etapas.length} etapas`, "", " vp-etapa-geral")}
+      ${sequencia.map((etapa) => etapaBloco(etapa)).join("")}
+      ${paralelas.map((etapa, indice) => etapaBloco(etapa, ` vp-etapa-paralela${indice ? "" : " vp-etapa-paralela-primeira"}`)).join("")}
     </nav>
   `;
 }
@@ -28417,7 +28424,7 @@ function tournamentSwissStandingsSection(event) {
 function tournamentSwissGroupTables(event, groups) {
   return `
     <div class="vp-tabelas">
-      ${groups.map((group) => tournamentSwissTabela(tournamentSwissStandingRows(event, group.standings), { titulo: escapeHtml(group.title || "Grupo") })).join("")}
+      ${groups.map((group) => tournamentSwissTabela(tournamentSwissStandingRows(event, group.standings), { titulo: escapeHtml(group.title || "Grupo"), estado: tournamentMostraEstado(event) })).join("")}
     </div>
   `;
 }
@@ -28427,7 +28434,7 @@ function tournamentSwissGeneralTables(event) {
     ...(event.swiss.standings || []).map((row) => ({ ...row, status: row.status || "Em disputa" })),
     ...(event.swiss.eliminated || []).map((row) => ({ ...row, status: row.status || "Eliminado" })),
   ]);
-  const geral = tournamentSwissTabela(rows, { colunas: 3 });
+  const geral = tournamentSwissTabela(rows, { colunas: 3, estado: tournamentMostraEstado(event) });
   if (!event.swiss.stateTables) return geral;
   return `
     <div class="tournament-swiss-table-wrap">
@@ -28455,12 +28462,18 @@ function tournamentSwissStandingRows(event, rows) {
 // Com tres colunas a ordem desce a primeira e continua nas seguintes, cada uma com o
 // proprio cabecalho. Em 1294px uma linha so deixava um vao enorme entre nome e dados.
 // O titulo entra como HTML por causa da bandeira do estado: quem chama escapa o texto.
-function tournamentSwissTabela(rows, { titulo = "", colunas = 1 } = {}) {
+// O estado so e dado do formato no JUBS (uma equipe por estado). Nos outros campeonatos
+// a coluna repetia o perfil e tirava 52px do nome.
+function tournamentMostraEstado(event) {
+  return /^jubs/.test(event?.campeonatoId || event?.id || "");
+}
+
+function tournamentSwissTabela(rows, { titulo = "", colunas = 1, estado = true } = {}) {
   if (!rows.length) return "";
   const porColuna = Math.ceil(rows.length / colunas);
   const partes = Array.from({ length: colunas }, (_, indice) => rows.slice(indice * porColuna, (indice + 1) * porColuna)).filter((parte) => parte.length);
   return `
-    <div class="vp-tabela">
+    <div class="vp-tabela${estado ? "" : " vp-sem-uf"}">
       ${titulo ? `<h3>${titulo}</h3>` : ""}
       <div class="vp-tabela-corpo">
         ${partes.map((parte) => `
@@ -28568,7 +28581,7 @@ const TOURNAMENT_BRACKET_STAGES = [
 ];
 
 function tournamentCuratedBracketSection(event) {
-  const regions = tournamentChaveRegioes(tournamentBracketDisplayRegions(event.bracket.regions));
+  const regions = tournamentChaveRegioes(tournamentBracketDisplayRegions(event.bracket.regions.map(tournamentChaveSemFaixa)));
   // Com 8 colunas ou mais o vao entre elas aperta para todas caberem em 1294px.
   const densa = Math.max(0, ...regions.map((region) => tournamentCuratedBracketColumns(event, region).length)) >= 8;
   const stages = tournamentBracketStages(regions);
@@ -28603,12 +28616,53 @@ function tournamentChaveRegioes(regions) {
       matches: (column.matches || []).map((match, matchIndex) => ({ ...match, previewKey: tournamentBracketMatchKey(columnIndex, matchIndex, match.code) })),
     })),
   }));
+  comChave.forEach((region) => {
+    if (region.layout !== "linked" && !String(region.className || "").includes("group-stage")) region.columns = tournamentChaveAlinhaRodadaCurta(region.columns);
+  });
   const superior = comChave.find((region) => tournamentBracketRegionKind(region) === "upper-bracket" && region.layout !== "linked");
   const final = comChave.find((region) => tournamentBracketRegionKind(region) === "grand-final" && region.layout !== "linked");
   if (!superior || !final || (superior.stage || "") !== (final.stage || "")) return comChave;
   superior.columns = [...superior.columns, ...final.columns.map((column) => ({ ...column, grandeFinal: true }))];
   superior.name = `${superior.name || "Chave superior"} e grande final`;
   return comChave.filter((region) => region !== final);
+}
+
+// Chave encadeada sem faixa gravada caia inteira no topo e sem fio (Aliança 2024,
+// CPUE, Qualify do JUBS 2024): vira a chave comum, que centraliza cada partida
+// entre as duas que a alimentam. O titulo da coluna perde o nome da regiao repetido.
+function tournamentChaveSemFaixa(region) {
+  if (region.layout !== "linked") return region;
+  const temFaixa = (region.columns || []).some((column) => (column.matches || []).some((match) => match.band != null))
+    || (region.terminalColumn?.cards || []).some((card) => card.band != null);
+  if (temFaixa) return region;
+  const { layout, ...comum } = region;
+  // A chave encadeada so mostrava classificados declarados: a troca e so de desenho.
+  return {
+    ...comum,
+    terminalColumn: region.terminalColumn?.cards?.length ? region.terminalColumn : false,
+    columns: (region.columns || []).map((column) => ({ ...column, title: String(column.title || "").replace(`${region.name} - `, "") })),
+  };
+}
+
+// Rodada com menos partidas que a seguinte (os byes nao entram no cadastro, como na
+// rodada de 64 da Univava): cada partida vai para a altura da partida que ela
+// alimenta e o resto da coluna fica vazio. Se alguma partida nao achar destino, ou
+// duas cairem no mesmo, a coluna fica como estava.
+function tournamentChaveAlinhaRodadaCurta(columns = []) {
+  return columns.map((column, index) => {
+    const matches = column.matches || [];
+    const seguinte = columns[index + 1]?.matches || [];
+    if (!matches.length || matches.length >= seguinte.length) return column;
+    const vagas = new Array(seguinte.length).fill(null);
+    for (const match of matches) {
+      const vencedor = tournamentBracketMatchWinner(match);
+      const quem = vencedor ? [vencedor] : [match.a, match.b].filter(Boolean);
+      const destino = seguinte.findIndex((proxima) => quem.some((id) => id === proxima.a || id === proxima.b));
+      if (destino < 0 || vagas[destino]) return column;
+      vagas[destino] = match;
+    }
+    return { ...column, matches: vagas.map((match) => match || { vazia: true }) };
+  });
 }
 
 function tournamentBracketStages(regions = []) {
@@ -28655,6 +28709,9 @@ function tournamentBracketRegionKind(region = {}) {
   if (descriptor.includes("upper bracket") || descriptor.includes("chave superior")) return "upper-bracket";
   if (descriptor.includes("lower bracket") || descriptor.includes("chave inferior")) return "lower-bracket";
   if (descriptor.includes("grand final") || descriptor.includes("grande final")) return "grand-final";
+  // A CPUE chama as regioes so de "Upper" e "Lower".
+  if (/(^|\s)upper(\s|$)/.test(descriptor)) return "upper-bracket";
+  if (/(^|\s)lower(\s|$)/.test(descriptor)) return "lower-bracket";
   return "";
 }
 
@@ -28741,7 +28798,9 @@ function tournamentChaveRodada(event, column, columns, columnIndex) {
 // "Sem adversario" e quem passou direto: vira celula vazia, sem fio, e a
 // equipe so aparece na rodada seguinte.
 function tournamentChaveEhBye(match) {
+  if (match?.vazia) return true;
   if (!match || (match.a && match.b)) return false;
+  if (normalize(match.status || "") === "bye") return true;
   return [match.aLabel, match.bLabel].some((label) => normalize(label || "").includes("sem advers"));
 }
 
@@ -29007,11 +29066,43 @@ function bindTournamentBracketPreview(event, matches) {
 function bindTournamentTeamPreview(event, matches) {
   const root = document.querySelector("[data-tournament-teams]");
   if (!root) return;
+  const fecharElencos = (exceto = null) => root.querySelectorAll(".vp-eq.aberta").forEach((caixa) => {
+    if (caixa === exceto) return;
+    caixa.classList.remove("aberta");
+    caixa.querySelector("[aria-expanded]")?.setAttribute("aria-expanded", "false");
+  });
   root.addEventListener("click", (clickEvent) => {
+    const detalhes = clickEvent.target.closest("[data-tournament-team-detalhes]");
+    if (detalhes) {
+      fecharElencos();
+      openTournamentTeamPreview(event, matches, detalhes.dataset.tournamentTeamDetalhes);
+      return;
+    }
     const button = clickEvent.target.closest("[data-tournament-team]");
     if (!button) return;
-    openTournamentTeamPreview(event, matches, button.dataset.tournamentTeam);
+    // Com mouse o elenco ja desceu no hover e o clique vai direto aos detalhes; no
+    // toque o primeiro clique abre o elenco, e os detalhes ficam no botao dele.
+    if (window.matchMedia?.("(hover: hover)").matches) {
+      openTournamentTeamPreview(event, matches, button.dataset.tournamentTeam);
+      return;
+    }
+    const caixa = button.closest(".vp-eq");
+    if (!caixa?.querySelector(".vp-eq-elenco")) return;
+    fecharElencos(caixa);
+    const aberta = caixa.classList.toggle("aberta");
+    button.setAttribute("aria-expanded", String(aberta));
   });
+  // Toque fora fecha o elenco aberto. Um ouvinte so, para a pagina inteira.
+  if (!bindTournamentTeamPreview.fora) {
+    bindTournamentTeamPreview.fora = true;
+    document.addEventListener("click", (clickEvent) => {
+      if (clickEvent.target.closest?.(".vp-eq-caixa .vp-eq")) return;
+      document.querySelectorAll(".vp-eq-caixa .vp-eq.aberta").forEach((caixa) => {
+        caixa.classList.remove("aberta");
+        caixa.querySelector("[aria-expanded]")?.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
 }
 
 function openTournamentMatchPreview(entry) {
@@ -29149,6 +29240,7 @@ function tournamentLineupRows(teamId, matches) {
             assists: 0,
             ratingTotal: 0,
             agents: new Map(),
+            papeis: new Map(),
           });
         }
         const row = rows.get(player.id);
@@ -29158,6 +29250,8 @@ function tournamentLineupRows(teamId, matches) {
         row.deaths += Number(player.deaths || 0);
         row.assists += Number(player.assists || 0);
         row.ratingTotal += Number(player.rating || 0) * Number(player.rounds || 0);
+        const papel = normalizeRoleKey(player.agentClass || "");
+        if (papel) row.papeis.set(papel, (row.papeis.get(papel) || 0) + Number(player.rounds || 0));
         const agentKey = player.agentSlug || player.agent || "agent";
         const agent = row.agents.get(agentKey) || { slug: player.agentSlug, name: player.agent, icon: player.agentIcon, maps: 0 };
         agent.maps += 1;
@@ -29166,7 +29260,7 @@ function tournamentLineupRows(teamId, matches) {
     }
   }
   return [...rows.values()]
-    .map((row) => ({ ...row, rating: row.rounds ? row.ratingTotal / row.rounds : 0, agents: [...row.agents.values()].sort((a, b) => b.maps - a.maps || String(a.name).localeCompare(String(b.name))) }))
+    .map((row) => ({ ...row, funcao: [...row.papeis].sort((a, b) => b[1] - a[1])[0]?.[0] || "", rating: row.rounds ? row.ratingTotal / row.rounds : 0, agents: [...row.agents.values()].sort((a, b) => b.maps - a.maps || String(a.name).localeCompare(String(b.name))) }))
     .sort((a, b) => b.maps - a.maps || b.rounds - a.rounds || b.rating - a.rating || a.nick.localeCompare(b.nick));
 }
 
@@ -29391,11 +29485,14 @@ function tournamentFirstMatchTimestamp(event, matches = []) {
 function tournamentTeamsSection(event, standings, matches = []) {
   const rows = tournamentTeamRows(event, standings, matches);
   const origens = tournamentOrigens(event);
+  // Barra do nome com a mesma altura em todos os cartoes: se alguma equipe tem a
+  // linha "Via", todas reservam essa linha.
+  const temOrigem = rows.some((row) => origens.get(row.team.id));
   return `
     <section class="tournament-section vp-s-equipes">
       ${sectionHead("Equipes Participantes", `${rows.length} ${rows.length === 1 ? "equipe" : "equipes"}`)}
       <div class="vp-eq-grade" style="--por-linha:${tournamentEquipesPorLinha(rows.length)}" data-tournament-teams>
-        ${rows.map((row) => tournamentEquipeQuadrado(row, origens.get(row.team.id))).join("") || `<div class="empty-state">Nenhum time detectado.</div>`}
+        ${rows.map((row) => tournamentEquipeQuadrado(row, origens.get(row.team.id), row.team.missing ? [] : tournamentLineupRows(row.team.id, matches), temOrigem)).join("") || `<div class="empty-state">Nenhum time detectado.</div>`}
       </div>
     </section>
   `;
@@ -29436,33 +29533,66 @@ function compareTournamentTeamByRank(a, b) {
 
 // Equipe sem cadastro (nenhuma partida na base, so o nome na chave): o quadrado
 // fica so com o nome, sem painel e sem ranking, como a chave ja mostra.
-function tournamentEquipeQuadrado(row, origem) {
+function tournamentEquipeQuadrado(row, origem, elenco = [], temOrigem = false) {
   const team = row.team;
-  const miolo = `
-      <span class="vp-slide-campo"><i></i></span>
-      ${team.missing ? "" : tournamentEquipeRanking(row)}
-      <span class="vp-eq-logo">${teamLogo(team.id, "large")}</span>
-      <span class="vp-eq-txt"><strong>${escapeHtml(team.name)}</strong>${origem ? `<small>Via ${escapeHtml(origem)}</small>` : ""}</span>`;
-  if (team.missing) return `<div class="vp-slide vp-eq vp-eq-sem-perfil" style="${escapeHtml(teamPlateStyle(team))}" title="${escapeHtml(team.name)}">${miolo}</div>`;
+  const campo = `<span class="vp-slide-campo"><i></i></span>`;
+  const logo = `<span class="vp-eq-logo">${teamLogo(team.id, "large")}</span>`;
+  const texto = `<strong>${escapeHtml(team.name)}</strong>${origem ? `<small>Via ${escapeHtml(origem)}</small>` : temOrigem ? `<small aria-hidden="true">&nbsp;</small>` : ""}`;
+  // Os rankings ficam numa faixa acima do quadrado, como a dos Melhores da semana:
+  // fora da arte, eles continuam a vista e com o balao quando o elenco abre.
+  const cabeca = `<p class="vp-eq-cabeca">${team.missing ? "" : tournamentEquipeRanking(row)}</p>`;
+  if (team.missing) return `<div class="vp-eq-caixa">${cabeca}<div class="vp-slide vp-eq vp-eq-sem-perfil" style="${escapeHtml(teamPlateStyle(team))}" title="${escapeHtml(team.name)}">${campo}${logo}<span class="vp-eq-txt">${texto}</span></div></div>`;
+  // So a arte abre o elenco; a barra do nome leva ao perfil da equipe.
   return `
-    <button type="button" class="vp-slide vp-eq" data-tournament-team="${escapeHtml(team.id)}" style="${escapeHtml(teamPlateStyle(team))}" title="${escapeHtml(team.name)}" aria-label="${escapeHtml(`Ver elenco, desempenho e partidas de ${team.name}`)}">${miolo}
-    </button>
+    <div class="vp-eq-caixa">
+      ${cabeca}
+      <div class="vp-slide vp-eq" style="${escapeHtml(teamPlateStyle(team))}">
+        ${campo}
+        <div class="vp-eq-arte">
+          <button type="button" class="vp-eq-abrir" data-tournament-team="${escapeHtml(team.id)}" aria-label="${escapeHtml(`Elenco de ${team.name}`)}" aria-expanded="false">${logo}</button>
+        </div>
+        <a class="vp-eq-txt" href="#/teams/${escapeHtml(team.id)}">${texto}</a>
+        ${tournamentEquipeElenco(team, elenco)}
+      </div>
+    </div>
   `;
 }
 
-// Um ranking em cada canto: o atual a esquerda, no campo livre, e o da data do
-// campeonato a direita. Quem esta inativa ou provisoria hoje fica so com o do inicio.
+// O elenco que aparece sobre a arte do cartao ao passar o mouse, como o cartao de equipe da
+// Liquipedia: o icone da funcao que o jogador mais fez no campeonato no lugar da
+// bandeira, o nick com link para o perfil e o menu completo em "Ver detalhes". Nunca
+// sai do quadrado: as linhas dividem a altura, e elenco grande em cartao baixo vira
+// duas colunas.
+function tournamentEquipeElenco(team, elenco) {
+  const linhas = elenco.map((row) => {
+    const funcao = ROLE_ICONS[row.funcao];
+    const icone = funcao ? `<i class="vp-eq-funcao" style="--icone:url('${escapeHtml(assetPath(funcao.icon))}')" title="${escapeHtml(funcao.label)}"></i>` : `<i class="vp-eq-funcao vp-eq-funcao-vazia"></i>`;
+    return `<a class="vp-eq-jogador" href="${playerHref(row.id)}">${icone}<span>${escapeHtml(row.nick)}</span></a>`;
+  }).join("");
+  // A classe diz o tamanho do elenco; o CSS decide pela altura da arte quando a
+  // coluna unica deixaria a letra abaixo de 12px e abre a segunda.
+  const tamanho = elenco.length >= 5 ? ` vp-eq-n${Math.min(elenco.length, 14)}` : "";
+  return `
+    <div class="vp-eq-elenco">
+      <div class="vp-eq-jogadores"><div class="vp-eq-lista${tamanho}" style="--l1:${elenco.length || 1}; --l2:${Math.ceil(elenco.length / 2) || 1}">${linhas}</div></div>
+      <button type="button" class="vp-eq-detalhes" data-tournament-team-detalhes="${escapeHtml(team.id)}">Ver detalhes</button>
+    </div>
+  `;
+}
+
+// Um ranking em cada ponta da faixa: o atual a esquerda e o da data do campeonato a
+// direita. Quem esta inativa ou provisoria hoje fica so com o do inicio.
 function tournamentEquipeRanking(row) {
   const hoje = teamValidRank(row.team);
-  return `
-    ${hoje ? `<b class="vp-eq-atual" title="Atual">#${hoje}</b>` : ""}
-    <b title="Início">${escapeHtml(tournamentTeamRankLabel(row))}</b>
-  `;
+  return `<span class="vp-eq-atual"${hoje ? ` title="Ranking atual"` : ""}>${hoje ? `#${hoje}` : ""}</span><span title="Ranking no início do Campeonato">${escapeHtml(tournamentTeamRankLabel(row))}</span>`;
 }
 
 function tournamentTeamRankLabel(row) {
   const rank = Number(row.eventRanking?.validRank || 0);
   if (rank > 0) return `#${rank}`;
+  // Sem nenhuma partida antes do campeonato a equipe estreia nele: e nova, nao
+  // inativa. A contagem e a do proprio ranking, que ja soma a heranca de sucessao.
+  if (!Number(row.eventRanking?.matches || 0)) return "novo";
   return rankingIsInactive(row.eventRanking) ? "inativa" : "prov";
 }
 
@@ -29852,14 +29982,16 @@ function tournamentEstPagina(event, rows, chave, porPagina) {
   };
 }
 
-function tournamentEstTabela(event, { table, titulo, descricao = "", rows, columns, fallback, chave, porPagina, detalhe = false }) {
-  if (!rows.length) return "";
+function tournamentEstTabela(event, { table, titulo, descricao = "", antes = "", vazio = "", rows, columns, fallback, chave, porPagina, detalhe = false }) {
+  if (!rows.length && !antes) return "";
+  if (!rows.length) return `<article class="vp-est-bloco"><h3>${escapeHtml(titulo)}</h3>${antes}<p class="vp-est-vazio">${escapeHtml(vazio)}</p></article>`;
   const ordenadas = tournamentSortedStatRows(table, rows, columns, fallback);
   const { linhas, paginador } = tournamentEstPagina(event, ordenadas, chave, porPagina);
   const visiveis = detalhe ? columns.filter((column) => column.curta) : columns;
   return `
     <article class="vp-est-bloco">
       <h3>${escapeHtml(titulo)}${descricao ? `<span>${escapeHtml(descricao)}</span>` : ""}</h3>
+      ${antes}
       ${tabelaComRotulos(`<div class="table-wrap tournament-stats-table-wrap">
         <table class="tournament-stats-table">
           <thead><tr>${visiveis.map((column) => tournamentStatsHeaderCell(table, column)).join("")}${detalhe ? `<th aria-label="Mais números"></th>` : ""}</tr></thead>
@@ -29930,15 +30062,28 @@ function bindEstatisticasDoCampeonato() {
     pagina.querySelector("[data-est-rounds-valor]").textContent = value;
   });
   pagina.addEventListener("click", (event) => {
-    if (event.target.closest("[data-est-limpar]")) aplica((query) => ["equipe", "mapa", "rounds", "usos", "agente"].forEach((chave) => query.delete(chave)), "[data-est-equipe]");
-    // Trocar de agente mantem a pagina da lista de agentes: so as composicoes mudam.
-    const agente = event.target.closest("[data-agente]");
-    if (agente) {
+    if (event.target.closest("[data-est-limpar]")) aplica((query) => ["equipe", "mapa", "rounds", "usos", "agente", "agentes"].forEach((chave) => query.delete(chave)), "[data-est-equipe]");
+    if (event.target.closest("[data-ag-limpar]")) {
       const query = routeQuery();
-      if (agente.getAttribute("aria-pressed") === "true") query.delete("agente");
-      else query.set("agente", agente.dataset.agente);
-      query.delete("pagina-comps");
-      pushFilterState(routePath().slice(2), query, `[data-agente="${agente.dataset.agente}"]`);
+      ["agente", "agentes", "pagina-comps"].forEach((chave) => query.delete(chave));
+      pushFilterState(routePath().slice(2), query, "[data-ag-grade]");
+    }
+    // Escolher agente (na grade ou no nome da tabela) mantem a pagina da lista de
+    // agentes: so as composicoes mudam. Ate 5; o sexto e ignorado.
+    const agente = event.target.closest("[data-agente]");
+    if (agente && !agente.disabled) {
+      const query = routeQuery();
+      const atuais = tournamentAgFiltro().agentes;
+      const id = agente.dataset.agente;
+      const novos = atuais.includes(id) ? atuais.filter((item) => item !== id) : [...atuais, id];
+      if (novos.length <= TOURNAMENT_AG_MAXIMO) {
+        query.delete("agente");
+        if (novos.length) query.set("agentes", novos.join(","));
+        else query.delete("agentes");
+        query.delete("pagina-comps");
+        const daGrade = agente.hasAttribute("data-ag-grade");
+        pushFilterState(routePath().slice(2), query, `[data-agente="${id}"]${daGrade ? "[data-ag-grade]" : ":not([data-ag-grade])"}`);
+      }
     }
     const lider = event.target.closest("[data-est-lider]");
     if (lider) {
@@ -30514,9 +30659,13 @@ const AGENT_CORES = {
   yoru: ["#2a3fa8", "#92c4e3"],
 };
 
+// Ate 5 agentes em `agentes` (jett,omen,sova). O `agente` sozinho dos links antigos vale como um.
+const TOURNAMENT_AG_MAXIMO = 5;
+
 function tournamentAgFiltro() {
   const query = routeQuery();
-  return { equipe: query.get("equipe") || "", mapa: query.get("mapa") || "", agente: query.get("agente") || "", usos: Number.parseInt(query.get("usos") || "0", 10) || 0 };
+  const agentes = [...new Set((query.get("agentes") || query.get("agente") || "").split(",").map((id) => id.trim()).filter(Boolean))].slice(0, TOURNAMENT_AG_MAXIMO);
+  return { equipe: query.get("equipe") || "", mapa: query.get("mapa") || "", agentes, agente: agentes.join(","), usos: Number.parseInt(query.get("usos") || "0", 10) || 0 };
 }
 
 // Junta o que a tabela do site pede as colunas da aba, que tambem servem ao perfil do jogador.
@@ -30533,7 +30682,7 @@ function tournamentAgColunas(colunas, textos, curtas, celulas, extras) {
   ];
 }
 
-function tournamentAgenteColunas(ativo) {
+function tournamentAgenteColunas(ativos = []) {
   const textos = {
     pickRate: (row) => pct(row.pickRate),
     winRate: tournamentAgentNonMirroredWinRate,
@@ -30549,7 +30698,7 @@ function tournamentAgenteColunas(ativo) {
     hs: (row) => pct(row.hs),
   };
   const celulas = {
-    agent: (row) => `<td><button type="button" class="vp-ag-nome" data-agente="${escapeHtml(row.id)}" aria-pressed="${row.id === ativo}" title="Ver as composições com ${escapeHtml(row.name)}">${tournamentAgentLogo(row)}<span><strong>${escapeHtml(row.name)}</strong><small>${escapeHtml(roleDisplayInfo(row.role).label)}</small></span></button></td>`,
+    agent: (row) => `<td><button type="button" class="vp-ag-nome" data-agente="${escapeHtml(row.id)}" aria-pressed="${ativos.includes(row.id)}" title="Ver as composições com ${escapeHtml(row.name)}">${tournamentAgentLogo(row)}<span><strong>${escapeHtml(row.name)}</strong><small>${escapeHtml(roleDisplayInfo(row.role).label)}</small></span></button></td>`,
   };
   const extras = [
     { key: "semEspelho", label: "Mapas sem espelho", texto: (row) => `${row.nonMirroredWins}-${row.nonMirroredLosses}` },
@@ -30665,26 +30814,55 @@ function tournamentAgentsSection(event, matches) {
   const mapas = filtro.mapa ? tournamentFilteredMapMatches(matches, filtro.mapa) : tournamentStatMapMatches(matches);
   const agentes = tournamentAgentRows(mapas, filtro.equipe);
   const todas = tournamentCompositionRows(mapas, filtro.equipe);
-  const ativo = agentes.find((row) => row.id === filtro.agente) || null;
-  const comAgente = ativo ? todas.filter((row) => row.agents.some((agent) => (agent.slug || agent.name) === ativo.id)) : todas;
+  const escolhidos = filtro.agentes.map((id) => agentes.find((row) => row.id === id)).filter(Boolean);
+  const ids = escolhidos.map((row) => row.id);
+  const comAgente = todas.filter((row) => tournamentComposicaoTem(row, ids));
   // Trocar de equipe, mapa ou agente pode baixar o teto: o minimo acompanha.
   const maximo = comAgente.reduce((maior, row) => Math.max(maior, row.picks), 0);
   const minimo = Math.min(filtro.usos, maximo);
   const composicoes = comAgente.filter((row) => row.picks >= minimo);
   const picks = agentes.reduce((sum, row) => sum + row.picks, 0);
   const contagem = `${agentes.length} ${agentes.length === 1 ? "agente" : "agentes"}, ${picks} picks, ${todas.length} ${todas.length === 1 ? "composição" : "composições"}`;
-  const destaque = ativo || agentes[0];
+  // O resumo da direita mostra o ultimo agente escolhido.
+  const destaque = escolhidos.at(-1) || agentes[0];
   return `
     <section class="tournament-section tournament-stats-section vp-est vp-ag-aba">
       <div class="vp-est-lista">
         ${sectionHead("Agentes", contagem)}
         ${tournamentEstFiltros(event, matches, filtro, maximo, minimo, "Usos mínimos das composições", "usos")}
         ${agentes.length ? "" : `<div class="empty-state">Nenhum agente com esses filtros. Tire um filtro para ver mais.</div>`}
-        ${tournamentEstTabela(event, { table: "agents", titulo: "Agentes", rows: agentes, columns: tournamentAgenteColunas(ativo?.id), fallback: tournamentAgentStatSort, chave: "pagina", porPagina: 10, detalhe: true })}
-        ${tournamentEstTabela(event, { table: "compositions", titulo: "Composições", descricao: ativo ? `Só as que usaram ${ativo.name}` : "", rows: composicoes, columns: tournamentComposicaoColunas(), fallback: tournamentCompositionStatSort, chave: "pagina-comps", porPagina: 10, detalhe: true })}
+        ${tournamentEstTabela(event, { table: "agents", titulo: "Agentes", rows: agentes, columns: tournamentAgenteColunas(ids), fallback: tournamentAgentStatSort, chave: "pagina", porPagina: 10, detalhe: true })}
+        ${agentes.length ? tournamentEstTabela(event, { table: "compositions", titulo: "Composições", antes: tournamentAgGrade(agentes, ids, todas), vazio: "Nenhuma composição com esses agentes.", rows: composicoes, columns: tournamentComposicaoColunas(), fallback: tournamentCompositionStatSort, chave: "pagina-comps", porPagina: 10, detalhe: true }) : ""}
       </div>
-      ${destaque ? tournamentAgenteResumo(destaque, Boolean(ativo), todas) : ""}
+      ${destaque ? tournamentAgenteResumo(destaque, escolhidos.length > 0, todas) : ""}
     </section>
+  `;
+}
+
+function tournamentComposicaoTem(row, ids) {
+  return ids.every((id) => row.agents.some((agent) => (agent.slug || agent.name) === id));
+}
+
+// O procurador das composicoes (modelo A, escolha dele em 08/11/2026): todos os
+// agentes do campeonato a vista, por funcao. Um clique escolhe ou desfaz, ate 5.
+// Quem nao forma composicao com os ja escolhidos, ou sobra depois do quinto, apaga.
+function tournamentAgGrade(agentes, ids, composicoes) {
+  const cheio = ids.length >= TOURNAMENT_AG_MAXIMO;
+  const grupos = ["duelista", "iniciador", "controlador", "sentinela", ""].map((papel) => ({
+    papel,
+    linhas: agentes.filter((row) => (normalizeRoleKey(row.role) || "") === papel).sort((a, b) => String(a.name).localeCompare(String(b.name), "pt-BR")),
+  })).filter((grupo) => grupo.linhas.length);
+  const botao = (row) => {
+    const escolhido = ids.includes(row.id);
+    const combina = escolhido || (!cheio && composicoes.some((comp) => tournamentComposicaoTem(comp, [...ids, row.id])));
+    return `<button type="button" class="vp-ag-escolha" data-agente="${escapeHtml(row.id)}" data-ag-grade aria-pressed="${escolhido}" title="${escapeHtml(row.name)}"${combina ? "" : " disabled"}>${tournamentAgentLogo(row)}</button>`;
+  };
+  const funcao = (papel) => papel ? `<i class="vp-ag-funcao" style="--icone:url('${escapeHtml(assetPath(ROLE_ICONS[papel].icon))}')" title="${escapeHtml(ROLE_ICONS[papel].label)}"></i>` : "";
+  return `
+    <div class="vp-ag-grade" role="group" aria-label="Escolher agentes das composições">
+      ${grupos.map((grupo) => `<span class="vp-ag-grupo">${funcao(grupo.papel)}${grupo.linhas.map(botao).join("")}</span>`).join("")}
+      <span class="vp-ag-conta">${ids.length ? `<span>${ids.length} de ${TOURNAMENT_AG_MAXIMO}</span><button type="button" data-ag-limpar>Limpar</button>` : ""}</span>
+    </div>
   `;
 }
 

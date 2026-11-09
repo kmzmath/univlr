@@ -179,10 +179,13 @@ const renderiza = (hash) => {
 {
   const geral = renderiza("#/events/univava");
   assert(geral.includes("<h1>UNIVAVÁ</h1>"), "o Geral tem o nome do campeonato");
-  const faixa = geral.split('class="vp-camp-etapas vp-camp-etapas-b"')[1].split("</nav>")[0];
+  const faixa = geral.split('class="vp-camp-etapas vp-camp-etapas-b vp-camp-etapas-setas"')[1].split("</nav>")[0];
   assert.strictEqual((faixa.match(/<a /g) || []).length, 7, "Geral e 6 etapas na faixa");
   assert(/href="#\/events\/univava" aria-current="page"><strong>Geral<\/strong><small>6 etapas<\/small>/.test(faixa), "Geral marcado, com a contagem de etapas");
   assert(/href="#\/events\/univava-classificatoria-1"><strong>Classificatória 1<\/strong><small>27 - 28 de jun<\/small>/.test(faixa), "cada bloco com as datas da etapa");
+  // Setas (08/11/2026): a sequencia vai da primeira etapa a ultima.
+  const ordem = [...faixa.matchAll(/<strong>([^<]+)/g)].map((m) => m[1]);
+  assert.deepStrictEqual(ordem, ["Geral", "Classificatória 1", "Classificatória 2", "Classificatória 3", "Classificatória 4", "Fase de Grupos", "Playoffs"], "faixa em ordem cronologica");
   assert(geral.includes("vp-s-etapas"), "lista de etapas no Geral");
   const etapa = renderiza("#/events/univava-playoffs");
   assert(etapa.includes("<h1>UNIVAVÁ</h1>"), "a etapa mostra o nome do campeonato no topo");
@@ -198,7 +201,9 @@ const renderiza = (hash) => {
   renderiza("#/events/univava/estatisticas");
   renderiza("#/events/univava/mapas");
   renderiza("#/events/univava/agentes");
-  renderiza("#/events/lbeu-2025-1-split");
+  const lbeu = renderiza("#/events/lbeu-2025-1-split").split("vp-camp-etapas-setas")[1].split("</nav>")[0];
+  const ordemLbeu = [...lbeu.matchAll(/class="vp-etapa-bloco([^"]*)"[^>]*><strong>([^<]+)/g)].map((m) => `${m[2]}${m[1].includes("paralela") ? " (paralela)" : ""}`);
+  assert.deepStrictEqual(ordemLbeu, ["Geral", "Fase Suíça", "Championship", "Practice (paralela)", "Off Season (paralela)"], "paralelas retas no fim da faixa");
   const sozinho = renderiza("#/events/aoc");
   assert(!sozinho.includes("vp-camp-etapas"), "campeonato sozinho nao tem faixa");
 }

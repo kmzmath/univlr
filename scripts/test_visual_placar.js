@@ -478,13 +478,14 @@ assert.strictEqual(`${perfilAntigo.name}|${perfilAntigo.sourceTag}|${perfilAntig
 assert.strictEqual(context.teamFasesNav(azr, context.teamFases(azr, []), null, "resumo"), "", "sem nomes antigos, sem linha do tempo");
 
 // ---------------------------------------------------------------- Tarefa 9
-// Pagina de jogador: os numeros viram uma ficha em Placa com tres grupos, a composicao
-// vai para a coluna ao lado, e os dois blocos so aparecem quando tem algum valor.
+// Pagina de jogador: seis numeros em destaque e o resto em tabelas por assunto, a
+// composicao vai para a coluna ao lado, e os dois blocos so aparecem quando tem valor.
 const jogadorFicha = { id: "aldeath", nick: "Aldeath", handle: "zeNith#mond", teamId: "azr", rounds: 1103, matches: 53, kills: 774, deaths: 757, assists: 292, acs: 204, adr: 107, kast: 74, kd: 1.02, kpr: 0.7, dpr: 0.69, apr: 0.26, hs: 23, firstKills: 99, firstDeaths: 101, agentStats: [], mapStats: [] };
 const ficha = context.fichaJogador(jogadorFicha);
-assert.strictEqual((ficha.match(/class="vp-ficha-grupo"/g) || []).length, 3, "a ficha tem tres grupos");
-["Geral", "Por round", "Abertura e trades"].forEach((rotulo) => assert(ficha.includes(`<small>${rotulo}</small>`), `a ficha tem o grupo ${rotulo}`));
-assert(ficha.includes("vp-placa vp-fj"), "a ficha e uma Placa");
+assert.strictEqual((ficha.match(/class="vp-nm-col"/g) || []).length, 3, "a ficha tem tres tabelas");
+["Geral", "Por round", "Abertura e trades"].forEach((rotulo) => assert(ficha.includes(`<h3>${rotulo}</h3>`), `a ficha tem a tabela ${rotulo}`));
+assert.strictEqual((ficha.match(/<dt>/g) || []).length, 6 + 7 + 5 + 9, "seis destaques e as linhas das tres tabelas");
+assert(ficha.includes("--n:3"), "sem as metricas, as tabelas dividem a largura em tres");
 assert(!ficha.includes("Métricas rAAting 3.0"), "com as metricas todas vazias, o grupo nao aparece");
 assert(context.fichaJogador({ ...jogadorFicha, ekpr: 0.71 }).includes("Métricas rAAting 3.0"), "com uma metrica, o grupo aparece");
 assert.strictEqual(context.playerComposicao(jogadorFicha), "", "com a composicao vazia, o bloco nao aparece");

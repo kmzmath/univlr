@@ -2965,175 +2965,8 @@ body {
 .vp-bom { color: var(--win); }
 .vp-ruim { color: var(--danger); }
 
-/* ---- ficha do jogador ---- */
-.vp-ficha-grupo {
-  display: grid;
-  grid-template-columns: repeat(9, minmax(0, 1fr));
-  align-items: end;
-  gap: 0 10px;
-  padding: 11px 14px;
-  border-top: 1px solid var(--line);
-}
 
-.vp-ficha-grupo:first-child {
-  border-top: 0;
-}
 
-.vp-ficha-grupo > small {
-  grid-column: 1 / -1;
-  margin-bottom: 8px;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.vp-ficha-n {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
-
-.vp-ficha-n small {
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 1.15;
-}
-
-.vp-ficha-n b {
-  font: 600 19px/1 var(--font-display);
-  font-variant-numeric: tabular-nums;
-}
-
-/* ---- agentes ---- */
-.vp-agentes {
-  display: grid;
-  grid-template-columns: 30px minmax(0, 1fr) 80px auto;
-  align-items: center;
-  gap: 6px 10px;
-}
-
-.vp-agentes > img {
-  width: 30px;
-  height: 30px;
-  border-radius: 2px;
-}
-
-.vp-agente-nome {
-  min-width: 0;
-}
-
-.vp-agente-nome b {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.vp-agente-nome small {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.vp-agente-barra {
-  height: 5px;
-  background: rgba(var(--ink-rgb), 0.06);
-}
-
-.vp-agente-barra i {
-  display: block;
-  width: var(--w);
-  height: 100%;
-  background: var(--team-line, var(--ink));
-}
-
-.vp-agente-rounds {
-  color: var(--muted);
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-  white-space: nowrap;
-}
-
-/* ---- desempenho por mapa ---- */
-.vp-pormapa {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto auto;
-  column-gap: 18px;
-}
-
-.vp-pm-cab,
-.vp-pm {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: subgrid;
-  align-items: center;
-  padding: 0 14px;
-}
-
-.vp-pm-cab {
-  height: 28px;
-  border-bottom: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.vp-pm-cab span:not(:first-child),
-.vp-pm span {
-  text-align: right;
-}
-
-.vp-pm {
-  position: relative;
-  isolation: isolate;
-  height: 34px;
-  overflow: hidden;
-  color: inherit;
-  font-variant-numeric: tabular-nums;
-  text-decoration: none;
-}
-
-.vp-pm + .vp-pm {
-  border-top: 1px solid var(--line);
-}
-
-.vp-pm img {
-  position: absolute;
-  inset: 0 auto 0 0;
-  z-index: -1;
-  width: 55%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 42%;
-  opacity: 0.22;
-  -webkit-mask-image: linear-gradient(90deg, #000 30%, transparent);
-  mask-image: linear-gradient(90deg, #000 30%, transparent);
-}
-
-.vp-pm b {
-  font-weight: 600;
-}
-
-.vp-pm .vp-pm-nota {
-  font-weight: 700;
-}
-
-.vp-pm:hover b {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-@media (max-width: 1180px) {
-  .vp-ficha-grupo {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    row-gap: 10px;
-  }
-}
-
-@media (max-width: 760px) {
-
-  .vp-ficha-grupo {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
 
 /* ==========================================================================
    Campeonato: a mesma largura do ranking com a coluna aberta (922 + 32 + 340),
@@ -10133,7 +9966,6 @@ a.vp-tabela-linha:hover strong {
 .vp-mvp-stats,
 .vp-hero-camp,
 .vp-camp-etapas,
-.vp-agentes,
 .vp-trofeus,
 .vp-rk-detalhes,
 .vp-s-ranking-equipe .ranking-chart-card,
@@ -10161,7 +9993,6 @@ a.vp-tabela-linha:hover strong {
 .vp-comparativo,
 .vp-historico,
 .vp-mvp-stats,
-.vp-agentes,
 .vp-trofeus,
 .vp-duelo,
 .vp-rk-detalhes,
@@ -11702,14 +11533,6 @@ a.vp-cj-equipe:hover span {
 }
 
 /* ---- aba Estatisticas ---- */
-.vp-fj {
-  background: var(--surface);
-}
-
-.vp-est-bloco .vp-fj {
-  padding: 0;
-}
-
 .vp-resumo-bloco:has(.vp-cm, .vp-mk) {
   padding: 12px 14px;
   background: var(--surface);
@@ -11871,12 +11694,8 @@ a.vp-cj-equipe:hover span {
     font-size: 12px;
   }
 
-  .vp-est-bloco .vp-ficha-grupo {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-
   /* Numa coluna so, os numeros vem antes da composicao deles. */
-  .vp-eq-bloco.vp-est:has(.vp-fj) .vp-resumo {
+  .vp-eq-bloco.vp-est:has(.vp-nm) .vp-resumo {
     order: 2;
   }
 
@@ -11982,10 +11801,6 @@ a.vp-cj-equipe:hover span {
   .vp-cj-numeros dd,
   .vp-cj-numeros .vp-cj-nota dd {
     font-size: 26px;
-  }
-
-  .vp-est-bloco .vp-ficha-grupo {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .vp-ev-logos:has(a:nth-child(13)) {
@@ -13237,4 +13052,168 @@ html[data-tema="claro"] :is(.tournament-stats-player-cell, .tournament-stats-tea
 
 .ranking-chart-tooltip.vp-rc-balao .vp-rc-line :is(span, b) {
   color: var(--placa-tinta);
+}
+
+/* ---- jogador, Ultimos campeonatos: Tier encostado no nome e com folga antes da colocacao ---- */
+.vp-cp-cab.vp-cp-jog,
+.vp-cp.vp-cp-jog {
+  grid-template-columns: 38px minmax(0, 350px) 44px minmax(176px, 1fr) 40px 40px 52px 36px;
+}
+
+/* ---- jogador, rAAting por campeonato: mapas jogados em barras atras da linha ---- */
+.vp-ev-barras rect {
+  fill: color-mix(in srgb, var(--muted) 22%, transparent);
+}
+
+/* ---- jogador: numeros em destaque e tabelas, agentes e mapas em linhas ---- */
+.vp-nm-topo {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin: 0 0 12px;
+  background: var(--surface);
+}
+
+.vp-nm-topo > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px 14px;
+}
+
+.vp-nm-topo > div + div {
+  border-left: 1px solid var(--line);
+}
+
+.vp-nm-topo dd {
+  margin: 0;
+  font: 600 30px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.vp-nm-topo dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-nm-colunas {
+  display: grid;
+  grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr));
+  align-items: start;
+  gap: 12px;
+}
+
+.vp-nm-col h3 {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font: 600 12px/1.2 var(--font-text);
+}
+
+.vp-nm .vp-ficha > div {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.vp-nm .vp-ficha dd {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-agl {
+  grid-template-columns: 28px minmax(0, 1fr) auto 44px;
+}
+
+.vp-agl img {
+  width: 28px;
+  height: 28px;
+}
+
+.vp-agl strong small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.vp-agl-n {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-agl-n b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.vp-mpl {
+  grid-template-columns: 48px minmax(0, 1fr) 40px 52px 36px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-mpl > span:nth-child(n + 3) {
+  text-align: right;
+}
+
+.vp-mpl img {
+  width: 48px;
+  height: 28px;
+  object-fit: cover;
+}
+
+.vp-mpl-cab {
+  display: grid;
+  gap: 10px;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-mpl .vp-pm-nota {
+  font-weight: 700;
+}
+
+/* Na coluna estreita, os destaques em tres por linha e as tabelas em duas. */
+@media (max-width: 1180px) {
+  .vp-eq-est .vp-nm-topo {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .vp-eq-est .vp-nm-topo > div:nth-child(4) {
+    border-left: 0;
+  }
+
+  .vp-eq-est .vp-nm-topo > div:nth-child(n + 4) {
+    border-top: 1px solid var(--line);
+  }
+
+  .vp-eq-est .vp-nm-colunas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .vp-nm-topo {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .vp-nm-topo > div:nth-child(4) {
+    border-left: 0;
+  }
+
+  .vp-nm-topo > div:nth-child(n + 4) {
+    border-top: 1px solid var(--line);
+  }
+
+  .vp-nm-topo dd {
+    font-size: 24px;
+  }
+
+  .vp-nm-colunas {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

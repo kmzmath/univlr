@@ -34322,6 +34322,14 @@ function playerEvolucao(tournamentRows) {
   const metade = (plotWidth / rows.length / width) * 50;
   const melhor = Math.max(...rows.map((row) => row.rating));
   const pontos = rows.map((row, indice) => `${fmt(x(indice), 2)},${fmt(y(row.rating), 2)}`).join(" ");
+  // Os mapas de cada campeonato em barras no pe do grafico, ate 40% da altura, atras da linha.
+  const chao = height - pad.bottom;
+  const maisMapas = Math.max(...rows.map((row) => row.maps), 1);
+  const larguraBarra = (plotWidth / rows.length) * 0.56;
+  const barras = rows.map((row, indice) => {
+    const alto = (row.maps / maisMapas) * (chao - pad.top) * 0.4;
+    return `<rect x="${fmt(x(indice) - larguraBarra / 2, 2)}" y="${fmt(chao - alto, 2)}" width="${fmt(larguraBarra, 2)}" height="${fmt(alto, 2)}"></rect>`;
+  }).join("");
   return `
     <section>
       ${sectionHead("rAAting por campeonato")}
@@ -34336,6 +34344,7 @@ function playerEvolucao(tournamentRows) {
             <g class="ranking-chart-grid">
               ${PLAYER_EVOLUCAO_REGUA.map((nota) => `<line${nota === 1 ? ` class="vp-ev-media"` : ""} x1="${pad.left}" x2="${width - pad.right}" y1="${fmt(y(nota), 2)}" y2="${fmt(y(nota), 2)}"></line>`).join("")}
             </g>
+            <g class="vp-ev-barras">${barras}</g>
             <polyline class="ranking-chart-line" points="${pontos}"></polyline>
           </svg>
           <div class="ranking-chart-axis" aria-hidden="true">
@@ -34385,64 +34394,58 @@ function playerInformacoes(player, { matches, jogos, teamRows, tournamentRows, t
   `;
 }
 
-// Todos os numeros do jogador num bloco so, um grupo por linha. As metricas da
-// rAAting 3.0 entram so quando existe valor: quem so tem partida antiga fica sem elas.
+// Os numeros do jogador: os seis principais em destaque e o resto em tabelas por
+// assunto, nas linhas de Informacoes. As metricas da rAAting 3.0 entram so quando
+// existe valor: quem so tem partida antiga fica sem a coluna.
 function fichaJogador(player) {
   const rounds = Number(player.rounds || 0);
-  const fkpr = rounds ? Number(player.firstKills || 0) / rounds : 0;
-  const fdpr = rounds ? Number(player.firstDeaths || 0) / rounds : 0;
   const kMenosD = Number(player.kills || 0) - Number(player.deaths || 0);
   const fkFd = Number(player.firstKills || 0) - Number(player.firstDeaths || 0);
   const swing = playerSwingPerRound(player);
   const tom = (valor) => (valor > 0 ? "vp-bom" : valor < 0 ? "vp-ruim" : "");
-  const grupo = (rotulo, itens) => `
-    <div class="vp-ficha-grupo"><small>${escapeHtml(rotulo)}</small>${itens
-      .map(([nome, valor, classe = "", dica = ""]) => `<span class="vp-ficha-n"${dica ? ` title="${escapeHtml(dica)}"` : ""}><small>${escapeHtml(nome)}</small><b${classe ? ` class="${classe}"` : ""}>${escapeHtml(String(valor))}</b></span>`)
-      .join("")}</div>`;
-  const metricas = [
-    ["eKPR", formatMaybeMetric(player, "ekpr"), "", "Kills por round ajustados por economia."],
-    ["eDPR", formatMaybeMetric(player, "edpr"), "", "Mortes por round ajustadas por economia."],
-    ["eADR", formatMaybeMetric(player, "eadr", 0), "", "Dano por round ajustado por economia."],
-    ["eKAST", formatMaybePercent(player, "ekast"), "", "KAST ajustado por economia."],
-    ["MK/R", formatMaybeMetric(player, "mk_per_r"), "", "Pontos de multi-kill por round."],
+  const destaque = [
+    ["rAAting 3.0", playerRating(player)],
+    ["K/D", fmt(player.kd)],
+    ["ACS", fmt(player.acs, 0)],
+    ["ADR", fmt(player.adr, 0)],
+    ["KAST", pct(player.kast)],
+    ["Swing/R", formatMaybeSwing(player), Number.isFinite(swing) ? tom(swing) : ""],
   ];
-  const temValor = (itens) => itens.some(([, valor]) => valor !== "-");
+  const metricas = [
+    ["eKPR", formatMaybeMetric(player, "ekpr")],
+    ["eDPR", formatMaybeMetric(player, "edpr")],
+    ["eADR", formatMaybeMetric(player, "eadr", 0)],
+    ["eKAST", formatMaybePercent(player, "ekast")],
+    ["MK/R", formatMaybeMetric(player, "mk_per_r")],
+  ];
+  const grupos = [
+    ["Geral", [["Mapas", player.matches || 0], ["Rounds", rounds], ["Kills", player.kills || 0], ["Deaths", player.deaths || 0], ["Assists", player.assists || 0], ["K-D", signed(kMenosD), tom(kMenosD)], ["HS%", pct(player.hs)]]],
+    ["Por round", [["KPR", fmt(player.kpr)], ["DPR", fmt(player.dpr)], ["APR", fmt(player.apr)], ["FKPR", fmt(rounds ? Number(player.firstKills || 0) / rounds : 0)], ["FDPR", fmt(rounds ? Number(player.firstDeaths || 0) / rounds : 0)]]],
+    ["Abertura e trades", [
+      ["First kills", player.firstKills || 0],
+      ["First deaths", player.firstDeaths || 0],
+      ["FK-FD", signed(fkFd), tom(fkFd)],
+      ["Trade kills", formatMaybeMetric(player, "tradeKills", 0)],
+      ["Mortes tradadas", formatMaybeMetric(player, "tradedDeaths", 0)],
+      ["Mortes sem trade", formatMaybeMetric(player, "failedTradeDeaths", 0)],
+      ["Trade denials", formatMaybeMetric(player, "tradeDenials", 0)],
+      ["Saves em derrota", formatMaybeMetric(player, "savedLossRounds", 0)],
+      ["Sobrev. em vitória", formatMaybeMetric(player, "survivedWinRounds", 0), "", "Sobrevivências em rounds vencidos."],
+    ]],
+    metricas.some(([, valor]) => valor !== "-") ? ["Métricas rAAting 3.0", metricas] : null,
+  ].filter(Boolean);
+  const valor = (classe, texto) => `<dd${classe ? ` class="${classe}"` : ""}>${escapeHtml(String(texto))}</dd>`;
   return `
-    <div class="vp-placa vp-fj">
-      ${grupo("Geral", [
-        ["rAAting 3.0", playerRating(player)],
-        ["Rounds", rounds],
-        ["Mapas", player.matches || 0],
-        ["ACS", fmt(player.acs, 0)],
-        ["K/D", fmt(player.kd)],
-        ["K-D", signed(kMenosD), tom(kMenosD)],
-        ["ADR", fmt(player.adr, 0)],
-        ["KAST", pct(player.kast)],
-        ["Swing/R", formatMaybeSwing(player), Number.isFinite(swing) ? tom(swing) : ""],
-      ])}
-      ${grupo("Por round", [
-        ["KPR", fmt(player.kpr)],
-        ["DPR", fmt(player.dpr)],
-        ["APR", fmt(player.apr)],
-        ["FKPR", fmt(fkpr)],
-        ["FDPR", fmt(fdpr)],
-        ["HS%", pct(player.hs)],
-        ["Kills", player.kills || 0],
-        ["Deaths", player.deaths || 0],
-        ["Assists", player.assists || 0],
-      ])}
-      ${grupo("Abertura e trades", [
-        ["First kills", player.firstKills || 0],
-        ["First deaths", player.firstDeaths || 0],
-        ["FK-FD", signed(fkFd), tom(fkFd)],
-        ["Trade kills", formatMaybeMetric(player, "tradeKills", 0)],
-        ["Mortes tradadas", formatMaybeMetric(player, "tradedDeaths", 0)],
-        ["Mortes sem trade", formatMaybeMetric(player, "failedTradeDeaths", 0)],
-        ["Trade denials", formatMaybeMetric(player, "tradeDenials", 0)],
-        ["Saves em derrota", formatMaybeMetric(player, "savedLossRounds", 0)],
-        ["Sobrev. em vitória", formatMaybeMetric(player, "survivedWinRounds", 0), "", "Sobrevivências em rounds vencidos."],
-      ])}
-      ${temValor(metricas) ? grupo("Métricas rAAting 3.0", metricas) : ""}
+    <div class="vp-nm">
+      <dl class="vp-nm-topo">${destaque.map(([rotulo, texto, classe = ""]) => `<div>${valor(classe, texto)}<dt>${escapeHtml(rotulo)}</dt></div>`).join("")}</dl>
+      <div class="vp-nm-colunas" style="--n:${grupos.length}">
+        ${grupos.map(([titulo, itens]) => `
+          <div class="vp-nm-col">
+            <h3>${escapeHtml(titulo)}</h3>
+            <dl class="vp-ficha">${itens.map(([rotulo, texto, classe = "", dica = ""]) => `<div${dica ? ` title="${escapeHtml(dica)}"` : ""}><dt>${escapeHtml(rotulo)}</dt>${valor(classe, texto)}</div>`).join("")}</dl>
+          </div>
+        `).join("")}
+      </div>
     </div>
   `;
 }
@@ -34455,39 +34458,48 @@ function kdDoJogadorNaSerie(player, series) {
   return [linhas.reduce((soma, linha) => soma + Number(linha.kills || 0), 0), linhas.reduce((soma, linha) => soma + Number(linha.deaths || 0), 0)];
 }
 
-// Os cinco agentes mais jogados, com a barra na cor da equipe medida contra o
-// mais jogado.
+// Os cinco agentes mais jogados, nas linhas de Informacoes: mapas e parte do total.
 function agentesTrilho(player) {
   const agentes = (player.agentStats || []).slice(0, 5);
   if (!agentes.length) return `<div class="empty-state">Sem agentes registrados.</div>`;
-  const maximo = Math.max(...agentes.map((agente) => Number(agente.rounds || 0)), 1);
   return `
-    <div class="vp-agentes">
-      ${agentes
-        .map((agente) => {
-          const nome = agente.name || agente.agent || "Agente";
-          const icone = agente.icon || agente.agentIcon || "";
-          return `${icone ? `<img src="${escapeHtml(assetPath(icone))}" alt="" loading="lazy" onerror="this.style.visibility='hidden'" />` : "<span></span>"}<span class="vp-agente-nome"><b>${escapeHtml(nome)}</b><small>${escapeHtml(agente.role || agente.agentClass || "")}</small></span><span class="vp-agente-barra"><i style="--w:${Math.round((Number(agente.rounds || 0) / maximo) * 100)}%"></i></span><span class="vp-agente-rounds">${escapeHtml(String(agente.rounds || 0))} rounds</span>`;
-        })
-        .join("")}
+    <div class="vp-campanhas">
+      ${agentes.map((agente) => {
+        const picks = Number(agente.picks || 0);
+        const icone = agente.icon || agente.agentIcon || "";
+        return `
+          <div class="vp-campanha vp-agl">
+            ${icone ? `<img src="${escapeHtml(assetPath(icone))}" alt="" loading="lazy" onerror="this.style.visibility='hidden'" />` : "<span></span>"}
+            <strong>${escapeHtml(agente.name || agente.agent || "Agente")}<small>${escapeHtml(agente.role || agente.agentClass || "")}</small></strong>
+            <span class="vp-agl-n"><b>${picks}</b> ${picks === 1 ? "mapa" : "mapas"}</span>
+            <span class="vp-agl-n"><b>${escapeHtml(pct(agente.rate))}</b></span>
+          </div>
+        `;
+      }).join("")}
     </div>
   `;
 }
 
-// Os cinco mapas mais jogados em Placa, com a arte do mapa no fundo da linha.
+// Os cinco mapas mais jogados, nas linhas de Informacoes, com a arte do mapa ao lado.
 function porMapaPlaca(player) {
   const mapas = (player.mapStats || []).slice().sort((a, b) => Number(b.matches || 0) - Number(a.matches || 0)).slice(0, 5);
   if (!mapas.length) return `<div class="empty-state">Sem mapas registrados.</div>`;
   const tom = (nota) => (nota >= 1.1 ? "vp-bom" : nota < 0.9 ? "vp-ruim" : "");
   return `
-    <div class="vp-placa vp-pormapa">
-      <div class="vp-pm-cab" aria-hidden="true"><span>Mapa</span><span>Mapas</span><span>rAAting</span><span>ACS</span></div>
-      ${mapas
-        .map((row) => {
-          const arte = matchMapAsset({ mapName: row.name });
-          return `<a class="vp-pm" href="#/maps/${escapeHtml(slugify(row.name))}">${arte.src ? `<img src="${escapeHtml(arte.src)}" data-fallback="${escapeHtml(arte.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : ""}<b>${escapeHtml(row.name)}</b><span>${escapeHtml(String(row.matches || 0))}</span><span class="vp-pm-nota ${tom(Number(row.rating))}">${escapeHtml(fmt(row.rating))}</span><span>${escapeHtml(fmt(row.acs, 0))}</span></a>`;
-        })
-        .join("")}
+    <div class="vp-campanhas">
+      <div class="vp-mpl vp-mpl-cab" aria-hidden="true"><span></span><span>Mapa</span><span>Mapas</span><span>rAAting</span><span>ACS</span></div>
+      ${mapas.map((row) => {
+        const arte = matchMapAsset({ mapName: row.name });
+        return `
+          <a class="vp-campanha vp-mpl" href="#/maps/${escapeHtml(slugify(row.name))}">
+            ${arte.src ? `<img src="${escapeHtml(arte.src)}" data-fallback="${escapeHtml(arte.fallback)}" alt="" loading="lazy" onerror="mapArtError(this)" />` : "<span></span>"}
+            <strong>${escapeHtml(row.name)}</strong>
+            <span>${escapeHtml(String(row.matches || 0))}</span>
+            <span class="vp-pm-nota ${tom(Number(row.rating))}">${escapeHtml(fmt(row.rating))}</span>
+            <span>${escapeHtml(fmt(row.acs, 0))}</span>
+          </a>
+        `;
+      }).join("")}
     </div>
   `;
 }

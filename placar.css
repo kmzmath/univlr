@@ -12970,3 +12970,271 @@ html[data-tema="claro"] .vp-ma-bloco :is(.vp-ma-n4, .vp-ma-n5) {
 html[data-tema="claro"] :is(.tournament-stats-player-cell, .tournament-stats-team-cell, .tournament-agent-cell) strong {
   color: var(--ink);
 }
+
+/* ---- Historico do ranking: periodo e semanas provisorias (08/11) ---- */
+.vp-s-ranking-equipe .ranking-chart-card {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+}
+
+.vp-s-ranking-equipe .ranking-chart-stage {
+  grid-column: 1 / -1;
+}
+
+.ranking-chart-periodo button {
+  min-width: 72px;
+  min-height: 32px;
+  padding: 0 12px;
+  background: var(--surface-2);
+}
+
+.ranking-chart-periodo button[aria-pressed="true"] {
+  background: var(--surface-2);
+}
+
+.ranking-chart-line.provisorio {
+  stroke-dasharray: 2 6;
+  stroke-width: 2;
+}
+
+/* ---- aba Campeonatos: Tier encostado no nome e com folga antes da colocacao ---- */
+.vp-cp-cab:not(.vp-cp-jog),
+.vp-cp:not(.vp-cp-jog) {
+  grid-template-columns: 38px minmax(0, 250px) 44px 142px minmax(0, 1fr) 38px 38px 38px;
+}
+
+/* ---- aba Partidas: a equipe, o placar e o adversario ---- */
+.vp-jl {
+  grid-template-columns: 40px minmax(0, 1fr) 52px minmax(0, 1fr) 112px;
+}
+
+.vp-jl:has(.vp-jl-kd) {
+  grid-template-columns: 40px minmax(0, 1fr) 52px minmax(0, 1fr) 46px 84px;
+}
+
+.vp-jl-nossa {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+@media (max-width: 760px) {
+  .vp-jl,
+  .vp-jl:has(.vp-jl-kd) {
+    grid-template-columns: 42px minmax(0, 1fr) 50px minmax(0, 1fr);
+  }
+}
+
+/* ---- Entradas e saidas: de onde veio e para onde foi (08/11) ---- */
+.vp-mov-lado {
+  display: grid;
+  justify-items: end;
+  gap: 3px;
+  max-width: 140px;
+  min-width: 0;
+}
+
+.vp-mov-equipe {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-mov-equipe .team-logo {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.vp-mov-equipe > span {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.vp-mov-sem {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* ---- Estatisticas da equipe: filtros vinculados ou um por bloco (08/11) ---- */
+.vp-eq-vincular {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  margin-left: auto;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-eq-vincular input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+
+.vp-est-filtros-bloco {
+  margin: 4px 0 12px;
+}
+
+/* O balao do grafico do ranking no modelo da HLTV (08/11), em Camisa: a cor1 da
+   equipe daquela semana chapada no topo (posicao, data, nota, logo e nome) e a cor2
+   atras da line. A emenda e reta: a diagonal cortava a ponta das fotos. */
+.ranking-chart-tooltip.vp-rc-balao {
+  width: 296px;
+  max-width: min(296px, 86vw);
+  gap: 0;
+  padding: 0 0 12px;
+  background: var(--placa-peca);
+  color: var(--placa-tinta);
+}
+
+.vp-rc-cabeca {
+  display: grid;
+  gap: 5px;
+  padding: 9px 12px 10px;
+  background: var(--placa-campo);
+  color: var(--placa-campo-tinta);
+}
+
+.vp-rc-topo {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.vp-rc-topo strong {
+  color: var(--placa-campo-tinta);
+  font: 700 22px/1 var(--fonte-carta, "Oswald", var(--font-display));
+}
+
+.vp-rc-topo span {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vp-rc-topo small {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.vp-rc-nota {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vp-rc-nota > span {
+  flex: none;
+  opacity: 0.8;
+}
+
+.vp-rc-nota b {
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 700;
+  text-overflow: ellipsis;
+}
+
+.vp-rc-nota .vp-rc-logo {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  /* Logo da cor do campo sumiria nele (UFRJ Canis, azul sobre azul): um contorno
+     fino na tinta do campo separa o desenho sem moldura. */
+  filter: drop-shadow(1px 0 0 var(--placa-campo-tinta)) drop-shadow(-1px 0 0 var(--placa-campo-tinta)) drop-shadow(0 1px 0 var(--placa-campo-tinta)) drop-shadow(0 -1px 0 var(--placa-campo-tinta));
+}
+
+.vp-rc-nota .vp-rc-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vp-rc-balao .vp-rc-line {
+  margin: 10px 12px 0;
+}
+
+.vp-rc-line {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.vp-rc-jog {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  min-width: 0;
+}
+
+.vp-rc-jog .vp-rc-foto {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 0;
+  background: color-mix(in srgb, var(--placa-tinta) 12%, transparent);
+  box-shadow: none;
+}
+
+.vp-rc-jog .vp-rc-foto {
+  overflow: hidden;
+}
+
+/* As fotos padronizadas tem o corpo inteiro com folga: o quadro mostra rosto e
+   ombros, como a HLTV. A silhueta fica inteira. */
+.vp-rc-jog .vp-rc-foto img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  border-radius: 0;
+  object-fit: cover;
+  object-position: center top;
+  transform: scale(1.7);
+  transform-origin: 50% 12%;
+}
+
+.vp-rc-jog .vp-rc-foto.no-photo img {
+  transform: none;
+}
+
+.vp-rc-jog b {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* O balao antigo pinta span e small de cinza sobre branco: na Camisa, a tinta e a
+   da peca em que o texto esta. */
+.ranking-chart-tooltip.vp-rc-balao .vp-rc-cabeca :is(span, small, strong, b) {
+  color: var(--placa-campo-tinta);
+}
+
+.ranking-chart-tooltip.vp-rc-balao .vp-rc-line :is(span, b) {
+  color: var(--placa-tinta);
+}

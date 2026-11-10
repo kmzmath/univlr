@@ -39583,6 +39583,7 @@ function searchEntities() {
   return [
     ...resultadosDeCampeonato(),
     ...db.teams.map(searchTeamResult),
+    ...db.teams.flatMap(searchTeamPhaseResults),
     ...db.maps.map((map) => ({
       type: "map",
       path: `maps/${map.id}`,
@@ -39639,6 +39640,25 @@ function searchTeamResult(team) {
     entity: team,
     searchText: `${team.name} ${team.id} ${tag} ${team.shortTag || ""} ${stateLabel} ${institution}`,
   };
+}
+
+// Cada nome antigo da linha do tempo (CAASO Hogs, Dark UFRJ...) continua achavel
+// na busca e abre o perfil da equipe atual ja naquela fase.
+function searchTeamPhaseResults(team) {
+  const stateLabel = teamStateSearchLabel(team);
+  const institution = teamInstitutionLabel(team);
+  return (team.profile?.nomes || []).filter((fase) => fase?.id && fase.nome).map((fase) => {
+    const tag = fase.tag || teamSearchTagLabel(team);
+    return {
+      type: "team",
+      path: `teams/${team.id}?fase=${encodeURIComponent(fase.id)}`,
+      label: fase.nome,
+      meta: `${tag} - ${stateLabel} - ${institution}`,
+      entity: team,
+      fase,
+      searchText: `${fase.nome} ${fase.id} ${tag} ${stateLabel} ${institution}`,
+    };
+  });
 }
 
 function searchPlayerResult(player) {
@@ -39778,17 +39798,25 @@ function renderSearchButton(item, content, index = 0) {
 
 function renderTeamSearchResult(item) {
   const team = item.entity;
-  const tag = teamSearchTagLabel(team);
+  const fase = item.fase || null;
+  const tag = fase?.tag || teamSearchTagLabel(team);
   const stateLabel = teamStateSearchLabel(team);
   const institution = teamInstitutionLabel(team);
+  // Nome antigo: escudo da epoca quando ela tem um, e o periodo para separar de
+  // uma equipe de mesmo nome (a UFRJ Canis de 2026 e a fase de 2025 da Thunders).
+  const faseLogo = fase?.logo ? assetPath(fase.logo) : "";
+  const visual = faseLogo
+    ? `<span class="team-logo clean-logo search-entity-logo"><img src="${escapeHtml(faseLogo)}" alt="${escapeHtml(`Logo ${fase.nome}`)}" loading="lazy" onerror="this.closest('.team-logo').classList.add('logo-empty'); this.remove()" /></span>`
+    : teamLogo(team.id, "search-entity-logo");
+  const periodo = fase?.desde ? teamFasePeriodo({ desde: new Date(`${fase.desde}T12:00:00`).getTime(), ate: fase.ate ? new Date(`${fase.ate}T12:00:00`).getTime() : 0 }) : "";
   return renderSearchButton(
     item,
     `
-      <span class="search-result-visual">${teamLogo(team.id, "search-entity-logo")}</span>
+      <span class="search-result-visual">${visual}</span>
       <span class="search-result-content">
         <span class="search-result-kicker">Time</span>
-        <strong class="search-result-title">${escapeHtml(team.name)}</strong>
-        <span class="search-result-meta">${escapeHtml(institution)}</span>
+        <strong class="search-result-title">${escapeHtml(fase?.nome || team.name)}</strong>
+        <span class="search-result-meta">${escapeHtml(periodo ? `${institution} - ${periodo}` : institution)}</span>
         <span class="search-team-facts">
           <span class="search-team-tag">${escapeHtml(tag)}</span>
           <span class="search-team-state">${teamSearchStateFlag(team)}<span>${escapeHtml(stateLabel)}</span></span>

@@ -25076,6 +25076,13 @@
       "name": "miks",
       "role": "controlador",
       "icon": "assets/agent-icons/miks.webp"
+    },
+    {
+      "id": "29",
+      "slug": "hush",
+      "name": "hush",
+      "role": "duelista",
+      "icon": "assets/agent-icons/hush.png"
     }
   ],
   "maps": [

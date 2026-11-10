@@ -4835,6 +4835,17 @@ a.vp-eq-txt:focus-visible strong {
   padding: 0;
 }
 
+/* Suíço em grupos paralelos: o título do grupo segue o da tabela (.vp-tabela h3). */
+.vp-rodadas-grupo {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font: 600 14px/1.2 var(--font-text);
+}
+
+.vp-rodadas + .vp-rodadas-grupo {
+  margin-top: 28px;
+}
+
 .vp-rd {
   display: grid;
   gap: 4px;

@@ -63,6 +63,20 @@
     "lifetimeDays": 304
   },
   "tournaments": {
+    "alianca-2023-2-classificatoria": {
+      "name": "Copa Aliança 2023.2 - Classificatória",
+      "logo": "assets/tournament-icons/copa_alianca.png",
+      "teams": 64,
+      "endAt": "2023-09-10T14:16:38",
+      "defaultPhase": "qualifier",
+      "phaseRules": [],
+      "placementPoints": {
+        "Classificado": 24,
+        "29-32": 9,
+        "33-44": 4,
+        "45-64": 0
+      }
+    },
     "e-jia-2023": {
       "defaultPhase": "playoffs",
       "phaseRules": [

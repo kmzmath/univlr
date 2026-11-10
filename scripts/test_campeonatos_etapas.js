@@ -288,6 +288,11 @@ const renderiza = (hash) => {
   assert(final.slice(0, 8).every((row) => row.etapaId === "alianca-2024-playoffs") && final.slice(8, 16).every((row) => row.etapaId === "alianca-2024-grupos"), "cada faixa vem da sua etapa");
   const a242 = context.campeonatoPorId("alianca-2024-2");
   assert.deepStrictEqual([...a242.etapas.map((etapa) => etapa.id)], ["alianca-2024-2-playoffs", "alianca-2024-2-fase-de-grupos", "alianca-2024-2-classificatoria"], "Aliança 2024.2 em três etapas");
+  const a232 = context.campeonatoPorId("alianca-2023-2");
+  assert.deepStrictEqual([...a232.etapas.map((etapa) => etapa.id)], ["alianca-2023-2-playoffs", "alianca-2023-2-fase-de-grupos", "alianca-2023-2-classificatoria"], "Aliança 2023.2 em três etapas");
+  // Classificatória: 158 séries (77 MD1 e 2 MD3 por grupo). Com arquivo, 71 no Grupo A (boletim)
+  // e 66 no B (tracker); o resto é W.O. ou mapa com menos de 10 jogadores.
+  assert.strictEqual(seriesDe("alianca-2023-2-classificatoria").length, 137, "137 séries com arquivo na classificatória da 2023.2");
   assert.strictEqual(seriesDe("alianca-2024-playoffs").length, 7, "7 séries nos playoffs da 2024.1");
   assert.strictEqual(seriesDe("alianca-2024-grupos").length, 30, "30 séries no suíço da 2024.1");
   assert.strictEqual(seriesDe("alianca-2024-2-playoffs").length, 9, "9 séries com arquivo nos playoffs da 2024.2");
@@ -342,8 +347,9 @@ for (const camp of cadastro) {
   // como na chave de cada etapa (CAAP 4-0 nos playoffs com duas finais sem arquivo).
   assert.strictEqual(campanha("alianca-2024-2", "caap_hellhounds"), "10-0", "CAAP na Aliança 2024.2 inteira");
   assert.strictEqual(campanha("univava", "ufu_saints"), "12-4", "UFU no UNIVAVÁ inteiro");
-  // Aliança 2023.2: 7-0 no Grupo B e 5-0 nos playoffs, sem perder série.
-  assert.strictEqual(campanha("alianca-2023-2", "caap_hellhounds"), "12-0", "CAAP na Aliança 2023.2 inteira");
+  // Aliança 2023.2: 4-1 na classificatória (derrota para a Mauá Blue na R1), 7-0 no Grupo B e
+  // 5-0 nos playoffs.
+  assert.strictEqual(campanha("alianca-2023-2", "caap_hellhounds"), "16-1", "CAAP na Aliança 2023.2 inteira");
 }
 
 // 3. A conversa do Geral tem assunto, para aparecer na atividade e no perfil.

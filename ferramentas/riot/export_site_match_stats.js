@@ -233,6 +233,7 @@ function main() {
       sourcePath: match.sourcePath,
       fileName: match.fileName,
       mapName: match.mapName,
+      startedAt: match.startedAt,
       teamA: match.teamA,
       teamB: match.teamB,
       winnerId: match.winnerId,

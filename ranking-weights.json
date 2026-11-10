@@ -62,6 +62,43 @@
     "lifetimeDays": 304
   },
   "tournaments": {
+    "alianca-2023-2-fase-de-grupos": {
+      "name": "Copa Aliança 2023.2 - Fase de Grupos",
+      "logo": "assets/tournament-icons/copa_alianca.png",
+      "teams": 32,
+      "endAt": "2023-10-08T17:54:53",
+      "defaultPhase": "regular",
+      "placementPoints": {
+        "Classificado": 0,
+        "17-24": 9,
+        "25-32": 4
+      },
+      "qualifiesTo": "alianca-2023-2-playoffs"
+    },
+    "alianca-2023-2-playoffs": {
+      "name": "Copa Aliança 2023.2 - Playoffs",
+      "logo": "assets/tournament-icons/copa_alianca.png",
+      "teams": 16,
+      "endAt": "2023-12-16T18:27:23",
+      "defaultPhase": "playoffs",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 30,
+          "seriesCodeMax": 30
+        }
+      ],
+      "placementPoints": {
+        "1": 100,
+        "2": 80,
+        "3": 45,
+        "4": 45,
+        "5-6": 35,
+        "7-8": 35,
+        "9-12": 25,
+        "13-16": 20
+      }
+    },
     "aoc": {
       "defaultPhase": "playoffs",
       "phaseRules": [

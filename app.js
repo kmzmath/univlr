@@ -387,9 +387,2175 @@ const CAMPEONATOS_COM_ETAPAS = [
       { id: "alianca-2024-classificatoria-1", nome: "Classificatória 1", nivel: 3 },
     ],
   },
+  {
+    id: "alianca-2023-2",
+    nome: "Copa Aliança 2023.2",
+    nomesAntigos: [],
+    decide: "alianca-2023-2-playoffs",
+    etapas: [
+      { id: "alianca-2023-2-playoffs", nome: "Playoffs", nivel: 1 },
+      { id: "alianca-2023-2-fase-de-grupos", nome: "Fase de Grupos", nivel: 2 },
+    ],
+  },
 ];
 
 const TOURNAMENT_OVERRIDES = {
+  "alianca-2023-2-fase-de-grupos": {
+    "name": "Copa Aliança 2023.2 - Fase de Grupos",
+    "organizer": "AcadArena",
+    "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
+    "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
+    "logo": "assets/tournament-icons/copa_alianca.png",
+    "tier": "S",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 32,
+    "teams": [
+      "caap_hellhounds_black_2024",
+      "laurp_royal_ps_orange_2024",
+      "azure_bears_black",
+      "puc_priests",
+      "maua_esports_black_2024",
+      "poli_plague",
+      "cyberkongs",
+      "inatel",
+      "hunter_esports",
+      "maua_white_2023",
+      "unicamp_tritons_black",
+      "oktoplus_gaming_cefet_mg_2024",
+      "caap_hellhounds",
+      "usp_ime_wolves",
+      "atletica_unifei",
+      "fmv_pantera",
+      "ufmg_fenix_b",
+      "uninassau_griffins",
+      "ufmt_turuna",
+      "unb_green_olws_line_red_2024",
+      "furia_utfpr",
+      "ufg_eagles",
+      "caaso_hogs_usp_2024",
+      "macklogic_red",
+      "ufrn_impetuosa",
+      "azure_bears_golden",
+      "unb_black",
+      "unicamp_tritons_red",
+      "ufrj_minerva",
+      "ufsc_titans_sc_2024",
+      "usjt_polaris",
+      "pucc_cardinals"
+    ],
+    "teamNames": {
+      "caap_hellhounds_black_2024": "CAAP Black",
+      "laurp_royal_ps_orange_2024": "LAURP Royal PS",
+      "azure_bears_black": "Azure Bears Black",
+      "puc_priests": "PUC Priests",
+      "maua_esports_black_2024": "Mauá Blue",
+      "poli_plague": "USP Poli Plague",
+      "cyberkongs": "USJT Cyberkongs",
+      "inatel": "Inatel",
+      "hunter_esports": "UTFPR Hunter",
+      "maua_white_2023": "Mauá White",
+      "unicamp_tritons_black": "Unicamp Tritons Black",
+      "oktoplus_gaming_cefet_mg_2024": "CEFET Oktoplus",
+      "caap_hellhounds": "CAAP Hellhounds",
+      "usp_ime_wolves": "USP IME Wolves",
+      "atletica_unifei": "UNIFEI Blue Rabbits",
+      "fmv_pantera": "FMV Pantera",
+      "ufmg_fenix_b": "UFMG Fênix",
+      "uninassau_griffins": "Uninassau Griffins",
+      "ufmt_turuna": "UFMT Turuna",
+      "unb_green_olws_line_red_2024": "UnB Green Owls B",
+      "furia_utfpr": "FÚRIA",
+      "ufg_eagles": "UFG Eagles",
+      "caaso_hogs_usp_2024": "USP CAASO Hogs",
+      "macklogic_red": "Mackenzie TecMack",
+      "ufrn_impetuosa": "UFRN Impetuosa",
+      "azure_bears_golden": "Azure Bears Blue",
+      "unb_black": "UnB Green Owls A",
+      "unicamp_tritons_red": "Unicamp Tritons Red",
+      "ufrj_minerva": "UFRJ Minerva",
+      "ufsc_titans_sc_2024": "UFSC Titans",
+      "usjt_polaris": "USJT Polaris",
+      "pucc_cardinals": "PUCCAMP Cardinals"
+    },
+    "format": {
+      "summary": "Grupos em pontos corridos",
+      "details": [
+        "32 equipes em 4 grupos de 8",
+        "Turno único dentro do grupo (7 rodadas)",
+        "Jogos MD3",
+        "As 4 primeiras de cada grupo avançam aos playoffs"
+      ],
+      "standings": "Classificação final"
+    },
+    "placements": [
+      {
+        "range": "Classificado",
+        "id": "laurp_royal_ps_orange_2024",
+        "note": "Grupo A, 7-0"
+      },
+      {
+        "range": "Classificado",
+        "id": "inatel",
+        "note": "Grupo A, 6-1"
+      },
+      {
+        "range": "Classificado",
+        "id": "maua_esports_black_2024",
+        "note": "Grupo A, 4-3"
+      },
+      {
+        "range": "Classificado",
+        "id": "azure_bears_black",
+        "note": "Grupo A, 3-4"
+      },
+      {
+        "range": "17-24",
+        "id": "poli_plague",
+        "note": "Grupo A, 3-4"
+      },
+      {
+        "range": "17-24",
+        "id": "cyberkongs",
+        "note": "Grupo A, 2-5"
+      },
+      {
+        "range": "25-32",
+        "id": "puc_priests",
+        "note": "Grupo A, 2-5"
+      },
+      {
+        "range": "25-32",
+        "id": "caap_hellhounds_black_2024",
+        "note": "Grupo A, 1-6"
+      },
+      {
+        "range": "Classificado",
+        "id": "caap_hellhounds",
+        "note": "Grupo B, 7-0"
+      },
+      {
+        "range": "Classificado",
+        "id": "maua_white_2023",
+        "note": "Grupo B, 5-2"
+      },
+      {
+        "range": "Classificado",
+        "id": "unicamp_tritons_black",
+        "note": "Grupo B, 5-2"
+      },
+      {
+        "range": "Classificado",
+        "id": "hunter_esports",
+        "note": "Grupo B, 4-3"
+      },
+      {
+        "range": "17-24",
+        "id": "atletica_unifei",
+        "note": "Grupo B, 3-4"
+      },
+      {
+        "range": "17-24",
+        "id": "usp_ime_wolves",
+        "note": "Grupo B, 3-4"
+      },
+      {
+        "range": "25-32",
+        "id": "fmv_pantera",
+        "note": "Grupo B, 1-6"
+      },
+      {
+        "range": "25-32",
+        "id": "oktoplus_gaming_cefet_mg_2024",
+        "note": "Grupo B, 0-7"
+      },
+      {
+        "range": "Classificado",
+        "id": "uninassau_griffins",
+        "note": "Grupo C, 6-1"
+      },
+      {
+        "range": "Classificado",
+        "id": "caaso_hogs_usp_2024",
+        "note": "Grupo C, 6-1"
+      },
+      {
+        "range": "Classificado",
+        "id": "ufg_eagles",
+        "note": "Grupo C, 5-2"
+      },
+      {
+        "range": "Classificado",
+        "id": "furia_utfpr",
+        "note": "Grupo C, 4-3"
+      },
+      {
+        "range": "17-24",
+        "id": "macklogic_red",
+        "note": "Grupo C, 4-3"
+      },
+      {
+        "range": "17-24",
+        "id": "unb_green_olws_line_red_2024",
+        "note": "Grupo C, 2-5"
+      },
+      {
+        "range": "25-32",
+        "id": "ufmt_turuna",
+        "note": "Grupo C, 1-6"
+      },
+      {
+        "range": "25-32",
+        "id": "ufmg_fenix_b",
+        "note": "Grupo C, 0-7"
+      },
+      {
+        "range": "Classificado",
+        "id": "unb_black",
+        "note": "Grupo D, 7-0"
+      },
+      {
+        "range": "Classificado",
+        "id": "azure_bears_golden",
+        "note": "Grupo D, 6-1"
+      },
+      {
+        "range": "Classificado",
+        "id": "usjt_polaris",
+        "note": "Grupo D, 5-2"
+      },
+      {
+        "range": "Classificado",
+        "id": "pucc_cardinals",
+        "note": "Grupo D, 4-3"
+      },
+      {
+        "range": "17-24",
+        "id": "ufrj_minerva",
+        "note": "Grupo D, 3-4"
+      },
+      {
+        "range": "17-24",
+        "id": "unicamp_tritons_red",
+        "note": "Grupo D, 2-5"
+      },
+      {
+        "range": "25-32",
+        "id": "ufsc_titans_sc_2024",
+        "note": "Grupo D, 1-6"
+      },
+      {
+        "range": "25-32",
+        "id": "ufrn_impetuosa",
+        "note": "Grupo D, 0-7"
+      }
+    ],
+    "seriesResults": {
+      "10": {
+        "a": "ufmt_turuna",
+        "b": "unb_green_olws_line_red_2024",
+        "scoreA": 1,
+        "scoreB": 2,
+        "bestOf": "MD3"
+      },
+      "12": {
+        "a": "caaso_hogs_usp_2024",
+        "b": "macklogic_red",
+        "scoreA": 2,
+        "scoreB": 1,
+        "bestOf": "MD3"
+      }
+    },
+    "swiss": {
+      "roundRobin": true,
+      "seriesCount": 112,
+      "standingsLabel": "Classificação final - as 4 primeiras de cada grupo avançam aos playoffs",
+      "rounds": [
+        {
+          "title": "Rodada 1",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 1",
+              "a": "caap_hellhounds_black_2024",
+              "b": "laurp_royal_ps_orange_2024",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "laurp_royal_ps_orange_2024",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 2",
+              "a": "azure_bears_black",
+              "b": "puc_priests",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "puc_priests",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 3",
+              "a": "maua_esports_black_2024",
+              "b": "poli_plague",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "maua_esports_black_2024",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 4",
+              "a": "cyberkongs",
+              "b": "inatel",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "inatel",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 5",
+              "a": "hunter_esports",
+              "b": "maua_white_2023",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "hunter_esports",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 6",
+              "a": "unicamp_tritons_black",
+              "b": "oktoplus_gaming_cefet_mg_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unicamp_tritons_black",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 7",
+              "a": "caap_hellhounds",
+              "b": "usp_ime_wolves",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "caap_hellhounds",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 8",
+              "a": "atletica_unifei",
+              "b": "fmv_pantera",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "atletica_unifei",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 9",
+              "a": "ufmg_fenix_b",
+              "b": "uninassau_griffins",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "uninassau_griffins",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 10",
+              "a": "ufmt_turuna",
+              "b": "unb_green_olws_line_red_2024",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "unb_green_olws_line_red_2024",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 11",
+              "a": "furia_utfpr",
+              "b": "ufg_eagles",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufg_eagles",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 12",
+              "a": "caaso_hogs_usp_2024",
+              "b": "macklogic_red",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "caaso_hogs_usp_2024",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 13",
+              "a": "ufrn_impetuosa",
+              "b": "azure_bears_golden",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "azure_bears_golden",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 14",
+              "a": "unb_black",
+              "b": "unicamp_tritons_red",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unb_black",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 15",
+              "a": "ufrj_minerva",
+              "b": "ufsc_titans_sc_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufrj_minerva",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 16",
+              "a": "usjt_polaris",
+              "b": "pucc_cardinals",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "usjt_polaris",
+              "group": "Grupo D"
+            }
+          ]
+        },
+        {
+          "title": "Rodada 2",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 17",
+              "a": "poli_plague",
+              "b": "cyberkongs",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "poli_plague",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 18",
+              "a": "puc_priests",
+              "b": "maua_esports_black_2024",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "maua_esports_black_2024",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 19",
+              "a": "inatel",
+              "b": "caap_hellhounds_black_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "inatel",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 20",
+              "a": "laurp_royal_ps_orange_2024",
+              "b": "azure_bears_black",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "laurp_royal_ps_orange_2024",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 21",
+              "a": "usp_ime_wolves",
+              "b": "atletica_unifei",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "atletica_unifei",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 22",
+              "a": "oktoplus_gaming_cefet_mg_2024",
+              "b": "caap_hellhounds",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "caap_hellhounds",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 23",
+              "a": "fmv_pantera",
+              "b": "hunter_esports",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "hunter_esports",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 24",
+              "a": "maua_white_2023",
+              "b": "unicamp_tritons_black",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "maua_white_2023",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 25",
+              "a": "ufg_eagles",
+              "b": "caaso_hogs_usp_2024",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "caaso_hogs_usp_2024",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 26",
+              "a": "unb_green_olws_line_red_2024",
+              "b": "furia_utfpr",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "furia_utfpr",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 27",
+              "a": "macklogic_red",
+              "b": "ufmg_fenix_b",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "macklogic_red",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 28",
+              "a": "uninassau_griffins",
+              "b": "ufmt_turuna",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "uninassau_griffins",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 29",
+              "a": "ufsc_titans_sc_2024",
+              "b": "usjt_polaris",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "usjt_polaris",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 30",
+              "a": "unicamp_tritons_red",
+              "b": "ufrj_minerva",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "ufrj_minerva",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 31",
+              "a": "pucc_cardinals",
+              "b": "ufrn_impetuosa",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "pucc_cardinals",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 32",
+              "a": "azure_bears_golden",
+              "b": "unb_black",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "unb_black",
+              "group": "Grupo D"
+            }
+          ]
+        },
+        {
+          "title": "Rodada 3",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 33",
+              "a": "cyberkongs",
+              "b": "puc_priests",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "cyberkongs",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 34",
+              "a": "caap_hellhounds_black_2024",
+              "b": "azure_bears_black",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "caap_hellhounds_black_2024",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 35",
+              "a": "maua_esports_black_2024",
+              "b": "laurp_royal_ps_orange_2024",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "laurp_royal_ps_orange_2024",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 36",
+              "a": "inatel",
+              "b": "poli_plague",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "inatel",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 37",
+              "a": "atletica_unifei",
+              "b": "oktoplus_gaming_cefet_mg_2024",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "atletica_unifei",
+              "status": "W.O.",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 38",
+              "a": "hunter_esports",
+              "b": "unicamp_tritons_black",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unicamp_tritons_black",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 39",
+              "a": "caap_hellhounds",
+              "b": "maua_white_2023",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "caap_hellhounds",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 40",
+              "a": "fmv_pantera",
+              "b": "usp_ime_wolves",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "usp_ime_wolves",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 41",
+              "a": "caaso_hogs_usp_2024",
+              "b": "unb_green_olws_line_red_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "caaso_hogs_usp_2024",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 42",
+              "a": "ufmg_fenix_b",
+              "b": "ufmt_turuna",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "ufmt_turuna",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 43",
+              "a": "furia_utfpr",
+              "b": "uninassau_griffins",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "uninassau_griffins",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 44",
+              "a": "macklogic_red",
+              "b": "ufg_eagles",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "macklogic_red",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 45",
+              "a": "usjt_polaris",
+              "b": "unicamp_tritons_red",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "usjt_polaris",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 46",
+              "a": "ufrn_impetuosa",
+              "b": "unb_black",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unb_black",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 47",
+              "a": "ufrj_minerva",
+              "b": "azure_bears_golden",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "azure_bears_golden",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 48",
+              "a": "pucc_cardinals",
+              "b": "ufsc_titans_sc_2024",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "pucc_cardinals",
+              "group": "Grupo D"
+            }
+          ]
+        },
+        {
+          "title": "Rodada 4",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 49",
+              "a": "azure_bears_black",
+              "b": "maua_esports_black_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "azure_bears_black",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 50",
+              "a": "laurp_royal_ps_orange_2024",
+              "b": "cyberkongs",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "laurp_royal_ps_orange_2024",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 51",
+              "a": "puc_priests",
+              "b": "inatel",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "inatel",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 52",
+              "a": "poli_plague",
+              "b": "caap_hellhounds_black_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "poli_plague",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 53",
+              "a": "unicamp_tritons_black",
+              "b": "caap_hellhounds",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "caap_hellhounds",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 54",
+              "a": "maua_white_2023",
+              "b": "atletica_unifei",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "maua_white_2023",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 55",
+              "a": "oktoplus_gaming_cefet_mg_2024",
+              "b": "fmv_pantera",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "fmv_pantera",
+              "status": "W.O.",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 56",
+              "a": "usp_ime_wolves",
+              "b": "hunter_esports",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "usp_ime_wolves",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 57",
+              "a": "ufmt_turuna",
+              "b": "furia_utfpr",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "furia_utfpr",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 58",
+              "a": "uninassau_griffins",
+              "b": "caaso_hogs_usp_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "uninassau_griffins",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 59",
+              "a": "unb_green_olws_line_red_2024",
+              "b": "macklogic_red",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "macklogic_red",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 60",
+              "a": "ufg_eagles",
+              "b": "ufmg_fenix_b",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufg_eagles",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 61",
+              "a": "unb_black",
+              "b": "ufrj_minerva",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unb_black",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 62",
+              "a": "azure_bears_golden",
+              "b": "usjt_polaris",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "azure_bears_golden",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 63",
+              "a": "unicamp_tritons_red",
+              "b": "pucc_cardinals",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "pucc_cardinals",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 64",
+              "a": "ufsc_titans_sc_2024",
+              "b": "ufrn_impetuosa",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "ufsc_titans_sc_2024",
+              "group": "Grupo D"
+            }
+          ]
+        },
+        {
+          "title": "Rodada 5",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 65",
+              "a": "laurp_royal_ps_orange_2024",
+              "b": "inatel",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "laurp_royal_ps_orange_2024",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 66",
+              "a": "azure_bears_black",
+              "b": "cyberkongs",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "azure_bears_black",
+              "status": "W.O.",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 67",
+              "a": "maua_esports_black_2024",
+              "b": "caap_hellhounds_black_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "maua_esports_black_2024",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 68",
+              "a": "poli_plague",
+              "b": "puc_priests",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "poli_plague",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 69",
+              "a": "caap_hellhounds",
+              "b": "hunter_esports",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "caap_hellhounds",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 70",
+              "a": "maua_white_2023",
+              "b": "fmv_pantera",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "maua_white_2023",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 71",
+              "a": "unicamp_tritons_black",
+              "b": "atletica_unifei",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unicamp_tritons_black",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 72",
+              "a": "usp_ime_wolves",
+              "b": "oktoplus_gaming_cefet_mg_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "usp_ime_wolves",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 73",
+              "a": "uninassau_griffins",
+              "b": "macklogic_red",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "uninassau_griffins",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 74",
+              "a": "caaso_hogs_usp_2024",
+              "b": "ufmt_turuna",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "caaso_hogs_usp_2024",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 75",
+              "a": "ufg_eagles",
+              "b": "unb_green_olws_line_red_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "ufg_eagles",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 76",
+              "a": "furia_utfpr",
+              "b": "ufmg_fenix_b",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "furia_utfpr",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 77",
+              "a": "unb_black",
+              "b": "usjt_polaris",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unb_black",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 78",
+              "a": "azure_bears_golden",
+              "b": "pucc_cardinals",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "azure_bears_golden",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 79",
+              "a": "ufrj_minerva",
+              "b": "ufrn_impetuosa",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "ufrj_minerva",
+              "status": "W.O.",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 80",
+              "a": "unicamp_tritons_red",
+              "b": "ufsc_titans_sc_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unicamp_tritons_red",
+              "group": "Grupo D"
+            }
+          ]
+        },
+        {
+          "title": "Rodada 6",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 81",
+              "a": "azure_bears_black",
+              "b": "inatel",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "inatel",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 82",
+              "a": "puc_priests",
+              "b": "caap_hellhounds_black_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "puc_priests",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 83",
+              "a": "laurp_royal_ps_orange_2024",
+              "b": "poli_plague",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "laurp_royal_ps_orange_2024",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 84",
+              "a": "maua_esports_black_2024",
+              "b": "cyberkongs",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "maua_esports_black_2024",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 85",
+              "a": "unicamp_tritons_black",
+              "b": "fmv_pantera",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "unicamp_tritons_black",
+              "status": "W.O.",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 86",
+              "a": "oktoplus_gaming_cefet_mg_2024",
+              "b": "hunter_esports",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "hunter_esports",
+              "status": "W.O.",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 87",
+              "a": "maua_white_2023",
+              "b": "usp_ime_wolves",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "maua_white_2023",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 88",
+              "a": "caap_hellhounds",
+              "b": "atletica_unifei",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "caap_hellhounds",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 89",
+              "a": "ufmt_turuna",
+              "b": "macklogic_red",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "macklogic_red",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 90",
+              "a": "unb_green_olws_line_red_2024",
+              "b": "ufmg_fenix_b",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "unb_green_olws_line_red_2024",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 91",
+              "a": "uninassau_griffins",
+              "b": "ufg_eagles",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "ufg_eagles",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 92",
+              "a": "furia_utfpr",
+              "b": "caaso_hogs_usp_2024",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "caaso_hogs_usp_2024",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 93",
+              "a": "unb_black",
+              "b": "pucc_cardinals",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "unb_black",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 94",
+              "a": "unicamp_tritons_red",
+              "b": "ufrn_impetuosa",
+              "scoreA": 1,
+              "scoreB": 0,
+              "winner": "unicamp_tritons_red",
+              "status": "W.O.",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 95",
+              "a": "azure_bears_golden",
+              "b": "ufsc_titans_sc_2024",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "azure_bears_golden",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 96",
+              "a": "ufrj_minerva",
+              "b": "usjt_polaris",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "usjt_polaris",
+              "group": "Grupo D"
+            }
+          ]
+        },
+        {
+          "title": "Rodada 7",
+          "status": "Concluída",
+          "bestOf": "MD3",
+          "matches": [
+            {
+              "code": "Partida 97",
+              "a": "inatel",
+              "b": "maua_esports_black_2024",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "inatel",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 98",
+              "a": "poli_plague",
+              "b": "azure_bears_black",
+              "scoreA": 1,
+              "scoreB": 2,
+              "winner": "azure_bears_black",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 99",
+              "a": "caap_hellhounds_black_2024",
+              "b": "cyberkongs",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "cyberkongs",
+              "status": "W.O.",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 100",
+              "a": "puc_priests",
+              "b": "laurp_royal_ps_orange_2024",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "laurp_royal_ps_orange_2024",
+              "status": "W.O.",
+              "group": "Grupo A"
+            },
+            {
+              "code": "Partida 101",
+              "a": "fmv_pantera",
+              "b": "caap_hellhounds",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "caap_hellhounds",
+              "status": "W.O.",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 102",
+              "a": "usp_ime_wolves",
+              "b": "unicamp_tritons_black",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unicamp_tritons_black",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 103",
+              "a": "hunter_esports",
+              "b": "atletica_unifei",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "hunter_esports",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 104",
+              "a": "oktoplus_gaming_cefet_mg_2024",
+              "b": "maua_white_2023",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "maua_white_2023",
+              "status": "W.O.",
+              "group": "Grupo B"
+            },
+            {
+              "code": "Partida 105",
+              "a": "macklogic_red",
+              "b": "furia_utfpr",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "furia_utfpr",
+              "status": "W.O.",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 106",
+              "a": "ufg_eagles",
+              "b": "ufmt_turuna",
+              "scoreA": 2,
+              "scoreB": 1,
+              "winner": "ufg_eagles",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 107",
+              "a": "ufmg_fenix_b",
+              "b": "caaso_hogs_usp_2024",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "caaso_hogs_usp_2024",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 108",
+              "a": "unb_green_olws_line_red_2024",
+              "b": "uninassau_griffins",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "uninassau_griffins",
+              "group": "Grupo C"
+            },
+            {
+              "code": "Partida 109",
+              "a": "pucc_cardinals",
+              "b": "ufrj_minerva",
+              "scoreA": 2,
+              "scoreB": 0,
+              "winner": "pucc_cardinals",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 110",
+              "a": "ufsc_titans_sc_2024",
+              "b": "unb_black",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "unb_black",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 111",
+              "a": "ufrn_impetuosa",
+              "b": "usjt_polaris",
+              "scoreA": 0,
+              "scoreB": 1,
+              "winner": "usjt_polaris",
+              "status": "W.O.",
+              "group": "Grupo D"
+            },
+            {
+              "code": "Partida 112",
+              "a": "unicamp_tritons_red",
+              "b": "azure_bears_golden",
+              "scoreA": 0,
+              "scoreB": 2,
+              "winner": "azure_bears_golden",
+              "group": "Grupo D"
+            }
+          ]
+        }
+      ],
+      "groups": [
+        {
+          "title": "Grupo A",
+          "standings": [
+            {
+              "id": "laurp_royal_ps_orange_2024",
+              "wins": 7,
+              "losses": 0,
+              "range": "1º",
+              "status": "Classificado"
+            },
+            {
+              "id": "inatel",
+              "wins": 6,
+              "losses": 1,
+              "range": "2º",
+              "status": "Classificado"
+            },
+            {
+              "id": "maua_esports_black_2024",
+              "wins": 4,
+              "losses": 3,
+              "range": "3º",
+              "status": "Classificado"
+            },
+            {
+              "id": "azure_bears_black",
+              "wins": 3,
+              "losses": 4,
+              "range": "4º",
+              "status": "Classificado"
+            },
+            {
+              "id": "poli_plague",
+              "wins": 3,
+              "losses": 4,
+              "range": "5º",
+              "status": "Eliminado"
+            },
+            {
+              "id": "cyberkongs",
+              "wins": 2,
+              "losses": 5,
+              "range": "6º",
+              "status": "Eliminado"
+            },
+            {
+              "id": "puc_priests",
+              "wins": 2,
+              "losses": 5,
+              "range": "7º",
+              "status": "Eliminado"
+            },
+            {
+              "id": "caap_hellhounds_black_2024",
+              "wins": 1,
+              "losses": 6,
+              "range": "8º",
+              "status": "Eliminado"
+            }
+          ]
+        },
+        {
+          "title": "Grupo B",
+          "standings": [
+            {
+              "id": "caap_hellhounds",
+              "wins": 7,
+              "losses": 0,
+              "range": "1º",
+              "status": "Classificado"
+            },
+            {
+              "id": "maua_white_2023",
+              "wins": 5,
+              "losses": 2,
+              "range": "2º",
+              "status": "Classificado"
+            },
+            {
+              "id": "unicamp_tritons_black",
+              "wins": 5,
+              "losses": 2,
+              "range": "3º",
+              "status": "Classificado"
+            },
+            {
+              "id": "hunter_esports",
+              "wins": 4,
+              "losses": 3,
+              "range": "4º",
+              "status": "Classificado"
+            },
+            {
+              "id": "atletica_unifei",
+              "wins": 3,
+              "losses": 4,
+              "range": "5º",
+              "status": "Eliminado"
+            },
+            {
+              "id": "usp_ime_wolves",
+              "wins": 3,
+              "losses": 4,
+              "range": "6º",
+              "status": "Eliminado"
+            },
+            {
+              "id": "fmv_pantera",
+              "wins": 1,
+              "losses": 6,
+              "range": "7º",
+              "status": "Eliminado"
+            },
+            {
+              "id": "oktoplus_gaming_cefet_mg_2024",
+              "wins": 0,
+              "losses": 7,
+              "range": "8º",
+              "status": "Eliminado"
+            }
+          ]
+        },
+        {
+          "title": "Grupo C",
+          "standings": [
+            {
+              "id": "uninassau_griffins",
+              "wins": 6,
+              "losses": 1,
+              "range": "1º",
+              "status": "Classificado"
+            },
+            {
+              "id": "caaso_hogs_usp_2024",
+              "wins": 6,
+              "losses": 1,
+              "range": "2º",
+              "status": "Classificado"
+            },
+            {
+              "id": "ufg_eagles",
+              "wins": 5,
+              "losses": 2,
+              "range": "3º",
+              "status": "Classificado"
+            },
+            {
+              "id": "furia_utfpr",
+              "wins": 4,
+              "losses": 3,
+              "range": "4º",
+              "status": "Classificado"
+            },
+            {
+              "id": "macklogic_red",
+              "wins": 4,
+              "losses": 3,
+              "range": "5º",
+              "status": "Eliminado"
+            },
+            {
+              "id": "unb_green_olws_line_red_2024",
+              "wins": 2,
+              "losses": 5,
+              "range": "6º",
+              "status": "Eliminado"
+            },
+            {
+              "id": "ufmt_turuna",
+              "wins": 1,
+              "losses": 6,
+              "range": "7º",
+              "status": "Eliminado"
+            },
+            {
+              "id": "ufmg_fenix_b",
+              "wins": 0,
+              "losses": 7,
+              "range": "8º",
+              "status": "Eliminado"
+            }
+          ]
+        },
+        {
+          "title": "Grupo D",
+          "standings": [
+            {
+              "id": "unb_black",
+              "wins": 7,
+              "losses": 0,
+              "range": "1º",
+              "status": "Classificado"
+            },
+            {
+              "id": "azure_bears_golden",
+              "wins": 6,
+              "losses": 1,
+              "range": "2º",
+              "status": "Classificado"
+            },
+            {
+              "id": "usjt_polaris",
+              "wins": 5,
+              "losses": 2,
+              "range": "3º",
+              "status": "Classificado"
+            },
+            {
+              "id": "pucc_cardinals",
+              "wins": 4,
+              "losses": 3,
+              "range": "4º",
+              "status": "Classificado"
+            },
+            {
+              "id": "ufrj_minerva",
+              "wins": 3,
+              "losses": 4,
+              "range": "5º",
+              "status": "Eliminado"
+            },
+            {
+              "id": "unicamp_tritons_red",
+              "wins": 2,
+              "losses": 5,
+              "range": "6º",
+              "status": "Eliminado"
+            },
+            {
+              "id": "ufsc_titans_sc_2024",
+              "wins": 1,
+              "losses": 6,
+              "range": "7º",
+              "status": "Eliminado"
+            },
+            {
+              "id": "ufrn_impetuosa",
+              "wins": 0,
+              "losses": 7,
+              "range": "8º",
+              "status": "Eliminado"
+            }
+          ]
+        }
+      ]
+    },
+    "startAt": "2023-09-16T13:04:00",
+    "endAt": "2023-10-08T17:54:53"
+  },
+  "alianca-2023-2-playoffs": {
+    "name": "Copa Aliança 2023.2 - Playoffs",
+    "organizer": "AcadArena",
+    "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
+    "banner": "assets/tournament-banners/acadarena_banner_generic.jpeg",
+    "logo": "assets/tournament-icons/copa_alianca.png",
+    "tier": "S",
+    "type": "Online",
+    "status": "Finalizado",
+    "teamCount": 16,
+    "teams": [
+      "laurp_royal_ps_orange_2024",
+      "pucc_cardinals",
+      "maua_white_2023",
+      "ufg_eagles",
+      "uninassau_griffins",
+      "hunter_esports",
+      "azure_bears_golden",
+      "maua_esports_black_2024",
+      "caap_hellhounds",
+      "furia_utfpr",
+      "inatel",
+      "usjt_polaris",
+      "unb_black",
+      "azure_bears_black",
+      "caaso_hogs_usp_2024",
+      "unicamp_tritons_black"
+    ],
+    "teamNames": {
+      "laurp_royal_ps_orange_2024": "LAURP Royal PS",
+      "pucc_cardinals": "PUCCAMP Cardinals",
+      "maua_white_2023": "Mauá White",
+      "ufg_eagles": "UFG Eagles",
+      "uninassau_griffins": "Uninassau Griffins",
+      "hunter_esports": "UTFPR Hunter",
+      "azure_bears_golden": "Azure Bears Blue",
+      "maua_esports_black_2024": "Mauá Blue",
+      "caap_hellhounds": "CAAP Hellhounds",
+      "furia_utfpr": "FÚRIA",
+      "inatel": "Inatel",
+      "usjt_polaris": "USJT Polaris",
+      "unb_black": "UnB Green Owls A",
+      "azure_bears_black": "Azure Bears Black",
+      "caaso_hogs_usp_2024": "USP CAASO Hogs",
+      "unicamp_tritons_black": "Unicamp Tritons Black"
+    },
+    "format": {
+      "summary": "Eliminação dupla",
+      "details": [
+        "16 equipes: as 4 primeiras de cada grupo",
+        "Todos os jogos MD3"
+      ],
+      "standings": "Colocação oficial do campeonato"
+    },
+    "placements": [
+      {
+        "range": "1",
+        "id": "caap_hellhounds",
+        "note": "Campeão"
+      },
+      {
+        "range": "2",
+        "id": "ufg_eagles",
+        "note": "Vice"
+      },
+      {
+        "range": "3",
+        "id": "azure_bears_golden"
+      },
+      {
+        "range": "4",
+        "id": "uninassau_griffins"
+      },
+      {
+        "range": "5-6",
+        "id": "unb_black"
+      },
+      {
+        "range": "5-6",
+        "id": "maua_esports_black_2024"
+      },
+      {
+        "range": "7-8",
+        "id": "azure_bears_black"
+      },
+      {
+        "range": "7-8",
+        "id": "maua_white_2023"
+      },
+      {
+        "range": "9-12",
+        "id": "laurp_royal_ps_orange_2024"
+      },
+      {
+        "range": "9-12",
+        "id": "inatel"
+      },
+      {
+        "range": "9-12",
+        "id": "usjt_polaris"
+      },
+      {
+        "range": "9-12",
+        "id": "unicamp_tritons_black"
+      },
+      {
+        "range": "13-16",
+        "id": "pucc_cardinals"
+      },
+      {
+        "range": "13-16",
+        "id": "hunter_esports"
+      },
+      {
+        "range": "13-16",
+        "id": "furia_utfpr"
+      },
+      {
+        "range": "13-16",
+        "id": "caaso_hogs_usp_2024"
+      }
+    ],
+    "seriesResults": {},
+    "bracket": {
+      "title": "Eliminação dupla",
+      "regions": [
+        {
+          "name": "Chave superior",
+          "className": "upper-bracket",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 1",
+                  "bestOf": "MD3",
+                  "a": "laurp_royal_ps_orange_2024",
+                  "b": "pucc_cardinals",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "laurp_royal_ps_orange_2024",
+                  "band": 0
+                },
+                {
+                  "code": "Partida 2",
+                  "bestOf": "MD3",
+                  "a": "maua_white_2023",
+                  "b": "ufg_eagles",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufg_eagles",
+                  "band": 1
+                },
+                {
+                  "code": "Partida 3",
+                  "bestOf": "MD3",
+                  "a": "uninassau_griffins",
+                  "b": "hunter_esports",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins",
+                  "band": 2
+                },
+                {
+                  "code": "Partida 4",
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "maua_esports_black_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "azure_bears_golden",
+                  "band": 3
+                },
+                {
+                  "code": "Partida 5",
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "b": "furia_utfpr",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds",
+                  "band": 4
+                },
+                {
+                  "code": "Partida 6",
+                  "bestOf": "MD3",
+                  "a": "inatel",
+                  "b": "usjt_polaris",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "usjt_polaris",
+                  "band": 5
+                },
+                {
+                  "code": "Partida 7",
+                  "bestOf": "MD3",
+                  "a": "unb_black",
+                  "b": "azure_bears_black",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "unb_black",
+                  "band": 6
+                },
+                {
+                  "code": "Partida 8",
+                  "bestOf": "MD3",
+                  "a": "caaso_hogs_usp_2024",
+                  "b": "unicamp_tritons_black",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "unicamp_tritons_black",
+                  "band": 7
+                }
+              ]
+            },
+            {
+              "title": "Quartas",
+              "matches": [
+                {
+                  "code": "Partida 13",
+                  "bestOf": "MD3",
+                  "a": "laurp_royal_ps_orange_2024",
+                  "b": "ufg_eagles",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "ufg_eagles",
+                  "band": 0.5,
+                  "from": [
+                    "Partida 1",
+                    "Partida 2"
+                  ]
+                },
+                {
+                  "code": "Partida 14",
+                  "bestOf": "MD3",
+                  "a": "uninassau_griffins",
+                  "b": "azure_bears_golden",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "azure_bears_golden",
+                  "band": 2.5,
+                  "from": [
+                    "Partida 3",
+                    "Partida 4"
+                  ]
+                },
+                {
+                  "code": "Partida 15",
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "b": "usjt_polaris",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds",
+                  "band": 4.5,
+                  "from": [
+                    "Partida 5",
+                    "Partida 6"
+                  ]
+                },
+                {
+                  "code": "Partida 16",
+                  "bestOf": "MD3",
+                  "a": "unb_black",
+                  "b": "unicamp_tritons_black",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "unb_black",
+                  "band": 6.5,
+                  "from": [
+                    "Partida 7",
+                    "Partida 8"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Semifinais",
+              "matches": [
+                {
+                  "code": "Partida 23",
+                  "bestOf": "MD3",
+                  "a": "ufg_eagles",
+                  "b": "azure_bears_golden",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "azure_bears_golden",
+                  "band": 1.5,
+                  "from": [
+                    "Partida 13",
+                    "Partida 14"
+                  ]
+                },
+                {
+                  "code": "Partida 24",
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "b": "unb_black",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds",
+                  "band": 5.5,
+                  "from": [
+                    "Partida 15",
+                    "Partida 16"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Final da superior",
+              "matches": [
+                {
+                  "code": "Partida 28",
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "caap_hellhounds",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "caap_hellhounds",
+                  "band": 3.5,
+                  "from": [
+                    "Partida 23",
+                    "Partida 24"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Chave inferior",
+          "className": "lower-bracket",
+          "layout": "linked",
+          "columns": [
+            {
+              "title": "Rodada 1",
+              "matches": [
+                {
+                  "code": "Partida 9",
+                  "bestOf": "MD3",
+                  "a": "pucc_cardinals",
+                  "b": "maua_white_2023",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "maua_white_2023",
+                  "band": 0
+                },
+                {
+                  "code": "Partida 10",
+                  "bestOf": "MD3",
+                  "a": "hunter_esports",
+                  "b": "maua_esports_black_2024",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "maua_esports_black_2024",
+                  "band": 1
+                },
+                {
+                  "code": "Partida 11",
+                  "bestOf": "MD3",
+                  "a": "furia_utfpr",
+                  "b": "inatel",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "inatel",
+                  "band": 2
+                },
+                {
+                  "code": "Partida 12",
+                  "bestOf": "MD3",
+                  "a": "azure_bears_black",
+                  "b": "caaso_hogs_usp_2024",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "azure_bears_black",
+                  "band": 3
+                }
+              ]
+            },
+            {
+              "title": "Rodada 2",
+              "matches": [
+                {
+                  "code": "Partida 20",
+                  "bestOf": "MD3",
+                  "a": "unicamp_tritons_black",
+                  "b": "maua_white_2023",
+                  "scoreA": 1,
+                  "scoreB": 1,
+                  "status": "Cancelada",
+                  "band": 0,
+                  "from": [
+                    "Partida 9"
+                  ]
+                },
+                {
+                  "code": "Partida 19",
+                  "bestOf": "MD3",
+                  "a": "usjt_polaris",
+                  "b": "maua_esports_black_2024",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "maua_esports_black_2024",
+                  "band": 1,
+                  "from": [
+                    "Partida 10"
+                  ]
+                },
+                {
+                  "code": "Partida 18",
+                  "bestOf": "MD3",
+                  "a": "uninassau_griffins",
+                  "b": "inatel",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins",
+                  "band": 2,
+                  "from": [
+                    "Partida 11"
+                  ]
+                },
+                {
+                  "code": "Partida 17",
+                  "bestOf": "MD3",
+                  "a": "laurp_royal_ps_orange_2024",
+                  "b": "azure_bears_black",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "azure_bears_black",
+                  "band": 3,
+                  "from": [
+                    "Partida 12"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Rodada 3",
+              "matches": [
+                {
+                  "code": "Partida 22",
+                  "bestOf": "MD3",
+                  "b": "maua_esports_black_2024",
+                  "aLabel": "Sem adversário",
+                  "status": "Cancelada",
+                  "band": 0.5,
+                  "from": [
+                    "Partida 20",
+                    "Partida 19"
+                  ]
+                },
+                {
+                  "code": "Partida 21",
+                  "bestOf": "MD3",
+                  "a": "uninassau_griffins",
+                  "b": "azure_bears_black",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "uninassau_griffins",
+                  "band": 2.5,
+                  "from": [
+                    "Partida 18",
+                    "Partida 17"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Rodada 4",
+              "matches": [
+                {
+                  "code": "Partida 25",
+                  "bestOf": "MD3",
+                  "a": "ufg_eagles",
+                  "bLabel": "Sem adversário",
+                  "winner": "ufg_eagles",
+                  "status": "Bye",
+                  "band": 0.5,
+                  "from": [
+                    "Partida 22"
+                  ]
+                },
+                {
+                  "code": "Partida 26",
+                  "bestOf": "MD3",
+                  "a": "unb_black",
+                  "b": "uninassau_griffins",
+                  "scoreA": 1,
+                  "scoreB": 2,
+                  "winner": "uninassau_griffins",
+                  "band": 2.5,
+                  "from": [
+                    "Partida 21"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Semifinal da inferior",
+              "matches": [
+                {
+                  "code": "Partida 27",
+                  "bestOf": "MD3",
+                  "a": "ufg_eagles",
+                  "b": "uninassau_griffins",
+                  "scoreA": 2,
+                  "scoreB": 1,
+                  "winner": "ufg_eagles",
+                  "band": 1.5,
+                  "from": [
+                    "Partida 25",
+                    "Partida 26"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Final da inferior",
+              "matches": [
+                {
+                  "code": "Partida 29",
+                  "bestOf": "MD3",
+                  "a": "azure_bears_golden",
+                  "b": "ufg_eagles",
+                  "scoreA": 0,
+                  "scoreB": 2,
+                  "winner": "ufg_eagles",
+                  "band": 1.5,
+                  "from": [
+                    "Partida 27"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Grande final",
+          "className": "grand-final",
+          "columns": [
+            {
+              "title": "Final",
+              "matches": [
+                {
+                  "code": "Partida 30",
+                  "bestOf": "MD3",
+                  "a": "caap_hellhounds",
+                  "b": "ufg_eagles",
+                  "scoreA": 2,
+                  "scoreB": 0,
+                  "winner": "caap_hellhounds",
+                  "band": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "startAt": "2023-10-21T13:11:19",
+    "endAt": "2023-12-16T18:27:23"
+  },
   "alianca-2024-classificatoria-1": {
     "name": "Copa Aliança 2024.1 - Classificatória 1",
     "organizer": "AcadArena",
@@ -21562,8 +23728,10 @@ function createMatchSeriesSummary(matches) {
     scoreB: score.b,
     roundScoreA: roundScore.a,
     roundScoreB: roundScore.b,
-    winnerId: score.a > score.b ? primary.teamA.id : primary.teamB.id,
-    loserId: score.a > score.b ? primary.teamB.id : primary.teamA.id,
+    // Serie empatada em mapas nao tem vencedor: a P20 da Alianca 2023.2 (1-1) foi
+    // encerrada pela organizacao. Antes o empate ia para a equipe B.
+    winnerId: score.a === score.b ? null : score.a > score.b ? primary.teamA.id : primary.teamB.id,
+    loserId: score.a === score.b ? null : score.a > score.b ? primary.teamB.id : primary.teamA.id,
     mapCount: maps.length,
     maps,
     mapNames: maps.map((item) => item.mapName),
@@ -21760,7 +23928,7 @@ const HISTORICAL_PEOPLE_2024 = {
     "nickHistory": []
   }
 };
-const HISTORICAL_MATCH_IDS_2024 = new Set(["876299e5-217b-45a1-b767-4c018605c752","5e56f8f6-154d-49c8-8f84-a7dd7588230b","59efe0cd-096b-4a96-a843-42e9904b17f4","992ab46a-3c96-4be9-8009-23a5de5f5ac8","3aaaff42-dac3-45b1-b4de-916270874ce4","08cd102d-4b63-457f-a59a-fec3b18df2a5","3cd82ded-0a64-4833-af6d-0e058448fb51","eafbf9cf-c7d3-4b78-9c14-50da663fb1b9","e8dc3a4c-9a8f-4760-b7cb-53980f122347","1356bb69-becd-4a7f-9a5f-94c4107b9789","609d8497-4b4c-418c-be5b-7a811e292707","320a8b7e-7adb-4832-b020-32736f22a1c1","81eabe50-a747-498c-b596-91b1433329c6","6671bb3c-2a96-499c-a42d-e6b8e8f82fcc","c81637d7-887d-447f-9985-c7eee9a457c9","5bbd17e5-8696-48e3-95b4-324c2e9aab11","f9438b5b-d506-4ac4-b038-e4bd3c7c76fc","8a296290-1da3-45c4-af87-45d7ee5ff314","55a58384-6eb9-4f0e-8033-5d6e6b210447","38a9c413-503f-43ea-853d-cc26b2b7f37a","eb3e3e39-2e24-45e6-88ff-4be0da05ba2a","7bbd1375-9134-4312-8646-1af7f11e0ae6","3a569d62-aea5-437a-a855-e64ab8e44ce0","e2e79070-49ef-4a67-bde0-694eba0b0741","f86c2a94-e24d-433c-8a04-602b408b8d41","c3f991bf-6a75-4d9d-813c-d0a050822c9e","baab53e6-c9a6-48f5-b39c-9012f2215f35","dc02b212-60ed-4043-946a-ef4d0cb206fa","4050dc8e-4d9d-4dc8-83a4-d8f4491fe7ae","0893f944-5234-4b10-a5c8-e5e233dbe969","72bfc87d-5102-4839-a1fd-82914e8f2e0c","902c69f8-71d3-4e8b-916f-3623129d0028","044fce23-8093-449e-a229-bc986c3e54dd","d5a52050-9c9b-43e9-8fbc-200d618c50ea","90786b15-67d6-4ff1-a9c2-d2556fe2f317","4b39fd75-c8c0-424e-8910-f7c227d6df84","7dddba05-0f28-4edd-8149-c427d0d98c8f","1e13d7e2-53ec-49eb-b1b9-726697b6f0fb","dc0a2349-2b93-4e29-8356-d23d72c9ab3b","b92f8dbe-70d6-4c81-b9bc-15476762af5d","575106f7-2fab-4a46-9833-9015393bff6f","1e78764a-b196-4478-8aa9-114999fe414b","2e4c6ac3-52fe-4495-9508-f275fc37d2f6","e0a10497-ad6c-48a4-a8f8-8b5f7ea3523a","eee12020-5b76-4f15-a56f-2214ece74dc8","bffe5eb2-15cc-48c1-b70e-ca86c44a36f3","2ee18510-e463-4b1f-8bbe-eb694a3df6fe","e603cbf3-2194-41bf-93cd-b9158ee6a81c","775966d7-ef49-4279-a855-3d7c911dc56b","42780b0b-d874-428f-8430-4fdc425a57ba","d006aeb3-817f-4157-99e0-744891cda115","fb80b9d1-cc0c-490a-94e2-3f6936a31fa6","e5d47b11-f647-4f65-b250-2467010540a8","79e867c0-5b7c-4807-aa97-e7172660ffb0","879d9a3d-e2b8-4ec2-bf3b-79a5cd11705e","d56c9e38-870d-4a6b-a25f-3e7bab64e39e","4cc8504b-7e49-45c1-bef1-879159a7ff21","2ed4f91e-ab35-4d13-84f9-089fafde26a9","0de57fb7-6a8e-433b-96d3-de5df238053c","79b36888-0afb-49ec-afcd-432f747a158e","2dd36e15-aa18-41ec-9890-66484f347359","746a5b01-7ea7-4651-b500-c4205ded67e0","369b098e-556b-4308-934d-6a604fe82b21","b819a104-ccb6-467a-afbf-8a145ef9c503","834c6ee2-85f3-49a2-bc34-92a9e344f836","3d9e3e6d-2ebd-449a-a788-9a723dd5b2f3","195b7c16-3d4c-4f49-bf1d-08da931c1bb5","4f92ccb9-73fe-443e-b21f-623ca350de8a","66a69b21-640e-4c8d-80b5-5df0d7319b40","894d535d-df58-44d0-8ae6-bd7f06a08b0d","cb84790a-cc18-4087-b732-e0021a41b907","f1ce7092-3cf6-4556-82f5-8c5b02865142","679adb43-56ba-4a13-b90e-8f5ff0ffbc80","850eb77e-d703-441e-9b60-71679edfdf93","588d6244-033a-450f-af35-f99ff39f4166","8b2962f0-488b-4ddc-8df9-cca7c9391596","35f52f26-4b81-4b78-a247-6eb3740519e7","0ffc1056-3a32-460a-83c5-b4a31123e011","d50eca90-1138-4863-bd4c-c5acc946b705","1cfa39e6-4924-4115-84ca-8aad6566c01f","cd5df1c1-1423-430d-ba0b-eec06ed6b01f","0b176e87-f255-41a8-8745-563c22bc1475","f07923aa-4eb5-43d4-a5f5-c070be03413f","07f1a884-25af-4ff9-8caa-7b5cf81963f0","4087b0b9-eb10-4ba7-9bbf-2a8cf5e559a9","0e4db5e5-c6f1-4e62-a0d9-acc9f9567c89","b3faa7b2-cc9d-4c4c-a43a-d3e63b838fae","feed8220-63af-47b8-94ee-26ca26e6d9cc","932329c3-114c-4e3a-8139-51b8dc352edf","ad52968d-418f-49ae-b4e2-6227b3afb3e5","ee4b72f2-33d5-4616-86c9-e34605f31d43","f0b9be8b-fc3e-45f2-86d7-fc5f8d538b87","57aaf725-4f4c-4cda-8dcf-2ceca0f51572","6d9dbcee-3050-47c5-a234-c0f0120cfaf9","513d3dc1-d392-40dc-873b-a7376cc32dbd","e4d3f914-41df-413f-a2b9-a483bda160f6","43ddebc1-acc5-4657-bdcd-383f46d6879d","af703da7-0b4f-42d5-9069-0f2547b08f3f","8a5f2827-6f99-4b14-bf6b-9b3cd2979758","eed4b418-b5b0-4e88-a119-93d4f656181a","c7c2eefd-e1bd-4581-a428-cbfb0a9716db","9a14a3e5-ea90-48fa-bd35-b7c517b71e0a","358c3b24-69c5-4f9f-a993-5d929633b93b","a0b7bbc4-b345-40ab-a32b-e66162e591b5","c9da4422-4821-43a9-85bc-c6192cc3508f","3aae49ed-ffa1-4460-97cb-d13a53bb46d6","696dfd68-7376-4d6d-851e-9a89868593d1","d70d65e7-4c88-4b43-a4d1-252f5cc663d6","9a3f6ee8-5ffb-4699-8c2b-5af3eaccf138","2b52d000-5f32-443b-81fa-d34c15306a6e","feec4645-0338-4eae-8d11-c33934a20c55","009f6f06-a16e-4549-a708-f7c1eea38602","15c5fbf0-2d8a-4734-b008-3e371d5d1a1f","72ac5d8f-8880-42c1-a859-de43ea26f4ce","318194ee-e633-4045-a66b-5ff022a6072a","98a69fe8-d72b-425b-9e31-073086bb3bab","42a859eb-1620-42c7-ba89-6555b44dd557","c668601b-d464-4515-949d-566170624ade","b8e21bbd-f26f-44cc-b990-5c21a18db806","1e5e21cb-5f49-4262-a406-f236a8a44ba5","0f61d0e0-7cac-4ecc-bb01-e1eebd5fb72e","71c83ede-9925-4a8b-8ca2-21eb956a2c0c","449612bd-44ef-42a4-a458-b8f7428fe254","2982ea4f-28fa-49f3-9f1d-af7431dce4af","d8993f42-ef45-4901-b222-125c2c2df190","bb2a6638-b813-433a-8508-2b00a9022a29","32f60fd8-4180-4c11-9f21-c97809475d78","a2744523-ec8a-483e-98e3-41339074e74c","6b7ed897-5820-460c-9800-6298921581e3","9356682e-8da5-4757-8f57-4cc0cdf6fb71","4fe9e684-56e7-48ae-8681-499fc2f256c3","9c5f28de-040a-439c-a1c1-9cf3f2a7f3ac","5b6c4d07-935f-4de1-b6fe-125d6ac3dcb0","b1e268fc-2939-497a-9f21-9de154806cdd","fdb029ef-cb5d-49fc-a8a5-21965d7f2b9c","a098db70-39e7-4916-89ac-51641febe1a0","58823c95-9278-448d-96bf-01777c272a1f","ad28b561-d3d6-4587-95dc-7f879937507f","d2e3a648-a0f0-446a-a429-7a1e18e965d2","b186e7d0-d676-4782-ad87-5ae2abd51ace","6e3d8269-b347-49fc-8eff-16bc30dedc0b","0683a96c-1b96-4380-9cdd-c2b7f14bd11c","2e8919f6-4877-4c26-8ef1-619a74b01b34","47ee8bbf-1f53-4913-bf16-feb729653b92","1f7d21b5-62b7-4668-80d5-4619c3dbac4d","49d061de-32c0-4032-9820-ee4d73fec6cf","c258a36d-3d88-4632-8346-5d2e3ba79af5","073077f3-b21a-4107-95bb-f4ccd2ba92b9","fa8ce6b8-d4b8-4b2b-af0f-2d092636aeae","27b83778-780e-4be0-aed8-7de1c2bbccd8","dcca61d8-60e9-469d-b90e-973baae6bcb4","5db4bb84-7fc8-4e53-9da5-d6739190bbe3","8bca0e62-08d7-4985-9d8a-7e94b6bc9834","628ae9ee-66d3-41e8-b5bb-b88cfaf2f5f4","10f344ad-bdb6-464f-b3bb-992a75dc401b","55047f57-a096-45a4-bd61-66823bf4ba2f","e83bdabd-d63a-4651-b315-ae428c1a1c30","0241bb11-a6b8-45be-bad4-bf09e6d60f3e","6be0c01d-744c-4aa0-afe2-7f0e3f814989","39446532-fddd-4b92-a190-9fde56bee034","f80aad66-83ef-45b1-8e7b-d3ce768645cc","252d07d4-fc5f-49ba-9191-8723d69288af","da61f53f-21b2-416d-8507-4d132365f12b","3a553161-dfcc-4315-b049-781c03287a05","4a8305cc-9975-443f-8de1-dc64ca643249","7dda7d42-a323-4ec5-999d-5691be6e1fdb","1b1a61a0-65da-4dbd-b2ba-f04e73fa1bc7","fc3d16c9-02b5-41d7-92c8-9de400880bbd","5df6c707-9a3d-41b5-a4d1-115bff3d8adc","e082774d-4ecb-40e5-97e0-39ef6d5bd504","ef1438bf-be54-40aa-94e7-4ec1708bc6cb","866eb2e4-1400-4eba-862a-ac423b5ebab5","6858eb96-fdbb-411b-acf4-747defeef08e","4858391c-f6e9-48db-a243-75c6eb85b8f4","e2f8f49a-2374-4f72-a9a9-24b565917c44","05f4ab58-64d7-4c96-a37f-4f8b03bdbd84","84bea0c7-8eaa-4e3a-be2f-4200d5687546","976b9ace-11d0-4a08-9c9b-1b355a0d84c8","ee4f65ea-009f-4bda-9c65-778f3eda6c88","33d4485e-032f-4bd7-a671-f779155b72db","346c3e0c-a812-48e5-929d-9b71857faaa3","90d2424d-ee86-4b0b-a227-4b222fb44bfd","5a470e1a-6850-4f17-a281-b604908c7de3","0b594be5-d489-4dc5-86f8-5cb50aebe853","ef527393-dce5-474f-a9a2-70d16774aad4","bb91a6cb-a6a3-4c07-a241-ae7f2f0ff1e1","a605cd10-7474-4f74-893c-fa41092dbf39","2a7a6fbc-6ea5-434e-8a52-dad81bd20528","7f543eb4-72be-4676-a600-5470dc2f25e3","17f945bc-ba8e-4a40-a234-eb8d04697a1f","85b726ec-2bbb-48a8-ab3f-bd6134a24c56","c144a931-1cc3-4375-a55b-ab7bc9d12aaa","fbae6516-6d59-4518-ba16-02c4a875b584","aeb2c72f-1ec5-4243-9a20-6846531418e2","15c01edf-64d3-4c22-8075-3b0cec218d8d","f4b70663-bcc8-4af8-a5c0-8ff38732dddd","13d0f2b1-abb6-4178-9a98-428c43a149d3","d51948e6-4a7f-4e5f-9422-1b17e6a15180","523a0863-91a9-4133-86f3-90cb58a9fa29","2afd1150-32a1-40c3-9eed-8c76fab899d5","2b0138bc-85d6-4950-95fa-c7d2f6849c47","856b1691-aefd-46f7-9171-17600e9a25e3","319765f3-1eff-4c9d-8365-169859d5f1f2","e9d08e5b-683b-48f0-aa81-4adc3e0e9eb8","ecb2cf13-4391-49d9-9cf3-16a934429754","bf0b9ed6-7a3f-41c4-9c17-0f653b877649","7e42478c-34a3-448e-8229-d0d953163511","51d59d8c-5e1a-421a-ae9f-22278f39638f","04bbbe79-6151-412b-b653-098821552a18","189ab7b7-b8e0-4514-ab29-306cd0656e84","e60363f8-6f89-4366-8d4d-978714ecccaa","c48c10da-db61-4957-a09a-c8cd5ec87f99","4d763551-2a73-4fb5-b989-665da241f4e2","9166ff02-77a2-461d-9401-545d243c4506","6b3e2009-0c0b-4cce-a44b-0aae442d0fbd","52dd1048-4bde-4bfc-ba6d-59c927ccb826","6f950bcf-cb64-400b-8687-5d1b37f35662","fef036f6-0cfd-4494-aaa2-2a03f581c68d","cc87cc9f-5e54-43fb-a27b-ad93f3b32a26","5c993983-2116-475c-a71b-2c4e46691b12","c6714cd4-6c56-439f-997a-c467de42465b","7e4010cb-e28d-48ca-8ada-d30cba8b0855","ea035b38-e968-4256-a352-9a5d4019ef69","57c00e96-efc4-4683-977a-8fe1d5dd4579","e0b0ced2-1ea7-475e-8266-0435dc5f0b40","d8633e84-1715-4fc1-809d-9ea46e54e657","86547e77-dc94-4907-b1c9-157fb59f5fb3","89d4b148-6082-4fc6-9634-66e427a1815b","6304d4ae-e85b-4511-8e2f-965b34e523db","c4713ff8-d19a-4a8c-96f8-4edc7da8a528","51c8703a-abe1-4100-98db-e6a4233472af","491da87a-6c0f-4aa0-b9a6-6ea75b0eaee5","c8adea45-4b89-4276-b273-bb9542539678","a26fa7bf-c32f-4744-99c2-3013a71f1faf","c71e206f-4dbc-4718-b42f-6bff1def430c","0c7e1ae0-18e9-4c83-b37b-a828c30b02b0","658cfe13-ff9d-48cb-be28-456d2e7df675","abd86b41-c5a6-4789-b8bb-cd2ecac108b7","5e006803-dd06-4f8b-8edd-46d1a6d7d039","a02399ff-1869-49be-b1c5-d36101c8acc8","eb0ad4b1-a8e6-41aa-803a-f573706292e2","f16a5995-776f-42c9-b07e-053685096727","d9cbd1ac-749f-46d0-ab62-71dad317fe7f","79d65905-5de5-4664-866b-671179546d87","2eee9645-bb05-4cf0-98a3-c05652d06b87","08e92dc7-8db0-4553-b210-e994d6d09ef3","6b289758-bce3-4a62-8886-90aedddb43d8","7bf1baad-eafd-459e-a01a-ce4cec23861b","3131cd92-7c52-4cdd-b79f-0fb0c995bb40","2aef5fc4-5bd3-4aaa-ba5d-54674a22ae74","cf371668-67fd-4dbe-bbc5-01779e28e83c","ad2f6443-9f09-4214-8496-2b38d887f60f","6a0a732c-d23e-4be8-ae6d-9a6aad9d438b","ecea155b-a764-419f-aec8-78ea7df8f0ec","ab3cce3b-931e-4cef-b2d4-84d6ef35c2b3","e6772865-7c68-4f3b-8e9e-5c5eac7dacb0","7635cb29-b8f5-40db-a982-2f5eb7adc068","277835c2-9056-4f9d-948c-4a26751caa2e","41fabde5-e045-41f1-a817-6e01e94d17cf","9e03d232-6448-425e-a6cd-805b772d01e8","436e9974-a5f9-4cf3-b98e-16489ddbedca","3af9228c-e681-4f6d-9621-97f27d894c5c","fc042e83-9752-4da9-bda9-e04076811d6f","8fd19a72-2f83-4cd8-b2d0-6905236bb67f","5cefa914-6888-4a77-9633-e211e9de74ea","8571d0a6-a3fa-4e0a-92be-5d76ecebf202","7f6d1a54-1c78-4331-83a5-6526979c57da","4d01517e-cedf-409e-a037-ec5667f529ee","b3ea6243-03c7-4aa4-b086-399d75d6ebd3","ad896abe-8c2c-4052-81c3-d81055760d75","3620a03a-a849-4d0e-bf85-d175987d6edd","ebc56ee3-6cc8-423c-8a39-2ec641a9562e","1ec6fcf6-54be-4e29-a849-c9af4d1499ec","c898915d-4a57-49fb-9455-d705fdda6d3b","806ba94a-3655-4327-aed1-def1a25d9377","1d847718-1302-4b18-ba6f-cc152582d369","3497b92a-d02f-4d3c-b894-8fd9f6a0315f","3741e362-f03f-4b27-b715-d572cc7af98c","03ca167e-597a-4b82-8a06-4865aa4fa11c","c2959736-f3be-469c-a929-89706273484c","ee90211d-5c49-44c7-9f4f-a696499271ec","17e72f0a-3a01-4d94-a39f-d369eb4b5531","265b704e-1cd6-4865-beb5-c21ee76e6a0f","431e906b-89d9-4245-8145-c5450f059fb3","0e3f6928-d0ca-4118-a2a5-15325124178e","9b370410-53b4-4ea4-ac5a-71b284e3386a","72565e97-9c42-415a-a1e0-50cb5bf20d4d","fea47831-8742-44ac-b942-1cb59cf4eb27","4154fbe4-9c09-4e16-8d13-7359f0a2aa7a","91847d9b-2ead-4e7f-954e-8d0b6637190a","986afe9b-de1b-449e-858c-7a9d21b25c12","62dbd74e-a5e2-48cc-b424-a18876b5cc1e","563c05ef-9233-4444-b8eb-5f3d2d77b615","29767ad9-74a1-4560-b63d-7e0e63238d01","2070c122-acdf-4e93-80be-f4c54834350f","5e6cdbf3-a7b6-4426-82cf-212894a977b2","744b605a-7832-4e2d-a0c8-6b79d035cf73","4f13263a-3a1d-4041-a4e2-187ee7cacd23","edf974f2-f710-4baf-a9c1-98de234f5ed4","f5562dd9-ac28-4e6d-8046-481724cc00e5","9ebc351b-0085-4999-8b8b-8ada32503e3a","00048140-5e5a-49fe-94d7-275f85db0075","853f6c6c-0366-4635-bca9-3c4112303e68","e3b544de-2f12-421a-8068-2016e2131fb5","d9900396-9b95-43bb-88b1-1ef1cb41995d","414c726d-9bd3-4db7-8750-50939cd408c7","255a5998-ef10-4de3-a1f6-68ad65f4617b","32304b6f-f0d4-40fc-a90d-3cab0337158c","a5d3fefa-ae6f-4db2-91fd-c495a65eb836","35c17fb0-852c-4b4a-81e1-86862a9790d6","72fb3545-7a49-416e-b4b0-664f699bd1ae","57b4de5c-6988-4ac8-9041-5a4a3bd07fe0","372ab97e-ec23-4c42-9c3b-71ae1f5e1468","cec15ecb-a794-40f5-a7eb-96e12cf3df34","7797d377-7355-44c6-aca0-7a7b05fc5835","30fc1418-4214-4336-9339-7d4a746dd6af","26d4eb2a-cd70-473d-868f-5a97607c73ca","f990a840-d2b2-457c-985e-1304157d6a54","ad4f9975-6c11-4de7-aefc-70b2720a15af","cf704c71-d591-42e5-ae95-059c7ae025a1","5789ef49-65e0-419e-bbf7-e71f3156f9ee","2bbababc-d452-47ee-8873-c98d3e87cfef","6a69328e-de55-4292-a1ba-2ea5473ecb39","daf5e30f-b200-43d0-935e-8bc2b559d9e5","8d69fb2d-08e3-4519-bd75-6f298fc65b4f","6eb16355-2f35-4b3c-94ba-687a77c34e23","ed99dd98-3acf-4721-b98c-3ebf0f17a1aa","d7a5aef0-566e-4fdf-814a-a669b283a5c4","0f20ae21-6dd2-4f67-9aa3-737140cdefd6","3f74750e-ad6b-462c-aa97-784db4d31c0b","26db0fd3-26c5-45a9-90eb-97a99401d58e","8478ba28-1777-4f9e-b33f-ea70dec4872c","96b04f37-1b7f-4ec0-9bf9-3546c05c36e4","fea08710-f035-4bb3-80f6-9a5dfc7b89f0","370ada48-5238-4d12-be2f-efd2890cc90d","eb8745e8-a5ee-4d5a-ac27-1e2a96e89132","4b5572e2-f272-4559-af79-09968efecccb","bb67ac05-5456-46da-892c-47350a33dd3a","6f786a23-c132-492e-b6f9-57a0bdcaef95","2a13932a-a5c4-4277-8910-bb3e91b92671","88f2f531-d77f-44e4-b50e-e276d4077f55","8d1baa9d-8857-499b-9fd1-83fbd609d3a1","be01b2e6-d42a-4878-b6a9-b26be965068b","350b57db-a80b-4bb0-b207-531fe602cdef","bf72ddab-44d8-4589-ad87-027d6e9bfb20","8449258b-ce52-4300-ad27-0c30bcc8ec2a","aed6b400-8306-4f99-b5af-8ebe425227bb","6c454a8d-d8af-4283-901e-594ab9303846","d57f20a3-7d5e-4fa8-9080-16f5efefd53f","1230d7df-e9b0-4d58-80f2-acb00b80afc8","33c61b8c-00bc-4863-9dad-2e02de473e69","c4d08340-567f-4fe0-beda-43de6493fa5e","468baa1c-2249-4ba5-8cf8-03a3e0e47b00","69eac9ef-ef2d-4d6c-a0c4-f50e3dd081eb","489d58ac-8167-46ba-a856-1738c100e08d","2fcd4df0-4a76-471f-83b2-7189c3a68fb7","8c629642-3e0f-413b-a8c0-10a6f30be66d","459070c0-d534-42ca-b039-a07af32026a5","5410b41c-7a3b-4b2e-8d81-7f71936ea6b0","ab57b9fc-7b46-49a1-9d1c-509cc691b076","b2d5b890-faa2-4ff0-b5fb-ccf6c5a619b8","ef26773d-1448-47ce-bf75-ff697f39132e","9439d167-b71d-4f28-a943-abe0d80abd4f","03af0585-90cf-40e1-8440-b05ca0e5fe63","0658b4df-f7e7-44c6-b27e-0981089108e6","1542bdf5-f466-4874-b9a9-7fc54cf09269","146960b4-1f31-48f0-9138-c469fd460790","bc163495-ca44-4c4f-a327-72b3cc51ebd1","91f3edec-e7d0-48ec-b49c-d9b28cf75289","018e4df2-e228-4303-8199-67df3f1bcbd6","1ef2d19e-013b-4c60-9f7a-a78558def85f","5a7480da-c911-4cac-b341-91df417f72ed","88887ee8-51fb-450c-a4bd-518e52467cef","f0f77aff-4a85-48de-b728-e8c8bd107654","318cbf3b-2e7b-4562-9e9d-664c7919678a","222a8f6c-a743-4525-8cc6-b7c4999c686a","1208a5b3-3ef8-4818-ab67-060922b0962d","a4b6fc87-31c9-4b42-a3e5-e09381a1bea4","0bb32d3d-e0a0-4169-8abc-4cae889077db","4c4bb286-9a71-4b34-8c9f-5cc90fcc6ac7","f4dc25f6-0412-4ea9-95d1-65f9e4f1e66f","a64e946b-22c4-4e3a-8c55-3edc8b79dbcd","2cc90a21-c0fc-422d-8d98-537c898203a9","2d1e6c0c-b97a-4af5-b938-b383b3cd9555","1446525a-c9d9-4152-8b71-af4aeffac6b8","efe69ecd-24ec-4dc3-a263-de67bab0b210","a23bad20-cc61-4702-9ecc-c88790c822dd","eabce190-5b2a-4e7d-9cb0-35a9b5dcfbf4","4ffcd5db-b485-4f7b-af21-902b674b7a21","4283fd39-b26d-4d1f-acad-df2145ea492a","2fe5cfe0-b932-4721-8218-e8d56aa0750d","3c8d2e54-ad3f-4186-9ed3-aa2742415ca4","40736658-a1f2-411f-8610-0d52f9b74234","7d4919f9-48fb-40ac-8bf4-d9f0be53106c","56a8b505-f968-41ac-93fb-2adeacfe431d","f797466c-e2cf-4db9-b774-ec6c517a80df","e381f3cb-a592-43df-815a-ccb38e915984","086e316c-ff11-4f4e-bdfa-0d29c9c96401","0a40bd06-f567-43e5-afe4-ea73d36101df","537562a4-9c0c-4cd9-ae33-26dc9ef38dc0","3a5c2b4e-0305-4972-bb35-c323c4360434","082f9290-dd5e-47bc-be26-ed716d3bf592","2ce699a3-8679-4118-99de-faefb0587f28","00af3ab0-aa4d-440c-a723-0c6d3fd5075d","7f6bea73-5705-4a86-9cf8-9e73b1dc4b81","ac695c59-3520-487b-9392-e2e41a93a43e","40029bae-9ce6-40b3-bd86-bb0e5c90c955","37461b04-93a7-40fe-99cf-725ed6428c76","33f3ff0f-bf44-4c16-b851-7881b6299801","cc3fc1d4-b6bf-457f-8b8c-c47b5221ce5c","0ff362b7-8944-425b-841d-b579c7d6b33d","3df3b615-1d5e-4b4b-8dc2-ca31fb277379","a6fb8ecf-6781-4573-942f-8f4ce65b18d0","23c94d3b-c168-464b-b5ac-d73f98b42784","2504c636-3b3d-4d8a-98f7-ee0f6bd4a87a","9790f3b7-42d1-48bf-8bc6-e8fcdd1dce89","1dc28959-8b23-45b0-9153-6c1badc8c6aa","e3b57cc6-18b6-42ca-b3a3-03df9b93f8e3","66695121-bd82-46f1-b04f-8786a3aa3e7e","419f496f-b3d8-4cf9-8f03-fd4a66c57014","9a8b9df2-8318-40ee-a66f-a04e05c62cf4","99dbf525-1fe1-4fab-96cc-b99d89a4e00d","84be44aa-3a6b-4888-aeec-fa377f1a2b74","db1c9eab-f026-486e-bf39-d62682c5928d","c7e933cd-68c6-4204-b01a-c9c1822d1e7b","0bfb1c32-07ce-4f87-a7ef-571c542b8707","085cb422-b936-418a-9d0b-9e8dbbeabe90","1f4e5d91-4362-48d6-85f7-26762062ebd3","e1cf31b5-0239-4c64-b009-cf52a5684123","b502ae3e-4782-4663-9802-6b01b43bb430","2440ded1-d10f-44cd-9c8c-05d24df31f2d","2ebbd35c-190c-4f6e-8f15-a89c715b95ea","841d0f58-b1ae-47bd-a250-f7226309c22c","76eccca7-6104-4915-8860-2d67965f662e","6f1ad155-d857-442e-b96a-3e12691989a1","74aaadc6-afc2-4876-886c-9c00ed10fb9a","1da8ad62-d934-4f3d-a638-62389c065abf","e3d2e380-1592-46e3-b7ec-8e6286fc70ad","957f7ff2-af2e-424d-9d5c-5677478dd5b3","6b5ca876-0b2a-4776-9968-d54fd60f20bd","ae87fc25-ad64-423a-b89b-403ea40c7f83","bb989b15-54f6-419f-85fa-95e204d79ef1","09d5cfcc-7b01-493f-bf38-67fd722d5774","b4120c3a-e61d-421d-bbdb-dfc796fbe91e","6f583cea-9a4b-44f3-a86d-5a437d17dcb8","c394034a-b6db-444c-816e-3ba125788e5e","7f121dc9-df15-4a75-b987-43083f709686","30f00323-04f5-4dc9-ba3c-fd29df7da91a","de545f07-2891-4875-aea6-e8c8d8b97a8f","2fbec7c2-3597-4221-9601-e9fd8fc5bb6c","99cfb9a5-6281-4b87-bdd1-51b5ff0d5adc","6e2efad5-6da9-452b-ac0f-e1b5ec2ef22b","205fd5c1-716b-4937-9136-5145568870cb","563871d8-c615-4da1-86cb-ba00232db1ed","b36b06d7-bdda-47c5-ad84-e41ad8bd7820","1d5566d2-5476-4d26-a2a9-477084c3f76a","a2a89e7f-57c2-458b-bd8c-ed1b5120a9d2","fa34d80a-65ac-4492-bd22-dda5d23d8ef5","60873f66-2f27-4fc5-8c8a-63ba93c01c9a","e9f2cea5-ec77-4c9e-87df-462c1b31f23d","68d9cd75-0e89-4e79-85cb-459a198cde20","28487ef0-3aee-452a-b842-d75c2e80109e","f68cd508-ce8a-4cdc-9cb6-dd37c83f826b","f4581cca-a236-417f-94f0-61654e608437","aad210c4-08af-4c14-bf6c-18069b3de23f","5c1c5dcf-5c79-457e-85f1-f8f2cba985dd","dd4e8272-cff5-44d3-bd0d-832fe5c6c0cf","38498444-a031-4128-b5f7-581d88f3f2f1","c66900d6-1468-4894-b769-491f39ad704c","effb7d88-78ba-4ad7-9b1f-64b5b033c83a","25268034-7c21-4c20-a97e-8e975f60b8ff","3a58c41d-d736-431d-9743-8b36f754b6f1","4a03759b-58c2-41bc-bb79-72ca0ab845c4","499be652-ad00-467b-8482-d4c06f54901c","4f634d8c-6db6-41b7-ae41-a440e4af4916","532d1d43-0a60-4d60-a5e4-657c5bfe0671","f06a90f6-a48a-46e7-8dad-991252a44da7","e1793d4d-0e9e-45b3-bdc6-2ae6d11ae2a3","dc5fcec1-8cfe-4594-b98c-5552a4280e7c","b5e1d1dc-7f1e-4f69-acd3-b9c80f54404c","5761dab6-8d6b-4e8e-aa17-fec8bb873093","bbaf0ddb-1118-420b-aa10-b7505e594757","82fdc3db-f37e-4a20-98fc-ffd65a187128","07f5509d-d644-4d2b-9b46-c9268bcf34b6","8051645b-f231-41d2-ae30-ec9e1e78b9db","4b69804b-6e3b-4d75-ae8c-2a66c517963d","f4a9a5c9-b8d4-4307-9aa0-9ccc67845249","b331fdc5-d73c-4af3-a62e-b3f9aea946c2","87933bfa-06ee-4863-92e3-794102e5e20d","7b9759b7-d597-4481-b5c4-a3bbe1540338","898596fa-1c28-4bbd-86e1-4b299c713f6a","c8f2f4df-f33f-4bf5-b978-1b2b8c42849d","8c0ada63-2808-42bb-a77f-4c13982455f3","661fc3a7-e197-492a-b1bc-6d2a7cdd7c7c","24fe2875-b2de-4b5b-bb87-8f0c316e341c","38591cda-9b9a-4e67-986c-31ff754cb654","5d2cc855-b483-4224-875f-e860344cb79e","04b4c144-c1c3-47f3-8b75-821ed02cdca8","ef55b86e-12bb-4a7a-9074-e7f02c5390b1","d1408af9-d584-4eda-bc6a-0ab824d93b75","7e1c1793-bc8d-4455-912b-079935393bea","baaabe1a-d8d5-472d-9c8d-65aa87c8c695"]);
+const HISTORICAL_MATCH_IDS_2024 = new Set(["993addee-f118-4294-a2e3-3071e1d301e3","dc164f2a-cb0b-4dd8-8c92-c8cfc961bcd3","139cc6c8-99ec-46e7-b1b7-c8078371de65","5e7c4540-c82e-45fb-a9b4-63599153d81a","1e83cbd1-5bfa-4cdd-a109-6315ad9ab3e7","06da3617-5145-4535-8e06-be7e3eb44cbf","d10b9ada-8c57-4a24-b240-a272f2d0d085","669e5694-19a8-48dd-b9ff-06b047b4a85d","805df168-5ddb-4c5e-afa1-de90e905f06c","5f832281-c186-419b-b729-04bdf9e839dc","db18c466-8b8c-4283-82a2-3fce607f915e","90e69e5c-33cf-420b-9c9e-3d43c00d7b1d","05ffbe1e-d0a6-4001-8bca-d70ed0070dfd","ff8e00fe-74c1-4de2-97b2-ee9d896f2740","85facdbb-977c-4d9c-b8cd-73df24c63b34","89014b0a-27a9-4a49-b4f8-40264b0ec032","c8681b03-a28e-4e6c-87b0-ef41ef7d17ef","97542ebd-6582-4bf3-b465-afab935234cd","d7b9b049-73ed-4b4b-9b83-78a796a32ecf","933bf8ae-1c19-4d15-8042-249764cce155","04db94a5-fea1-4dbe-acfb-edded32d8a96","63c632b9-26cd-4404-8759-f3cca28767a5","a484c8d3-bd79-4abf-9ffc-93768ddeb7e8","542c0a1a-5002-4aea-b532-02d2ca64c16e","71565209-4604-4330-9f6c-295afb088f53","1e3d31ec-780e-4ee6-9ac4-35dbcc1a6a90","decf9c22-dabd-44e1-b458-1318838168cc","67fbd121-0a8e-4728-a0cd-2254bfa396a1","d599bf6e-9996-479d-9646-4821e6a6ea26","0a99a95d-cbd0-4337-ad72-e4e3a36fa939","da687b03-3f4c-43f4-bfb4-36b7b50967f7","333f5699-46ed-4e51-8db1-e3392f6c2590","4974f2c8-ad87-4a2a-bc5a-e366df2211b0","3525dcaf-6504-42a5-9341-1885ba7efcf3","0b8e1663-437a-465c-ae54-ee38842b21dd","03dde015-e76f-4428-b6ed-5e8abd1fd64d","538dfad5-e27e-4931-82df-9894fd6ff0c3","84ada9a4-6ecc-4d0b-9077-8f32214d50f3","b2a4ff9a-3122-4bce-99b5-5e7614c2f2b7","23f9313e-cdf3-444d-9d9a-5396a5fb292e","6622d921-cca6-4fd6-89ea-ace2a377ae00","98411581-853f-429c-970a-89569fdc6418","b925f2d7-d41d-4460-bb1a-0633ecd05b43","6524f18f-6a0a-4582-9267-d150856f2bea","e77fa82e-172d-44cd-8699-7e993028ef58","9f5d5734-1870-4d0e-b689-ab68001db2a0","8c13c22d-f37b-4a25-bd77-87e1817f6118","6ef3e8c5-c86a-4a90-ac71-c1bd918c6a01","26f126a8-90d0-4121-bafc-7b1c28cb33fd","8cab6719-555a-4675-90f3-0a5fa9ec2696","aabb8e2b-cc84-45f5-b2b3-5e439c45d4f9","947fb7bc-79b2-4311-a944-81c3e3140533","dbe9868c-acdd-46cd-947b-a29d33e77d1a","f25e025a-6811-4124-bd4c-a4e3e0fff323","d5d230b3-c633-474d-871a-95ac6b40da2e","eb984a93-2fc5-4967-8ff7-effa36b935d8","d5d4ce34-f455-4ee8-9a9d-6b70610a1734","2becb0f0-cb07-4ad1-bebb-863feaa126e7","98943a43-4122-44ef-ab18-5649fa849350","6a543b9d-b494-44a6-8701-30b3cbf11b61","9bc5b5d4-343c-46e9-8345-68eb7e460fac","d4e1b1bd-0d0f-48ca-a996-8eff1bc445c5","944885ba-efb4-4518-8c0a-5948f8446c2b","124e37ce-f4d6-44ae-bb0f-d63c54dfa04c","7fbb6108-d1be-4346-9fa4-fc2d867e6080","1e03851f-9838-4337-9cca-619962ddf4ab","41905945-003e-4378-b7c3-abd135e0a96b","079712b8-10ff-4330-8632-7a60c94e1116","5c4a680e-b642-4217-91bb-472237466dc8","a36bc268-51d0-4176-a9e8-82b701c16035","12a4f931-d380-4764-b673-1a86f44798d1","bc6c4dd9-9d57-46f9-bfa7-a7061e04a75f","063cc5e1-9087-4b46-9779-1f733f236a44","49a1fc3a-1a0b-424f-86ed-ff8294f44724","bfce8c66-52b1-420c-a3d4-15b456760651","31eba0fb-0f00-4339-97a4-0a619ce254a9","0d2bbd61-d273-498d-b106-1622929d44c1","391699ec-8aca-4720-8eb5-bd5224be7168","3f1a6ae9-ce5c-4f89-bddf-9040ba74b9f5","12058b87-40b0-464d-bf5b-d18583558a80","45fb727c-529f-4adc-821a-878c5de9a715","31e64095-6435-462c-bfdc-fed1266e9520","ad3057ea-6eab-4ba0-8e67-91c8367e15f6","453b0c58-8fd0-4dc1-9011-cf98ba901b62","c02b78ae-7cc7-4b73-934e-a9ef7230b1f1","54b7cf70-0672-4f9a-9ebc-f3559f138dfe","9b082184-21dc-402d-919e-e944d1283901","9caefd54-3e1c-4844-b378-717caacb047d","6f96ab3b-9e0e-46b1-892c-32553b606871","9da40ec2-176c-4bf0-ac5c-d09929ac39bd","dd6bdf1f-565f-4d35-846a-93529f7a4def","5f3cda08-3aa1-4e54-805b-8bd61c27d027","ef44da31-a3ef-4811-9581-5255ffea0667","cbe446a0-7c0a-4a73-9f50-180ed23f8524","093c1785-987b-4e89-9b6f-55f1c4dddaaa","2768131b-1703-44c4-ab72-d9ba38bbdafe","6ba5b120-2cbb-43e0-8fc4-5c859511c285","16593718-cafd-4969-a9bc-c01805ef304b","7eeedbf6-98fc-49d8-a090-7f9e6d4a2d78","7fd59040-05e6-486d-85db-917f4d3efc4f","e49b98c4-5671-4dcf-bd2d-450c881b706b","3ab9f68b-84fb-4874-9004-adcf64136936","e45cdccc-06af-46df-ac7d-e1d9e76cb856","0298ebc4-01c8-4428-81e7-355d427777f6","d26b5a68-0024-4d0e-9549-15929501f285","515ea699-919e-4d90-83f9-ca2f12a2e6d4","36903bfb-d824-4624-bcc1-bd6b28ca2cd0","c9d218a8-abf8-4248-a174-cee209ff40e8","10a2fbfe-4f2b-4f8f-8759-6ca83d46521b","0a7b5d8e-0ea0-444d-8e70-41c8ab625814","09c28d61-8b42-49b9-ad66-e73bedfb7e4e","f03eeedf-fba9-4efd-8fed-858ce75c9884","53509013-8af8-49bb-90e2-784343cd2096","90dc2c5a-b126-49f8-a74a-14641c8814de","36d8c21c-8ee1-401f-9f25-f81e7bc7772b","71cad5e0-426e-419a-ac08-0b43c2856785","dadf64d9-e29d-426c-b4ff-9b9058a89e11","a6aa6728-71bf-49b0-ae8c-d77d6e1c01ec","17f8020b-352c-430e-98d6-32794ba7f844","355bd93e-02ad-459a-92ca-2c2bfc891ce8","cf773f1d-92b1-45cc-9b93-d915c4de442f","1fb910c3-891a-4ec4-b1c3-c23ae016276f","f7ec7860-9f4f-41d8-a683-8ec54fade359","c20748af-57a8-4250-941b-b0b15f65e651","aa2ea00a-13af-4fd3-88d8-baa6ed719aed","2a37b54b-4ab5-407a-b816-0861eae1234d","5e032800-7e3b-4461-b2d2-d9fdef94b153","14440148-4a5f-4816-9e31-06c45e19750d","96da0c18-84b3-4f34-8348-fe221220f636","4e72114b-609d-4e93-bfff-8b8782b81448","2331dd40-e72b-4e17-bd06-f022261a5573","27ef8d6a-9f19-4e90-b2c0-bc99a2f97452","d7cd1903-eab0-4bfb-9a4a-7ec37aab0b9d","b3a3bd37-eb4a-4370-8f90-061cbe6958c7","f0c836c5-84f9-4ccb-a2c7-2f7bc5211ef8","a333b4d2-1f24-4428-a746-a1a22aa46e09","faa46776-956f-4424-88c6-9d8485f0ba8a","3a9179c3-934f-461b-9247-fb7d110b20f6","e53f64e6-88b3-4375-8f6c-f63733e7a35f","ad2dd12c-1b1c-47ed-88d1-cf4725f731db","044dce84-16ee-4705-bd1c-e34f0f183be3","f2d3c452-8a91-4bb3-bad5-4417cedba1f7","cb9edb65-f2e7-4074-b8bd-06e0f8d27bac","04126e67-fc65-45ba-a4ce-07b99e22c21c","6d267fcb-32b8-4ce6-a031-d7211a558560","229bbb20-9f4e-4a4b-9d24-a42aa4333da6","7c691d9c-7ca2-479b-be71-80c158b5b518","48c0f46e-987f-4572-ab9c-30bd041be855","8b234ecf-664d-40b0-9340-f1d564ec20fc","8fb98a0b-31e5-4a7a-9948-1f082e068354","1b5bb8fe-6aab-4b84-831a-d694220f1363","875b2b71-9c24-4125-a3b2-6f2e92b5a18f","535cca42-c671-48b1-953c-2afca7928c59","d3b893fb-4461-45c3-a9bd-6b203be01367","c8195b29-5322-4f9a-90b0-cb7bf2fecddb","363a517f-e5e6-4c6d-be67-0222791868b2","8a6fd0b7-cf0b-490f-b7c9-83ab3c4fd61c","1bb3282f-c853-411a-9567-81ae86aed113","c702f32f-5f2c-4c48-a430-09e65913371d","472278f1-e932-4de4-8dce-d32c0d21abaa","6a0d3e57-0181-48fb-8ca1-b68920b48e3c","0b4eabe3-5585-4dd1-a9c2-c2093d52dcc8","b20aa334-9f09-44e7-ad2c-545ee19da884","204408a0-8c4c-4b03-80a1-2ea9a6667f8b","3aa7f149-3104-4f66-8085-dbc823256bf7","ff0659dd-6917-4e1b-a4d3-f54bf4dd9d70","cf0684ea-c2ea-44da-b1a9-3bf168d2b1da","5e084d71-034f-4681-8458-f3bd234bf734","78f8bf37-9e4f-4f4b-ad81-3447fc80da73","861080ce-9035-48fa-9c24-40450d4631c2","722c93f7-dc02-41f7-b34a-16d99282951c","679b1ed3-3b29-486d-9a1f-5cc4c58f465a","0b4eca03-c25e-4b32-ab6e-771a18ebb232","06a15098-2567-4d5d-a6d1-c87fc169fe3e","dce9efc1-37be-445d-8e61-12c28cac81da","d4386b05-653f-41bb-bde9-f9fa77c02f57","48bcba66-4460-4e71-ae78-e4083c3ece3d","a36be4fb-c304-4aa0-a426-34d7bcb635d2","3df44a2b-1525-4183-9e2e-da0c9d19b168","8de90459-2c30-476f-b860-6f67f14b4145","b8628ee2-e178-4b54-b66a-45a161e223cc","19e16987-4df1-43ae-8298-4aaf2b1e2183","60300750-971d-48a6-b2dc-25a3dd456aec","e08cbc75-af32-4912-9451-ea4d2d636993","de8996cb-0794-4299-b6d8-0624ee5955ff","494f7e68-43c8-4d78-b04a-21d7bd218a1b","d34c724f-4716-44af-b888-b9fedccfbd22","abf2fec3-9cde-4469-ad64-952de6e94ecb","a738f281-ffb6-40a1-989a-10a5cf4fba36","b8908099-22d5-4e99-af27-a929e3fdef52","969eed6d-d7f9-48d9-9417-2b7ffa6f6a16","ed8224f9-a1f8-4f2e-beee-b42e01fadf3a","71327d26-1c38-4e4f-9b83-a1c2396306ea","7f0ca24b-8790-4527-890b-2e38aca8e190","98f60887-d913-4162-885b-110542d16508","a17debda-5272-4220-9004-44ceef9b4911","1c014370-e4c1-44fb-a902-0930e85d4a92","64eb9793-2213-4e57-a071-e347692dcc73","c833b13e-4758-4121-b4c2-f8cebdcb9312","314b1bd6-3fa7-4aa9-a654-a225263011a5","ca4320c4-88e3-4d71-9ff5-8c7be4b77b8c","c7af1942-a509-4852-a653-442c6727cb81","3bfe3f81-63bc-47ce-85de-895578f256e1","39b0df7f-235c-4be0-812e-709b79d03a01","237a7961-52be-41eb-b3b1-c9056f5db57b","73530266-91b2-4610-9eca-6975268ca933","1f41b588-255b-443c-bf9e-0936ae251046","5a2070d4-211e-4647-9e43-b9b3ed502af2","0bffba43-32a5-463d-bbc1-c33c39850fb1","0952a594-3264-4c6e-a304-6b6c9acf6ce4","2485396e-8e8a-45d0-98ea-6db1bc14627a","341af196-2f61-4392-a748-07badef0d707","01666556-056f-4be3-8c54-5ef8f13dd220","16d36c56-6f20-4513-acf1-ab178c4e8a32","459d98db-cbb2-4b2a-bc95-e2af11a21874","591e55bc-e767-41dc-b2b9-f9ab56d8b798","8aef3315-0e2b-4afc-a070-09c542e8f8af","a4d248c6-30c8-4c80-9c51-1f5cccc55c59","2596db96-36a2-42eb-8546-813d5e8ab500","0b5d49cc-a0d0-414e-84b1-3d2ea0d1442c","2f993c55-f2de-4e1e-8911-8c3ff41644ed","e27809ed-b10f-490f-884f-b5abeda368f3","e6b5e88a-a252-4b75-b5d6-ec20856b2dcd","0d53311f-a31f-4604-8e99-c9330d9e729f","bea2ba3c-eba4-43b7-b4cd-f0521660ead4","a92f8ad6-b9ea-46c8-b477-e679a186a589","6d9c67ca-138b-45db-845f-9ec8314bfe5c","d4ac2875-f1a8-4db7-9272-1ba2de96b242","2bbec6fe-08e9-4a60-89c1-788cbfede386","0d18766e-498e-4a94-af1a-b5cf5201992b","c1259caf-d5da-4dda-8535-439a7394d43c","d5bf5d94-7d15-4181-84c9-5ef15eea5a38","0bca07d8-1ac7-4c30-b47f-9feade7f229b","75617c71-e59e-48b5-94f5-41701d0b04bd","a215b8ea-43e5-4aa9-b4f1-6f8ba2256ea9","70ea3a1d-48ec-42a5-afe7-1f99a9be34b8","5c8998c5-fe30-4bd3-a4f8-3406e90e260d","ce2ee408-ba4a-4398-9f61-72b99cf607ed","fbe6ca12-e6e3-4390-be3f-28d0a8cec996","6aff21aa-adf7-44a1-8ba9-58b93d13cbee","409d4c79-0f7f-432a-98f6-16b39f1908eb","00b8cda1-8be2-4732-9c7f-7a57d20b08bd","a8d8b0fa-92ff-42c7-a1c6-911b1a64ef72","02fd862c-7131-4b39-b755-301ffbbd9eb4","0812bf86-08cd-4cb6-929d-5602a261e033","d5aca77e-aaf3-4f22-93f7-62586269c3d3","d8b07128-34e9-4cca-90e9-eb4a08cd7f0c","ea577572-9524-43a3-a20c-1c3cdce02078","af9c5e37-211d-4c18-b8ea-2659a9571d63","d5e58c18-4df1-4da2-b389-4175aee18f7c","74098102-9d02-4164-b094-f02277d24e52","0eb10845-9305-41d1-b176-ee08bd0a5a92","b57b6995-2cfe-420c-b283-edec59d8aae0","438c2c5a-21cb-4f4f-b0e2-f24035ba27a9","0ee9b5ba-d94e-455d-8054-0f9fad70457c","e6a6930b-4700-4dcd-bf78-cea859884453","d9651aff-81bd-4e51-b200-0c24e4e33eb6","eea9bbf3-2867-4528-b447-d25828343654","5ca00792-8060-4b88-a9b9-e81555b7e5e3","f18a3d3f-b94f-4445-85cc-3fd478fb08b9","05b5b46a-7404-4a2f-9878-012c13d2c48d","d0dcb059-043f-41ff-8c13-9b12e93bcc26","15456fb0-a636-4189-b1e0-6d32bfefb56d","09b21ce2-6429-41f3-b47e-8218101d8d6c","637ac5a1-c89a-48b8-95bb-90002e521f4c","f7172f74-1042-4fb0-9adc-fccb2da7b815","c061367e-bdeb-409c-99ab-cc15e4542769","2cf05610-edbe-4ac8-9399-c900be7cc2df","a7db0930-87ca-44ed-8f71-2ff42684abf0","2cac56fa-dd03-45f7-b298-28d42450c5a2","ec842d99-a110-4caf-979c-ef3d466d17db","d3bb14be-01fe-4708-9dc6-34e84e9251bf","09465daa-3873-482e-a290-d5a7978d7428","da196fc0-e63c-4522-82c0-33ee82eb011a","5a678e63-fbcc-4334-ac36-1cffaecaec97","40ffa432-3d4b-4eb2-8f96-a15505e1d483","7f271a14-7e60-4582-8624-9ed92089936b","dfe8ce09-677b-477a-8b9a-153804eddc42","f8482468-7a42-43b6-924a-5380b36e2ec8","a8626c9e-54e1-4a98-adda-1b9465d25fdd","af77352d-1702-498b-bb7f-120a479dc50f","ddca29fa-9f4c-48bc-976d-a8ec236e3833","fa037309-fca4-49b2-b839-f5d7457feb1b","af0b252c-6dba-4b6c-aa83-07ac311da46e","057d19bf-ec9c-4d71-8765-fedebe893aa3","f906b201-7c4b-4373-88ab-4c9bf30e5bdb","c6e5d512-e547-48e5-b13a-85abc5f8661f","d580ac9c-8620-4637-bdb1-310885b98cb5","1a131739-a8bb-457d-9f86-12f0bcb4493b","2dc4b6c6-7c8f-4027-9256-7a3ff6454f1b","8280e096-cb21-4d97-ad37-f52c3421e28d","876299e5-217b-45a1-b767-4c018605c752","5e56f8f6-154d-49c8-8f84-a7dd7588230b","59efe0cd-096b-4a96-a843-42e9904b17f4","992ab46a-3c96-4be9-8009-23a5de5f5ac8","3aaaff42-dac3-45b1-b4de-916270874ce4","08cd102d-4b63-457f-a59a-fec3b18df2a5","3cd82ded-0a64-4833-af6d-0e058448fb51","eafbf9cf-c7d3-4b78-9c14-50da663fb1b9","e8dc3a4c-9a8f-4760-b7cb-53980f122347","1356bb69-becd-4a7f-9a5f-94c4107b9789","609d8497-4b4c-418c-be5b-7a811e292707","320a8b7e-7adb-4832-b020-32736f22a1c1","81eabe50-a747-498c-b596-91b1433329c6","6671bb3c-2a96-499c-a42d-e6b8e8f82fcc","c81637d7-887d-447f-9985-c7eee9a457c9","5bbd17e5-8696-48e3-95b4-324c2e9aab11","f9438b5b-d506-4ac4-b038-e4bd3c7c76fc","8a296290-1da3-45c4-af87-45d7ee5ff314","55a58384-6eb9-4f0e-8033-5d6e6b210447","38a9c413-503f-43ea-853d-cc26b2b7f37a","eb3e3e39-2e24-45e6-88ff-4be0da05ba2a","7bbd1375-9134-4312-8646-1af7f11e0ae6","3a569d62-aea5-437a-a855-e64ab8e44ce0","e2e79070-49ef-4a67-bde0-694eba0b0741","f86c2a94-e24d-433c-8a04-602b408b8d41","c3f991bf-6a75-4d9d-813c-d0a050822c9e","baab53e6-c9a6-48f5-b39c-9012f2215f35","dc02b212-60ed-4043-946a-ef4d0cb206fa","4050dc8e-4d9d-4dc8-83a4-d8f4491fe7ae","0893f944-5234-4b10-a5c8-e5e233dbe969","72bfc87d-5102-4839-a1fd-82914e8f2e0c","902c69f8-71d3-4e8b-916f-3623129d0028","044fce23-8093-449e-a229-bc986c3e54dd","d5a52050-9c9b-43e9-8fbc-200d618c50ea","90786b15-67d6-4ff1-a9c2-d2556fe2f317","4b39fd75-c8c0-424e-8910-f7c227d6df84","7dddba05-0f28-4edd-8149-c427d0d98c8f","1e13d7e2-53ec-49eb-b1b9-726697b6f0fb","dc0a2349-2b93-4e29-8356-d23d72c9ab3b","b92f8dbe-70d6-4c81-b9bc-15476762af5d","575106f7-2fab-4a46-9833-9015393bff6f","1e78764a-b196-4478-8aa9-114999fe414b","2e4c6ac3-52fe-4495-9508-f275fc37d2f6","e0a10497-ad6c-48a4-a8f8-8b5f7ea3523a","eee12020-5b76-4f15-a56f-2214ece74dc8","bffe5eb2-15cc-48c1-b70e-ca86c44a36f3","2ee18510-e463-4b1f-8bbe-eb694a3df6fe","e603cbf3-2194-41bf-93cd-b9158ee6a81c","775966d7-ef49-4279-a855-3d7c911dc56b","42780b0b-d874-428f-8430-4fdc425a57ba","d006aeb3-817f-4157-99e0-744891cda115","fb80b9d1-cc0c-490a-94e2-3f6936a31fa6","e5d47b11-f647-4f65-b250-2467010540a8","79e867c0-5b7c-4807-aa97-e7172660ffb0","879d9a3d-e2b8-4ec2-bf3b-79a5cd11705e","d56c9e38-870d-4a6b-a25f-3e7bab64e39e","4cc8504b-7e49-45c1-bef1-879159a7ff21","2ed4f91e-ab35-4d13-84f9-089fafde26a9","0de57fb7-6a8e-433b-96d3-de5df238053c","79b36888-0afb-49ec-afcd-432f747a158e","2dd36e15-aa18-41ec-9890-66484f347359","746a5b01-7ea7-4651-b500-c4205ded67e0","369b098e-556b-4308-934d-6a604fe82b21","b819a104-ccb6-467a-afbf-8a145ef9c503","834c6ee2-85f3-49a2-bc34-92a9e344f836","3d9e3e6d-2ebd-449a-a788-9a723dd5b2f3","195b7c16-3d4c-4f49-bf1d-08da931c1bb5","4f92ccb9-73fe-443e-b21f-623ca350de8a","66a69b21-640e-4c8d-80b5-5df0d7319b40","894d535d-df58-44d0-8ae6-bd7f06a08b0d","cb84790a-cc18-4087-b732-e0021a41b907","f1ce7092-3cf6-4556-82f5-8c5b02865142","679adb43-56ba-4a13-b90e-8f5ff0ffbc80","850eb77e-d703-441e-9b60-71679edfdf93","588d6244-033a-450f-af35-f99ff39f4166","8b2962f0-488b-4ddc-8df9-cca7c9391596","35f52f26-4b81-4b78-a247-6eb3740519e7","0ffc1056-3a32-460a-83c5-b4a31123e011","d50eca90-1138-4863-bd4c-c5acc946b705","1cfa39e6-4924-4115-84ca-8aad6566c01f","cd5df1c1-1423-430d-ba0b-eec06ed6b01f","0b176e87-f255-41a8-8745-563c22bc1475","f07923aa-4eb5-43d4-a5f5-c070be03413f","07f1a884-25af-4ff9-8caa-7b5cf81963f0","4087b0b9-eb10-4ba7-9bbf-2a8cf5e559a9","0e4db5e5-c6f1-4e62-a0d9-acc9f9567c89","b3faa7b2-cc9d-4c4c-a43a-d3e63b838fae","feed8220-63af-47b8-94ee-26ca26e6d9cc","932329c3-114c-4e3a-8139-51b8dc352edf","ad52968d-418f-49ae-b4e2-6227b3afb3e5","ee4b72f2-33d5-4616-86c9-e34605f31d43","f0b9be8b-fc3e-45f2-86d7-fc5f8d538b87","57aaf725-4f4c-4cda-8dcf-2ceca0f51572","6d9dbcee-3050-47c5-a234-c0f0120cfaf9","513d3dc1-d392-40dc-873b-a7376cc32dbd","e4d3f914-41df-413f-a2b9-a483bda160f6","43ddebc1-acc5-4657-bdcd-383f46d6879d","af703da7-0b4f-42d5-9069-0f2547b08f3f","8a5f2827-6f99-4b14-bf6b-9b3cd2979758","eed4b418-b5b0-4e88-a119-93d4f656181a","c7c2eefd-e1bd-4581-a428-cbfb0a9716db","9a14a3e5-ea90-48fa-bd35-b7c517b71e0a","358c3b24-69c5-4f9f-a993-5d929633b93b","a0b7bbc4-b345-40ab-a32b-e66162e591b5","c9da4422-4821-43a9-85bc-c6192cc3508f","3aae49ed-ffa1-4460-97cb-d13a53bb46d6","696dfd68-7376-4d6d-851e-9a89868593d1","d70d65e7-4c88-4b43-a4d1-252f5cc663d6","9a3f6ee8-5ffb-4699-8c2b-5af3eaccf138","2b52d000-5f32-443b-81fa-d34c15306a6e","feec4645-0338-4eae-8d11-c33934a20c55","009f6f06-a16e-4549-a708-f7c1eea38602","15c5fbf0-2d8a-4734-b008-3e371d5d1a1f","72ac5d8f-8880-42c1-a859-de43ea26f4ce","318194ee-e633-4045-a66b-5ff022a6072a","98a69fe8-d72b-425b-9e31-073086bb3bab","42a859eb-1620-42c7-ba89-6555b44dd557","c668601b-d464-4515-949d-566170624ade","b8e21bbd-f26f-44cc-b990-5c21a18db806","1e5e21cb-5f49-4262-a406-f236a8a44ba5","0f61d0e0-7cac-4ecc-bb01-e1eebd5fb72e","71c83ede-9925-4a8b-8ca2-21eb956a2c0c","449612bd-44ef-42a4-a458-b8f7428fe254","2982ea4f-28fa-49f3-9f1d-af7431dce4af","d8993f42-ef45-4901-b222-125c2c2df190","bb2a6638-b813-433a-8508-2b00a9022a29","32f60fd8-4180-4c11-9f21-c97809475d78","a2744523-ec8a-483e-98e3-41339074e74c","6b7ed897-5820-460c-9800-6298921581e3","9356682e-8da5-4757-8f57-4cc0cdf6fb71","4fe9e684-56e7-48ae-8681-499fc2f256c3","9c5f28de-040a-439c-a1c1-9cf3f2a7f3ac","5b6c4d07-935f-4de1-b6fe-125d6ac3dcb0","b1e268fc-2939-497a-9f21-9de154806cdd","fdb029ef-cb5d-49fc-a8a5-21965d7f2b9c","a098db70-39e7-4916-89ac-51641febe1a0","58823c95-9278-448d-96bf-01777c272a1f","ad28b561-d3d6-4587-95dc-7f879937507f","d2e3a648-a0f0-446a-a429-7a1e18e965d2","b186e7d0-d676-4782-ad87-5ae2abd51ace","6e3d8269-b347-49fc-8eff-16bc30dedc0b","0683a96c-1b96-4380-9cdd-c2b7f14bd11c","2e8919f6-4877-4c26-8ef1-619a74b01b34","47ee8bbf-1f53-4913-bf16-feb729653b92","1f7d21b5-62b7-4668-80d5-4619c3dbac4d","49d061de-32c0-4032-9820-ee4d73fec6cf","c258a36d-3d88-4632-8346-5d2e3ba79af5","073077f3-b21a-4107-95bb-f4ccd2ba92b9","fa8ce6b8-d4b8-4b2b-af0f-2d092636aeae","27b83778-780e-4be0-aed8-7de1c2bbccd8","dcca61d8-60e9-469d-b90e-973baae6bcb4","5db4bb84-7fc8-4e53-9da5-d6739190bbe3","8bca0e62-08d7-4985-9d8a-7e94b6bc9834","628ae9ee-66d3-41e8-b5bb-b88cfaf2f5f4","10f344ad-bdb6-464f-b3bb-992a75dc401b","55047f57-a096-45a4-bd61-66823bf4ba2f","e83bdabd-d63a-4651-b315-ae428c1a1c30","0241bb11-a6b8-45be-bad4-bf09e6d60f3e","6be0c01d-744c-4aa0-afe2-7f0e3f814989","39446532-fddd-4b92-a190-9fde56bee034","f80aad66-83ef-45b1-8e7b-d3ce768645cc","252d07d4-fc5f-49ba-9191-8723d69288af","da61f53f-21b2-416d-8507-4d132365f12b","3a553161-dfcc-4315-b049-781c03287a05","4a8305cc-9975-443f-8de1-dc64ca643249","7dda7d42-a323-4ec5-999d-5691be6e1fdb","1b1a61a0-65da-4dbd-b2ba-f04e73fa1bc7","fc3d16c9-02b5-41d7-92c8-9de400880bbd","5df6c707-9a3d-41b5-a4d1-115bff3d8adc","e082774d-4ecb-40e5-97e0-39ef6d5bd504","ef1438bf-be54-40aa-94e7-4ec1708bc6cb","866eb2e4-1400-4eba-862a-ac423b5ebab5","6858eb96-fdbb-411b-acf4-747defeef08e","4858391c-f6e9-48db-a243-75c6eb85b8f4","e2f8f49a-2374-4f72-a9a9-24b565917c44","05f4ab58-64d7-4c96-a37f-4f8b03bdbd84","84bea0c7-8eaa-4e3a-be2f-4200d5687546","976b9ace-11d0-4a08-9c9b-1b355a0d84c8","ee4f65ea-009f-4bda-9c65-778f3eda6c88","33d4485e-032f-4bd7-a671-f779155b72db","346c3e0c-a812-48e5-929d-9b71857faaa3","90d2424d-ee86-4b0b-a227-4b222fb44bfd","5a470e1a-6850-4f17-a281-b604908c7de3","0b594be5-d489-4dc5-86f8-5cb50aebe853","ef527393-dce5-474f-a9a2-70d16774aad4","bb91a6cb-a6a3-4c07-a241-ae7f2f0ff1e1","a605cd10-7474-4f74-893c-fa41092dbf39","2a7a6fbc-6ea5-434e-8a52-dad81bd20528","7f543eb4-72be-4676-a600-5470dc2f25e3","17f945bc-ba8e-4a40-a234-eb8d04697a1f","85b726ec-2bbb-48a8-ab3f-bd6134a24c56","c144a931-1cc3-4375-a55b-ab7bc9d12aaa","fbae6516-6d59-4518-ba16-02c4a875b584","aeb2c72f-1ec5-4243-9a20-6846531418e2","15c01edf-64d3-4c22-8075-3b0cec218d8d","f4b70663-bcc8-4af8-a5c0-8ff38732dddd","13d0f2b1-abb6-4178-9a98-428c43a149d3","d51948e6-4a7f-4e5f-9422-1b17e6a15180","523a0863-91a9-4133-86f3-90cb58a9fa29","2afd1150-32a1-40c3-9eed-8c76fab899d5","2b0138bc-85d6-4950-95fa-c7d2f6849c47","856b1691-aefd-46f7-9171-17600e9a25e3","319765f3-1eff-4c9d-8365-169859d5f1f2","e9d08e5b-683b-48f0-aa81-4adc3e0e9eb8","ecb2cf13-4391-49d9-9cf3-16a934429754","bf0b9ed6-7a3f-41c4-9c17-0f653b877649","7e42478c-34a3-448e-8229-d0d953163511","51d59d8c-5e1a-421a-ae9f-22278f39638f","04bbbe79-6151-412b-b653-098821552a18","189ab7b7-b8e0-4514-ab29-306cd0656e84","e60363f8-6f89-4366-8d4d-978714ecccaa","c48c10da-db61-4957-a09a-c8cd5ec87f99","4d763551-2a73-4fb5-b989-665da241f4e2","9166ff02-77a2-461d-9401-545d243c4506","6b3e2009-0c0b-4cce-a44b-0aae442d0fbd","52dd1048-4bde-4bfc-ba6d-59c927ccb826","6f950bcf-cb64-400b-8687-5d1b37f35662","fef036f6-0cfd-4494-aaa2-2a03f581c68d","cc87cc9f-5e54-43fb-a27b-ad93f3b32a26","5c993983-2116-475c-a71b-2c4e46691b12","c6714cd4-6c56-439f-997a-c467de42465b","7e4010cb-e28d-48ca-8ada-d30cba8b0855","ea035b38-e968-4256-a352-9a5d4019ef69","57c00e96-efc4-4683-977a-8fe1d5dd4579","e0b0ced2-1ea7-475e-8266-0435dc5f0b40","d8633e84-1715-4fc1-809d-9ea46e54e657","86547e77-dc94-4907-b1c9-157fb59f5fb3","89d4b148-6082-4fc6-9634-66e427a1815b","6304d4ae-e85b-4511-8e2f-965b34e523db","c4713ff8-d19a-4a8c-96f8-4edc7da8a528","51c8703a-abe1-4100-98db-e6a4233472af","491da87a-6c0f-4aa0-b9a6-6ea75b0eaee5","c8adea45-4b89-4276-b273-bb9542539678","a26fa7bf-c32f-4744-99c2-3013a71f1faf","c71e206f-4dbc-4718-b42f-6bff1def430c","0c7e1ae0-18e9-4c83-b37b-a828c30b02b0","658cfe13-ff9d-48cb-be28-456d2e7df675","abd86b41-c5a6-4789-b8bb-cd2ecac108b7","5e006803-dd06-4f8b-8edd-46d1a6d7d039","a02399ff-1869-49be-b1c5-d36101c8acc8","eb0ad4b1-a8e6-41aa-803a-f573706292e2","f16a5995-776f-42c9-b07e-053685096727","d9cbd1ac-749f-46d0-ab62-71dad317fe7f","79d65905-5de5-4664-866b-671179546d87","2eee9645-bb05-4cf0-98a3-c05652d06b87","08e92dc7-8db0-4553-b210-e994d6d09ef3","6b289758-bce3-4a62-8886-90aedddb43d8","7bf1baad-eafd-459e-a01a-ce4cec23861b","3131cd92-7c52-4cdd-b79f-0fb0c995bb40","2aef5fc4-5bd3-4aaa-ba5d-54674a22ae74","cf371668-67fd-4dbe-bbc5-01779e28e83c","ad2f6443-9f09-4214-8496-2b38d887f60f","6a0a732c-d23e-4be8-ae6d-9a6aad9d438b","ecea155b-a764-419f-aec8-78ea7df8f0ec","ab3cce3b-931e-4cef-b2d4-84d6ef35c2b3","e6772865-7c68-4f3b-8e9e-5c5eac7dacb0","7635cb29-b8f5-40db-a982-2f5eb7adc068","277835c2-9056-4f9d-948c-4a26751caa2e","41fabde5-e045-41f1-a817-6e01e94d17cf","9e03d232-6448-425e-a6cd-805b772d01e8","436e9974-a5f9-4cf3-b98e-16489ddbedca","3af9228c-e681-4f6d-9621-97f27d894c5c","fc042e83-9752-4da9-bda9-e04076811d6f","8fd19a72-2f83-4cd8-b2d0-6905236bb67f","5cefa914-6888-4a77-9633-e211e9de74ea","8571d0a6-a3fa-4e0a-92be-5d76ecebf202","7f6d1a54-1c78-4331-83a5-6526979c57da","4d01517e-cedf-409e-a037-ec5667f529ee","b3ea6243-03c7-4aa4-b086-399d75d6ebd3","ad896abe-8c2c-4052-81c3-d81055760d75","3620a03a-a849-4d0e-bf85-d175987d6edd","ebc56ee3-6cc8-423c-8a39-2ec641a9562e","1ec6fcf6-54be-4e29-a849-c9af4d1499ec","c898915d-4a57-49fb-9455-d705fdda6d3b","806ba94a-3655-4327-aed1-def1a25d9377","1d847718-1302-4b18-ba6f-cc152582d369","3497b92a-d02f-4d3c-b894-8fd9f6a0315f","3741e362-f03f-4b27-b715-d572cc7af98c","03ca167e-597a-4b82-8a06-4865aa4fa11c","c2959736-f3be-469c-a929-89706273484c","ee90211d-5c49-44c7-9f4f-a696499271ec","17e72f0a-3a01-4d94-a39f-d369eb4b5531","265b704e-1cd6-4865-beb5-c21ee76e6a0f","431e906b-89d9-4245-8145-c5450f059fb3","0e3f6928-d0ca-4118-a2a5-15325124178e","9b370410-53b4-4ea4-ac5a-71b284e3386a","72565e97-9c42-415a-a1e0-50cb5bf20d4d","fea47831-8742-44ac-b942-1cb59cf4eb27","4154fbe4-9c09-4e16-8d13-7359f0a2aa7a","91847d9b-2ead-4e7f-954e-8d0b6637190a","986afe9b-de1b-449e-858c-7a9d21b25c12","62dbd74e-a5e2-48cc-b424-a18876b5cc1e","563c05ef-9233-4444-b8eb-5f3d2d77b615","29767ad9-74a1-4560-b63d-7e0e63238d01","2070c122-acdf-4e93-80be-f4c54834350f","5e6cdbf3-a7b6-4426-82cf-212894a977b2","744b605a-7832-4e2d-a0c8-6b79d035cf73","4f13263a-3a1d-4041-a4e2-187ee7cacd23","edf974f2-f710-4baf-a9c1-98de234f5ed4","f5562dd9-ac28-4e6d-8046-481724cc00e5","9ebc351b-0085-4999-8b8b-8ada32503e3a","00048140-5e5a-49fe-94d7-275f85db0075","853f6c6c-0366-4635-bca9-3c4112303e68","e3b544de-2f12-421a-8068-2016e2131fb5","d9900396-9b95-43bb-88b1-1ef1cb41995d","414c726d-9bd3-4db7-8750-50939cd408c7","255a5998-ef10-4de3-a1f6-68ad65f4617b","32304b6f-f0d4-40fc-a90d-3cab0337158c","a5d3fefa-ae6f-4db2-91fd-c495a65eb836","35c17fb0-852c-4b4a-81e1-86862a9790d6","72fb3545-7a49-416e-b4b0-664f699bd1ae","57b4de5c-6988-4ac8-9041-5a4a3bd07fe0","372ab97e-ec23-4c42-9c3b-71ae1f5e1468","cec15ecb-a794-40f5-a7eb-96e12cf3df34","7797d377-7355-44c6-aca0-7a7b05fc5835","30fc1418-4214-4336-9339-7d4a746dd6af","26d4eb2a-cd70-473d-868f-5a97607c73ca","f990a840-d2b2-457c-985e-1304157d6a54","ad4f9975-6c11-4de7-aefc-70b2720a15af","cf704c71-d591-42e5-ae95-059c7ae025a1","5789ef49-65e0-419e-bbf7-e71f3156f9ee","2bbababc-d452-47ee-8873-c98d3e87cfef","6a69328e-de55-4292-a1ba-2ea5473ecb39","daf5e30f-b200-43d0-935e-8bc2b559d9e5","8d69fb2d-08e3-4519-bd75-6f298fc65b4f","6eb16355-2f35-4b3c-94ba-687a77c34e23","ed99dd98-3acf-4721-b98c-3ebf0f17a1aa","d7a5aef0-566e-4fdf-814a-a669b283a5c4","0f20ae21-6dd2-4f67-9aa3-737140cdefd6","3f74750e-ad6b-462c-aa97-784db4d31c0b","26db0fd3-26c5-45a9-90eb-97a99401d58e","8478ba28-1777-4f9e-b33f-ea70dec4872c","96b04f37-1b7f-4ec0-9bf9-3546c05c36e4","fea08710-f035-4bb3-80f6-9a5dfc7b89f0","370ada48-5238-4d12-be2f-efd2890cc90d","eb8745e8-a5ee-4d5a-ac27-1e2a96e89132","4b5572e2-f272-4559-af79-09968efecccb","bb67ac05-5456-46da-892c-47350a33dd3a","6f786a23-c132-492e-b6f9-57a0bdcaef95","2a13932a-a5c4-4277-8910-bb3e91b92671","88f2f531-d77f-44e4-b50e-e276d4077f55","8d1baa9d-8857-499b-9fd1-83fbd609d3a1","be01b2e6-d42a-4878-b6a9-b26be965068b","350b57db-a80b-4bb0-b207-531fe602cdef","bf72ddab-44d8-4589-ad87-027d6e9bfb20","8449258b-ce52-4300-ad27-0c30bcc8ec2a","aed6b400-8306-4f99-b5af-8ebe425227bb","6c454a8d-d8af-4283-901e-594ab9303846","d57f20a3-7d5e-4fa8-9080-16f5efefd53f","1230d7df-e9b0-4d58-80f2-acb00b80afc8","33c61b8c-00bc-4863-9dad-2e02de473e69","c4d08340-567f-4fe0-beda-43de6493fa5e","468baa1c-2249-4ba5-8cf8-03a3e0e47b00","69eac9ef-ef2d-4d6c-a0c4-f50e3dd081eb","489d58ac-8167-46ba-a856-1738c100e08d","2fcd4df0-4a76-471f-83b2-7189c3a68fb7","8c629642-3e0f-413b-a8c0-10a6f30be66d","459070c0-d534-42ca-b039-a07af32026a5","5410b41c-7a3b-4b2e-8d81-7f71936ea6b0","ab57b9fc-7b46-49a1-9d1c-509cc691b076","b2d5b890-faa2-4ff0-b5fb-ccf6c5a619b8","ef26773d-1448-47ce-bf75-ff697f39132e","9439d167-b71d-4f28-a943-abe0d80abd4f","03af0585-90cf-40e1-8440-b05ca0e5fe63","0658b4df-f7e7-44c6-b27e-0981089108e6","1542bdf5-f466-4874-b9a9-7fc54cf09269","146960b4-1f31-48f0-9138-c469fd460790","bc163495-ca44-4c4f-a327-72b3cc51ebd1","91f3edec-e7d0-48ec-b49c-d9b28cf75289","018e4df2-e228-4303-8199-67df3f1bcbd6","1ef2d19e-013b-4c60-9f7a-a78558def85f","5a7480da-c911-4cac-b341-91df417f72ed","88887ee8-51fb-450c-a4bd-518e52467cef","f0f77aff-4a85-48de-b728-e8c8bd107654","318cbf3b-2e7b-4562-9e9d-664c7919678a","222a8f6c-a743-4525-8cc6-b7c4999c686a","1208a5b3-3ef8-4818-ab67-060922b0962d","a4b6fc87-31c9-4b42-a3e5-e09381a1bea4","0bb32d3d-e0a0-4169-8abc-4cae889077db","4c4bb286-9a71-4b34-8c9f-5cc90fcc6ac7","f4dc25f6-0412-4ea9-95d1-65f9e4f1e66f","a64e946b-22c4-4e3a-8c55-3edc8b79dbcd","2cc90a21-c0fc-422d-8d98-537c898203a9","2d1e6c0c-b97a-4af5-b938-b383b3cd9555","1446525a-c9d9-4152-8b71-af4aeffac6b8","efe69ecd-24ec-4dc3-a263-de67bab0b210","a23bad20-cc61-4702-9ecc-c88790c822dd","eabce190-5b2a-4e7d-9cb0-35a9b5dcfbf4","4ffcd5db-b485-4f7b-af21-902b674b7a21","4283fd39-b26d-4d1f-acad-df2145ea492a","2fe5cfe0-b932-4721-8218-e8d56aa0750d","3c8d2e54-ad3f-4186-9ed3-aa2742415ca4","40736658-a1f2-411f-8610-0d52f9b74234","7d4919f9-48fb-40ac-8bf4-d9f0be53106c","56a8b505-f968-41ac-93fb-2adeacfe431d","f797466c-e2cf-4db9-b774-ec6c517a80df","e381f3cb-a592-43df-815a-ccb38e915984","086e316c-ff11-4f4e-bdfa-0d29c9c96401","0a40bd06-f567-43e5-afe4-ea73d36101df","537562a4-9c0c-4cd9-ae33-26dc9ef38dc0","3a5c2b4e-0305-4972-bb35-c323c4360434","082f9290-dd5e-47bc-be26-ed716d3bf592","2ce699a3-8679-4118-99de-faefb0587f28","00af3ab0-aa4d-440c-a723-0c6d3fd5075d","7f6bea73-5705-4a86-9cf8-9e73b1dc4b81","ac695c59-3520-487b-9392-e2e41a93a43e","40029bae-9ce6-40b3-bd86-bb0e5c90c955","37461b04-93a7-40fe-99cf-725ed6428c76","33f3ff0f-bf44-4c16-b851-7881b6299801","cc3fc1d4-b6bf-457f-8b8c-c47b5221ce5c","0ff362b7-8944-425b-841d-b579c7d6b33d","3df3b615-1d5e-4b4b-8dc2-ca31fb277379","a6fb8ecf-6781-4573-942f-8f4ce65b18d0","23c94d3b-c168-464b-b5ac-d73f98b42784","2504c636-3b3d-4d8a-98f7-ee0f6bd4a87a","9790f3b7-42d1-48bf-8bc6-e8fcdd1dce89","1dc28959-8b23-45b0-9153-6c1badc8c6aa","e3b57cc6-18b6-42ca-b3a3-03df9b93f8e3","66695121-bd82-46f1-b04f-8786a3aa3e7e","419f496f-b3d8-4cf9-8f03-fd4a66c57014","9a8b9df2-8318-40ee-a66f-a04e05c62cf4","99dbf525-1fe1-4fab-96cc-b99d89a4e00d","84be44aa-3a6b-4888-aeec-fa377f1a2b74","db1c9eab-f026-486e-bf39-d62682c5928d","c7e933cd-68c6-4204-b01a-c9c1822d1e7b","0bfb1c32-07ce-4f87-a7ef-571c542b8707","085cb422-b936-418a-9d0b-9e8dbbeabe90","1f4e5d91-4362-48d6-85f7-26762062ebd3","e1cf31b5-0239-4c64-b009-cf52a5684123","b502ae3e-4782-4663-9802-6b01b43bb430","2440ded1-d10f-44cd-9c8c-05d24df31f2d","2ebbd35c-190c-4f6e-8f15-a89c715b95ea","841d0f58-b1ae-47bd-a250-f7226309c22c","76eccca7-6104-4915-8860-2d67965f662e","6f1ad155-d857-442e-b96a-3e12691989a1","74aaadc6-afc2-4876-886c-9c00ed10fb9a","1da8ad62-d934-4f3d-a638-62389c065abf","e3d2e380-1592-46e3-b7ec-8e6286fc70ad","957f7ff2-af2e-424d-9d5c-5677478dd5b3","6b5ca876-0b2a-4776-9968-d54fd60f20bd","ae87fc25-ad64-423a-b89b-403ea40c7f83","bb989b15-54f6-419f-85fa-95e204d79ef1","09d5cfcc-7b01-493f-bf38-67fd722d5774","b4120c3a-e61d-421d-bbdb-dfc796fbe91e","6f583cea-9a4b-44f3-a86d-5a437d17dcb8","c394034a-b6db-444c-816e-3ba125788e5e","7f121dc9-df15-4a75-b987-43083f709686","30f00323-04f5-4dc9-ba3c-fd29df7da91a","de545f07-2891-4875-aea6-e8c8d8b97a8f","2fbec7c2-3597-4221-9601-e9fd8fc5bb6c","99cfb9a5-6281-4b87-bdd1-51b5ff0d5adc","6e2efad5-6da9-452b-ac0f-e1b5ec2ef22b","205fd5c1-716b-4937-9136-5145568870cb","563871d8-c615-4da1-86cb-ba00232db1ed","b36b06d7-bdda-47c5-ad84-e41ad8bd7820","1d5566d2-5476-4d26-a2a9-477084c3f76a","a2a89e7f-57c2-458b-bd8c-ed1b5120a9d2","fa34d80a-65ac-4492-bd22-dda5d23d8ef5","60873f66-2f27-4fc5-8c8a-63ba93c01c9a","e9f2cea5-ec77-4c9e-87df-462c1b31f23d","68d9cd75-0e89-4e79-85cb-459a198cde20","28487ef0-3aee-452a-b842-d75c2e80109e","f68cd508-ce8a-4cdc-9cb6-dd37c83f826b","f4581cca-a236-417f-94f0-61654e608437","aad210c4-08af-4c14-bf6c-18069b3de23f","5c1c5dcf-5c79-457e-85f1-f8f2cba985dd","dd4e8272-cff5-44d3-bd0d-832fe5c6c0cf","38498444-a031-4128-b5f7-581d88f3f2f1","c66900d6-1468-4894-b769-491f39ad704c","effb7d88-78ba-4ad7-9b1f-64b5b033c83a","25268034-7c21-4c20-a97e-8e975f60b8ff","3a58c41d-d736-431d-9743-8b36f754b6f1","4a03759b-58c2-41bc-bb79-72ca0ab845c4","499be652-ad00-467b-8482-d4c06f54901c","4f634d8c-6db6-41b7-ae41-a440e4af4916","532d1d43-0a60-4d60-a5e4-657c5bfe0671","f06a90f6-a48a-46e7-8dad-991252a44da7","e1793d4d-0e9e-45b3-bdc6-2ae6d11ae2a3","dc5fcec1-8cfe-4594-b98c-5552a4280e7c","b5e1d1dc-7f1e-4f69-acd3-b9c80f54404c","5761dab6-8d6b-4e8e-aa17-fec8bb873093","bbaf0ddb-1118-420b-aa10-b7505e594757","82fdc3db-f37e-4a20-98fc-ffd65a187128","07f5509d-d644-4d2b-9b46-c9268bcf34b6","8051645b-f231-41d2-ae30-ec9e1e78b9db","4b69804b-6e3b-4d75-ae8c-2a66c517963d","f4a9a5c9-b8d4-4307-9aa0-9ccc67845249","b331fdc5-d73c-4af3-a62e-b3f9aea946c2","87933bfa-06ee-4863-92e3-794102e5e20d","7b9759b7-d597-4481-b5c4-a3bbe1540338","898596fa-1c28-4bbd-86e1-4b299c713f6a","c8f2f4df-f33f-4bf5-b978-1b2b8c42849d","8c0ada63-2808-42bb-a77f-4c13982455f3","661fc3a7-e197-492a-b1bc-6d2a7cdd7c7c","24fe2875-b2de-4b5b-bb87-8f0c316e341c","38591cda-9b9a-4e67-986c-31ff754cb654","5d2cc855-b483-4224-875f-e860344cb79e","04b4c144-c1c3-47f3-8b75-821ed02cdca8","ef55b86e-12bb-4a7a-9074-e7f02c5390b1","d1408af9-d584-4eda-bc6a-0ab824d93b75","7e1c1793-bc8d-4455-912b-079935393bea","baaabe1a-d8d5-472d-9c8d-65aa87c8c695"]);
 function resolveHistoricalPlayer2024(player, metadata, matchId) {
   if (!HISTORICAL_MATCH_IDS_2024.has(matchId)) return null;
   const direct = metadata.playersByPuuid.get(player.puuid);
@@ -28494,10 +30662,16 @@ function tournamentSwissRoundGroups(event, roundIndex) {
   // e ainda tirava as partidas da ordem numerada (11 e 12 antes de 9 e 10).
   // Opt-in, como o swiss.stateTables, para nao mexer nos campeonatos suicos.
   if (event.swiss?.roundRobin) {
-    return [{
-      label: "",
-      matches: (round.matches || []).map((match, matchIndex) => ({ match, matchIndex })),
-    }];
+    const comIndice = (round.matches || []).map((match, matchIndex) => ({ match, matchIndex }));
+    // Grupos em pontos corridos (Copa Aliança 2023.2): a rodada mostra um bloco por grupo.
+    if (!comIndice.some(({ match }) => match.group)) return [{ label: "", matches: comIndice }];
+    const porGrupo = new Map();
+    for (const item of comIndice) {
+      const rotulo = item.match.group || "";
+      if (!porGrupo.has(rotulo)) porGrupo.set(rotulo, []);
+      porGrupo.get(rotulo).push(item);
+    }
+    return [...porGrupo].map(([label, matches]) => ({ label, matches }));
   }
   const records = tournamentSwissRecordsBeforeRound(event, roundIndex);
   const grouped = new Map();
@@ -31766,7 +33940,7 @@ function teamFormaItem(team, jogo) {
   const nome = teamById(rivalId)?.name || displayTeamName(rivalId);
   const [nosso, deles] = teamFormaPlacar(team, jogo);
   const venceu = jogo.vencedor === team.id;
-  const resultado = venceu ? "Vitória" : "Derrota";
+  const resultado = venceu ? "Vitória" : jogo.vencedor ? "Derrota" : "Sem vencedor";
   const corpo = `
     ${teamLogo(rivalId, "large")}
     <strong title="${escapeHtml(nome)}"><span class="nome-rolante">${escapeHtml(nome)}</span></strong>

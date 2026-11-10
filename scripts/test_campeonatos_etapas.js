@@ -74,7 +74,7 @@ const ev = (id) => db.tournaments.find((item) => item.id === id);
 
 // ---------------------------------------------------------------- Tarefa 1
 const cadastro = vm.runInContext("CAMPEONATOS_COM_ETAPAS", context);
-assert.strictEqual(cadastro.length, 9, "nove campeonatos com etapas");
+assert.strictEqual(cadastro.length, 10, "dez campeonatos com etapas");
 const idsDeEtapa = new Set(db.tournaments.map((item) => item.id));
 const vistas = new Set();
 for (const camp of cadastro) {
@@ -211,14 +211,14 @@ const renderiza = (hash) => {
 // ---------------------------------------------------------------- Tarefa 3
 {
   const lista = context.listaDeCampeonatos(context.sortedEvents("end"));
-  assert.strictEqual(lista.length, 25, "25 linhas em Eventos");
+  assert.strictEqual(lista.length, 26, "26 linhas em Eventos");
   context.location.hash = "#/events";
   vm.runInContext("state.eventFilters = {}; state.eventTableSort = {};", context);
   appElement.innerHTML = "";
   context.renderEventsPage();
   const pagina = appElement.innerHTML;
-  assert((pagina.match(/class="event-row event-row-rich/g) || []).length === 25, "25 linhas desenhadas");
-  assert(pagina.includes("25 campeonatos"), "a contagem diz 25 campeonatos");
+  assert((pagina.match(/class="event-row event-row-rich/g) || []).length === 26, "26 linhas desenhadas");
+  assert(pagina.includes("26 campeonatos"), "a contagem diz 26 campeonatos");
   const linhaUnivava = pagina.split('href="#/events/univava"')[1].split("</div>")[0];
   assert.strictEqual((linhaUnivava.match(/href="#\/events\/univava-/g) || []).length, 6, "as 6 etapas escritas na linha do UNIVAVA");
   assert(linhaUnivava.includes('class="event-cell event-cell-etapas" data-rotulo="Etapas"'), "as etapas ficam na coluna do formato");
@@ -342,6 +342,8 @@ for (const camp of cadastro) {
   // como na chave de cada etapa (CAAP 4-0 nos playoffs com duas finais sem arquivo).
   assert.strictEqual(campanha("alianca-2024-2", "caap_hellhounds"), "10-0", "CAAP na Aliança 2024.2 inteira");
   assert.strictEqual(campanha("univava", "ufu_saints"), "12-4", "UFU no UNIVAVÁ inteiro");
+  // Aliança 2023.2: 7-0 no Grupo B e 5-0 nos playoffs, sem perder série.
+  assert.strictEqual(campanha("alianca-2023-2", "caap_hellhounds"), "12-0", "CAAP na Aliança 2023.2 inteira");
 }
 
 // 3. A conversa do Geral tem assunto, para aparecer na atividade e no perfil.

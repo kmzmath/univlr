@@ -355,7 +355,12 @@ def _numeric_fields(player: Dict[str, Any]) -> Dict[str, float]:
 def build_records_from_site_pipeline(payload: Dict[str, Any]) -> List[RowRecord]:
     """Converte as linhas normalizadas do site para o layout historico do XLSX."""
     records: List[RowRecord] = []
-    for match in payload.get("matches") or []:
+    # Mesma ordem do site (app.js: matches.sort por startedAt decrescente). A conta sem
+    # cadastro leva o nome da partida mais recente; na ordem dos arquivos, a Aliança 2023.2
+    # vinha antes de 2024 e o relatório saía com o nome de hoje (rigas) e o site com o
+    # da época (R1645).
+    partidas = sorted(payload.get("matches") or [], key=lambda m: -float(m.get("startedAt") or 0))
+    for match in partidas:
         filename = str(match.get("fileName") or match.get("sourcePath") or "")
         map_name = str(match.get("mapName") or "")
         for player in match.get("players") or []:

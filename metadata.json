@@ -1311,28 +1311,6 @@
       "lineupRegistered": true
     },
     {
-      "id": "caaso_hogs_usp_2024",
-      "sourceId": "2922",
-      "slug": "caaso_hogs_usp_2024",
-      "tag": "CAASO",
-      "displayName": "CAASO Hogs",
-      "org": "Universidade de São Paulo",
-      "orgTag": "USP São Carlos",
-      "logo": "assets/team-logos/caaso_hogs_usp_2024.png",
-      "state": "SP",
-      "stateName": "São Paulo",
-      "stateFlag": "assets/state-flags/sp.webp",
-      "stateRegion": "Sudeste",
-      "colors": [
-        "#f9f8f8",
-        "#d6a659"
-      ],
-      "socials": {
-        "instagram": ""
-      },
-      "lineup": []
-    },
-    {
       "id": "canis_valorant_inclusivo_2024",
       "sourceId": "2955",
       "slug": "canis_valorant_inclusivo_2024",
@@ -7795,8 +7773,7 @@
       "puuid": "Ivx_XcyZkFfN-cyRBnBMjFhYCE0qGvLwP0yKqCm6-bseUGPsvGN8LL73f11FzZmg15b_rO_yav4ySQ",
       "currentTeam": "usp_stars",
       "teamHistory": [
-        "usp_stars",
-        "caaso_hogs_usp_2024"
+        "usp_stars"
       ],
       "nickHistory": [
         "Dioguera#CAASO"
@@ -7842,8 +7819,7 @@
       ],
       "currentTeam": "usp_stars",
       "teamHistory": [
-        "usp_stars",
-        "caaso_hogs_usp_2024"
+        "usp_stars"
       ],
       "nickHistory": [
         "miaumiaumiaumiau#nob",
@@ -23368,7 +23344,7 @@
       "puuid": "tRXIo2Fd0dptWoJvQSd2IZAJDvE4QW1rOcxyfof_zEtYj7coflSQZfilRno_YCxuukO1zYl2HZQotg",
       "currentTeam": "",
       "teamHistory": [
-        "caaso_hogs_usp_2024"
+        "usp_stars"
       ],
       "nickHistory": [
         "guilherme#2008"
@@ -23641,7 +23617,7 @@
       "puuid": "-jc1InbFZZY2Or3HYnKwE5jQPNe2m67_-cz5t-TBQjPev4OuBCVnEAVzzPaEOdUQ3HuY_Kxw3zqhxA",
       "currentTeam": "",
       "teamHistory": [
-        "caaso_hogs_usp_2024"
+        "usp_stars"
       ],
       "nickHistory": [
         "MFDESTINO#ORC"

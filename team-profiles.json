@@ -12958,29 +12958,28 @@
     "usp_stars": {
       "lineupHistory": [
         {
-          "from": "2024-07-07",
+          "from": "2023-09-16",
           "to": "2026-09-27",
-          "firstSeenAt": 1720372163939,
+          "firstSeenAt": 1694883754537,
           "lastSeenAt": 1790535023714,
-          "matches": 74,
+          "matches": 108,
           "source": "auto-json+players-history",
-          "profileConfidence": 1292,
+          "profileConfidence": 1738,
           "players": [
             {
               "slot": 1,
               "playerId": "Oj0WGnOzydLcxOwcSzJdjxmDuxilnU3a0zcm-QMSQepCvn2_PWmo_AQEg-HQ36X6xYWBkgU53hfjFQ",
               "name": "Pagode",
               "handle": "quero um arduino#dma",
-              "firstSeenAt": "2024-07-07",
+              "firstSeenAt": "2023-09-16",
               "lastSeenAt": "2026-09-27",
-              "matches": 68,
-              "rounds": 1417,
-              "profileMatches": 68,
-              "profileConfidence": 272,
+              "matches": 102,
+              "rounds": 2119,
+              "profileMatches": 102,
+              "profileConfidence": 408,
               "currentTeam": "usp_stars",
               "teamHistory": [
-                "usp_stars",
-                "caaso_hogs_usp_2024"
+                "usp_stars"
               ]
             },
             {
@@ -12988,12 +12987,12 @@
               "playerId": "YGfh-g2eH66I0R6KQ9813-g4bMngIRtmCJk8d2iexN40HtWkt9MJc4ZJ0rsHi493kSTqSk1IO8Mj7Q",
               "name": "Dagn1",
               "handle": "GPTTERAPIAAPOIA#ELIZA",
-              "firstSeenAt": "2024-07-07",
+              "firstSeenAt": "2023-09-16",
               "lastSeenAt": "2026-09-20",
-              "matches": 62,
-              "rounds": 1284,
-              "profileMatches": 62,
-              "profileConfidence": 248,
+              "matches": 94,
+              "rounds": 1949,
+              "profileMatches": 94,
+              "profileConfidence": 376,
               "currentTeam": "usp_stars",
               "teamHistory": [
                 "usp_stars"
@@ -13004,16 +13003,15 @@
               "playerId": "Ivx_XcyZkFfN-cyRBnBMjFhYCE0qGvLwP0yKqCm6-bseUGPsvGN8LL73f11FzZmg15b_rO_yav4ySQ",
               "name": "Dioguera",
               "handle": "Dioguera#CAASO",
-              "firstSeenAt": "2024-07-07",
+              "firstSeenAt": "2023-09-16",
               "lastSeenAt": "2026-09-27",
-              "matches": 59,
-              "rounds": 1236,
-              "profileMatches": 59,
-              "profileConfidence": 236,
+              "matches": 93,
+              "rounds": 1938,
+              "profileMatches": 93,
+              "profileConfidence": 372,
               "currentTeam": "usp_stars",
               "teamHistory": [
-                "usp_stars",
-                "caaso_hogs_usp_2024"
+                "usp_stars"
               ]
             },
             {
@@ -13085,33 +13083,36 @@
             },
             {
               "slot": 8,
-              "playerId": "8XbYnMG5ldAseB9Un5OEmo8x_WtpwtXRnpOSA65PHoNRaYDt2uD4QeD4cVt-Bi60-bKUSYKy2uDyHg",
-              "name": "xrz",
-              "handle": "yuta okkotsu#black",
-              "firstSeenAt": "2026-09-12",
-              "lastSeenAt": "2026-09-27",
-              "matches": 11,
-              "rounds": 217,
-              "profileMatches": 11,
-              "profileConfidence": 44,
-              "currentTeam": "usp_stars",
-              "teamHistory": [
-                "usp_stars",
-                "poli_plague"
-              ]
+              "playerId": "15RCaBDsFgSwORoE8jKDlinCSgGVwm9JPjKxANGgillMMzBgeSsOII8LHJeA0nsnEpvm075mcH_abw",
+              "name": "RaNhO",
+              "handle": "RaNhO#101",
+              "firstSeenAt": "2023-09-16",
+              "lastSeenAt": "2024-06-08",
+              "matches": 34,
+              "rounds": 702,
+              "profileMatches": 0,
+              "profileConfidence": 0
             }
           ]
         }
       ],
       "nomes": [
         {
-          "id": "usp_caaso_hogs_jubs_2024",
-          "nome": "USP CAASO Hogs",
-          "logo": "",
-          "cores": [],
-          "desde": "2024-07-07",
+          "id": "caaso_hogs_usp_2024",
+          "nome": "CAASO Hogs",
+          "tag": "CAASO",
+          "logo": "assets/team-logos/caaso_hogs_usp_2024.png",
+          "cores": [
+            "#f9f8f8",
+            "#d6a659"
+          ],
+          "desde": "2023-09-16",
           "ate": "2024-08-10",
           "eventos": [
+            "alianca-2023-2-fase-de-grupos",
+            "alianca-2023-2-playoffs",
+            "alianca-2024-classificatoria-1",
+            "alianca-2024-grupos",
             "jubs-2024-playoffs-online",
             "jubs-2024-qualify-1"
           ]
@@ -27754,128 +27755,6 @@
           ]
         }
       ]
-    },
-    "caaso_hogs_usp_2024": {
-      "lineupHistory": [
-        {
-          "from": "2023-09-16",
-          "to": "2024-06-08",
-          "firstSeenAt": 1694883754537,
-          "lastSeenAt": 1717869095678,
-          "matches": 34,
-          "source": "auto-json+players-history",
-          "profileConfidence": 182,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "Ivx_XcyZkFfN-cyRBnBMjFhYCE0qGvLwP0yKqCm6-bseUGPsvGN8LL73f11FzZmg15b_rO_yav4ySQ",
-              "name": "Dioguera",
-              "handle": "Dioguera#CAASO",
-              "firstSeenAt": "2023-09-16",
-              "lastSeenAt": "2024-06-08",
-              "matches": 34,
-              "rounds": 702,
-              "profileMatches": 34,
-              "profileConfidence": 68,
-              "currentTeam": "usp_stars",
-              "teamHistory": [
-                "usp_stars",
-                "caaso_hogs_usp_2024"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "Oj0WGnOzydLcxOwcSzJdjxmDuxilnU3a0zcm-QMSQepCvn2_PWmo_AQEg-HQ36X6xYWBkgU53hfjFQ",
-              "name": "Pagode",
-              "handle": "JR Smith#USAFA",
-              "firstSeenAt": "2023-09-16",
-              "lastSeenAt": "2024-06-08",
-              "matches": 34,
-              "rounds": 702,
-              "profileMatches": 34,
-              "profileConfidence": 68,
-              "currentTeam": "usp_stars",
-              "teamHistory": [
-                "usp_stars",
-                "caaso_hogs_usp_2024"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "15RCaBDsFgSwORoE8jKDlinCSgGVwm9JPjKxANGgillMMzBgeSsOII8LHJeA0nsnEpvm075mcH_abw",
-              "name": "RaNhO",
-              "handle": "RaNhO#101",
-              "firstSeenAt": "2023-09-16",
-              "lastSeenAt": "2024-06-08",
-              "matches": 34,
-              "rounds": 702,
-              "profileMatches": 0,
-              "profileConfidence": 0
-            },
-            {
-              "slot": 4,
-              "playerId": "YGfh-g2eH66I0R6KQ9813-g4bMngIRtmCJk8d2iexN40HtWkt9MJc4ZJ0rsHi493kSTqSk1IO8Mj7Q",
-              "name": "Dagn1",
-              "handle": "GPTTERAPIAAPOIA#ELIZA",
-              "firstSeenAt": "2023-09-16",
-              "lastSeenAt": "2024-06-08",
-              "matches": 32,
-              "rounds": 665,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "usp_stars",
-              "teamHistory": [
-                "usp_stars"
-              ]
-            },
-            {
-              "slot": 5,
-              "playerId": "-jc1InbFZZY2Or3HYnKwE5jQPNe2m67_-cz5t-TBQjPev4OuBCVnEAVzzPaEOdUQ3HuY_Kxw3zqhxA",
-              "name": "MFDESTINO",
-              "handle": "MFDESTINO#ORC",
-              "firstSeenAt": "2023-09-16",
-              "lastSeenAt": "2023-10-28",
-              "matches": 18,
-              "rounds": 372,
-              "profileMatches": 18,
-              "profileConfidence": 36,
-              "teamHistory": [
-                "caaso_hogs_usp_2024"
-              ]
-            },
-            {
-              "slot": 6,
-              "playerId": "DO_QBRwfqapDEscA0KtWdw9Bgvsy0ifE_K-1kBnHwUQVGq0-5GwyJkpaJxqYaFvjRtZNGJs2n6RfCA",
-              "name": "C4ST0R",
-              "handle": "C4ST0R#ビーバー",
-              "firstSeenAt": "2024-04-20",
-              "lastSeenAt": "2024-06-08",
-              "matches": 13,
-              "rounds": 269,
-              "profileMatches": 0,
-              "profileConfidence": 0
-            },
-            {
-              "slot": 7,
-              "playerId": "tRXIo2Fd0dptWoJvQSd2IZAJDvE4QW1rOcxyfof_zEtYj7coflSQZfilRno_YCxuukO1zYl2HZQotg",
-              "name": "guilherme 2008",
-              "handle": "guilherme#2008",
-              "firstSeenAt": "2023-09-30",
-              "lastSeenAt": "2023-10-06",
-              "matches": 5,
-              "rounds": 98,
-              "profileMatches": 5,
-              "profileConfidence": 10,
-              "teamHistory": [
-                "caaso_hogs_usp_2024"
-              ]
-            }
-          ]
-        }
-      ],
-      "competitiveStatus": "historical",
-      "continuity": "none",
-      "statusSource": "Confirmado pelo responsável em 06/11/2026: atlética distinta da USP Stars. No JUBS 2024 a inscrição com o nome da Hogs já era a line da Stars, e esses mapas são da Stars."
     },
     "canis_valorant_inclusivo_2024": {
       "lineupHistory": [

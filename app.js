@@ -433,7 +433,7 @@ const TOURNAMENT_OVERRIDES = {
       "unb_green_olws_line_red_2024",
       "furia_utfpr",
       "ufg_eagles",
-      "caaso_hogs_usp_2024",
+      "usp_stars",
       "macklogic_red",
       "ufrn_impetuosa",
       "azure_bears_golden",
@@ -496,7 +496,7 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "Classificado",
-        "id": "caaso_hogs_usp_2024",
+        "id": "usp_stars",
         "note": "Grupo C, 6-1"
       },
       {
@@ -634,7 +634,7 @@ const TOURNAMENT_OVERRIDES = {
         "bestOf": "MD3"
       },
       "12": {
-        "a": "caaso_hogs_usp_2024",
+        "a": "usp_stars",
         "b": "macklogic_red",
         "scoreA": 2,
         "scoreB": 1,
@@ -752,11 +752,11 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 12",
-              "a": "caaso_hogs_usp_2024",
+              "a": "usp_stars",
               "b": "macklogic_red",
               "scoreA": 2,
               "scoreB": 1,
-              "winner": "caaso_hogs_usp_2024",
+              "winner": "usp_stars",
               "group": "Grupo C"
             },
             {
@@ -877,10 +877,10 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 25",
               "a": "ufg_eagles",
-              "b": "caaso_hogs_usp_2024",
+              "b": "usp_stars",
               "scoreA": 1,
               "scoreB": 2,
-              "winner": "caaso_hogs_usp_2024",
+              "winner": "usp_stars",
               "group": "Grupo C"
             },
             {
@@ -1028,11 +1028,11 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 41",
-              "a": "caaso_hogs_usp_2024",
+              "a": "usp_stars",
               "b": "unb_green_olws_line_red_2024",
               "scoreA": 2,
               "scoreB": 0,
-              "winner": "caaso_hogs_usp_2024",
+              "winner": "usp_stars",
               "group": "Grupo C"
             },
             {
@@ -1190,7 +1190,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 58",
               "a": "uninassau_griffins",
-              "b": "caaso_hogs_usp_2024",
+              "b": "usp_stars",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "uninassau_griffins",
@@ -1341,11 +1341,11 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 74",
-              "a": "caaso_hogs_usp_2024",
+              "a": "usp_stars",
               "b": "ufmt_turuna",
               "scoreA": 2,
               "scoreB": 1,
-              "winner": "caaso_hogs_usp_2024",
+              "winner": "usp_stars",
               "group": "Grupo C"
             },
             {
@@ -1514,10 +1514,10 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 92",
               "a": "furia_utfpr",
-              "b": "caaso_hogs_usp_2024",
+              "b": "usp_stars",
               "scoreA": 1,
               "scoreB": 2,
-              "winner": "caaso_hogs_usp_2024",
+              "winner": "usp_stars",
               "group": "Grupo C"
             },
             {
@@ -1662,10 +1662,10 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 107",
               "a": "ufmg_fenix_b",
-              "b": "caaso_hogs_usp_2024",
+              "b": "usp_stars",
               "scoreA": 0,
               "scoreB": 2,
-              "winner": "caaso_hogs_usp_2024",
+              "winner": "usp_stars",
               "group": "Grupo C"
             },
             {
@@ -1851,7 +1851,7 @@ const TOURNAMENT_OVERRIDES = {
               "status": "Classificado"
             },
             {
-              "id": "caaso_hogs_usp_2024",
+              "id": "usp_stars",
               "wins": 6,
               "losses": 1,
               "range": "2º",
@@ -1992,7 +1992,7 @@ const TOURNAMENT_OVERRIDES = {
       "usjt_polaris",
       "unb_black",
       "azure_bears_black",
-      "caaso_hogs_usp_2024",
+      "usp_stars",
       "unicamp_tritons_black"
     ],
     "teamNames": {
@@ -2073,7 +2073,7 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "13-16",
-        "id": "caaso_hogs_usp_2024"
+        "id": "usp_stars"
       }
     ],
     "seriesResults": {},
@@ -2161,7 +2161,7 @@ const TOURNAMENT_OVERRIDES = {
                 {
                   "code": "Partida 8",
                   "bestOf": "MD3",
-                  "a": "caaso_hogs_usp_2024",
+                  "a": "usp_stars",
                   "b": "unicamp_tritons_black",
                   "scoreA": 0,
                   "scoreB": 2,
@@ -2327,7 +2327,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 12",
                   "bestOf": "MD3",
                   "a": "azure_bears_black",
-                  "b": "caaso_hogs_usp_2024",
+                  "b": "usp_stars",
                   "scoreA": 2,
                   "scoreB": 0,
                   "winner": "azure_bears_black",
@@ -2547,7 +2547,7 @@ const TOURNAMENT_OVERRIDES = {
       "minerva_artemis",
       "ufmg_fenix_b",
       "oktoplus_gaming_cefet_mg_2024",
-      "caaso_hogs_usp_2024",
+      "usp_stars",
       "laurp_royal_ps_orange_2024",
       "poli_plague_silver_echo_2024",
       "fgv_alligators_valorant_2024",
@@ -2593,7 +2593,7 @@ const TOURNAMENT_OVERRIDES = {
       "minerva_artemis": "Minerva eSports UFRJ INCLUSIVO",
       "ufmg_fenix_b": "UFMG Fênix Valorant",
       "oktoplus_gaming_cefet_mg_2024": "Oktoplus Gaming - CEFET-MG",
-      "caaso_hogs_usp_2024": "Caaso Hogs - USP",
+      "usp_stars": "Caaso Hogs - USP",
       "laurp_royal_ps_orange_2024": "LAURP Royal PS Orange",
       "poli_plague_silver_echo_2024": "POLI Plague Silver Echo",
       "fgv_alligators_valorant_2024": "FGV Alligators Valorant",
@@ -2641,7 +2641,7 @@ const TOURNAMENT_OVERRIDES = {
       {"range": "Classificado", "id": "azure_bears_golden", "note": "Chave superior"},
       {"range": "Classificado", "id": "maua_esports_black_2024", "note": "Chave superior"},
       {"range": "Classificado", "id": "caap_hellhounds", "note": "Chave superior"},
-      {"range": "Classificado", "id": "caaso_hogs_usp_2024", "note": "Chave superior"},
+      {"range": "Classificado", "id": "usp_stars", "note": "Chave superior"},
       {"range": "Classificado", "id": "unicamp_tritons_black", "note": "Chave inferior"},
       {"range": "Classificado", "id": "unb_green_olws_line_red_2024", "note": "Chave inferior"},
       {"range": "Classificado", "id": "usp_cronos_2024", "note": "Chave inferior"},
@@ -2702,7 +2702,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 1,
                   "bestOf": "MD1",
                   "a": "azure_bears_golden",
-                  "b": "caaso_hogs_usp_2024",
+                  "b": "usp_stars",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "azure_bears_golden"
@@ -3011,7 +3011,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 32",
                   "seriesCode": 32,
                   "bestOf": "MD1",
-                  "a": "caaso_hogs_usp_2024",
+                  "a": "usp_stars",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -3188,11 +3188,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 49",
                   "seriesCode": 49,
                   "bestOf": "MD1",
-                  "a": "caaso_hogs_usp_2024",
+                  "a": "usp_stars",
                   "b": "espm_overbite_misto",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "caaso_hogs_usp_2024"
+                  "winner": "usp_stars"
                 }
               ]
             },
@@ -3274,10 +3274,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 57,
                   "bestOf": "MD1",
                   "a": "cyberkongs",
-                  "b": "caaso_hogs_usp_2024",
+                  "b": "usp_stars",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "caaso_hogs_usp_2024"
+                  "winner": "usp_stars"
                 }
               ]
             },
@@ -3319,10 +3319,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 61,
                   "bestOf": "MD1",
                   "a": "unicamp_tritons_black",
-                  "b": "caaso_hogs_usp_2024",
+                  "b": "usp_stars",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "caaso_hogs_usp_2024"
+                  "winner": "usp_stars"
                 }
               ]
             },
@@ -3344,7 +3344,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 63,
                   "bestOf": "MD1",
                   "a": "caap_hellhounds",
-                  "b": "caaso_hogs_usp_2024",
+                  "b": "usp_stars",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "caap_hellhounds"
@@ -3941,11 +3941,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 124",
                   "seriesCode": 124,
                   "bestOf": "MD1",
-                  "a": "caaso_hogs_usp_2024",
+                  "a": "usp_stars",
                   "b": "ufg_eagles",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "caaso_hogs_usp_2024"
+                  "winner": "usp_stars"
                 }
               ]
             },
@@ -3957,10 +3957,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 125,
                   "bestOf": "MD1",
                   "a": "unb_green_olws_line_red_2024",
-                  "b": "caaso_hogs_usp_2024",
+                  "b": "usp_stars",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "caaso_hogs_usp_2024"
+                  "winner": "usp_stars"
                 }
               ]
             },
@@ -3972,10 +3972,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 126,
                   "bestOf": "MD1",
                   "a": "caap_hellhounds",
-                  "b": "caaso_hogs_usp_2024",
+                  "b": "usp_stars",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "caaso_hogs_usp_2024",
+                  "winner": "usp_stars",
                   "status": "Sem estatísticas",
                   "previewNote": "Sem estatísticas"
                 }
@@ -5472,7 +5472,7 @@ const TOURNAMENT_OVERRIDES = {
       "fei_darkowls",
       "usp_cronos_2024",
       "unb_green_olws_line_red_2024",
-      "caaso_hogs_usp_2024",
+      "usp_stars",
       "caap_hellhounds",
       "laurp_royal_ps_orange_2024",
       "unicamp_tritons_black"
@@ -5490,7 +5490,7 @@ const TOURNAMENT_OVERRIDES = {
       "fei_darkowls": "FEI eSports Valorant",
       "usp_cronos_2024": "USP Cronos",
       "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
-      "caaso_hogs_usp_2024": "Caaso Hogs - USP",
+      "usp_stars": "Caaso Hogs - USP",
       "caap_hellhounds": "CAAP Hellhounds",
       "laurp_royal_ps_orange_2024": "LAURP Royal PS Orange",
       "unicamp_tritons_black": "UNICAMP Tritons"
@@ -5569,7 +5569,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "2-3 na fase suíça"
       },
       {
-        "id": "caaso_hogs_usp_2024",
+        "id": "usp_stars",
         "range": "12-14",
         "note": "1-3 na fase suíça"
       },
@@ -5619,11 +5619,11 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 3",
               "seriesCode": 3,
               "bestOf": "MD1",
-              "a": "caaso_hogs_usp_2024",
+              "a": "usp_stars",
               "b": "fei_darkowls",
               "scoreA": 1,
               "scoreB": 0,
-              "winner": "caaso_hogs_usp_2024"
+              "winner": "usp_stars"
             },
             {
               "code": "Partida 5",
@@ -5705,7 +5705,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 17",
               "seriesCode": 17,
               "bestOf": "MD1",
-              "a": "caaso_hogs_usp_2024",
+              "a": "usp_stars",
               "b": "unb_black",
               "scoreA": 0,
               "scoreB": 1,
@@ -5803,7 +5803,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 26",
               "seriesCode": 26,
               "bestOf": "MD1",
-              "a": "caaso_hogs_usp_2024",
+              "a": "usp_stars",
               "b": "azure_bears_black",
               "scoreA": 0,
               "scoreB": 1,
@@ -5901,7 +5901,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 35",
               "seriesCode": 35,
               "bestOf": "MD3",
-              "a": "caaso_hogs_usp_2024",
+              "a": "usp_stars",
               "b": "puc_clerigos",
               "scoreA": 1,
               "scoreB": 2,
@@ -6059,7 +6059,7 @@ const TOURNAMENT_OVERRIDES = {
           "status": "Eliminado"
         },
         {
-          "id": "caaso_hogs_usp_2024",
+          "id": "usp_stars",
           "wins": 1,
           "losses": 3,
           "points": 1,
@@ -25740,7 +25740,7 @@ function Shell(content, options = {}) {
           ${window.Auth ? window.Auth.slotHtml() : ""}
         </div>
       </header>
-      <main class="main">${content}</main>
+      <main class="main">${ligarFasesDaEpoca(content)}</main>
       <footer class="footer">
         <div class="footer-inner vp-rodape">
           <a class="footer-logo-link" href="#/home" aria-label="${SITE_NAME}">
@@ -31401,7 +31401,7 @@ function bindTournamentTeamPreview(event, matches) {
 function openTournamentMatchPreview(entry) {
   const root = ensureTournamentPreviewRoot();
   if (!root) return;
-  root.innerHTML = tournamentMatchPreviewHtml(entry);
+  root.innerHTML = ligarFasesDaEpoca(tournamentMatchPreviewHtml(entry));
   root.classList.add("open");
   root.querySelector("[data-tournament-preview-close]")?.focus();
 }
@@ -31449,7 +31449,7 @@ function closeTournamentMatchPreview() {
 function openTournamentTeamPreview(event, matches, teamId) {
   const root = ensureTournamentPreviewRoot();
   if (!root) return;
-  root.innerHTML = tournamentTeamPreviewHtml(event, matches, teamId);
+  root.innerHTML = ligarFasesDaEpoca(tournamentTeamPreviewHtml(event, matches, teamId));
   root.classList.add("open");
   root.querySelector("[data-tournament-preview-close]")?.focus();
 }
@@ -33621,7 +33621,7 @@ function renderTeamDetail(id) {
   // historia inteira; um nome antigo (`?fase=dark_ufrj`) troca a pagina toda para
   // aquela epoca: nome, escudo, cores, quem jogou, trofeus, ranking e abas.
   const fases = teamFases(team, todasAsSeries);
-  const pedida = teamFaseAtiva(fases);
+  const pedida = teamFaseAtiva(fases, team);
   const fase = pedida && !pedida.atual ? pedida : null;
   state.faseDaPagina = fase ? { teamId: team.id, nome: fase.nome, logo: fase.logo } : null;
   const naFase = (eventId) => !fase || fase.eventos.has(eventId);
@@ -34095,9 +34095,21 @@ function teamPerfilDaFase(team, fase, series = []) {
 }
 
 // A fase da URL (`?fase=dark_ufrj`). O id da equipe também vale, e é a fase atual.
-function teamFaseAtiva(fases) {
-  const pedida = routeQuery().get("fase");
-  return pedida ? fases.find((fase) => fase.id === pedida) || null : null;
+// O id antigo na rota (`#/teams/dark_ufrj`) abre a mesma página já naquela fase, e
+// o endereço passa a ser o da equipe atual com `?fase=`, como se tivesse clicado no
+// nome da linha do tempo.
+function teamFaseAtiva(fases, team = null) {
+  const query = routeQuery();
+  const pedida = query.get("fase");
+  if (pedida) return fases.find((fase) => fase.id === pedida) || null;
+  const naRota = decodeURIComponent(route().id || "");
+  const daRota = team && naRota !== team.id ? fases.find((fase) => !fase.atual && fase.id === naRota) : null;
+  if (daRota && typeof history !== "undefined" && typeof history.replaceState === "function") {
+    query.set("fase", daRota.id);
+    const aba = route().tab ? `/${route().tab}` : "";
+    history.replaceState(history.state, "", `#/teams/${team.id}${aba}?${query.toString()}`);
+  }
+  return daRota || null;
 }
 
 const TEAM_FASE_MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
@@ -40213,6 +40225,20 @@ function eventosDaRota(section, id) {
   return campeonato ? campeonato.etapas.map((etapa) => etapa.id) : [id];
 }
 
+// Na pagina de um campeonato, o link da equipe que jogou ali com um nome antigo
+// abre o perfil ja naquela fase (`?fase=`), como o escudo e o nome da epoca.
+// Link que ja traz query fica como esta.
+function ligarFasesDaEpoca(html) {
+  const eventos = state.eventoDaPagina || [];
+  if (!eventos.length || !html) return html;
+  return String(html).replace(/href="#\/teams\/([^"/?]+)((?:\/[^"/?]+)?)"/g, (inteiro, id, aba) => {
+    const team = teamById(decodeURIComponent(id));
+    const nomes = team?.profile?.nomes || [];
+    const fase = eventos.map((eventId) => nomes.find((item) => (item.eventos || []).includes(eventId))).find(Boolean);
+    return fase ? `href="#/teams/${team.id}${aba}?fase=${encodeURIComponent(fase.id)}"` : inteiro;
+  });
+}
+
 function teamLogo(id, extra = "") {
   const team = teamById(id);
   const nomes = team?.profile?.nomes || [];
@@ -40289,7 +40315,11 @@ const HISTORICAL_TEAM_ROUTE_ALIASES = {
   "ufpe_virtus": "incinera_esports",
   "dark_ufrj": "minerva_thunders",
   "ufrn_carcaras": "ufrn_tirana",
-  "ufu_saints_trigons": "ufu_saints_onyx"
+  "ufu_saints_trigons": "ufu_saints_onyx",
+  "caaso_hogs_usp_2024": "usp_stars",
+  "usp_caaso_hogs_jubs_2024": "usp_stars",
+  "undb_reapers": "undbala",
+  "estacio_cybers_rj_2024": "unesa_cyborgs"
 };
 
 function teamById(id) {

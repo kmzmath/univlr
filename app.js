@@ -17386,6 +17386,116 @@ const TOURNAMENT_OVERRIDES = {
       ],
     },
   },
+  "rush-series-inclusivo-2": {
+    organizer: "AcadArena",
+    organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
+    banner: "assets/tournament-banners/banner_rushseries_inclusivo.jpg",
+    prizePool: "R$1.000",
+    tier: "A",
+    type: "Online",
+    teamCount: 7,
+    mapPool: ["Abyss", "Bind", "Corrode", "Haven", "Lotus", "Summit", "Sunset"],
+    teams: [
+      "ufu_saints_auryn",
+      "ufpb_sarues",
+      "pucc_canaries",
+      "ufg_gc_eagles",
+      "azure_bears_white",
+      "caap_auroras",
+      "macklogic_rainbow",
+    ],
+    placements: [
+      { range: "1", id: "azure_bears_white" },
+      { range: "2", id: "pucc_canaries" },
+      { range: "3", id: "macklogic_rainbow" },
+      { range: "4", id: "caap_auroras" },
+      { range: "5-6", id: "ufu_saints_auryn" },
+      { range: "5-6", id: "ufpb_sarues" },
+      { range: "7", id: "ufg_gc_eagles" },
+    ],
+    format: {
+      summary: "Eliminação dupla",
+      details: ["Todos os jogos MD1", "Grande final MD3"],
+      standings: "Colocação oficial do campeonato",
+    },
+    bracket: {
+      title: "Eliminação dupla",
+      regions: [
+        {
+          name: "Grande final",
+          className: "grand-final",
+          columns: [
+            {
+              title: "Grande final",
+              matches: [
+                { code: "Partida 14", bestOf: "MD3", a: "azure_bears_white", scoreA: 2, b: "pucc_canaries", scoreB: 0, winner: "azure_bears_white" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave superior",
+          className: "upper-bracket",
+          columns: [
+            {
+              title: "Quartas de final superior",
+              matches: [
+                { code: "Partida 1", a: "ufu_saints_auryn", scoreA: 1, bLabel: "Sem adversário", scoreB: 0, winner: "ufu_saints_auryn" },
+                { code: "Partida 2", a: "ufpb_sarues", scoreA: 3, b: "pucc_canaries", scoreB: 13, winner: "pucc_canaries" },
+                { code: "Partida 3", a: "ufg_gc_eagles", scoreA: 4, b: "azure_bears_white", scoreB: 13, winner: "azure_bears_white" },
+                { code: "Partida 4", a: "caap_auroras", scoreA: 3, b: "macklogic_rainbow", scoreB: 13, winner: "macklogic_rainbow" },
+              ],
+            },
+            {
+              title: "Semifinais superior",
+              matches: [
+                { code: "Partida 5", a: "ufu_saints_auryn", scoreA: 10, b: "pucc_canaries", scoreB: 13, winner: "pucc_canaries" },
+                { code: "Partida 6", a: "azure_bears_white", scoreA: 15, b: "macklogic_rainbow", scoreB: 13, winner: "azure_bears_white" },
+              ],
+            },
+            {
+              title: "Final superior",
+              matches: [
+                { code: "Partida 7", a: "pucc_canaries", scoreA: 10, b: "azure_bears_white", scoreB: 13, winner: "azure_bears_white" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave inferior",
+          className: "lower-bracket",
+          columns: [
+            {
+              title: "Rodada de 4 inferior",
+              matches: [
+                { code: "Partida 8", a: "ufg_gc_eagles", scoreA: 5, b: "caap_auroras", scoreB: 13, winner: "caap_auroras" },
+                { code: "Partida 9", aLabel: "Sem adversário", scoreA: 0, b: "ufpb_sarues", scoreB: 1, winner: "ufpb_sarues" },
+              ],
+            },
+            {
+              title: "Quartas de final inferior",
+              matches: [
+                { code: "Partida 10", a: "ufu_saints_auryn", scoreA: 4, b: "caap_auroras", scoreB: 13, winner: "caap_auroras" },
+                { code: "Partida 11", a: "macklogic_rainbow", scoreA: 13, b: "ufpb_sarues", scoreB: 1, winner: "macklogic_rainbow" },
+              ],
+            },
+            {
+              title: "Semifinal inferior",
+              matches: [
+                { code: "Partida 12", a: "caap_auroras", scoreA: 6, b: "macklogic_rainbow", scoreB: 13, winner: "macklogic_rainbow" },
+              ],
+            },
+            {
+              title: "Final inferior",
+              matches: [
+                { code: "Partida 13", a: "pucc_canaries", scoreA: 14, b: "macklogic_rainbow", scoreB: 12, winner: "pucc_canaries" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
   "rush-series-inclusivo": {
     organizer: "AcadArena",
     organizerLogo: "assets/organizers-logos/logo_AcadArena.png",

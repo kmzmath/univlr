@@ -2781,6 +2781,31 @@
       ]
     },
     {
+      "id": "rush-series-inclusivo-2",
+      "name": "Rush Series Inclusivo 2ª Edição",
+      "organizer": "AcadArena",
+      "source": "Histórico",
+      "sourceId": "",
+      "startAt": "2026-11-07T15:00:00",
+      "endAt": "2026-11-08T20:30:00",
+      "logo": "assets/tournament-icons/rushSeries.png",
+      "folder": "campeonatos/Rush Series Inclusivo 2",
+      "files": [
+        "campeonatos/Rush Series Inclusivo 2/RUSH_INCLUSIVO2_002_07-11-26_ufpb_sarues_3_x_13_pucc_canaries_haven.json",
+        "campeonatos/Rush Series Inclusivo 2/RUSH_INCLUSIVO2_003_07-11-26_ufg_gc_eagles_4_x_13_azure_bears_white_haven.json",
+        "campeonatos/Rush Series Inclusivo 2/RUSH_INCLUSIVO2_004_07-11-26_caap_auroras_3_x_13_macklogic_rainbow_lotus.json",
+        "campeonatos/Rush Series Inclusivo 2/RUSH_INCLUSIVO2_005_07-11-26_ufu_saints_auryn_10_x_13_pucc_canaries_haven.json",
+        "campeonatos/Rush Series Inclusivo 2/RUSH_INCLUSIVO2_006_07-11-26_azure_bears_white_15_x_13_macklogic_rainbow_lotus.json",
+        "campeonatos/Rush Series Inclusivo 2/RUSH_INCLUSIVO2_007_08-11-26_pucc_canaries_10_x_13_azure_bears_white_haven.json",
+        "campeonatos/Rush Series Inclusivo 2/RUSH_INCLUSIVO2_008_07-11-26_ufg_gc_eagles_5_x_13_caap_auroras_haven.json",
+        "campeonatos/Rush Series Inclusivo 2/RUSH_INCLUSIVO2_010_07-11-26_ufu_saints_auryn_4_x_13_caap_auroras_haven.json",
+        "campeonatos/Rush Series Inclusivo 2/RUSH_INCLUSIVO2_012_08-11-26_caap_auroras_6_x_13_macklogic_rainbow_lotus.json",
+        "campeonatos/Rush Series Inclusivo 2/RUSH_INCLUSIVO2_013_08-11-26_pucc_canaries_14_x_12_macklogic_rainbow_lotus.json",
+        "campeonatos/Rush Series Inclusivo 2/RUSH_INCLUSIVO2_014a_08-11-26_azure_bears_white_17_x_15_pucc_canaries_bind.json",
+        "campeonatos/Rush Series Inclusivo 2/RUSH_INCLUSIVO2_014b_08-11-26_azure_bears_white_13_x_9_pucc_canaries_summit.json"
+      ]
+    },
+    {
       "id": "totale-inters",
       "name": "Totale Inters",
       "organizer": "UNIVLR",

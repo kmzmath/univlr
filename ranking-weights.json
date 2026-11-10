@@ -569,6 +569,27 @@
         "5-6": 5
       }
     },
+    "rush-series-inclusivo-2": {
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 14
+        }
+      ],
+      "name": "Rush Series Inclusivo 2ª Edição",
+      "logo": "assets/tournament-icons/rushSeries.png",
+      "teams": 7,
+      "endAt": "2026-11-08T23:30:00.000Z",
+      "placementPoints": {
+        "1": 30,
+        "2": 20,
+        "3": 15,
+        "4": 10,
+        "5-6": 5,
+        "7": 0
+      }
+    },
     "unicup-rj": {
       "placementPoints": {
         "1": 25,

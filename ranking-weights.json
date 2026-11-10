@@ -6,7 +6,7 @@
   "inactivityMaxCalendarDays": 365,
   "incompleteRosterInactivityDays": 60,
   "inactivityExcludedMonths": [12, 1, 2, 3, 4],
-  "firstRankingAt": "2024-07-23T00:00:00",
+  "firstRankingAt": "2023-12-19T00:00:00",
   "pointsWeights": {
     "tournamentExponent": 0
   },

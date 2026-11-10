@@ -496,78 +496,8 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "Classificado",
-        "id": "inatel",
-        "note": "Grupo A, 6-1"
-      },
-      {
-        "range": "Classificado",
-        "id": "maua_esports_black_2024",
-        "note": "Grupo A, 4-3"
-      },
-      {
-        "range": "Classificado",
-        "id": "azure_bears_black",
-        "note": "Grupo A, 3-4"
-      },
-      {
-        "range": "17-24",
-        "id": "poli_plague",
-        "note": "Grupo A, 3-4"
-      },
-      {
-        "range": "17-24",
-        "id": "cyberkongs",
-        "note": "Grupo A, 2-5"
-      },
-      {
-        "range": "25-32",
-        "id": "puc_priests",
-        "note": "Grupo A, 2-5"
-      },
-      {
-        "range": "25-32",
-        "id": "caap_hellhounds_black_2024",
-        "note": "Grupo A, 1-6"
-      },
-      {
-        "range": "Classificado",
         "id": "caap_hellhounds",
         "note": "Grupo B, 7-0"
-      },
-      {
-        "range": "Classificado",
-        "id": "maua_white_2023",
-        "note": "Grupo B, 5-2"
-      },
-      {
-        "range": "Classificado",
-        "id": "unicamp_tritons_black",
-        "note": "Grupo B, 5-2"
-      },
-      {
-        "range": "Classificado",
-        "id": "hunter_esports",
-        "note": "Grupo B, 4-3"
-      },
-      {
-        "range": "17-24",
-        "id": "atletica_unifei",
-        "note": "Grupo B, 3-4"
-      },
-      {
-        "range": "17-24",
-        "id": "usp_ime_wolves",
-        "note": "Grupo B, 3-4"
-      },
-      {
-        "range": "25-32",
-        "id": "fmv_pantera",
-        "note": "Grupo B, 1-6"
-      },
-      {
-        "range": "25-32",
-        "id": "oktoplus_gaming_cefet_mg_2024",
-        "note": "Grupo B, 0-7"
       },
       {
         "range": "Classificado",
@@ -576,43 +506,23 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "Classificado",
-        "id": "caaso_hogs_usp_2024",
-        "note": "Grupo C, 6-1"
-      },
-      {
-        "range": "Classificado",
-        "id": "ufg_eagles",
-        "note": "Grupo C, 5-2"
-      },
-      {
-        "range": "Classificado",
-        "id": "furia_utfpr",
-        "note": "Grupo C, 4-3"
-      },
-      {
-        "range": "17-24",
-        "id": "macklogic_red",
-        "note": "Grupo C, 4-3"
-      },
-      {
-        "range": "17-24",
-        "id": "unb_green_olws_line_red_2024",
-        "note": "Grupo C, 2-5"
-      },
-      {
-        "range": "25-32",
-        "id": "ufmt_turuna",
-        "note": "Grupo C, 1-6"
-      },
-      {
-        "range": "25-32",
-        "id": "ufmg_fenix_b",
-        "note": "Grupo C, 0-7"
-      },
-      {
-        "range": "Classificado",
         "id": "unb_black",
         "note": "Grupo D, 7-0"
+      },
+      {
+        "range": "Classificado",
+        "id": "inatel",
+        "note": "Grupo A, 6-1"
+      },
+      {
+        "range": "Classificado",
+        "id": "maua_white_2023",
+        "note": "Grupo B, 5-2"
+      },
+      {
+        "range": "Classificado",
+        "id": "caaso_hogs_usp_2024",
+        "note": "Grupo C, 6-1"
       },
       {
         "range": "Classificado",
@@ -621,8 +531,38 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "Classificado",
+        "id": "maua_esports_black_2024",
+        "note": "Grupo A, 4-3"
+      },
+      {
+        "range": "Classificado",
+        "id": "unicamp_tritons_black",
+        "note": "Grupo B, 5-2"
+      },
+      {
+        "range": "Classificado",
+        "id": "ufg_eagles",
+        "note": "Grupo C, 5-2"
+      },
+      {
+        "range": "Classificado",
         "id": "usjt_polaris",
         "note": "Grupo D, 5-2"
+      },
+      {
+        "range": "Classificado",
+        "id": "azure_bears_black",
+        "note": "Grupo A, 3-4"
+      },
+      {
+        "range": "Classificado",
+        "id": "hunter_esports",
+        "note": "Grupo B, 4-3"
+      },
+      {
+        "range": "Classificado",
+        "id": "furia_utfpr",
+        "note": "Grupo C, 4-3"
       },
       {
         "range": "Classificado",
@@ -631,8 +571,38 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "17-24",
+        "id": "poli_plague",
+        "note": "Grupo A, 3-4"
+      },
+      {
+        "range": "17-24",
+        "id": "atletica_unifei",
+        "note": "Grupo B, 3-4"
+      },
+      {
+        "range": "17-24",
+        "id": "macklogic_red",
+        "note": "Grupo C, 4-3"
+      },
+      {
+        "range": "17-24",
         "id": "ufrj_minerva",
         "note": "Grupo D, 3-4"
+      },
+      {
+        "range": "17-24",
+        "id": "cyberkongs",
+        "note": "Grupo A, 2-5"
+      },
+      {
+        "range": "17-24",
+        "id": "usp_ime_wolves",
+        "note": "Grupo B, 3-4"
+      },
+      {
+        "range": "17-24",
+        "id": "unb_green_olws_line_red_2024",
+        "note": "Grupo C, 2-5"
       },
       {
         "range": "17-24",
@@ -641,8 +611,38 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "25-32",
+        "id": "puc_priests",
+        "note": "Grupo A, 2-5"
+      },
+      {
+        "range": "25-32",
+        "id": "fmv_pantera",
+        "note": "Grupo B, 1-6"
+      },
+      {
+        "range": "25-32",
+        "id": "ufmt_turuna",
+        "note": "Grupo C, 1-6"
+      },
+      {
+        "range": "25-32",
         "id": "ufsc_titans_sc_2024",
         "note": "Grupo D, 1-6"
+      },
+      {
+        "range": "25-32",
+        "id": "caap_hellhounds_black_2024",
+        "note": "Grupo A, 1-6"
+      },
+      {
+        "range": "25-32",
+        "id": "oktoplus_gaming_cefet_mg_2024",
+        "note": "Grupo B, 0-7"
+      },
+      {
+        "range": "25-32",
+        "id": "ufmg_fenix_b",
+        "note": "Grupo C, 0-7"
       },
       {
         "range": "25-32",
@@ -23299,7 +23299,8 @@ function rankingSnapshotShell(cutoffAt, ranking, label = "") {
 }
 
 // O primeiro ranking oficial e `firstRankingAt` (decisao de 07/11/2026: 23/07/2024,
-// a terca depois da final da Alianca 2024.1). As partidas de antes contam na nota;
+// a terca depois da final da Alianca 2024.1; em 10/11/2026, com a Alianca 2023.2 no
+// banco, passou a 19/12/2023, a terca depois da final dela). As partidas de antes contam na nota;
 // so as semanas de antes nao viram ranking, porque nelas o top 10 trocava metade
 // em quatro semanas. Sem o campo, comeca na primeira terca depois do primeiro jogo.
 function rankingSnapshotCutoffs(matches, matchSeries, rankingWeights = {}) {
@@ -34292,7 +34293,11 @@ function teamRankingChart(history, primeiraPartida = 0, provisorias = [], lineDa
   const todos = routeQuery().get("periodo") === "todos";
   const semanas = (state.db?.rankingSnapshots || []).map((foto) => Number(foto.cutoffAt || 0)).filter(Boolean);
   const primeira = dateValue(rows[0].date);
-  const inicio = todos && semanas.length ? Math.min(...semanas) : primeiraPartida ? Math.min(primeiraPartida, primeira) : primeira;
+  // "Ativo" comeca na primeira partida, mas nunca antes da primeira semana de ranking:
+  // com a Alianca 2023.2 (set/2023) ele ficava mais largo que "Todos" (jul/2024),
+  // com dez meses vazios no comeco.
+  const primeiraSemana = semanas.length ? Math.min(...semanas) : 0;
+  const inicio = todos && semanas.length ? primeiraSemana : Math.max(primeiraPartida ? Math.min(primeiraPartida, primeira) : primeira, primeiraSemana);
   // Equipe com poucas semanas ainda precisa de eixo: um mes de largura, no minimo.
   const fim = todos && semanas.length ? Math.max(...semanas) : Math.max(dateValue(rows[rows.length - 1].date), inicio + 30 * DAY_MS);
   const span = fim - inicio;

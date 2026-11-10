@@ -101,6 +101,7 @@ const TROPHY_GENERIC_ASSETS = {
 // e o candidato volta a ser tentado - uma vez so, e com sucesso.
 const TROPHY_ART_FILES = new Set([
   "copa-alianca-2025-playoffs-campeao.png",
+  "e-jia-2023-campeao.png",
   "e-tusca-campeao.png",
   "jubs-2024-presencial-campeao.png",
   "jubs-etapa-presencial-campeao.png",
@@ -403,6 +404,7 @@ const TOURNAMENT_OVERRIDES = {
   "e-jia-2023": {
     "name": "E-JIA 2023",
     "organizer": "JIA",
+    "logo": "assets/tournament-icons/jia_2023.png",
     "prizePool": "-",
     "tier": "C",
     "status": "Finalizado",

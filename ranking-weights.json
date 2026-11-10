@@ -72,6 +72,7 @@
         }
       ],
       "name": "E-JIA 2023",
+      "logo": "assets/tournament-icons/jia_2023.png",
       "teams": 8,
       "endAt": "2023-07-16T17:49:08",
       "placementPoints": {

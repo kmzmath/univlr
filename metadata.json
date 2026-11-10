@@ -1032,17 +1032,17 @@
       "sourceId": "2990",
       "slug": "bluesharks",
       "tag": "BSK",
-      "displayName": "Bluesharks",
-      "org": "",
-      "orgTag": "",
-      "logo": "",
+      "displayName": "UEL Blue Sharks",
+      "org": "Universidade Estadual de Londrina",
+      "orgTag": "UEL",
+      "logo": "assets/team-logos/bluesharks.png",
       "state": "PR",
       "stateName": "Paraná",
       "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
       "colors": [
-        "#76239f",
-        "#535918"
+        "#067aad",
+        "#011840"
       ],
       "socials": {
         "instagram": ""
@@ -2280,17 +2280,17 @@
       "sourceId": "2994",
       "slug": "gorilada",
       "tag": "GRL",
-      "displayName": "Gorilada",
-      "org": "",
-      "orgTag": "",
-      "logo": "",
+      "displayName": "UTFPR Gorilada",
+      "org": "Universidade Tecnológica Federal do Paraná",
+      "orgTag": "UTFPR Londrina",
+      "logo": "assets/team-logos/gorilada.png",
       "state": "PR",
       "stateName": "Paraná",
       "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
       "colors": [
-        "#9f2325",
-        "#185932"
+        "#fdeb01",
+        "#df0011"
       ],
       "socials": {
         "instagram": ""
@@ -3965,18 +3965,18 @@
       "id": "odonto_uel",
       "sourceId": "2992",
       "slug": "odonto_uel",
-      "tag": "ODT",
-      "displayName": "Odonto UEL",
+      "tag": "PIO",
+      "displayName": "UEL PioXII",
       "org": "Universidade Estadual de Londrina",
       "orgTag": "UEL",
-      "logo": "",
+      "logo": "assets/team-logos/odonto_uel.png",
       "state": "PR",
       "stateName": "Paraná",
       "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
       "colors": [
-        "#9f235d",
-        "#1b5918"
+        "#560204",
+        "#daa153"
       ],
       "socials": {
         "instagram": ""
@@ -4526,17 +4526,17 @@
       "sourceId": "2991",
       "slug": "pucpr_corujao",
       "tag": "CRJ",
-      "displayName": "Corujão PUC Londrina",
+      "displayName": "PUC Corujão",
       "org": "Pontifícia Universidade Católica do Paraná",
-      "orgTag": "PUCPR Londrina",
-      "logo": "",
+      "orgTag": "PUC Londrina",
+      "logo": "assets/team-logos/pucpr_corujao.png",
       "state": "PR",
       "stateName": "Paraná",
       "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
       "colors": [
-        "#9f3823",
-        "#18593e"
+        "#d52028",
+        "#71413d"
       ],
       "socials": {
         "instagram": ""
@@ -4548,17 +4548,17 @@
       "sourceId": "2989",
       "slug": "puff",
       "tag": "PUFF",
-      "displayName": "PUFF",
-      "org": "",
-      "orgTag": "",
-      "logo": "",
+      "displayName": "UEL Puff Doido",
+      "org": "Universidade Estadual de Londrina",
+      "orgTag": "UEL",
+      "logo": "assets/team-logos/puff.png",
       "state": "PR",
       "stateName": "Paraná",
       "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
       "colors": [
-        "#3e239f",
-        "#594118"
+        "#feb641",
+        "#126439"
       ],
       "socials": {
         "instagram": ""
@@ -7518,17 +7518,17 @@
       "sourceId": "2993",
       "slug": "xxi_de_agosto_uel",
       "tag": "XXI",
-      "displayName": "XXI de Agosto UEL",
+      "displayName": "UEL XXI de Agosto",
       "org": "Universidade Estadual de Londrina",
       "orgTag": "UEL",
-      "logo": "",
+      "logo": "assets/team-logos/xxi_de_agosto_uel.png",
       "state": "PR",
       "stateName": "Paraná",
       "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
       "colors": [
-        "#23409f",
-        "#592318"
+        "#548148",
+        "#252641"
       ],
       "socials": {
         "instagram": ""

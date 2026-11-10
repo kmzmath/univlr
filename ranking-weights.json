@@ -63,6 +63,24 @@
     "lifetimeDays": 304
   },
   "tournaments": {
+    "e-jia-2023": {
+      "defaultPhase": "playoffs",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 7
+        }
+      ],
+      "name": "E-JIA 2023",
+      "teams": 8,
+      "endAt": "2023-07-16T17:49:08",
+      "placementPoints": {
+        "1": 10,
+        "2": 7,
+        "3-4": 4,
+        "5-8": 0
+      }
+    },
     "alianca-2023-2-fase-de-grupos": {
       "name": "Copa Aliança 2023.2 - Fase de Grupos",
       "logo": "assets/tournament-icons/copa_alianca.png",

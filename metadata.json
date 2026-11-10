@@ -1028,6 +1028,28 @@
       "lineupRegistered": true
     },
     {
+      "id": "bluesharks",
+      "sourceId": "2990",
+      "slug": "bluesharks",
+      "tag": "BSK",
+      "displayName": "Bluesharks",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "PR",
+      "stateName": "Paraná",
+      "stateFlag": "assets/state-flags/pr.webp",
+      "stateRegion": "Sul",
+      "colors": [
+        "#76239f",
+        "#535918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "bot_s_academy_pb_2024",
       "sourceId": "2983",
       "slug": "bot_s_academy_pb_2024",
@@ -2247,6 +2269,28 @@
       "colors": [
         "#181916",
         "#e8e9e4"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "gorilada",
+      "sourceId": "2994",
+      "slug": "gorilada",
+      "tag": "GRL",
+      "displayName": "Gorilada",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "PR",
+      "stateName": "Paraná",
+      "stateFlag": "assets/state-flags/pr.webp",
+      "stateRegion": "Sul",
+      "colors": [
+        "#9f2325",
+        "#185932"
       ],
       "socials": {
         "instagram": ""
@@ -3918,6 +3962,28 @@
       "lineupRegistered": true
     },
     {
+      "id": "odonto_uel",
+      "sourceId": "2992",
+      "slug": "odonto_uel",
+      "tag": "ODT",
+      "displayName": "Odonto UEL",
+      "org": "Universidade Estadual de Londrina",
+      "orgTag": "UEL",
+      "logo": "",
+      "state": "PR",
+      "stateName": "Paraná",
+      "stateFlag": "assets/state-flags/pr.webp",
+      "stateRegion": "Sul",
+      "colors": [
+        "#9f235d",
+        "#1b5918"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
       "id": "ods_force_ufla_mg_2024",
       "sourceId": "2971",
       "slug": "ods_force_ufla_mg_2024",
@@ -4454,6 +4520,50 @@
         }
       ],
       "lineupRegistered": true
+    },
+    {
+      "id": "pucpr_corujao",
+      "sourceId": "2991",
+      "slug": "pucpr_corujao",
+      "tag": "CRJ",
+      "displayName": "Corujão PUC Londrina",
+      "org": "Pontifícia Universidade Católica do Paraná",
+      "orgTag": "PUCPR Londrina",
+      "logo": "",
+      "state": "PR",
+      "stateName": "Paraná",
+      "stateFlag": "assets/state-flags/pr.webp",
+      "stateRegion": "Sul",
+      "colors": [
+        "#9f3823",
+        "#18593e"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "puff",
+      "sourceId": "2989",
+      "slug": "puff",
+      "tag": "PUFF",
+      "displayName": "PUFF",
+      "org": "",
+      "orgTag": "",
+      "logo": "",
+      "state": "PR",
+      "stateName": "Paraná",
+      "stateFlag": "assets/state-flags/pr.webp",
+      "stateRegion": "Sul",
+      "colors": [
+        "#3e239f",
+        "#594118"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
     },
     {
       "id": "rahnag",
@@ -7397,6 +7507,28 @@
       "colors": [
         "#2c681a",
         "#580474"
+      ],
+      "socials": {
+        "instagram": ""
+      },
+      "lineup": []
+    },
+    {
+      "id": "xxi_de_agosto_uel",
+      "sourceId": "2993",
+      "slug": "xxi_de_agosto_uel",
+      "tag": "XXI",
+      "displayName": "XXI de Agosto UEL",
+      "org": "Universidade Estadual de Londrina",
+      "orgTag": "UEL",
+      "logo": "",
+      "state": "PR",
+      "stateName": "Paraná",
+      "stateFlag": "assets/state-flags/pr.webp",
+      "stateRegion": "Sul",
+      "colors": [
+        "#23409f",
+        "#592318"
       ],
       "socials": {
         "instagram": ""
@@ -18266,7 +18398,8 @@
       "puuid": "mD_vaZ_Ux99_Bs__XwviwICTF8ZMOLIyo-R8g6rsKIwfLsymjMB0USI9dHVcxI87HVTtyvny9saV-g",
       "currentTeam": "",
       "teamHistory": [
-        "furia_utfpr"
+        "furia_utfpr",
+        "gorilada"
       ],
       "nickHistory": [
         "Já FUI#RAD"
@@ -23974,6 +24107,422 @@
         "Ñefry was here#666"
       ],
       "photo": ""
+    },
+    {
+      "id": "veknFrk_PP3vofg4C1N3-vljybttdOaOsu8KZ0pQpDN3-bcAEWbPRWDfYJyeKMwxpkPz56kG7dqOHg",
+      "name": "Aronga",
+      "puuid": "veknFrk_PP3vofg4C1N3-vljybttdOaOsu8KZ0pQpDN3-bcAEWbPRWDfYJyeKMwxpkPz56kG7dqOHg",
+      "currentTeam": "",
+      "teamHistory": [
+        "bluesharks"
+      ],
+      "nickHistory": [
+        "Aronga#try"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "RZhFZ6tjBmsAk_rn9iwnUfhNrKglwxUHewx6Trn0l_aeeHBFtUsUS1hQNVeAOquuo_oNlUXH1MUZtA",
+      "name": "Asu",
+      "puuid": "RZhFZ6tjBmsAk_rn9iwnUfhNrKglwxUHewx6Trn0l_aeeHBFtUsUS1hQNVeAOquuo_oNlUXH1MUZtA",
+      "currentTeam": "",
+      "teamHistory": [
+        "puff"
+      ],
+      "nickHistory": [
+        "Asu#9595"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "W9pzWBPxVgqt4yD5NflNvin4G2fhjlw33hpsSxyWgnBC4-0z4r96Re8AS55fwZdudLKi1Vt3gIepkQ",
+      "name": "aYk",
+      "puuid": "W9pzWBPxVgqt4yD5NflNvin4G2fhjlw33hpsSxyWgnBC4-0z4r96Re8AS55fwZdudLKi1Vt3gIepkQ",
+      "currentTeam": "",
+      "teamHistory": [
+        "xxi_de_agosto_uel"
+      ],
+      "nickHistory": [
+        "aYk#aykow"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "yJsGTZWjuah4hqO-DnmoWAD0y7CeTMqUEWxmKidyPoc8FyXf65ex-72RYKOCemhNtB44GzPXwmIncQ",
+      "name": "Bruninha Cu Roxo",
+      "puuid": "yJsGTZWjuah4hqO-DnmoWAD0y7CeTMqUEWxmKidyPoc8FyXf65ex-72RYKOCemhNtB44GzPXwmIncQ",
+      "currentTeam": "",
+      "teamHistory": [
+        "gorilada"
+      ],
+      "nickHistory": [
+        "Bruninha Cu Roxo#BR2"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "G3MUDUwT-rHQnnNh_AG5fZL7fPw9YCQY9zSSRwak0t53wMtY-rx1DiTV9BrmP0CRHpYYZg_-oPGrAw",
+      "name": "Bruxinha Rabuda",
+      "puuid": "G3MUDUwT-rHQnnNh_AG5fZL7fPw9YCQY9zSSRwak0t53wMtY-rx1DiTV9BrmP0CRHpYYZg_-oPGrAw",
+      "currentTeam": "",
+      "teamHistory": [
+        "gorilada"
+      ],
+      "nickHistory": [
+        "Bruxinha Rabuda#2610"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "rAga1u-lQkXdSA-2CrHGRKq6xe7zZ-VvK3txfuAW4ks3um0uB4Bb-6lIo5R7kqQvz1zGBWux9PQEkQ",
+      "name": "CNishi",
+      "puuid": "rAga1u-lQkXdSA-2CrHGRKq6xe7zZ-VvK3txfuAW4ks3um0uB4Bb-6lIo5R7kqQvz1zGBWux9PQEkQ",
+      "currentTeam": "",
+      "teamHistory": [
+        "puff"
+      ],
+      "nickHistory": [
+        "CNishi#BR0"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "vLD4LF2-b2kDbhbzLH80ux6YrFvqPLYouBo46OOx2QCXMSBB331FxBksgwyInqFlLzZb1oCI-wiVJw",
+      "name": "Cpt Broxa",
+      "puuid": "vLD4LF2-b2kDbhbzLH80ux6YrFvqPLYouBo46OOx2QCXMSBB331FxBksgwyInqFlLzZb1oCI-wiVJw",
+      "currentTeam": "",
+      "teamHistory": [
+        "bluesharks"
+      ],
+      "nickHistory": [
+        "Cpt Broxa#beliv"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "wVVUtFEIfUR3xrC8xweL05d8e_Th-OiEq5HZyu5mRB_soFs0MGgx4zU8o-5NzF92g1S1XrrvNuTtiw",
+      "name": "Dallas77",
+      "puuid": "wVVUtFEIfUR3xrC8xweL05d8e_Th-OiEq5HZyu5mRB_soFs0MGgx4zU8o-5NzF92g1S1XrrvNuTtiw",
+      "currentTeam": "",
+      "teamHistory": [
+        "odonto_uel"
+      ],
+      "nickHistory": [
+        "Dallas77#CHRIS"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "JvEiRBnazjqXmNjucMjJ-QpvziL1Te5OGhEyoAkp8fiDefukwkfHzcprC0tjNKrLtmNKWZcTnouGVA",
+      "name": "Deezer",
+      "puuid": "JvEiRBnazjqXmNjucMjJ-QpvziL1Te5OGhEyoAkp8fiDefukwkfHzcprC0tjNKrLtmNKWZcTnouGVA",
+      "currentTeam": "",
+      "teamHistory": [
+        "pucpr_corujao"
+      ],
+      "nickHistory": [
+        "Deezer#1030"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "2WBisTZsT2FkT6JL2_yHfXjSk7FaqkrAh-2OcRyiwxvvxtvOwNylYk9H6CyQU_nGicQmaeWMiV3bQw",
+      "name": "DoençaCÁRIE",
+      "puuid": "2WBisTZsT2FkT6JL2_yHfXjSk7FaqkrAh-2OcRyiwxvvxtvOwNylYk9H6CyQU_nGicQmaeWMiV3bQw",
+      "currentTeam": "",
+      "teamHistory": [
+        "odonto_uel"
+      ],
+      "nickHistory": [
+        "DoençaCÁRIE#1997"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "wROYQaPxPPw75i0he4Kmi7NZYl1cA7ApIGMS1ERMYRY9JRscWcLwCsCwDr_UhEPqSGvprJzvZEJ5KQ",
+      "name": "Dudã1",
+      "puuid": "wROYQaPxPPw75i0he4Kmi7NZYl1cA7ApIGMS1ERMYRY9JRscWcLwCsCwDr_UhEPqSGvprJzvZEJ5KQ",
+      "currentTeam": "",
+      "teamHistory": [
+        "bluesharks"
+      ],
+      "nickHistory": [
+        "Dudã1#42424"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "6nGNkjkjcB9OEaLzNMIW3MzFezmUbnhXZLLsVN4qgb9yX2ktKfsv5dQXGHGAdMfuIXpAAgB4FitT_A",
+      "name": "Fefzzz",
+      "puuid": "6nGNkjkjcB9OEaLzNMIW3MzFezmUbnhXZLLsVN4qgb9yX2ktKfsv5dQXGHGAdMfuIXpAAgB4FitT_A",
+      "currentTeam": "",
+      "teamHistory": [
+        "pucpr_corujao"
+      ],
+      "nickHistory": [
+        "Fefzzz#Fefs"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "BGFHa5YT8bIYvlNmFhwS1_h802MTfHPn3M9NgF4X44AIM_QMkE1jQoXYxxmU5kN7i74guyJotz2rPw",
+      "name": "FG koutz",
+      "puuid": "BGFHa5YT8bIYvlNmFhwS1_h802MTfHPn3M9NgF4X44AIM_QMkE1jQoXYxxmU5kN7i74guyJotz2rPw",
+      "currentTeam": "",
+      "teamHistory": [
+        "odonto_uel"
+      ],
+      "nickHistory": [
+        "FG koutz#001"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "2yjPPbI0xjIro9cFpwA7kYorve4lb4CzztE0xhoBHhL1GL0n7tw2h5CegWc39RsoveKOwKpvqHbiGg",
+      "name": "FROD",
+      "puuid": "2yjPPbI0xjIro9cFpwA7kYorve4lb4CzztE0xhoBHhL1GL0n7tw2h5CegWc39RsoveKOwKpvqHbiGg",
+      "currentTeam": "",
+      "teamHistory": [
+        "pucpr_corujao"
+      ],
+      "nickHistory": [
+        "FROD#Fake"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "bajUkLwghq8HGrvETjgmDq2JecD7gX5pBjO_qGyGPgbB25eo12VZaPQgCF8DQhs15KYS-7JtHcYlIg",
+      "name": "getulio nargas",
+      "puuid": "bajUkLwghq8HGrvETjgmDq2JecD7gX5pBjO_qGyGPgbB25eo12VZaPQgCF8DQhs15KYS-7JtHcYlIg",
+      "currentTeam": "",
+      "teamHistory": [
+        "puff"
+      ],
+      "nickHistory": [
+        "getulio nargas#6956"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "zxWmZKmZJ8v0-qgZdK56JewI9A966FifdFqwmVjL3Y-oJgxhXPGW6eJ2AnjJlZz87yxLEyTxSQkXhg",
+      "name": "guilherme pret",
+      "puuid": "zxWmZKmZJ8v0-qgZdK56JewI9A966FifdFqwmVjL3Y-oJgxhXPGW6eJ2AnjJlZz87yxLEyTxSQkXhg",
+      "currentTeam": "",
+      "teamHistory": [
+        "furia_utfpr"
+      ],
+      "nickHistory": [
+        "guilherme#pret"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Szyp1wLUDiXFsdeymVkrccuZmc0SR63MaWAntbgVBtdYw9aSmnUsVS97a27iK9f49PgKm1y3RWa8gg",
+      "name": "Guloma",
+      "puuid": "Szyp1wLUDiXFsdeymVkrccuZmc0SR63MaWAntbgVBtdYw9aSmnUsVS97a27iK9f49PgKm1y3RWa8gg",
+      "currentTeam": "",
+      "teamHistory": [
+        "odonto_uel"
+      ],
+      "nickHistory": [
+        "Guloma#1996"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "mwipxc8eH1YTiOdQSJadwevVqKUMGNG9OsDz863X2SPu-AlRnRu_LpcKTImDC2ZTSOOXSaY6gvWgjw",
+      "name": "hugh jass",
+      "puuid": "mwipxc8eH1YTiOdQSJadwevVqKUMGNG9OsDz863X2SPu-AlRnRu_LpcKTImDC2ZTSOOXSaY6gvWgjw",
+      "currentTeam": "",
+      "teamHistory": [
+        "hunter_esports"
+      ],
+      "nickHistory": [
+        "hugh jass#bosta"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "-e6tyiQnn49G3w2gcUk1M0OZYbd9dJUuRlJ6V_RKH8kOaRnfw-xPPbuyU12WWRKgFcSNSWoRI2flaA",
+      "name": "Ipsulon ｼ",
+      "puuid": "-e6tyiQnn49G3w2gcUk1M0OZYbd9dJUuRlJ6V_RKH8kOaRnfw-xPPbuyU12WWRKgFcSNSWoRI2flaA",
+      "currentTeam": "",
+      "teamHistory": [
+        "bluesharks"
+      ],
+      "nickHistory": [
+        "Ipsulon ｼ#IPSU"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "pHoRYkC7u00kwsGM1ILcnD-sWpyo_kv7CtEk5H3eqZz_OwPpAeZW3viO8SddNB0f2uBU_o1C19fFHw",
+      "name": "ITetsuoI",
+      "puuid": "pHoRYkC7u00kwsGM1ILcnD-sWpyo_kv7CtEk5H3eqZz_OwPpAeZW3viO8SddNB0f2uBU_o1C19fFHw",
+      "currentTeam": "",
+      "teamHistory": [
+        "pucpr_corujao"
+      ],
+      "nickHistory": [
+        "ITetsuoI#6969"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "KDe9NPiT8obqKuVx6BYGVWTK35lWv6j8I-OJmFyw2q7fiFsIPMFxMzrC_oac_B_o4mVHmSCMsT7_nA",
+      "name": "Jaspas",
+      "puuid": "KDe9NPiT8obqKuVx6BYGVWTK35lWv6j8I-OJmFyw2q7fiFsIPMFxMzrC_oac_B_o4mVHmSCMsT7_nA",
+      "currentTeam": "",
+      "teamHistory": [
+        "pucpr_corujao"
+      ],
+      "nickHistory": [
+        "Jaspas#ojvp"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "jvTyvt2t3wjNvr-nt3UgDlKUQa4w360n831uIzUo3gW0k_jZwjQO8NpD_AJ3LsSwEBjJ35Oj5QNp8w",
+      "name": "Kenjii",
+      "puuid": "jvTyvt2t3wjNvr-nt3UgDlKUQa4w360n831uIzUo3gW0k_jZwjQO8NpD_AJ3LsSwEBjJ35Oj5QNp8w",
+      "currentTeam": "",
+      "teamHistory": [
+        "furia_utfpr"
+      ],
+      "nickHistory": [
+        "Kenjii#HODL"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "kVre-5LATqcfjfP1jp28I_kHsRwUOQPZXnQU8Ib2-9uxfUSGif7Y9fxBaKJfg14jdPdPjRXZTgLkBA",
+      "name": "Laplace",
+      "puuid": "kVre-5LATqcfjfP1jp28I_kHsRwUOQPZXnQU8Ib2-9uxfUSGif7Y9fxBaKJfg14jdPdPjRXZTgLkBA",
+      "currentTeam": "",
+      "teamHistory": [
+        "furia_utfpr"
+      ],
+      "nickHistory": [
+        "Laplace#demo"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "2yXpYgqxIG1WozuyGW4G1rrYXzRsDFZtM7mtcQRRW-jlogJSerydtUDR9MzwKOncDFQN8Kav-nJJlg",
+      "name": "MrNippon",
+      "puuid": "2yXpYgqxIG1WozuyGW4G1rrYXzRsDFZtM7mtcQRRW-jlogJSerydtUDR9MzwKOncDFQN8Kav-nJJlg",
+      "currentTeam": "",
+      "teamHistory": [
+        "gorilada"
+      ],
+      "nickHistory": [
+        "MrNippon#br1"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "YSS3CFJb43C9b3gBa-QxcNJWBnc7Lkz1l444RtFQ-MgcqVWaVmTjE4NFwyHVEhp6NLQchWoZcd763w",
+      "name": "Paduan1",
+      "puuid": "YSS3CFJb43C9b3gBa-QxcNJWBnc7Lkz1l444RtFQ-MgcqVWaVmTjE4NFwyHVEhp6NLQchWoZcd763w",
+      "currentTeam": "",
+      "teamHistory": [
+        "bluesharks"
+      ],
+      "nickHistory": [
+        "Paduan1#4173"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "-2RM7ZwHHCCuZtYFuKCJS5D6evSyX4J3Cq4103eFTgdx3riNs6UnvMcuia9O58hjrSs1JsBPvPK8qg",
+      "name": "pandorazzx",
+      "puuid": "-2RM7ZwHHCCuZtYFuKCJS5D6evSyX4J3Cq4103eFTgdx3riNs6UnvMcuia9O58hjrSs1JsBPvPK8qg",
+      "currentTeam": "",
+      "teamHistory": [
+        "puff"
+      ],
+      "nickHistory": [
+        "pandorazzx#br1"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "A876mPcV_xWJB-0b1EN-hRGsYJhIBitimyGgWryKCOMN4SLVOWTCfhYjN9EOUxOEyNxmN2p-mw5TrA",
+      "name": "ph washed",
+      "puuid": "A876mPcV_xWJB-0b1EN-hRGsYJhIBitimyGgWryKCOMN4SLVOWTCfhYjN9EOUxOEyNxmN2p-mw5TrA",
+      "currentTeam": "",
+      "teamHistory": [
+        "xxi_de_agosto_uel"
+      ],
+      "nickHistory": [
+        "ph washed#RIP"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "MkIGbWwpuZe6A1CBTtbfHXWC4xBKqDIk-sK3FePM0CBTTdp2J2nAJZoXITsDbC3LJqImZuCK7Mc8Bw",
+      "name": "pHzera",
+      "puuid": "MkIGbWwpuZe6A1CBTtbfHXWC4xBKqDIk-sK3FePM0CBTTdp2J2nAJZoXITsDbC3LJqImZuCK7Mc8Bw",
+      "currentTeam": "",
+      "teamHistory": [
+        "odonto_uel"
+      ],
+      "nickHistory": [
+        "pHzera#BR2"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "8-bvGBuICo1wviAcFUAYKHLt7MHzUevXxL1u_4ogImOUf2-5dZNU0SnuE0EkBR8Yel_Sxz_30qbsAA",
+      "name": "seidy",
+      "puuid": "8-bvGBuICo1wviAcFUAYKHLt7MHzUevXxL1u_4ogImOUf2-5dZNU0SnuE0EkBR8Yel_Sxz_30qbsAA",
+      "currentTeam": "",
+      "teamHistory": [
+        "xxi_de_agosto_uel"
+      ],
+      "nickHistory": [
+        "seidy#UEL"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "epYXrr5AXNwl5MlUyZUXXaVkxfGXZpfvR-5-B7Sm9guCdYyH9djtcHEarVK4FpRQj05zV35aNOlYPQ",
+      "name": "Souza 7777",
+      "puuid": "epYXrr5AXNwl5MlUyZUXXaVkxfGXZpfvR-5-B7Sm9guCdYyH9djtcHEarVK4FpRQj05zV35aNOlYPQ",
+      "currentTeam": "",
+      "teamHistory": [
+        "gorilada"
+      ],
+      "nickHistory": [
+        "Souza#7777"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "monWwQg6e2lDb0kQHVrHKFGF2yEiUw7DBAEc6iHdYQ8aMGNKfHkNUvGHK0equRFstfsMw2uXhJ83LA",
+      "name": "XXI Bundinha",
+      "puuid": "monWwQg6e2lDb0kQHVrHKFGF2yEiUw7DBAEc6iHdYQ8aMGNKfHkNUvGHK0equRFstfsMw2uXhJ83LA",
+      "currentTeam": "",
+      "teamHistory": [
+        "xxi_de_agosto_uel"
+      ],
+      "nickHistory": [
+        "XXI Bundinha#UEL"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "AI0eXnyhCo05rezCYr4bYRC-MBbtWlLKOB25MV2COv9PohMTzCCuqkt0spAmiTIQ2nMH31h6UCECOQ",
+      "name": "Yudiasso",
+      "puuid": "AI0eXnyhCo05rezCYr4bYRC-MBbtWlLKOB25MV2COv9PohMTzCCuqkt0spAmiTIQ2nMH31h6UCECOQ",
+      "currentTeam": "",
+      "teamHistory": [
+        "xxi_de_agosto_uel"
+      ],
+      "nickHistory": [
+        "Yudiasso#Allan"
+      ],
+      "photo": ""
     }
   ],
   "states": [
@@ -24457,200 +25006,200 @@
       "state": "1v1",
       "allies": 1,
       "enemies": 1,
-      "occurrences": "16852",
-      "wins": "8426",
+      "occurrences": "16914",
+      "wins": "8457",
       "winRate": 0.5
     },
     {
       "state": "1v2",
       "allies": 1,
       "enemies": 2,
-      "occurrences": "20924",
-      "wins": "3336",
-      "winRate": 0.1594341426113554
+      "occurrences": "21007",
+      "wins": "3355",
+      "winRate": 0.1597086685390584
     },
     {
       "state": "1v3",
       "allies": 1,
       "enemies": 3,
-      "occurrences": "21873",
-      "wins": "817",
-      "winRate": 0.03735198646733415
+      "occurrences": "21971",
+      "wins": "819",
+      "winRate": 0.03727640981293523
     },
     {
       "state": "1v4",
       "allies": 1,
       "enemies": 4,
-      "occurrences": "17332",
-      "wins": "141",
-      "winRate": 0.008135241172397877
+      "occurrences": "17410",
+      "wins": "142",
+      "winRate": 0.008156232050545664
     },
     {
       "state": "1v5",
       "allies": 1,
       "enemies": 5,
-      "occurrences": "7988",
+      "occurrences": "8018",
       "wins": "16",
-      "winRate": 0.00200300450676014
+      "winRate": 0.001995510102269893
     },
     {
       "state": "2v1",
       "allies": 2,
       "enemies": 1,
-      "occurrences": "20924",
-      "wins": "17588",
-      "winRate": 0.8405658573886446
+      "occurrences": "21007",
+      "wins": "17652",
+      "winRate": 0.8402913314609416
     },
     {
       "state": "2v2",
       "allies": 2,
       "enemies": 2,
-      "occurrences": "25492",
-      "wins": "12746",
+      "occurrences": "25582",
+      "wins": "12791",
       "winRate": 0.5
     },
     {
       "state": "2v3",
       "allies": 2,
       "enemies": 3,
-      "occurrences": "28226",
-      "wins": "6064",
-      "winRate": 0.2148373839722242
+      "occurrences": "28344",
+      "wins": "6086",
+      "winRate": 0.2147191645498165
     },
     {
       "state": "2v4",
       "allies": 2,
       "enemies": 4,
-      "occurrences": "25462",
-      "wins": "1933",
-      "winRate": 0.0759170528630901
+      "occurrences": "25572",
+      "wins": "1941",
+      "winRate": 0.07590333176912248
     },
     {
       "state": "2v5",
       "allies": 2,
       "enemies": 5,
-      "occurrences": "14224",
-      "wins": "323",
-      "winRate": 0.02270809898762655
+      "occurrences": "14280",
+      "wins": "325",
+      "winRate": 0.02275910364145658
     },
     {
       "state": "3v1",
       "allies": 3,
       "enemies": 1,
-      "occurrences": "21873",
-      "wins": "21056",
-      "winRate": 0.9626480135326658
+      "occurrences": "21971",
+      "wins": "21152",
+      "winRate": 0.9627235901870648
     },
     {
       "state": "3v2",
       "allies": 3,
       "enemies": 2,
-      "occurrences": "28226",
-      "wins": "22162",
-      "winRate": 0.7851626160277758
+      "occurrences": "28344",
+      "wins": "22258",
+      "winRate": 0.7852808354501835
     },
     {
       "state": "3v3",
       "allies": 3,
       "enemies": 3,
-      "occurrences": "34410",
-      "wins": "17205",
+      "occurrences": "34566",
+      "wins": "17283",
       "winRate": 0.5
     },
     {
       "state": "3v4",
       "allies": 3,
       "enemies": 4,
-      "occurrences": "36640",
-      "wins": "9438",
-      "winRate": 0.2575873362445415
+      "occurrences": "36803",
+      "wins": "9481",
+      "winRate": 0.2576148683531234
     },
     {
       "state": "3v5",
       "allies": 3,
       "enemies": 5,
-      "occurrences": "26328",
-      "wins": "2909",
-      "winRate": 0.1104907323002127
+      "occurrences": "26426",
+      "wins": "2922",
+      "winRate": 0.1105729206084916
     },
     {
       "state": "4v1",
       "allies": 4,
       "enemies": 1,
-      "occurrences": "17332",
-      "wins": "17191",
-      "winRate": 0.9918647588276022
+      "occurrences": "17410",
+      "wins": "17268",
+      "winRate": 0.9918437679494544
     },
     {
       "state": "4v2",
       "allies": 4,
       "enemies": 2,
-      "occurrences": "25462",
-      "wins": "23529",
-      "winRate": 0.9240829471369099
+      "occurrences": "25572",
+      "wins": "23631",
+      "winRate": 0.9240966682308775
     },
     {
       "state": "4v3",
       "allies": 4,
       "enemies": 3,
-      "occurrences": "36640",
-      "wins": "27202",
-      "winRate": 0.7424126637554586
+      "occurrences": "36803",
+      "wins": "27322",
+      "winRate": 0.7423851316468766
     },
     {
       "state": "4v4",
       "allies": 4,
       "enemies": 4,
-      "occurrences": "49262",
-      "wins": "24631",
+      "occurrences": "49504",
+      "wins": "24752",
       "winRate": 0.5
     },
     {
       "state": "4v5",
       "allies": 4,
       "enemies": 5,
-      "occurrences": "50965",
-      "wins": "14548",
-      "winRate": 0.2854507995683312
+      "occurrences": "51184",
+      "wins": "14625",
+      "winRate": 0.2857338230697093
     },
     {
       "state": "5v1",
       "allies": 5,
       "enemies": 1,
-      "occurrences": "7988",
-      "wins": "7972",
-      "winRate": 0.9979969954932398
+      "occurrences": "8018",
+      "wins": "8002",
+      "winRate": 0.9980044898977302
     },
     {
       "state": "5v2",
       "allies": 5,
       "enemies": 2,
-      "occurrences": "14224",
-      "wins": "13901",
-      "winRate": 0.9772919010123734
+      "occurrences": "14280",
+      "wins": "13955",
+      "winRate": 0.9772408963585434
     },
     {
       "state": "5v3",
       "allies": 5,
       "enemies": 3,
-      "occurrences": "26328",
-      "wins": "23419",
-      "winRate": 0.8895092676997873
+      "occurrences": "26426",
+      "wins": "23504",
+      "winRate": 0.8894270793915083
     },
     {
       "state": "5v4",
       "allies": 5,
       "enemies": 4,
-      "occurrences": "50965",
-      "wins": "36417",
-      "winRate": 0.7145492004316688
+      "occurrences": "51184",
+      "wins": "36559",
+      "winRate": 0.7142661769302907
     },
     {
       "state": "5v5",
       "allies": 5,
       "enemies": 5,
-      "occurrences": "101950",
-      "wins": "50975",
+      "occurrences": "102388",
+      "wins": "51194",
       "winRate": 0.5
     }
   ],

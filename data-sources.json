@@ -1346,6 +1346,30 @@
       ]
     },
     {
+      "id": "e-jia-2023",
+      "name": "E-JIA 2023",
+      "organizer": "JIA",
+      "source": "Histórico",
+      "sourceId": "",
+      "startAt": "2023-07-08T09:03:15",
+      "endAt": "2023-07-16T17:49:08",
+      "logo": "",
+      "folder": "campeonatos/E-JIA 2023",
+      "files": [
+        "campeonatos/E-JIA 2023/EJIA23_001_08-07-23_hunter_esports_13_x_2_puff_fracture.json",
+        "campeonatos/E-JIA 2023/EJIA23_002_08-07-23_bluesharks_13_x_9_pucpr_corujao_ascent.json",
+        "campeonatos/E-JIA 2023/EJIA23_003_08-07-23_odonto_uel_13_x_8_xxi_de_agosto_uel_pearl.json",
+        "campeonatos/E-JIA 2023/EJIA23_004_08-07-23_furia_utfpr_13_x_7_gorilada_haven.json",
+        "campeonatos/E-JIA 2023/EJIA23_005a_15-07-23_hunter_esports_13_x_3_bluesharks_haven.json",
+        "campeonatos/E-JIA 2023/EJIA23_005b_15-07-23_hunter_esports_13_x_6_bluesharks_split.json",
+        "campeonatos/E-JIA 2023/EJIA23_006a_15-07-23_odonto_uel_11_x_13_furia_utfpr_pearl.json",
+        "campeonatos/E-JIA 2023/EJIA23_006b_15-07-23_odonto_uel_8_x_13_furia_utfpr_ascent.json",
+        "campeonatos/E-JIA 2023/EJIA23_007a_16-07-23_hunter_esports_13_x_5_furia_utfpr_bind.json",
+        "campeonatos/E-JIA 2023/EJIA23_007b_16-07-23_hunter_esports_9_x_13_furia_utfpr_split.json",
+        "campeonatos/E-JIA 2023/EJIA23_007c_16-07-23_hunter_esports_13_x_8_furia_utfpr_haven.json"
+      ]
+    },
+    {
       "id": "e-tusca",
       "name": "E-Tusca 2026",
       "organizer": "AcadArena",

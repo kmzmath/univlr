@@ -3907,13 +3907,13 @@
     "furia_utfpr": {
       "lineupHistory": [
         {
-          "from": "2023-09-16",
+          "from": "2023-07-08",
           "to": "2026-09-20",
-          "firstSeenAt": 1694880669125,
+          "firstSeenAt": 1688824472689,
           "lastSeenAt": 1789927146284,
-          "matches": 92,
+          "matches": 98,
           "source": "auto-json+players-history",
-          "profileConfidence": 1416,
+          "profileConfidence": 1488,
           "players": [
             {
               "slot": 1,
@@ -3936,12 +3936,12 @@
               "playerId": "pHsn3vg2hACNurf9nvccGPwwotp53EwnXW4YUO1ds9rQc2Y-11Wy9PQfekAtEwFwD4ZAnVjK6qp6qA",
               "name": "AsianJack",
               "handle": "AsianJack#ASIAN",
-              "firstSeenAt": "2023-09-16",
+              "firstSeenAt": "2023-07-08",
               "lastSeenAt": "2026-09-20",
-              "matches": 71,
-              "rounds": 1484,
-              "profileMatches": 71,
-              "profileConfidence": 284,
+              "matches": 77,
+              "rounds": 1610,
+              "profileMatches": 77,
+              "profileConfidence": 308,
               "currentTeam": "furia_utfpr",
               "teamHistory": [
                 "furia_utfpr"
@@ -4027,15 +4027,18 @@
             },
             {
               "slot": 8,
-              "playerId": "J1QnE2FTfOTd_LZQGaVTvAEgl6meok9tlMEXiplPijKew3V79DHmPyFe-gknAyLMEpFsMXGpn-70nA",
-              "name": "matanoob2013",
-              "handle": "matanoob2013#BEST",
-              "firstSeenAt": "2023-09-16",
-              "lastSeenAt": "2024-05-04",
-              "matches": 25,
-              "rounds": 529,
-              "profileMatches": 0,
-              "profileConfidence": 0
+              "playerId": "Pa13ZFYOuMqb-frVgH6kj3ZK7nMmTnaMkA7ojwUOaDgqMyosZZJf6Y1jzUFIuDWnhtlVBijvNAWU2Q",
+              "name": "Caju",
+              "handle": "Caju#2001",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2025-07-12",
+              "matches": 27,
+              "rounds": 579,
+              "profileMatches": 27,
+              "profileConfidence": 54,
+              "teamHistory": [
+                "furia_utfpr"
+              ]
             }
           ]
         }
@@ -21197,57 +21200,57 @@
     "hunter_esports": {
       "lineupHistory": [
         {
-          "from": "2023-09-16",
+          "from": "2023-07-08",
           "to": "2023-10-27",
-          "firstSeenAt": 1694880380228,
+          "firstSeenAt": 1688817795891,
           "lastSeenAt": 1698368134024,
-          "matches": 16,
+          "matches": 22,
           "source": "auto-json+players-history",
-          "profileConfidence": 160,
+          "profileConfidence": 220,
           "players": [
             {
               "slot": 1,
               "playerId": "HEpYKhhB7H5IiBwnoytzVNSGCbPPr3JbKtobe9VOkixCsj2Kkh1h-Hf4FM5JMSw0cYpnSauNThU8ZA",
               "name": "Aspetinha",
               "handle": "Aspetinhaa#2002",
-              "firstSeenAt": "2023-09-16",
+              "firstSeenAt": "2023-07-08",
               "lastSeenAt": "2023-10-27",
-              "matches": 16,
-              "rounds": 328,
-              "profileMatches": 16,
-              "profileConfidence": 32,
+              "matches": 22,
+              "rounds": 439,
+              "profileMatches": 22,
+              "profileConfidence": 44,
               "teamHistory": [
                 "hunter_esports"
               ]
             },
             {
               "slot": 2,
-              "playerId": "4gEtyBdgQilz-aY5N75kS5el3I_G2MGKMuapayRpr0ji8_w43bcVX1U2IavEX7-pyhCby0mzwbfKmw",
-              "name": "kmyzth",
-              "handle": "kmyzth#mafer",
-              "firstSeenAt": "2023-09-16",
+              "playerId": "G-PCKYCqC-4hSakwlarZu3exBVW2ZefC5QZd9vJL79pR1-olAt1-S6YC56YjF8j_KCRnXeQulPDxjw",
+              "name": "Mendigo",
+              "handle": "mendigo fumaças#bosta",
+              "firstSeenAt": "2023-07-08",
               "lastSeenAt": "2023-10-27",
-              "matches": 16,
-              "rounds": 328,
-              "profileMatches": 16,
-              "profileConfidence": 32,
+              "matches": 22,
+              "rounds": 439,
+              "profileMatches": 22,
+              "profileConfidence": 44,
               "teamHistory": [
-                "azure_bears_red",
                 "hunter_esports"
               ]
             },
             {
               "slot": 3,
-              "playerId": "G-PCKYCqC-4hSakwlarZu3exBVW2ZefC5QZd9vJL79pR1-olAt1-S6YC56YjF8j_KCRnXeQulPDxjw",
-              "name": "Mendigo",
-              "handle": "mendigo fumaças#bosta",
-              "firstSeenAt": "2023-09-16",
+              "playerId": "4gEtyBdgQilz-aY5N75kS5el3I_G2MGKMuapayRpr0ji8_w43bcVX1U2IavEX7-pyhCby0mzwbfKmw",
+              "name": "kmyzth",
+              "handle": "kmyzth#mafer",
+              "firstSeenAt": "2023-07-08",
               "lastSeenAt": "2023-10-27",
-              "matches": 16,
-              "rounds": 328,
-              "profileMatches": 16,
-              "profileConfidence": 32,
+              "matches": 20,
+              "rounds": 404,
+              "profileMatches": 20,
+              "profileConfidence": 40,
               "teamHistory": [
+                "azure_bears_red",
                 "hunter_esports"
               ]
             },
@@ -21256,12 +21259,12 @@
               "playerId": "kV_uuHTxnc-BuvX4H_ag48NNTi5dqYDrDcnXEC2Cq07LQXF-9MkkfxEnk4pTJjMYqfSZiWGcnrWldA",
               "name": "ness marchigiano",
               "handle": "ness marchigiano#BRIT",
-              "firstSeenAt": "2023-09-16",
+              "firstSeenAt": "2023-07-08",
               "lastSeenAt": "2023-10-27",
-              "matches": 16,
-              "rounds": 328,
-              "profileMatches": 16,
-              "profileConfidence": 32,
+              "matches": 17,
+              "rounds": 343,
+              "profileMatches": 17,
+              "profileConfidence": 34,
               "teamHistory": [
                 "hunter_esports"
               ]
@@ -21271,12 +21274,12 @@
               "playerId": "NIg2lEgg6LdqwQ7m5RrFsCzNCX4-e___KYfTwZOZMljhoh5Oj-NtndBeVNPiTfMfueIAjt-vKsBNpA",
               "name": "CALISES",
               "handle": "CALISES#ÓDIO",
-              "firstSeenAt": "2023-09-16",
+              "firstSeenAt": "2023-07-08",
               "lastSeenAt": "2023-10-27",
-              "matches": 11,
-              "rounds": 228,
-              "profileMatches": 11,
-              "profileConfidence": 22,
+              "matches": 17,
+              "rounds": 339,
+              "profileMatches": 17,
+              "profileConfidence": 34,
               "teamHistory": [
                 "hunter_esports"
               ]
@@ -21286,12 +21289,27 @@
               "playerId": "B4PKIP94M8iGvpjpEcro-hAPkHb_JP_IHNjK_eZMMtxrPbKVJWUHvhUCPuHOMW6fZijTbQ25PAK7LA",
               "name": "Letroche",
               "handle": "Letroche#cash",
-              "firstSeenAt": "2023-09-23",
+              "firstSeenAt": "2023-07-15",
               "lastSeenAt": "2023-10-07",
-              "matches": 5,
-              "rounds": 100,
-              "profileMatches": 5,
-              "profileConfidence": 10,
+              "matches": 10,
+              "rounds": 196,
+              "profileMatches": 10,
+              "profileConfidence": 20,
+              "teamHistory": [
+                "hunter_esports"
+              ]
+            },
+            {
+              "slot": 7,
+              "playerId": "mwipxc8eH1YTiOdQSJadwevVqKUMGNG9OsDz863X2SPu-AlRnRu_LpcKTImDC2ZTSOOXSaY6gvWgjw",
+              "name": "hugh jass",
+              "handle": "hugh jass#bosta",
+              "firstSeenAt": "2023-07-15",
+              "lastSeenAt": "2023-07-15",
+              "matches": 2,
+              "rounds": 35,
+              "profileMatches": 2,
+              "profileConfidence": 4,
               "teamHistory": [
                 "hunter_esports"
               ]
@@ -31045,6 +31063,544 @@
               "profileConfidence": 12,
               "teamHistory": [
                 "usjt_polaris"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bluesharks": {
+      "lineupHistory": [
+        {
+          "from": "2023-07-08",
+          "to": "2023-07-15",
+          "firstSeenAt": 1688818576379,
+          "lastSeenAt": 1689433630952,
+          "matches": 3,
+          "source": "auto-json+players-history",
+          "profileConfidence": 30,
+          "players": [
+            {
+              "slot": 1,
+              "playerId": "veknFrk_PP3vofg4C1N3-vljybttdOaOsu8KZ0pQpDN3-bcAEWbPRWDfYJyeKMwxpkPz56kG7dqOHg",
+              "name": "Aronga",
+              "handle": "Aronga#try",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-15",
+              "matches": 3,
+              "rounds": 57,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "bluesharks"
+              ]
+            },
+            {
+              "slot": 2,
+              "playerId": "vLD4LF2-b2kDbhbzLH80ux6YrFvqPLYouBo46OOx2QCXMSBB331FxBksgwyInqFlLzZb1oCI-wiVJw",
+              "name": "Cpt Broxa",
+              "handle": "Cpt Broxa#beliv",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-15",
+              "matches": 3,
+              "rounds": 57,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "bluesharks"
+              ]
+            },
+            {
+              "slot": 3,
+              "playerId": "wROYQaPxPPw75i0he4Kmi7NZYl1cA7ApIGMS1ERMYRY9JRscWcLwCsCwDr_UhEPqSGvprJzvZEJ5KQ",
+              "name": "Dudã1",
+              "handle": "Dudã1#42424",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-15",
+              "matches": 3,
+              "rounds": 57,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "bluesharks"
+              ]
+            },
+            {
+              "slot": 4,
+              "playerId": "-e6tyiQnn49G3w2gcUk1M0OZYbd9dJUuRlJ6V_RKH8kOaRnfw-xPPbuyU12WWRKgFcSNSWoRI2flaA",
+              "name": "Ipsulon ｼ",
+              "handle": "Ipsulon ｼ#IPSU",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-15",
+              "matches": 3,
+              "rounds": 57,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "bluesharks"
+              ]
+            },
+            {
+              "slot": 5,
+              "playerId": "YSS3CFJb43C9b3gBa-QxcNJWBnc7Lkz1l444RtFQ-MgcqVWaVmTjE4NFwyHVEhp6NLQchWoZcd763w",
+              "name": "Paduan1",
+              "handle": "Paduan1#4173",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-15",
+              "matches": 3,
+              "rounds": 57,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "bluesharks"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "gorilada": {
+      "lineupHistory": [
+        {
+          "from": "2023-07-08",
+          "to": "2023-07-08",
+          "firstSeenAt": 1688824472689,
+          "lastSeenAt": 1688824472689,
+          "matches": 1,
+          "source": "auto-json+players-history",
+          "profileConfidence": 10,
+          "players": [
+            {
+              "slot": 1,
+              "playerId": "yJsGTZWjuah4hqO-DnmoWAD0y7CeTMqUEWxmKidyPoc8FyXf65ex-72RYKOCemhNtB44GzPXwmIncQ",
+              "name": "Bruninha Cu Roxo",
+              "handle": "Bruninha Cu Roxo#BR2",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 20,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "gorilada"
+              ]
+            },
+            {
+              "slot": 2,
+              "playerId": "G3MUDUwT-rHQnnNh_AG5fZL7fPw9YCQY9zSSRwak0t53wMtY-rx1DiTV9BrmP0CRHpYYZg_-oPGrAw",
+              "name": "Bruxinha Rabuda",
+              "handle": "Bruxinha Rabuda#2610",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 20,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "gorilada"
+              ]
+            },
+            {
+              "slot": 3,
+              "playerId": "2yXpYgqxIG1WozuyGW4G1rrYXzRsDFZtM7mtcQRRW-jlogJSerydtUDR9MzwKOncDFQN8Kav-nJJlg",
+              "name": "MrNippon",
+              "handle": "MrNippon#br1",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 20,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "gorilada"
+              ]
+            },
+            {
+              "slot": 4,
+              "playerId": "epYXrr5AXNwl5MlUyZUXXaVkxfGXZpfvR-5-B7Sm9guCdYyH9djtcHEarVK4FpRQj05zV35aNOlYPQ",
+              "name": "Souza 7777",
+              "handle": "Souza#7777",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 20,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "gorilada"
+              ]
+            },
+            {
+              "slot": 5,
+              "playerId": "mD_vaZ_Ux99_Bs__XwviwICTF8ZMOLIyo-R8g6rsKIwfLsymjMB0USI9dHVcxI87HVTtyvny9saV-g",
+              "name": "viga",
+              "handle": "Já FUI#RAD",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 20,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "furia_utfpr",
+                "gorilada"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "odonto_uel": {
+      "lineupHistory": [
+        {
+          "from": "2023-07-08",
+          "to": "2023-07-15",
+          "firstSeenAt": 1688823007101,
+          "lastSeenAt": 1689431628005,
+          "matches": 3,
+          "source": "auto-json+players-history",
+          "profileConfidence": 30,
+          "players": [
+            {
+              "slot": 1,
+              "playerId": "wVVUtFEIfUR3xrC8xweL05d8e_Th-OiEq5HZyu5mRB_soFs0MGgx4zU8o-5NzF92g1S1XrrvNuTtiw",
+              "name": "Dallas77",
+              "handle": "Dallas77#CHRIS",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-15",
+              "matches": 3,
+              "rounds": 66,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "odonto_uel"
+              ]
+            },
+            {
+              "slot": 2,
+              "playerId": "2WBisTZsT2FkT6JL2_yHfXjSk7FaqkrAh-2OcRyiwxvvxtvOwNylYk9H6CyQU_nGicQmaeWMiV3bQw",
+              "name": "DoençaCÁRIE",
+              "handle": "DoençaCÁRIE#1997",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-15",
+              "matches": 3,
+              "rounds": 66,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "odonto_uel"
+              ]
+            },
+            {
+              "slot": 3,
+              "playerId": "BGFHa5YT8bIYvlNmFhwS1_h802MTfHPn3M9NgF4X44AIM_QMkE1jQoXYxxmU5kN7i74guyJotz2rPw",
+              "name": "FG koutz",
+              "handle": "FG koutz#001",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-15",
+              "matches": 3,
+              "rounds": 66,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "odonto_uel"
+              ]
+            },
+            {
+              "slot": 4,
+              "playerId": "Szyp1wLUDiXFsdeymVkrccuZmc0SR63MaWAntbgVBtdYw9aSmnUsVS97a27iK9f49PgKm1y3RWa8gg",
+              "name": "Guloma",
+              "handle": "Guloma#1996",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-15",
+              "matches": 3,
+              "rounds": 66,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "odonto_uel"
+              ]
+            },
+            {
+              "slot": 5,
+              "playerId": "MkIGbWwpuZe6A1CBTtbfHXWC4xBKqDIk-sK3FePM0CBTTdp2J2nAJZoXITsDbC3LJqImZuCK7Mc8Bw",
+              "name": "pHzera",
+              "handle": "pHzera#BR2",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-15",
+              "matches": 3,
+              "rounds": 66,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "odonto_uel"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "pucpr_corujao": {
+      "lineupHistory": [
+        {
+          "from": "2023-07-08",
+          "to": "2023-07-08",
+          "firstSeenAt": 1688818576379,
+          "lastSeenAt": 1688818576379,
+          "matches": 1,
+          "source": "auto-json+players-history",
+          "profileConfidence": 10,
+          "players": [
+            {
+              "slot": 1,
+              "playerId": "JvEiRBnazjqXmNjucMjJ-QpvziL1Te5OGhEyoAkp8fiDefukwkfHzcprC0tjNKrLtmNKWZcTnouGVA",
+              "name": "Deezer",
+              "handle": "Deezer#1030",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 22,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "pucpr_corujao"
+              ]
+            },
+            {
+              "slot": 2,
+              "playerId": "6nGNkjkjcB9OEaLzNMIW3MzFezmUbnhXZLLsVN4qgb9yX2ktKfsv5dQXGHGAdMfuIXpAAgB4FitT_A",
+              "name": "Fefzzz",
+              "handle": "Fefzzz#Fefs",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 22,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "pucpr_corujao"
+              ]
+            },
+            {
+              "slot": 3,
+              "playerId": "2yjPPbI0xjIro9cFpwA7kYorve4lb4CzztE0xhoBHhL1GL0n7tw2h5CegWc39RsoveKOwKpvqHbiGg",
+              "name": "FROD",
+              "handle": "FROD#Fake",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 22,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "pucpr_corujao"
+              ]
+            },
+            {
+              "slot": 4,
+              "playerId": "pHoRYkC7u00kwsGM1ILcnD-sWpyo_kv7CtEk5H3eqZz_OwPpAeZW3viO8SddNB0f2uBU_o1C19fFHw",
+              "name": "ITetsuoI",
+              "handle": "ITetsuoI#6969",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 22,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "pucpr_corujao"
+              ]
+            },
+            {
+              "slot": 5,
+              "playerId": "KDe9NPiT8obqKuVx6BYGVWTK35lWv6j8I-OJmFyw2q7fiFsIPMFxMzrC_oac_B_o4mVHmSCMsT7_nA",
+              "name": "Jaspas",
+              "handle": "Jaspas#ojvp",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 22,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "pucpr_corujao"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "puff": {
+      "lineupHistory": [
+        {
+          "from": "2023-07-08",
+          "to": "2023-07-08",
+          "firstSeenAt": 1688817795891,
+          "lastSeenAt": 1688817795891,
+          "matches": 1,
+          "source": "auto-json+players-history",
+          "profileConfidence": 8,
+          "players": [
+            {
+              "slot": 1,
+              "playerId": "RZhFZ6tjBmsAk_rn9iwnUfhNrKglwxUHewx6Trn0l_aeeHBFtUsUS1hQNVeAOquuo_oNlUXH1MUZtA",
+              "name": "Asu",
+              "handle": "Asu#9595",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 15,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "puff"
+              ]
+            },
+            {
+              "slot": 2,
+              "playerId": "rAga1u-lQkXdSA-2CrHGRKq6xe7zZ-VvK3txfuAW4ks3um0uB4Bb-6lIo5R7kqQvz1zGBWux9PQEkQ",
+              "name": "CNishi",
+              "handle": "CNishi#BR0",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 15,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "puff"
+              ]
+            },
+            {
+              "slot": 3,
+              "playerId": "bajUkLwghq8HGrvETjgmDq2JecD7gX5pBjO_qGyGPgbB25eo12VZaPQgCF8DQhs15KYS-7JtHcYlIg",
+              "name": "getulio nargas",
+              "handle": "getulio nargas#6956",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 15,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "puff"
+              ]
+            },
+            {
+              "slot": 4,
+              "playerId": "-2RM7ZwHHCCuZtYFuKCJS5D6evSyX4J3Cq4103eFTgdx3riNs6UnvMcuia9O58hjrSs1JsBPvPK8qg",
+              "name": "pandorazzx",
+              "handle": "pandorazzx#br1",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 15,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "puff"
+              ]
+            },
+            {
+              "slot": 5,
+              "playerId": "sem-puuid:rato de bic#luiz",
+              "name": "Rato de BIC",
+              "handle": "Rato de BIC#luiz",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 15,
+              "profileMatches": 0,
+              "profileConfidence": 0
+            }
+          ]
+        }
+      ]
+    },
+    "xxi_de_agosto_uel": {
+      "lineupHistory": [
+        {
+          "from": "2023-07-08",
+          "to": "2023-07-08",
+          "firstSeenAt": 1688823007101,
+          "lastSeenAt": 1688823007101,
+          "matches": 1,
+          "source": "auto-json+players-history",
+          "profileConfidence": 10,
+          "players": [
+            {
+              "slot": 1,
+              "playerId": "W9pzWBPxVgqt4yD5NflNvin4G2fhjlw33hpsSxyWgnBC4-0z4r96Re8AS55fwZdudLKi1Vt3gIepkQ",
+              "name": "aYk",
+              "handle": "aYk#aykow",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 21,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "xxi_de_agosto_uel"
+              ]
+            },
+            {
+              "slot": 2,
+              "playerId": "A876mPcV_xWJB-0b1EN-hRGsYJhIBitimyGgWryKCOMN4SLVOWTCfhYjN9EOUxOEyNxmN2p-mw5TrA",
+              "name": "ph washed",
+              "handle": "ph washed#RIP",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 21,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "xxi_de_agosto_uel"
+              ]
+            },
+            {
+              "slot": 3,
+              "playerId": "8-bvGBuICo1wviAcFUAYKHLt7MHzUevXxL1u_4ogImOUf2-5dZNU0SnuE0EkBR8Yel_Sxz_30qbsAA",
+              "name": "seidy",
+              "handle": "seidy#UEL",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 21,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "xxi_de_agosto_uel"
+              ]
+            },
+            {
+              "slot": 4,
+              "playerId": "monWwQg6e2lDb0kQHVrHKFGF2yEiUw7DBAEc6iHdYQ8aMGNKfHkNUvGHK0equRFstfsMw2uXhJ83LA",
+              "name": "XXI Bundinha",
+              "handle": "XXI Bundinha#UEL",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 21,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "xxi_de_agosto_uel"
+              ]
+            },
+            {
+              "slot": 5,
+              "playerId": "AI0eXnyhCo05rezCYr4bYRC-MBbtWlLKOB25MV2COv9PohMTzCCuqkt0spAmiTIQ2nMH31h6UCECOQ",
+              "name": "Yudiasso",
+              "handle": "Yudiasso#Allan",
+              "firstSeenAt": "2023-07-08",
+              "lastSeenAt": "2023-07-08",
+              "matches": 1,
+              "rounds": 21,
+              "profileMatches": 1,
+              "profileConfidence": 2,
+              "teamHistory": [
+                "xxi_de_agosto_uel"
               ]
             }
           ]

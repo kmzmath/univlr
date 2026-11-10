@@ -681,6 +681,9 @@ def read_teams(states_by_sigla):
                 "colors": info.get("colors", []),
                 "socials": info.get("socials", {}),
                 "lineup": roster.get("lineup", []),
+                # Linha vazia e elenco conhecido sem jogadores; ausencia de
+                # linha e falta de cadastro, nao prova de saida dos atletas.
+                **({"lineupRegistered": True} if team_id in rosters else {}),
                 # So as sucessoras levam o campo, como o "accounts" dos jogadores.
                 **({"succeeds": info["succeeds"]} if info.get("succeeds") else {}),
             }

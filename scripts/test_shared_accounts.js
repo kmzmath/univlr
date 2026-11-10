@@ -45,14 +45,14 @@ globalThis.history = { pushState: noop, replaceState: noop };
 globalThis.requestAnimationFrame = () => 0;
 globalThis.fetch = () => new Promise(noop);
 
-function loadScript(relativePath) {
+function loadScript(relativePath, epilogue = "") {
   const source = fs.readFileSync(path.join(ROOT, relativePath), "utf8");
-  (0, eval)(source);
+  (0, eval)(source + epilogue);
 }
 
 loadScript("raating-core.js");
 loadScript("ranking-core.js");
-loadScript("app.js");
+loadScript("app.js", ";globalThis.__sharedAccountsAppState = state; globalThis.__historicalPeople = HISTORICAL_PEOPLE_2024;");
 
 const readJson = (relativePath) => JSON.parse(fs.readFileSync(path.join(ROOT, relativePath), "utf8"));
 
@@ -135,5 +135,110 @@ assert.throws(
   /resolvem para a mesma pessoa \(Laves\)/,
   "duas contas do mesmo dono sem regra derrubam o build",
 );
+
+// --- 5. Perfis antigos continuam unidos no cadastro, nas partidas e nas rotas -
+// Alternativas globais exigem confirmacao da pessoa para todo esse historico.
+const decoded = require("../db-codec.js").decode(readJson("database.json"));
+globalThis.__sharedAccountsAppState.db = decoded;
+const unified = [
+  { name: "swpz", oldRoute: "sweepzz", handle: "burger burglar#fat" },
+  { name: "Balalov3", oldRoute: "balalov3-s2", handle: "balalov3   s2#pas" },
+];
+for (const { name, oldRoute, handle } of unified) {
+  const registered = metadata.players.find((player) => player.name === name);
+  const aggregate = decoded.players.find((player) => player.id === registered.puuid);
+  const account = aggregate.accounts.find((entry) => entry.handle === handle);
+  assert.ok(account, `${name} conserva a conta ${handle}`);
+  assert.strictEqual(pessoaDaConta(account.puuid), name, `${handle} aponta para ${name} no cadastro de origem`);
+  assert.strictEqual(playerById(oldRoute), aggregate, `a rota antiga ${oldRoute} abre ${name}`);
+  assert.strictEqual(playerById(account.puuid), aggregate, `o link pela conta antiga abre ${name}`);
+  assert.ok(!decoded.players.some((player) => player.routeSlug === oldRoute), `${oldRoute} nao reaparece como perfil separado`);
+  const appearances = decoded.matches.flatMap((match) => match.players.filter((player) => player.puuid === account.puuid));
+  assert.ok(appearances.length > 0, `${handle} tem partidas na base`);
+  assert.ok(appearances.every((player) => player.id === registered.puuid), `todo o historico de ${handle} soma para ${name}`);
+  const matches = decoded.matches.filter((match) => match.players.some((player) => player.id === aggregate.id));
+  assert.strictEqual(aggregate.matches, matches.length, `${name} agrega todos os mapas uma unica vez`);
+  assert.strictEqual(aggregate.rounds, matches.reduce((total, match) => total + match.players.find((player) => player.id === aggregate.id).rounds, 0), `${name} conserva o total de rounds`);
+}
+
+// --- 6. Identificacoes confirmadas por mapa nao viram alternativas globais ---
+// Em 09/11/2026 o responsavel liberou somente quatro mapas de vrnx/yakult
+// e dez de Harry Kane no JUBS. A pendencia anterior continua fora dessa lista.
+// Mesma conta, equipe e companheiros nao autorizam estender essa confirmacao.
+const confirmedNassauJubs = new Set([
+  "4f634d8c-6db6-41b7-ae41-a440e4af4916",
+  "499be652-ad00-467b-8482-d4c06f54901c",
+  "a23bad20-cc61-4702-9ecc-c88790c822dd",
+  "efe69ecd-24ec-4dc3-a263-de67bab0b210",
+]);
+const confirmedHarryJubs = new Set([
+  "baaabe1a-d8d5-472d-9c8d-65aa87c8c695",
+  "7e1c1793-bc8d-4455-912b-079935393bea",
+  "04b4c144-c1c3-47f3-8b75-821ed02cdca8",
+  "5d2cc855-b483-4224-875f-e860344cb79e",
+  "87933bfa-06ee-4863-92e3-794102e5e20d",
+  "b331fdc5-d73c-4af3-a62e-b3f9aea946c2",
+  "f06a90f6-a48a-46e7-8dad-991252a44da7",
+  "532d1d43-0a60-4d60-a5e4-657c5bfe0671",
+  "84be44aa-3a6b-4888-aeec-fa377f1a2b74",
+  "99dbf525-1fe1-4fab-96cc-b99d89a4e00d",
+]);
+const scopedAccounts = [
+  { name: "Peso", route: "vrnx", handle: "vrnx#vlr", account: "_lm4wvldJGlh78VM9JgUKkiiYRyBRTumTVFUQJuFfdVsG4VTA90i_xrF5x_ulA95T6enfThFjr5VLQ" },
+  { name: "Laves", route: "yakult", handle: "yakult#ttt", account: "tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ" },
+  { name: "suvas", route: "harry-kane-9", handle: "Harry Kane 9#MFMA", account: "Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A" },
+];
+for (const { name, route, handle, account } of scopedAccounts) {
+  const approved = name === "suvas" ? confirmedHarryJubs : confirmedNassauJubs;
+  const person = metadata.players.find((player) => player.name === name);
+  assert.strictEqual(pessoaDaConta(account), undefined, `${handle} nao tem dono global confirmado no cadastro`);
+  const jubs = decoded.matches.filter((match) => match.eventId.startsWith("jubs-2024-") && match.players.some((player) => player.puuid === account));
+  assert.strictEqual(jubs.filter((match) => approved.has(match.id)).length, approved.size, `${handle} tem todos os mapas aprovados na base`);
+  const pending = [];
+  for (const match of jubs) {
+    const override = sharedAccountOverrides(new Set(match.players.map((player) => player.puuid)), match.id).get(account);
+    const player = match.players.find((entry) => entry.puuid === account);
+    if (approved.has(match.id)) {
+      assert.strictEqual(override, person.puuid, `${match.id}: regra especifica para ${name}`);
+      assert.strictEqual(player.id, person.puuid, `${match.id}: mapa aprovado soma para ${name}`);
+      continue;
+    }
+    assert.strictEqual(override, undefined, `${match.id}: mapa fora da lista nao foi liberado`);
+    assert.strictEqual(player.id, account, `${match.id}: ${handle} conserva a identidade da conta pendente`);
+    assert.strictEqual(player.registered, false, `${match.id}: ${handle} continua sem confirmacao de pessoa`);
+    pending.push(player);
+  }
+  assert.strictEqual(pending.length, jubs.length - approved.size);
+  assert.strictEqual(playerById(route)?.id, pending.length ? account : person.puuid, `${route} respeita a existencia de atuacoes pendentes`);
+  assert.strictEqual(sharedAccountOverrides(new Set([account]), "mapa-fora-do-escopo-confirmado").size, 0, `${handle} nao recebe atribuicao em mapas futuros sem confirmacao`);
+  const confirmed = decoded.matches.filter((match) => match.eventId.startsWith("alianca-2024") && match.players.some((player) => player.puuid === account));
+  assert.ok(confirmed.length > 0);
+  for (const match of confirmed) assert.strictEqual(match.players.find((player) => player.puuid === account).id, person.puuid, `${match.id}: a confirmacao da Copa para ${name} foi preservada`);
+}
+
+// Um novo mapa pendente de Harry Kane deve voltar a abrir seu proprio perfil,
+// mesmo com o link antigo redirecionando hoje para as dez atuacoes de suvas.
+const futurePendingHarry = { id: scopedAccounts[2].account, routeSlug: "harry-kane-9", accounts: [] };
+decoded.players.push(futurePendingHarry);
+try {
+  assert.strictEqual(playerById("harry-kane-9"), futurePendingHarry, "perfil pendente tem prioridade sobre rota historica");
+} finally {
+  decoded.players.pop();
+}
+
+// Confere tambem as excecoes reais da Uninassau, incluindo as 18 partidas de
+// 2025 e a Haven contra CAAP: o titular da conta pode ser outra pessoa no mapa.
+let checkedOverrides = 0;
+for (const match of decoded.matches) {
+  const overrides = sharedAccountOverrides(new Set(match.players.map((player) => player.puuid)), match.id);
+  for (const [account, target] of overrides) {
+    const person = metadata.playersByPuuid.get(target) || globalThis.__historicalPeople[target];
+    assert.ok(person, `${match.id}: pessoa confirmada ${target} existe`);
+    const player = match.players.find((entry) => entry.puuid === account);
+    assert.strictEqual(player.id, person.puuid || `registered-${slugify(person.name)}`, `${match.id}: atribuicao por partida preservada para ${player.handle}`);
+    checkedOverrides += 1;
+  }
+}
+assert.ok(checkedOverrides > 0, "excecoes reais de contas compartilhadas foram conferidas");
 
 console.log("Shared account tests passed");

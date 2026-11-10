@@ -2295,7 +2295,7 @@
               "teamHistory": [
                 "usp_stars",
                 "caap_hellhounds",
-                "usp_ime_wolves"
+                "ime_wolves_red"
               ]
             }
           ]
@@ -2356,7 +2356,7 @@
               "teamHistory": [
                 "usp_stars",
                 "caap_hellhounds",
-                "usp_ime_wolves"
+                "ime_wolves_red"
               ]
             },
             {
@@ -4601,6 +4601,106 @@
     "ime_wolves_red": {
       "lineupHistory": [
         {
+          "from": "2023-09-16",
+          "to": "2023-10-07",
+          "firstSeenAt": 1694887805472,
+          "lastSeenAt": 1696697904417,
+          "matches": 17,
+          "source": "auto-json+players-history",
+          "profileConfidence": 102,
+          "players": [
+            {
+              "slot": 1,
+              "playerId": "l6IyZQw8aDqmq-xf76Fp62PuSa52Q-LWxkvWosOYQx_DX1iDc02b8B39JSkpF0nlyZ4R4_aeYQJ50w",
+              "name": "grem",
+              "handle": "grem#sutab",
+              "firstSeenAt": "2023-09-16",
+              "lastSeenAt": "2023-10-07",
+              "matches": 17,
+              "rounds": 333,
+              "profileMatches": 17,
+              "profileConfidence": 34,
+              "teamHistory": [
+                "ime_wolves_red"
+              ]
+            },
+            {
+              "slot": 2,
+              "playerId": "SCDmaM6TMQ-1GFsBTzVcaBxLcg1GNkNzrFfCcOfIVkLLXtqJHfesD_-8oUkZU2AXwFHXTjo5Z4-g3A",
+              "name": "Masaru 太陽",
+              "handle": "Masaru 太陽#0708",
+              "firstSeenAt": "2023-09-16",
+              "lastSeenAt": "2023-10-07",
+              "matches": 17,
+              "rounds": 333,
+              "profileMatches": 0,
+              "profileConfidence": 0
+            },
+            {
+              "slot": 3,
+              "playerId": "ZpOjqwvPaQ8UMJ5Rfu2rr5x_q-QDNUkZ7NvEcWyCZnIoqkS9Q5YBlAQ1FyjdCAjFVmvjtK74Rn5T9A",
+              "name": "Olivio Kitchens",
+              "handle": "Olivio Kitchens#orion",
+              "firstSeenAt": "2023-09-16",
+              "lastSeenAt": "2023-10-07",
+              "matches": 17,
+              "rounds": 333,
+              "profileMatches": 0,
+              "profileConfidence": 0
+            },
+            {
+              "slot": 4,
+              "playerId": "B9x9pjCjlos-_ucaoZL52jOfzQ6hM8ntS2Lvi3GyhHVQpffnp3fqk-Y4FWR2LmpjUhvLl2Kld0eSpg",
+              "name": "Foca Não",
+              "handle": "Foca Não#SCCP",
+              "firstSeenAt": "2023-09-16",
+              "lastSeenAt": "2023-10-07",
+              "matches": 16,
+              "rounds": 314,
+              "profileMatches": 16,
+              "profileConfidence": 32,
+              "currentTeam": "macklogic_white",
+              "teamHistory": [
+                "macklogic_white",
+                "ime_wolves_red"
+              ]
+            },
+            {
+              "slot": 5,
+              "playerId": "gKTqyqnZ6udzOD8v_tp48YQX3yuuXtuXyR29UltuRZ4e1Acsz2o9tggIa29cdFv1hJNI0fz8JvE5bg",
+              "name": "Burrito",
+              "handle": "CAAP Burrito42#yuki",
+              "firstSeenAt": "2023-09-16",
+              "lastSeenAt": "2023-10-07",
+              "matches": 15,
+              "rounds": 293,
+              "profileMatches": 15,
+              "profileConfidence": 30,
+              "currentTeam": "caap_hellhounds",
+              "teamHistory": [
+                "usp_stars",
+                "caap_hellhounds",
+                "ime_wolves_red"
+              ]
+            },
+            {
+              "slot": 6,
+              "playerId": "vFAyfafC3R2fGg4fE0v7B2-1c7JzPp1SugC5PeKm1oa56dStfJQBUsCqAgVpD3OJtAmhmhSIlcSV5A",
+              "name": "l0cked",
+              "handle": "l0cked#BR01",
+              "firstSeenAt": "2023-09-30",
+              "lastSeenAt": "2023-10-07",
+              "matches": 3,
+              "rounds": 59,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "ime_wolves_red"
+              ]
+            }
+          ]
+        },
+        {
           "from": "2026-06-06",
           "to": "2026-07-25",
           "firstSeenAt": 1780769496566,
@@ -6143,7 +6243,7 @@
               "currentTeam": "macklogic_white",
               "teamHistory": [
                 "macklogic_white",
-                "usp_ime_wolves"
+                "ime_wolves_red"
               ]
             },
             {
@@ -12980,7 +13080,7 @@
               "teamHistory": [
                 "usp_stars",
                 "caap_hellhounds",
-                "usp_ime_wolves"
+                "ime_wolves_red"
               ]
             },
             {
@@ -30457,7 +30557,7 @@
               "teamHistory": [
                 "usp_stars",
                 "caap_hellhounds",
-                "usp_ime_wolves"
+                "ime_wolves_red"
               ]
             },
             {
@@ -30498,7 +30598,7 @@
               "currentTeam": "macklogic_white",
               "teamHistory": [
                 "macklogic_white",
-                "usp_ime_wolves"
+                "ime_wolves_red"
               ]
             },
             {
@@ -31066,110 +31166,6 @@
               "profileConfidence": 12,
               "teamHistory": [
                 "usjt_polaris"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "usp_ime_wolves": {
-      "lineupHistory": [
-        {
-          "from": "2023-09-16",
-          "to": "2023-10-07",
-          "firstSeenAt": 1694887805472,
-          "lastSeenAt": 1696697904417,
-          "matches": 17,
-          "source": "auto-json+players-history",
-          "profileConfidence": 102,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "l6IyZQw8aDqmq-xf76Fp62PuSa52Q-LWxkvWosOYQx_DX1iDc02b8B39JSkpF0nlyZ4R4_aeYQJ50w",
-              "name": "grem",
-              "handle": "grem#sutab",
-              "firstSeenAt": "2023-09-16",
-              "lastSeenAt": "2023-10-07",
-              "matches": 17,
-              "rounds": 333,
-              "profileMatches": 17,
-              "profileConfidence": 34,
-              "teamHistory": [
-                "usp_ime_wolves"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "SCDmaM6TMQ-1GFsBTzVcaBxLcg1GNkNzrFfCcOfIVkLLXtqJHfesD_-8oUkZU2AXwFHXTjo5Z4-g3A",
-              "name": "Masaru 太陽",
-              "handle": "Masaru 太陽#0708",
-              "firstSeenAt": "2023-09-16",
-              "lastSeenAt": "2023-10-07",
-              "matches": 17,
-              "rounds": 333,
-              "profileMatches": 0,
-              "profileConfidence": 0
-            },
-            {
-              "slot": 3,
-              "playerId": "ZpOjqwvPaQ8UMJ5Rfu2rr5x_q-QDNUkZ7NvEcWyCZnIoqkS9Q5YBlAQ1FyjdCAjFVmvjtK74Rn5T9A",
-              "name": "Olivio Kitchens",
-              "handle": "Olivio Kitchens#orion",
-              "firstSeenAt": "2023-09-16",
-              "lastSeenAt": "2023-10-07",
-              "matches": 17,
-              "rounds": 333,
-              "profileMatches": 0,
-              "profileConfidence": 0
-            },
-            {
-              "slot": 4,
-              "playerId": "B9x9pjCjlos-_ucaoZL52jOfzQ6hM8ntS2Lvi3GyhHVQpffnp3fqk-Y4FWR2LmpjUhvLl2Kld0eSpg",
-              "name": "Foca Não",
-              "handle": "Foca Não#SCCP",
-              "firstSeenAt": "2023-09-16",
-              "lastSeenAt": "2023-10-07",
-              "matches": 16,
-              "rounds": 314,
-              "profileMatches": 16,
-              "profileConfidence": 32,
-              "currentTeam": "macklogic_white",
-              "teamHistory": [
-                "macklogic_white",
-                "usp_ime_wolves"
-              ]
-            },
-            {
-              "slot": 5,
-              "playerId": "gKTqyqnZ6udzOD8v_tp48YQX3yuuXtuXyR29UltuRZ4e1Acsz2o9tggIa29cdFv1hJNI0fz8JvE5bg",
-              "name": "Burrito",
-              "handle": "CAAP Burrito42#yuki",
-              "firstSeenAt": "2023-09-16",
-              "lastSeenAt": "2023-10-07",
-              "matches": 15,
-              "rounds": 293,
-              "profileMatches": 15,
-              "profileConfidence": 30,
-              "currentTeam": "caap_hellhounds",
-              "teamHistory": [
-                "usp_stars",
-                "caap_hellhounds",
-                "usp_ime_wolves"
-              ]
-            },
-            {
-              "slot": 6,
-              "playerId": "vFAyfafC3R2fGg4fE0v7B2-1c7JzPp1SugC5PeKm1oa56dStfJQBUsCqAgVpD3OJtAmhmhSIlcSV5A",
-              "name": "l0cked",
-              "handle": "l0cked#BR01",
-              "firstSeenAt": "2023-09-30",
-              "lastSeenAt": "2023-10-07",
-              "matches": 3,
-              "rounds": 59,
-              "profileMatches": 3,
-              "profileConfidence": 6,
-              "teamHistory": [
-                "usp_ime_wolves"
               ]
             }
           ]

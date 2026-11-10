@@ -2705,8 +2705,8 @@
       "slug": "ime_wolves_red",
       "tag": "IME",
       "displayName": "IME Wolves Red",
-      "org": "Instituto Militar de Engenharia",
-      "orgTag": "IME",
+      "org": "Instituto de Matemática e Estatística da Universidade de São Paulo",
+      "orgTag": "IME-USP",
       "logo": "assets/team-logos/ime_wolves.png",
       "state": "SP",
       "stateName": "São Paulo",
@@ -7208,28 +7208,6 @@
       "colors": [
         "#f4056d",
         "#090837"
-      ],
-      "socials": {
-        "instagram": ""
-      },
-      "lineup": []
-    },
-    {
-      "id": "usp_ime_wolves",
-      "sourceId": "2986",
-      "slug": "usp_ime_wolves",
-      "tag": "IME",
-      "displayName": "USP IME Wolves",
-      "org": "Instituto de Matemática e Estatística da Universidade de São Paulo",
-      "orgTag": "IME-USP",
-      "logo": "",
-      "state": "SP",
-      "stateName": "São Paulo",
-      "stateFlag": "assets/state-flags/sp.webp",
-      "stateRegion": "Sudeste",
-      "colors": [
-        "#80239f",
-        "#4e5918"
       ],
       "socials": {
         "instagram": ""
@@ -14233,7 +14211,7 @@
       "teamHistory": [
         "usp_stars",
         "caap_hellhounds",
-        "usp_ime_wolves"
+        "ime_wolves_red"
       ],
       "nickHistory": [
         "Burrito42#WLV",
@@ -17181,7 +17159,7 @@
       "currentTeam": "macklogic_white",
       "teamHistory": [
         "macklogic_white",
-        "usp_ime_wolves"
+        "ime_wolves_red"
       ],
       "nickHistory": [
         "Foca Não#SCCP"
@@ -23364,7 +23342,7 @@
       "puuid": "l6IyZQw8aDqmq-xf76Fp62PuSa52Q-LWxkvWosOYQx_DX1iDc02b8B39JSkpF0nlyZ4R4_aeYQJ50w",
       "currentTeam": "",
       "teamHistory": [
-        "usp_ime_wolves"
+        "ime_wolves_red"
       ],
       "nickHistory": [
         "grem#sutab"
@@ -23546,7 +23524,7 @@
       "puuid": "vFAyfafC3R2fGg4fE0v7B2-1c7JzPp1SugC5PeKm1oa56dStfJQBUsCqAgVpD3OJtAmhmhSIlcSV5A",
       "currentTeam": "",
       "teamHistory": [
-        "usp_ime_wolves"
+        "ime_wolves_red"
       ],
       "nickHistory": [
         "l0cked#BR01"

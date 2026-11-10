@@ -424,7 +424,7 @@ const TOURNAMENT_OVERRIDES = {
       "unicamp_tritons_black",
       "oktoplus_gaming_cefet_mg_2024",
       "caap_hellhounds",
-      "usp_ime_wolves",
+      "ime_wolves_red",
       "atletica_unifei",
       "fmv_pantera",
       "ufmg_fenix_b",
@@ -445,38 +445,13 @@ const TOURNAMENT_OVERRIDES = {
       "pucc_cardinals"
     ],
     "teamNames": {
-      "caap_hellhounds_black_2024": "CAAP Black",
-      "laurp_royal_ps_orange_2024": "LAURP Royal PS",
-      "azure_bears_black": "Azure Bears Black",
-      "puc_priests": "PUC Priests",
       "maua_esports_black_2024": "Mauá Blue",
-      "poli_plague": "USP Poli Plague",
-      "cyberkongs": "USJT Cyberkongs",
-      "inatel": "Inatel",
-      "hunter_esports": "UTFPR Hunter",
-      "maua_white_2023": "Mauá White",
-      "unicamp_tritons_black": "Unicamp Tritons Black",
-      "oktoplus_gaming_cefet_mg_2024": "CEFET Oktoplus",
-      "caap_hellhounds": "CAAP Hellhounds",
-      "usp_ime_wolves": "USP IME Wolves",
+      "ime_wolves_red": "IME Wolves",
       "atletica_unifei": "UNIFEI Blue Rabbits",
-      "fmv_pantera": "FMV Pantera",
-      "ufmg_fenix_b": "UFMG Fênix",
-      "uninassau_griffins": "Uninassau Griffins",
-      "ufmt_turuna": "UFMT Turuna",
       "unb_green_olws_line_red_2024": "UnB Green Owls B",
-      "furia_utfpr": "FÚRIA",
-      "ufg_eagles": "UFG Eagles",
-      "caaso_hogs_usp_2024": "USP CAASO Hogs",
       "macklogic_red": "Mackenzie TecMack",
-      "ufrn_impetuosa": "UFRN Impetuosa",
       "azure_bears_golden": "Azure Bears Blue",
-      "unb_black": "UnB Green Owls A",
-      "unicamp_tritons_red": "Unicamp Tritons Red",
-      "ufrj_minerva": "UFRJ Minerva",
-      "ufsc_titans_sc_2024": "UFSC Titans",
-      "usjt_polaris": "USJT Polaris",
-      "pucc_cardinals": "PUCCAMP Cardinals"
+      "unb_black": "UnB Green Owls A"
     },
     "format": {
       "summary": "Grupos em pontos corridos",
@@ -596,7 +571,7 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "17-24",
-        "id": "usp_ime_wolves",
+        "id": "ime_wolves_red",
         "note": "Grupo B, 3-4"
       },
       {
@@ -733,7 +708,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 7",
               "a": "caap_hellhounds",
-              "b": "usp_ime_wolves",
+              "b": "ime_wolves_red",
               "scoreA": 2,
               "scoreB": 1,
               "winner": "caap_hellhounds",
@@ -865,7 +840,7 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 21",
-              "a": "usp_ime_wolves",
+              "a": "ime_wolves_red",
               "b": "atletica_unifei",
               "scoreA": 0,
               "scoreB": 2,
@@ -1045,10 +1020,10 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 40",
               "a": "fmv_pantera",
-              "b": "usp_ime_wolves",
+              "b": "ime_wolves_red",
               "scoreA": 1,
               "scoreB": 2,
-              "winner": "usp_ime_wolves",
+              "winner": "ime_wolves_red",
               "group": "Grupo B"
             },
             {
@@ -1196,11 +1171,11 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 56",
-              "a": "usp_ime_wolves",
+              "a": "ime_wolves_red",
               "b": "hunter_esports",
               "scoreA": 2,
               "scoreB": 0,
-              "winner": "usp_ime_wolves",
+              "winner": "ime_wolves_red",
               "group": "Grupo B"
             },
             {
@@ -1348,11 +1323,11 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 72",
-              "a": "usp_ime_wolves",
+              "a": "ime_wolves_red",
               "b": "oktoplus_gaming_cefet_mg_2024",
               "scoreA": 2,
               "scoreB": 0,
-              "winner": "usp_ime_wolves",
+              "winner": "ime_wolves_red",
               "group": "Grupo B"
             },
             {
@@ -1494,7 +1469,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 87",
               "a": "maua_white_2023",
-              "b": "usp_ime_wolves",
+              "b": "ime_wolves_red",
               "scoreA": 2,
               "scoreB": 1,
               "winner": "maua_white_2023",
@@ -1639,7 +1614,7 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 102",
-              "a": "usp_ime_wolves",
+              "a": "ime_wolves_red",
               "b": "unicamp_tritons_black",
               "scoreA": 0,
               "scoreB": 2,
@@ -1843,7 +1818,7 @@ const TOURNAMENT_OVERRIDES = {
               "status": "Eliminado"
             },
             {
-              "id": "usp_ime_wolves",
+              "id": "ime_wolves_red",
               "wins": 3,
               "losses": 4,
               "range": "6º",
@@ -2021,22 +1996,9 @@ const TOURNAMENT_OVERRIDES = {
       "unicamp_tritons_black"
     ],
     "teamNames": {
-      "laurp_royal_ps_orange_2024": "LAURP Royal PS",
-      "pucc_cardinals": "PUCCAMP Cardinals",
-      "maua_white_2023": "Mauá White",
-      "ufg_eagles": "UFG Eagles",
-      "uninassau_griffins": "Uninassau Griffins",
-      "hunter_esports": "UTFPR Hunter",
       "azure_bears_golden": "Azure Bears Blue",
       "maua_esports_black_2024": "Mauá Blue",
-      "caap_hellhounds": "CAAP Hellhounds",
-      "furia_utfpr": "FÚRIA",
-      "inatel": "Inatel",
-      "usjt_polaris": "USJT Polaris",
-      "unb_black": "UnB Green Owls A",
-      "azure_bears_black": "Azure Bears Black",
-      "caaso_hogs_usp_2024": "USP CAASO Hogs",
-      "unicamp_tritons_black": "Unicamp Tritons Black"
+      "unb_black": "UnB Green Owls A"
     },
     "format": {
       "summary": "Eliminação dupla",

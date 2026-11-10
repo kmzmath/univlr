@@ -1192,10 +1192,26 @@ body {
   }
 }
 
-.vp-semana-nota {
-  margin: 8px 0 0;
+/* Cabeca do cartao: a janela e a regra de corte ficam presas nele, e nao soltas
+   ao lado do titulo e embaixo dos tracinhos. A faixa nao desliza com os
+   slides: e o mesmo dado para os nove, e fica parada enquanto eles passam. A
+   letra e a das cartinhas, como o resto do cartao. */
+.vp-semana-cabeca {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  padding: 7px 12px 6px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
   color: var(--muted);
-  font-size: 12px;
+  font: 500 13px/1.2 "Oswald", var(--font-display);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.vp-semana-cabeca span:first-child {
+  color: var(--ink);
 }
 
 /* ==========================================================================
@@ -1419,7 +1435,6 @@ body {
   .vp-home .vp-s-ranking { order: 3; }
   .vp-home .vp-noticias { order: 4; }
   .vp-home .vp-s-campeonatos { order: 5; }
-  .vp-home .atividade-faixa { order: 6; }
 
   .vp-placa-rk {
     grid-template-columns: 4px 20px 22px 22px minmax(0, 1fr) auto auto 6px;
@@ -8548,20 +8563,23 @@ a.vp-tabela-linha:hover strong {
   color: var(--ink);
 }
 
-/* Disputa pelo topo: a linha de cada equipe na cor dela, com o logo no fim. */
+/* Trajetoria: a posicao da equipe em foco semana a semana, na cor dela. As guias
+   marcam o melhor e o pior lugar da janela; o ponto, a semana escolhida. */
 .vp-ranking-cartao {
   min-width: 0;
 }
 
 .vp-bump-placa {
-  padding: 8px 34px 8px 24px;
+  padding: 8px 12px 8px 34px;
   background: var(--surface);
   border-radius: 2px;
 }
 
+/* 128px e nao os 164px do grafico de cinco equipes: com uma linha so, a altura
+   sobrava como vao. */
 .vp-bump {
   position: relative;
-  height: 164px;
+  height: 128px;
 }
 
 .vp-bump svg {
@@ -8574,23 +8592,40 @@ a.vp-tabela-linha:hover strong {
 
 .vp-bump path {
   fill: none;
+  stroke: var(--team-line, var(--ink));
   stroke-width: 2.5;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
-  transition: opacity 160ms ease;
-}
-
-.vp-bump.com-foco path:not(.foco) {
-  opacity: 0.16;
 }
 
 .vp-bump-pos {
   position: absolute;
-  left: -16px;
+  right: calc(100% + 8px);
   color: var(--muted);
   font-size: 11px;
   line-height: 1;
+  white-space: nowrap;
   transform: translateY(-50%);
+}
+
+.vp-bump-guia {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 0;
+  border-top: 1px dashed var(--line);
+}
+
+.vp-bump-ponto {
+  position: absolute;
+  z-index: 1;
+  width: 9px;
+  height: 9px;
+  background: var(--team-line, var(--ink));
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .vp-bump-marca {
@@ -8626,33 +8661,6 @@ a.vp-tabela-linha:hover strong {
   outline-offset: -2px;
 }
 
-.vp-bump-logo {
-  position: absolute;
-  left: 100%;
-  width: 22px;
-  height: 22px;
-  transform: translate(7px, -50%);
-}
-
-.vp-bump-logo .team-logo {
-  width: 22px;
-  height: 22px;
-}
-
-.vp-bump-logo:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 1px;
-}
-
-/* Movimentos: a Placa do ranking da home, sem o destaque da primeira linha. */
-.vp-movimentos .vp-placa-rk {
-  grid-template-columns: 4px 20px 26px 22px minmax(0, 1fr) auto 6px;
-}
-
-.vp-movimentos .vp-rk:first-child .vp-rk-pos {
-  color: var(--muted);
-}
-
 .vp-nota-bloco .vp-rk-soma {
   background: none;
 }
@@ -8662,6 +8670,190 @@ a.vp-tabela-linha:hover strong {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.45;
+}
+
+/* As categorias na placa de dados do mapa: a linha e o botao, e a explicacao
+   desce embaixo dela, na mesma placa. */
+.vp-nota-categorias {
+  display: grid;
+  overflow: hidden;
+  background: var(--surface);
+  border-radius: 2px;
+}
+
+.vp-nota-categoria + .vp-nota-categoria {
+  border-top: 1px solid var(--line);
+}
+
+.vp-nota-categoria > button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 12px;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  min-height: 34px;
+  padding: 8px 14px;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  font: 600 13px/1.2 var(--font-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.vp-nota-categoria > button b {
+  font: 600 16px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-nota-categoria > button svg {
+  align-self: center;
+  color: var(--muted);
+  transition: transform 220ms ease;
+}
+
+.vp-nota-categoria > button[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.vp-nota-categoria > button:hover {
+  background: rgba(var(--ink-rgb), 0.04);
+}
+
+.vp-nota-categoria > button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+.vp-nota-explica {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 220ms ease;
+}
+
+[aria-expanded="true"] + .vp-nota-explica {
+  grid-template-rows: 1fr;
+}
+
+.vp-nota-explica > div {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.vp-nota-explica p {
+  margin: 0;
+  padding: 0 14px 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* A formacao aberta na lista: a faixa da capa da pagina da equipe, menor. */
+.vp-slide.vp-rk-faixa {
+  height: 150px;
+  margin-bottom: 4px;
+}
+
+.vp-rk-faixa .vp-slide-campo i {
+  top: -110px;
+  width: 380px;
+  height: 380px;
+}
+
+.vp-slide.vp-rk-faixa .player-figure {
+  bottom: -40px;
+  width: 196px;
+  height: 196px;
+}
+
+.vp-slide.vp-rk-faixa .player-figure.is-silhouette {
+  bottom: -22px;
+  width: 150px;
+  height: 150px;
+}
+
+/* So no largo: com dois nomes de classe, a regra venceria a reducao do celular da
+   faixa da equipe e cortava o nick ("Dioguer"). */
+@media (min-width: 761px) {
+  .vp-rk-faixa .vp-capa-nick {
+    bottom: 8px;
+    font-size: 15px;
+  }
+}
+
+/* Destaques da semana: maior subida e maior queda na placa de dados, cada uma
+   com o motivo embaixo do nome. */
+.vp-destaques-placa {
+  display: grid;
+  overflow: hidden;
+  background: var(--surface);
+  border-radius: 2px;
+}
+
+.vp-destaque {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 10px 14px 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-destaque + .vp-destaque {
+  border-top: 1px solid var(--line);
+}
+
+.vp-destaque > small {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.vp-destaque .team-logo {
+  width: 22px;
+  height: 22px;
+}
+
+.vp-destaque strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-destaque-posicao {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.vp-destaque-posicao b {
+  font: 600 18px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-destaque:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vp-destaque.pintura-de-equipe:hover {
+    box-shadow: inset 0 0 0 2px var(--team-accent-2, var(--teal));
+  }
+
+  .vp-destaque.pintura-de-equipe :is(small, strong, .vp-rk-delta, b) {
+    transition: color 160ms ease;
+  }
+
+  .vp-destaque.pintura-de-equipe:hover :is(small, strong, .vp-rk-delta, b) {
+    color: var(--team-ink, var(--ink));
+    transition: color 220ms ease 210ms;
+  }
 }
 
 /* Abaixo de 1300px, com o resumo aberto, a lista perde largura para o trilho fixo: a
@@ -8932,7 +9124,8 @@ a.vp-tabela-linha:hover strong {
 
 .vp-eventos .event-filter-drop {
   position: relative;
-  flex: 0 1 180px;
+  flex: 1 1 auto;
+  min-width: 160px;
   background: none;
   border: 0;
   border-right: 1px solid var(--line);
@@ -8956,18 +9149,21 @@ a.vp-tabela-linha:hover strong {
 }
 
 .vp-eventos .event-filter-toggle {
+  display: block;
+  flex: none;
   min-height: 44px;
+  margin-left: auto;
   padding: 0 14px;
   background: none;
   border: 0;
   color: var(--muted);
   cursor: pointer;
   font: 600 13px/1 var(--font-text);
+  white-space: nowrap;
 }
 
-.vp-eventos .event-filter-toggle[aria-pressed="true"] {
+.vp-eventos .event-filter-toggle:hover {
   color: var(--ink);
-  box-shadow: inset 0 -2px var(--brand);
 }
 
 .vp-lista-pagina.vp-eventos .event-list.large > .event-row.event-row-rich {
@@ -9030,6 +9226,7 @@ a.vp-tabela-linha:hover strong {
   }
 
   .vp-eventos .event-filter-toggle {
+    margin-left: 0;
     text-align: left;
   }
 }
@@ -9223,9 +9420,12 @@ a.vp-tabela-linha:hover strong {
   height: 92px;
 }
 
+/* Um contorno so, por fora da linha, na tinta do site: dentro dela cada peca
+   tem uma cor, e qualquer tinta sumia numa das duas (ou no fundo da pagina). */
 .vp-jg-linha:hover,
 .vp-jg-linha:focus-visible {
-  box-shadow: inset 0 0 0 2px var(--placa-tinta);
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
 }
 
 .vp-slide.vp-jg-linha .player-figure {
@@ -12145,13 +12345,14 @@ a.vp-cj-equipe:hover span {
 /* ------------------------------------------------------------ threads livres
    Painel na home (trilho da esquerda, embaixo do ranking), lista em tabela da
    HLTV, pagina da thread em cartao solido e formulario no proprio cartao
-   (escolhas do dono em 07/11/2026). Todo bloco de dado tem fundo solido. */
+   (escolhas do dono em 07/11/2026). Todo bloco de dado tem fundo solido, sem
+   contorno: o fio de 1px saiu em 08/11, pedido dele. Canto de 2px, como as
+   placas de dado do resto do site. */
 
 .th-painel .th-lista,
 .th-bloco {
   background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border-radius: 2px;
 }
 
 .th-linha {
@@ -12200,6 +12401,24 @@ a.vp-cj-equipe:hover span {
 .th-pe,
 .th-esq-pe { padding-top: 10px; }
 
+/* Comentarios recentes, dentro do painel de Threads da home: a mesma lista,
+   com um subtitulo pequeno em vez de um segundo titulo de secao. */
+.th-atividade { margin-top: 22px; }
+
+.th-subtitulo {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font: 600 15px/1.2 var(--font-text);
+}
+
+.th-linha-curta {
+  grid-template-columns: 68px minmax(0, 1fr) auto;
+  grid-template-areas: "m t c";
+  align-items: baseline;
+}
+
+.th-linha-curta .th-titulo { font-size: 13px; }
+
 .th-nova {
   display: inline-flex;
   align-items: center;
@@ -12243,8 +12462,23 @@ a.vp-cj-equipe:hover span {
   color: var(--ink);
 }
 
-.th-explica { padding: 16px; color: var(--muted); font-size: 14px; line-height: 1.5; }
-.th-explica p { margin: 0 0 14px; }
+/* Sem caixa em volta do botao, e o vazio do forum em texto cinza solto, nunca
+   na placa clara do .empty-state (regra do dono, 08/11). */
+.th-explica { padding: 0; }
+
+.th-pagina .empty-state {
+  padding: 14px 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  color: var(--muted);
+  font-weight: 500;
+  text-align: left;
+}
+
+.th-pagina .empty-state strong { color: var(--ink); }
+
+.th-pagina .th-vazio { padding: 14px 0; }
 
 .th-carregando { margin: 0; color: var(--muted); }
 

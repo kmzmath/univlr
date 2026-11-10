@@ -785,15 +785,23 @@ assert(/@media \(max-width: 1180px\)[\s\S]*\.tournament-stats-table[\s\S]*attr\(
 // Ranking, 01/11: a lista nas duas primeiras colunas da home e o trilho na
 // terceira, com a nota colada na equipe e a lineup depois dela.
 assert(/\.vp-ranking\.com-resumo \{[^}]*minmax\(0, 922px\) 340px/.test(estiloDoRanking), "com o resumo aberto, lista e trilho somam a largura da home");
-assert(/\.vp-ranking \{[^}]*minmax\(0, 922px\) 0px/.test(estiloDoRanking), "o resumo nasce fechado, com a lista centralizada");
+assert(/\.vp-ranking \{[^}]*minmax\(0, 922px\) 0px/.test(estiloDoRanking), "com o resumo fechado, a lista fica centralizada");
+assert(/^\s*rankingResumo: true,/m.test(ler("app.js")), "o resumo da semana nasce aberto (07/11)");
 assert(/\.vp-ranking \.rank-change-cell\.down \{[^}]*var\(--muted\)/.test(estiloDoRanking), "cair nao e vermelho, como na home");
 const fonteDoRanking = ler("app.js");
 assert(fonteDoRanking.indexOf('class="numeric ranking-score-cell"') < fonteDoRanking.indexOf('class="ranking-lineup-inline optional"'), "a nota vem antes da lineup");
-assert.strictEqual(context.alturaNoGrafico(1), 5, "o primeiro lugar fica no topo do grafico");
-assert.strictEqual(context.alturaNoGrafico(8), 95, "o oitavo fica no fundo do grafico");
-assert(context.alturaNoGrafico(9) > 100, "abaixo do oitavo a linha sai do grafico");
-assert.strictEqual(context.curvaDaEquipe([1, 8]), "M0.00 5.00C50.00 5.00 50.00 95.00 100.00 95.00", "a curva sai e chega na horizontal");
-assert.strictEqual((context.curvaDaEquipe([1, null, 2]).match(/M/g) || []).length, 2, "semana fora do ranking interrompe a linha");
+// Trajetoria, 07/11: a escala e a da equipe em foco, com folga de uma posicao e
+// no minimo 4 de altura.
+const escalaLider = context.escalaDaTrajetoria([1, 1, 2]);
+assert.strictEqual(escalaLider.y(1), 6, "a lider encosta no topo, sem folga acima do 1");
+assert.strictEqual(escalaLider.y(5), 94, "do 1 ao pior lugar mais um, com no minimo 4 de altura");
+const escalaMeio = context.escalaDaTrajetoria([30, null, 31]);
+assert.strictEqual(escalaMeio.y(29), 6, "uma posicao de folga acima do melhor lugar");
+assert.strictEqual(escalaMeio.y(33), 94, "oscilar entre 30 e 31 nao ocupa o grafico inteiro");
+assert.deepStrictEqual([escalaMeio.melhor, escalaMeio.pior], [30, 31], "melhor e pior lugar da janela");
+const linear = (posicao) => posicao * 10;
+assert.strictEqual(context.curvaDaEquipe([1, 8], linear), "M0.00 10.00C50.00 10.00 50.00 80.00 100.00 80.00", "a curva sai e chega na horizontal");
+assert.strictEqual((context.curvaDaEquipe([1, null, 2], linear).match(/M/g) || []).length, 2, "semana fora do ranking interrompe a linha");
 
 void vp;
 // Quem joga o mesmo campeonato por duas equipes tem uma campanha para cada uma.
@@ -828,7 +836,7 @@ assert.deepStrictEqual(JSON.parse(campanhaDividida), {
 // ranking (opcao B, escolhida pelo dono sobre a home real).
 const itensDoMenu = JSON.parse(vm.runInContext("JSON.stringify(navItems)", context));
 const iRanking = itensDoMenu.findIndex(([k]) => k === "ranking");
-assert.deepStrictEqual(itensDoMenu[iRanking + 1], ["threads", "Threads"], "Threads entra no menu logo depois de Ranking");
+assert.deepStrictEqual(itensDoMenu[iRanking + 1], ["forum", "Fórum"], "Fórum (as threads) entra no menu logo depois de Ranking");
 
 const recentes = (n, extra = {}) =>
   Array.from({ length: n }, (_, i) => ({
@@ -845,11 +853,11 @@ context.Comments = { quando: () => "há 4 min", atividadeFaixa: () => "", selo: 
 vm.runInContext(ler("threads.js"), context);
 const painel = () => context.Threads.painelHome();
 assert.strictEqual((painel().match(/class="th-linha"/g) || []).length, 5, "o painel mostra 5 threads");
-assert(painel().includes('href="#/threads"') && painel().includes("Ver todas"), "o painel tem Ver todas para a lista");
+assert(painel().includes('href="#/forum"') && painel().includes("Ver todas"), "o painel tem Ver todas para a lista");
 assert(painel().includes("+ Nova thread"), "o painel tem o botao de nova thread");
 assert(painel().includes('title="Thread numero 0"'), "o titulo inteiro vai na dica");
 topicos = [];
-assert(painel().includes("Nenhuma thread ainda. Comece a primeira."), "sem thread, o painel diz isso");
+assert(painel().includes("Nenhuma thread ainda."), "sem thread, o painel diz isso");
 assert(painel().includes("+ Nova thread"), "e continua com o botao");
 topicos = recentes(1, { author_username: null });
 assert(painel().includes("conta apagada"), "autor de conta apagada aparece assim");

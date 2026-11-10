@@ -3,6 +3,8 @@
   "minimumMatches": 9,
   "minimumRosterSize": 5,
   "inactivityDays": 150,
+  "incompleteRosterInactivityDays": 60,
+  "inactivityExcludedMonths": [12, 1, 2, 3, 4],
   "firstRankingAt": "2024-07-23T00:00:00",
   "pointsWeights": {
     "tournamentExponent": 0

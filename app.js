@@ -12483,6 +12483,7 @@ const TOURNAMENT_OVERRIDES = {
   "copa-xv-6-2025": {
     name: "Copa XV - 6ª edição (2025)",
     organizer: "XV Buzzards",
+    type: "Online",
     tier: "C",
     status: "Finalizado",
     teamCount: 4,
@@ -20291,7 +20292,7 @@ const navItems = [
   ["players", "Players"],
   ["teams", "Equipes"],
   ["ranking", "Ranking"],
-  ["threads", "Threads"],
+  ["forum", "Fórum"],
 ];
 
 // Lista de equipes: 48 fecha as fileiras de 6, 4 e 3 quadrados sem sobra.
@@ -20325,7 +20326,7 @@ const STATIC_DOCUMENT_TITLES = {
   teams: "Equipes",
   u: "Perfil",
   news: "Notícias",
-  threads: "Threads",
+  forum: "Fórum",
 };
 
 const state = {
@@ -20369,6 +20370,9 @@ const state = {
   matchLineupCompare: {},
   rankingScope: "valid",
   rankingShowDetails: false,
+  // Resumo da semana aberto por padrao desde 07/11, depois da trajetoria e dos
+  // destaques com motivo. Fechar vale ate recarregar a pagina.
+  rankingResumo: true,
   rankingSort: { key: "", direction: "default" },
   // Ordenacao da tabela de /eventos por clique no cabecalho, incluindo a coluna
   // Data. O seletor "ordenar por inicio/termino" saiu: eram duas perguntas
@@ -20630,6 +20634,10 @@ function prepareMetadata(rawMetadata = {}) {
   // Apontar toda conta alternativa para a mesma pessoa é o que faz
   // normalizeMatchPlayer devolver um `id` só para aparições de contas
   // diferentes; o resto do pipeline agrega por esse id e se une sozinho.
+  // So entram aqui alternativas confirmadas para todo o historico da conta.
+  // Confirmacoes por mapa ficam em SHARED_ACCOUNT_RULES com seus matchIds;
+  // No JUBS 2024, yakult, vrnx e Harry Kane so foram confirmados nos matchIds
+  // listados nas regras; as demais atuacoes dessas contas seguem pendentes.
   // A conta principal tem prioridade: uma alternativa nunca sobrescreve um
   // jogador que já se registrou com aquele puuid como principal.
   for (const player of players) {
@@ -20815,15 +20823,14 @@ function buildRaatingContext(matchFiles) {
 
 function applyTeamRankings(teams, matches, matchSeries, players, tournaments, rankingWeights) {
   const minimumMatches = rankingMinimumMatches(rankingWeights);
-  const minimumRosterSize = rankingMinimumRosterSize(rankingWeights);
   const fallback = () => {
     let validIndex = 0;
     teams
       .sort((a, b) => b.points - a.points || b.winRate - a.winRate || b.roundDiff - a.roundDiff)
       .forEach((team, index) => {
         const provisional = team.matches < minimumMatches;
-        const rosterSize = teamActiveRoster(team).length;
-        const inactive = rosterSize < minimumRosterSize;
+        const rosterSize = rankingRosterKnown(team) ? teamActiveRoster(team).length : null;
+        const inactive = false;
         const overallRank = index + 1;
         const validRank = provisional || inactive ? null : ++validIndex;
         team.rank = validRank || overallRank;
@@ -20833,6 +20840,8 @@ function applyTeamRankings(teams, matches, matchSeries, players, tournaments, ra
         team.resultPoints = team.points;
         team.rankingScore = clamp(team.points, 0, 100);
         team.ranking = {
+          id: team.id,
+          matches: team.matches,
           rank: team.rank,
           validRank,
           canonicalRank: validRank,
@@ -20857,6 +20866,8 @@ function applyTeamRankings(teams, matches, matchSeries, players, tournaments, ra
         };
       });
     const ranking = { teams: teams.map((team) => team.ranking), byTeamId: Object.fromEntries(teams.map((team) => [team.id, team.ranking])), diagnostics: { fallback: true } };
+    rankingAplicaInatividade(ranking, rankingDatasDeJogo(matches, matchSeries), Date.now(), rankingInactivityDays(rankingWeights), null, { teams, weights: rankingWeights, currentWeek: true });
+    applyRankingResultToTeams(teams, ranking);
     return { ...ranking, snapshots: [rankingSnapshotShell(Date.now(), ranking, "Fallback")] };
   };
 
@@ -20899,7 +20910,7 @@ function calculateRankingForCutoff({ teams, matches, matchSeries, players, tourn
     weights: achievements.rankingWeights,
     now: cutoffAt,
   });
-  return rankingAplicaInatividade(withSucceededRankingRows(ranking, aliases), rankingDatasDeJogo(inherited.matches, inherited.matchSeries), cutoffAt, rankingInactivityDays(rankingWeights));
+  return rankingAplicaInatividade(withSucceededRankingRows(ranking, aliases), rankingDatasDeJogo(inherited.matches, inherited.matchSeries), cutoffAt, rankingInactivityDays(rankingWeights), null, { teams: inherited.teams, weights: rankingWeights, currentWeek });
 }
 
 function teamsForRankingCutoff(teams, matches, cutoffAt, currentWeek = true) {
@@ -20913,7 +20924,7 @@ function teamsForRankingCutoff(teams, matches, cutoffAt, currentWeek = true) {
       // elenco de hoje, uma equipe que perdeu jogadores depois sumia tambem das
       // semanas em que jogava completa (Axis Ego, Carcaras e Momentum sumiam de
       // 14 a 23 semanas).
-      activeRoster: currentWeek ? teamActiveRoster(team) : lineup,
+      activeRoster: currentWeek ? (rankingRosterKnown(team) ? teamActiveRoster(team) : null) : lineup,
       currentLineup: lineup,
       observedLineup: lineup,
       lineup,
@@ -21232,6 +21243,15 @@ function rankingInactivityDays(weights) {
   return Number.isFinite(value) && value > 0 ? value : 150;
 }
 
+function rankingIncompleteRosterInactivityDays(weights) {
+  const value = Number(weights?.incompleteRosterInactivityDays);
+  return Number.isFinite(value) && value > 0 ? value : 60;
+}
+
+function rankingRosterKnown(team) {
+  return team?.rosterKnown === true || Boolean(team?.currentLineup?.length) || team?.profile?.competitiveStatus === "dissolved";
+}
+
 // Os dias em que cada equipe jogou, em ordem, para achar o ultimo jogo antes de cada semana.
 function rankingDatasDeJogo(matches, matchSeries) {
   const datas = new Map();
@@ -21249,14 +21269,44 @@ function rankingDatasDeJogo(matches, matchSeries) {
 // As paradas do cenario inteiro: 30 dias ou mais sem jogo de ninguem. Elas nao contam
 // para a inatividade: sem isso, o intervalo de nov/24 a mai/25 deixava todas as equipes
 // inativas ao mesmo tempo, e o ranking daquelas semanas ficava vazio.
-function rankingParadasDoCenario(datas) {
-  const dias = [...new Set([...datas.values()].flat())].sort((a, b) => a - b);
-  return dias.flatMap((dia, indice) => (indice && dia - dias[indice - 1] >= 30 * DAY_MS ? [[dias[indice - 1], dia]] : []));
+function rankingParadasDoCenario(datas, cutoffAt = Infinity) {
+  const dias = [...new Set([...datas.values()].flat())].filter((dia) => dia <= cutoffAt).sort((a, b) => a - b);
+  const paradas = dias.flatMap((dia, indice) => (indice && dia - dias[indice - 1] >= 30 * DAY_MS ? [[dias[indice - 1], dia]] : []));
+  // A parada ainda aberta tambem conta, sem depender de uma partida futura.
+  const ultimo = dias.at(-1);
+  if (ultimo && Number.isFinite(cutoffAt) && cutoffAt - ultimo >= 30 * DAY_MS) paradas.push([ultimo, cutoffAt]);
+  return paradas;
+}
+
+function rankingUnirParadas(paradas) {
+  const unidas = [];
+  const ordenadas = paradas.filter(([inicio, fim]) => Number.isFinite(inicio) && Number.isFinite(fim) && fim > inicio).map((parada) => parada.slice()).sort((a, b) => a[0] - b[0]);
+  for (const [inicio, fim] of ordenadas) {
+    const anterior = unidas.at(-1);
+    if (anterior && inicio <= anterior[1]) anterior[1] = Math.max(anterior[1], fim);
+    else unidas.push([inicio, fim]);
+  }
+  return unidas;
+}
+
+function rankingParadasDeInatividade(datas, cutoffAt, weights = {}) {
+  const paradas = rankingParadasDoCenario(datas, cutoffAt);
+  const meses = Array.isArray(weights?.inactivityExcludedMonths) ? weights.inactivityExcludedMonths : [12, 1, 2, 3, 4];
+  const excluidos = [...new Set(meses.map(Number).filter((mes) => Number.isInteger(mes) && mes >= 1 && mes <= 12))];
+  const conhecidas = [...datas.values()].flat().filter((dia) => dia <= cutoffAt);
+  const primeiro = conhecidas.length ? Math.min(...conhecidas) : cutoffAt;
+  for (let ano = new Date(primeiro).getUTCFullYear() - 1; ano <= new Date(cutoffAt).getUTCFullYear(); ano += 1) {
+    for (const mes of excluidos) {
+      // Brasilia (UTC-3), independente do fuso do navegador.
+      paradas.push([Date.UTC(ano, mes - 1, 1, 3), Date.UTC(ano, mes, 1, 3)]);
+    }
+  }
+  return rankingUnirParadas(paradas);
 }
 
 function rankingDiasSemJogar(ultimo, cutoffAt, paradas) {
-  const descontar = paradas.reduce((soma, [inicio, fim]) => soma + Math.max(0, Math.min(fim, cutoffAt) - Math.max(inicio, ultimo)), 0);
-  return (cutoffAt - ultimo - descontar) / DAY_MS;
+  const descontar = rankingUnirParadas(paradas).reduce((soma, [inicio, fim]) => soma + Math.max(0, Math.min(fim, cutoffAt) - Math.max(inicio, ultimo)), 0);
+  return Math.max(0, cutoffAt - ultimo - descontar) / DAY_MS;
 }
 
 function rankingUltimoJogo(datas, ids, cutoffAt) {
@@ -21278,17 +21328,32 @@ function rankingUltimoJogo(datas, ids, cutoffAt) {
 // novo. A nota nao muda: so quem esta ativo e numerado.
 // Serve ao calculo de cada semana e as semanas ja gravadas no banco, que recebem a
 // regra ao carregar, e por isso rodar duas vezes nao muda nada.
-function rankingAplicaInatividade(ranking, datas, cutoffAt, dias, paradas = rankingParadasDoCenario(datas)) {
+function rankingAplicaInatividade(ranking, datas, cutoffAt, dias, paradas = null, context = {}) {
   const linhas = ranking?.teams || Object.values(ranking?.byTeamId || {});
-  const validas = linhas.filter((row) => row.validRank).sort((a, b) => a.validRank - b.validRank);
+  const pausas = paradas || rankingParadasDeInatividade(datas, cutoffAt, context.weights);
+  const equipes = new Map((context.teams || []).map((team) => [team.id, team]));
+  const minimo = rankingMinimumRosterSize(context.weights);
+  const prazoIncompleto = rankingIncompleteRosterInactivityDays(context.weights);
+  // Uma marca antiga de inatividade pode estar errada. Reavaliar todas as
+  // linhas permite recuperar essas equipes sem reativar dissolvidas/sucedidas.
+  const ordenadas = linhas.slice().sort((a, b) => (a.overallRank || Infinity) - (b.overallRank || Infinity));
   let posicao = 0;
-  validas.forEach((row) => {
+  ordenadas.forEach((row) => {
+    const equipe = equipes.get(row.id);
+    if (context.currentWeek && equipe && !row.succeededBy) row.rosterSize = rankingRosterKnown(equipe) ? teamActiveRoster(equipe).length : null;
     const ultimo = rankingUltimoJogo(datas, [row.id, ...(row.inherits || []), ...(row.performanceInherits || [])], cutoffAt);
-    const parada = ultimo && rankingDiasSemJogar(ultimo, cutoffAt, paradas) > dias;
-    if (!parada) posicao += 1;
+    const tempo = ultimo ? rankingDiasSemJogar(ultimo, cutoffAt, pausas) : 0;
+    const incompleto = Number.isFinite(row.rosterSize) && row.rosterSize < minimo;
+    const encerrada = context.currentWeek && equipe?.profile?.competitiveStatus === "dissolved";
+    const motivo = row.succeededBy ? "succession" : encerrada ? "dissolved" : ultimo && incompleto && tempo > prazoIncompleto ? "incomplete-roster" : ultimo && tempo > dias ? "inactivity" : "";
+    const valida = !motivo && !row.provisional && Number(row.matches || 0) > 0;
+    if (valida) posicao += 1;
     [row, ranking.byTeamId?.[row.id]].filter(Boolean).forEach((linha) => {
-      linha.inactive = parada ? true : linha.inactive;
-      linha.validRank = parada ? null : posicao;
+      linha.rosterSize = row.rosterSize;
+      linha.inactive = Boolean(motivo);
+      if (motivo) linha.inactiveReason = motivo;
+      else delete linha.inactiveReason;
+      linha.validRank = valida ? posicao : null;
       linha.canonicalRank = linha.validRank;
       linha.rank = linha.validRank || linha.overallRank;
     });
@@ -21301,8 +21366,8 @@ function rankingInatividadeNasSemanas(db) {
   if (!snapshots.length) return;
   const datas = rankingDatasDeJogo(db.matches, db.matchSeries);
   const dias = rankingInactivityDays(db.rankingWeights);
-  const paradas = rankingParadasDoCenario(datas);
-  snapshots.forEach((snapshot) => rankingAplicaInatividade(snapshot, datas, Number(snapshot.cutoffAt || 0), dias, paradas));
+  const currentCutoff = rankingTuesdayStartOnOrBefore(Date.now());
+  snapshots.forEach((snapshot) => rankingAplicaInatividade(snapshot, datas, Number(snapshot.cutoffAt || 0), dias, null, { teams: db.teams, weights: db.rankingWeights, currentWeek: Number(snapshot.cutoffAt) >= currentCutoff }));
   const atual = snapshots.reduce((maior, snapshot) => (Number(snapshot.cutoffAt || 0) > Number(maior.cutoffAt || 0) ? snapshot : maior));
   applyRankingResultToTeams(db.teams || [], atual);
   db.teams?.sort(compareTeamsByCanonicalRank);
@@ -22117,12 +22182,47 @@ const SHARED_ACCOUNT_RULES = [
   {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["c4d08340-567f-4fe0-beda-43de6493fa5e"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
   {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["489d58ac-8167-46ba-a856-1738c100e08d"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
   {"label":"Copa Aliança 2024: identificação histórica confirmada","matchIds":["2fcd4df0-4a76-471f-83b2-7189c3a68fb7"],"accounts":{"tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ":"vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw"}},
+  // Confirmacao do responsavel em 09/11/2026: somente os quatro mapas
+  // cruzados com o Battlefy para vrnx/Peso e yakult/Laves.
+  {
+    label: "JUBS 2024: Peso e Laves, quatro mapas confirmados",
+    matchIds: [
+      "4f634d8c-6db6-41b7-ae41-a440e4af4916",
+      "499be652-ad00-467b-8482-d4c06f54901c",
+      "a23bad20-cc61-4702-9ecc-c88790c822dd",
+      "efe69ecd-24ec-4dc3-a263-de67bab0b210",
+    ],
+    accounts: {
+      "_lm4wvldJGlh78VM9JgUKkiiYRyBRTumTVFUQJuFfdVsG4VTA90i_xrF5x_ulA95T6enfThFjr5VLQ": "9SjVMoViYDrykn-9mAvMXUfFtI5HSn_t9wB8GGtbxgIxskIi5v7y22uzTTBM_7-wo8o7lEQmBgR2NQ",
+      "tqZorWhqNTDQLNe16COgqKHMml_lrpfb8gpzcVji9IuXngt7pPHqmV8NoZGA3YZED8N09pBbM5uykQ": "vRYrbB_JkHpUPbVYP3NXOX3sbjjajeINlTRDIMSbEtxXZoIe-dKcU5b2hmwY9KAvIzEZm1KQToc6vw",
+    },
+  },
+  // A mesma confirmacao cobre estes dez mapas de Harry Kane 9/suvas.
+  // A conta permanece sem vinculo global para futuras partidas.
+  {
+    label: "JUBS 2024: suvas, dez mapas confirmados",
+    matchIds: [
+      "baaabe1a-d8d5-472d-9c8d-65aa87c8c695",
+      "7e1c1793-bc8d-4455-912b-079935393bea",
+      "04b4c144-c1c3-47f3-8b75-821ed02cdca8",
+      "5d2cc855-b483-4224-875f-e860344cb79e",
+      "87933bfa-06ee-4863-92e3-794102e5e20d",
+      "b331fdc5-d73c-4af3-a62e-b3f9aea946c2",
+      "f06a90f6-a48a-46e7-8dad-991252a44da7",
+      "532d1d43-0a60-4d60-a5e4-657c5bfe0671",
+      "84be44aa-3a6b-4888-aeec-fa377f1a2b74",
+      "99dbf525-1fe1-4fab-96cc-b99d89a4e00d",
+    ],
+    accounts: {
+      "Yb3XQ4g2ozd3TnNWq31ZGmy0waIdeh85cSdaLw6kRl3W7oae8O1Y50cLoQLixZYWhU3WZ1CiwFQg8A": "8uj60-to6rvE1sAUxw4E2O9g3sY9wrclWTIfKV2ZYwoi9fsrPbOKo7PXHjURgyepRRpmhVVupogppA",
+    },
+  },
   {"label":"JUBS 2024: gbzïnNn e KüruK, identificação confirmada por UUID","matchIds":["018e4df2-e228-4303-8199-67df3f1bcbd6","1ef2d19e-013b-4c60-9f7a-a78558def85f","5a7480da-c911-4cac-b341-91df417f72ed","4283fd39-b26d-4d1f-acad-df2145ea492a","2fe5cfe0-b932-4721-8218-e8d56aa0750d","3c8d2e54-ad3f-4186-9ed3-aa2742415ca4"],"accounts":{"I1wipv7H5O9qrj-EL3S4vDJfzcRPy6GdiYYTHz01g6hB-A0gWizTk1uU_Bb8TE5RJLvvo2__MobL5g":"I1wipv7H5O9qrj-EL3S4vDJfzcRPy6GdiYYTHz01g6hB-A0gWizTk1uU_Bb8TE5RJLvvo2__MobL5g","2r_fEwFxq4nk_X8TzcMS94eHABPhLpWe4MJSh4rQv47Kct3-6-E8sQaYZxMCiyVp8xROF0MJATsu1g":"historico:jubs-2024:kuruk"}},
 ];
 
-// Uma regra só vale quando TODAS as contas que ela descreve estão na partida:
-// é a coexistência que denuncia o empréstimo. Com uma conta só, a unificação
-// normal por metadata.accounts já acerta.
+// Regras com matchIds identificam quem jogou somente nos mapas confirmados;
+// elas não autorizam cadastrar a conta como alternativa global dessa pessoa.
+// Sem matchIds, a coexistência de TODAS as contas descritas ativa a regra.
 function sharedAccountOverrides(matchPuuids, matchId = null) {
   const overrides = new Map();
   for (const rule of SHARED_ACCOUNT_RULES) {
@@ -23246,6 +23346,7 @@ function applyTeamMetadata(teams, players, metadata, teamProfiles) {
     team.logo = profile.logo;
     team.profile = profile;
     team.observedLineup = team.lineup;
+    team.rosterKnown = Boolean(registered?.lineupRegistered || registered?.lineup?.length);
     team.currentLineup = (registered?.lineup || []).map((slot) => {
       const player = playersByName.get(normalizeNameKey(slot.name));
       return {
@@ -23591,7 +23692,7 @@ function render() {
     maps: renderMapsCompact,
     u: (username) => window.Profile.renderProfilePage(username),
     news: (slug) => window.News.renderNews(slug),
-    threads: (id) => window.Threads.renderThreads(id),
+    forum: (id) => window.Threads.renderThreads(id),
   };
   (pages[section] || renderHomeCompact)(id);
   ajustarTextosVariaveis();
@@ -23612,6 +23713,9 @@ function canonicalHashForRoute(currentRoute) {
   // 404 porque /stats esteve na navegacao e pode estar em link salvo. So o
   // indice cai aqui: #/maps/<id> tem id e segue para a pagina do mapa.
   if (currentRoute.section === "stats") return "#/home";
+  // O forum nasceu em #/threads (07/11) e mudou de endereco em 08/11. Aviso de
+  // resposta e link salvo ainda apontam para la: a thread e a query vem junto.
+  if (currentRoute.section === "threads") return window.location.hash.replace(/^#\/threads/, "#/forum");
   if (currentRoute.section === "maps" && !currentRoute.id) return "#/home";
   if (currentRoute.section !== "players" || !currentRoute.id) return "";
   const player = playerById(currentRoute.id);
@@ -23970,7 +24074,6 @@ function renderHomeCompact() {
           ${panelTitle("Últimas partidas", "matches", "Ver todas")}
           ${recentMatches.length ? partidasPorDia : `<div class="empty-state">Nenhuma partida registrada ainda.</div>`}
         </section>
-        ${window.Comments ? window.Comments.atividadeFaixa(5) : ""}
       </div>
       <div class="vp-trilho vp-trilho-dir">
         ${window.News ? window.News.blocoTrilho() : ""}
@@ -25023,7 +25126,7 @@ function renderRankingPage(teamId = route().id || "") {
         ${aba === "partidas" ? rankingWeekMatchesSection(semanaMatches) : rankingAccordion(rows, scope, state.rankingShowDetails)}
       </div>
       <aside class="vp-resumo" data-ranking-trilho aria-label="Resumo do ranking">
-        ${trilhoDoRanking(snapshot)}
+        ${trilhoDoRanking(snapshot, rankingLider(snapshot))}
       </aside>
     </section>
   `);
@@ -25161,7 +25264,7 @@ function rankingRowExistsInSnapshot(ranking) {
   if (!Number.isFinite(matches) || matches <= 0) return false;
   // Equipe inativa nao aparece nem em "Todas": esse escopo so soma as provisorias.
   if (rankingIsInactive(ranking)) return false;
-  return Number(ranking?.rosterSize ?? -1) !== 0;
+  return true;
 }
 
 function rankingExistingSnapshotTeams(snapshot = selectedRankingSnapshot()) {
@@ -25376,16 +25479,25 @@ function rankingWeekMatchesSection(matches) {
 }
 
 // O trilho e opcional: por padrao a lista fica sozinha, centralizada, e "Resumo da
-// semana" abre o trilho no lugar em que ele esta na home e em #/matches. O cartao
-// Camisa fala da lider da semana, ou da equipe aberta na lista. Grafico e
-// movimentos sao de equipes, nunca de jogadores.
-function trilhoDoRanking(snapshot = selectedRankingSnapshot()) {
+// semana" abre o trilho no lugar em que ele esta na home e em #/matches. Cartao
+// Camisa e trajetoria falam da mesma equipe: a lider da semana, ou a aberta na
+// lista. Os destaques sao da semana inteira.
+// Na primeira montagem da pagina o DOM ainda e o da tela anterior: quem chama
+// passa a lider, e a equipe da rota entra depois por openRankingRouteTeam.
+function trilhoDoRanking(snapshot = selectedRankingSnapshot(), foco = equipeEmFoco(snapshot)) {
   return `
-    <div class="vp-ranking-cartao" data-ranking-cartao>${cartaoDoRanking(rankingLider(snapshot))}</div>
-    ${disputaPeloTopo(snapshot)}
-    ${movimentosDaSemana(snapshot)}
+    <div class="vp-ranking-cartao" data-ranking-cartao>${cartaoDoRanking(foco)}</div>
+    ${trajetoriaDaEquipe(foco)}
+    ${destaquesDaSemana(snapshot)}
     ${comoANotaEFeita()}
   `;
+}
+
+function equipeEmFoco(snapshot = selectedRankingSnapshot()) {
+  const aberta = document.querySelector(".ranking-accordion-item.open")?.dataset.rankingTeamId;
+  const ranking = aberta ? snapshot?.byTeamId?.[aberta] : null;
+  const team = ranking ? teamById(aberta) : null;
+  return team ? { team, ranking, snapshot } : rankingLider(snapshot);
 }
 
 function rankingPorPosicao(snapshot) {
@@ -25449,87 +25561,99 @@ function cartaoDoRanking(row) {
   });
 }
 
+// Cartao e trajetoria trocam juntos quando uma equipe abre ou fecha na lista.
 function trocarCartaoDoRanking() {
   const lugar = document.querySelector("[data-ranking-cartao]");
   if (!lugar) return;
-  const snapshot = selectedRankingSnapshot();
-  const aberta = document.querySelector(".ranking-accordion-item.open")?.dataset.rankingTeamId;
-  const ranking = aberta ? snapshot?.byTeamId?.[aberta] : null;
-  const team = ranking ? teamById(aberta) : null;
-  lugar.innerHTML = cartaoDoRanking(team ? { team, ranking, snapshot } : rankingLider(snapshot));
+  const foco = equipeEmFoco();
+  lugar.innerHTML = cartaoDoRanking(foco);
   ajustarTextosVariaveis(lugar);
+  const grafico = document.querySelector("[data-ranking-trajetoria]");
+  if (grafico) grafico.outerHTML = trajetoriaDaEquipe(foco);
+  const trilho = document.querySelector("[data-ranking-trilho]");
+  trilho?.style.setProperty("--resumo-altura", `${trilho.scrollHeight}px`);
 }
 
-// Doze semanas das cinco primeiras da semana escolhida. Quem sai do oitavo lugar
-// desce para fora do grafico. A janela vai duas semanas alem da escolhida, para
-// dar para andar nos dois sentidos clicando no proprio grafico.
+// Doze semanas da equipe em foco, ate a escolhida e duas alem dela, para dar para
+// andar nos dois sentidos clicando no proprio grafico. A escala e a da propria
+// equipe, do melhor ao pior lugar dela na janela, com folga de uma posicao em
+// cada ponta e no minimo 4 de altura: sem o minimo, quem oscila entre 30 e 31
+// pareceria subir e descer o grafico inteiro.
 const RANKING_GRAFICO_SEMANAS = 12;
-const RANKING_GRAFICO_EQUIPES = 5;
-const RANKING_GRAFICO_FUNDO = 8;
+const RANKING_GRAFICO_ALTURA_MINIMA = 4;
 
-function alturaNoGrafico(posicao) {
-  if (posicao > RANKING_GRAFICO_FUNDO) return 112;
-  return 5 + ((posicao - 1) / (RANKING_GRAFICO_FUNDO - 1)) * 90;
+function escalaDaTrajetoria(posicoes) {
+  const validas = posicoes.filter(Boolean);
+  const melhor = Math.min(...validas);
+  const pior = Math.max(...validas);
+  const topo = Math.max(1, melhor - 1);
+  const base = Math.max(pior + 1, topo + RANKING_GRAFICO_ALTURA_MINIMA);
+  return { melhor, pior, y: (posicao) => 6 + ((posicao - topo) / (base - topo)) * 88 };
 }
 
-function curvaDaEquipe(posicoes) {
+function curvaDaEquipe(posicoes, y) {
   const passo = 100 / (posicoes.length - 1);
   let caminho = "";
   posicoes.forEach((posicao, i) => {
     if (!posicao) return;
     const x = i * passo;
-    const y = alturaNoGrafico(posicao);
     const antes = posicoes[i - 1];
     if (!antes) {
-      caminho += `M${x.toFixed(2)} ${y.toFixed(2)}`;
+      caminho += `M${x.toFixed(2)} ${y(posicao).toFixed(2)}`;
       return;
     }
     const meio = (x - passo / 2).toFixed(2);
-    caminho += `C${meio} ${alturaNoGrafico(antes).toFixed(2)} ${meio} ${y.toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)}`;
+    caminho += `C${meio} ${y(antes).toFixed(2)} ${meio} ${y(posicao).toFixed(2)} ${x.toFixed(2)} ${y(posicao).toFixed(2)}`;
   });
   return caminho;
 }
 
-function disputaPeloTopo(snapshot) {
+function leituraDaSemana(semana, posicao) {
+  return `${posicao ? `${posicao}º` : "Fora da lista"} em ${formatShortDate(semana.cutoffAt)}`;
+}
+
+function trajetoriaDaEquipe(foco) {
+  const snapshot = foco?.snapshot || selectedRankingSnapshot();
+  const team = foco?.team;
   const semanas = semanasDoRanking();
   const indice = semanas.findIndex((semana) => semana.id === snapshot?.id);
   const fim = Math.min(semanas.length - 1, indice + 2);
-  const janela = semanas.slice(Math.max(0, fim - RANKING_GRAFICO_SEMANAS + 1), fim + 1);
-  const topo = rankingPorPosicao(snapshot).slice(0, RANKING_GRAFICO_EQUIPES);
-  if (indice < 0 || janela.length < 2 || !topo.length) return "";
+  const janela = indice < 0 ? [] : semanas.slice(Math.max(0, fim - RANKING_GRAFICO_SEMANAS + 1), fim + 1);
+  const posicoes = team ? janela.map((semana) => rankingCanonicalPosition(semana.byTeamId?.[team.id])) : [];
+  const titulo = team ? `Trajetória da ${team.sourceTag || team.tag || team.name}` : "Trajetória";
+  if (!team || janela.length < 2 || posicoes.filter(Boolean).length < 2) {
+    const aviso = team ? `${team.name} ainda não tem duas semanas na lista.` : "Nenhuma equipe na lista nesta semana.";
+    return `
+      <section class="vp-resumo-bloco vp-bump-bloco" data-ranking-trajetoria aria-label="Trajetória no ranking">
+        <h3>${escapeHtml(titulo)}</h3>
+        <p class="vp-nota-regras">${escapeHtml(aviso)}</p>
+      </section>
+    `;
+  }
   const passo = 100 / (janela.length - 1);
-  const linhas = topo.map((ranking) => ({
-    id: ranking.id,
-    team: teamById(ranking.id),
-    posicoes: janela.map((semana) => rankingCanonicalPosition(semana.byTeamId?.[ranking.id])),
-  }));
-  const leitura = `Semana de ${formatShortDate(snapshot.cutoffAt)}`;
+  const { melhor, pior, y } = escalaDaTrajetoria(posicoes);
+  const atual = janela.indexOf(snapshot);
+  const leitura = leituraDaSemana(snapshot, posicoes[atual]);
+  const marcas = melhor === pior ? [melhor] : [melhor, pior];
   return `
-    <section class="vp-resumo-bloco vp-bump-bloco" aria-label="Disputa pelo topo do ranking">
-      <h3>Disputa pelo topo <span data-ranking-leitura data-padrao="${escapeHtml(leitura)}">${escapeHtml(leitura)}</span></h3>
+    <section class="vp-resumo-bloco vp-bump-bloco" data-ranking-trajetoria aria-label="${escapeHtml(`${titulo}, ${leitura}`)}" style="--team-line:${escapeHtml(teamLineColor(team.id))}">
+      <h3>${escapeHtml(titulo)} <span data-ranking-leitura data-padrao="${escapeHtml(leitura)}">${escapeHtml(leitura)}</span></h3>
       <div class="vp-bump-placa">
         <div class="vp-bump" data-ranking-grafico>
-          <span class="vp-bump-pos" style="top:${alturaNoGrafico(1)}%">1</span>
-          <span class="vp-bump-pos" style="top:${alturaNoGrafico(RANKING_GRAFICO_FUNDO)}%">${RANKING_GRAFICO_FUNDO}</span>
-          <i class="vp-bump-marca" style="left:${(janela.indexOf(snapshot) * passo).toFixed(2)}%"></i>
+          ${marcas.map((posicao) => `<span class="vp-bump-pos" style="top:${y(posicao).toFixed(2)}%">${posicao}º</span><i class="vp-bump-guia" style="top:${y(posicao).toFixed(2)}%"></i>`).join("")}
+          <i class="vp-bump-marca" style="left:${(atual * passo).toFixed(2)}%"></i>
           <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            ${linhas.slice().reverse().map((linha) => `<path d="${curvaDaEquipe(linha.posicoes)}" stroke="${escapeHtml(teamLineColor(linha.id))}" data-ranking-linha="${escapeHtml(linha.id)}" />`).join("")}
+            <path d="${curvaDaEquipe(posicoes, y)}" />
           </svg>
+          ${posicoes[atual] ? `<i class="vp-bump-ponto" style="left:${(atual * passo).toFixed(2)}%;top:${y(posicoes[atual]).toFixed(2)}%"></i>` : ""}
           <div class="vp-bump-semanas" style="left:${(-passo / 2).toFixed(2)}%;right:${(-passo / 2).toFixed(2)}%">
             ${janela
-              .map((semana) => {
-                const rotulo = `Semana de ${formatShortDate(semana.cutoffAt)}`;
-                return `<button type="button" data-ranking-semana="${escapeHtml(semana.id)}" data-rotulo="${escapeHtml(rotulo)}" aria-label="Ver o ranking da ${escapeHtml(rotulo.toLowerCase())}" aria-pressed="${semana === snapshot}"></button>`;
+              .map((semana, i) => {
+                const rotulo = leituraDaSemana(semana, posicoes[i]);
+                return `<button type="button" data-ranking-semana="${escapeHtml(semana.id)}" data-rotulo="${escapeHtml(rotulo)}" aria-label="${escapeHtml(`${rotulo}. Ver o ranking dessa semana`)}" aria-pressed="${semana === snapshot}"></button>`;
               })
               .join("")}
           </div>
-          ${linhas
-            .map((linha) => {
-              const ultima = linha.posicoes[linha.posicoes.length - 1];
-              if (!ultima || ultima > RANKING_GRAFICO_FUNDO) return "";
-              return `<a class="vp-bump-logo" href="#/ranking/${escapeHtml(linha.id)}" style="top:${alturaNoGrafico(ultima).toFixed(2)}%" data-ranking-foco="${escapeHtml(linha.id)}" aria-label="${escapeHtml(`Abrir ${linha.team?.name || linha.id} na lista`)}">${teamLogo(linha.id)}</a>`;
-            })
-            .join("")}
         </div>
       </div>
       <div class="vp-rt-eixo"><span>${escapeHtml(formatShortDate(janela[0].cutoffAt))}</span><span>${escapeHtml(formatShortDate(janela[janela.length - 1].cutoffAt))}</span></div>
@@ -25537,55 +25661,67 @@ function disputaPeloTopo(snapshot) {
   `;
 }
 
-// As maiores subidas e quedas da semana, na mesma linha da Placa da home.
-function movimentosDaSemana(snapshot) {
+// Quem mais subiu e quem mais caiu na semana: nome, variacao e posicao, sem
+// frase de explicacao (pedido do dono em 07/11).
+function destaquesDaSemana(snapshot) {
   const anterior = previousRankingSnapshot(snapshot);
   if (!anterior) return "";
   const linhas = rankingPorPosicao(snapshot)
     .map((ranking) => {
       const antes = rankingCanonicalPosition(anterior.byTeamId?.[ranking.id]);
+      const agora = rankingCanonicalPosition(ranking);
       const team = teamById(ranking.id);
-      return antes && team ? { team, ranking, snapshot, delta: antes - rankingCanonicalPosition(ranking) } : null;
+      return antes && team ? { team, agora, delta: antes - agora } : null;
     })
     .filter((linha) => linha?.delta);
-  const subiram = linhas.filter((linha) => linha.delta > 0).sort((a, b) => b.delta - a.delta);
-  const cairam = linhas.filter((linha) => linha.delta < 0).sort((a, b) => a.delta - b.delta);
-  const resumo = linhas.length ? `${subiram.length} ${subiram.length === 1 ? "subiu" : "subiram"}, ${cairam.length} ${cairam.length === 1 ? "caiu" : "caíram"}` : "";
+  const subida = linhas.filter((linha) => linha.delta > 0).sort((a, b) => b.delta - a.delta || a.agora - b.agora)[0];
+  const queda = linhas.filter((linha) => linha.delta < 0).sort((a, b) => a.delta - b.delta || a.agora - b.agora)[0];
+  const itens = [subida && destaqueDaSemana("Maior subida", subida), queda && destaqueDaSemana("Maior queda", queda)].filter(Boolean);
   return `
-    <section class="vp-resumo-bloco vp-movimentos" aria-label="Movimentos da semana">
-      <h3>Movimentos da semana <span>${escapeHtml(resumo)}</span></h3>
-      ${linhas.length
-        ? `<div class="vp-placa vp-placa-rk">${[...subiram.slice(0, 3), ...cairam.slice(0, 3)].map(linhaDeMovimento).join("")}</div>`
-        : `<p class="vp-nota-regras">Nenhuma equipe mudou de posição nesta semana.</p>`}
+    <section class="vp-resumo-bloco vp-movimentos vp-destaques" aria-label="Destaques da semana">
+      <h3>Destaques da semana</h3>
+      ${itens.length ? `<div class="vp-destaques-placa">${itens.join("")}</div>` : `<p class="vp-nota-regras">Nenhuma equipe mudou de posição nesta semana.</p>`}
     </section>
   `;
 }
 
-function linhaDeMovimento(row) {
-  const { team, ranking } = row;
+function destaqueDaSemana(rotulo, { team, agora, delta }) {
   return `
-    <a class="vp-rk pintura-de-equipe" href="#/ranking/${escapeHtml(team.id)}" ${teamAccentStyle(team)}>
-      <span class="vp-rk-pos">${rankingCanonicalPosition(ranking)}</span>
-      ${rankingPositionChangeBadge(row, "vp-rk-delta")}
+    <a class="vp-destaque pintura-de-equipe" href="#/ranking/${escapeHtml(team.id)}" ${teamAccentStyle(team)}>
+      <small>${escapeHtml(rotulo)}</small>
       ${teamLogo(team.id)}
-      <span class="vp-rk-nome" title="${escapeHtml(team.name)}">${escapeHtml(team.name)}</span>
-      <span class="vp-rk-nota">${fmt(ranking.score, 1)}</span>
+      <strong title="${escapeHtml(team.name)}">${escapeHtml(team.name)}</strong>
+      <span class="vp-destaque-posicao"><span class="vp-rk-delta ${delta > 0 ? "up" : "down"}">${delta > 0 ? `+${delta}` : delta}</span><b>${agora}º</b></span>
     </a>
   `;
 }
 
+// Cada categoria abre a propria explicacao, uma de cada vez. Botao e grade de
+// 0fr a 1fr, como o painel da lista, e nao <details>: a abertura animada do
+// details (interpolate-size) so existe no Chrome. Os numeros saem do
+// ranking-weights.json, como a nota.
 function comoANotaEFeita() {
-  const pesos = [["Desempenho", 70], ["Conquistas", 15], ["Forma recente", 10], ["rAAting 3.0 dos jogadores", 5]];
-  const minimoPartidas = state.db.rankingMinimumMatches || 9;
-  const minimoElenco = rankingMinimumRosterSize(state.db?.rankingWeights);
+  const pesos = state.db?.rankingWeights || {};
+  const meiaVida = Number(pesos.halfLives?.matches) || 150;
+  const janela = Number(pesos.recentWindowDays) || 60;
+  const vida = Math.round((Number(pesos.achievements?.lifetimeDays) || 304) / 30.4);
+  const categorias = [
+    ["Desempenho", 70, `Vitórias, força dos adversários e margem de rounds. Um jogo perde metade do peso a cada ${meiaVida} dias.`],
+    ["Conquistas", 15, `Pontos por colocação em campeonatos. Zeram em ${vida} meses.`],
+    ["Forma recente", 10, `Desempenho nos últimos ${janela} dias.`],
+    ["rAAting 3.0 dos jogadores", 5, "rAAting 3.0 dos jogadores da formação."],
+  ];
   return `
     <section class="vp-resumo-bloco vp-nota-bloco" aria-label="Como a nota é feita">
       <h3>Como a nota é feita</h3>
-      <div class="vp-rk-soma" style="--team-line:var(--ink)" aria-hidden="true">${pesos.map(([, peso]) => `<i style="--w:${peso}%"></i>`).join("")}</div>
-      <dl class="vp-mapa-dados">
-        ${pesos.map(([nome, peso]) => `<div><dt>${escapeHtml(nome)}</dt><dd><b>${peso}%</b></dd></div>`).join("")}
-      </dl>
-      <p class="vp-nota-regras">Equipes com menos de ${minimoPartidas} partidas ficam provisórias, e com menos de ${minimoElenco} jogadores, inativas. Nas semanas passadas, conta a formação que jogou em cada uma. Quando o núcleo de uma equipe passa para uma equipe nova, a nova herda o histórico da antiga.</p>
+      <div class="vp-rk-soma" style="--team-line:var(--ink)" aria-hidden="true">${categorias.map(([, peso]) => `<i style="--w:${peso}%"></i>`).join("")}</div>
+      <div class="vp-nota-categorias">
+        ${categorias.map(([nome, peso, texto], indice) => `
+          <div class="vp-nota-categoria">
+            <button type="button" data-nota-categoria aria-expanded="false" aria-controls="ranking-categoria-${indice}"><span>${escapeHtml(nome)}</span><b>${peso}%</b>${chevronIcon()}</button>
+            <div class="vp-nota-explica" id="ranking-categoria-${indice}" inert><div><p>${escapeHtml(texto)}</p></div></div>
+          </div>`).join("")}
+      </div>
     </section>
   `;
 }
@@ -25619,35 +25755,53 @@ function bindTrilhoDoRanking() {
   const trilho = pagina?.querySelector("[data-ranking-trilho]");
   if (!trilho) return;
   trilho.style.setProperty("--resumo-altura", `${trilho.scrollHeight}px`);
+  // Uma categoria aberta por vez. Ela muda a altura do trilho, e o `top` do
+  // sticky depende dela: a medida e a do fim da abertura.
+  trilho.addEventListener("click", (event) => {
+    const botao = event.target.closest("[data-nota-categoria]");
+    if (!botao) return;
+    const abrir = botao.getAttribute("aria-expanded") !== "true";
+    trilho.querySelectorAll("[data-nota-categoria]").forEach((outro) => {
+      const aberto = outro === botao && abrir;
+      outro.setAttribute("aria-expanded", String(aberto));
+      document.getElementById(outro.getAttribute("aria-controls"))?.toggleAttribute("inert", !aberto);
+    });
+    window.setTimeout(() => trilho.style.setProperty("--resumo-altura", `${trilho.scrollHeight}px`), RANKING_ABA_MS + 20);
+  });
+  // O timeout sozinho mediu no meio da abertura quando a pagina estava lenta
+  // (998px contra 1082px reais): o fim da transicao confirma a medida.
+  trilho.addEventListener("transitionend", (event) => {
+    if (event.target.matches(".vp-nota-explica")) trilho.style.setProperty("--resumo-altura", `${trilho.scrollHeight}px`);
+  });
   const mostrar = (texto) => {
     const leitura = trilho.querySelector("[data-ranking-leitura]");
     if (leitura) leitura.textContent = texto ?? leitura.dataset.padrao;
   };
-  const focar = (id) => {
-    const grafico = trilho.querySelector("[data-ranking-grafico]");
-    grafico?.classList.toggle("com-foco", Boolean(id));
-    grafico?.querySelectorAll("[data-ranking-linha]").forEach((linha) => linha.classList.toggle("foco", linha.dataset.rankingLinha === id));
-  };
+  // Trocar a semana redesenha a lista fechada. A equipe que estava aberta volta
+  // aberta, sem rolar: quem clica na trajetoria dela continua olhando para ela.
   trilho.addEventListener("click", (event) => {
     const semana = event.target.closest("[data-ranking-semana]");
     if (!semana) return;
     const id = semana.dataset.rankingSemana;
+    const aberta = document.querySelector(".ranking-accordion-item.open")?.dataset.rankingTeamId;
     state.rankingVersionId = id;
     updateRankingVersionView();
+    const item = aberta ? document.querySelector(`.ranking-accordion-item[data-ranking-team-id="${CSS.escape(aberta)}"]`) : null;
+    if (item) {
+      setRankingAccordionItem(item, true);
+      trocarCartaoDoRanking();
+    }
     document.querySelector(`[data-ranking-semana="${id}"]`)?.focus({ preventScroll: true });
   });
   ["mouseover", "focusin"].forEach((tipo) => {
     trilho.addEventListener(tipo, (event) => {
       const semana = event.target.closest("[data-ranking-semana]");
-      const logo = event.target.closest("[data-ranking-foco]");
       if (semana) mostrar(semana.dataset.rotulo);
-      if (logo) focar(logo.dataset.rankingFoco);
     });
   });
   ["mouseout", "focusout"].forEach((tipo) => {
     trilho.addEventListener(tipo, (event) => {
       if (event.target.closest("[data-ranking-semana]")) mostrar();
-      if (event.target.closest("[data-ranking-foco]")) focar("");
     });
   });
 }
@@ -25737,13 +25891,22 @@ function rankingStatusChip(team, ranking = team.ranking) {
   return `<span class="${label === "Validado" ? "chip green" : "chip"}">${label}</span>`;
 }
 
+// A formacao vestida nas duas cores da equipe: a mesma faixa da capa da pagina da
+// equipe, menor. Escolhida pelo dono em 07/11 entre fotos soltas, esta faixa e um
+// cartao Camisa por jogador.
+function rankingLineupFaixa(team, lineup) {
+  const jogadores = lineup.map((entry) => {
+    const player = playerById(entry.playerId || entry.id);
+    return teamCapaJogador(team, { ...entry, name: player?.nick || entry.name || entry.handle }, player);
+  });
+  return `<div class="vp-slide vp-capa-fotos vp-rk-faixa" style="${escapeHtml(teamPlateStyle(team))};--n:${jogadores.length}"><span class="vp-slide-campo"><i></i></span>${jogadores.join("")}</div>`;
+}
+
 function rankingTeamPreviewPanel(team, cutoffAt = null) {
   const lineup = rankingLineupEntries(team, cutoffAt);
   return `
     <div class="ranking-team-preview">
-      <div class="ranking-lineup">
-        ${lineup.length ? lineup.map(rankingLineupCard).join("") : `<div class="empty-state">Equipe sem lineup atual cadastrada.</div>`}
-      </div>
+      ${lineup.length ? rankingLineupFaixa(team, lineup) : `<div class="ranking-lineup"><div class="empty-state">Equipe sem lineup atual cadastrada.</div></div>`}
       <div class="ranking-team-actions vp-rk-acoes">
         <button class="vp-rk-acao" type="button" data-ranking-details aria-expanded="false">Detalhes do ranking${chevronIcon()}</button>
         <a class="vp-rk-acao" href="#/teams/${team.id}">Perfil da equipe</a>
@@ -25857,20 +26020,6 @@ function rankingInlineLineup(team, cutoffAt = null) {
   return names.length ? escapeHtml(names.join(" · ")) : `<span class="muted">Sem lineup até esta semana</span>`;
 }
 
-function rankingLineupCard(entry) {
-  const player = playerById(entry.playerId || entry.id);
-  const name = player?.nick || entry.name || entry.handle || "Jogador";
-  const handle = player?.handle && player.handle !== name ? player.handle : player?.matches ? `${player.matches} partidas` : "";
-  const tag = playerTemPerfil(player) ? "a" : "span";
-  const attrs = playerTemPerfil(player) ? `href="${playerHref(player)}"` : "";
-  return `
-    <${tag} class="ranking-lineup-card" ${attrs}>
-      ${player ? playerLogo(player.id, "large") : logo(String(entry.slot || "?").padStart(2, "0"), ["#1a2638", "#334155"], "round")}
-      <strong>${escapeHtml(name)}</strong>
-      ${handle ? `<small>${escapeHtml(handle)}</small>` : ""}
-    </${tag}>
-  `;
-}
 
 // "Detalhes do ranking" no desenho da Placa: a nota solta no topo e, ao lado,
 // a nota desmontada numa barra so (cada fatia e valor do bloco x peso, entao o
@@ -35846,7 +35995,6 @@ function homeSummaryLeaders() {
 // pequenas para o dedo; cada tracinho tem 22px de area de clique.
 function weekHighlights() {
   const leaders = state.homeSummary ? homeSummaryLeaders() : playerOfWeekLeaders();
-  const note = `Mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas no período.`;
   if (!leaders.length) {
     return `
       <section class="vp-semana vp-semana-vazia" aria-labelledby="week-board-title">
@@ -35857,12 +36005,12 @@ function weekHighlights() {
   }
   return `
     <section class="vp-semana" aria-roledescription="carrossel" aria-labelledby="week-board-title">
-      <header class="vp-sec"><h2 id="week-board-title">Melhores da semana</h2><span class="vp-sec-aside">${escapeHtml(leaders[0].windowLabel)}</span></header>
+      <header class="vp-sec"><h2 id="week-board-title">Melhores da semana</h2></header>
       <div class="vp-semana-cartao" tabindex="0" style="--vp-passo:${PLAYER_OF_WEEK_INTERVAL_MS}ms">
+        <p class="vp-semana-cabeca"><span>${escapeHtml(leaders[0].windowLabel)}</span><span>Mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas</span></p>
         <div class="vp-semana-trilho">${leaders.map((leader) => weekSlide(leader, false)).join("")}${weekSlide(leaders[0], true)}</div>
         <div class="vp-passos">${leaders.map(({ category }) => `<button type="button" class="vp-passo" aria-label="${escapeHtml(category.label)}"><i></i></button>`).join("")}</div>
       </div>
-      <p class="vp-semana-nota">${escapeHtml(note)}</p>
     </section>
   `;
 }
@@ -36713,7 +36861,7 @@ function eventDirectoryRow(event) {
       ${eventCell(eventPremioTexto(event), "Prizepool", "premio")}
       ${eventCell(teamTotal, "Times", "numeric")}
       ${eventCell(event.type || "-", "Tipo")}
-      ${eventCell(tournamentFormatLabel(event, matches), "Formato")}
+      ${eventCell(eventFormatoLabel(event) || tournamentFormatLabel(event, matches), "Formato")}
       <span class="event-row-participants" data-rotulo="Equipes">
         ${eventParticipantStack(featuredTeams, teamTotal)}
         <small class="sr-only">Equipes participantes</small>
@@ -36798,7 +36946,7 @@ function eventFilterGrupo(chave, rotulo, valores, ler, resumoVazio) {
   if (!opcoes) return "";
   return `
     <details class="filter-dropdown event-filter-drop${sel.length ? " tem-selecao" : ""}" data-event-group="${escapeHtml(chave)}"${state.eventFilterOpen?.[chave] ? " open" : ""}>
-      <summary>${filterIcon()}<span>${escapeHtml(rotulo)}</span><strong>${escapeHtml(eventFilterResumo(sel, resumoVazio))}</strong>${chevronIcon()}</summary>
+      <summary>${filterIcon()}<span>${escapeHtml(rotulo)}</span><strong>${escapeHtml(eventFilterResumo(sel.map((id) => valores.find((v) => v.id === id)?.label || id), resumoVazio))}</strong>${chevronIcon()}</summary>
       <div class="filter-dropdown-body">
         <div class="event-filter-rows">${opcoes}</div>
       </div>
@@ -36820,7 +36968,7 @@ function eventFilterBar() {
       ${eventFilterGrupo("tier", "Tier", tiers, eventTierChave, "Todos")}
       ${eventFilterGrupo("tipo", "Tipo", tipos, eventTipoGrupo, "Todos")}
       ${eventFilterGrupo("formato", "Formato", formatos, eventFormatoLabel, "Todos")}
-      <button type="button" class="event-filter-toggle" data-event-filter="premio" data-valor="1" aria-pressed="${f.premio ? "true" : "false"}">Com premiação</button>
+      ${eventFilterGrupo("premio", "Prizepool", EVENT_PREMIO_OPCOES, eventPremioChave, "Todos")}
       ${eventFiltrosAtivos() ? `<button type="button" class="event-filter-toggle" data-event-filter-reset>Limpar filtros</button>` : ""}
     </section>
   `;
@@ -36869,17 +37017,14 @@ function bindEventTable() {
       const chave = botao.dataset.eventFilter;
       const valor = botao.dataset.valor;
       const f = state.eventFilters || {};
-      if (chave === "premio") f.premio = !f.premio;
-      else {
-        const atual = f[chave] || [];
-        f[chave] = atual.includes(valor) ? atual.filter((v) => v !== valor) : atual.concat(valor);
-      }
+      const atual = f[chave] || [];
+      f[chave] = atual.includes(valor) ? atual.filter((v) => v !== valor) : atual.concat(valor);
       state.eventFilters = f;
       pushFilterState("events", eventFiltersToQuery(), `[data-event-filter="${chave}"][data-valor="${valor}"]`);
     });
   });
   document.querySelector("[data-event-filter-reset]")?.addEventListener("click", () => {
-    state.eventFilters = { tier: [], tipo: [], formato: [], premio: false };
+    state.eventFilters = { tier: [], tipo: [], formato: [], premio: [] };
     pushFilterState("events", eventFiltersToQuery());
   });
 }
@@ -36919,8 +37064,19 @@ function eventTipoGrupo(event) {
 
 // Formato nao e string: e um objeto { summary, details, standings }. Ler
 // event.format direto devolve "[object Object]".
+// A lista e o filtro usam o nome curto: 16 resumos diferentes eram 6 formatos na
+// pratica. O resumo inteiro e os detalhes ficam em Informacoes, no campeonato.
 function eventFormatoLabel(event) {
-  return String(event?.format?.summary || "").trim();
+  const resumo = String(event?.format?.summary || (typeof event?.format === "string" ? event.format : "")).trim();
+  if (!resumo) return "";
+  const suico = /su[ií][çc]/i.test(resumo);
+  if (suico && /\+|classificat|elimina|playoff/i.test(resumo)) return "Suíço + playoffs";
+  if (suico) return "Sistema suíço";
+  if (/grupo|gsl|pontos corridos.*playoff/i.test(resumo)) return "Grupos + playoffs";
+  if (/pontos corridos/i.test(resumo)) return "Pontos corridos";
+  if (/elimina[çc][ãa]o dupla/i.test(resumo)) return "Eliminação dupla";
+  if (/elimina[çc][ãa]o simples|vagas/i.test(resumo)) return "Eliminação simples";
+  return resumo;
 }
 
 // Prizepool: 11 dos 18 gravam "-", 2 gravam nulo, 3 tem "R$1.000", 1 tem
@@ -36937,6 +37093,12 @@ function eventPremioValor(event) {
 
 function eventTemPremio(event) {
   return eventPremioValor(event) > 0;
+}
+
+const EVENT_PREMIO_OPCOES = [{ id: "com", label: "Com premiação" }, { id: "sem", label: "Sem premiação" }];
+
+function eventPremioChave(event) {
+  return eventTemPremio(event) ? "com" : "sem";
 }
 
 function eventTimesTotal(event) {
@@ -36979,7 +37141,7 @@ function eventSortHeader(key, label, extra = "") {
 
 function eventFiltrosAtivos() {
   const f = state.eventFilters || {};
-  return (f.tier || []).length + (f.tipo || []).length + (f.formato || []).length + (f.premio ? 1 : 0);
+  return (f.tier || []).length + (f.tipo || []).length + (f.formato || []).length + (f.premio || []).length;
 }
 
 // Uma entrada por campeonato: cada etapa vira o campeonato dela, na posicao da
@@ -37004,7 +37166,7 @@ function eventsFiltrados() {
     if ((f.tier || []).length && !f.tier.includes(eventTierChave(e) || "sem")) return false;
     if ((f.tipo || []).length && !f.tipo.includes(eventTipoGrupo(e) || "sem")) return false;
     if ((f.formato || []).length && !f.formato.includes(eventFormatoLabel(e) || "sem")) return false;
-    if (f.premio && !eventTemPremio(e)) return false;
+    if ((f.premio || []).length && !f.premio.includes(eventPremioChave(e))) return false;
     return true;
   }));
   const sort = state.eventTableSort || {};
@@ -37030,7 +37192,7 @@ function eventFiltersToQuery() {
   if ((f.tier || []).length) p.set("tier", f.tier.join(LISTA_SEP));
   if ((f.tipo || []).length) p.set("tipo", f.tipo.join(LISTA_SEP));
   if ((f.formato || []).length) p.set("formato", f.formato.join(LISTA_SEP));
-  if (f.premio) p.set("premio", "1");
+  if ((f.premio || []).length) p.set("premio", f.premio.join(LISTA_SEP));
   const sort = state.eventTableSort || {};
   if (sort.key && sort.direction !== "default") p.set("ord", sort.key + ":" + sort.direction);
   return p;
@@ -37045,7 +37207,8 @@ function applyEventFiltersFromQuery(params) {
     tier: ler("tier"),
     tipo: ler("tipo"),
     formato: ler("formato"),
-    premio: params.get("premio") === "1",
+    // "1" era o link do antigo botao "Com premiacao".
+    premio: params.get("premio") === "1" ? ["com"] : ler("premio"),
   };
   const ord = String(params.get("ord") || "");
   const [chave, direcao] = ord.split(":");
@@ -37989,11 +38152,18 @@ const HISTORICAL_PLAYER_ROUTE_ALIASES = {
   "wow": "raap",
   "yanf99": "falcao",
   "registered-yanf99": "falcao",
+  "sweepzz": "swpz",
+  "balalov3-s2": "balalov3",
+  "harry-kane-9": "suvas",
 };
 
 function playerById(id) {
   const requested = String(id || "");
-  const key = HISTORICAL_PLAYER_ROUTE_ALIASES[requested] || requested;
+  const alias = HISTORICAL_PLAYER_ROUTE_ALIASES[requested];
+  // Se uma conta reaparecer num mapa ainda nao confirmado, seu perfil
+  // pendente tem prioridade sobre o redirecionamento dos mapas ja unidos.
+  const hasOwnProfile = alias && state.db?.players.some((player) => player.id === requested || player.routeSlug === requested);
+  const key = (hasOwnProfile ? requested : alias) || requested;
   if (!key) return null;
   const routeKey = slugify(key);
   const players = state.db?.players;

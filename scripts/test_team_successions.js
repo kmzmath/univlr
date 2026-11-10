@@ -160,9 +160,14 @@ assert.equal(fimDaCadeia.byTeamId.velha.succeededBy, "nova", "each predecessor p
 const passada = rank(teamsWith(undefined), at(20));
 assert.equal(passada.byTeamId.velha.rosterSize, 5, "a past week uses the lineup that played");
 assert.equal(passada.byTeamId.velha.inactive, false, "the old team was complete in a past week");
-const atual = rank(teamsWith(undefined), rankingTuesdayStartOnOrBefore(Date.now()));
+const currentCutoff = rankingTuesdayStartOnOrBefore(Date.now());
+// O restante do cenario continua jogando: sem isso, a ausencia de partidas de
+// todos configura uma parada geral, que tambem suspende o prazo de 60 dias.
+const activeScene = matches.slice();
+for (let day = 44; at(day) <= currentCutoff; day += 14) activeScene.push(mapa(`scene${day}`, day, "r1", 13, "r2", 9, roster("a"), roster("b")));
+const atual = calculateRankingForCutoff({ teams: teamsWith(undefined), matches: activeScene, matchSeries: activeScene.map(serie), players: [], tournaments, rankingWeights: weights, cutoffAt: currentCutoff });
 assert.equal(atual.byTeamId.velha.rosterSize, 2, "the current week uses the registered roster");
-assert.equal(atual.byTeamId.velha.inactive, true, "the old team is inactive today");
+assert.equal(atual.byTeamId.velha.inactive, true, "the incomplete old team is inactive after 60 counted days without playing");
 
 // Detector: acha o par sem a declaracao e fica quieto com ela.
 const detectado = checkTeamSuccessions(matches, teamsWith(undefined));

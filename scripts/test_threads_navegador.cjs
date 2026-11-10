@@ -144,7 +144,7 @@ async function testePrincipal(navegador, base) {
 
   // Menu: Threads entre Ranking e Cartinhas, ativo na pagina.
   const menu = await pagina.$$eval(".nav-link", (l) => l.map((a) => a.textContent.trim()));
-  assert.deepStrictEqual(menu.slice(menu.indexOf("Ranking"), menu.indexOf("Ranking") + 3), ["Ranking", "Threads", "Cartinhas"]);
+  assert.deepStrictEqual(menu.slice(menu.indexOf("Ranking"), menu.indexOf("Ranking") + 3), ["Ranking", "Fórum", "Cartinhas"]);
   assert.strictEqual(new Set(await pagina.$$eval(".nav-link", (l) => l.map((a) => Math.round(a.getBoundingClientRect().top)))).size, 1, "o menu cabe numa linha a 1440px");
 
   // Sem conta, "+ Nova thread" abre o convite e nao navega.
@@ -155,7 +155,7 @@ async function testePrincipal(navegador, base) {
 
   // Alice abre uma thread: erro sem perder o texto, depois publica.
   await comoUsuario(pagina, "alice@teste.univlr", "senha-da-alice");
-  await vai(pagina, "#/threads/nova");
+  await vai(pagina, "#/forum/nova");
   await pagina.waitForSelector("[data-th-form]");
   await pagina.fill("#th-titulo", "   abcd  ");
   await pagina.fill("#th-texto", "texto que precisa sobreviver");
@@ -173,8 +173,8 @@ async function testePrincipal(navegador, base) {
 
   // Bruno comenta.
   await comoUsuario(pagina, "bruno@teste.univlr", "senha-do-bruno");
-  await vai(pagina, "#/threads");
-  await vai(pagina, `#/threads/${idNova}`);
+  await vai(pagina, "#/forum");
+  await vai(pagina, `#/forum/${idNova}`);
   await pagina.waitForSelector("[data-comentarios] textarea[name=corpo]");
   await pagina.fill("[data-comentarios] textarea[name=corpo]", "eu vou!");
   await pagina.click("[data-comentarios] button.cmt-enviar[type=submit]");
@@ -182,7 +182,7 @@ async function testePrincipal(navegador, base) {
   assert.deepStrictEqual(await pagina.$$eval(".th-acao", (b) => b.length), 0, "Bruno nao edita nem apaga a thread da Alice");
 
   // A comentada vai para o topo da lista.
-  await vai(pagina, "#/threads");
+  await vai(pagina, "#/forum");
   await pagina.waitForSelector(".th-tabela tbody tr");
   assert.strictEqual(await pagina.textContent(".th-tabela tbody tr:first-child .th-c-tit a"), "Quem vai na final presencial?");
   assert.strictEqual(await pagina.textContent(".th-tabela tbody tr:first-child .th-c-num"), "1");
@@ -192,7 +192,7 @@ async function testePrincipal(navegador, base) {
   await vai(pagina, "#/u/bruno_teste");
   await pagina.waitForSelector(".perfil-item");
   assert.ok((await pagina.textContent(".perfil-item")).includes("Quem vai na final presencial?"));
-  assert.ok((await pagina.getAttribute(".perfil-item header a", "href")).startsWith(`#/threads/${idNova}?c=`));
+  assert.ok((await pagina.getAttribute(".perfil-item header a", "href")).startsWith(`#/forum/${idNova}?c=`));
 
   // Alice recebe o aviso e cai no comentario destacado.
   await comoUsuario(pagina, "alice@teste.univlr", "senha-da-alice");
@@ -201,17 +201,17 @@ async function testePrincipal(navegador, base) {
   assert.strictEqual((await pagina.textContent(".auth-avisos a")).trim(), "Comentaram na sua thread");
   await pagina.click(".auth-avisos a");
   await pagina.waitForSelector("[data-comentarios] .cmt.destacado");
-  assert.ok((await pagina.evaluate(() => location.hash)).startsWith(`#/threads/${idNova}?c=`));
+  assert.ok((await pagina.evaluate(() => location.hash)).startsWith(`#/forum/${idNova}?c=`));
 
   // Alice apaga: sai da lista e do painel; o link antigo diz que foi apagada.
   await pagina.click("[data-th-apagar]");
-  await pagina.waitForFunction(() => location.hash === "#/threads");
+  await pagina.waitForFunction(() => location.hash === "#/forum");
   await pagina.waitForSelector(".th-tabela tbody tr");
   assert.ok(!(await pagina.textContent(".th-tabela")).includes("Quem vai na final presencial?"));
   await vai(pagina, "#/home");
   await pagina.waitForSelector(".th-painel");
   assert.ok(!(await pagina.textContent(".th-painel")).includes("Quem vai na final presencial?"));
-  await vai(pagina, `#/threads/${idNova}`);
+  await vai(pagina, `#/forum/${idNova}`);
   await pagina.waitForSelector(".th-aviso h1");
   assert.strictEqual(await pagina.textContent(".th-aviso h1"), "Thread apagada");
   assert.strictEqual(await pagina.$("[data-comentarios]"), null, "thread apagada nao mostra conversa");
@@ -222,11 +222,11 @@ async function testePrincipal(navegador, base) {
 
 async function testePaginacao(navegador, base) {
   const { contexto, pagina, erros } = await novaPagina(navegador, { fake: muitas });
-  await pagina.goto(`${base}/#/threads`);
+  await pagina.goto(`${base}/#/forum`);
   await pagina.waitForSelector(".th-tabela tbody tr");
   assert.strictEqual(await pagina.$$eval(".th-tabela tbody tr", (l) => l.length), 50);
   assert.match(await pagina.textContent(".th-pagina .lista-contagem"), /60 threads/);
-  await vai(pagina, "#/threads?pagina=2");
+  await vai(pagina, "#/forum?pagina=2");
   await pagina.waitForFunction(() => document.querySelectorAll(".th-tabela tbody tr").length === 10);
   assert.deepStrictEqual(erros, []);
   await contexto.close();
@@ -245,11 +245,11 @@ async function testeCelular(navegador, base) {
   assert.ok(ordem, "no celular o painel vem logo depois do ranking");
   await semEstouro(pagina, "home 375");
   await captura(pagina, "home-375");
-  await vai(pagina, "#/threads");
+  await vai(pagina, "#/forum");
   await pagina.waitForSelector(".th-compactas .th-linha");
   await semEstouro(pagina, "lista 375");
   await captura(pagina, "lista-375");
-  await vai(pagina, "#/threads/aaaaaaaa-0000-4000-8000-000000000004");
+  await vai(pagina, "#/forum/aaaaaaaa-0000-4000-8000-000000000004");
   await pagina.waitForSelector(".th-cartao h1");
   await semEstouro(pagina, "thread 375");
   await captura(pagina, "thread-375");

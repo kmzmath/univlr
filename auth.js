@@ -171,7 +171,7 @@
   function hrefDoAviso(n) {
     const t = n.comments && n.comments.threads;
     if (t && t.subject_kind === "topic") {
-      return `#/threads/${encodeURIComponent(t.subject_id)}?c=${encodeURIComponent(n.comment_id)}`;
+      return `#/forum/${encodeURIComponent(t.subject_id)}?c=${encodeURIComponent(n.comment_id)}`;
     }
     return `#cmt-${n.comment_id}`;
   }

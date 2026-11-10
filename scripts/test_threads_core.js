@@ -153,10 +153,10 @@ async function rejeita(promessa, trecho) {
   // Encaixes: a thread livre vira assunto com titulo e link, mas fica fora da
   // faixa de atividade recente (ela tem painel proprio).
   const Cm = w.Comments;
-  assert.deepStrictEqual(JSON.parse(JSON.stringify(Cm.assuntoDaThread("topic", t2))), { href: `#/threads/${t2}`, nome: "Procurando quinto para a LUCE" });
+  assert.deepStrictEqual(JSON.parse(JSON.stringify(Cm.assuntoDaThread("topic", t2))), { href: `#/forum/${t2}`, nome: "Procurando quinto para a LUCE" });
   assert.strictEqual(Cm.assuntoDaThread("topic", t1), null, "apagada nao vira assunto");
   await C.carregarContagens();
-  assert.ok(!Cm.atividadeFaixa(5).includes("#/threads/"), "thread livre nao entra na atividade recente");
+  assert.ok(!Cm.atividadeFaixa(5).includes("#/forum/"), "thread livre nao entra na atividade recente");
 
   // A mensagem do banco chega sem acento; a tela mostra escrita direito.
   assert.strictEqual(C.mensagemDeErro({ message: "titulo precisa ter entre 5 e 120 caracteres" }), "O título precisa ter entre 5 e 120 caracteres.");

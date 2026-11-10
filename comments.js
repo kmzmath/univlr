@@ -675,7 +675,7 @@
       // nao carregada fica sem assunto, como uma partida que sumiu do JSON.
       if (kind === "topic") {
         const titulo = window.Community?.tituloDoTopico?.(id);
-        return titulo ? { href: `#/threads/${encodeURIComponent(id)}`, nome: titulo } : null;
+        return titulo ? { href: `#/forum/${encodeURIComponent(id)}`, nome: titulo } : null;
       }
       if (typeof state === "undefined" || !state.db) return null;
       if (kind === "match") {
@@ -759,6 +759,29 @@
         <h2 class="atv-rotulo">Atividade recente</h2>
         <div class="atv-lista">${itens.map(umaLinha).join("")}</div>
       </section>`;
+  }
+
+  // Dentro do painel de Threads, na home: as threads livres em cima e, embaixo,
+  // as conversas que acontecem nas paginas do site, para o painel ler como uma
+  // coisa so: onde a comunidade esta conversando agora. As linhas usam a caixa
+  // da lista de threads, mas numa linha so (tipo, nome, contagem): em duas, o
+  // trilho da esquerda passava 350px do das partidas.
+  function atividadeNoPainel(limite = 5) {
+    const itens = linhasDeAtividade(limite);
+    if (!itens.length) return "";
+    return `
+      <div class="th-atividade">
+        <h3 class="th-subtitulo">Comentários recentes</h3>
+        <div class="th-lista">${itens
+          .map(
+            ({ r, assunto }) => `<a class="th-linha th-linha-curta" href="${esc(assunto.href)}">
+              <span class="th-titulo" title="${esc(assunto.nome)}">${esc(assunto.nome)}</span>
+              <span class="th-meta">${esc(ROTULO_TIPO[r.subject_kind] || "")}</span>
+              <span class="atv-conta th-conta">${r.comentarios}</span>
+            </a>`
+          )
+          .join("")}</div>
+      </div>`;
   }
 
   // Sem noticia nenhuma a coluna estreita nao existe, e a atividade sozinha
@@ -871,5 +894,5 @@
     setTimeout(() => alvo.classList.remove("destacado"), 2600);
   }
 
-  window.Comments = { shell, montar, novaRender, avatar, quando, corpo, selo, selos: selosDeFa, atividadeHome, atividadeFaixa, atividadeLarga, assuntoDaThread };
+  window.Comments = { shell, montar, novaRender, avatar, quando, corpo, selo, selos: selosDeFa, atividadeHome, atividadeFaixa, atividadeLarga, atividadeNoPainel, assuntoDaThread };
 })();

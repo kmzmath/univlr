@@ -1,8 +1,8 @@
 // UNIVLR - threads livres.
 //
 // A conversa de assunto livre, aberta por quem tem conta: o painel da home
-// (trilho da esquerda, embaixo do ranking), a lista completa (#/threads), a
-// pagina de cada uma (#/threads/<id>) e o formulario (#/threads/nova).
+// (trilho da esquerda, embaixo do ranking), a lista completa (#/forum), a
+// pagina de cada uma (#/forum/<id>) e o formulario (#/forum/nova).
 //
 // O dado vem do Supabase pelo community-core.js (listarTopicos, topico,
 // criarTopico...). A conversa dentro da thread e o comments.js de sempre, no
@@ -20,7 +20,7 @@
   const EDITA_MINUTOS = 15;
   const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
-  const hrefDaThread = (id) => `#/threads/${encodeURIComponent(id)}`;
+  const hrefDaThread = (id) => `#/forum/${encodeURIComponent(id)}`;
   const quando = (iso) => (window.Comments ? window.Comments.quando(iso) : "");
   const logado = () => Boolean(window.Community && window.Community.logado());
 
@@ -33,7 +33,7 @@
   // Link e nao botao: o endereco funciona sozinho (Voltar, abrir em outra aba).
   // Sem conta, o clique abre o convite de login em vez de navegar.
   function botaoNova(secundario) {
-    return `<a class="th-nova${secundario ? " sec" : ""}" href="#/threads/nova" data-th-nova>+ Nova thread</a>`;
+    return `<a class="th-nova${secundario ? " sec" : ""}" href="#/forum/nova" data-th-nova>+ Nova thread</a>`;
   }
 
   // ---------------------------------------------------------- painel da home
@@ -50,12 +50,13 @@
             </a>`
           )
           .join("")
-      : `<p class="th-vazio">Nenhuma thread ainda. Comece a primeira.</p>`;
+      : `<p class="th-vazio">Nenhuma thread ainda.</p>`;
     return `
       <section class="th-painel">
-        ${window.panelTitle ? window.panelTitle("Threads", "threads", "Ver todas") : `<header class="vp-sec"><h2>Threads</h2><a class="vp-sec-more" href="#/threads">Ver todas</a></header>`}
+        ${window.panelTitle ? window.panelTitle("Fórum", "forum", "Ver todas") : `<header class="vp-sec"><h2>Fórum</h2><a class="vp-sec-more" href="#/forum">Ver todas</a></header>`}
         <div class="th-lista">${linhas}</div>
         <div class="th-pe">${botaoNova(true)}</div>
+        ${window.Comments?.atividadeNoPainel ? window.Comments.atividadeNoPainel(5) : ""}
       </section>`;
   }
 
@@ -92,15 +93,14 @@
 
   const blocoNovaConversa = `
     <header class="vp-sec"><h2>Nova conversa</h2></header>
-    <div class="th-bloco th-explica">
-      <p>Conversa sobre qualquer assunto do cenário: palpite, time procurando jogador, dúvida, ideia para o site.</p>
+    <div class="th-explica">
       ${botaoNova()}
     </div>`;
 
   function outrasThreads(atual) {
     const itens = (window.Community.topicosRecentes() || []).filter((t) => t.id !== atual).slice(0, 6);
     return `
-      <header class="vp-sec"><h2>Outras threads</h2><a class="vp-sec-more" href="#/threads">Ver todas</a></header>
+      <header class="vp-sec"><h2>Outras threads</h2><a class="vp-sec-more" href="#/forum">Ver todas</a></header>
       ${
         itens.length
           ? `<div class="th-bloco th-outras">${itens
@@ -134,12 +134,12 @@
 
   async function renderLista() {
     const pagina = Math.max(1, parseInt(window.routeQuery().get("pagina"), 10) || 1);
-    const minhaVez = casca(blocoNovaConversa, `<header class="vp-sec"><h1>Threads</h1></header>${carregando}`);
+    const minhaVez = casca(blocoNovaConversa, `<header class="vp-sec"><h1>Fórum</h1></header>${carregando}`);
     let resultado;
     try {
       resultado = await window.Community.listarTopicos({ pagina, porPagina: POR_PAGINA });
     } catch (erro) {
-      preenche(minhaVez, "[data-th-principal]", `<header class="vp-sec"><h1>Threads</h1></header>${falhou(erro)}`);
+      preenche(minhaVez, "[data-th-principal]", `<header class="vp-sec"><h1>Fórum</h1></header>${falhou(erro)}`);
       return;
     }
     const { itens, total } = resultado;
@@ -153,9 +153,9 @@
            </table>
          </div>
          <div class="th-bloco th-compactas">${itens.map(linhaCompacta).join("")}</div>
-         ${window.paginacaoDaLista("threads", pagina, paginas, new URLSearchParams())}`
-      : `<div class="empty-state"><strong>Nenhuma thread ainda.</strong><p>Abra a primeira pelo botão ao lado.</p></div>`;
-    preenche(minhaVez, "[data-th-principal]", `<header class="vp-sec"><h1>Threads</h1>${contagem}</header>${corpo}`);
+         ${window.paginacaoDaLista("forum", pagina, paginas, new URLSearchParams())}`
+      : `<p class="th-vazio">Nenhuma thread ainda.</p>`;
+    preenche(minhaVez, "[data-th-principal]", `<header class="vp-sec"><h1>Fórum</h1>${contagem}</header>${corpo}`);
   }
 
   // ------------------------------------------------------------- formulario
@@ -231,10 +231,10 @@
         titulo: rascunho ? rascunho.titulo : "",
         texto: rascunho ? rascunho.texto : "",
         botao: "Publicar",
-        cancelar: "#/threads",
+        cancelar: "#/forum",
       });
     }
-    casca(outrasThreads(null), `<a class="th-voltar" href="#/threads">‹ Threads</a><h1 class="sr-only">Nova thread</h1>${principal}`, true);
+    casca(outrasThreads(null), `<a class="th-voltar" href="#/forum">‹ Fórum</a><h1 class="sr-only">Nova thread</h1>${principal}`, true);
     const form = document.querySelector("[data-th-form]");
     ligaFormulario(form, async (titulo, texto) => {
       const id = await window.Community.criarTopico(titulo, texto);
@@ -282,21 +282,21 @@
   }
 
   async function renderThread(id) {
-    const minhaVez = casca(outrasThreads(id), `<a class="th-voltar" href="#/threads">‹ Threads</a>${carregando}`, true);
+    const minhaVez = casca(outrasThreads(id), `<a class="th-voltar" href="#/forum">‹ Fórum</a>${carregando}`, true);
     let t;
     try {
       t = UUID.test(id) ? await window.Community.topico(id) : null;
     } catch (erro) {
-      preenche(minhaVez, "[data-th-principal]", `<a class="th-voltar" href="#/threads">‹ Threads</a>${falhou(erro)}`);
+      preenche(minhaVez, "[data-th-principal]", `<a class="th-voltar" href="#/forum">‹ Fórum</a>${falhou(erro)}`);
       return;
     }
     if (!t) {
-      preenche(minhaVez, "[data-th-principal]", `<a class="th-voltar" href="#/threads">‹ Threads</a>
-        <div class="empty-state"><strong>Thread não encontrada.</strong><p><a class="subtle-link" href="#/threads">Ver todas as threads</a></p></div>`);
+      preenche(minhaVez, "[data-th-principal]", `<a class="th-voltar" href="#/forum">‹ Fórum</a>
+        <div class="empty-state"><strong>Thread não encontrada.</strong><p><a class="subtle-link" href="#/forum">Ver todas as threads</a></p></div>`);
       return;
     }
     if (t.deleted_at) {
-      preenche(minhaVez, "[data-th-principal]", `<a class="th-voltar" href="#/threads">‹ Threads</a>
+      preenche(minhaVez, "[data-th-principal]", `<a class="th-voltar" href="#/forum">‹ Fórum</a>
         <div class="th-bloco th-aviso"><h1>Thread apagada</h1><p>Quem abriu esta thread apagou. A conversa dela não aparece mais.</p></div>`);
       return;
     }
@@ -304,7 +304,7 @@
     const alvo = preenche(
       minhaVez,
       "[data-th-principal]",
-      `<a class="th-voltar" href="#/threads">‹ Threads</a>
+      `<a class="th-voltar" href="#/forum">‹ Fórum</a>
        <div data-th-cartao>${cartaoDaThread(t)}</div>
        ${window.Comments.shell("topic", t.id)}`
     );
@@ -320,7 +320,7 @@
       ev.currentTarget.disabled = true;
       try {
         await window.Community.apagarTopico(t.id);
-        window.location.hash = "#/threads";
+        window.location.hash = "#/forum";
       } catch (erro) {
         ev.currentTarget.disabled = false;
         window.alert(window.Community.mensagemDeErro(erro));

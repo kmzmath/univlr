@@ -23409,6 +23409,14 @@ function rankingInactivityDays(weights) {
   return Number.isFinite(value) && value > 0 ? value : 150;
 }
 
+// Teto em dias corridos, sem desconto de recesso nem de parada geral. Com as pausas,
+// a Maua White (ultimo jogo em 28/10/2023) somava so 150 dias contaveis em mai/2025
+// e ficava 40 semanas no ranking sem jogar. Decisao do dono em 10/11/2026: 365.
+function rankingInactivityMaxCalendarDays(weights) {
+  const value = Number(weights?.inactivityMaxCalendarDays);
+  return Number.isFinite(value) && value > 0 ? value : 365;
+}
+
 function rankingIncompleteRosterInactivityDays(weights) {
   const value = Number(weights?.incompleteRosterInactivityDays);
   return Number.isFinite(value) && value > 0 ? value : 60;
@@ -23500,6 +23508,7 @@ function rankingAplicaInatividade(ranking, datas, cutoffAt, dias, paradas = null
   const equipes = new Map((context.teams || []).map((team) => [team.id, team]));
   const minimo = rankingMinimumRosterSize(context.weights);
   const prazoIncompleto = rankingIncompleteRosterInactivityDays(context.weights);
+  const teto = rankingInactivityMaxCalendarDays(context.weights);
   // Uma marca antiga de inatividade pode estar errada. Reavaliar todas as
   // linhas permite recuperar essas equipes sem reativar dissolvidas/sucedidas.
   const ordenadas = linhas.slice().sort((a, b) => (a.overallRank || Infinity) - (b.overallRank || Infinity));
@@ -23511,7 +23520,7 @@ function rankingAplicaInatividade(ranking, datas, cutoffAt, dias, paradas = null
     const tempo = ultimo ? rankingDiasSemJogar(ultimo, cutoffAt, pausas) : 0;
     const incompleto = Number.isFinite(row.rosterSize) && row.rosterSize < minimo;
     const encerrada = context.currentWeek && equipe?.profile?.competitiveStatus === "dissolved";
-    const motivo = row.succeededBy ? "succession" : encerrada ? "dissolved" : ultimo && incompleto && tempo > prazoIncompleto ? "incomplete-roster" : ultimo && tempo > dias ? "inactivity" : "";
+    const motivo = row.succeededBy ? "succession" : encerrada ? "dissolved" : ultimo && incompleto && tempo > prazoIncompleto ? "incomplete-roster" : ultimo && (tempo > dias || (cutoffAt - ultimo) / DAY_MS > teto) ? "inactivity" : "";
     const valida = !motivo && !row.provisional && Number(row.matches || 0) > 0;
     if (valida) posicao += 1;
     [row, ranking.byTeamId?.[row.id]].filter(Boolean).forEach((linha) => {

@@ -108,6 +108,17 @@ const core = window.RankingCore;
 window.RankingCore = undefined;
 const now = Date.now();
 const fallbackTeam = { id: "a", matches: 12, points: 50, winRate: 50, roundDiff: 0, currentLineup: roster(4) };
+// Teto de 365 dias corridos: as pausas nao seguram a equipe para sempre.
+{
+  const ultimo = date("2023-10-28");
+  const corte = (d) => date(d);
+  const datasLongas = new Map([["a", [ultimo]]]);
+  const linha = () => ({ teams: [{ id: "a", matches: 19, overallRank: 1, validRank: null, rosterSize: 5, score: 70 }], byTeamId: {} });
+  const recessoTodo = [[ultimo, date("2026-01-01")]];
+  assert.equal(rankingAplicaInatividade(linha(), datasLongas, corte("2024-10-27"), 150, recessoTodo).teams[0].inactive, false, "364 dias corridos ainda valem");
+  assert.equal(rankingAplicaInatividade(linha(), datasLongas, corte("2024-10-29"), 150, recessoTodo).teams[0].inactiveReason, "inactivity", "passou de 365 dias corridos");
+  assert.equal(rankingAplicaInatividade(linha(), datasLongas, corte("2024-10-29"), 150, recessoTodo, { weights: { inactivityMaxCalendarDays: 400 } }).teams[0].inactive, false, "teto configuravel");
+}
 const fallback = applyTeamRankings([fallbackTeam], [{ startedAt: now - DAY, teamA: { id: "a" }, teamB: { id: "b" } }], [], [], [], {});
 window.RankingCore = core;
 assert.equal(fallback.byTeamId.a.inactive, false, "fallback respeita prazo para elenco incompleto");

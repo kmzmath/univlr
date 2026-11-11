@@ -37,10 +37,11 @@ body {
 }
 
 /* Nove abas desde as Threads (07/11/2026): a busca cede 40px para o menu caber
-   numa linha a 1440px. Com 460px faltavam 21px e Cartinhas descia. */
+   numa linha a 1440px. Com 460px faltavam 21px e Cartinhas descia. Dez desde
+   Mapas (11/11/2026): mais 40px, pelo mesmo motivo. */
 @media (min-width: 1181px) {
   .topbar-inner {
-    grid-template-columns: auto minmax(0, 1fr) minmax(300px, 420px) auto;
+    grid-template-columns: auto minmax(0, 1fr) minmax(300px, 380px) auto;
   }
 }
 
@@ -13640,5 +13641,640 @@ html[data-tema="claro"] :is(.tournament-stats-player-cell, .tournament-stats-tea
 
   .vp-partida .vp-rounds-bloco {
     min-width: 0;
+  }
+}
+
+/* ==========================================================================
+   Mapas (11/11/2026): o painel #/maps com uma faixa por mapa e os numeros ao
+   lado (modelo A), e a pagina de cada mapa com a capa dividida pela emenda.
+   As faixas sao as da aba Mapas do campeonato; aqui so mudam as colunas.
+   ========================================================================== */
+
+.vp-mapas-painel {
+  display: grid;
+  grid-template-columns: minmax(0, 922px) 340px;
+  justify-content: center;
+  align-items: start;
+  gap: 32px;
+  width: 100%;
+  max-width: 1294px;
+  margin-inline: auto;
+}
+
+.vp-mp-lista {
+  min-width: 0;
+  padding: 0 0 4px;
+  background: var(--bg);
+  box-shadow: 0 0 0 12px var(--bg);
+}
+
+.vp-mp-lista > .vp-sec h1 {
+  margin: 0;
+  font: 700 34px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-mp-trilho {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+
+.vp-mp-placa,
+.vp-pool {
+  padding: 14px;
+  background: var(--surface-funda);
+}
+
+.vp-mp-placa {
+  display: grid;
+  gap: 8px;
+}
+
+.vp-mp-placa h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vp-mp-placa .vp-eq-data {
+  justify-content: space-between;
+}
+
+.vp-mp-placa .vp-eq-data input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Cabecalho: cada coluna ordena a lista. */
+.vp-mp-cab button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: inherit;
+}
+
+.vp-mp-cab button:hover,
+.vp-mp-cab button[aria-pressed="true"] {
+  color: var(--ink);
+}
+
+.vp-mp-cab button[aria-pressed="true"] {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+
+@media (min-width: 761px) {
+  .vp-mp-corpo .vp-ml-cab,
+  .vp-mp-corpo .vp-ml {
+    grid-template-columns: minmax(0, 1fr) 56px 72px 104px 100px 64px 84px;
+  }
+
+  .vp-mp-corpo.vp-mp-com-equipe .vp-ml-cab,
+  .vp-mp-corpo.vp-mp-com-equipe .vp-ml {
+    grid-template-columns: minmax(0, 1fr) 56px 64px 64px 72px 64px 84px;
+  }
+}
+
+.vp-mp-linha {
+  text-decoration: none;
+}
+
+.vp-mp-linha .vp-ml-num:last-child {
+  font-size: 17px;
+}
+
+.vp-mp-linha:hover .vp-ml-faixa strong {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Fora do pool: a faixa apaga, a data ao lado diz desde quando. */
+.vp-mp-fora .vp-ml-faixa {
+  opacity: 0.45;
+  filter: grayscale(0.7);
+}
+
+.vp-mp-fora .vp-ml-num {
+  color: var(--muted);
+}
+
+/* ---- map pool mes a mes ---- */
+.vp-pool h3 {
+  margin-bottom: 10px;
+}
+
+.vp-pool-grade {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  align-items: center;
+  gap: 3px 8px;
+}
+
+.vp-pool-nome {
+  overflow: hidden;
+  color: var(--muted);
+  font: 600 11px/1 var(--font-text);
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vp-pool-nome:hover {
+  color: var(--ink);
+}
+
+.vp-pool-linha {
+  display: grid;
+  grid-template-columns: repeat(var(--meses), minmax(0, 1fr));
+  gap: 1px;
+  height: 12px;
+}
+
+.vp-pool-linha i {
+  display: block;
+  background: rgba(var(--ink-rgb), 0.05);
+}
+
+.vp-pool-linha i.vp-pool-jogado {
+  background: rgba(var(--ink-rgb), calc(0.18 + var(--tom) * 0.82));
+}
+
+.vp-pool-eixo {
+  position: relative;
+  height: 14px;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.vp-pool-eixo span {
+  position: absolute;
+  top: 0;
+  left: calc(var(--coluna) / var(--meses) * 100%);
+}
+
+/* ---- pagina do mapa ---- */
+.vp-mp-faixa {
+  --emenda-mapa: calc(var(--ataque) * 1%);
+  --corte: 44px;
+  position: relative;
+  isolation: isolate;
+  height: 236px;
+  overflow: hidden;
+  color: #fff;
+}
+
+.vp-mp-faixa .vp-mapa-peca img {
+  object-position: center 40%;
+}
+
+.vp-mp-faixa h1 {
+  position: absolute;
+  left: 26px;
+  bottom: 12px;
+  margin: 0;
+  font: 600 112px/0.9 "Oswald", var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+/* Os dois numeros encostam na emenda pelo alto, um de cada lado. */
+.vp-mp-lado {
+  position: absolute;
+  top: 18px;
+  display: grid;
+  gap: 2px;
+}
+
+.vp-mp-lado b {
+  font: 600 58px/1 "Oswald", var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-mp-lado small {
+  font: 600 13px/1 var(--font-text);
+  opacity: 0.85;
+}
+
+.vp-mp-lado-a {
+  right: clamp(16px, calc(100% - var(--emenda-mapa) - var(--corte) + 26px), calc(100% - 170px));
+  text-align: right;
+}
+
+.vp-mp-lado-d {
+  left: clamp(170px, calc(var(--emenda-mapa) + var(--corte) + 26px), calc(100% - 150px));
+}
+
+.vp-capa-id.vp-mp-id {
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 84px;
+  padding: 12px 22px;
+}
+
+.vp-mp-id .vp-equipe-onde {
+  font-size: 15px;
+}
+
+.vp-mp-equipe {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.vp-mp-equipe:hover b {
+  text-decoration: underline;
+}
+
+.vp-mp-filtros {
+  margin: 0;
+}
+
+.vp-mp-filtros select {
+  flex: 1 1 128px;
+}
+
+.vp-mp-filtros .vp-eq-data {
+  flex: 0 0 auto;
+}
+
+.vp-mp-blocos {
+  display: grid;
+  gap: 28px;
+}
+
+.vp-mp-bloco h3 {
+  margin-bottom: 12px;
+}
+
+/* Numeros soltos, sem caixa: o valor grande e o rotulo embaixo. */
+.vp-mp-numeros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 18px 24px;
+  margin: 0;
+}
+
+.vp-mp-numeros dd {
+  margin: 0;
+  font: 600 46px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-mp-numeros dt {
+  margin-top: 4px;
+  color: var(--muted);
+  font: 600 13px/1.25 var(--font-text);
+}
+
+.vp-mp-numeros small {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vp-mp-sites {
+  display: flex;
+  gap: 4px;
+}
+
+.vp-mp-sites > span {
+  display: grid;
+  flex: var(--parte) 1 0;
+  gap: 6px;
+  min-width: 72px;
+}
+
+.vp-mp-sites b {
+  font: 600 22px/1 var(--font-display);
+}
+
+.vp-mp-sites em {
+  font-size: 40px;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-mp-sites i {
+  display: block;
+  height: 12px;
+  background: rgba(var(--ink-rgb), 0.85);
+}
+
+.vp-mp-sites > span:nth-child(2) i { background: rgba(var(--ink-rgb), 0.55); }
+.vp-mp-sites > span:nth-child(3) i { background: rgba(var(--ink-rgb), 0.3); }
+
+.vp-mp-sites small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Placares: uma coluna por placar final, o numero no alto e a barra embaixo. */
+.vp-mp-placares {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr)) minmax(0, 1.6fr);
+  gap: 4px;
+}
+
+.vp-mp-placar {
+  display: grid;
+  grid-template-rows: auto 128px auto;
+  gap: 6px;
+  min-width: 0;
+  text-align: center;
+}
+
+.vp-mp-placar b {
+  min-height: 18px;
+  font: 600 18px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-mp-barra {
+  display: flex;
+  align-items: flex-end;
+}
+
+.vp-mp-pilha {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(var(--altura) * 100%);
+}
+
+.vp-mp-pilha i {
+  display: block;
+  flex: var(--parte) 1 0;
+  min-height: 0;
+  background: rgba(var(--ink-rgb), 0.5);
+}
+
+.vp-mp-pilha i.vp-mp-v {
+  background: var(--win);
+}
+
+.vp-mp-pilha i.vp-mp-d {
+  background: rgba(var(--ink-rgb), 0.28);
+}
+
+.vp-mp-placar small {
+  overflow: hidden;
+  color: var(--muted);
+  font: 600 11px/1 var(--font-text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.vp-mp-meses-bloco .vp-rt {
+  height: 96px;
+}
+
+.vp-mp-leitura {
+  margin: -4px 0 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.vp-mp-recordes dd a,
+.vp-mp-destaques dd a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.vp-mp-recordes dd a:hover,
+.vp-mp-destaques dd a:hover span {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.vp-mp-destaques dd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+}
+
+.vp-mp-destaques dd a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.vp-mp-destaques dd a span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vp-mp-destaques dd b {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Partidas: uma linha por mapa, com o campeonato e o patch na ponta. */
+.vp-mp-partidas .vp-jl-lista + .vp-dia {
+  margin-top: 16px;
+}
+
+.vp-jl.vp-mp-jogo {
+  grid-template-columns: 44px minmax(0, 1fr) 56px minmax(0, 1fr) 200px 40px;
+}
+
+.vp-mp-perdeu strong {
+  color: var(--loss-ink);
+  font-weight: 500;
+}
+
+.vp-mp-perdeu .team-logo {
+  opacity: 0.6;
+}
+
+.vp-mp-jogo-evento {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.vp-mp-jogo-patch {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-mp-eventos {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-mp-eventos button {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 0 10px;
+  border: 0;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font: 600 12px/1.2 var(--font-text);
+  text-align: left;
+}
+
+.vp-mp-eventos button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vp-mp-eventos button b {
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-mp-eventos button:hover {
+  background: var(--surface-2);
+}
+
+.vp-mp-eventos button[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+/* Arte de mapa e sempre noite, tambem no tema claro. */
+html[data-tema="claro"] .vp-mp-faixa {
+  color: #fff;
+}
+
+@media (max-width: 1180px) {
+  .vp-mapas-painel {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .vp-mp-trilho {
+    display: contents;
+  }
+
+  .vp-mp-placa { order: 1; }
+  .vp-mp-lista { order: 2; }
+  .vp-pool { order: 3; }
+
+  .vp-mp-placa {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .vp-mp-placa h3 {
+    grid-column: 1 / -1;
+  }
+
+  .vp-mp-faixa h1 {
+    font-size: 84px;
+  }
+}
+
+@media (max-width: 760px) {
+  .vp-mp-cab {
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+
+  .vp-mp-cab > span:first-child {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 14px;
+    padding: 0;
+  }
+
+  .vp-mp-faixa {
+    height: 168px;
+    --corte: 26px;
+  }
+
+  .vp-mp-faixa h1 {
+    left: 14px;
+    font-size: 54px;
+  }
+
+  .vp-mp-lado {
+    top: 12px;
+  }
+
+  .vp-mp-lado b {
+    font-size: 36px;
+  }
+
+  .vp-mp-lado-a {
+    right: clamp(12px, calc(100% - var(--emenda-mapa) - var(--corte) + 14px), calc(100% - 96px));
+  }
+
+  .vp-mp-lado-d {
+    left: clamp(96px, calc(var(--emenda-mapa) + var(--corte) + 14px), calc(100% - 92px));
+  }
+
+  .vp-capa-id.vp-mp-id {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .vp-mp-id .vp-capa-numeros {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    text-align: left;
+  }
+
+  .vp-mp-id .vp-capa-numeros dd {
+    font-size: 30px;
+  }
+
+  .vp-mp-filtros select,
+  .vp-mp-filtros .vp-eq-data {
+    flex: 1 1 calc(50% - 6px);
+  }
+
+  .vp-mp-numeros dd {
+    font-size: 36px;
+  }
+
+  .vp-mp-placares {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    row-gap: 14px;
+  }
+
+  .vp-mp-placar {
+    grid-template-rows: auto 80px auto;
+  }
+
+  .vp-jl.vp-mp-jogo {
+    grid-template-columns: 40px minmax(0, 1fr) 50px minmax(0, 1fr);
+    height: auto;
+    min-height: 44px;
+    padding-block: 6px;
+  }
+
+  .vp-mp-jogo-evento {
+    grid-column: 2 / -1;
+    font-size: 12px;
+  }
+
+  .vp-mp-jogo-patch {
+    display: none;
   }
 }

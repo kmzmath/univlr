@@ -25631,6 +25631,7 @@ const navItems = [
   ["events", "Eventos"],
   ["players", "Players"],
   ["teams", "Equipes"],
+  ["maps", "Mapas"],
   ["ranking", "Ranking"],
   ["forum", "Fórum"],
 ];
@@ -25645,6 +25646,16 @@ const TEAM_LISTA_ORDENS = [
   { id: "mapas", rotulo: "Mapas" },
   { id: "estado", rotulo: "Estado" },
 ];
+
+// Painel de mapas e pagina de cada mapa (11/11/2026). Declarados aqui porque
+// init() renderiza antes do fim do arquivo.
+const MAPA_ABAS = ["geral", "equipes", "jogadores", "agentes", "partidas"];
+const MAPA_ABA_ROTULOS = { geral: "Visão Geral", equipes: "Equipes", jogadores: "Jogadores", agentes: "Agentes", partidas: "Partidas" };
+const MAPA_FILTROS = ["ano", "evento", "tier", "equipe", "patch", "formato", "de", "ate"];
+const MAPA_FORMATOS = [["md1", "MD1"], ["md3", "MD3"], ["md5", "MD5"], ["decisivo", "Mapa decisivo"]];
+const MAPA_FORA_DO_POOL_DIAS = 120;
+const MAPA_PARTIDAS_PAGINA = 20;
+const cacheDosMapas = { db: null, series: [], eventos: new Map(), ultimos: new Map(), maisRecente: 0 };
 
 // Transicao padrao de troca de conteudo (ver playPanelSlide). Declarada aqui em
 // cima porque init() roda antes do bloco das funcoes de slide.
@@ -25664,6 +25675,7 @@ const STATIC_DOCUMENT_TITLES = {
   ranking: "Ranking",
   rankings: "Ranking",
   teams: "Equipes",
+  maps: "Mapas",
   u: "Perfil",
   news: "Notícias",
   forum: "Fórum",
@@ -29068,7 +29080,6 @@ function canonicalHashForRoute(currentRoute) {
   // O forum nasceu em #/threads (07/11) e mudou de endereco em 08/11. Aviso de
   // resposta e link salvo ainda apontam para la: a thread e a query vem junto.
   if (currentRoute.section === "threads") return window.location.hash.replace(/^#\/threads/, "#/forum");
-  if (currentRoute.section === "maps" && !currentRoute.id) return "#/home";
   if (currentRoute.section !== "players" || !currentRoute.id) return "";
   const player = playerById(currentRoute.id);
   if (!player?.routeSlug) return "";
@@ -29391,12 +29402,11 @@ function bindListaDeEquipes() {
   });
 }
 
-// O indice /maps saiu em 29/08/2026 junto com /stats. A pagina de UM mapa
-// continua viva: ela e ligada pelo placar da partida, pela aba de mapas do
-// campeonato e pela pagina do jogador.
+// O indice /maps saiu em 29/08/2026 junto com /stats e voltou em 11/11/2026 como
+// o painel de mapas, com uma pagina por mapa.
 function renderMapsCompact(id) {
   if (id) return renderMapDetail(id);
-  return renderNotFound("Recurso");
+  return renderMapsPainel();
 }
 
 // A home em trilhos, como HLTV e vlr.gg: tres colunas desde o topo. Na
@@ -36186,7 +36196,7 @@ function tournamentTeamStatColumns() {
 }
 
 function tournamentStatsSortState(table) {
-  const fallback = table === "teams" ? { key: "lugar", direction: "asc" } : table === "agents" || table === "compositions" ? { key: "picks", direction: "desc" } : { key: "rating", direction: "desc" };
+  const fallback = table === "teams" ? { key: "lugar", direction: "asc" } : table === "agents" || table === "compositions" ? { key: "picks", direction: "desc" } : table === "mapteams" ? { key: "mapas", direction: "desc" } : { key: "rating", direction: "desc" };
   return state.tournamentStatsSort?.[table] || fallback;
 }
 
@@ -38770,7 +38780,7 @@ function bindAbaDaEquipe(id, refaz = renderTeamDetail) {
   const aplica = (mudanca, foco) => {
     const query = routeQuery();
     mudanca(query);
-    ["pagina", "pagina-rivais", "pagina-agentes", "pagina-comps", "pagina-mapas"].forEach((chave) => query.delete(chave));
+    ["pagina", "pagina-rivais", "pagina-agentes", "pagina-comps", "pagina-mapas", "pagina-equipes"].forEach((chave) => query.delete(chave));
     pushFilterState(routePath().slice(2), query, foco);
   };
   const alterna = (chave, valor, foco) => aplica((query) => {
@@ -38825,12 +38835,12 @@ function bindAbaDaEquipe(id, refaz = renderTeamDetail) {
       return aplica((query) => ["evento", "de", "ate", "rounds"].forEach((chave) => query.delete(`${prefixo}${chave}`)), `[data-eq-filtro="${prefixo}evento"]`);
     }
     if (event.target.closest("[data-eq-limpar]")) {
-      return aplica((query) => ["evento", "rival", "equipe", "mapa", "resultado", "colocacao", "tier", "ano", "de", "ate", "agente", "rounds"].forEach((chave) => query.delete(chave)), "[data-eq-filtro]");
+      return aplica((query) => ["evento", "rival", "equipe", "mapa", "resultado", "colocacao", "tier", "ano", "de", "ate", "agente", "rounds", "patch", "formato", "minimo"].forEach((chave) => query.delete(chave)), "[data-eq-filtro]");
     }
     const ordenar = event.target.closest("[data-tournament-stat-sort]");
     if (ordenar) {
       const [table, key] = String(ordenar.dataset.tournamentStatSort || "").split(":");
-      const colunas = table === "agents" ? tournamentAgenteColunas() : table === "compositions" ? tournamentComposicaoColunas() : table === "maps" ? playerMapaColunas() : tournamentPlayerStatColumns();
+      const colunas = table === "agents" ? tournamentAgenteColunas() : table === "compositions" ? tournamentComposicaoColunas() : table === "maps" ? playerMapaColunas() : table === "mapteams" ? mapaEquipeColunas() : tournamentPlayerStatColumns();
       const column = colunas.find((item) => item.key === key);
       if (!column) return;
       const atual = tournamentStatsSortState(table);
@@ -40941,54 +40951,855 @@ function playerRankingRows(players) {
   });
 }
 
-function renderMapDetail(id) {
-  const map = mapById(id);
-  if (!map) return renderNotFound("Mapa");
-  const matches = matchSeriesForMap(id);
-  Shell(`
-    <section class="profile-header">
-      ${mapLogo(map.id, "large")}
-      <div>
-        <span class="eyebrow">Mapa competitivo</span>
-        <h1>${escapeHtml(map.name)}</h1>
-        <p class="muted">${map.matches} partidas - ${map.rounds} rounds jogados</p>
-      </div>
-      <div class="profile-actions">
-        <a class="action-link" href="#/matches">Partidas</a>
+// ==========================================================================
+// Mapas (11/11/2026). O painel #/maps e uma faixa por mapa com os numeros ao lado
+// (modelo A, escolha do dono), e cada mapa tem a sua pagina em cinco abas. O
+// filtro mora na URL, vale para o painel e para todas as abas, e viaja junto nos
+// links de um para o outro. So campeonatos visiveis entram, como em Partidas.
+// ==========================================================================
+
+function mapaFiltro() {
+  const query = routeQuery();
+  return Object.fromEntries(MAPA_FILTROS.map((chave) => [chave, query.get(chave) || ""]));
+}
+
+function mapaFiltroAtivo(filtro) {
+  return MAPA_FILTROS.some((chave) => filtro[chave]);
+}
+
+function mapaQueryDoFiltro(filtro, extra = {}) {
+  const query = new URLSearchParams();
+  MAPA_FILTROS.forEach((chave) => {
+    const valor = chave in extra ? extra[chave] : filtro[chave];
+    if (valor) query.set(chave, valor);
+  });
+  const texto = query.toString();
+  return texto ? `?${texto}` : "";
+}
+
+function mapaSeriesBase() {
+  if (cacheDosMapas.db !== state.db) {
+    const eventos = new Map(visibleTournaments().map((event) => [event.id, event]));
+    const series = allMatchSeries().filter((item) => eventos.has(item.eventId));
+    const ultimos = new Map();
+    let maisRecente = 0;
+    series.forEach((item) => (item.maps || []).forEach((match) => {
+      const quando = mapaQuandoDoJogo(match, item);
+      if (quando > (ultimos.get(match.mapId) || 0)) ultimos.set(match.mapId, quando);
+      if (quando > maisRecente) maisRecente = quando;
+    }));
+    Object.assign(cacheDosMapas, { db: state.db, series, eventos, ultimos, maisRecente });
+  }
+  return cacheDosMapas.series;
+}
+
+function mapaEventoDaSerie(series) {
+  mapaSeriesBase();
+  return cacheDosMapas.eventos.get(series.eventId) || null;
+}
+
+function mapaQuando(series) {
+  return dateValue(series.startedAt || series.sortAt);
+}
+
+function mapaQuandoDoJogo(match, series) {
+  return dateValue(match.startedAt || match.date) || mapaQuando(series);
+}
+
+// Fora do pool: o ultimo jogo no mapa ficou mais de 120 dias atras do mapa mais
+// recente do banco. Nao depende do filtro.
+function mapaForaDoPool(mapId) {
+  mapaSeriesBase();
+  const ultimo = cacheDosMapas.ultimos.get(mapId) || 0;
+  return cacheDosMapas.maisRecente - ultimo > MAPA_FORA_DO_POOL_DIAS * DAY_MS;
+}
+
+function mapaSeriePassa(series, filtro, ignorar = "") {
+  const quando = mapaQuando(series);
+  const semDatas = ignorar === "datas";
+  if (!semDatas && ignorar !== "ano" && filtro.ano && new Date(quando).getFullYear() !== Number(filtro.ano)) return false;
+  if (!semDatas && filtro.de && quando < dateInputToStart(filtro.de)) return false;
+  if (!semDatas && filtro.ate && quando > dateInputToEnd(filtro.ate)) return false;
+  if (ignorar !== "evento" && filtro.evento && series.eventId !== filtro.evento) return false;
+  if (ignorar !== "tier" && filtro.tier && eventTierChave(mapaEventoDaSerie(series)) !== filtro.tier) return false;
+  if (ignorar !== "equipe" && filtro.equipe && !seriesHasTeam(series, filtro.equipe)) return false;
+  if (ignorar !== "formato" && /^md\d$/.test(filtro.formato) && `md${seriesBestOf(series)}` !== filtro.formato) return false;
+  return true;
+}
+
+// O mapa decisivo e o ultimo possivel da serie: o terceiro da MD3, o quinto da MD5.
+function mapaDecisivo(match, series) {
+  const melhorDe = Number(seriesBestOf(series));
+  return melhorDe > 1 && (series.maps || []).indexOf(match) + 1 === melhorDe;
+}
+
+function mapaJogoPassa(match, series, filtro, ignorar = "") {
+  if (ignorar !== "patch" && filtro.patch && patchLabel(match.gameVersion) !== filtro.patch) return false;
+  if (ignorar !== "formato" && filtro.formato === "decisivo" && !mapaDecisivo(match, series)) return false;
+  return true;
+}
+
+// Os mapas que passam no filtro, cada um com a serie de onde veio. `ignorar` tira
+// um filtro da conta, para cada faceta contar sem o proprio filtro.
+function mapaJogos(filtro, { mapId = "", ignorar = "" } = {}) {
+  const jogos = [];
+  for (const series of mapaSeriesBase()) {
+    if (!mapaSeriePassa(series, filtro, ignorar)) continue;
+    for (const match of series.maps || []) {
+      if (!match?.mapId || (mapId && match.mapId !== mapId)) continue;
+      if (mapaJogoPassa(match, series, filtro, ignorar)) jogos.push({ match, series });
+    }
+  }
+  return jogos;
+}
+
+// Soma os mapas. Sem equipe, entram os dois lados de cada mapa e as taxas sao por
+// round; com equipe, so a linha dela, e ataque e defesa deixam de somar 100.
+function mapaSoma(jogos, teamId = "") {
+  const soma = { ...emptyTeamRoundStats(), mapas: 0, comLados: 0, roundsComLados: 0, vitorias: 0, derrotas: 0, rounds: 0, prorrogacoes: 0, duracao: 0, comDuracao: 0, primeiro: 0, ultimo: 0 };
+  const campos = Object.keys(emptyTeamRoundStats());
+  jogos.forEach(({ match, series }) => {
+    const rounds = Number(match.rounds || 0);
+    soma.mapas += 1;
+    soma.rounds += rounds;
+    if (rounds > 24) soma.prorrogacoes += 1;
+    if (Number(match.durationMillis) > 0) {
+      soma.duracao += Number(match.durationMillis);
+      soma.comDuracao += 1;
+    }
+    const quando = mapaQuandoDoJogo(match, series);
+    if (quando && (!soma.primeiro || quando < soma.primeiro)) soma.primeiro = quando;
+    if (quando > soma.ultimo) soma.ultimo = quando;
+    if (teamId && match.winnerId === teamId) soma.vitorias += 1;
+    if (teamId && match.loserId === teamId) soma.derrotas += 1;
+    const linhas = teamId ? [match.teamStats?.[teamId]] : Object.values(match.teamStats || {});
+    if (!linhas.length || !linhas.every(Boolean)) return;
+    soma.comLados += 1;
+    soma.roundsComLados += rounds;
+    linhas.forEach((linha) => campos.forEach((campo) => {
+      soma[campo] += Number(linha[campo]) || 0;
+    }));
+  });
+  return soma;
+}
+
+function mapaLados(soma, comEquipe) {
+  const ataque = taxaInteira(soma.attackWins, soma.attackRounds);
+  const defesa = comEquipe ? taxaInteira(soma.defenseWins, soma.defenseRounds) : soma.attackRounds ? 100 - ataque : 0;
+  return { ataque, defesa, emenda: ataque + defesa ? Math.round((ataque / (ataque + defesa)) * 100) : 50 };
+}
+
+function mapaSaldo(soma) {
+  return soma.roundWins * 2 - soma.roundsComLados;
+}
+
+function mapaComparaPatch(a, b) {
+  const [a1, a2] = String(a).split(".").map(Number);
+  const [b1, b2] = String(b).split(".").map(Number);
+  return (a1 || 0) - (b1 || 0) || (a2 || 0) - (b2 || 0);
+}
+
+function mapaNomeDaEquipe(id) {
+  return teamById(id)?.name || displayTeamName(id);
+}
+
+function mapaArte(map, carregar = "lazy") {
+  const art = mapArtAttrs(map);
+  return art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="" loading="${carregar}" onerror="mapArtError(this)" />` : "";
+}
+
+// ---- filtros: os mesmos campos no painel e na pagina do mapa ----
+function mapaFiltroCampos(filtro, mapId = "") {
+  const faceta = (chave, valores) => {
+    const contagem = new Map();
+    mapaJogos(filtro, { mapId, ignorar: chave }).forEach((jogo) => valores(jogo).forEach((valor) => valor && contagem.set(valor, (contagem.get(valor) || 0) + 1)));
+    if (filtro[chave] && !contagem.has(filtro[chave])) contagem.set(filtro[chave], 0);
+    return contagem;
+  };
+  const itens = (contagem, nome, ordem) => [...contagem.entries()].map(([id, n]) => ({ id, nome: nome(id), n })).sort(ordem);
+  const porNome = (a, b) => a.nome.localeCompare(b.nome, "pt-BR");
+  const anos = itens(faceta("ano", ({ series }) => [String(new Date(mapaQuando(series)).getFullYear())]), (id) => id, (a, b) => b.id.localeCompare(a.id));
+  const eventos = itens(faceta("evento", ({ series }) => [series.eventId]), (id) => cacheDosMapas.eventos.get(id)?.name || id, porNome);
+  const tiers = itens(faceta("tier", ({ series }) => [eventTierChave(mapaEventoDaSerie(series))]), (id) => `Tier ${id}`, (a, b) => (EVENT_TIER_ORDEM[b.id] || 0) - (EVENT_TIER_ORDEM[a.id] || 0));
+  const equipes = itens(faceta("equipe", ({ match }) => [match.teamA?.id, match.teamB?.id]), mapaNomeDaEquipe, porNome);
+  const patches = itens(faceta("patch", ({ match }) => [patchLabel(match.gameVersion)].filter((patch) => patch !== "-")), (id) => `Patch ${id}`, (a, b) => mapaComparaPatch(b.id, a.id));
+  const formatos = itens(faceta("formato", ({ match, series }) => [`md${seriesBestOf(series)}`, mapaDecisivo(match, series) ? "decisivo" : ""]), (id) => MAPA_FORMATOS.find(([chave]) => chave === id)?.[1] || id.toUpperCase(), (a, b) => MAPA_FORMATOS.findIndex(([id]) => id === a.id) - MAPA_FORMATOS.findIndex(([id]) => id === b.id));
+  const select = (chave, todos, lista) => `
+    <select data-mp-filtro="${chave}" aria-label="${escapeHtml(todos)}">
+      <option value="">${escapeHtml(todos)}</option>
+      ${lista.map(({ id, nome, n }) => `<option value="${escapeHtml(id)}"${id === filtro[chave] ? " selected" : ""}>${escapeHtml(nome)} (${n})</option>`).join("")}
+    </select>`;
+  const data = (chave, rotulo) => `<label class="vp-eq-data"><span>${rotulo}</span><input type="date" data-mp-filtro="${chave}" value="${escapeHtml(filtro[chave])}"></label>`;
+  return [
+    select("ano", "Todos os anos", anos),
+    select("evento", "Todos os campeonatos", eventos),
+    select("tier", "Todos os tiers", tiers),
+    select("equipe", "Todas as equipes", equipes),
+    select("patch", "Todos os patches", patches),
+    select("formato", "Todos os formatos", formatos),
+    data("de", "De"),
+    data("ate", "Até"),
+  ].join("");
+}
+
+function mapaLimpar(filtro) {
+  return mapaFiltroAtivo(filtro) ? `<button type="button" class="vp-filtros-limpar" data-mp-limpar>Limpar filtros</button>` : "";
+}
+
+// ---- painel ----
+function mapaPainelColunas(comEquipe) {
+  return comEquipe
+    ? [["mapas", "Mapas"], ["vitorias", "V-D"], ["pistol", "Pistol"], ["retakes", "Retakes"], ["rounds", "Saldo"], ["ultimo", "Último jogo"]]
+    : [["mapas", "Mapas"], ["total", "Do total"], ["rounds", "Média de rounds"], ["prorrogacoes", "Prorrogações"], ["retakes", "Retakes"], ["ultimo", "Último jogo"]];
+}
+
+function mapaPainelValor(linha, chave, total, comEquipe) {
+  const { soma, lados } = linha;
+  const valores = {
+    ataque: lados.ataque,
+    defesa: lados.defesa,
+    mapas: soma.mapas,
+    total: soma.mapas / Math.max(1, total),
+    vitorias: soma.vitorias / Math.max(1, soma.mapas) + soma.mapas / 1e6,
+    pistol: soma.pistolWins / Math.max(1, soma.pistolRounds),
+    retakes: soma.retakes / Math.max(1, soma.plantsAgainst),
+    rounds: comEquipe ? mapaSaldo(soma) : soma.rounds / Math.max(1, soma.mapas),
+    prorrogacoes: soma.prorrogacoes,
+    ultimo: soma.ultimo,
+  };
+  return valores[chave] ?? soma.mapas;
+}
+
+function mapaPainelTexto(linha, chave, total, comEquipe) {
+  const { soma } = linha;
+  const textos = {
+    mapas: () => String(soma.mapas),
+    total: () => `${fmt((soma.mapas / Math.max(1, total)) * 100, 1)}%`,
+    vitorias: () => `${soma.vitorias}-${soma.derrotas}`,
+    pistol: () => `${taxaInteira(soma.pistolWins, soma.pistolRounds)}%`,
+    retakes: () => `${taxaInteira(soma.retakes, soma.plantsAgainst)}%`,
+    rounds: () => (comEquipe ? signed(mapaSaldo(soma)) : fmt(soma.rounds / Math.max(1, soma.mapas), 1)),
+    prorrogacoes: () => String(soma.prorrogacoes),
+    ultimo: () => (soma.ultimo ? dataCurta(soma.ultimo) : "-"),
+  };
+  return (textos[chave] || textos.mapas)();
+}
+
+function mapaPainelLinha(linha, colunas, total, filtro, comEquipe) {
+  const { map, lados, fora } = linha;
+  const arte = mapaArte(map);
+  return `
+    <a class="vp-ml vp-mp-linha${fora ? " vp-mp-fora" : ""}" href="#/maps/${encodeURIComponent(map.id)}${mapaQueryDoFiltro(filtro)}">
+      <span class="vp-ml-faixa" style="--ataque:${lados.emenda}">
+        <span class="vp-mapa-peca vp-mapa-atk">${arte}</span>
+        <span class="vp-mapa-peca vp-mapa-def">${arte}</span>
+        <strong>${escapeHtml(map.name)}</strong>
+        <b class="vp-ml-a" aria-label="${escapeHtml(`Ataque ${lados.ataque}%`)}">${lados.ataque}%</b>
+        <b class="vp-ml-d" aria-label="${escapeHtml(`Defesa ${lados.defesa}%`)}">${lados.defesa}%</b>
+      </span>
+      ${colunas.map(([chave, rotulo]) => `<span class="vp-ml-num" data-rotulo="${escapeHtml(rotulo)}">${escapeHtml(mapaPainelTexto(linha, chave, total, comEquipe))}</span>`).join("")}
+    </a>
+  `;
+}
+
+// O map pool mes a mes: uma linha por mapa, uma coluna por mes, e o tom e a parte
+// daquele mes que foi jogada no mapa. O eixo e o banco inteiro; o filtro de data
+// nao entra, para a grade continuar mostrando quando cada mapa entrou e saiu.
+function mapaPoolGrade(filtro) {
+  const jogos = mapaJogos(filtro, { ignorar: "datas" });
+  if (!jogos.length) return "";
+  const datas = mapaSeriesBase().map(mapaQuando).filter(Boolean);
+  const primeiro = mesDoResumo(Math.min(...datas));
+  const ultimo = mesDoResumo(Math.max(...datas));
+  const meses = Array.from({ length: ultimo - primeiro + 1 }, (_, indice) => primeiro + indice);
+  const porMes = new Map();
+  const porMapa = new Map();
+  jogos.forEach(({ match, series }) => {
+    const mes = mesDoResumo(mapaQuandoDoJogo(match, series));
+    porMes.set(mes, (porMes.get(mes) || 0) + 1);
+    if (!porMapa.has(match.mapId)) porMapa.set(match.mapId, new Map());
+    const doMapa = porMapa.get(match.mapId);
+    doMapa.set(mes, (doMapa.get(mes) || 0) + 1);
+  });
+  const total = (mapId) => [...porMapa.get(mapId).values()].reduce((soma, valor) => soma + valor, 0);
+  const mapas = state.db.maps.filter((map) => porMapa.has(map.id)).sort((a, b) => total(b.id) - total(a.id));
+  let maior = 0;
+  mapas.forEach((map) => porMapa.get(map.id).forEach((vezes, mes) => {
+    maior = Math.max(maior, vezes / porMes.get(mes));
+  }));
+  const anos = meses.filter((mes) => mes % 12 === 0 || mes === primeiro);
+  return `
+    <section class="vp-resumo-bloco vp-pool" aria-label="Map pool por mês">
+      <h3>Map pool <span>${escapeHtml(`${rotuloDoMes(primeiro, true)} a ${rotuloDoMes(ultimo, true)}`)}</span></h3>
+      <div class="vp-pool-grade" style="--meses:${meses.length}">
+        ${mapas.map((map) => `
+          <a class="vp-pool-nome" href="#/maps/${encodeURIComponent(map.id)}${mapaQueryDoFiltro(filtro)}">${escapeHtml(map.name)}</a>
+          <span class="vp-pool-linha">${meses.map((mes) => {
+            const vezes = porMapa.get(map.id).get(mes) || 0;
+            if (!vezes) return "<i></i>";
+            const parte = vezes / porMes.get(mes);
+            return `<i class="vp-pool-jogado" style="--tom:${(parte / maior).toFixed(3)}" title="${escapeHtml(`${map.name}, ${rotuloDoMes(mes)}: ${vezes} de ${porMes.get(mes)} mapas`)}"></i>`;
+          }).join("")}</span>
+        `).join("")}
+        <span></span>
+        <span class="vp-pool-eixo">${anos.map((mes) => `<span style="--coluna:${mes - primeiro}">${Math.floor(mes / 12)}</span>`).join("")}</span>
       </div>
     </section>
-    <div class="layout-grid">
-      <div class="stack">
-        <section class="section-band">
-          ${sectionHead("Partidas neste mapa")}
-          <div class="match-list">${matches.map(matchCard).join("")}</div>
-        </section>
-        <section class="section-band">
-          ${sectionHead("Equipes por aproveitamento")}
-          <div class="card-grid">${map.teamStats.map((row) => teamCard(teamById(row.teamId))).join("")}</div>
-        </section>
-      </div>
-      <aside class="side-rail">
-        <section class="data-panel dark">
-          <div class="section-head"><h2>Resumo</h2></div>
-          <div class="stats-grid">
-            ${stat(map.matches, "Partidas")}
-            ${stat(map.rounds, "Rounds")}
-            ${stat(map.teamStats.length, "Equipes")}
-            ${stat(map.agentStats[0]?.name || "-", "Agente mais usado")}
+  `;
+}
+
+function renderMapsPainel() {
+  const filtro = mapaFiltro();
+  const comEquipe = Boolean(filtro.equipe);
+  const colunas = mapaPainelColunas(comEquipe);
+  const pedida = routeQuery().get("ordem") || "mapas";
+  const ordem = ["ataque", "defesa", ...colunas.map(([chave]) => chave)].includes(pedida) ? pedida : "mapas";
+  const jogos = mapaJogos(filtro);
+  const porMapa = new Map();
+  jogos.forEach((jogo) => {
+    if (!porMapa.has(jogo.match.mapId)) porMapa.set(jogo.match.mapId, []);
+    porMapa.get(jogo.match.mapId).push(jogo);
+  });
+  const total = jogos.length;
+  const linhas = state.db.maps
+    .filter((map) => porMapa.has(map.id))
+    .map((map) => {
+      const soma = mapaSoma(porMapa.get(map.id), filtro.equipe);
+      return { map, soma, lados: mapaLados(soma, comEquipe), fora: mapaForaDoPool(map.id) };
+    })
+    .sort((a, b) => mapaPainelValor(b, ordem, total, comEquipe) - mapaPainelValor(a, ordem, total, comEquipe) || b.soma.mapas - a.soma.mapas || a.map.name.localeCompare(b.map.name, "pt-BR"));
+  const semJogo = state.db.maps.filter((map) => !porMapa.has(map.id));
+  const rounds = jogos.reduce((soma, { match }) => soma + Number(match.rounds || 0), 0);
+  const equipe = comEquipe ? `${mapaNomeDaEquipe(filtro.equipe)}, ` : "";
+  const botao = (chave, rotulo) => `<button type="button" data-mp-ordem="${chave}" aria-pressed="${ordem === chave}">${escapeHtml(rotulo)}</button>`;
+  Shell(`
+    <div class="vp-mapas-painel">
+      <section class="vp-mp-lista">
+        <header class="vp-sec"><h1>Mapas</h1><span class="vp-sec-aside">${escapeHtml(`${equipe}${total} ${total === 1 ? "mapa" : "mapas"}, ${rounds} rounds`)}</span></header>
+        ${linhas.length ? `
+          <div class="vp-ml-corpo vp-mp-corpo${comEquipe ? " vp-mp-com-equipe" : ""}">
+            <div class="vp-ml-cab vp-mp-cab"><span>${botao("ataque", "Ataque")}${botao("defesa", "Defesa")}</span>${colunas.map(([chave, rotulo]) => botao(chave, rotulo)).join("")}</div>
+            <div class="vp-ml-lista">${linhas.map((linha) => mapaPainelLinha(linha, colunas, total, filtro, comEquipe)).join("")}</div>
           </div>
+          ${semJogo.length ? `<p class="vp-ml-fora">Sem jogos: ${escapeHtml(semJogo.map((map) => map.name).join(", "))}</p>` : ""}
+        ` : `<p class="vp-est-vazio">Nenhum mapa com esses filtros.</p>`}
+      </section>
+      <aside class="vp-resumo vp-mp-trilho" aria-label="Filtros e map pool">
+        <section class="vp-resumo-bloco vp-jogos-filtro vp-mp-placa">
+          <h3>Filtros ${mapaLimpar(filtro)}</h3>
+          ${mapaFiltroCampos(filtro)}
         </section>
-        <section class="data-panel">
-          <div class="section-head"><h2>Agentes</h2></div>
-          ${agentBars(map.agentStats.slice(0, 8), { showPickRate: true })}
-        </section>
-        <section class="data-panel">
-          <div class="section-head"><h2>Win rate por equipe</h2></div>
-          ${bars(map.teamStats.map((item) => [teamById(item.teamId).name, item.winRate, `${item.wins}-${item.matches - item.wins}`]))}
-        </section>
+        ${mapaPoolGrade(filtro)}
       </aside>
     </div>
   `);
+  bindMapas();
+}
+
+// ---- pagina do mapa ----
+function mapaCapa(map, jogos, totalDoFiltro, filtro) {
+  const team = filtro.equipe ? teamById(filtro.equipe) || { id: filtro.equipe, name: mapaNomeDaEquipe(filtro.equipe) } : null;
+  const soma = mapaSoma(jogos, team?.id);
+  const lados = mapaLados(soma, Boolean(team));
+  const arte = mapaArte(map, "eager");
+  const campeonatos = new Set(jogos.map(({ series }) => series.eventId)).size;
+  const equipes = new Set(jogos.flatMap(({ match }) => [match.teamA?.id, match.teamB?.id]).filter(Boolean)).size;
+  const jogadores = new Set(jogos.flatMap(({ match }) => (match.players || []).filter((player) => !team || player.teamId === team.id).map((player) => player.id))).size;
+  const numeros = team
+    ? [[`${soma.vitorias}-${soma.derrotas}`, "Mapas"], [`${taxaInteira(soma.vitorias, soma.mapas)}%`, "Vitórias"], [String(campeonatos), "Campeonatos"], [String(jogadores), "Jogadores"]]
+    : [[String(soma.mapas), "Mapas"], [`${fmt((soma.mapas / Math.max(1, totalDoFiltro)) * 100, 1)}%`, "Do total"], [String(campeonatos), "Campeonatos"], [String(equipes), "Equipes"], [String(jogadores), "Jogadores"]];
+  const periodo = soma.mapas ? `${dataCurta(soma.primeiro)} a ${dataCurta(soma.ultimo)}` : "Nenhum mapa com esses filtros";
+  return `
+    <header class="vp-capa vp-mp-capa">
+      <div class="vp-mp-faixa" style="--ataque:${lados.emenda}">
+        <span class="vp-mapa-peca vp-mapa-atk">${arte}</span>
+        <span class="vp-mapa-peca vp-mapa-def">${arte}</span>
+        <h1>${escapeHtml(map.name)}</h1>
+        <span class="vp-mp-lado vp-mp-lado-a"><b>${lados.ataque}%</b><small>Ataque</small></span>
+        <span class="vp-mp-lado vp-mp-lado-d"><b>${lados.defesa}%</b><small>Defesa</small></span>
+      </div>
+      <div class="vp-capa-id vp-mp-id">
+        <span class="vp-equipe-onde">
+          ${team ? `<a class="vp-mp-equipe" href="#/teams/${encodeURIComponent(team.id)}">${teamLogo(team.id, "tiny")}<b>${escapeHtml(team.name)}</b></a>` : ""}
+          <span>${escapeHtml(periodo)}</span>
+        </span>
+        <dl class="vp-capa-numeros">${numeros.map(([valor, rotulo]) => `<div><dd>${escapeHtml(valor)}</dd><dt>${escapeHtml(rotulo)}</dt></div>`).join("")}</dl>
+      </div>
+    </header>
+  `;
+}
+
+function mapaVazio() {
+  return `<p class="vp-est-vazio">Nenhum mapa com esses filtros.</p>`;
+}
+
+function mapaBloco(titulo, apoio, corpo, classe = "") {
+  return `<article class="vp-est-bloco vp-mp-bloco${classe ? ` ${classe}` : ""}"><h3>${escapeHtml(titulo)}${apoio ? `<span>${escapeHtml(apoio)}</span>` : ""}</h3>${corpo}</article>`;
+}
+
+// Os numeros soltos de cada lado. Sem equipe, retake e vitoria depois do plant somam
+// 100, entao so o retake aparece; com equipe, sao a defesa e o ataque dela.
+function mapaLadosBloco(soma, team) {
+  const pistolAtaque = taxaInteira(soma.pistolAttackWins, soma.pistolAttackRounds);
+  const pistolDefesa = team ? taxaInteira(soma.pistolWins - soma.pistolAttackWins, soma.pistolRounds - soma.pistolAttackRounds) : soma.pistolAttackRounds ? 100 - pistolAtaque : 0;
+  const itens = [
+    [`${pistolAtaque}%`, "Pistol do ataque", ""],
+    [`${pistolDefesa}%`, "Pistol da defesa", ""],
+    [`${taxaInteira(soma.plants, soma.attackRounds)}%`, "Plants", "dos rounds de ataque"],
+    ...(team ? [[`${taxaInteira(soma.plantWins, soma.plants)}%`, "Depois do plant", "de vitórias"]] : []),
+    [`${taxaInteira(soma.retakes, soma.plantsAgainst)}%`, "Retakes", "dos plants"],
+    team ? [signed(mapaSaldo(soma)), "Saldo de rounds", ""] : [fmt(soma.rounds / Math.max(1, soma.mapas), 1), "Rounds por mapa", ""],
+  ];
+  return mapaBloco("Lados", "", `<dl class="vp-mp-numeros">${itens.map(([valor, rotulo, unidade]) => `<div><dd>${escapeHtml(valor)}</dd><dt>${escapeHtml(rotulo)}${unidade ? ` <small>${escapeHtml(unidade)}</small>` : ""}</dt></div>`).join("")}</dl>`);
+}
+
+function mapaSitesBloco(soma) {
+  const sites = ["A", "B", "C"].map((site) => ({ site, plants: soma[`plant${site}`] })).filter((item) => item.plants);
+  const total = sites.reduce((acc, item) => acc + item.plants, 0);
+  if (!total) return "";
+  return mapaBloco("Sites", `${total} plants`, `
+    <div class="vp-mp-sites">
+      ${sites.map(({ site, plants }) => `<span style="--parte:${plants}"><b>${site} <em>${taxaInteira(plants, total)}%</em></b><i></i><small>${plants} plants</small></span>`).join("")}
+    </div>
+  `);
+}
+
+// Placar final de cada mapa, do 13-0 ao 13-11, e a prorrogacao numa coluna so.
+// Com equipe, a barra divide vitorias e derrotas dela.
+function mapaPlacaresBloco(jogos, team) {
+  const colunas = [...Array.from({ length: 12 }, (_, indice) => ({ rotulo: `13-${indice}`, v: 0, d: 0 })), { rotulo: "Prorrogação", v: 0, d: 0 }];
+  jogos.forEach(({ match }) => {
+    const a = Number(match.teamA?.score || 0);
+    const b = Number(match.teamB?.score || 0);
+    const maior = Math.max(a, b);
+    const menor = Math.min(a, b);
+    const coluna = maior === 13 && menor <= 11 ? colunas[menor] : maior > 13 || menor >= 12 ? colunas[12] : null;
+    if (!coluna) return;
+    if (team && match.loserId === team.id) coluna.d += 1;
+    else coluna.v += 1;
+  });
+  const topo = Math.max(1, ...colunas.map((coluna) => coluna.v + coluna.d));
+  const total = colunas.reduce((acc, coluna) => acc + coluna.v + coluna.d, 0);
+  if (!total) return "";
+  return mapaBloco("Placares", team ? "vitórias e derrotas" : `${total} mapas`, `
+    <div class="vp-mp-placares${team ? " vp-mp-placares-equipe" : ""}">
+      ${colunas.map((coluna) => {
+        const n = coluna.v + coluna.d;
+        const texto = team ? `${coluna.rotulo}: ${coluna.v} ${coluna.v === 1 ? "vitória" : "vitórias"} e ${coluna.d} ${coluna.d === 1 ? "derrota" : "derrotas"}` : `${coluna.rotulo}: ${n} ${n === 1 ? "mapa" : "mapas"}, ${taxaInteira(n, total)}%`;
+        return `
+          <span class="vp-mp-placar" title="${escapeHtml(texto)}" aria-label="${escapeHtml(texto)}">
+            <b>${n || ""}</b>
+            <span class="vp-mp-barra"><span class="vp-mp-pilha" style="--altura:${(n / topo).toFixed(4)}">${team ? `<i class="vp-mp-v" style="--parte:${coluna.v}"></i><i class="vp-mp-d" style="--parte:${coluna.d}"></i>` : `<i style="--parte:1"></i>`}</span></span>
+            <small>${escapeHtml(coluna.rotulo === "Prorrogação" ? "Prorr." : coluna.rotulo)}</small>
+          </span>
+        `;
+      }).join("")}
+    </div>
+  `);
+}
+
+// Mapas por mes, como em Partidas: o eixo e o do proprio mapa e o filtro de data nao
+// entra. Clicar num mes filtra a pagina inteira por ele.
+function mapaMesesBloco(map, filtro) {
+  const todos = mapaJogos({}, { mapId: map.id });
+  const jogos = mapaJogos(filtro, { mapId: map.id, ignorar: "datas" });
+  if (!todos.length) return "";
+  const quando = ({ match, series }) => mapaQuandoDoJogo(match, series);
+  const datas = todos.map(quando).filter(Boolean);
+  const primeiro = mesDoResumo(Math.min(...datas));
+  const ultimo = mesDoResumo(Math.max(...datas));
+  const contagem = new Map();
+  jogos.forEach((jogo) => {
+    const mes = mesDoResumo(quando(jogo));
+    contagem.set(mes, (contagem.get(mes) || 0) + 1);
+  });
+  const meses = Array.from({ length: ultimo - primeiro + 1 }, (_, indice) => primeiro + indice);
+  const maior = Math.max(1, ...contagem.values());
+  const pico = meses.reduce((melhor, mes) => ((contagem.get(mes) || 0) > (contagem.get(melhor) || 0) ? mes : melhor), meses[0]);
+  const marcado = mapaMesMarcado(filtro);
+  const leitura = contagem.size ? `${contagem.get(marcado ?? pico) || 0} em ${rotuloDoMes(marcado ?? pico)}` : "Nenhum mapa";
+  return mapaBloco("Mapas por mês", "", `
+    <p class="vp-mp-leitura" data-mp-leitura data-padrao="${escapeHtml(leitura)}">${escapeHtml(leitura)}</p>
+    <div class="vp-rt vp-mp-meses${marcado === null ? "" : " vp-rt-marcado"}">
+      ${meses.map((mes) => {
+        const vezes = contagem.get(mes) || 0;
+        const rotulo = `${vezes} em ${rotuloDoMes(mes)}`;
+        return `<button type="button" class="vp-rt-mes" data-mp-mes="${mes}" data-rotulo="${escapeHtml(rotulo)}" aria-label="${escapeHtml(rotulo)}" aria-pressed="${marcado === mes}" style="--altura:${(vezes / maior).toFixed(4)}"><i></i></button>`;
+      }).join("")}
+    </div>
+    <div class="vp-rt-eixo"><span>${escapeHtml(rotuloDoMes(primeiro, true))}</span><span>${escapeHtml(rotuloDoMes(ultimo, true))}</span></div>
+  `, "vp-mp-meses-bloco");
+}
+
+function mapaMesMarcado(filtro) {
+  if (!filtro.de || !filtro.ate) return null;
+  const mes = mesDoResumo(dateInputToStart(filtro.de));
+  const { de, ate } = diasDoMes(mes);
+  return filtro.de === de && filtro.ate === ate ? mes : null;
+}
+
+function mapaInformacoes(soma, jogos) {
+  const patches = [...new Set(jogos.map(({ match }) => patchLabel(match.gameVersion)).filter((patch) => patch && patch !== "-"))].sort(mapaComparaPatch);
+  const linhas = [
+    ["Primeiro jogo", soma.primeiro ? dataCurta(soma.primeiro) : "-"],
+    ["Último jogo", soma.ultimo ? dataCurta(soma.ultimo) : "-"],
+    ["Patches", patches.length > 1 ? `${patches.length}, do ${patches[0]} ao ${patches.at(-1)}` : patches[0] || "-"],
+    ["Duração média", soma.comDuracao ? `${Math.round(soma.duracao / soma.comDuracao / 60000)} min` : "-"],
+    ["Rounds jogados", String(soma.rounds)],
+    ["Prorrogações", `${soma.prorrogacoes}, ${taxaInteira(soma.prorrogacoes, soma.mapas)}% dos mapas`],
+  ];
+  return `<section class="vp-resumo-bloco"><h3>Informações</h3><dl class="vp-ficha">${linhas.map(([rotulo, valor]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd>${escapeHtml(valor)}</dd></div>`).join("")}</dl></section>`;
+}
+
+// A maior sequencia de vitorias de cada equipe no mapa, na ordem das datas.
+function mapaSequencias(jogos) {
+  const atual = new Map();
+  const melhor = new Map();
+  jogos
+    .slice()
+    .sort((a, b) => mapaQuandoDoJogo(a.match, a.series) - mapaQuandoDoJogo(b.match, b.series))
+    .forEach(({ match }) => {
+      if (!match.winnerId) return;
+      const seguidas = (atual.get(match.winnerId) || 0) + 1;
+      atual.set(match.winnerId, seguidas);
+      melhor.set(match.winnerId, Math.max(melhor.get(match.winnerId) || 0, seguidas));
+      if (match.loserId) atual.set(match.loserId, 0);
+    });
+  return melhor;
+}
+
+function mapaRecordes(jogos, team) {
+  let abates = null;
+  let acs = null;
+  let longo = null;
+  jogos.forEach(({ match }) => {
+    (match.players || []).filter((player) => !team || player.teamId === team.id).forEach((player) => {
+      if (!abates || Number(player.kills) > Number(abates.player.kills)) abates = { player, match };
+      if (Number(player.rounds) >= 13 && (!acs || Number(player.acs) > Number(acs.player.acs))) acs = { player, match };
+    });
+    if (!longo || Number(match.rounds) > Number(longo.rounds)) longo = match;
+  });
+  const sequencias = mapaSequencias(jogos);
+  const [lider, seguidas] = team ? [team.id, sequencias.get(team.id) || 0] : [...sequencias.entries()].sort((a, b) => b[1] - a[1])[0] || [];
+  const link = (href, texto) => `<a href="${href}">${escapeHtml(texto)}</a>`;
+  const linhas = [
+    abates ? ["Mais abates", link(`#/matches/${encodeURIComponent(abates.match.id)}`, `${abates.player.nick}, ${abates.player.kills} em ${abates.player.rounds} rounds`)] : null,
+    acs ? ["Maior ACS", link(`#/matches/${encodeURIComponent(acs.match.id)}`, `${acs.player.nick}, ${fmt(acs.player.acs, 0)}`)] : null,
+    longo ? ["Mais longo", link(`#/matches/${encodeURIComponent(longo.id)}`, `${longo.teamA?.score}-${longo.teamB?.score}, ${longo.rounds} rounds`)] : null,
+    lider && seguidas > 1 ? ["Vitórias seguidas", link(`#/teams/${encodeURIComponent(lider)}`, `${team ? "" : `${mapaNomeDaEquipe(lider)}, `}${seguidas}`)] : null,
+  ].filter(Boolean);
+  if (!linhas.length) return "";
+  return `<section class="vp-resumo-bloco"><h3>Recordes</h3><dl class="vp-ficha vp-mp-recordes">${linhas.map(([rotulo, valor]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd>${valor}</dd></div>`).join("")}</dl></section>`;
+}
+
+function mapaGeralAba(map, jogos, filtro) {
+  if (!jogos.length) return mapaVazio();
+  const team = filtro.equipe ? { id: filtro.equipe } : null;
+  const soma = mapaSoma(jogos, team?.id);
+  return `
+    <section class="vp-eq-bloco vp-est vp-mp-geral">
+      <div class="vp-est-lista vp-mp-blocos">
+        ${mapaLadosBloco(soma, team)}
+        ${mapaSitesBloco(soma)}
+        ${mapaPlacaresBloco(jogos, team)}
+        ${mapaMesesBloco(map, filtro)}
+      </div>
+      <aside class="vp-resumo" aria-label="Informações do mapa">
+        ${mapaInformacoes(soma, jogos)}
+        ${mapaRecordes(jogos, team)}
+      </aside>
+    </section>
+  `;
+}
+
+// ---- aba Equipes ----
+function mapaEquipeLinhas(jogos) {
+  const porEquipe = new Map();
+  jogos.forEach((jogo) => [jogo.match.teamA?.id, jogo.match.teamB?.id].forEach((id) => {
+    if (!id) return;
+    if (!porEquipe.has(id)) porEquipe.set(id, []);
+    porEquipe.get(id).push(jogo);
+  }));
+  const sequencias = mapaSequencias(jogos);
+  return [...porEquipe.entries()].map(([id, lista]) => {
+    const soma = mapaSoma(lista, id);
+    return { id, name: mapaNomeDaEquipe(id), soma, lados: mapaLados(soma, true), seguidas: sequencias.get(id) || 0 };
+  });
+}
+
+function mapaHrefDaEquipe(teamId) {
+  return `#/maps/${encodeURIComponent(route().id || "")}${mapaQueryDoFiltro(mapaFiltro(), { equipe: teamId })}`;
+}
+
+function mapaEquipeColunas() {
+  const numero = (texto, tom) => (row) => `<td class="numeric${tom ? ` ${escapeHtml(tom(row))}` : ""}">${escapeHtml(texto(row))}</td>`;
+  const coluna = (key, label, value, texto, tom) => ({ key, label, value, texto, celula: numero(texto, tom), curta: true });
+  return [
+    {
+      key: "team", label: "Equipe", value: (row) => row.name, type: "text", direction: "asc", curta: true,
+      celula: (row) => `<td><a class="tournament-stats-team-cell" href="${mapaHrefDaEquipe(row.id)}">${teamLogo(row.id, "tournament-stat-logo")}<span><strong>${escapeHtml(row.name)}</strong></span></a></td>`,
+    },
+    coluna("mapas", "Mapas", (row) => row.soma.mapas, (row) => String(row.soma.mapas)),
+    coluna("vd", "V-D", (row) => row.soma.vitorias - row.soma.derrotas, (row) => `${row.soma.vitorias}-${row.soma.derrotas}`),
+    coluna("winrate", "Win%", (row) => row.soma.vitorias / Math.max(1, row.soma.mapas), (row) => `${taxaInteira(row.soma.vitorias, row.soma.mapas)}%`),
+    coluna("ataque", "Ataque", (row) => row.lados.ataque, (row) => `${row.lados.ataque}%`),
+    coluna("defesa", "Defesa", (row) => row.lados.defesa, (row) => `${row.lados.defesa}%`),
+    coluna("pistol", "Pistol", (row) => row.soma.pistolWins / Math.max(1, row.soma.pistolRounds), (row) => `${taxaInteira(row.soma.pistolWins, row.soma.pistolRounds)}%`),
+    coluna("retakes", "Retakes", (row) => row.soma.retakes / Math.max(1, row.soma.plantsAgainst), (row) => `${taxaInteira(row.soma.retakes, row.soma.plantsAgainst)}%`),
+    coluna("saldo", "Saldo", (row) => mapaSaldo(row.soma), (row) => signed(mapaSaldo(row.soma)), (row) => signedTone(mapaSaldo(row.soma))),
+    coluna("seguidas", "Seguidas", (row) => row.seguidas, (row) => String(row.seguidas)),
+    coluna("ultimo", "Último jogo", (row) => row.soma.ultimo, (row) => dataCurta(row.soma.ultimo)),
+  ];
+}
+
+function mapaEquipeOrdem(a, b) {
+  return b.soma.mapas - a.soma.mapas || b.soma.vitorias - a.soma.vitorias || a.name.localeCompare(b.name, "pt-BR");
+}
+
+// O slider de minimo e o dos campeonatos: o numero acompanha o arraste e a lista so
+// refaz ao soltar. O minimo acompanha o teto para a lista nunca zerar.
+function mapaMinimo(rotulo, chave, maximo, minimo) {
+  return `
+    <div class="vp-est-filtros">
+      <label class="vp-est-rounds" style="--cheio:${maximo ? (minimo / maximo) * 100 : 0}%">
+        <span>${escapeHtml(rotulo)}</span>
+        <input type="range" min="0" max="${maximo}" step="1" value="${minimo}" data-eq-filtro="${chave}" data-eq-rounds>
+        <b data-est-rounds-valor>${minimo}</b>
+      </label>
+    </div>
+  `;
+}
+
+// Destaques entre quem jogou ao menos o minimo escolhido, ou, sem minimo, um quinto
+// dos mapas de quem mais jogou: um 1-0 nao vira melhor aproveitamento.
+function mapaPiso(minimo, maximo) {
+  return minimo || Math.max(1, Math.ceil(maximo * 0.2));
+}
+
+function mapaEquipeDestaques(linhas, piso) {
+  const elegiveis = linhas.filter((linha) => linha.soma.mapas >= piso);
+  const melhor = (lista, valor) => lista.reduce((topo, linha) => (!topo || valor(linha) > valor(topo) ? linha : topo), null);
+  const itens = [
+    ["Mais mapas", melhor(linhas, (linha) => linha.soma.mapas + linha.soma.vitorias / 1e4), (linha) => `${linha.soma.mapas}`],
+    ["Aproveitamento", melhor(elegiveis, (linha) => linha.soma.vitorias / linha.soma.mapas + linha.soma.mapas / 1e6), (linha) => `${taxaInteira(linha.soma.vitorias, linha.soma.mapas)}%, ${linha.soma.vitorias}-${linha.soma.derrotas}`],
+    ["Vitórias seguidas", melhor(linhas, (linha) => linha.seguidas + linha.soma.mapas / 1e6), (linha) => `${linha.seguidas}`],
+    ["Ataque", melhor(elegiveis, (linha) => linha.lados.ataque + linha.soma.mapas / 1e6), (linha) => `${linha.lados.ataque}%`],
+    ["Defesa", melhor(elegiveis, (linha) => linha.lados.defesa + linha.soma.mapas / 1e6), (linha) => `${linha.lados.defesa}%`],
+    ["Pistol", melhor(elegiveis, (linha) => linha.soma.pistolWins / Math.max(1, linha.soma.pistolRounds) + linha.soma.mapas / 1e6), (linha) => `${taxaInteira(linha.soma.pistolWins, linha.soma.pistolRounds)}%`],
+  ].filter(([, linha]) => linha);
+  return `
+    <aside class="vp-resumo" aria-label="Destaques das equipes">
+      <section class="vp-resumo-bloco">
+        <h3>Destaques <span>${escapeHtml(`a partir de ${piso} ${piso === 1 ? "mapa" : "mapas"}`)}</span></h3>
+        <dl class="vp-ficha vp-mp-destaques">
+          ${itens.map(([rotulo, linha, texto]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd><a href="${mapaHrefDaEquipe(linha.id)}">${teamLogo(linha.id, "tiny")}<span>${escapeHtml(linha.name)}</span></a><b>${escapeHtml(texto(linha))}</b></dd></div>`).join("")}
+        </dl>
+      </section>
+    </aside>
+  `;
+}
+
+function mapaEquipesAba(jogos) {
+  if (!jogos.length) return mapaVazio();
+  const todas = mapaEquipeLinhas(jogos);
+  const maximo = Math.max(0, ...todas.map((linha) => linha.soma.mapas));
+  const minimo = Math.min(Number.parseInt(routeQuery().get("minimo") || "0", 10) || 0, maximo);
+  const linhas = todas.filter((linha) => linha.soma.mapas >= minimo);
+  return `
+    <section class="vp-eq-bloco vp-est vp-mp-equipes">
+      <div class="vp-est-lista">
+        ${tournamentEstTabela(null, { table: "mapteams", titulo: "Equipes", descricao: `${linhas.length} ${linhas.length === 1 ? "equipe" : "equipes"}`, antes: mapaMinimo("Mapas mínimos", "minimo", maximo, minimo), vazio: "Nenhuma equipe com esse mínimo.", rows: linhas, columns: mapaEquipeColunas(), fallback: mapaEquipeOrdem, chave: "pagina-equipes", porPagina: 20 })}
+      </div>
+      ${linhas.length ? mapaEquipeDestaques(linhas, mapaPiso(minimo, maximo)) : ""}
+    </section>
+  `;
+}
+
+// ---- aba Jogadores ----
+function mapaComJogadores(jogos, teamId = "") {
+  return jogos
+    .map(({ match }) => match)
+    .filter((match) => Array.isArray(match.players) && match.players.length)
+    .map((match) => (teamId ? { ...match, players: match.players.filter((player) => player.teamId === teamId) } : match));
+}
+
+function mapaJogadoresAba(jogos, filtro) {
+  const todos = aggregateMatchPlayers(mapaComJogadores(jogos, filtro.equipe)).filter((player) => Number(player.rounds || 0) > 0).sort(tournamentPlayerStatSort);
+  if (!todos.length) return mapaVazio();
+  const maximo = todos.reduce((maior, player) => Math.max(maior, Number(player.rounds || 0)), 0);
+  const minimo = Math.min(Number.parseInt(routeQuery().get("rounds") || "0", 10) || 0, maximo);
+  const jogadores = todos.filter((player) => Number(player.rounds || 0) >= minimo);
+  const piso = mapaPiso(minimo, maximo);
+  const lideres = jogadores.filter((player) => Number(player.rounds || 0) >= piso);
+  return `
+    <section class="vp-eq-bloco vp-est">
+      <div class="vp-est-lista">
+        ${tournamentEstTabela(null, { table: "players", titulo: "Jogadores", descricao: `${jogadores.length} ${jogadores.length === 1 ? "jogador" : "jogadores"}`, antes: mapaMinimo("Rounds mínimos", "rounds", maximo, minimo), vazio: "Nenhum jogador com esse mínimo.", rows: jogadores, columns: tournamentPlayerStatColumns(), fallback: tournamentPlayerStatSort, chave: "pagina", porPagina: 20, detalhe: true })}
+      </div>
+      ${lideres.length ? tournamentEstLideres(lideres, "Líderes do mapa") : ""}
+    </section>
+  `;
+}
+
+// ---- aba Agentes ----
+function mapaAgentesAba(jogos, filtro) {
+  const mapas = mapaComJogadores(jogos);
+  let agentes = tournamentAgentRows(mapas, filtro.equipe);
+  if (!agentes.length) return mapaVazio();
+  // Com uma equipe so, o espelho nao existe: valem todos os mapas dela, como na equipe.
+  if (filtro.equipe) agentes = agentes.map((row) => ({ ...row, nonMirroredPicks: row.picks, nonMirroredWins: row.mapWins, nonMirroredLosses: row.mapLosses, winRateNM: pctValue(row.mapWins, row.picks) }));
+  const ativoId = routeQuery().get("agente") || "";
+  const todas = tournamentCompositionRows(mapas, filtro.equipe);
+  const ativo = agentes.find((row) => row.id === ativoId) || null;
+  const composicoes = ativo ? todas.filter((row) => row.agents.some((agent) => (agent.slug || agent.name) === ativo.id)) : todas;
+  return `
+    <section class="vp-eq-bloco vp-est vp-ag-aba">
+      <div class="vp-est-lista">
+        ${tournamentEstTabela(null, { table: "agents", titulo: "Agentes", descricao: `${agentes.length} agentes`, rows: agentes, columns: tournamentAgenteColunas(ativo ? [ativo.id] : []), fallback: tournamentAgentStatSort, chave: "pagina-agentes", porPagina: 10, detalhe: true })}
+        ${tournamentEstTabela(null, { table: "compositions", titulo: "Composições", descricao: ativo ? `Só as que usaram ${ativo.name}` : `${todas.length} composições`, vazio: "Nenhuma composição com esse agente.", rows: composicoes, columns: tournamentComposicaoColunas(), fallback: tournamentCompositionStatSort, chave: "pagina-comps", porPagina: 10, detalhe: true })}
+      </div>
+      ${tournamentAgenteResumo(ativo || agentes[0], Boolean(ativo), todas)}
+    </section>
+  `;
+}
+
+// ---- aba Partidas: uma linha por mapa, com o placar daquele mapa ----
+function mapaJogoLinha({ match, series }, teamId) {
+  const [a, b] = teamId && match.teamB?.id === teamId ? [match.teamB, match.teamA] : [match.teamA, match.teamB];
+  const event = mapaEventoDaSerie(series);
+  const lado = (time) => `<span class="vp-jl-rival${match.winnerId && match.winnerId !== time?.id ? " vp-mp-perdeu" : ""}">${teamLogo(time?.id)}<strong title="${escapeHtml(time?.name || "")}"><span class="nome-rolante">${escapeHtml(time?.name || mapaNomeDaEquipe(time?.id))}</span></strong></span>`;
+  const placar = teamId ? (match.winnerId === teamId ? " vp-jl-v" : match.loserId === teamId ? " vp-jl-d" : "") : "";
+  const patch = patchLabel(match.gameVersion);
+  return `
+    <a class="vp-jl vp-mp-jogo" href="#/matches/${encodeURIComponent(match.id)}">
+      <span class="vp-jl-data">${escapeHtml(formatDate(mapaQuandoDoJogo(match, series), "hour"))}</span>
+      ${lado(a)}
+      <span class="vp-jl-placar${placar}"><b>${escapeHtml(String(a?.score ?? "-"))}</b><i>:</i><b>${escapeHtml(String(b?.score ?? "-"))}</b></span>
+      ${lado(b)}
+      <span class="vp-mp-jogo-evento" title="${escapeHtml(event?.name || "")}">${event ? eventLogo(event, "tiny") : ""}<span class="nome-rolante">${escapeHtml(event?.name || "")}</span></span>
+      <span class="vp-mp-jogo-patch">${escapeHtml(patch !== "-" ? patch : "")}</span>
+    </a>
+  `;
+}
+
+function mapaPartidasAba(jogos, filtro) {
+  if (!jogos.length) return mapaVazio();
+  const ordenados = jogos.slice().sort((a, b) => mapaQuandoDoJogo(b.match, b.series) - mapaQuandoDoJogo(a.match, a.series));
+  const query = routeQuery();
+  const paginas = Math.max(1, Math.ceil(ordenados.length / MAPA_PARTIDAS_PAGINA));
+  const pagina = Math.min(paginas, Math.max(1, Number.parseInt(query.get("pagina") || "1", 10) || 1));
+  query.delete("pagina");
+  const trecho = ordenados.slice((pagina - 1) * MAPA_PARTIDAS_PAGINA, pagina * MAPA_PARTIDAS_PAGINA).map((jogo) => ({ ...jogo, sortAt: mapaQuandoDoJogo(jogo.match, jogo.series) }));
+  const dias = agruparPorDia(trecho).map((grupo) => `<p class="vp-dia">${escapeHtml(grupo.rotulo)}</p><div class="vp-jl-lista">${grupo.itens.map((jogo) => mapaJogoLinha(jogo, filtro.equipe)).join("")}</div>`).join("");
+  const porEvento = new Map();
+  jogos.forEach(({ series }) => porEvento.set(series.eventId, (porEvento.get(series.eventId) || 0) + 1));
+  const eventos = [...porEvento.entries()].map(([id, n]) => ({ event: cacheDosMapas.eventos.get(id), n })).filter((item) => item.event).sort((a, b) => b.n - a.n || a.event.name.localeCompare(b.event.name, "pt-BR"));
+  return `
+    <section class="vp-eq-bloco vp-est vp-mp-partidas">
+      <div class="vp-est-lista">
+        ${sectionHead("Partidas", `${ordenados.length} ${ordenados.length === 1 ? "mapa" : "mapas"}`)}
+        ${dias}
+        ${paginacaoDaLista(routePath().slice(2), pagina, paginas, query)}
+      </div>
+      <aside class="vp-resumo" aria-label="Campeonatos">
+        <section class="vp-resumo-bloco vp-mp-eventos">
+          <h3>Campeonatos <span>${eventos.length}</span></h3>
+          ${eventos.map(({ event, n }) => `<button type="button" data-eq-alterna="evento" data-valor="${escapeHtml(event.id)}" aria-pressed="${filtro.evento === event.id}">${eventLogo(event, "tiny")}<span>${escapeHtml(event.name)}</span><b>${n}</b></button>`).join("")}
+        </section>
+      </aside>
+    </section>
+  `;
+}
+
+function mapaAba(aba, map, jogos, filtro) {
+  if (aba === "equipes") return mapaEquipesAba(jogos);
+  if (aba === "jogadores") return mapaJogadoresAba(jogos, filtro);
+  if (aba === "agentes") return mapaAgentesAba(jogos, filtro);
+  if (aba === "partidas") return mapaPartidasAba(jogos, filtro);
+  return mapaGeralAba(map, jogos, filtro);
+}
+
+function renderMapDetail(id) {
+  const map = mapById(id);
+  if (!map) return renderNotFound("Mapa");
+  const filtro = mapaFiltro();
+  const jogos = mapaJogos(filtro, { mapId: map.id });
+  const total = mapaJogos(filtro).length;
+  const aba = MAPA_ABAS.includes(route().tab) ? route().tab : "geral";
+  const tabSlide = panelSlideSnapshot("map-tabs", { selector: ".team-tab-panel", scope: map.id, key: aba, order: MAPA_ABAS });
+  const query = mapaQueryDoFiltro(filtro);
+  Shell(`
+    <section class="team-page vp-mapa-pagina">
+      <div class="vp-capa-cabeca">
+        ${mapaCapa(map, jogos, total, filtro)}
+        <nav class="team-tabs" aria-label="Abas do mapa">
+          ${MAPA_ABAS.map((tab) => `<a class="team-tab ${aba === tab ? "active" : ""}"${aba === tab ? ` aria-current="page"` : ""} href="#/maps/${encodeURIComponent(map.id)}/${tab}${query}">${escapeHtml(MAPA_ABA_ROTULOS[tab])}</a>`).join("")}
+        </nav>
+      </div>
+      <div class="vp-est-filtros vp-mp-filtros">${mapaFiltroCampos(filtro, map.id)}${mapaLimpar(filtro)}</div>
+      <section class="team-tab-panel">
+        ${mapaAba(aba, map, jogos, filtro)}
+      </section>
+    </section>
+  `);
+  bindAbaDaEquipe(map.id, renderMapDetail);
+  bindMapas();
+  playPanelSlide(tabSlide);
+}
+
+// Um ouvinte para o painel e a pagina: os filtros, a ordem das faixas e os meses.
+// O resto da aba (ordenar tabela, minimo, agente, campeonato) e o da equipe.
+function bindMapas() {
+  const raiz = document.querySelector(".vp-mapas-painel, .vp-mapa-pagina");
+  if (!raiz) return;
+  const aplica = (mudanca, foco) => {
+    const query = routeQuery();
+    mudanca(query);
+    ["pagina", "pagina-equipes", "pagina-agentes", "pagina-comps"].forEach((chave) => query.delete(chave));
+    pushFilterState(routePath().slice(2), query, foco);
+  };
+  raiz.querySelectorAll("[data-mp-filtro]").forEach((campo) => {
+    campo.addEventListener("change", () => {
+      const chave = campo.dataset.mpFiltro;
+      aplica((query) => {
+        if (campo.value) query.set(chave, campo.value);
+        else query.delete(chave);
+      }, `[data-mp-filtro="${chave}"]`);
+    });
+  });
+  const leitura = raiz.querySelector("[data-mp-leitura]");
+  raiz.querySelectorAll("[data-mp-mes]").forEach((barra) => {
+    barra.addEventListener("mouseenter", () => leitura && (leitura.textContent = barra.dataset.rotulo));
+    barra.addEventListener("mouseleave", () => leitura && (leitura.textContent = leitura.dataset.padrao));
+  });
+  raiz.addEventListener("click", (event) => {
+    if (event.target.closest("[data-mp-limpar]")) {
+      aplica((query) => MAPA_FILTROS.forEach((chave) => query.delete(chave)), "[data-mp-filtro]");
+      return;
+    }
+    const ordem = event.target.closest("[data-mp-ordem]");
+    if (ordem) {
+      aplica((query) => {
+        if (ordem.dataset.mpOrdem === "mapas") query.delete("ordem");
+        else query.set("ordem", ordem.dataset.mpOrdem);
+      }, `[data-mp-ordem="${ordem.dataset.mpOrdem}"]`);
+      return;
+    }
+    const mes = event.target.closest("[data-mp-mes]");
+    if (mes) {
+      const { de, ate } = diasDoMes(Number(mes.dataset.mpMes));
+      aplica((query) => {
+        if (mes.getAttribute("aria-pressed") === "true") {
+          query.delete("de");
+          query.delete("ate");
+          return;
+        }
+        query.set("de", de);
+        query.set("ate", ate);
+        query.delete("ano");
+      }, `[data-mp-mes="${mes.dataset.mpMes}"]`);
+    }
+  });
 }
 
 // panelTitle e sectionHead devolvem a mesma peca do visual Placar: titulo

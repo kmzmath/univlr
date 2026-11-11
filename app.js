@@ -31936,9 +31936,32 @@ function openRankingRouteTeam(teamId) {
   root.querySelectorAll(".ranking-accordion-item.open").forEach((openItem) => setRankingAccordionItem(openItem, false));
   setRankingAccordionItem(item, true);
   trocarCartaoDoRanking();
-  window.requestAnimationFrame(() => {
-    item.scrollIntoView({ block: "center", behavior: "smooth" });
+  // Vindo do grafico do perfil, a rota muda e scrollToRouteTop mandava a pagina
+  // para o topo 10ms depois desta rolagem, que nunca chegava. Marcada aqui, ela
+  // vence: o topo vem antes, na hora, e a rolagem parte dele.
+  state.rolagemDaRota = item;
+  depoisDoSlide(() => {
+    if (state.rolagemDaRota !== item) return;
+    state.rolagemDaRota = null;
+    if (item.isConnected) item.scrollIntoView({ block: "center", behavior: "smooth" });
   });
+}
+
+// Durante o slide entre secoes o .main fica com a altura da pagina que saiu
+// (1495px vindo do perfil, para uma equipe a 2079px): rolar ali para no fundo
+// falso. Sem slide, basta o proximo quadro.
+function depoisDoSlide(fn) {
+  const panel = document.querySelector(".panel-sliding");
+  if (!panel) {
+    window.requestAnimationFrame(fn);
+    return;
+  }
+  const observer = new MutationObserver(() => {
+    if (panel.classList.contains("panel-sliding")) return;
+    observer.disconnect();
+    fn();
+  });
+  observer.observe(panel, { attributes: true, attributeFilter: ["class"] });
 }
 
 function setRankingAccordionItem(item, open) {
@@ -44676,6 +44699,10 @@ function currentRouteKey() {
 
 function scrollToRouteTop(routeChanged) {
   if (!routeChanged || typeof window.scrollTo !== "function") return;
+  if (state.rolagemDaRota?.isConnected) {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    return;
+  }
   window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
 }
 

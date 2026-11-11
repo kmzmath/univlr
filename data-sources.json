@@ -2292,6 +2292,33 @@
       ]
     },
     {
+      "id": "jums-2026",
+      "name": "JUMS 2026",
+      "organizer": "FMDU",
+      "source": "Histórico",
+      "sourceId": "",
+      "startAt": "2026-10-07T21:07:59",
+      "endAt": "2026-10-31T17:17:26",
+      "logo": "",
+      "folder": "campeonatos/JUMS 2026",
+      "files": [
+        "campeonatos/JUMS 2026/JUMS26_001_07-10-26_ufu_saints_13_x_0_unifei_calango_2024_ascent.json",
+        "campeonatos/JUMS 2026/JUMS26_002_08-10-26_brutal_esports_13_x_4_inatel_dois_lotus.json",
+        "campeonatos/JUMS 2026/JUMS26_003_08-10-26_inatel_13_x_10_inatel_dois_sunset.json",
+        "campeonatos/JUMS 2026/JUMS26_004_12-10-26_inatel_13_x_3_brutal_esports_split.json",
+        "campeonatos/JUMS 2026/JUMS26_005_12-10-26_ufu_saints_13_x_1_atletica_unifei_split.json",
+        "campeonatos/JUMS 2026/JUMS26_006_12-10-26_atletica_unifei_13_x_3_unifei_calango_2024_lotus.json",
+        "campeonatos/JUMS 2026/JUMS26_007_21-10-26_ufu_saints_13_x_0_ufmg_fenix_b_ascent.json",
+        "campeonatos/JUMS 2026/JUMS26_008_28-10-26_atletica_unifei_13_x_4_ufmg_fenix_b_sunset.json",
+        "campeonatos/JUMS 2026/JUMS26_009a_28-10-26_ufu_saints_13_x_9_brutal_esports_lotus.json",
+        "campeonatos/JUMS 2026/JUMS26_009b_28-10-26_ufu_saints_13_x_4_brutal_esports_abyss.json",
+        "campeonatos/JUMS 2026/JUMS26_010a_29-10-26_inatel_13_x_2_atletica_unifei_haven.json",
+        "campeonatos/JUMS 2026/JUMS26_010b_30-10-26_inatel_13_x_7_atletica_unifei_lotus.json",
+        "campeonatos/JUMS 2026/JUMS26_011a_31-10-26_ufu_saints_13_x_7_inatel_haven.json",
+        "campeonatos/JUMS 2026/JUMS26_011b_31-10-26_ufu_saints_13_x_1_inatel_split.json"
+      ]
+    },
+    {
       "id": "lbeu-2025-1-split-championship",
       "name": "LBEU 2025 - 1º Split - Championship",
       "organizer": "LigaGG",

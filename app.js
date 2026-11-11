@@ -20078,6 +20078,126 @@ const TOURNAMENT_OVERRIDES = {
       ],
     },
   },
+  "jums-2026": {
+    name: "JUMS 2026",
+    organizer: "FMDU",
+    prizePool: "-",
+    tier: "C",
+    type: "Online",
+    status: "Finalizado",
+    startAt: "2026-10-07T21:07:59",
+    endAt: "2026-10-31T17:17:26",
+    teamCount: 7,
+    format: {
+      summary: "Grupos + Playoffs",
+      details: [
+        "Grupo A com 4 equipes e Grupo B com 3, em turno único com jogos MD1",
+        "Os 2 primeiros de cada grupo avançam às semifinais, 1º de um grupo contra 2º do outro",
+        "Semifinais e final em MD3",
+      ],
+      standings: "Colocação oficial do campeonato",
+    },
+    teams: [
+      "ufu_saints",
+      "atletica_unifei",
+      "ufmg_fenix_b",
+      "unifei_calango_2024",
+      "inatel",
+      "brutal_esports",
+      "inatel_dois",
+    ],
+    placements: [
+      { range: "1", id: "ufu_saints" },
+      { range: "2", id: "inatel" },
+      { range: "3-4", id: "brutal_esports" },
+      { range: "3-4", id: "atletica_unifei" },
+      { range: "5-7", id: "ufmg_fenix_b" },
+      { range: "5-7", id: "unifei_calango_2024" },
+      { range: "5-7", id: "inatel_dois" },
+    ],
+    bracket: {
+      title: "Grupos + Playoffs",
+      regions: [
+        {
+          name: "Grupo A",
+          stage: "groups",
+          className: "group-stage",
+          columns: [
+            {
+              title: "Confrontos",
+              matches: [
+                { code: "Partida 1", bestOf: "MD1", a: "ufu_saints", scoreA: 13, b: "unifei_calango_2024", scoreB: 0, winner: "ufu_saints" },
+                { code: "Partida 5", bestOf: "MD1", a: "ufu_saints", scoreA: 13, b: "atletica_unifei", scoreB: 1, winner: "ufu_saints" },
+                { code: "Partida 6", bestOf: "MD1", a: "atletica_unifei", scoreA: 13, b: "unifei_calango_2024", scoreB: 3, winner: "atletica_unifei" },
+                { code: "Partida 7", bestOf: "MD1", a: "ufu_saints", scoreA: 13, b: "ufmg_fenix_b", scoreB: 0, winner: "ufu_saints" },
+                { code: "Partida 8", bestOf: "MD1", a: "atletica_unifei", scoreA: 13, b: "ufmg_fenix_b", scoreB: 4, winner: "atletica_unifei" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Grupo B",
+          stage: "groups",
+          className: "group-stage",
+          columns: [
+            {
+              title: "Confrontos",
+              matches: [
+                { code: "Partida 2", bestOf: "MD1", a: "brutal_esports", scoreA: 13, b: "inatel_dois", scoreB: 4, winner: "brutal_esports" },
+                { code: "Partida 3", bestOf: "MD1", a: "inatel", scoreA: 13, b: "inatel_dois", scoreB: 10, winner: "inatel" },
+                { code: "Partida 4", bestOf: "MD1", a: "inatel", scoreA: 13, b: "brutal_esports", scoreB: 3, winner: "inatel" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Chave principal",
+          stage: "playoffs",
+          className: "playoff-bracket",
+          layout: "linked",
+          columns: [
+            {
+              title: "Semifinais",
+              matches: [
+                { code: "Partida 9", label: "Semifinal", bestOf: "MD3", band: 0, a: "ufu_saints", scoreA: 2, b: "brutal_esports", scoreB: 0, winner: "ufu_saints" },
+                { code: "Partida 10", label: "Semifinal", bestOf: "MD3", band: 1, a: "inatel", scoreA: 2, b: "atletica_unifei", scoreB: 0, winner: "inatel" },
+              ],
+            },
+            {
+              title: "Final",
+              matches: [
+                { code: "Partida 11", label: "Final", bestOf: "MD3", band: 0.5, from: ["Partida 9", "Partida 10"], a: "ufu_saints", scoreA: 2, b: "inatel", scoreB: 0, winner: "ufu_saints" },
+              ],
+            },
+          ],
+          terminalColumn: false,
+        },
+      ],
+    },
+    swiss: {
+      seriesCount: 11,
+      standingsLabel: "Classificação final da fase de grupos",
+      groups: [
+        {
+          title: "Grupo A",
+          standings: [
+            { id: "ufu_saints", wins: 3, losses: 0 },
+            { id: "atletica_unifei", wins: 2, losses: 1 },
+            { id: "ufmg_fenix_b", wins: 0, losses: 2 },
+            { id: "unifei_calango_2024", wins: 0, losses: 2 },
+          ],
+        },
+        {
+          title: "Grupo B",
+          standings: [
+            { id: "inatel", wins: 2, losses: 0 },
+            { id: "brutal_esports", wins: 1, losses: 1 },
+            { id: "inatel_dois", wins: 0, losses: 2 },
+          ],
+        },
+      ],
+    },
+  },
   "rush-series-inclusivo-2": {
     organizer: "AcadArena",
     organizerLogo: "assets/organizers-logos/logo_AcadArena.png",

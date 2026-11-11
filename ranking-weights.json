@@ -583,6 +583,28 @@
         "5-6": 5
       }
     },
+    "jums-2026": {
+      "defaultPhase": "regular",
+      "phaseRules": [
+        {
+          "phase": "final",
+          "seriesCodeMin": 11
+        },
+        {
+          "phase": "playoffs",
+          "seriesCodeMin": 9
+        }
+      ],
+      "name": "JUMS 2026",
+      "teams": 7,
+      "endAt": "2026-10-31T17:17:26",
+      "placementPoints": {
+        "1": 10,
+        "2": 7,
+        "3-4": 4,
+        "5-7": 0
+      }
+    },
     "rush-series-inclusivo-2": {
       "defaultPhase": "regular",
       "phaseRules": [

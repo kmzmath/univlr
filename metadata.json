@@ -399,7 +399,28 @@
       "socials": {
         "instagram": ""
       },
-      "lineup": [],
+      "lineup": [
+        {
+          "slot": 1,
+          "name": "Texx7"
+        },
+        {
+          "slot": 2,
+          "name": "cury"
+        },
+        {
+          "slot": 3,
+          "name": "mikemike"
+        },
+        {
+          "slot": 4,
+          "name": "Hiro 00008"
+        },
+        {
+          "slot": 5,
+          "name": "Pedronsom"
+        }
+      ],
       "lineupRegistered": true
     },
     {
@@ -1174,6 +1195,10 @@
           "slot": 7,
           "name": "cailloou",
           "role": "titular"
+        },
+        {
+          "slot": 8,
+          "name": "camel azul"
         }
       ],
       "lineupRegistered": true
@@ -7111,7 +7136,37 @@
       "socials": {
         "instagram": ""
       },
-      "lineup": []
+      "lineup": [
+        {
+          "slot": 1,
+          "name": "Jam"
+        },
+        {
+          "slot": 2,
+          "name": "anaozito"
+        },
+        {
+          "slot": 3,
+          "name": "Coquinha gelada"
+        },
+        {
+          "slot": 4,
+          "name": "InFiniT1L"
+        },
+        {
+          "slot": 5,
+          "name": "Loss perdi"
+        },
+        {
+          "slot": 6,
+          "name": "Luizin"
+        },
+        {
+          "slot": 7,
+          "name": "Gaguinho"
+        }
+      ],
+      "lineupRegistered": true
     },
     {
       "id": "unifesp_erex",
@@ -27778,6 +27833,175 @@
         "私はLIMAMEIです#HAHAH"
       ],
       "photo": ""
+    },
+    {
+      "id": "2YLUwbBHDVqdD9BOJ3MAm0hmWfc-DsBwbtvwMpt4E0ELNJ7gNfeGjP5g5zg3Zz4bUCol4Y5W8qZuLQ",
+      "name": "Texx7",
+      "puuid": "2YLUwbBHDVqdD9BOJ3MAm0hmWfc-DsBwbtvwMpt4E0ELNJ7gNfeGjP5g5zg3Zz4bUCol4Y5W8qZuLQ",
+      "currentTeam": "atletica_unifei",
+      "teamHistory": [
+        "atletica_unifei"
+      ],
+      "nickHistory": [
+        "Texx7#UCB"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "b68EytI4xFtZhk2IL4ui5uVgJZLYe6AkH1eFNdbA4CJuU4JlavCL0mKYzDlnh9s2zYcb4xXWm8iV3A",
+      "name": "cury",
+      "puuid": "b68EytI4xFtZhk2IL4ui5uVgJZLYe6AkH1eFNdbA4CJuU4JlavCL0mKYzDlnh9s2zYcb4xXWm8iV3A",
+      "currentTeam": "atletica_unifei",
+      "teamHistory": [
+        "atletica_unifei"
+      ],
+      "nickHistory": [
+        "cury#karma"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "PLvpVBbYnpx95OUs0IVC_tyVJNMI4mIDIRHonAOaHRzRYfuwnVSqV1bQRpekenPRywxRzSYdKiZSKw",
+      "name": "mikemike",
+      "puuid": "PLvpVBbYnpx95OUs0IVC_tyVJNMI4mIDIRHonAOaHRzRYfuwnVSqV1bQRpekenPRywxRzSYdKiZSKw",
+      "currentTeam": "atletica_unifei",
+      "teamHistory": [
+        "atletica_unifei"
+      ],
+      "nickHistory": [
+        "mikemike#treme"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "5sZMaslGLtU-j4YJgrccC8gn9-LP0VhkCAYUo7Ycf01MZizkiLygo_yI8jdd8wqtIVcPEQI3BXVUOw",
+      "name": "Hiro 00008",
+      "puuid": "5sZMaslGLtU-j4YJgrccC8gn9-LP0VhkCAYUo7Ycf01MZizkiLygo_yI8jdd8wqtIVcPEQI3BXVUOw",
+      "currentTeam": "atletica_unifei",
+      "teamHistory": [
+        "atletica_unifei"
+      ],
+      "nickHistory": [
+        "Hiro#00008"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "PRz_l8gAxX_Ic_JAhYqZf0GEBn2Z9DjrqNsi5ZjfuNPOXPmNFsvdo7Z58L4nw5eTyWEON84-7S2Ilg",
+      "name": "Pedronsom",
+      "puuid": "PRz_l8gAxX_Ic_JAhYqZf0GEBn2Z9DjrqNsi5ZjfuNPOXPmNFsvdo7Z58L4nw5eTyWEON84-7S2Ilg",
+      "currentTeam": "atletica_unifei",
+      "teamHistory": [
+        "atletica_unifei"
+      ],
+      "nickHistory": [
+        "Pedronsom#5313"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "5-LOYcL041ntEq15D1NwDRomnqFUOaN2dTRZ68arh4qXwpV9RtiqIvx1UOXcBFMoxaAUWiGQZEMagw",
+      "name": "Jam",
+      "puuid": "5-LOYcL041ntEq15D1NwDRomnqFUOaN2dTRZ68arh4qXwpV9RtiqIvx1UOXcBFMoxaAUWiGQZEMagw",
+      "currentTeam": "unifei_calango_2024",
+      "teamHistory": [
+        "unifei_calango_2024"
+      ],
+      "nickHistory": [
+        "Jam#amand"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "pwZucz3dTD1FJUo-B-SEg1YvOqfWpgvmaCmLhWYa4l0UjZ40J3zD3GJvxknPJyyJ4hrZR1-ZONT6IA",
+      "name": "anaozito",
+      "puuid": "pwZucz3dTD1FJUo-B-SEg1YvOqfWpgvmaCmLhWYa4l0UjZ40J3zD3GJvxknPJyyJ4hrZR1-ZONT6IA",
+      "currentTeam": "unifei_calango_2024",
+      "teamHistory": [
+        "unifei_calango_2024"
+      ],
+      "nickHistory": [
+        "anaozito#0000"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "Mf_8msyV42zLO2r2wtXimpKhZYmxVfkWZPYSVLeZea4rS_kwb6dT_Bwh7WKxAS5XhuOBUDu7k6wTzA",
+      "name": "Coquinha gelada",
+      "puuid": "Mf_8msyV42zLO2r2wtXimpKhZYmxVfkWZPYSVLeZea4rS_kwb6dT_Bwh7WKxAS5XhuOBUDu7k6wTzA",
+      "currentTeam": "unifei_calango_2024",
+      "teamHistory": [
+        "unifei_calango_2024"
+      ],
+      "nickHistory": [
+        "Coquinha gelada#jade"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "DHC43PG5vYxS_oLMRDZlrQFWWe1FEs_Y04st3sTp5xGkOBpFXErUxzMyKtI3-TBgadWxCcn1vQqh6g",
+      "name": "InFiniT1L",
+      "puuid": "DHC43PG5vYxS_oLMRDZlrQFWWe1FEs_Y04st3sTp5xGkOBpFXErUxzMyKtI3-TBgadWxCcn1vQqh6g",
+      "currentTeam": "unifei_calango_2024",
+      "teamHistory": [
+        "unifei_calango_2024"
+      ],
+      "nickHistory": [
+        "InFiniT1L#InF"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "n2dmGjdDTV2aMRW5f1K2nFcJAW8s0DEHXfh9avxkUVbGuYLVX0DVQuT2CHYoJOgpJaLf6XekPTEG0Q",
+      "name": "Loss perdi",
+      "puuid": "n2dmGjdDTV2aMRW5f1K2nFcJAW8s0DEHXfh9avxkUVbGuYLVX0DVQuT2CHYoJOgpJaLf6XekPTEG0Q",
+      "currentTeam": "unifei_calango_2024",
+      "teamHistory": [
+        "unifei_calango_2024"
+      ],
+      "nickHistory": [
+        "Loss#perdi"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "V1jj3xp2S1ir5uyQVIr6qabuMcY1fUGzjZyPF2Nb9hX_xdD70kw9ODv1RIKaG8Vhe3a_ALHYtmdR_Q",
+      "name": "Luizin",
+      "puuid": "V1jj3xp2S1ir5uyQVIr6qabuMcY1fUGzjZyPF2Nb9hX_xdD70kw9ODv1RIKaG8Vhe3a_ALHYtmdR_Q",
+      "currentTeam": "unifei_calango_2024",
+      "teamHistory": [
+        "unifei_calango_2024"
+      ],
+      "nickHistory": [
+        "Luizin#2803"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "IaFtuTRgL-Nro_QWeveolZzarVTHo3Q6PnTXNvUy6VTPF9fvWMx9-n7Jt_PoPi51OW5xEPRON2ko2w",
+      "name": "Gaguinho",
+      "puuid": "IaFtuTRgL-Nro_QWeveolZzarVTHo3Q6PnTXNvUy6VTPF9fvWMx9-n7Jt_PoPi51OW5xEPRON2ko2w",
+      "currentTeam": "unifei_calango_2024",
+      "teamHistory": [
+        "unifei_calango_2024"
+      ],
+      "nickHistory": [
+        "Gaguinho#AKS"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "3uDB1ENf4n-iIiLMsTDEQ5BQu9wOczMacI7KXTU6ip4Tibk_nbOcGJgc_nbGo4eoQbh7IOYWWDV79g",
+      "name": "camel azul",
+      "puuid": "3uDB1ENf4n-iIiLMsTDEQ5BQu9wOczMacI7KXTU6ip4Tibk_nbOcGJgc_nbGo4eoQbh7IOYWWDV79g",
+      "currentTeam": "brutal_esports",
+      "teamHistory": [
+        "brutal_esports"
+      ],
+      "nickHistory": [
+        "camel azul#drey"
+      ],
+      "photo": ""
     }
   ],
   "states": [
@@ -28268,200 +28492,200 @@
       "state": "1v1",
       "allies": 1,
       "enemies": 1,
-      "occurrences": "17922",
-      "wins": "8961",
+      "occurrences": "17992",
+      "wins": "8996",
       "winRate": 0.5
     },
     {
       "state": "1v2",
       "allies": 1,
       "enemies": 2,
-      "occurrences": "22228",
-      "wins": "3562",
-      "winRate": 0.1602483354327875
+      "occurrences": "22321",
+      "wins": "3574",
+      "winRate": 0.160118274270866
     },
     {
       "state": "1v3",
       "allies": 1,
       "enemies": 3,
-      "occurrences": "23236",
-      "wins": "870",
-      "winRate": 0.03744190049922534
+      "occurrences": "23333",
+      "wins": "874",
+      "winRate": 0.0374576779668281
     },
     {
       "state": "1v4",
       "allies": 1,
       "enemies": 4,
-      "occurrences": "18416",
+      "occurrences": "18506",
       "wins": "150",
-      "winRate": 0.00814509122502172
+      "winRate": 0.00810547930400951
     },
     {
       "state": "1v5",
       "allies": 1,
       "enemies": 5,
-      "occurrences": "8514",
+      "occurrences": "8553",
       "wins": "18",
-      "winRate": 0.002114164904862579
+      "winRate": 0.002104524728165556
     },
     {
       "state": "2v1",
       "allies": 2,
       "enemies": 1,
-      "occurrences": "22228",
-      "wins": "18666",
-      "winRate": 0.8397516645672125
+      "occurrences": "22321",
+      "wins": "18747",
+      "winRate": 0.839881725729134
     },
     {
       "state": "2v2",
       "allies": 2,
       "enemies": 2,
-      "occurrences": "27058",
-      "wins": "13529",
+      "occurrences": "27168",
+      "wins": "13584",
       "winRate": 0.5
     },
     {
       "state": "2v3",
       "allies": 2,
       "enemies": 3,
-      "occurrences": "29974",
-      "wins": "6446",
-      "winRate": 0.2150530459731768
+      "occurrences": "30095",
+      "wins": "6473",
+      "winRate": 0.2150855623857784
     },
     {
       "state": "2v4",
       "allies": 2,
       "enemies": 4,
-      "occurrences": "27025",
-      "wins": "2055",
-      "winRate": 0.07604070305272896
+      "occurrences": "27144",
+      "wins": "2065",
+      "winRate": 0.07607574417919245
     },
     {
       "state": "2v5",
       "allies": 2,
       "enemies": 5,
-      "occurrences": "15135",
-      "wins": "348",
-      "winRate": 0.02299306243805748
+      "occurrences": "15201",
+      "wins": "351",
+      "winRate": 0.02309058614564831
     },
     {
       "state": "3v1",
       "allies": 3,
       "enemies": 1,
-      "occurrences": "23236",
-      "wins": "22366",
-      "winRate": 0.9625580995007746
+      "occurrences": "23333",
+      "wins": "22459",
+      "winRate": 0.9625423220331719
     },
     {
       "state": "3v2",
       "allies": 3,
       "enemies": 2,
-      "occurrences": "29974",
-      "wins": "23528",
-      "winRate": 0.7849469540268232
+      "occurrences": "30095",
+      "wins": "23622",
+      "winRate": 0.7849144376142216
     },
     {
       "state": "3v3",
       "allies": 3,
       "enemies": 3,
-      "occurrences": "36624",
-      "wins": "18312",
+      "occurrences": "36778",
+      "wins": "18389",
       "winRate": 0.5
     },
     {
       "state": "3v4",
       "allies": 3,
       "enemies": 4,
-      "occurrences": "38934",
-      "wins": "10052",
-      "winRate": 0.2581805106076951
+      "occurrences": "39104",
+      "wins": "10096",
+      "winRate": 0.2581833060556465
     },
     {
       "state": "3v5",
       "allies": 3,
       "enemies": 5,
-      "occurrences": "27982",
-      "wins": "3098",
-      "winRate": 0.1107140304481452
+      "occurrences": "28100",
+      "wins": "3112",
+      "winRate": 0.1107473309608541
     },
     {
       "state": "4v1",
       "allies": 4,
       "enemies": 1,
-      "occurrences": "18416",
-      "wins": "18266",
-      "winRate": 0.9918549087749783
+      "occurrences": "18506",
+      "wins": "18356",
+      "winRate": 0.9918945206959905
     },
     {
       "state": "4v2",
       "allies": 4,
       "enemies": 2,
-      "occurrences": "27025",
-      "wins": "24970",
-      "winRate": 0.9239592969472711
+      "occurrences": "27144",
+      "wins": "25079",
+      "winRate": 0.9239242558208075
     },
     {
       "state": "4v3",
       "allies": 4,
       "enemies": 3,
-      "occurrences": "38934",
-      "wins": "28882",
-      "winRate": 0.7418194893923049
+      "occurrences": "39104",
+      "wins": "29008",
+      "winRate": 0.7418166939443536
     },
     {
       "state": "4v4",
       "allies": 4,
       "enemies": 4,
-      "occurrences": "52374",
-      "wins": "26187",
+      "occurrences": "52612",
+      "wins": "26306",
       "winRate": 0.5
     },
     {
       "state": "4v5",
       "allies": 4,
       "enemies": 5,
-      "occurrences": "54175",
-      "wins": "15448",
-      "winRate": 0.2851499769266267
+      "occurrences": "54412",
+      "wins": "15512",
+      "winRate": 0.2850841726089833
     },
     {
       "state": "5v1",
       "allies": 5,
       "enemies": 1,
-      "occurrences": "8514",
-      "wins": "8496",
-      "winRate": 0.9978858350951374
+      "occurrences": "8553",
+      "wins": "8535",
+      "winRate": 0.9978954752718344
     },
     {
       "state": "5v2",
       "allies": 5,
       "enemies": 2,
-      "occurrences": "15135",
-      "wins": "14787",
-      "winRate": 0.9770069375619426
+      "occurrences": "15201",
+      "wins": "14850",
+      "winRate": 0.9769094138543517
     },
     {
       "state": "5v3",
       "allies": 5,
       "enemies": 3,
-      "occurrences": "27982",
-      "wins": "24884",
-      "winRate": 0.8892859695518548
+      "occurrences": "28100",
+      "wins": "24988",
+      "winRate": 0.8892526690391459
     },
     {
       "state": "5v4",
       "allies": 5,
       "enemies": 4,
-      "occurrences": "54175",
-      "wins": "38727",
-      "winRate": 0.7148500230733733
+      "occurrences": "54412",
+      "wins": "38900",
+      "winRate": 0.7149158273910167
     },
     {
       "state": "5v5",
       "allies": 5,
       "enemies": 5,
-      "occurrences": "108370",
-      "wins": "54185",
+      "occurrences": "108844",
+      "wins": "54422",
       "winRate": 0.5
     }
   ],

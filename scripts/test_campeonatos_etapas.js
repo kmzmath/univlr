@@ -211,14 +211,14 @@ const renderiza = (hash) => {
 // ---------------------------------------------------------------- Tarefa 3
 {
   const lista = context.listaDeCampeonatos(context.sortedEvents("end"));
-  assert.strictEqual(lista.length, 28, "28 linhas em Eventos");
+  assert.strictEqual(lista.length, 29, "29 linhas em Eventos");
   context.location.hash = "#/events";
   vm.runInContext("state.eventFilters = {}; state.eventTableSort = {};", context);
   appElement.innerHTML = "";
   context.renderEventsPage();
   const pagina = appElement.innerHTML;
-  assert((pagina.match(/class="event-row event-row-rich/g) || []).length === 28, "28 linhas desenhadas");
-  assert(pagina.includes("28 campeonatos"), "a contagem diz 28 campeonatos");
+  assert((pagina.match(/class="event-row event-row-rich/g) || []).length === 29, "29 linhas desenhadas");
+  assert(pagina.includes("29 campeonatos"), "a contagem diz 29 campeonatos");
   const linhaUnivava = pagina.split('href="#/events/univava"')[1].split("</div>")[0];
   assert.strictEqual((linhaUnivava.match(/href="#\/events\/univava-/g) || []).length, 6, "as 6 etapas escritas na linha do UNIVAVA");
   assert(linhaUnivava.includes('class="event-cell event-cell-etapas" data-rotulo="Etapas"'), "as etapas ficam na coluna do formato");

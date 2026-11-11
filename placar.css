@@ -4497,6 +4497,12 @@ a.vp-eq-txt:focus-visible strong {
   flex: 0 1 auto;
 }
 
+/* Grupo com menos jogos nao estica ate a altura do vizinho: esticado, o titulo
+   ganhava a sobra e os jogos desciam (JUMS 2026, grupos de 4 e de 3). */
+.vp-chaves .tournament-bracket-stage-body > .tournament-bracket-region.group-stage {
+  align-self: flex-start;
+}
+
 /* Cada partida tem a mesma largura em chave, grupo e rodada: nome que nao couber vai
    e volta (.nome-rolante), para o placar nao ficar longe do nome. So encolhe quando
    as colunas nao cabem na largura da pagina. */

@@ -34274,9 +34274,17 @@ function tournamentBracketEntries(event, matches) {
   return entries;
 }
 
+// Resultado que so existe na chave, sem arquivo de partida. Sem isto o card cai
+// na busca pelo par de equipes e abre outra serie delas no mesmo evento (a grande
+// final da Alianca 2024.2, MD1 sem estatisticas, abria a semifinal 2x0).
+// "Cancelada" fica de fora: a Partida 20 da Alianca 2023.2 foi cancelada no 1-1
+// e os dois mapas existem.
+const BRACKET_STATUS_SEM_ARQUIVO = new Set(["W.O.", "Duplo W.O.", "Provável W.O.", "Sem estatísticas", "Placar não registrado", "Bye"]);
+
 function tournamentSeriesForBracketMatch(matches, match) {
   // Avanços diretos não têm partida disputada para abrir nas estatísticas.
   if (!match.a || !match.b) return null;
+  if (BRACKET_STATUS_SEM_ARQUIVO.has(match.status)) return null;
   const codeNumber = tournamentMatchCodeNumber(match.code);
   // Chaves com referência explícita não podem reutilizar outro encontro do par.
   const candidates = match.seriesCode == null

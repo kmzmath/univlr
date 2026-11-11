@@ -40106,13 +40106,14 @@ function playerMovimentoLinha({ tipo, data, linha }) {
 
 function playerPartidasFiltro() {
   const query = routeQuery();
-  return { evento: query.get("evento") || "", equipe: query.get("equipe") || "", mapa: query.get("mapa") || "", resultado: query.get("resultado") || "" };
+  return { evento: query.get("evento") || "", equipe: query.get("equipe") || "", rival: query.get("rival") || "", mapa: query.get("mapa") || "", resultado: query.get("resultado") || "" };
 }
 
 // Cada filtro ignora a si mesmo na hora de contar a propria faceta, como em Partidas.
 function playerJogoPassa(jogo, filtro, ignorar = "") {
   if (ignorar !== "evento" && filtro.evento && jogo.event.id !== filtro.evento) return false;
   if (ignorar !== "equipe" && filtro.equipe && jogo.nossa !== filtro.equipe) return false;
+  if (ignorar !== "rival" && filtro.rival && teamJogoRival(jogo, { id: jogo.nossa }) !== filtro.rival) return false;
   if (ignorar !== "mapa" && filtro.mapa && !jogo.series.maps.some((match) => match.mapId === filtro.mapa)) return false;
   if (ignorar !== "resultado" && filtro.resultado === "v" && jogo.vencedor !== jogo.nossa) return false;
   if (ignorar !== "resultado" && filtro.resultado === "d" && jogo.perdedor !== jogo.nossa) return false;
@@ -40147,8 +40148,11 @@ function playerPartidasFiltros(player, jogos, filtro) {
   const equipes = [...new Set(jogos.filter((jogo) => playerJogoPassa(jogo, filtro, "equipe")).map((jogo) => jogo.nossa).filter(Boolean))]
     .map((id) => ({ id, nome: teamById(id)?.name || displayTeamName(id) }))
     .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+  const rivais = [...new Set(jogos.filter((jogo) => playerJogoPassa(jogo, filtro, "rival")).map((jogo) => teamJogoRival(jogo, { id: jogo.nossa })).filter(Boolean))]
+    .map((id) => ({ id, nome: teamById(id)?.name || displayTeamName(id) }))
+    .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
   const paraResultado = jogos.filter((jogo) => playerJogoPassa(jogo, filtro, "resultado"));
-  const ativo = filtro.evento || filtro.equipe || filtro.mapa || filtro.resultado;
+  const ativo = filtro.evento || filtro.equipe || filtro.rival || filtro.mapa || filtro.resultado;
   const botao = (valor, rotulo, quantos) => `<button type="button" data-eq-alterna="resultado" data-valor="${valor}" aria-pressed="${filtro.resultado === valor}">${rotulo} <b>${quantos}</b></button>`;
   return `
     <aside class="vp-resumo" aria-label="Filtros das partidas">
@@ -40156,6 +40160,7 @@ function playerPartidasFiltros(player, jogos, filtro) {
         <h3>Filtros ${ativo ? `<button type="button" class="vp-filtros-limpar" data-eq-limpar>Limpar filtros</button>` : ""}</h3>
         <select data-eq-filtro="evento" aria-label="Filtrar por campeonato"><option value="">Todos os campeonatos</option>${teamOpcoes(eventos.map((event) => ({ id: event.id, nome: event.name })), filtro.evento)}</select>
         ${equipes.length > 1 || filtro.equipe ? `<select data-eq-filtro="equipe" aria-label="Filtrar por equipe"><option value="">Todas as equipes</option>${teamOpcoes(equipes, filtro.equipe)}</select>` : ""}
+        <select data-eq-filtro="rival" aria-label="Filtrar por adversário"><option value="">Todos os adversários</option>${teamOpcoes(rivais, filtro.rival)}</select>
         <div class="vp-eq-escolha">
           ${botao("v", "Vitórias", paraResultado.filter((jogo) => jogo.vencedor === jogo.nossa).length)}
           ${botao("d", "Derrotas", paraResultado.filter((jogo) => jogo.perdedor === jogo.nossa).length)}

@@ -20082,6 +20082,8 @@ const TOURNAMENT_OVERRIDES = {
   "marica-games-2026": {
     name: "Maricá Games 2026",
     organizer: "FERJEE",
+    organizerLogo: "assets/organizers-logos/logo_ferjee.webp",
+    logo: "assets/tournament-icons/marica_games.png",
     prizePool: "-",
     tier: "C",
     type: "Online e Presencial",

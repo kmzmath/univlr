@@ -592,6 +592,7 @@
         }
       ],
       "name": "Maricá Games 2026",
+      "logo": "assets/tournament-icons/marica_games.png",
       "teams": 6,
       "endAt": "2026-10-31T13:44:41",
       "placementPoints": {

@@ -16,15 +16,38 @@
   // cartinhas fica fora do app e define "/".
   const RAIZ = window.UNIVLR_RAIZ || "";
 
-  // Recuperar senha por e-mail exige SMTP proprio configurado no Supabase, e
-  // hoje ele esta desligado - o servidor embutido entrega uns poucos por hora e
-  // e so para desenvolvimento. Com isto em `false`, "Esqueci a senha" diz a
-  // verdade em vez de mandar um e-mail que nunca chega.
+  // "Esqueci a senha" manda o link pelo Supabase (resetPasswordForEmail). Isso
+  // so entrega para qualquer endereco com SMTP proprio configurado em
+  // Authentication -> SMTP Settings: o servidor embutido do Supabase so envia
+  // para os membros da equipe do projeto, e poucos por hora.
   //
-  // Para religar: ponha `true` aqui depois de configurar o SMTP em
-  // Authentication -> SMTP Settings. Nada mais muda; o fluxo inteiro
-  // (pedido, link, janela de nova senha) continua escrito e testado.
-  const RESET_POR_EMAIL = false;
+  // Com `false`, a tela volta a dizer que a troca e feita na mao por um
+  // administrador, em vez de prometer um e-mail que nao chega.
+  const RESET_POR_EMAIL = true;
+
+  // Contato e por e-mail da propria pessoa, por escolha do dono: cada assunto
+  // abre o app de e-mail ja enderecado, e foto vai como anexo por la. O
+  // endereco tambem aparece escrito, com botao de copiar, porque quem usa o
+  // Gmail no navegador nao tem app de e-mail para o `mailto:` abrir.
+  // Vazio, o link do rodape nao aparece.
+  const CONTATO_EMAIL = "kmyzth@gmail.com";
+
+  // O corpo do erro leva a pagina em que a pessoa estava: e a primeira coisa
+  // que se pergunta de volta, e ela raramente lembra de mandar.
+  const ASSUNTOS_DE_CONTATO = [
+    { rotulo: "Enviar foto", assunto: "Foto", corpo: () => "Jogador ou equipe:\n\n" },
+    { rotulo: "Reportar erro", assunto: "Erro no site", corpo: () => `Página: ${window.location.href}\n\n` },
+    { rotulo: "Tirar dúvida", assunto: "Dúvida", corpo: () => "" },
+    { rotulo: "Dar feedback", assunto: "Feedback", corpo: () => "" },
+  ];
+
+  function mailtoDe(a) {
+    const corpo = a.corpo();
+    return (
+      `mailto:${CONTATO_EMAIL}?subject=${encodeURIComponent("UNIVLR - " + a.assunto)}` +
+      (corpo ? `&body=${encodeURIComponent(corpo)}` : "")
+    );
+  }
 
   // ------------------------------------------------------------- o convite
   //
@@ -143,8 +166,13 @@
     corpo.className = "auth-corpo";
     corpo.innerHTML = VISTAS[vista] ? VISTAS[vista](dados) : VISTAS.entrar();
     antigo.replaceWith(corpo);
+    // O leitor de tela anuncia a janela pelo titulo da vista, e nao "Conta"
+    // para tudo - o contato nem e assunto de conta.
+    overlay.querySelector(".auth-janela").setAttribute("aria-label", corpo.querySelector("h2")?.textContent || "Conta");
     ligaVista(corpo, vista);
-    corpo.querySelector("input, textarea, button")?.focus();
+    // `[data-foco]` e para vista cujo primeiro controle e link, como a de
+    // contato: sem ele o foco pularia os assuntos e cairia no "Copiar".
+    corpo.querySelector("[data-foco], input, textarea, button")?.focus();
   }
 
   const campo = (nome, rotulo, tipo, extra) =>
@@ -293,6 +321,18 @@
         </div>`;
     },
 
+    contato: () => `
+      <h2>Entrar em contato</h2>
+      <ul class="auth-contato">
+        ${ASSUNTOS_DE_CONTATO.map(
+          (a, i) => `<li><a href="${esc(mailtoDe(a))}"${i === 0 ? " data-foco" : ""}>${esc(a.rotulo)}</a></li>`
+        ).join("")}
+      </ul>
+      <div class="auth-contato-email">
+        <span>${esc(CONTATO_EMAIL)}</span>
+        <button type="button" class="cmt-link" data-copiar-email="1">Copiar</button>
+      </div>`,
+
     avisos: (dados) => {
       const itens = (dados && dados.itens) || [];
       if (!itens.length)
@@ -347,6 +387,20 @@
         await atualizaAvisos();
         pintaSlot();
         abrirVista("avisos");
+        return;
+      }
+
+      const copiar = ev.target.closest("[data-copiar-email]");
+      if (copiar) {
+        try {
+          await navigator.clipboard.writeText(CONTATO_EMAIL);
+          copiar.textContent = "Copiado";
+        } catch (e) {
+          // Sem permissao de area de transferencia (http, navegador antigo):
+          // deixa o endereco selecionado para o Ctrl+C da pessoa.
+          const alvo = corpo.querySelector(".auth-contato-email span");
+          window.getSelection()?.selectAllChildren(alvo);
+        }
         return;
       }
 
@@ -531,6 +585,10 @@
     const { erroAuth } = await window.Community.init();
     await atualizaAvisos();
     ligaCabecalho();
+    // O rodape das cartinhas e HTML fixo, sem o template do app.js que chama
+    // contatoHtml() a cada render; ali o link entra uma vez, aqui.
+    const rodape = document.querySelector(".vp-rodape-links");
+    if (rodape && !rodape.querySelector('[data-auth="contato"]')) rodape.insertAdjacentHTML("beforeend", contatoHtml());
 
     window.Community.aoMudar(async (_sessao, _perfil, evento) => {
       await atualizaAvisos();
@@ -568,5 +626,10 @@
     }
   }
 
-  window.Auth = { slotHtml, pintaSlot, abrir: abrirVista, iniciar, fecha };
+  // Link do rodape, igual no app e nas cartinhas. Fica aqui para os dois
+  // rodapes nao repetirem a regra de esconder quando nao ha endereco.
+  const contatoHtml = () =>
+    CONTATO_EMAIL ? `<button type="button" class="vp-rodape-botao" data-auth="contato">Contato</button>` : "";
+
+  window.Auth = { slotHtml, pintaSlot, abrir: abrirVista, iniciar, fecha, contatoHtml };
 })();

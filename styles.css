@@ -14879,6 +14879,30 @@ img {
   margin-top: 2px;
 }
 
+.auth-contato {
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.auth-contato a {
+  display: block;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font: 600 var(--text-md) / 1.3 var(--font-text);
+  text-decoration: none;
+}
+.auth-contato a:hover { color: var(--brand); }
+.auth-contato-email {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  color: rgba(var(--ink-rgb), 0.72);
+  font: 400 var(--text-sm) / 1.4 var(--font-text);
+}
+.auth-contato-email span { overflow-wrap: anywhere; user-select: all; }
 .auth-dica.ok { color: var(--green); }
 .auth-dica.ruim { color: var(--danger); }
 

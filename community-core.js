@@ -645,8 +645,14 @@
     "Password should be at least 6 characters":
       "A senha precisa de pelo menos 6 caracteres.",
     "Email not confirmed": "Confirme o e-mail antes de entrar.",
-    "For security purposes, you can only request this after 60 seconds":
+    // O numero de segundos varia com o intervalo configurado no painel, entao
+    // a chave para antes dele.
+    "For security purposes, you can only request this after":
       "Espere um minuto antes de tentar de novo.",
+    // Limite de envios por hora do Supabase, comum logo depois de ligar o
+    // reset: aparece para quem pede o link e nao e culpa de quem pediu.
+    "rate limit exceeded":
+      "Muitos e-mails enviados agora. Tente de novo em alguns minutos.",
     // Chega pelo fragmento, quando o link de recuperacao venceu ou ja foi
     // usado. E o texto que a pessoa mais tem chance de encontrar na pratica.
     "Email link is invalid or has expired":

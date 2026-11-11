@@ -28912,7 +28912,7 @@ function Shell(content, options = {}) {
             <img class="footer-logo so-tema-claro" src="${SITE_LOGO_CLARO_SRC}" alt="" loading="lazy" decoding="async" />
           </a>
           <span class="vp-rodape-texto">Estatísticas do cenário universitário brasileiro de VALORANT.</span>
-          <nav class="vp-rodape-links" aria-label="Rodapé"><a href="#/matches">Partidas</a><a href="#/events">Eventos</a><a href="#/ranking">Ranking</a><a href="#/news">Notícias</a></nav>
+          <nav class="vp-rodape-links" aria-label="Rodapé"><a href="#/matches">Partidas</a><a href="#/events">Eventos</a><a href="#/ranking">Ranking</a><a href="#/news">Notícias</a>${window.Auth ? window.Auth.contatoHtml() : ""}</nav>
         </div>
       </footer>
     </div>

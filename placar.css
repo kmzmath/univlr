@@ -148,8 +148,19 @@ body {
   margin-left: auto;
 }
 
-.vp-rodape-links a:hover {
+.vp-rodape-links a:hover,
+.vp-rodape-botao:hover {
   color: var(--ink);
+}
+
+/* Contato abre janela, nao navega: e botao, vestido igual aos links ao lado. */
+.vp-rodape-botao {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
 }
 
 /* Titulo de secao: e ele que separa uma secao da outra. Vale tambem para os

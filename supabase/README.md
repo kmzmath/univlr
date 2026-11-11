@@ -80,6 +80,14 @@ existe e precisa passar antes de qualquer tela.
    | **Domínio próprio + Resend** | `smtp.resend.com`, porta `465`, usuário `resend`, senha = a API key. Precisa comprar domínio. |
    | **Deixar desligado** | Reset por interface não funciona; troca-se a senha por SQL (ver abaixo). |
 
+   Desde 11/11/2026 o site pede o link pelo Supabase (`RESET_POR_EMAIL = true`
+   no `auth.js`). Sem SMTP próprio o servidor embutido só entrega para os
+   membros da equipe do projeto, então os outros usuários não recebem nada.
+   Depois de configurar o SMTP, colar o modelo em português de
+   `supabase/email-redefinir-senha.html` em **Authentication → Emails →
+   Reset Password** e, se der, subir o limite de envio em **Authentication →
+   Rate Limits** (o padrão com SMTP próprio é 30 e-mails por hora).
+
 7. **Anotar as duas chaves** de Settings → API:
    - `Project URL` e `anon public` → vão para o front, são públicas por design.
    - `service_role` → **nunca** entra no repositório nem no navegador. Ela

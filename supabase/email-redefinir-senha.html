@@ -1,0 +1,13 @@
+<!--
+  Modelo do e-mail de "Esqueci a senha". Colar em Authentication -> Emails ->
+  Reset Password (campo "Message body"), com o assunto:
+
+    Sua senha nova no UNIVLR
+
+  {{ .ConfirmationURL }} e preenchido pelo Supabase. O link vale uma vez e
+  vence em 1 hora (Authentication -> Providers -> Email -> Email OTP expiration).
+-->
+<h2>Criar uma senha nova</h2>
+<p>Alguém pediu para trocar a senha da sua conta no UNIVLR.</p>
+<p><a href="{{ .ConfirmationURL }}">Criar senha nova</a></p>
+<p>O link vale uma vez e vence em 1 hora. Se não foi você, ignore este e-mail: sua senha continua a mesma.</p>

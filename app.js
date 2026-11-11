@@ -25419,6 +25419,7 @@ async function init() {
       state.db = buildDatabase(manifest.events, loaded, metadata, teamProfiles, rankingWeights);
     }
     aplicarCampeonatos(state.db);
+    aplicarNomesDaEpoca(state.db);
     // O banco completo chegou: o resumo sai de cena e o que estiver na tela é
     // redesenhado a partir dele. Sem isso a home ficaria presa nos 10 itens do
     // resumo, e uma janela da semana virada durante a sessão nunca corrigiria.
@@ -36889,12 +36890,12 @@ function teamFormaPlacar(team, { series, match }) {
 
 function teamFormaItem(team, jogo) {
   const rivalId = teamJogoRival(jogo, team);
-  const nome = teamById(rivalId)?.name || displayTeamName(rivalId);
+  const nome = nomeNaEpoca(rivalId, jogo.event, eventoDoJogo(jogo));
   const [nosso, deles] = teamFormaPlacar(team, jogo);
   const venceu = jogo.vencedor === team.id;
   const resultado = venceu ? "Vitória" : jogo.vencedor ? "Derrota" : "Sem vencedor";
   const corpo = `
-    ${teamLogo(rivalId, "large")}
+    ${teamLogo(rivalId, "large", eventoDoJogo(jogo))}
     <strong title="${escapeHtml(nome)}"><span class="nome-rolante">${escapeHtml(nome)}</span></strong>
     <b>${escapeHtml(nosso)}<i>:</i>${escapeHtml(deles)}</b>
     <small>${escapeHtml([resultado, jogo.quando ? dataSemAno(jogo.quando) : jogo.match?.status].filter(Boolean).join(", "))}</small>
@@ -37736,18 +37737,18 @@ function teamJogosPorCampeonato(jogos) {
 // geral, e a coluna tem os 550px da lista da home.
 function teamJogoLinha(team, jogo, kd = "") {
   const rivalId = teamJogoRival(jogo, team);
-  const nome = teamById(rivalId)?.name || displayTeamName(rivalId);
+  const nome = nomeNaEpoca(rivalId, jogo.event, eventoDoJogo(jogo));
   const [nosso, deles] = teamFormaPlacar(team, jogo);
   const decidido = Boolean(jogo.vencedor);
   const venceu = jogo.vencedor === team.id;
   const mapas = jogo.series ? (jogo.series.mapNames || []).filter(Boolean).join(", ") : jogo.match?.status || (decidido ? "Sem estatísticas" : "A jogar");
-  // A pagina de uma fase antiga chega com o nome da epoca.
-  const nossoNome = team.name || teamById(team.id)?.name || displayTeamName(team.id);
+  // Os dois lados com o nome da epoca do jogo, na pagina atual e na de uma fase.
+  const nossoNome = nomeNaEpoca(team.id, jogo.event, eventoDoJogo(jogo));
   const corpo = `
     <span class="vp-jl-data">${escapeHtml(jogo.quando ? dataCurta(jogo.quando).slice(0, 5) : "-")}</span>
-    <span class="vp-jl-rival vp-jl-nossa">${teamLogo(team.id)}<strong title="${escapeHtml(nossoNome)}"><span class="nome-rolante">${escapeHtml(nossoNome)}</span></strong></span>
+    <span class="vp-jl-rival vp-jl-nossa">${teamLogo(team.id, "", eventoDoJogo(jogo))}<strong title="${escapeHtml(nossoNome)}"><span class="nome-rolante">${escapeHtml(nossoNome)}</span></strong></span>
     <span class="vp-jl-placar${decidido ? (venceu ? " vp-jl-v" : " vp-jl-d") : ""}"><b>${escapeHtml(nosso)}</b><i>:</i><b>${escapeHtml(deles)}</b></span>
-    <span class="vp-jl-rival">${teamLogo(rivalId)}<strong title="${escapeHtml(nome)}"><span class="nome-rolante">${escapeHtml(nome)}</span></strong></span>
+    <span class="vp-jl-rival">${teamLogo(rivalId, "", eventoDoJogo(jogo))}<strong title="${escapeHtml(nome)}"><span class="nome-rolante">${escapeHtml(nome)}</span></strong></span>
     ${kd ? `<span class="vp-jl-kd" title="Abates e mortes">${escapeHtml(kd)}</span>` : ""}
     <span class="vp-jl-mapas" title="${escapeHtml(mapas)}"><span class="nome-rolante">${escapeHtml(mapas)}</span></span>
   `;
@@ -37796,7 +37797,7 @@ function teamPartidasFiltros(team, jogos, filtro) {
   const eventos = [...new Map(jogos.filter((jogo) => teamJogoPassa(jogo, team, filtro, "evento")).map((jogo) => [jogo.event.id, jogo.event])).values()]
     .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
   const rivais = [...new Set(jogos.filter((jogo) => teamJogoPassa(jogo, team, filtro, "rival")).map((jogo) => teamJogoRival(jogo, team)).filter(Boolean))]
-    .map((id) => ({ id, nome: teamById(id)?.name || displayTeamName(id) }))
+    .map((id) => ({ id, nome: nomeNosJogos(jogos, id, (jogo) => teamJogoRival(jogo, team) === id) }))
     .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
   const paraResultado = jogos.filter((jogo) => teamJogoPassa(jogo, team, filtro, "resultado"));
   const ativo = filtro.evento || filtro.rival || filtro.mapa || filtro.resultado;
@@ -39947,10 +39948,10 @@ function playerPartidasFiltros(player, jogos, filtro) {
   const eventos = [...new Map(jogos.filter((jogo) => playerJogoPassa(jogo, filtro, "evento")).map((jogo) => [jogo.event.id, jogo.event])).values()]
     .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
   const equipes = [...new Set(jogos.filter((jogo) => playerJogoPassa(jogo, filtro, "equipe")).map((jogo) => jogo.nossa).filter(Boolean))]
-    .map((id) => ({ id, nome: teamById(id)?.name || displayTeamName(id) }))
+    .map((id) => ({ id, nome: nomeNosJogos(jogos, id, (jogo) => jogo.nossa === id) }))
     .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
   const rivais = [...new Set(jogos.filter((jogo) => playerJogoPassa(jogo, filtro, "rival")).map((jogo) => teamJogoRival(jogo, { id: jogo.nossa })).filter(Boolean))]
-    .map((id) => ({ id, nome: teamById(id)?.name || displayTeamName(id) }))
+    .map((id) => ({ id, nome: nomeNosJogos(jogos, id, (jogo) => teamJogoRival(jogo, { id: jogo.nossa }) === id) }))
     .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
   const paraResultado = jogos.filter((jogo) => playerJogoPassa(jogo, filtro, "resultado"));
   const ativo = filtro.evento || filtro.equipe || filtro.rival || filtro.mapa || filtro.resultado;
@@ -40013,7 +40014,7 @@ function playerCampanhaLinha({ event, team, trofeu, mvp, colocacao, series, maps
   return `
     <a class="vp-cp vp-cp-jog" href="#/tournaments/${escapeHtml(event.id)}">
       ${eventLogo(event, "vp-cp-logo")}
-      <span class="vp-cp-nome"><strong title="${escapeHtml(event.name)}"><span class="nome-rolante">${escapeHtml(event.name)}</span></strong><small>${escapeHtml([eventTimeRange(event), team?.name].filter(Boolean).join(", "))}</small></span>
+      <span class="vp-cp-nome"><strong title="${escapeHtml(event.name)}"><span class="nome-rolante">${escapeHtml(event.name)}</span></strong><small>${escapeHtml([eventTimeRange(event), team?.id ? nomeNaEpoca(team.id, event) : team?.name].filter(Boolean).join(", "))}</small></span>
       <span class="vp-cp-tier" data-rotulo="Tier">${event.tier ? eventTierBadge(event) : ""}</span>
       <span class="vp-cp-lugar" data-rotulo="Colocação"><span class="team-placement-badge ${escapeHtml(colocacao.tom)}"><strong>${escapeHtml(colocacao.valor)}</strong><small>${escapeHtml(colocacao.rotulo)}</small></span><span class="vp-cp-premios">${trofeu ? trophyVisual(trofeu) : ""}${mvp ? trophyVisual(mvp) : ""}</span></span>
       <span class="vp-cp-n" data-rotulo="Séries">${series}</span>
@@ -40164,7 +40165,7 @@ function playerEstMapas(player, matches, filtro) {
 
 function playerEstFiltros(jogos, matches, filtro) {
   const eventos = [...new Map(jogos.map((jogo) => [jogo.event.id, jogo.event])).values()].sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
-  const equipes = [...new Set(jogos.map((jogo) => jogo.nossa).filter(Boolean))].map((id) => ({ id, nome: teamById(id)?.name || displayTeamName(id) })).sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+  const equipes = [...new Set(jogos.map((jogo) => jogo.nossa).filter(Boolean))].map((id) => ({ id, nome: nomeNosJogos(jogos, id, (jogo) => jogo.nossa === id) })).sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
   const anos = [...new Set(matches.map(playerSerieAno).filter(Boolean))].sort().reverse();
   const mapas = tournamentFilterMapOptions(matches);
   return `
@@ -41292,7 +41293,7 @@ function mapaAgentesAba(jogos, filtro) {
 function mapaJogoLinha({ match, series }, teamId) {
   const [a, b] = teamId && match.teamB?.id === teamId ? [match.teamB, match.teamA] : [match.teamA, match.teamB];
   const event = mapaEventoDaSerie(series);
-  const lado = (time) => `<span class="vp-jl-rival${match.winnerId && match.winnerId !== time?.id ? " vp-mp-perdeu" : ""}">${teamLogo(time?.id)}<strong title="${escapeHtml(time?.name || "")}"><span class="nome-rolante">${escapeHtml(time?.name || mapaNomeDaEquipe(time?.id))}</span></strong></span>`;
+  const lado = (time) => `<span class="vp-jl-rival${match.winnerId && match.winnerId !== time?.id ? " vp-mp-perdeu" : ""}">${teamLogo(time?.id, "", match.eventId)}<strong title="${escapeHtml(time?.name || "")}"><span class="nome-rolante">${escapeHtml(time?.name || mapaNomeDaEquipe(time?.id))}</span></strong></span>`;
   const placar = teamId ? (match.winnerId === teamId ? " vp-jl-v" : match.loserId === teamId ? " vp-jl-d" : "") : "";
   const patch = patchLabel(match.gameVersion);
   return `
@@ -42415,6 +42416,57 @@ function visibleTournaments() {
 // So o cliente (e o build_home, que pinta a home) chama: o database.json guarda o
 // nome de antes, e o ranking nunca ve o nome composto. Chamar de novo sobre um
 // banco ja marcado nao recompoe (o resumo da home chega com o nome pronto).
+// Cada lado de uma partida leva o nome da epoca: a fase da equipe (`nomes` no
+// team-profiles.json) que lista o campeonato do mapa. Gravado nos mapas e nas
+// series assim que o banco chega, para toda lista, a busca e a pagina da partida
+// lerem o mesmo nome. Troca o objeto do lado em vez de mexer nele, porque ele
+// pode ser o da propria equipe.
+function aplicarNomesDaEpoca(db) {
+  const nomesPorEquipe = new Map((db?.teams || []).filter((team) => team.profile?.nomes?.length).map((team) => [team.id, team.profile.nomes]));
+  if (!nomesPorEquipe.size) return;
+  const vistos = new Set();
+  const renomear = (item) => {
+    if (!item || vistos.has(item)) return;
+    vistos.add(item);
+    for (const lado of ["teamA", "teamB"]) {
+      const time = item[lado];
+      const fase = (nomesPorEquipe.get(time?.id) || []).find((entrada) => (entrada.eventos || []).includes(item.eventId));
+      if (fase && time.name !== fase.nome) item[lado] = { ...time, name: fase.nome, faseId: fase.id, faseTag: fase.tag || "" };
+    }
+  };
+  (db.matches || []).forEach(renomear);
+  (db.matchSeries || []).forEach((series) => {
+    renomear(series);
+    (series.maps || []).forEach(renomear);
+  });
+}
+
+// O campeonato de um jogo da lista: o do mapa, que e sempre a etapa (o Geral
+// junta as etapas e nenhuma fase lista o id dele).
+function eventoDoJogo(jogo) {
+  return jogo?.series?.eventId || jogo?.match?.eventId || jogo?.event?.id || "";
+}
+
+// A fase da equipe que cobre o campeonato, ou nada.
+function faseNoEvento(teamId, eventId) {
+  if (!teamId || !eventId) return null;
+  return (teamById(teamId)?.profile?.nomes || []).find((fase) => (fase.eventos || []).includes(eventId)) || null;
+}
+
+// O nome da equipe num jogo daquele campeonato: o da epoca, senao o atual, e para
+// quem nao tem cadastro o nome gravado no evento.
+// O nome de uma equipe num filtro de jogos: o do jogo mais recente com ela. Na
+// pagina de uma fase e o da epoca; na atual, o mais novo que ela teve na lista.
+function nomeNosJogos(jogos, teamId, temEquipe) {
+  const ultimo = jogos.filter(temEquipe).reduce((melhor, jogo) => (!melhor || Number(jogo.quando || 0) > Number(melhor.quando || 0) ? jogo : melhor), null);
+  return nomeNaEpoca(teamId, ultimo?.event, ultimo ? eventoDoJogo(ultimo) : "");
+}
+
+function nomeNaEpoca(teamId, event, eventId = event?.id) {
+  if (!teamId) return "";
+  return faseNoEvento(teamId, eventId)?.nome || teamById(teamId)?.name || event?.teamNames?.[teamId] || displayTeamName(teamId);
+}
+
 function aplicarCampeonatos(db) {
   cacheDosCampeonatos.db = null;
   const porId = new Map((db?.tournaments || []).map((event) => [event.id, event]));
@@ -43356,9 +43408,9 @@ function matchResultRow(item, options) {
           ? `<span class="vp-pl-evento"></span>`
           : `<span class="vp-pl-evento" title="${escapeHtml(nomeDoEvento)}"><span class="vp-pl-evento-nome"><span class="nome-rolante">${escapeHtml(nomeDoEvento)}</span></span>${event ? eventLogo(event, "tiny") : ""}</span>`}
       </span>
-      <span class="vp-pl-lado vp-pl-a">${teamLogo(series.teamA.id)}${lado(series.teamA)}</span>
+      <span class="vp-pl-lado vp-pl-a">${teamLogo(series.teamA.id, "", series.eventId)}${lado(series.teamA)}</span>
       <span class="vp-pl-placar">${numero(score.a, score.b)}<i>:</i>${numero(score.b, score.a)}</span>
-      <span class="vp-pl-lado vp-pl-b">${lado(series.teamB)}${teamLogo(series.teamB.id)}</span>
+      <span class="vp-pl-lado vp-pl-b">${lado(series.teamB)}${teamLogo(series.teamB.id, "", series.eventId)}</span>
       ${kd}
     </a>
   `;
@@ -44661,13 +44713,13 @@ function renderMatchSearchResult(item) {
         <span class="search-result-kicker">Partida</span>
         <strong class="search-match-score-line">
           <span class="search-match-team search-match-team-a">
-            ${teamLogo(series.teamA.id, "search-match-team-logo")}
+            ${teamLogo(series.teamA.id, "search-match-team-logo", series.eventId)}
             <span>${escapeHtml(series.teamA.name)}</span>
           </span>
           <b><span class="${scoreNumberClass(score.a, score.b)}">${escapeHtml(String(score.a))}</span><i>:</i><span class="${scoreNumberClass(score.b, score.a)}">${escapeHtml(String(score.b))}</span></b>
           <span class="search-match-team search-match-team-b">
             <span>${escapeHtml(series.teamB.name)}</span>
-            ${teamLogo(series.teamB.id, "search-match-team-logo")}
+            ${teamLogo(series.teamB.id, "search-match-team-logo", series.eventId)}
           </span>
         </strong>
         <span class="search-match-event-line">
@@ -44866,9 +44918,9 @@ function matchCard(item) {
   const event = state.db?.tournaments.find((row) => row.id === series.eventId);
   return `
     <a class="match-card" href="${matchSeriesHref(series)}">
-      <div class="team-side">${teamLogo(series.teamA.id)}<strong>${escapeHtml(series.teamA.name)}</strong></div>
+      <div class="team-side">${teamLogo(series.teamA.id, "", series.eventId)}<strong>${escapeHtml(series.teamA.name)}</strong></div>
       <div class="score-box"><strong>${score.a} : ${score.b}</strong><span>${escapeHtml(score.label)}</span></div>
-      <div class="team-side right"><strong>${escapeHtml(series.teamB.name)}</strong>${teamLogo(series.teamB.id)}</div>
+      <div class="team-side right"><strong>${escapeHtml(series.teamB.name)}</strong>${teamLogo(series.teamB.id, "", series.eventId)}</div>
       <div class="match-meta">
         ${event ? eventLogo(event, "tiny") : ""}
         <span>${escapeHtml(formatDate(series.startedAt, "time"))}</span>
@@ -45030,6 +45082,11 @@ function organizerLogo(event, extra = "") {
 // Os eventos da pagina aberta, para o escudo de epoca: a etapa, ou as etapas do
 // campeonato no Geral (da mais recente para a mais antiga). Fora de campeonato, nada.
 function eventosDaRota(section, id) {
+  // A pagina de uma partida e a do campeonato dela: escudo e link da epoca.
+  if (section === "matches" && id) {
+    const match = state.db?.matches?.find((item) => item.id === id);
+    return match?.eventId ? [match.eventId] : null;
+  }
   if ((section !== "events" && section !== "tournaments") || !id) return null;
   const campeonato = state.db ? campeonatoPorId(id) : null;
   return campeonato ? campeonato.etapas.map((etapa) => etapa.id) : [id];
@@ -45049,11 +45106,15 @@ function ligarFasesDaEpoca(html) {
   });
 }
 
-function teamLogo(id, extra = "") {
+// `eventId` e o campeonato da linha de partida: o escudo da epoca daquele jogo,
+// como o nome. Sem ele vale a pagina aberta.
+function teamLogo(id, extra = "", eventId = "") {
   const team = teamById(id);
   const nomes = team?.profile?.nomes || [];
-  const fase = (state.faseDaPagina?.teamId === team?.id && state.faseDaPagina) ||
-    (state.eventoDaPagina || []).map((eventId) => nomes.find((item) => (item.eventos || []).includes(eventId))).find(Boolean);
+  const fase = eventId
+    ? faseNoEvento(team?.id, eventId)
+    : (state.faseDaPagina?.teamId === team?.id && state.faseDaPagina) ||
+      (state.eventoDaPagina || []).map((evento) => nomes.find((item) => (item.eventos || []).includes(evento))).find(Boolean);
   const src = assetPath(fase?.logo || team?.profile?.logo || team?.logo || "");
   const label = `Logo ${fase?.nome || team?.name || id}`;
   if (!src) return `<span class="team-logo clean-logo logo-empty ${escapeHtml(extra)}" aria-label="${escapeHtml(label)}"></span>`;
@@ -45242,7 +45303,7 @@ function matchDocumentTitle(id, tab) {
 
 function matchTitleTeamTag(side) {
   const team = teamById(side.id) || side;
-  const candidates = [team.sourceTag, team.tag, side.sourceTag, side.tag, team.shortTag, side.shortTag];
+  const candidates = [side.faseTag, team.sourceTag, team.tag, side.sourceTag, side.tag, team.shortTag, side.shortTag];
   const preferred = candidates.find((value) => value && value !== side.id && value !== team.id);
   return preferred || (team.id ? teamTag(team.id) : "") || team.name || side.name || side.id;
 }

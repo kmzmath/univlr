@@ -5349,8 +5349,11 @@
         {
           "id": "usp_ime_wolves",
           "nome": "IME Wolves",
-          "logo": "",
-          "cores": [],
+          "logo": "assets/team-logos/usp_ime_wolves.png",
+          "cores": [
+            "#6e0d0d",
+            "#000000"
+          ],
           "desde": "2023-09-09",
           "ate": "2023-10-07",
           "eventos": [
@@ -6506,8 +6509,11 @@
         {
           "id": "mackenzie_tecmack_2023",
           "nome": "Mackenzie TecMack",
-          "logo": "",
-          "cores": [],
+          "logo": "assets/team-logos/mackenzie_tecmack_2023.png",
+          "cores": [
+            "#201e41",
+            "#82bde7"
+          ],
           "desde": "2023-09-09",
           "ate": "2023-10-01",
           "eventos": [
@@ -22209,8 +22215,11 @@
         {
           "id": "unifei_blue_rabbits_2023",
           "nome": "UNIFEI Blue Rabbits",
-          "logo": "",
-          "cores": [],
+          "logo": "assets/team-logos/unifei_blue_rabbits_2023.png",
+          "cores": [
+            "#09233a",
+            "#3c5d93"
+          ],
           "desde": "2023-09-09",
           "ate": "2023-10-07",
           "eventos": [

@@ -10709,6 +10709,10 @@ a.vp-cp:hover {
   transform: none;
 }
 
+.team-page a.ranking-chart-hotspot {
+  cursor: pointer;
+}
+
 .team-page .ranking-chart-hotspot:hover,
 .team-page .ranking-chart-hotspot:focus {
   z-index: 5;

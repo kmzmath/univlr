@@ -30388,6 +30388,10 @@ function avg(values) {
 }
 
 function renderRankingPage(teamId = route().id || "") {
+  // `?semana=` abre o ranking daquela semana: o grafico do perfil da equipe leva
+  // para ca. Sem o parametro, fica a semana que ja estava escolhida.
+  const semanaDaUrl = routeQuery().get("semana");
+  if (semanaDaUrl && (state.db?.rankingSnapshots || []).some((snapshot) => snapshot.id === semanaDaUrl)) state.rankingVersionId = semanaDaUrl;
   const routeTeamId = rankingRouteTeamId(teamId);
   if (routeTeamId) ensureRankingScopeIncludesTeam(routeTeamId);
   const scope = state.rankingScope === "all" ? "all" : "valid";
@@ -30552,13 +30556,35 @@ function ensureRankingScopeIncludesTeam(teamId) {
   if (ranking && !rankingIsValid(ranking)) state.rankingScope = "all";
 }
 
-function rankingRowsForScope(teams, scope) {
-  const snapshot = selectedRankingSnapshot();
-  const rows = (snapshot?.teams || [])
+function rankingLinhasDaSemana(snapshot) {
+  return (snapshot?.teams || [])
     .map((ranking) => ({ team: teamById(ranking.id), ranking, snapshot }))
     .filter((row) => row.team && rankingRowExistsInSnapshot(row.ranking));
+}
+
+// A ordem de "Todas" na pagina do Ranking. A posicao entre todas e o lugar nessa
+// lista, e nao o `rank` gravado, que conta as equipes inativas que a lista esconde
+// (o balao do perfil dizia #58 para quem aparecia em 54º).
+function rankingOrdemEntreTodas(a, b) {
+  return (a.ranking.overallRank || 9999) - (b.ranking.overallRank || 9999) || b.ranking.score - a.ranking.score || a.team.name.localeCompare(b.team.name);
+}
+
+const rankingPosicoesEntreTodasCache = new WeakMap();
+function rankingPosicaoEntreTodas(snapshot, teamId) {
+  if (!snapshot) return null;
+  let posicoes = rankingPosicoesEntreTodasCache.get(snapshot);
+  if (!posicoes) {
+    posicoes = new Map(rankingLinhasDaSemana(snapshot).sort(rankingOrdemEntreTodas).map((row, indice) => [row.ranking.id, indice + 1]));
+    rankingPosicoesEntreTodasCache.set(snapshot, posicoes);
+  }
+  return posicoes.get(teamId) || null;
+}
+
+function rankingRowsForScope(teams, scope) {
+  const snapshot = selectedRankingSnapshot();
+  const rows = rankingLinhasDaSemana(snapshot);
   const sorted = scope === "all"
-    ? rows.slice().sort((a, b) => (a.ranking.overallRank || 9999) - (b.ranking.overallRank || 9999) || b.ranking.score - a.ranking.score || a.team.name.localeCompare(b.team.name))
+    ? rows.slice().sort(rankingOrdemEntreTodas)
     : rows.filter((row) => rankingIsValid(row.ranking)).sort((a, b) => (a.ranking.validRank || 9999) - (b.ranking.validRank || 9999) || b.ranking.score - a.ranking.score || a.team.name.localeCompare(b.team.name));
   return applyRankingSort(sorted.map((row, index) => ({ ...row, displayRank: index + 1, defaultIndex: index })));
 }
@@ -31089,6 +31115,7 @@ function bindTrilhoDoRanking() {
     const id = semana.dataset.rankingSemana;
     const aberta = document.querySelector(".ranking-accordion-item.open")?.dataset.rankingTeamId;
     state.rankingVersionId = id;
+    rankingSemanaNaUrl(id);
     updateRankingVersionView();
     const item = aberta ? document.querySelector(`.ranking-accordion-item[data-ranking-team-id="${CSS.escape(aberta)}"]`) : null;
     if (item) {
@@ -31663,9 +31690,22 @@ function bindRankingScopeToggle() {
   });
 }
 
+// A semana escolhida na pagina vai para a URL sem re-renderizar: sem isso, um
+// `?semana=` antigo voltava na troca de aba ou ao recarregar. A mais recente nao
+// leva parametro.
+function rankingSemanaNaUrl(id) {
+  const params = routeQuery();
+  if (id && id !== latestRankingSnapshot()?.id) params.set("semana", id);
+  else params.delete("semana");
+  const q = params.toString();
+  const alvo = routePath() + (q ? `?${q}` : "");
+  if (window.location.hash !== alvo) history.replaceState(history.state, "", alvo);
+}
+
 function bindRankingVersionPicker() {
   document.querySelector("[data-ranking-version]")?.addEventListener("change", (event) => {
     state.rankingVersionId = event.currentTarget.value || "";
+    rankingSemanaNaUrl(state.rankingVersionId);
     updateRankingVersionView();
   });
 }
@@ -37082,7 +37122,7 @@ function teamResumoTab(team, context) {
           <section class="vp-s-ranking-equipe">
             ${sectionHead("Histórico do ranking")}
             ${nota}
-            ${historico.length ? teamRankingChart(historico, Math.min(...context.matches.map((series) => dateValue(series.startedAt)).filter(Boolean)), teamRankingHistory(team).filter((row) => row.provisorio), teamLineDaEpoca(team)) : ""}
+            ${historico.length ? teamRankingChart(historico, Math.min(...context.matches.map((series) => dateValue(series.startedAt)).filter(Boolean)), teamRankingHistory(team).filter((row) => row.provisorio), teamLineDaEpoca(team), team.id) : ""}
           </section>
         ` : ""}
         ${historico.length && !sucedida ? `<section class="team-ranking-explainer">${rankingExplanationPanel(team, null, null, { recolhido: true })}</section>` : ""}
@@ -37459,7 +37499,7 @@ function teamLineDaEpoca(team) {
   };
 }
 
-function teamRankingChart(history, primeiraPartida = 0, provisorias = [], lineDaEpoca = null) {
+function teamRankingChart(history, primeiraPartida = 0, provisorias = [], lineDaEpoca = null, teamId = "") {
   const validas = history
     .slice()
     .sort((a, b) => dateValue(a.date) - dateValue(b.date))
@@ -37525,8 +37565,12 @@ function teamRankingChart(history, primeiraPartida = 0, provisorias = [], lineDa
       // Nas pontas o balao centrado sairia da tela: ele tem ate 260px, e num
       // grafico de 328px (celular de 360) so o terco do meio tem 130px livres
       // dos dois lados. Fora dele, o balao cresce para dentro do grafico.
+      // Clicar na semana abre o Ranking daquela semana com a equipe aberta. Antes
+      // era um span focavel: o clique so prendia o balao na tela.
+      const href = teamId && row.semana ? `#/ranking/${encodeURIComponent(teamId)}?semana=${encodeURIComponent(row.semana)}` : "";
+      const tag = href ? "a" : "span";
       return `
-        <span class="ranking-chart-hotspot${left < 35 ? " na-esquerda" : left > 65 ? " na-direita" : ""}" style="--esq:${fmt(esquerda, 3)};--larg:${fmt(direita - esquerda, 3)};--c:${fmt(((left - esquerda) / (direita - esquerda)) * 100, 2)};--y:${fmt(top, 2)}" tabindex="0" aria-label="${escapeHtml(`${formatDate(row.date)} ${rankingHistoryRankLabel(row.rank)}`)}">
+        <${tag} class="ranking-chart-hotspot${left < 35 ? " na-esquerda" : left > 65 ? " na-direita" : ""}" style="--esq:${fmt(esquerda, 3)};--larg:${fmt(direita - esquerda, 3)};--c:${fmt(((left - esquerda) / (direita - esquerda)) * 100, 2)};--y:${fmt(top, 2)}" ${href ? `href="${escapeHtml(href)}"` : `tabindex="0"`} aria-label="${escapeHtml(`${formatDate(row.date)} ${rankingHistoryRankLabel(row.rank)}`)}">
           ${epoca ? `
             <span class="ranking-chart-tooltip vp-rc-balao" style="${escapeHtml(epoca.estilo)}">
               <span class="vp-rc-cabeca">
@@ -37542,7 +37586,7 @@ function teamRankingChart(history, primeiraPartida = 0, provisorias = [], lineDa
               <small>${escapeHtml(detail)}</small>
             </span>
           `}
-        </span>
+        </${tag}>
       `;
     })
     .join("");
@@ -39311,10 +39355,11 @@ function teamRankingSnapshotHistory(teamId) {
       const row = snapshot.byTeamId?.[teamId];
       if (!row || !row.matches) return null;
       return {
+        semana: snapshot.id,
         date: snapshot.cutoffAt,
         rank: row.validRank || null,
         // Semana provisoria tem a posicao entre todas as equipes, desenhada pontilhada.
-        provisorio: !row.validRank && row.provisional && !rankingIsInactive(row) && Number(row.rank) > 0 ? Number(row.rank) : null,
+        provisorio: !row.validRank && row.provisional && !rankingIsInactive(row) && Number(row.rank) > 0 ? rankingPosicaoEntreTodas(snapshot, teamId) : null,
         points: row.score,
         note: rankingIsValid(row) ? snapshot.label : `${snapshot.label} - ${rankingStatusLabel(row).toLowerCase()}`,
       };

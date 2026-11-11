@@ -1787,6 +1787,20 @@
             }
           ]
         }
+      ],
+      "nomes": [
+        {
+          "id": "azure_bears_blue_2023",
+          "nome": "Azure Bears Blue",
+          "logo": "",
+          "cores": [],
+          "desde": "2023-09-16",
+          "ate": "2023-11-03",
+          "eventos": [
+            "alianca-2023-2-fase-de-grupos",
+            "alianca-2023-2-playoffs"
+          ]
+        }
       ]
     },
     "brutal_esports": {
@@ -5330,6 +5344,20 @@
             }
           ]
         }
+      ],
+      "nomes": [
+        {
+          "id": "usp_ime_wolves",
+          "nome": "IME Wolves",
+          "logo": "",
+          "cores": [],
+          "desde": "2023-09-09",
+          "ate": "2023-10-07",
+          "eventos": [
+            "alianca-2023-2-classificatoria",
+            "alianca-2023-2-fase-de-grupos"
+          ]
+        }
       ]
     },
     "inatel": {
@@ -6471,6 +6499,20 @@
                 "macklogic_red"
               ]
             }
+          ]
+        }
+      ],
+      "nomes": [
+        {
+          "id": "mackenzie_tecmack_2023",
+          "nome": "Mackenzie TecMack",
+          "logo": "",
+          "cores": [],
+          "desde": "2023-09-09",
+          "ate": "2023-10-01",
+          "eventos": [
+            "alianca-2023-2-classificatoria",
+            "alianca-2023-2-fase-de-grupos"
           ]
         }
       ]
@@ -10302,6 +10344,19 @@
             }
           ]
         }
+      ],
+      "nomes": [
+        {
+          "id": "ufpr_blackhat_bbn_2023",
+          "nome": "UFPR Blackhat BBN",
+          "logo": "",
+          "cores": [],
+          "desde": "2023-09-09",
+          "ate": "2023-09-10",
+          "eventos": [
+            "alianca-2023-2-classificatoria"
+          ]
+        }
       ]
     },
     "ufrj_minerva": {
@@ -13834,7 +13889,7 @@
             "#f9f8f8",
             "#d6a659"
           ],
-          "desde": "2023-09-16",
+          "desde": "2023-09-09",
           "ate": "2024-08-10",
           "eventos": [
             "alianca-2023-2-fase-de-grupos",
@@ -13842,7 +13897,8 @@
             "alianca-2024-classificatoria-1",
             "alianca-2024-grupos",
             "jubs-2024-playoffs-online",
-            "jubs-2024-qualify-1"
+            "jubs-2024-qualify-1",
+            "alianca-2023-2-classificatoria"
           ]
         }
       ]
@@ -22148,6 +22204,20 @@
             }
           ]
         }
+      ],
+      "nomes": [
+        {
+          "id": "unifei_blue_rabbits_2023",
+          "nome": "UNIFEI Blue Rabbits",
+          "logo": "",
+          "cores": [],
+          "desde": "2023-09-09",
+          "ate": "2023-10-07",
+          "eventos": [
+            "alianca-2023-2-classificatoria",
+            "alianca-2023-2-fase-de-grupos"
+          ]
+        }
       ]
     },
     "axis_blossom": {
@@ -26093,6 +26163,21 @@
             }
           ]
         }
+      ],
+      "nomes": [
+        {
+          "id": "unb_green_owls_a_2023",
+          "nome": "UnB Green Owls A",
+          "logo": "",
+          "cores": [],
+          "desde": "2023-09-09",
+          "ate": "2023-10-30",
+          "eventos": [
+            "alianca-2023-2-classificatoria",
+            "alianca-2023-2-fase-de-grupos",
+            "alianca-2023-2-playoffs"
+          ]
+        }
       ]
     },
     "aufa_faesa": {
@@ -28617,9 +28702,10 @@
           "logo": "",
           "cores": [],
           "desde": "2024-07-07",
-          "ate": "2024-07-07",
+          "ate": "2024-07-17",
           "eventos": [
-            "jubs-2024-qualify-1"
+            "jubs-2024-qualify-1",
+            "jubs-2024-qualify-2"
           ]
         },
         {
@@ -30453,6 +30539,21 @@
             }
           ]
         }
+      ],
+      "nomes": [
+        {
+          "id": "maua_blue_2023",
+          "nome": "Mauá Blue",
+          "logo": "",
+          "cores": [],
+          "desde": "2023-09-09",
+          "ate": "2023-10-28",
+          "eventos": [
+            "alianca-2023-2-classificatoria",
+            "alianca-2023-2-fase-de-grupos",
+            "alianca-2023-2-playoffs"
+          ]
+        }
       ]
     },
     "ods_force_ufla_mg_2024": {
@@ -31568,6 +31669,20 @@
                 "unb_green_olws_line_red_2024"
               ]
             }
+          ]
+        }
+      ],
+      "nomes": [
+        {
+          "id": "unb_green_owls_b_2023",
+          "nome": "UnB Green Owls B",
+          "logo": "",
+          "cores": [],
+          "desde": "2023-09-09",
+          "ate": "2023-10-07",
+          "eventos": [
+            "alianca-2023-2-classificatoria",
+            "alianca-2023-2-fase-de-grupos"
           ]
         }
       ]

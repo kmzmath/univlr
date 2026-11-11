@@ -530,15 +530,6 @@ const TOURNAMENT_OVERRIDES = {
       "homem_passaro",
       "ifsuldeminas_machado"
     ],
-    "teamNames": {
-      "maua_esports_black_2024": "Mauá Blue",
-      "ime_wolves_red": "IME Wolves",
-      "atletica_unifei": "UNIFEI Blue Rabbits",
-      "ufpr_bbn": "UFPR Blackhat BBN",
-      "unb_black": "UnB Green Owls A",
-      "unb_green_olws_line_red_2024": "UnB Green Owls B",
-      "macklogic_red": "Mackenzie TecMack"
-    },
     "format": {
       "summary": "Sistema suíço",
       "details": [
@@ -3360,15 +3351,6 @@ const TOURNAMENT_OVERRIDES = {
       "usjt_polaris",
       "pucc_cardinals"
     ],
-    "teamNames": {
-      "maua_esports_black_2024": "Mauá Blue",
-      "ime_wolves_red": "IME Wolves",
-      "atletica_unifei": "UNIFEI Blue Rabbits",
-      "unb_green_olws_line_red_2024": "UnB Green Owls B",
-      "macklogic_red": "Mackenzie TecMack",
-      "azure_bears_golden": "Azure Bears Blue",
-      "unb_black": "UnB Green Owls A"
-    },
     "format": {
       "summary": "Grupos em pontos corridos",
       "details": [
@@ -4911,11 +4893,6 @@ const TOURNAMENT_OVERRIDES = {
       "usp_stars",
       "unicamp_tritons_black"
     ],
-    "teamNames": {
-      "azure_bears_golden": "Azure Bears Blue",
-      "maua_esports_black_2024": "Mauá Blue",
-      "unb_black": "UnB Green Owls A"
-    },
     "format": {
       "summary": "Eliminação dupla",
       "details": [
@@ -5489,48 +5466,7 @@ const TOURNAMENT_OVERRIDES = {
       "cyberkongs"
     ],
     "teamNames": {
-      "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
-      "unb_green_olws_line_red_2024": "UnB Green Owls Line RED",
-      "ufu_saints": "UFU Saints",
-      "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
-      "uninassau_griffins": "Uninassau Griffins",
-      "macklogic_red": "MackLogic",
-      "maua_esports_black_2024": "Mauá Esports Black",
-      "espm_overbite_misto": "ESPM Overbite Valorant M.",
-      "fei_darkowls": "FEI eSports Valorant",
-      "ufg_eagles": "UFG Eagles",
-      "fatec_ornyx_2024": "FATEC Ornyx",
-      "ufmt_turuna": "UFMT Turuna",
-      "aufa_line_b_2024": "AUFA LINE B",
-      "poli_plague": "Poli Plague Gold",
-      "aufa_faesa": "AUFA LINE A",
-      "minerva_artemis": "Minerva eSports UFRJ INCLUSIVO",
-      "ufmg_fenix_b": "UFMG Fênix Valorant",
-      "panterao_gaming": "Oktoplus Gaming - CEFET-MG",
-      "usp_stars": "Caaso Hogs - USP",
-      "laurp_royal_ps_orange_2024": "LAURP Royal PS Orange",
-      "poli_plague_silver_echo_2024": "POLI Plague Silver Echo",
-      "fgv_alligators_valorant_2024": "FGV Alligators Valorant",
-      "caap_hellhounds": "CAAP Hellhounds",
-      "ufg_eagles_blue": "UFG Eagles Black",
-      "usp_cronos_2024": "USP Cronos",
-      "ufrj_minerva": "Minerva eSports MISTO",
-      "usf_e_sports_2024": "Usf E-sports",
-      "ufscar_fire": "UFSCar FIRE VALORANT",
-      "xarada_riddlers_ufla_2024": "XARADA RIDDLERS - UFLA",
-      "ibmec_sharks": "IBTEC",
-      "ufpr_bbn": "Burning Bunnies UFPR",
-      "usf_paragons_2024": "USF Paragons",
-      "unirio_krakens": "Kraken - Unirio",
-      "madness_ufop_2024": "MADNESS - UFOP",
-      "unicamp_tritons_black": "UNICAMP Tritons",
-      "furia_utfpr": "FURIA VALORANT",
-      "unb_black": "UNB Green Owls Black",
-      "unifesp_knights_2024": "Unifesp Knights",
-      "raposa_e_sports": "Raposa eSports",
-      "ovb_purple_2024": "OVB Purple",
-      "inatel": "Inatel White",
-      "cyberkongs": "Cyber Kongs Dourada"
+      "usf_e_sports_2024": "USF E-sports"
     },
     "mapPool": [
       "Ascent",
@@ -6951,48 +6887,9 @@ const TOURNAMENT_OVERRIDES = {
       "ufrj_minerva"
     ],
     "teamNames": {
-      "macklogic_red": "MackLogic",
-      "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
-      "azure_bears_white": "Azure Bears UTFPR - White [VAL]",
-      "inatel": "Inatel White",
-      "unirio_krakens": "Kraken - Unirio",
-      "unb_black": "UNB Green Owls Black",
-      "uninassau_griffins": "Uninassau Griffins",
-      "ufu_saints": "UFU Saints",
-      "panterao_gaming": "Oktoplus Gaming - CEFET-MG",
-      "liga_atletica_unisinos_lau_2024": "Liga Atlética Unisinos - LAU",
-      "axis_anteaters": "AXIS Anteaters - Valorant",
-      "ufscar_fire": "UFSCar FIRE VALORANT",
-      "raposa_e_sports": "Raposa eSports",
-      "fatec_ornyx_2024": "FATEC Ornyx",
-      "poli_plague_silver_echo_2024": "POLI Plague Silver Echo",
-      "furia_utfpr": "FURIA VALORANT",
-      "fei_darkowls": "FEI eSports Valorant",
-      "ufmg_fenix_b": "UFMG Fênix Valorant",
-      "puc_priests": "Puc Priests Valorant",
-      "puc_clerigos": "Clérigos - PUC-Rio",
-      "poli_plague": "Poli Plague Gold",
-      "laurp_royal_ps_orange_2024": "LAURP Royal PS Orange",
-      "atletica_unifei_2024": "Atlética UNIFEI",
-      "ufpr_bbn": "Burning Bunnies UFPR",
-      "ufmt_turuna": "UFMT Turuna",
-      "minerva_artemis": "Minerva eSports UFRJ INCLUSIVO",
-      "unifei_calango_2024": "UNIFEI Calango",
-      "atletica_unifei": "Atlética UNIFEI",
-      "unifesp_knights_2024": "Unifesp Knights",
-      "xarada_riddlers_ufla_2024": "XARADA RIDDLERS - UFLA",
-      "stings_yellow": "Stings BA Valorant",
-      "ibmec_sharks": "IBTEC",
-      "usf_sports_2024": "USF Sports",
-      "caap_hellhounds_black_2024": "CAAP Hellhounds Black",
-      "fgv_alligators_valorant_2024": "FGV Alligators Valorant",
+      "liga_atletica_unisinos_lau_2024": "Liga Atlética Unisinos",
       "atletica_unifei_6f52b4a1_2024": "Atlética UNIFEI",
-      "maua_rubi_2024": "Mauá Rubi",
-      "cyberkongs": "Cyber Kongs Dourada",
-      "espm_overbite_misto": "ESPM Overbite Valorant M.",
-      "facens_night_owls_2024": "FACENS NIGHT OWLS",
-      "aufa_line_b_2024": "AUFA LINE B",
-      "ufrj_minerva": "Minerva eSports MISTO"
+      "maua_rubi_2024": "Mauá Rubi"
     },
     "mapPool": [
       "Ascent",
@@ -8387,24 +8284,6 @@ const TOURNAMENT_OVERRIDES = {
       "laurp_royal_ps_orange_2024",
       "unicamp_tritons_black"
     ],
-    "teamNames": {
-      "puc_clerigos": "Clérigos - PUC-Rio",
-      "unb_black": "UNB Green Owls Black",
-      "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
-      "ufg_eagles": "UFG Eagles",
-      "maua_esports_black_2024": "Mauá Esports Black",
-      "inatel": "Inatel White",
-      "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
-      "macklogic_red": "MackLogic",
-      "uninassau_griffins": "Uninassau Griffins",
-      "fei_darkowls": "FEI eSports Valorant",
-      "usp_cronos_2024": "USP Cronos",
-      "unb_green_olws_line_red_2024": "UnB Green Owls Line RED",
-      "usp_stars": "Caaso Hogs - USP",
-      "caap_hellhounds": "CAAP Hellhounds",
-      "laurp_royal_ps_orange_2024": "LAURP Royal PS Orange",
-      "unicamp_tritons_black": "UNICAMP Tritons"
-    },
     "mapPool": [
       "Ascent",
       "Bind",
@@ -9031,16 +8910,6 @@ const TOURNAMENT_OVERRIDES = {
       "unicamp_tritons_black",
       "usp_cronos_2024"
     ],
-    "teamNames": {
-      "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
-      "maua_esports_black_2024": "Mauá Esports Black",
-      "caap_hellhounds": "CAAP Hellhounds",
-      "ufg_eagles": "UFG Eagles",
-      "unb_black": "UNB Green Owls Black",
-      "unb_green_olws_line_red_2024": "UnB Green Owls Line RED",
-      "unicamp_tritons_black": "UNICAMP Tritons",
-      "usp_cronos_2024": "USP Cronos"
-    },
     "mapPool": [
       "Ascent",
       "Bind",
@@ -9271,54 +9140,6 @@ const TOURNAMENT_OVERRIDES = {
       "ufrj_canis_b",
       "stings_yellow"
     ],
-    "teamNames": {
-      "inatel": "Inatel White",
-      "panterao_gaming": "Oktoplus Gaming - CEFET-MG",
-      "ufg_eagles": "UFG Eagles Black",
-      "unb_green_olws_line_red_2024": "UnB Green Owls Line RED",
-      "maua_b": "Mauá Esports - IMT",
-      "maua_blue": "Mauá Esports - IMT",
-      "ufmt_turuna": "UFMT Turuna",
-      "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
-      "espm_overbite_misto": "ESPM Overbite - Valorant Misto",
-      "ufu_saints": "UFU Saints",
-      "pucc_cardinals": "PUCC CARDNALS",
-      "usp_stars": "USP Stars",
-      "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
-      "fei_darkowls": "FEI eSports Valorant",
-      "caap_hellhounds_black_2024": "CAAP Void",
-      "caap_hellhounds": "CAAP Hellhounds",
-      "unb_black": "UNB Green Owls Black",
-      "macklogic_red": "MackLogic",
-      "puc_priests": "Puc Priests Valorant",
-      "furia_utfpr": "FURIA VALORANT",
-      "puc_clerigos": "Clérigos - PUC-Rio",
-      "unicamp_tritons_black": "UNICAMP Tritons",
-      "atletica_unifei": "Atlética UNIFEI",
-      "ufpr_bbn": "Burning Bunnies UFPR - White",
-      "uninassau_griffins": "Uninassau Griffins",
-      "ufmg_fenix_b": "UFMG Fênix Valorant",
-      "ufg_eagles_blue": "UFG Eagles Blue",
-      "axis_anteaters": "AXIS Anteaters Black - Valorant",
-      "unifei_calango_2024": "UNIFEI Calango",
-      "minerva_artemis": "Canis - Valorant Inclusivo",
-      "poli_plague": "Poli Plague Gold",
-      "unesa_cyborgs": "Team Valorant Cybers",
-      "ibmec_sharks": "SharkS Ibmec",
-      "poli_plague_silver_echo_2024": "POLI Plague Silver Echo",
-      "ufs_warriowls": "UFS Warriowls - Valorant",
-      "each_griffins_valorant_2024": "EACH Griffins VALORANT",
-      "pesadelo_renegadas_unb_2024": "Pesadelo Renegadas - UnB",
-      "azure_bears_white": "Azure Bears UTFPR - White [VAL]",
-      "axis_anteaters_green_valorant_2024": "AXIS Anteaters Green - Valorant",
-      "hunter_esports": "Hunter E-sports - Valorant Black",
-      "brutal_esports": "Brutal eSports - UFSJ",
-      "poli_plague_silver_delta_c6f948a0_2024": "POLI Plague Silver Delta",
-      "unirio_krakens": "UNIRIO Kraken",
-      "wolf_gaming": "Wolf Gaming Valorant",
-      "ufrj_canis_b": "CANIS Line B",
-      "stings_yellow": "STINGS BELAS ARTES"
-    },
     "mapPool": [
       "Abyss",
       "Ascent",
@@ -10578,24 +10399,6 @@ const TOURNAMENT_OVERRIDES = {
       "puc_clerigos",
       "atletica_unifei"
     ],
-    "teamNames": {
-      "unb_green_olws_line_red_2024": "UnB Green Owls Line RED",
-      "ufg_eagles_blue": "UFG Eagles Blue",
-      "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
-      "ufg_eagles": "UFG Eagles Black",
-      "maua_blue": "Mauá Esports - IMT",
-      "furia_utfpr": "FURIA VALORANT",
-      "macklogic_red": "MackLogic",
-      "usp_stars": "USP Stars",
-      "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
-      "uninassau_griffins": "Uninassau Griffins",
-      "ufmg_fenix_b": "UFMG Fênix Valorant",
-      "puc_priests": "Puc Priests Valorant",
-      "caap_hellhounds": "CAAP Hellhounds",
-      "poli_plague": "Poli Plague Gold",
-      "puc_clerigos": "Clérigos - PUC-Rio",
-      "atletica_unifei": "Atlética UNIFEI"
-    },
     "mapPool": [
       "Abyss",
       "Ascent",
@@ -11220,16 +11023,6 @@ const TOURNAMENT_OVERRIDES = {
       "ufg_eagles",
       "unb_green_olws_line_red_2024"
     ],
-    "teamNames": {
-      "caap_hellhounds": "CAAP Hellhounds",
-      "usp_stars": "USP Stars",
-      "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
-      "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
-      "uninassau_griffins": "Uninassau Griffins",
-      "macklogic_red": "MackLogic",
-      "ufg_eagles": "UFG Eagles Black",
-      "unb_green_olws_line_red_2024": "UnB Green Owls Line RED"
-    },
     "mapPool": [
       "Abyss",
       "Ascent",
@@ -11590,48 +11383,9 @@ const TOURNAMENT_OVERRIDES = {
       "calango_team_fametro_am_2024"
     ],
     "teamNames": {
-      "unb_black": "UNB Green OWLS Black - DF",
-      "furia_utfpr": "UTFPR FÚRIA XV - PR",
-      "ufrj_canis_b": "UFRJ Noctua - RJ",
-      "rahnag": "UDF Thunder Fusion - DF",
-      "ufmt_turuna": "UFMT TURUNA - MT",
-      "unioeste_rino_pr_2024": "UNIOESTE RINO - PR",
-      "uninassau_griffins": "Uninassau Griffins - PE",
-      "ufg_eagles": "UFG Eagles - GO",
-      "ufs_warriowls": "UFS Warriowls - SE",
-      "uema_cyborgues_ma_2024": "UEMA Cyborgues - MA",
-      "ufrn_tirana": "UFRN - RN",
-      "incinera_esports": "UFPE VIRTUS - PE",
-      "unigran_sarristas_ms_2024": "UNIGRAN Sarristas - MS",
-      "univasf": "UNIVASF - PE",
-      "puc_clerigos": "Clérigos PUC - RJ",
-      "azure_bears_golden": "UTFPR Azure Bears - PR",
-      "pato": "UTFPR Pato E-sports - PR",
-      "unesa_cyborgs": "ESTÁCIO CYBERS  - RJ",
-      "ufma_balsas_ma_2024": "UFMA BALSAS - MA",
-      "fusve_barao_rj_2024": "FUSVE Barão - RJ",
-      "ufac_esports_ac_2024": "Ufac eSports - AC",
-      "caap_hellhounds": "UFABC CAAP Hellhounds - SP",
-      "ufu_saints": "UFU Saints - MG",
-      "maua_esports_black_2024": "Maua Black - SP",
-      "lunatica_ufms": "UFMS aaacomp Lunatica - MS",
-      "ods_force_ufla_mg_2024": "Ods Force - UFLA - MG",
-      "senais_falcons_ba_2024": "SENAIS Falcons - BA",
-      "inatel": "Inatel - MG",
-      "usp_stars": "USP CAASO Hogs - SP",
-      "ufsc_titans_sc_2024": "UFSC TItans - SC",
-      "xarada_riddlers_ufla_2024": "UFLA Xarada Riddlers - MG",
-      "uesc_cacaueiros_ba_2024": "UESC Cacaueiros - BA",
-      "anhanguera_the_dream_team_df_2024": "ANHANGUERA The Dream Team - DF",
-      "ucsal_aduc_ba_2024": "UCSAL ADUC - BA",
-      "fametro_berserkers": "FAMETRO Codify Team - AM",
-      "imperador_uvv_2024": "IMPERADOR - UVV",
-      "iesb_cesb_ieb_df_2024": "IESB/CESB IEB - DF",
-      "asces_unita_pe_2024": "Asces-unita - PE",
-      "unirv_rushone": "UNIRV E-SPORTS - GO",
-      "castor_vai": "Eng. UFES - ES",
-      "bot_s_academy_pb_2024": "Bot's academy - PB",
-      "calango_team_fametro_am_2024": "Calango Team - FAMETRO -AM"
+      "uema_cyborgues_ma_2024": "UEMA Cyborgues",
+      "anhanguera_the_dream_team_df_2024": "Anhanguera The Dream Team",
+      "calango_team_fametro_am_2024": "Calango Team FAMETRO"
     },
     "mapPool": [
       "Ascent",
@@ -11645,9 +11399,7 @@ const TOURNAMENT_OVERRIDES = {
       "summary": "Classificatória para oito vagas",
       "details": [
         "Classificatória eliminatória para oito vagas no playoff online.",
-        "Algumas equipes avançaram direto na chave. Séries sem estatísticas mostram só o resultado oficial.",
-        "Nesta edição, a Azure Bears Golden jogou como UTFPR Azure Bears.",
-        "A FAMETRO Codify Team é a atual FAMETRO Berserkers."
+        "Algumas equipes avançaram direto na chave. Séries sem estatísticas mostram só o resultado oficial."
       ],
       "standings": "Classificação oficial"
     },
@@ -12490,41 +12242,10 @@ const TOURNAMENT_OVERRIDES = {
       "calango_team_manaus_am_2024"
     ],
     "teamNames": {
-      "furia_utfpr": "UTFPR FÚRIA XV - PR",
-      "rahnag": "UDF Thunder Fusion - DF",
-      "ufmt_turuna": "UFMT TURUNA - MT",
-      "unioeste_rino_pr_2024": "UNIOESTE RINO - PR",
-      "ufs_warriowls": "UFS Warriowls - SE",
-      "uema_cyborgues_ma_2024": "UEMA Cyborgues - MA",
-      "ufrn_tirana": "UFRN - RN",
-      "incinera_esports": "UFPE VIRTUS - PE",
-      "unigran_sarristas_ms_2024": "UNIGRAN Sarristas - MS",
-      "univasf": "UNIVASF - PE",
-      "puc_clerigos": "Clérigos PUC - RJ",
-      "pato": "UTFPR Pato E-sports - PR",
-      "unesa_cyborgs": "ESTÁCIO CYBERS  - RJ",
-      "ufma_balsas_ma_2024": "UFMA BALSAS - MA",
-      "fusve_barao_rj_2024": "FUSVE Barão - RJ",
-      "ufac_esports_ac_2024": "Ufac eSports - AC",
-      "caap_hellhounds": "UFABC CAAP Hellhounds - SP",
-      "maua_esports_black_2024": "Maua Black - SP",
-      "lunatica_ufms": "UFMS aaacomp Lunatica - MS",
-      "ods_force_ufla_mg_2024": "Ods Force - UFLA - MG",
-      "senais_falcons_ba_2024": "SENAIS Falcons - BA",
-      "inatel": "Inatel - MG",
-      "ufsc_titans_sc_2024": "UFSC TItans - SC",
-      "xarada_riddlers_ufla_2024": "UFLA Xarada Riddlers - MG",
-      "uesc_cacaueiros_ba_2024": "UESC Cacaueiros - BA",
-      "anhanguera_the_dream_team_df_2024": "ANHANGUERA The Dream Team - DF",
-      "ucsal_aduc_ba_2024": "UCSAL ADUC - BA",
-      "imperador_uvv_2024": "IMPERADOR - UVV",
-      "iesb_cesb_ieb_df_2024": "IESB/CESB IEB - DF",
-      "asces_unita_pe_2024": "Asces-unita - PE",
-      "unirv_rushone": "UNIRV E-SPORTS - GO",
-      "castor_vai": "Eng. UFES - ES",
-      "bot_s_academy_pb_2024": "Bot's academy - PB",
-      "calango_team_fametro_am_2024": "Calango Team - FAMETRO -AM",
-      "calango_team_manaus_am_2024": "Calango Team - Manaus/AM"
+      "uema_cyborgues_ma_2024": "UEMA Cyborgues",
+      "anhanguera_the_dream_team_df_2024": "Anhanguera The Dream Team",
+      "calango_team_fametro_am_2024": "Calango Team FAMETRO",
+      "calango_team_manaus_am_2024": "Calango Team Manaus"
     },
     "mapPool": [
       "Ascent",
@@ -13346,24 +13067,6 @@ const TOURNAMENT_OVERRIDES = {
       "usp_stars",
       "fametro_berserkers"
     ],
-    "teamNames": {
-      "unb_black": "UNB Green OWLS Black - DF",
-      "ufrj_canis_b": "UFRJ Noctua - RJ",
-      "ufmt_turuna": "UFMT TURUNA - MT",
-      "uninassau_griffins": "Uninassau Griffins - PE",
-      "ufg_eagles": "UFG Eagles - GO",
-      "ufs_warriowls": "UFS Warriowls - SE",
-      "ufrn_tirana": "UFRN - RN",
-      "incinera_esports": "UFPE VIRTUS - PE",
-      "unigran_sarristas_ms_2024": "UNIGRAN Sarristas - MS",
-      "puc_clerigos": "Clérigos PUC - RJ",
-      "azure_bears_golden": "UTFPR Azure Bears - PR",
-      "caap_hellhounds": "UFABC CAAP Hellhounds - SP",
-      "ufu_saints": "UFU Saints - MG",
-      "inatel": "Inatel - MG",
-      "usp_stars": "USP CAASO Hogs - SP",
-      "fametro_berserkers": "FAMETRO Codify Team - AM"
-    },
     "mapPool": [
       "Abyss",
       "Ascent",
@@ -13378,9 +13081,7 @@ const TOURNAMENT_OVERRIDES = {
       "details": [
         "16 equipes disputam oito vagas na etapa presencial.",
         "No máximo uma representante de cada estado avança ao presencial.",
-        "USP CAASO e FAMETRO venceram no online; CAAP e UFMT participaram do presencial.",
-        "Nesta edição, a Azure Bears Golden jogou como UTFPR Azure Bears.",
-        "A FAMETRO Codify Team é a atual FAMETRO Berserkers."
+        "CAASO Hogs e FAMETRO Berserkers venceram no online; CAAP Hellhounds e UFMT Turuna participaram do presencial."
       ],
       "standings": "Classificação oficial"
     },
@@ -13589,16 +13290,6 @@ const TOURNAMENT_OVERRIDES = {
       "inatel",
       "ufrj_canis_b"
     ],
-    "teamNames": {
-      "unb_black": "UNB Green OWLS Black - DF",
-      "ufmt_turuna": "UFMT TURUNA - MT",
-      "uninassau_griffins": "Uninassau Griffins - PE",
-      "ufg_eagles": "UFG Eagles - GO",
-      "azure_bears_golden": "UTFPR Azure Bears - PR",
-      "caap_hellhounds": "UFABC CAAP Hellhounds - SP",
-      "inatel": "Inatel - MG",
-      "ufrj_canis_b": "UFRJ CANIS / UFRJ-RJ"
-    },
     "mapPool": [
       "Abyss",
       "Ascent",
@@ -13613,8 +13304,7 @@ const TOURNAMENT_OVERRIDES = {
       "details": [
         "Dois grupos de quatro em eliminação dupla (GSL), com partidas MD1.",
         "Dois classificados por grupo. Semifinais, disputa de terceiro lugar e final em MD3.",
-        "Resultados e classificação oficiais da CBDU.",
-        "Nesta edição, a Azure Bears Golden jogou como UTFPR Azure Bears."
+        "Resultados e classificação oficiais da CBDU."
       ],
       "standings": "Classificação oficial"
     },
@@ -13993,16 +13683,6 @@ const TOURNAMENT_OVERRIDES = {
       "maua_blue",
       "tec_barao"
     ],
-    "teamNames": {
-      "axis_anteaters": "AXIS Anteaters",
-      "maua_b": "Mauá Blue",
-      "maua_blue": "Mauá White",
-      "macklogic_white": "MackLogic WHITE",
-      "macklogic_red": "Mack Logic RED",
-      "caap_hellhounds": "CAAP Hell",
-      "tec_barao": "TEC BARAO",
-      "ifsp_midas": "MIDAS"
-    },
     "placements": [
       {
         "id": "macklogic_red",
@@ -14536,7 +14216,7 @@ const TOURNAMENT_OVERRIDES = {
                   "bestOf": "MD3",
                   "status": "Sem estatísticas",
                   "playedOn": "2025-10-04T12:00:00",
-                  "previewNote": "UFG Eagles venceu por 2x1 em 04/10/2025. Lotus: Azure 14x12 UFG; Abyss: UFG 13x4 Azure; Sunset: UFG 13x8 Azure. Sem estatísticas.",
+                  "previewNote": "UFG Eagles venceu por 2x1 em 04/10/2025. Lotus: Azure Bears Golden 14x12 UFG Eagles; Abyss: UFG Eagles 13x4 Azure Bears Golden; Sunset: UFG Eagles 13x8 Azure Bears Golden. Sem estatísticas.",
                   "from": [
                     "Partida 5",
                     "Partida 6"
@@ -14577,7 +14257,7 @@ const TOURNAMENT_OVERRIDES = {
         "45 equipes, seis rodadas suíças e séries MD3.",
         "16 equipes disputam uma série classificatória MD3 para definir oito vagas presenciais.",
         "Máximo de duas equipes do mesmo estado no classificatório; equipes do mesmo estado se enfrentam para garantir uma representante por estado no presencial.",
-        "Canis B venceu o classificatório, mas não pôde comparecer ao presencial; Wolf Gaming assumiu sua vaga."
+        "UFRJ Canis B venceu o classificatório, mas não pôde comparecer ao presencial; Wolf Gaming assumiu sua vaga."
       ],
       "standings": "Classificação da fase on-line"
     },
@@ -14678,7 +14358,7 @@ const TOURNAMENT_OVERRIDES = {
         "id": "wolf_gaming",
         "range": "9-16",
         "note": "10º na classificação on-line",
-        "reason": "Convocada para o presencial no lugar da Canis B"
+        "reason": "Convocada para o presencial no lugar da UFRJ Canis B"
       },
       {
         "id": "unifacs_sting",
@@ -15789,7 +15469,7 @@ const TOURNAMENT_OVERRIDES = {
               "scoreA": 2,
               "scoreB": 1,
               "winner": "ufu_saints",
-              "previewNote": "Placar oficial. O terceiro mapa, 13x10 para a Ravens, não tem estatísticas."
+              "previewNote": "Placar oficial. O terceiro mapa, 13x10 para a UFU Saints, não tem estatísticas."
             },
             {
               "code": "Partida 93",
@@ -16425,51 +16105,10 @@ const TOURNAMENT_OVERRIDES = {
       ]
     },
     "teamNames": {
-      "unicamp_tritons_red": "UNICAMP Tritons Red",
-      "sem_totem": "Sem Totem UFRR",
-      "ufu_saints": "UFU Saints Ravens",
-      "unicamp_tritons_black": "UNICAMP TRITONS BLUE",
-      "black_cyber": "Black Cyber CEUB",
-      "rahnag": "RAHNAG UDF",
-      "azure_bears_golden": "Azure Bears UTFPR",
-      "beyond": "BEYOND UEPB",
-      "unifor": "UNIFOR",
-      "limpezinha": "Limpezinha  Team´s UFCG",
-      "ufrj_canis_b": "UFRJ Canis X",
-      "uninassau_griffins": "UNINASSAU",
       "crotalus_ufersa": "Crotalus UFERSA",
-      "nassau": "NASSAU UNIVERSITY E-SPORTS",
-      "ggg_sports": "GGG Sports IFBA",
-      "minerva_thunders": "UFRJ Canis A",
-      "aufa_faesa": "AUFA FAESA",
-      "wolf_gaming": "Wolf Gaming CEFET",
-      "nexus": "Nexus UERR",
-      "ufma_abscissa": "UFMA - Abscissa",
-      "castor_vai": "Vai que tá Cego UFES",
-      "if_academy": "IF ACADEMY IFPB",
-      "green_owls_pulsatrix": "Green Owls UNB",
-      "usp_stars": "USP Stars",
-      "unifacs_sting": "UNIFACS STING UNIFACS",
-      "ufmt_turuna": "UFMT TURUNA",
-      "grifos_unisales": "GRIFOS UNISALES",
-      "ufpr_bbn": "UFPR Burning Bunnies",
-      "univasf": "TIME UNIVSF",
+      "ufma_abscissa": "UFMA Abscissa",
       "anhangueros": "Anhangueros",
-      "compressora_cangaceiros": "UPE CANGACEIROS",
-      "ceuma": "CEUMA E-sports",
-      "notapixel": "NOTaPixel.py UFCG",
-      "undbala": "UNDB Reapers",
-      "ufrn_tirana": "UFRN Carcarás",
-      "ufg_eagles": "UFG Eagles",
-      "unirv_rushone": "UNIRV RUSH ONE",
-      "ufs_warriowls": "UFS Warriowls",
-      "inatel": "Inatel",
-      "undb_turing": "UNDB Turing",
-      "caap_hellhounds": "UFABC CAAP Hellhounds",
-      "team_nyx_ufersa": "Team Nyx UFERSA",
-      "unit_troianos_trojan": "UNIT Troianos Trojan",
-      "unir_sentinelas": "Sentinelas do Norte UNIR",
-      "unesa_cyborgs": "CYBORGS ESTÁCIO"
+      "team_nyx_ufersa": "Team Nyx UFERSA"
     },
     "bracket": {
       "title": "Suíça e playoff classificatório"
@@ -16916,51 +16555,10 @@ const TOURNAMENT_OVERRIDES = {
       ]
     },
     "teamNames": {
-      "unicamp_tritons_red": "UNICAMP Tritons Red",
-      "sem_totem": "Sem Totem UFRR",
-      "ufu_saints": "UFU Saints Ravens",
-      "unicamp_tritons_black": "UNICAMP TRITONS BLUE",
-      "black_cyber": "Black Cyber CEUB",
-      "rahnag": "RAHNAG UDF",
-      "azure_bears_golden": "Azure Bears UTFPR",
-      "beyond": "BEYOND UEPB",
-      "unifor": "UNIFOR",
-      "limpezinha": "Limpezinha  Team´s UFCG",
-      "ufrj_canis_b": "UFRJ Canis X",
-      "uninassau_griffins": "UNINASSAU",
       "crotalus_ufersa": "Crotalus UFERSA",
-      "nassau": "NASSAU UNIVERSITY E-SPORTS",
-      "ggg_sports": "GGG Sports IFBA",
-      "ufrj_canis": "UFRJ Canis A",
-      "aufa_faesa": "AUFA FAESA",
-      "wolf_gaming": "Wolf Gaming CEFET",
-      "nexus": "Nexus UERR",
-      "ufma_abscissa": "UFMA - Abscissa",
-      "castor_vai": "Vai que tá Cego UFES",
-      "if_academy": "IF ACADEMY IFPB",
-      "green_owls_pulsatrix": "Green Owls UNB",
-      "usp_stars": "USP Stars",
-      "unifacs_sting": "UNIFACS STING UNIFACS",
-      "ufmt_turuna": "UFMT TURUNA",
-      "grifos_unisales": "GRIFOS UNISALES",
-      "ufpr_bbn": "UFPR Burning Bunnies",
-      "univasf": "TIME UNIVSF",
+      "ufma_abscissa": "UFMA Abscissa",
       "anhangueros": "Anhangueros",
-      "compressora_cangaceiros": "UPE CANGACEIROS",
-      "ceuma": "CEUMA E-sports",
-      "notapixel": "NOTaPixel.py UFCG",
-      "undbala": "UNDB Reapers",
-      "ufrn_tirana": "UFRN Carcarás",
-      "ufg_eagles": "UFG Eagles",
-      "unirv_rushone": "UNIRV RUSH ONE",
-      "ufs_warriowls": "UFS Warriowls",
-      "inatel": "Inatel",
-      "undb_turing": "UNDB Turing",
-      "caap_hellhounds": "UFABC CAAP Hellhounds",
-      "team_nyx_ufersa": "Team Nyx UFERSA",
-      "unit_troianos_trojan": "UNIT Troianos Trojan",
-      "unir_sentinelas": "Sentinelas do Norte UNIR",
-      "unesa_cyborgs": "CYBORGS ESTÁCIO"
+      "team_nyx_ufersa": "Team Nyx UFERSA"
     },
     "mapPool": [
       "Abyss",
@@ -16975,7 +16573,6 @@ const TOURNAMENT_OVERRIDES = {
     "endAt": "2025-10-10T22:33:23.713Z"
   },
   "lbeu-2025-1-split-fase-suica": {
-    "teamNames": { "minerva_thunders": "UFRJ Canis" },
     name: "LBEU 2025 - 1\u00ba Split - Fase Su\u00ed\u00e7a",
     organizer: "LigaGG",
     prizePool: "-",
@@ -17526,10 +17123,6 @@ const TOURNAMENT_OVERRIDES = {
     status: "Finalizado",
     teamCount: 4,
     teams: ["axis_anteaters", "azure_bears_black", "azure_bears_red", "unicamp_tritons_red"],
-    teamNames: {
-      axis_anteaters: "AXIS Anteaters",
-      unicamp_tritons_red: "Unicamp Tritons",
-    },
     placements: [
       { range: "1", id: "axis_anteaters" },
       { range: "2", id: "azure_bears_black" },
@@ -17597,7 +17190,6 @@ const TOURNAMENT_OVERRIDES = {
     },
   },
   aoc: {
-    teamNames: { minerva_thunders: "Dark UFRJ" },
     organizerLogo: "assets/organizers-logos/logo_aoc.png",
     prizePool: "5x Monitores AGON CS24A/P",
     tier: "A",
@@ -18126,8 +17718,6 @@ const TOURNAMENT_OVERRIDES = {
     hidden: true,
   },
   "jubs-fase-inicial": {
-    "teamNames": { "ufrn_tirana": "UFRN Carcarás" },
-    "teamNames": { "incinera_esports": "UFPE Virtus" },
     "name": "JUBS Goiás 2026 - Fase inicial",
     "organizer": "CBDU",
     "organizerLogo": "assets/organizers-logos/logo_CBDU.png",
@@ -19845,10 +19435,6 @@ const TOURNAMENT_OVERRIDES = {
     endAt: "2026-05-17T20:00:00",
     teamCount: 6,
     mapPool: ["Ascent", "Breeze", "Fracture", "Haven", "Lotus", "Pearl", "Split"],
-    teamNames: {
-      "caap_momentum": "Axis Ego",
-      unicamp_tritons_black: "Unicamp Tritons",
-    },
     teams: ["caap_momentum", "poli_plague", "totale_umc", "unicamp_tritons_black", "caap_hellhounds", "pucc_cardinals"],
     placements: [
       { range: "1", id: "pucc_cardinals", note: "Campe\u00e3o" },
@@ -21318,7 +20904,6 @@ const TOURNAMENT_OVERRIDES = {
     },
   },
   "univava-classificatoria-4": {
-    "teamNames": { "ufu_saints_onyx": "UFU Saints Trigons" },
     "name": "UNIVAVÁ - Classificatória 4",
     "organizer": "AcadArena",
     "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
@@ -22063,7 +21648,7 @@ const TOURNAMENT_OVERRIDES = {
                   "winner": "maua_blue",
                   "status": "Sem estatísticas",
                   "playedAt": "2026-09-12T21:34:41Z",
-                  "previewNote": "Placar oficial: Mauá Blue 16x14 FATEC PG, Haven. Mapa fora das estatísticas porque os dados da partida estão incompletos."
+                  "previewNote": "Placar oficial: Mauá Esports 16x14 FATEC PG, Haven. Mapa fora das estatísticas porque os dados da partida estão incompletos."
                 }
               ]
             },
@@ -23049,7 +22634,6 @@ const TOURNAMENT_OVERRIDES = {
     },
   },
   "copa-alianca-2025-classificatoria-2": {
-    "teamNames": { "minerva_thunders": "UFRJ Canis" },
     name: "Copa Alian\u00e7a 2025 - Classificat\u00f3ria 2",
     organizer: "AcadArena",
     organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
@@ -23294,7 +22878,6 @@ const TOURNAMENT_OVERRIDES = {
     },
   },
   "copa-alianca-2025-classificatoria-3": {
-    "teamNames": { "minerva_thunders": "UFRJ Canis" },
     "name": "Copa Aliança 2025 - Classificatória 3",
     "organizer": "AcadArena",
     "organizerLogo": "assets/organizers-logos/logo_AcadArena.png",
@@ -24052,7 +23635,7 @@ const TOURNAMENT_OVERRIDES = {
                   "winner": "ufmt_turuna",
                   "status": "Sem estatísticas",
                   "playedAt": "2025-06-29T18:54:57Z",
-                  "previewNote": "Placar oficial: FURIA 7x13 UFMT, Haven. Mapa fora das estatísticas porque os dados da partida estão incompletos."
+                  "previewNote": "Placar oficial: Furia XV 7x13 UFMT Turuna, Haven. Mapa fora das estatísticas porque os dados da partida estão incompletos."
                 }
               ]
             }
@@ -24063,7 +23646,7 @@ const TOURNAMENT_OVERRIDES = {
   },
   "copa-alianca-2025-classificatoria-4": {
     name: "Copa Alian\u00e7a 2025 - Classificat\u00f3ria 4",
-    teamNames: { ifsp_icare: "IFSP Icar\u00e9" },
+    teamNames: { ifsp_icare: "IFSP Icaré" },
     organizer: "AcadArena",
     organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
     prizePool: "-",
@@ -24271,7 +23854,6 @@ const TOURNAMENT_OVERRIDES = {
     },
   },
   "copa-alianca-2025-fase-de-grupos": {
-    "teamNames": { "minerva_thunders": "UFRJ Canis" },
     name: "Copa Alian\u00e7a 2025 - Fase de Grupos",
     organizer: "AcadArena",
     organizerLogo: "assets/organizers-logos/logo_AcadArena.png",
@@ -25421,11 +25003,6 @@ const TOURNAMENT_OVERRIDES = {
       summary: "Eliminação dupla",
       details: ["Todos os jogos MD1", "Finais MD3"],
       standings: "Colocação oficial do campeonato",
-    },
-    teamNames: {
-      "minerva_thunders": "Dark UFRJ",
-      "caap_momentum": "Axis Ego",
-      sixa_eaters: "sixA Eaters",
     },
     teams: [
       "pucgo_sistematica",
@@ -45555,7 +45132,15 @@ const HISTORICAL_TEAM_ROUTE_ALIASES = {
   "estacio_cybers_rj_2024": "unesa_cyborgs",
   "minerva_fem_ufrj": "minerva_artemis",
   "oktoplus_gaming_cefet_mg_2024": "panterao_gaming",
-  "canis_valorant_inclusivo_2024": "minerva_artemis"
+  "canis_valorant_inclusivo_2024": "minerva_artemis",
+  "maua_blue_2023": "maua_esports_black_2024",
+  "unifei_blue_rabbits_2023": "atletica_unifei",
+  "usp_ime_wolves": "ime_wolves_red",
+  "ufpr_blackhat_bbn_2023": "ufpr_bbn",
+  "unb_green_owls_a_2023": "unb_black",
+  "unb_green_owls_b_2023": "unb_green_olws_line_red_2024",
+  "mackenzie_tecmack_2023": "macklogic_red",
+  "azure_bears_blue_2023": "azure_bears_golden"
 };
 
 function teamById(id) {

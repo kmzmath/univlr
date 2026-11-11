@@ -197,7 +197,7 @@ de outra pessoa vira "Comentário removido.", com o texto apagado e o autor nulo
 e as respostas, votos e denúncias dos outros ficam. Antes o `on delete cascade`
 do `parent_id` apagava tudo isso junto. A regra mora no gatilho
 `antes_de_apagar_perfil`; comentário vivo sem autor é recusado
-(`comments_autor_ou_apagado`).
+(`comments_autor_ou_apagado`). Aplicada no projeto em 11/11/2026.
 
 Desde a `0009` os outros cinco tipos (`match`, `event`, `team`, `player`,
 `article`) também têm formato: até 120 caracteres, só letras, números, `-` e

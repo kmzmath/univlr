@@ -44476,34 +44476,8 @@ function searchEntities() {
     ...resultadosDeCampeonato(),
     ...db.teams.map(searchTeamResult),
     ...db.teams.flatMap(searchTeamPhaseResults),
-    ...db.maps.map((map) => ({
-      type: "map",
-      path: `maps/${map.id}`,
-      label: map.name,
-      meta: `${map.matches} partidas`,
-      entity: map,
-      searchText: map.name,
-      visual: mapLogo(map.id),
-      colors: map.colors,
-      mark: map.name.slice(0, 3).toUpperCase(),
-    })),
     ...db.players.filter(playerTemPerfil).map(searchPlayerResult),
     ...(window.Community?.usuariosParaBusca() || []).map(searchUserResult),
-    ...allMatchSeries().map((series) => {
-      const score = matchListScore(series);
-      const event = state.db?.tournaments.find((row) => row.id === series.eventId);
-      const patch = matchSearchPatchLabel(series);
-      return {
-        type: "match",
-        path: matchSeriesRoute(series),
-        label: `${series.teamA.name} ${score.a} x ${score.b} ${series.teamB.name}`,
-        meta: `${score.label} - ${score.detail} - ${formatDate(series.startedAt, "time")} - ${event?.name || "Campeonato"}${patch ? ` - ${patch}` : ""}`,
-        entity: series,
-        searchText: matchSearchText(series, score, event, patch),
-        colors: ["#181715", "#d8323c"],
-        mark: score.label.slice(0, 3).toUpperCase(),
-      };
-    }),
   ];
 }
 
@@ -44593,10 +44567,28 @@ function resultadosDeCampeonato() {
 
 // O filtro da barra de busca: o texto inteiro dentro do pesquisavel do item, e a
 // regra propria do item quando ele tem uma.
+// O indice da busca e montado uma vez por banco (e de novo quando a lista de
+// usuarios da comunidade chega), com o texto ja normalizado. Antes ele era
+// refeito a cada tecla: com 4.065 itens depois de 2023 a 2025 entrarem no site,
+// cada letra custava ~200 ms, contra ~55 ms na versao com so 2026 (11/11/2026).
+let indiceDaBusca = null;
+
+function indiceBusca() {
+  const usuarios = window.Community?.usuariosParaBusca() || null;
+  if (indiceDaBusca && indiceDaBusca.db === state.db && indiceDaBusca.usuarios === usuarios) return indiceDaBusca.itens;
+  const itens = searchEntities().map((item) => ({ item, texto: normalize(item.searchText || `${item.label} ${item.meta || ""}`) }));
+  indiceDaBusca = { db: state.db, usuarios, itens };
+  return itens;
+}
+
 function filtrarBusca(query) {
-  return searchEntities()
-    .filter((item) => normalize(item.searchText || `${item.label} ${item.meta || ""}`).includes(query) && (!item.mostrarSe || item.mostrarSe(query)))
-    .slice(0, 10);
+  const achados = [];
+  for (const { item, texto } of indiceBusca()) {
+    if (!texto.includes(query) || (item.mostrarSe && !item.mostrarSe(query))) continue;
+    achados.push(item);
+    if (achados.length === 10) break;
+  }
+  return achados;
 }
 
 function searchTournamentResult(event) {
@@ -44612,62 +44604,8 @@ function searchTournamentResult(event) {
   };
 }
 
-function matchSearchText(series, score, event, patch) {
-  const teamA = matchSearchTeamAliases(series.teamA);
-  const teamB = matchSearchTeamAliases(series.teamB);
-  const primaryA = teamA[0] || series.teamA.name;
-  const primaryB = teamB[0] || series.teamB.name;
-  const scoreVariants = matchSearchScoreVariants(score.a, score.b);
-  const reverseScoreVariants = matchSearchScoreVariants(score.b, score.a);
-  const scorePhrases = scoreVariants.flatMap((scoreText) => [
-    scoreText,
-    `${primaryA} ${scoreText} ${primaryB}`,
-    `${primaryA} ${scoreText}`,
-    `${scoreText} ${primaryB}`,
-  ]);
-  const reverseScorePhrases = reverseScoreVariants.flatMap((scoreText) => [
-    `${primaryB} ${scoreText} ${primaryA}`,
-    `${primaryB} ${scoreText}`,
-    `${scoreText} ${primaryA}`,
-  ]);
-  return [
-    `${primaryA} ${score.a} x ${score.b} ${primaryB}`,
-    ...teamA,
-    ...teamB,
-    ...scorePhrases,
-    ...reverseScorePhrases,
-    score.label,
-    score.detail,
-    event?.name || "",
-    formatDate(series.startedAt, "time"),
-    patch,
-  ].filter(Boolean).join(" ");
-}
 
-function matchSearchTeamAliases(team) {
-  const dbTeam = teamById(team?.id);
-  return [...new Set([
-    team?.name,
-    dbTeam?.name,
-    dbTeam ? teamSearchTagLabel(dbTeam) : "",
-    team?.tag,
-    dbTeam?.tag,
-    dbTeam?.shortTag,
-    dbTeam?.sourceTag,
-    team?.id,
-  ].filter(Boolean))];
-}
 
-function matchSearchScoreVariants(a, b) {
-  return [
-    `${a} x ${b}`,
-    `${a}x${b}`,
-    `${a} : ${b}`,
-    `${a}:${b}`,
-    `${a} - ${b}`,
-    `${a}-${b}`,
-  ];
-}
 
 function renderSearchResult(item, index = 0) {
   searchResultIndex = index;
@@ -44675,8 +44613,6 @@ function renderSearchResult(item, index = 0) {
     team: renderTeamSearchResult,
     player: renderPlayerSearchResult,
     tournament: renderTournamentSearchResult,
-    match: renderMatchSearchResult,
-    map: renderMapSearchResult,
     user: renderUserSearchResult,
   };
   return (renderers[item.type] || renderGenericSearchResult)(item);
@@ -44759,139 +44695,16 @@ function renderTournamentSearchResult(item) {
   );
 }
 
-function renderMatchSearchResult(item) {
-  const series = item.entity;
-  const score = matchListScore(series);
-  const event = state.db?.tournaments.find((row) => row.id === series.eventId);
-  return renderSearchButton(
-    item,
-    `
-      ${matchSearchMapVisual(series)}
-      <span class="search-result-content">
-        <span class="search-result-kicker">Partida</span>
-        <strong class="search-match-score-line">
-          <span class="search-match-team search-match-team-a">
-            ${teamLogo(series.teamA.id, "search-match-team-logo", series.eventId)}
-            <span>${escapeHtml(series.teamA.name)}</span>
-          </span>
-          <b><span class="${scoreNumberClass(score.a, score.b)}">${escapeHtml(String(score.a))}</span><i>:</i><span class="${scoreNumberClass(score.b, score.a)}">${escapeHtml(String(score.b))}</span></b>
-          <span class="search-match-team search-match-team-b">
-            <span>${escapeHtml(series.teamB.name)}</span>
-            ${teamLogo(series.teamB.id, "search-match-team-logo", series.eventId)}
-          </span>
-        </strong>
-        <span class="search-match-event-line">
-          ${event ? eventLogo(event, "search-match-event-logo") : ""}
-          <span>${escapeHtml(event?.name || "Campeonato")}</span>
-        </span>
-        <span class="search-match-facts">
-          <span>${escapeHtml(formatDate(series.startedAt, "time"))}</span>
-          ${matchSearchPatchLabel(series) ? `<span>${escapeHtml(matchSearchPatchLabel(series))}</span>` : ""}
-          <span>${escapeHtml(matchSearchMapLabel(series, score))}</span>
-        </span>
-      </span>
-    `,
-  );
-}
 
-function matchSearchMapVisual(series) {
-  const maps = series.maps || [];
-  const mapCount = Math.max(maps.length, 1);
-  const countClass = mapCount > 1 ? "multi" : "single";
-  return `
-    <span class="search-result-visual search-match-map-visual ${countClass}" style="--search-match-map-count:${mapCount}" aria-label="${escapeHtml(matchSearchMapLabel(series, matchListScore(series)))}">
-      ${maps.map(searchMatchMapImage).join("")}
-    </span>
-  `;
-}
 
-function searchMatchMapImage(match, index) {
-  const asset = matchMapAsset(match);
-  const label = asset.name || match?.mapName || `Mapa ${index + 1}`;
-  return `
-    <span class="search-match-map-image ${asset.src ? "" : "missing-image"}" title="${escapeHtml(label)}">
-      ${asset.src ? `<img src="${escapeHtml(asset.src)}" data-fallback="${escapeHtml(asset.fallback)}" alt="${escapeHtml(label)}" loading="lazy" onerror="mapArtError(this)" />` : ""}
-      <span>${escapeHtml(label.slice(0, 3).toUpperCase())}</span>
-    </span>
-  `;
-}
 
-function matchSearchMapLabel(series, score = matchListScore(series)) {
-  if (series.mapCount > 1) return `${score.label} - ${score.detail}`;
-  return score.detail || score.label || "Mapa";
-}
 
-function matchSearchPatchLabel(series) {
-  const patches = [...new Set((series.maps || []).map((match) => patchLabel(match?.gameVersion || "")).filter((label) => label && label !== "-"))];
-  if (!patches.length) return "";
-  return `Patch ${patches.slice(0, 3).join(" / ")}${patches.length > 3 ? ` +${patches.length - 3}` : ""}`;
-}
 
-function mapSearchMatches(map) {
-  const mapId = String(map?.id || "");
-  const mapNameKey = normalizeNameKey(map?.name || "");
-  const mapIdKey = normalizeNameKey(mapId);
-  return (state.db?.matches || []).filter((match) => {
-    const matchMapNameKey = normalizeNameKey(match.mapName || "");
-    const matchMapIdKey = normalizeNameKey(match.mapId || "");
-    return (mapId && match.mapId === mapId) || (mapNameKey && matchMapNameKey === mapNameKey) || (mapIdKey && matchMapIdKey === mapIdKey);
-  });
-}
 
-function mapSearchPatchLabel(map) {
-  const patches = [...new Set(mapSearchMatches(map).map((match) => patchLabel(match?.gameVersion || "")).filter((label) => label && label !== "-"))];
-  if (!patches.length) return "";
-  return `Patch ${patches.slice(0, 4).join(" / ")}${patches.length > 4 ? ` +${patches.length - 4}` : ""}`;
-}
 
-function mapSearchTournaments(map) {
-  const tournamentsById = new Map((state.db?.tournaments || []).map((event) => [event.id, event]));
-  const eventIds = [...new Set(mapSearchMatches(map).map((match) => match.eventId).filter(Boolean))];
-  return eventIds.map((eventId) => tournamentsById.get(eventId)).filter(Boolean);
-}
 
-function mapSearchTournamentLogos(map) {
-  const events = mapSearchTournaments(map);
-  const visibleEvents = events.slice(0, 5);
-  const extra = events.length - visibleEvents.length;
-  if (!events.length) return `<span class="search-map-events search-map-events-empty">Sem campeonatos</span>`;
-  return `
-    <span class="search-map-events" aria-label="${escapeHtml(`${events.length} campeonatos`)}">
-      ${visibleEvents.map((event) => eventLogo(event, "search-map-event-logo")).join("")}
-      ${extra ? `<span class="search-map-event-extra">+${extra}</span>` : ""}
-    </span>
-  `;
-}
 
-function mapSearchBanner(map) {
-  const art = mapArtAttrs(map);
-  const label = map?.name || "Mapa";
-  return `
-    <span class="search-result-visual search-map-banner ${art ? "" : "missing-image"}" aria-label="${escapeHtml(label)}">
-      ${art ? `<img src="${escapeHtml(art.src)}" data-fallback="${escapeHtml(art.fallback)}" alt="${escapeHtml(`Mapa ${label}`)}" loading="lazy" onerror="mapArtError(this)" />` : ""}
-      <span>${escapeHtml(label.slice(0, 3).toUpperCase())}</span>
-    </span>
-  `;
-}
 
-function renderMapSearchResult(item) {
-  const map = item.entity;
-  return renderSearchButton(
-    item,
-    `
-      ${mapSearchBanner(map)}
-      <span class="search-result-content">
-        <span class="search-result-kicker">Mapa</span>
-        <strong class="search-result-title">${escapeHtml(map.name)}</strong>
-        <span class="search-map-stats">${escapeHtml(`${map.matches} partidas - ${map.rounds} rounds`)}</span>
-        <span class="search-map-facts">
-          ${mapSearchPatchLabel(map) ? `<span>${escapeHtml(mapSearchPatchLabel(map))}</span>` : ""}
-          ${mapSearchTournamentLogos(map)}
-        </span>
-      </span>
-    `,
-  );
-}
 
 function renderUserSearchResult(item) {
   return renderSearchButton(
@@ -45028,11 +44841,6 @@ function eventIsDone(event) {
   return eventStatusClass(event?.status) === "done";
 }
 
-function scoreNumberClass(value, opponent) {
-  if (value > opponent) return "score-number win";
-  if (value < opponent) return "score-number loss";
-  return "score-number";
-}
 
 function playerTable(players) {
   return `
@@ -45108,16 +44916,6 @@ function logo(label, colors, extra = "") {
   return `<span class="logo ${extra}" style="background:linear-gradient(135deg, ${colors[0]}, ${colors[1]})">${escapeHtml(label)}</span>`;
 }
 
-function imageLogo(src, label, colors, extra = "", alt = "") {
-  const safeSrc = assetPath(src);
-  if (!safeSrc) return logo(label, colors, extra);
-  return `
-    <span class="logo image-logo ${extra}" style="background:linear-gradient(135deg, ${colors[0]}, ${colors[1]})">
-      <span class="logo-fallback">${escapeHtml(label)}</span>
-      <img src="${escapeHtml(safeSrc)}" alt="${escapeHtml(alt || label)}" loading="lazy" onerror="this.remove()" />
-    </span>
-  `;
-}
 
 function eventLogo(event, extra = "") {
   const label = event?.mark || eventAcronym(event?.name || event?.id || "EV");
@@ -45200,15 +44998,6 @@ function playerPhotoError(image) {
   image.src = assetPath(PLAYER_FALLBACK_PHOTO);
 }
 
-function mapLogo(id, extra = "") {
-  const map = mapById(id);
-  const label = (map?.name || id).slice(0, 3).toUpperCase();
-  // O maior lugar onde este logo aparece tem 82px; o PNG de origem tem 1600px
-  // de largura. Se o WebP faltar, imageLogo ja cai no monograma de tres letras
-  // que fica atras da imagem, entao nao precisa de cadeia de fallback aqui.
-  const art = mapArtAttrs(map);
-  return imageLogo(art?.src || "", label, map?.colors || mapColors(id), `map-logo ${extra}`.trim(), `Mapa ${map?.name || id}`);
-}
 
 const HISTORICAL_TEAM_ROUTE_ALIASES = {
   "utfpr_azure_bears_pr_2024": "azure_bears_golden",

@@ -383,9 +383,78 @@ begin
 end;
 $topicos$;
 
+-- ------------------------------------------- assunto e mencoes (0009)
+-- Uma conta nova (eva), longe do limite por minuto que as outras ja gastaram,
+-- e sete contas so para serem mencionadas.
+
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
+                        email_confirmed_at, created_at, updated_at, raw_user_meta_data)
+select ('55555555-5555-5555-5555-55555555555' || i)::uuid, '00000000-0000-0000-0000-000000000000',
+       'authenticated', 'authenticated', 'mencao' || i || '@teste.univlr', '', now(), now(), now(),
+       json_build_object('username', 'mencao_teste_' || i)::jsonb
+  from generate_series(0, 7) as i;
+
+do $assunto$
+declare
+  eva uuid := '55555555-5555-5555-5555-555555555550';
+  c uuid;
+  n int;
+begin
+  perform set_config('request.jwt.claims', json_build_object('sub', eva)::text, true);
+  set local role authenticated;
+
+  -- ATAQUE - subject_id gigante. Antes virava uma linha da thread_counts, que
+  -- todo visitante baixa antes do primeiro desenho.
+  begin
+    perform public.post_comment('match', repeat('a', 5000), 'assunto gigante');
+    insert into _r (teste, esperado, resultado) values ('subject_id de 5000 caracteres', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('subject_id de 5000 caracteres', 'bloqueado',
+      case when SQLERRM like '%assunto invalido%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - subject_id com caractere que nenhum id do site tem.
+  begin
+    perform public.post_comment('team', 'equipe <script>', 'assunto com espaco e sinal');
+    insert into _r (teste, esperado, resultado) values ('subject_id fora do formato', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('subject_id fora do formato', 'bloqueado',
+      case when SQLERRM like '%assunto invalido%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - a restricao da tabela segura mesmo quem contorna a RPC. Como
+  -- dono (o caminho do security definer), um insert direto fora do formato.
+  reset role;
+  begin
+    insert into public.threads (subject_kind, subject_id) values ('event', repeat('b', 121));
+    insert into _r (teste, esperado, resultado) values ('restricao da tabela barra id de 121', 'bloqueado', 'FALHOU - passou');
+  exception when check_violation then
+    insert into _r (teste, esperado, resultado) values ('restricao da tabela barra id de 121', 'bloqueado', 'ok');
+  end;
+  set local role authenticated;
+
+  -- Controle: o maior id real do site (chave de serie de 91 caracteres) passa.
+  c := public.post_comment('match', 'copa-alianca-2025-classificatoria-1-001-azure_bears_golden-unifacens_fodens-' || repeat('x', 15), 'id longo de verdade');
+  insert into _r (teste, esperado, resultado) values ('id de 91 caracteres passa', 'ok', case when c is not null then 'ok' else 'FALHOU' end);
+
+  -- ATAQUE - mencoes sem teto. Sete pessoas distintas (uma repetida em
+  -- maiusculas): avisa so as 5 primeiras, na ordem do texto.
+  c := public.post_comment('match', 'partida-de-teste',
+    '@mencao_teste_1 @MENCAO_TESTE_1 @mencao_teste_2 @mencao_teste_3 @mencao_teste_4 @mencao_teste_5 @mencao_teste_6 @mencao_teste_7');
+  reset role;
+  select count(*) into n from public.notifications where comment_id = c and kind = 'mention';
+  insert into _r (teste, esperado, resultado) values ('7 mencoes avisam 5', '5', case when n = 5 then 'ok' else 'FALHOU - ' || n end);
+  select count(*) into n from public.notifications nt join public.profiles p on p.id = nt.user_id
+   where nt.comment_id = c and p.username in ('mencao_teste_6', 'mencao_teste_7');
+  insert into _r (teste, esperado, resultado) values ('a 6a e a 7a ficam sem aviso', '0', case when n = 0 then 'ok' else 'FALHOU - ' || n end);
+end;
+$assunto$;
+
 -- ------------------------------------------------------------------ limpeza
 delete from auth.users where email in ('alice@teste.univlr', 'bruno@teste.univlr');
+delete from auth.users where email like 'mencao_@teste.univlr';
 delete from public.threads where subject_id in ('partida-de-teste', 'outra-partida');
+delete from public.threads where subject_id like 'copa-alianca-2025-classificatoria-1-001-%';
 
 select ordem, teste, esperado, resultado from _r order by ordem;
 

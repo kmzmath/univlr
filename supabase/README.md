@@ -26,6 +26,7 @@ existe e precisa passar antes de qualquer tela.
 | `migrations/0006_voto_com_sinal.sql` | Voto para cima e para baixo |
 | `migrations/0007_cartinhas.sql` | Conversas das cartinhas (`card`), com formato conferido |
 | `migrations/0008_threads_livres.sql` | Threads livres (`topics`, tipo `topic`), aviso `topic_reply`, view `topic_list` |
+| `migrations/0009_limite_de_assunto_e_mencoes.sql` | Formato e tamanho do `subject_id` (até 120 caracteres, letras, números, `-` e `_`) e no máximo 5 avisos de menção por comentário |
 | `tests/rls_test.sql` | Ataques que precisam falhar |
 | `tests/positive_test.sql` | Operações legítimas que precisam passar |
 
@@ -188,6 +189,19 @@ O banco recusa qualquer outro formato (`threads_card_subject_format`), já que
 é uuid, que não existe ou que foi apagado. Quem apaga a conta leva os próprios
 comentários, mas a thread que abriu fica, com `author_id` nulo ("conta
 apagada" na tela). Quem abriu recebe o aviso `topic_reply` a cada comentário.
+
+Desde a `0009` os outros cinco tipos (`match`, `event`, `team`, `player`,
+`article`) também têm formato: até 120 caracteres, só letras, números, `-` e
+`_` (`threads_subject_id_formato`; o maior id real, uma chave de série, tem 91).
+`post_comment()` recusa o resto com "assunto invalido". Antes um id de qualquer
+tamanho virava thread e engordava a `thread_counts` que todo visitante baixa.
+Se a migração encontrar threads antigas fora do formato, ela não falha: avisa
+quantas são, a regra passa a valer só para as novas, e a consulta para
+listá-las está na mensagem.
+
+Menção: cada comentário avisa no máximo as 5 primeiras pessoas distintas, na
+ordem do texto, e `@Fulano` e `@fulano` contam como uma (antes eram dois
+avisos para a mesma pessoa, e não havia teto).
 
 Consequência de o conteúdo da notícia viver no repositório e o comentário no
 banco: apagar o `.docx` **não** apaga a thread. Ela fica órfã e invisível. Se a

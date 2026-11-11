@@ -196,12 +196,30 @@
     topic_reply: "Comentaram na sua thread",
   };
 
+  // Rota de cada tipo de assunto quando o banco ainda nao chegou (ou nas
+  // cartinhas, que nao tem banco). A partida precisa do banco para virar
+  // endereco, porque o assunto e o seriesKey; sem ele vai para a lista.
+  const ROTA_DO_ASSUNTO = {
+    topic: (id) => `#/forum/${encodeURIComponent(id)}`,
+    team: (id) => `#/teams/${encodeURIComponent(id)}`,
+    player: (id) => `#/players/${encodeURIComponent(id)}`,
+    event: (id) => `#/tournaments/${encodeURIComponent(id)}`,
+    article: (id) => `#/news/${encodeURIComponent(id)}`,
+    match: () => "#/matches",
+  };
+
+  // O aviso leva a pagina do assunto com `?c=`, que destaca o comentario. Antes
+  // so o de thread livre fazia isso; os outros iam para `#cmt-<id>`, que o
+  // roteador le como pagina desconhecida, e a pessoa caia na home.
   function hrefDoAviso(n) {
     const t = n.comments && n.comments.threads;
-    if (t && t.subject_kind === "topic") {
-      return `#/forum/${encodeURIComponent(t.subject_id)}?c=${encodeURIComponent(n.comment_id)}`;
-    }
-    return `#cmt-${n.comment_id}`;
+    if (!t) return `${RAIZ}#/home`;
+    const assunto = window.Comments?.assuntoDaThread?.(t.subject_kind, t.subject_id);
+    const href = assunto?.href || ROTA_DO_ASSUNTO[t.subject_kind]?.(t.subject_id) || "#/home";
+    // Cartinha ja e um endereco proprio (/cartas/#jogador-...), sem rota com query.
+    if (!href.startsWith("#")) return href;
+    const comQuery = t.subject_kind === "match" && !assunto ? href : `${href}${href.includes("?") ? "&" : "?"}c=${encodeURIComponent(n.comment_id)}`;
+    return `${RAIZ}${comQuery}`;
   }
 
   const VISTAS = {

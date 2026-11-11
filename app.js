@@ -25406,7 +25406,7 @@ async function init() {
     // Caminho rápido: banco pré-agregado por scripts/build_database.js.
     // Sem database.json (ex.: dados novos ainda não processados), cai no
     // pipeline completo no navegador, que baixa todos os arquivos brutos.
-    const packed = window.DbCodec ? await loadJsonOptional(DATABASE_MANIFEST) : null;
+    const packed = window.DbCodec ? await loadDatabaseOrNull(DATABASE_MANIFEST) : null;
     if (packed) {
       state.db = window.DbCodec.decode(packed);
     } else {
@@ -25656,8 +25656,24 @@ function prepareTeamProfiles(rawTeamProfiles) {
 
 async function loadJson(path) {
   const response = await fetch(encodeURI(path));
-  if (!response.ok) throw new Error(`Falha ao carregar ${path}`);
+  if (!response.ok) {
+    const erro = new Error(`Falha ao carregar ${path}`);
+    erro.status = response.status;
+    throw erro;
+  }
   return response.json();
+}
+
+// Sem banco pre-agregado (404) o site monta tudo dos arquivos brutos. Qualquer
+// outra falha (5xx, rede cortada, JSON truncado) vai para a tela de erro com
+// "Tentar de novo": cair nos brutos ai baixava 1,1 GB no aparelho de quem visita.
+async function loadDatabaseOrNull(path) {
+  try {
+    return await loadJson(path);
+  } catch (error) {
+    if (error.status === 404) return null;
+    throw error;
+  }
 }
 
 async function loadJsonOptional(path) {
@@ -26111,12 +26127,17 @@ function rankingSnapshotCutoffs(matches, matchSeries, rankingWeights = {}) {
   return cutoffs;
 }
 
+// Terca 00:00 em Brasilia (UTC-3, sem horario de verao desde 2019), qualquer que
+// seja o fuso do navegador. No fuso local, quem abria o site em Manaus ou Lisboa
+// ganhava um corte que nao batia com o do banco e um ranking duplicado da semana.
+const RANKING_FUSO_MS = 3 * 60 * 60 * 1000;
+
 function rankingTuesdayStartOnOrBefore(timestamp) {
-  const date = new Date(timestamp);
-  date.setHours(0, 0, 0, 0);
-  const diff = (date.getDay() - RANKING_UPDATE_DAY + 7) % 7;
-  date.setDate(date.getDate() - diff);
-  return date.getTime();
+  const date = new Date(Number(timestamp) - RANKING_FUSO_MS);
+  date.setUTCHours(0, 0, 0, 0);
+  const diff = (date.getUTCDay() - RANKING_UPDATE_DAY + 7) % 7;
+  date.setUTCDate(date.getUTCDate() - diff);
+  return date.getTime() + RANKING_FUSO_MS;
 }
 
 function rankingTuesdayStartOnOrAfter(timestamp) {
@@ -28685,7 +28706,11 @@ function canonicalHashForRoute(currentRoute) {
   const player = playerById(currentRoute.id);
   if (!player?.routeSlug) return "";
   const canonicalHash = playerHref(player, currentRoute.tab);
-  return canonicalHash === currentRouteKey() ? "" : canonicalHash;
+  if (canonicalHash === currentRouteKey()) return "";
+  // A query vem junto (filtro de funcao, ?c= do aviso de comentario): o endereco
+  // antigo ou por id trocava de rota e perdia o que vinha depois do "?".
+  const query = window.location.hash.split("?").slice(1).join("?");
+  return query ? `${canonicalHash}?${query}` : canonicalHash;
 }
 
 // Equipes: a Camisa em pe das Equipes Participantes, uma por equipe cadastrada, ou
@@ -33387,7 +33412,10 @@ function tournamentPodiumRowsFromBracket(event, matches) {
   const finalMatch = columns.at(-1)?.matches?.at(-1);
   if (!finalMatch?.a || !finalMatch?.b) return [];
 
-  const winnerId = finalMatch.winner || (Number(finalMatch.scoreA) > Number(finalMatch.scoreB) ? finalMatch.a : finalMatch.b);
+  // Final sem vencedor (ainda nao jogada, ou empatada) nao tem podio: a conta
+  // antiga caia sempre na equipe B.
+  const winnerId = tournamentBracketMatchWinner(finalMatch);
+  if (!winnerId) return [];
   const runnerUpId = finalMatch.a === winnerId ? finalMatch.b : finalMatch.a;
   const rows = [
     { range: "1", team: tournamentTeamById(event, winnerId) },
@@ -33396,7 +33424,8 @@ function tournamentPodiumRowsFromBracket(event, matches) {
 
   const semifinalLosers = (columns.at(-2)?.matches || [])
     .map((match) => {
-      const matchWinner = match.winner || (Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b);
+      const matchWinner = tournamentBracketMatchWinner(match);
+      if (!matchWinner) return "";
       return match.a === matchWinner ? match.b : match.a;
     })
     .filter(Boolean)
@@ -33638,8 +33667,20 @@ function tournamentSwissRecordsBeforeRound(event, roundIndex) {
 
 function tournamentSwissApplyMatchRecord(records, match) {
   if (!tournamentBracketMatchHasResult(match)) return;
-  const winnerId = match.winner || (Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b);
-  const loserId = match.a === winnerId ? match.b : match.a;
+  // Duplo W.O. e derrota das duas equipes, como na tabela; antes a equipe B
+  // ganhava uma vitoria. Outro empate sem vencedor nao entra na campanha.
+  if (!match.winner && Number(match.scoreA) === Number(match.scoreB)) {
+    if (/duplo/i.test(String(match.status || ""))) {
+      if (match.a) tournamentSwissRecordForTeam(records, match.a).losses += 1;
+      if (match.b) tournamentSwissRecordForTeam(records, match.b).losses += 1;
+    }
+    return;
+  }
+  // O lado vem do placar mesmo quando uma das equipes nao tem id (adversario sem
+  // cadastro): quem perdeu para ela continua com a derrota.
+  const ladoA = match.winner ? match.winner === match.a : Number(match.scoreA) > Number(match.scoreB);
+  const winnerId = ladoA ? match.a : match.b;
+  const loserId = ladoA ? match.b : match.a;
   if (winnerId) tournamentSwissRecordForTeam(records, winnerId).wins += 1;
   if (loserId) tournamentSwissRecordForTeam(records, loserId).losses += 1;
 }
@@ -34574,8 +34615,10 @@ function tournamentMatchPreviewHtml(entry) {
   const { event, region, column, match, series } = entry;
   const hasResult = tournamentBracketMatchHasResult(match);
   // Série inferida pela chave tem vencedor declarado e nenhum placar.
-  const winnerId = hasResult ? match.winner || (Number(match.scoreA) > Number(match.scoreB) ? match.a : match.b) : tournamentBracketMatchWinner(match);
-  const decided = hasResult || Boolean(winnerId);
+  // Empate, cancelamento e duplo W.O. nao tem vencedor: o modal mostra o status
+  // (antes dava a vitoria a equipe B).
+  const winnerId = tournamentBracketMatchWinner(match);
+  const decided = Boolean(winnerId);
   const teamA = tournamentTeamById(event, match.a);
   const teamB = tournamentTeamById(event, match.b);
   return `

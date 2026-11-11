@@ -212,7 +212,9 @@
   // rascunho deles). Guarda o que estava escrito e devolve no formulario novo.
   function rascunhoAtual() {
     const form = document.querySelector("[data-th-form]");
-    if (!form || !/^#\/threads\/nova\b/.test(window.location.hash)) return null;
+    // A pagina mudou de #/threads para #/forum em 08/11; a regex antiga nunca
+    // casava e o rascunho da nova thread se perdia em todo redesenho.
+    if (!form || !/^#\/(forum|threads)\/nova\b/.test(window.location.hash)) return null;
     return { titulo: form.titulo.value, texto: form.texto.value };
   }
 

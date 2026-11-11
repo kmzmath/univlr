@@ -34099,12 +34099,26 @@ function tournamentChaveRegioes(regions) {
   comChave.forEach((region) => {
     if (region.layout !== "linked" && !String(region.className || "").includes("group-stage")) region.columns = tournamentChaveAlinhaRodadaCurta(region.columns);
   });
-  const superior = comChave.find((region) => tournamentBracketRegionKind(region) === "upper-bracket" && region.layout !== "linked");
+  const superior = comChave.find((region) => tournamentBracketRegionKind(region) === "upper-bracket");
   const final = comChave.find((region) => tournamentBracketRegionKind(region) === "grand-final" && region.layout !== "linked");
   if (!superior || !final || (superior.stage || "") !== (final.stage || "")) return comChave;
-  superior.columns = [...superior.columns, ...final.columns.map((column) => ({ ...column, grandeFinal: true }))];
+  superior.columns = [...superior.columns, ...(superior.layout === "linked" ? tournamentChaveFinalEncadeada(superior, final) : final.columns).map((column) => ({ ...column, grandeFinal: true }))];
   superior.name = `${superior.name || "Chave superior"} e grande final`;
   return comChave.filter((region) => region !== final);
+}
+
+// Na chave encadeada (Alianca 2023.2 e 2024.2) a grande final fica na faixa da
+// final da superior e recebe o fio dela, como na chave comum.
+function tournamentChaveFinalEncadeada(superior, final) {
+  let anterior = [...superior.columns].reverse().find((column) => (column.matches || []).length)?.matches || [];
+  return final.columns.map((column) => {
+    const unica = anterior.length === 1 ? anterior[0] : null;
+    const matches = (column.matches || []).map((match, index) => (unica && column.matches.length === 1
+      ? { ...match, band: Number(unica.band ?? 0), from: [unica.code] }
+      : { ...match, band: Number(match.band ?? index) }));
+    anterior = matches;
+    return { ...column, matches };
+  });
 }
 
 // Chave encadeada sem faixa gravada caia inteira no topo e sem fio (Aliança 2024,
@@ -34391,7 +34405,7 @@ function tournamentLinkedBracketColumns(event, region) {
       id: match.code,
       band: Number(match.band ?? matchIndex),
       from: match.from,
-      render: (placement) => tournamentLinkedBracketMatch(event, match, tournamentBracketMatchKey(columnIndex, matchIndex, match.code), placement),
+      render: (placement) => tournamentLinkedBracketMatch(event, match, match.previewKey || tournamentBracketMatchKey(columnIndex, matchIndex, match.code), placement),
     })),
   }));
   const cards = region.terminalColumn?.cards || [];

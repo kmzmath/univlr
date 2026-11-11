@@ -437,5 +437,48 @@ for (const camp of cadastro) {
   assert.strictEqual((jogos.match(/class="vp-jogos-etapa"/g) || []).length, comSerie, `${camp.id}: um bloco de jogos por etapa com jogos`);
 }
 
+// ---------------------------------------------------------------- Edicoes (11/11/2026)
+{
+  const series = vm.runInContext("SERIES_DE_CAMPEONATOS", context);
+  const vistas = new Set();
+  for (const serie of series) {
+    let antes = 0;
+    for (const edicao of serie.edicoes) {
+      assert(!vistas.has(edicao.id), `${edicao.id}: em uma serie so`);
+      vistas.add(edicao.id);
+      const pagina = context.campeonatoPorId(edicao.id) || ev(edicao.id);
+      assert(pagina, `${edicao.id}: existe`);
+      assert(Number(pagina.start) > antes, `${serie.id}: ${edicao.id} depois da edicao anterior`);
+      antes = Number(pagina.start);
+    }
+  }
+  const destino = (de, para) => {
+    const etapa = context.campeonatoPorId(de) ? context.eventoDoGeral(context.campeonatoPorId(de)) : ev(de);
+    const camp = context.campeonatoPorId(de) || context.campeonatoDaEtapa(etapa);
+    return context.edicaoDestino(para, etapa, camp);
+  };
+  assert.strictEqual(destino("alianca-2024-playoffs", "alianca-2024-2"), "alianca-2024-2-playoffs", "mesmo nome");
+  assert.strictEqual(destino("alianca-2024-grupos", "alianca-2024-2"), "alianca-2024-2-fase-de-grupos", "mesmo degrau, uma so");
+  assert.strictEqual(destino("alianca-2024-classificatoria-1", "alianca-2024-2"), "alianca-2024-2", "duas no degrau: Geral");
+  assert.strictEqual(destino("alianca-2023-2-classificatoria", "alianca-2024-1"), "alianca-2024-1", "uma de la, duas aqui: Geral");
+  assert.strictEqual(destino("alianca-2024-1", "copa-alianca-2025"), "copa-alianca-2025", "do Geral, o Geral");
+  assert.strictEqual(destino("jubs-2024-presencial", "jubs-2026"), "jubs-etapa-presencial", "JUBS: Etapa Presencial");
+  assert.strictEqual(destino("jubs-pre-jubs-sp", "jubs-2025"), "jubs-2025", "paralela sem par: Geral");
+  assert.strictEqual(destino("lbeu-2025-1-split-practice", "lbeu-2025-2-split"), "lbeu-2025-2-split-practice", "LBEU por nome");
+
+  const html = renderiza("#/events/alianca-2024-playoffs/mapas");
+  const nav = html.match(/<nav class="vp-camp-edicoes"[\s\S]*?<\/nav>/)?.[0] || "";
+  assert.strictEqual((nav.match(/<a /g) || []).length, 4, "quatro edicoes da Aliança");
+  assert(nav.includes('href="#/events/alianca-2024-2-playoffs/mapas"'), "aba vai junto");
+  assert(/aria-current="page">2024\.1</.test(nav), "edicao aberta marcada");
+  assert(!renderiza("#/events/cpue-2025").includes("vp-camp-edicoes"), "controle: campeonato sem serie nao tem numeros");
+
+  // Evento sozinho como edicao: o Rush Series, inclusivas junto.
+  const rush = renderiza("#/events/rush-series-3/jogos").match(/<nav class="vp-camp-edicoes"[\s\S]*?<\/nav>/)?.[0] || "";
+  assert.strictEqual((rush.match(/<a /g) || []).length, 5, "cinco edicoes do Rush Series");
+  assert(rush.includes('href="#/events/rush-series-inclusivo-2/jogos"'), "Rush: aba vai junto");
+  assert(/aria-current="page">3ª Edição</.test(rush), "Rush: edicao aberta marcada");
+}
+
 console.log("campeonatos com etapas: ok");
 

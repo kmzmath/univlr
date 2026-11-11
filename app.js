@@ -403,6 +403,54 @@ const CAMPEONATOS_COM_ETAPAS = [
   },
 ];
 
+// Edicoes do mesmo campeonato (11/11/2026, modelo B escolhido pelo dono): a camada
+// acima das etapas. Cada edicao aponta para um campeonato com etapas (o Geral) ou
+// para um evento sozinho, e o rotulo e o que aparece nos numeros do topo. Ordem
+// cronologica, da primeira edicao a mais recente. So navegacao: ranking, pontos e
+// database.json nao sabem que a serie existe.
+const SERIES_DE_CAMPEONATOS = [
+  {
+    id: "copa-alianca",
+    nome: "Copa Aliança",
+    edicoes: [
+      { id: "alianca-2023-2", rotulo: "2023.2" },
+      { id: "alianca-2024-1", rotulo: "2024.1" },
+      { id: "alianca-2024-2", rotulo: "2024.2" },
+      { id: "copa-alianca-2025", rotulo: "2025" },
+    ],
+  },
+  {
+    id: "jubs",
+    nome: "JUBS",
+    edicoes: [
+      { id: "jubs-2024", rotulo: "2024" },
+      { id: "jubs-2025", rotulo: "2025" },
+      { id: "jubs-2026", rotulo: "2026" },
+    ],
+  },
+  {
+    id: "lbeu-2025",
+    nome: "LBEU 2025",
+    edicoes: [
+      { id: "lbeu-2025-1-split", rotulo: "1º Split" },
+      { id: "lbeu-2025-2-split", rotulo: "2º Split" },
+    ],
+  },
+  {
+    // Todas as edicoes sao o mesmo campeonato para o dono, inclusivas junto, mesmo
+    // sem uma levar a outra (11/11/2026).
+    id: "rush-series",
+    nome: "Rush Series",
+    edicoes: [
+      { id: "rush-series-esquenta", rotulo: "Esquenta" },
+      { id: "rush-series-esquenta-2", rotulo: "Esquenta 2" },
+      { id: "rush-series-inclusivo", rotulo: "Inclusivo" },
+      { id: "rush-series-3", rotulo: "3ª Edição" },
+      { id: "rush-series-inclusivo-2", rotulo: "Inclusivo 2" },
+    ],
+  },
+];
+
 const TOURNAMENT_OVERRIDES = {
   "alianca-2023-2-classificatoria": {
     "name": "Copa Aliança 2023.2 - Classificatória",
@@ -33022,19 +33070,22 @@ function renderTournamentDetail(id) {
   const matches = matchSeriesForEvent(event.id);
   const standings = tournamentStandingsRows(event, matches);
   const activeTab = tournamentActiveTab();
+  const edicaoId = campeonato ? campeonato.id : event.id;
+  const serie = serieDaPagina(edicaoId);
   // Dentro de um campeonato, trocar de etapa (ou ir ao Geral) tambem desliza: o
-  // escopo e o campeonato e a chave e etapa + aba, na ordem da faixa.
-  const paginas = campeonato ? [campeonato.id, ...campeonato.etapas.map((item) => item.id)] : [event.id];
+  // escopo e o campeonato e a chave e etapa + aba, na ordem da faixa. Numa serie o
+  // escopo e a serie, e a edicao seguinte desliza para frente.
+  const paginas = serie ? paginasDaSerie(serie) : campeonato ? [campeonato.id, ...campeonato.etapas.map((item) => item.id)] : [event.id];
   const tabTransition = panelSlideSnapshot("tournament-tabs", {
     selector: ".tournament-tab-panel",
-    scope: campeonato ? campeonato.id : event.id,
+    scope: serie ? serie.id : edicaoId,
     key: `${event.id}|${activeTab}`,
     order: paginas.flatMap((pagina) => TOURNAMENT_TAB_KEYS.map((aba) => `${pagina}|${aba}`)),
   });
   Shell(`
     <article class="tournament-hub">
       <div class="vp-camp-cabeca">
-        ${tournamentHero(cabeca)}
+        ${tournamentHero(cabeca, serie ? tournamentEdicoesNav(serie, edicaoId, event, campeonato, activeTab) : "")}
         ${campeonato ? tournamentEtapasNav(event, campeonato, activeTab) : ""}
         ${tournamentTabNav(event, activeTab)}
       </div>
@@ -33237,7 +33288,7 @@ function tournamentTabContent(event, matches, standings, activeTab) {
 // cai em cima da arte, que costuma ter letreiro proprio. Campeonato sem banner
 // (23 de 50) mostra o proprio logo apagado no lugar. Os dados moram na ficha da
 // Visao Geral.
-function tournamentHero(event) {
+function tournamentHero(event, edicoes = "") {
   const banner = assetPath(event.banner || event.bannerPath || "");
   const logo = assetPath(event.logo || "");
   const status = event.status || "Campeonato";
@@ -33251,6 +33302,7 @@ function tournamentHero(event) {
       <div class="vp-camp-id">
         <h1>${escapeHtml(event.name)}</h1>
         <span class="vp-camp-quando">${eventStatusClass(event.status) === "live" ? `<span class="vp-ao-vivo">${escapeHtml(status)}</span>` : escapeHtml(status)}, ${escapeHtml(eventTimeRange(event))}</span>
+        ${edicoes}
       </div>
     </header>
   `;
@@ -33285,6 +33337,54 @@ function tournamentEtapasNav(event, campeonato, activeTab = "overview") {
       ${bloco(campeonato.id, "Geral", `${campeonato.etapas.length} etapas`, "", " vp-etapa-geral")}
       ${sequencia.map((etapa) => etapaBloco(etapa)).join("")}
       ${paralelas.map((etapa, indice) => etapaBloco(etapa, ` vp-etapa-paralela${indice ? "" : " vp-etapa-paralela-primeira"}`)).join("")}
+    </nav>
+  `;
+}
+
+// A serie a que a pagina pertence: pelo campeonato (Geral ou etapa) ou pelo proprio
+// evento, quando a edicao e um evento sozinho. Edicao sem pagina visivel sai da lista.
+function serieDaPagina(paginaId) {
+  const serie = SERIES_DE_CAMPEONATOS.find((item) => item.edicoes.some((edicao) => edicao.id === paginaId));
+  if (!serie) return null;
+  const edicoes = serie.edicoes.filter((edicao) => campeonatoPorId(edicao.id) || visibleTournaments().some((event) => event.id === edicao.id));
+  return edicoes.length > 1 && edicoes.some((edicao) => edicao.id === paginaId) ? { ...serie, edicoes } : null;
+}
+
+// Para onde vai cada numero: a mesma etapa na outra edicao. Primeiro a de mesmo
+// nome (Playoffs, Playoffs); depois a do mesmo degrau, quando os dois lados tem uma
+// so ali (Grupos, Fase de Grupos); senao o Geral. Do Geral, o Geral.
+function edicaoDestino(edicaoId, event, campeonato) {
+  const alvo = campeonatoPorId(edicaoId);
+  if (!alvo || !campeonato || event.isGeral || event.id === campeonato.id) return edicaoId;
+  const nome = normalize(event.etapaNome || "");
+  const mesmoNome = alvo.etapas.find((etapa) => normalize(etapa.etapaNome || "") === nome);
+  if (mesmoNome) return mesmoNome.id;
+  const doDegrau = (camp, nivel, paralela) => camp.etapas.filter((etapa) => camp.niveis.get(etapa.id) === nivel && camp.paralelas.has(etapa.id) === paralela);
+  const nivel = campeonato.niveis.get(event.id);
+  const paralela = campeonato.paralelas.has(event.id);
+  const la = doDegrau(alvo, nivel, paralela);
+  return la.length === 1 && doDegrau(campeonato, nivel, paralela).length === 1 ? la[0].id : alvo.id;
+}
+
+// As paginas da serie na ordem cronologica das edicoes, para o slide saber se a
+// troca anda para frente ou para tras.
+function paginasDaSerie(serie) {
+  return serie.edicoes.flatMap((edicao) => {
+    const camp = campeonatoPorId(edicao.id);
+    return camp ? [camp.id, ...camp.etapas.map((etapa) => etapa.id)] : [edicao.id];
+  });
+}
+
+// Os numeros das edicoes embaixo do nome (modelo B, 11/11/2026). A aba aberta vai junto.
+function tournamentEdicoesNav(serie, atualId, event, campeonato, activeTab = "overview") {
+  const aba = activeTab && activeTab !== "overview" ? `/${activeTab}` : "";
+  return `
+    <nav class="vp-camp-edicoes" aria-label="${escapeHtml(`Edições de ${serie.nome}`)}">
+      ${serie.edicoes.map((edicao) => {
+        const atual = edicao.id === atualId;
+        const href = `#/events/${escapeHtml(atual ? event.id : edicaoDestino(edicao.id, event, campeonato))}${aba}`;
+        return `<a href="${href}"${atual ? ` aria-current="page"` : ""}>${escapeHtml(edicao.rotulo)}</a>`;
+      }).join("")}
     </nav>
   `;
 }

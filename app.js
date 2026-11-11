@@ -25630,8 +25630,8 @@ const navItems = [
   ["matches", "Partidas"],
   ["events", "Eventos"],
   ["players", "Players"],
+  ["stats", "Estatísticas"],
   ["teams", "Equipes"],
-  ["maps", "Mapas"],
   ["ranking", "Ranking"],
   ["forum", "Fórum"],
 ];
@@ -25657,6 +25657,26 @@ const MAPA_FORA_DO_POOL_DIAS = 120;
 const MAPA_PARTIDAS_PAGINA = 20;
 const cacheDosMapas = { db: null, series: [], eventos: new Map(), ultimos: new Map(), maisRecente: 0 };
 
+// Estatisticas dos jogadores (11/11/2026), pelo mesmo motivo.
+// #/stats e a entrada unica (11/11/2026, pedido dele): quatro quadrados que levam a
+// Jogadores, Equipes, Mapas (o painel #/maps) e Agentes.
+const STATS_ABAS = ["geral", "lideres", "tabela", "recordes"];
+const STATS_ABA_ROTULOS = { geral: "Visão Geral", lideres: "Líderes", tabela: "Tabela", recordes: "Recordes" };
+// `mapas` e o minimo da aba Lideres, em mapas como nos Melhores da semana.
+const STATS_FILTROS = ["ano", "de", "ate", "evento", "tier", "formato", "top", "mapa", "agente", "funcao", "patch", "equipe", "atual", "rounds", "minimo", "mapas"];
+// Os filtros que cada pagina mostra e aplica. Agentes usa `agente` para destacar uma
+// linha da tabela, como no campeonato, e nao para cortar os mapas.
+const STATS_FILTROS_DA_PAGINA = {
+  jogadores: ["ano", "de", "ate", "evento", "tier", "formato", "top", "mapa", "agente", "funcao", "patch", "equipe", "atual", "rounds", "mapas"],
+  equipes: ["ano", "de", "ate", "evento", "tier", "formato", "top", "mapa", "patch", "minimo"],
+  agentes: ["ano", "de", "ate", "evento", "tier", "formato", "top", "mapa", "patch", "equipe"],
+};
+const STATS_RECORDES_PAGINA = 20;
+const cacheDasEstatisticas = { db: null, linhas: [], chave: "", recorte: null };
+// Filtro "contra Top X" (11/11/2026, cortes da HLTV): Estatisticas, perfil e equipe.
+const RANKING_TOPS = [5, 10, 20, 30, 50];
+const cacheDosTops = { db: null, fotos: [] };
+
 // Transicao padrao de troca de conteudo (ver playPanelSlide). Declarada aqui em
 // cima porque init() roda antes do bloco das funcoes de slide.
 const PANEL_SLIDE_MS = 220;
@@ -25676,6 +25696,7 @@ const STATIC_DOCUMENT_TITLES = {
   rankings: "Ranking",
   teams: "Equipes",
   maps: "Mapas",
+  stats: "Estatísticas",
   u: "Perfil",
   news: "Notícias",
   forum: "Fórum",
@@ -28951,7 +28972,7 @@ function Shell(content, options = {}) {
             <span class="sr-only">${SITE_NAME}</span>
           </a>
           <nav class="nav" aria-label="Navegação principal">
-            ${navItems.map(([key, label]) => `<a class="nav-link ${section === key ? "active" : ""}"${section === key ? ` aria-current="page"` : ""} href="#/${key}">${label}</a>`).join("")}
+            ${navItems.map(([key, label]) => `<a class="nav-link ${secaoDoMenu(section) === key ? "active" : ""}"${secaoDoMenu(section) === key ? ` aria-current="page"` : ""} href="#/${key}">${label}</a>`).join("")}
             <a class="nav-link" href="/cartas/">Cartinhas</a>
             <span class="nav-indicator" aria-hidden="true"></span>
           </nav>
@@ -29054,6 +29075,7 @@ function render() {
     rankings: renderRankingPage,
     teams: renderTeamsCompact,
     maps: renderMapsCompact,
+    stats: renderStatsPage,
     u: (username) => window.Profile.renderProfilePage(username),
     news: (slug) => window.News.renderNews(slug),
     forum: (id) => window.Threads.renderThreads(id),
@@ -29073,10 +29095,8 @@ function normalizeCanonicalRoute() {
 }
 
 function canonicalHashForRoute(currentRoute) {
-  // /stats e o indice /maps sairam em 29/08/2026. Redireciono em vez de dar
-  // 404 porque /stats esteve na navegacao e pode estar em link salvo. So o
-  // indice cai aqui: #/maps/<id> tem id e segue para a pagina do mapa.
-  if (currentRoute.section === "stats") return "#/home";
+  // Mapas mora em #/maps desde antes do hub de Estatisticas: o quadrado leva para la.
+  if (currentRoute.section === "stats" && currentRoute.id === "mapas") return "#/maps";
   // O forum nasceu em #/threads (07/11) e mudou de endereco em 08/11. Aviso de
   // resposta e link salvo ainda apontam para la: a thread e a query vem junto.
   if (currentRoute.section === "threads") return window.location.hash.replace(/^#\/threads/, "#/forum");
@@ -36219,7 +36239,7 @@ function tournamentTeamStatColumns() {
 }
 
 function tournamentStatsSortState(table) {
-  const fallback = table === "teams" ? { key: "lugar", direction: "asc" } : table === "agents" || table === "compositions" ? { key: "picks", direction: "desc" } : table === "mapteams" ? { key: "mapas", direction: "desc" } : { key: "rating", direction: "desc" };
+  const fallback = table === "teams" ? { key: "lugar", direction: "asc" } : table === "agents" || table === "compositions" ? { key: "picks", direction: "desc" } : table === "mapteams" || table === "statsteams" ? { key: "mapas", direction: "desc" } : { key: "rating", direction: "desc" };
   return state.tournamentStatsSort?.[table] || fallback;
 }
 
@@ -38518,18 +38538,21 @@ const TEAM_EST_BLOCOS = ["jog", "map", "ag", "comp", "conf"];
 function teamEstFiltro(prefixo = "") {
   const query = routeQuery();
   const valor = (chave) => query.get(`${prefixo}${chave}`) || "";
-  return { evento: valor("evento"), de: valor("de"), ate: valor("ate"), rounds: Number.parseInt(valor("rounds") || "0", 10) || 0 };
+  return { evento: valor("evento"), de: valor("de"), ate: valor("ate"), top: valor("top"), rounds: Number.parseInt(valor("rounds") || "0", 10) || 0 };
 }
 
 function teamEstSeparado() {
   return routeQuery().get("separado") === "1";
 }
 
-function teamEstSeries(matches, filtro) {
+// Contra Top X olha a serie pelo primeiro mapa: o adversario e o mesmo em todos.
+function teamEstSeries(matches, filtro, teamId = "") {
   const inicio = filtro.de ? dateValue(dateInputToStart(filtro.de)) : 0;
   const fim = filtro.ate ? dateValue(dateInputToStart(filtro.ate)) + DAY_MS : Infinity;
   return matches.filter((series) => {
     const quando = dateValue(series.startedAt);
+    const primeiro = series.maps?.[0];
+    if (filtro.top && !contraTopPassa(rankingDoRival(primeiro || series, teamId, dateValue(primeiro?.startedAt || series.startedAt)), filtro.top)) return false;
     return (!filtro.evento || series.eventId === filtro.evento) && quando >= inicio && quando < fim;
   });
 }
@@ -38717,13 +38740,14 @@ function teamEstFiltros(matches, filtro, { maximo = 0, minimo = 0, prefixo = "",
     .map((id) => state.db.tournaments.find((event) => event.id === id))
     .filter(Boolean)
     .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
-  const ativo = filtro.evento || filtro.de || filtro.ate || filtro.rounds;
+  const ativo = filtro.evento || filtro.de || filtro.ate || filtro.top || filtro.rounds;
   const chave = (nome) => `${prefixo}${nome}`;
   const limpar = prefixo ? `<button type="button" class="vp-filtros-limpar" data-eq-limpar-bloco="${prefixo}">Limpar filtros</button>` : `<button type="button" class="vp-filtros-limpar" data-eq-limpar>Limpar filtros</button>`;
   const campos = vincular === false ? "" : `
       <select data-eq-filtro="${chave("evento")}" aria-label="Filtrar por campeonato"><option value="">Todos os campeonatos</option>${teamOpcoes(eventos.map((event) => ({ id: event.id, nome: event.name })), filtro.evento)}</select>
       <label class="vp-eq-data"><span>De</span><input type="date" data-eq-filtro="${chave("de")}" value="${escapeHtml(filtro.de)}"></label>
       <label class="vp-eq-data"><span>Até</span><input type="date" data-eq-filtro="${chave("ate")}" value="${escapeHtml(filtro.ate)}"></label>
+      ${topSelect(`data-eq-filtro="${chave("top")}"`, filtro.top)}
       ${maximo ? `
         <label class="vp-est-rounds" style="--cheio:${(minimo / maximo) * 100}%">
           <span>Rounds mínimos</span>
@@ -38746,7 +38770,7 @@ function teamStatsTab(team, matches) {
   // Cada bloco com o seu filtro e as suas series; vinculados, todos usam o de cima.
   const blocos = Object.fromEntries(TEAM_EST_BLOCOS.map((bloco) => {
     const filtro = separado ? teamEstFiltro(`${bloco}-`) : geral;
-    return [bloco, { filtro, series: teamEstSeries(matches, filtro), prefixo: `${bloco}-` }];
+    return [bloco, { filtro, series: teamEstSeries(matches, filtro, team.id), prefixo: `${bloco}-` }];
   }));
   const linha = (bloco, extra = {}) => (separado ? teamEstFiltros(matches, blocos[bloco].filtro, { ...extra, prefixo: blocos[bloco].prefixo }) : "");
   const todos = teamEstJogadores(team, blocos.jog.series);
@@ -38828,7 +38852,7 @@ function bindAbaDaEquipe(id, refaz = renderTeamDetail) {
   // Desvincular comeca cada bloco com o filtro que estava valendo; vincular de novo
   // volta ao filtro de cima e apaga os dos blocos.
   pagina.querySelector("[data-eq-vincular]")?.addEventListener("change", (event) => aplica((query) => {
-    const chaves = ["evento", "de", "ate", "rounds"];
+    const chaves = ["evento", "de", "ate", "top", "rounds"];
     if (event.target.checked) {
       query.delete("separado");
       TEAM_EST_BLOCOS.forEach((bloco) => chaves.forEach((chave) => query.delete(`${bloco}-${chave}`)));
@@ -38855,15 +38879,15 @@ function bindAbaDaEquipe(id, refaz = renderTeamDetail) {
     const limparBloco = event.target.closest("[data-eq-limpar-bloco]");
     if (limparBloco) {
       const prefixo = limparBloco.dataset.eqLimparBloco;
-      return aplica((query) => ["evento", "de", "ate", "rounds"].forEach((chave) => query.delete(`${prefixo}${chave}`)), `[data-eq-filtro="${prefixo}evento"]`);
+      return aplica((query) => ["evento", "de", "ate", "top", "rounds"].forEach((chave) => query.delete(`${prefixo}${chave}`)), `[data-eq-filtro="${prefixo}evento"]`);
     }
     if (event.target.closest("[data-eq-limpar]")) {
-      return aplica((query) => ["evento", "rival", "equipe", "mapa", "resultado", "colocacao", "tier", "ano", "de", "ate", "agente", "rounds", "patch", "formato", "minimo"].forEach((chave) => query.delete(chave)), "[data-eq-filtro]");
+      return aplica((query) => ["evento", "rival", "equipe", "mapa", "resultado", "colocacao", "tier", "ano", "de", "ate", "agente", "rounds", "patch", "formato", "minimo", "top"].forEach((chave) => query.delete(chave)), "[data-eq-filtro]");
     }
     const ordenar = event.target.closest("[data-tournament-stat-sort]");
     if (ordenar) {
       const [table, key] = String(ordenar.dataset.tournamentStatSort || "").split(":");
-      const colunas = table === "agents" ? tournamentAgenteColunas() : table === "compositions" ? tournamentComposicaoColunas() : table === "maps" ? playerMapaColunas() : table === "mapteams" ? mapaEquipeColunas() : tournamentPlayerStatColumns();
+      const colunas = table === "agents" ? tournamentAgenteColunas() : table === "compositions" ? tournamentComposicaoColunas() : table === "maps" ? playerMapaColunas() : table === "mapteams" ? mapaEquipeColunas() : table === "statsteams" ? statsEquipeColunas() : tournamentPlayerStatColumns();
       const column = colunas.find((item) => item.key === key);
       if (!column) return;
       const atual = tournamentStatsSortState(table);
@@ -40543,7 +40567,7 @@ function playerMapStatSort(a, b) {
 
 function playerEstFiltro() {
   const query = routeQuery();
-  return { ano: query.get("ano") || "", evento: query.get("evento") || "", equipe: query.get("equipe") || "", mapa: query.get("mapa") || "" };
+  return { ano: query.get("ano") || "", evento: query.get("evento") || "", equipe: query.get("equipe") || "", mapa: query.get("mapa") || "", top: query.get("top") || "" };
 }
 
 function playerSerieAno(series) {
@@ -40557,7 +40581,7 @@ function playerEstMapas(player, matches, filtro) {
   const series = matches.filter((item) => (!filtro.evento || item.eventId === filtro.evento) && (!filtro.ano || playerSerieAno(item) === filtro.ano));
   const mapas = filtro.mapa ? tournamentFilteredMapMatches(series, filtro.mapa) : tournamentStatMapMatches(series);
   return mapas
-    .map((match) => ({ ...match, players: (match.players || []).filter((row) => row.id === player.id && (!filtro.equipe || row.teamId === filtro.equipe)) }))
+    .map((match) => ({ ...match, players: (match.players || []).filter((row) => row.id === player.id && (!filtro.equipe || row.teamId === filtro.equipe) && contraTopPassa(filtro.top ? rankingDoRival(match, row.teamId) : null, filtro.top)) }))
     .filter((match) => match.players.length);
 }
 
@@ -40572,7 +40596,8 @@ function playerEstFiltros(jogos, matches, filtro) {
       <select data-eq-filtro="evento" aria-label="Filtrar por campeonato"><option value="">Todos os campeonatos</option>${teamOpcoes(eventos.map((event) => ({ id: event.id, nome: event.name })), filtro.evento)}</select>
       ${equipes.length > 1 ? `<select data-eq-filtro="equipe" aria-label="Filtrar por equipe"><option value="">Todas as equipes</option>${teamOpcoes(equipes, filtro.equipe)}</select>` : ""}
       <select data-eq-filtro="mapa" aria-label="Filtrar por mapa"><option value="">Todos os mapas</option>${teamOpcoes(mapas.map((mapa) => ({ id: mapa.id, nome: mapa.name })), filtro.mapa)}</select>
-      ${filtro.ano || filtro.evento || filtro.equipe || filtro.mapa ? `<button type="button" class="vp-filtros-limpar" data-eq-limpar>Limpar filtros</button>` : ""}
+      ${topSelect('data-eq-filtro="top"', filtro.top)}
+      ${filtro.ano || filtro.evento || filtro.equipe || filtro.mapa || filtro.top ? `<button type="button" class="vp-filtros-limpar" data-eq-limpar>Limpar filtros</button>` : ""}
     </div>
   `;
 }
@@ -40720,7 +40745,7 @@ function playerStatsTab(player, matches) {
             ${playerMultiKills(soma)}
           </aside>
         </section>
-      ` : `<div class="empty-state">Nenhuma estatística com esses filtros. Tire um filtro para ver mais.</div>`}
+      ` : `<p class="vp-est-vazio">Nenhuma estatística com esses filtros.</p>`}
       ${playerAgentesBloco(mapas)}
       ${playerMapasBloco(player, mapas)}
     </div>
@@ -41599,7 +41624,7 @@ function mapaPiso(minimo, maximo) {
   return minimo || Math.max(1, Math.ceil(maximo * 0.2));
 }
 
-function mapaEquipeDestaques(linhas, piso) {
+function mapaEquipeDestaques(linhas, piso, href = mapaHrefDaEquipe) {
   const elegiveis = linhas.filter((linha) => linha.soma.mapas >= piso);
   const melhor = (lista, valor) => lista.reduce((topo, linha) => (!topo || valor(linha) > valor(topo) ? linha : topo), null);
   const itens = [
@@ -41615,7 +41640,7 @@ function mapaEquipeDestaques(linhas, piso) {
       <section class="vp-resumo-bloco">
         <h3>Destaques <span>${escapeHtml(`a partir de ${piso} ${piso === 1 ? "mapa" : "mapas"}`)}</span></h3>
         <dl class="vp-ficha vp-mp-destaques">
-          ${itens.map(([rotulo, linha, texto]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd><a href="${mapaHrefDaEquipe(linha.id)}">${teamLogo(linha.id, "tiny")}<span>${escapeHtml(linha.name)}</span></a><b>${escapeHtml(texto(linha))}</b></dd></div>`).join("")}
+          ${itens.map(([rotulo, linha, texto]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd><a href="${href(linha.id)}">${teamLogo(linha.id, "tiny")}<span>${escapeHtml(linha.name)}</span></a><b>${escapeHtml(texto(linha))}</b></dd></div>`).join("")}
         </dl>
       </section>
     </aside>
@@ -41821,6 +41846,972 @@ function bindMapas() {
         query.set("ate", ate);
         query.delete("ano");
       }, `[data-mp-mes="${mes.dataset.mpMes}"]`);
+    }
+  });
+}
+
+// ==========================================================================
+// Estatisticas (11/11/2026). #/stats e a pagina de numeros dos jogadores em tres
+// abas (modelo B, escolha do dono): Visao Geral com os lideres, Jogadores com a
+// tabela inteira e Recordes com as atuacoes num mapa. O filtro e o de Mapas mais
+// mapa, agente, funcao, equipe do jogador, equipe atual e rounds minimos; mora na
+// URL e vale para as tres abas. A nota soma os rounds, como a capa do perfil e a
+// aba do campeonato. O corte padrao e um quinto dos rounds de quem mais jogou no
+// recorte (a regra de Mapas), e acompanha o filtro.
+// ==========================================================================
+
+// ---- contra Top X ----
+// A posicao oficial de uma equipe no ranking em vigor num instante: o ultimo
+// publicado antes dele, como a HLTV. Provisoria, inativa ou antes do primeiro
+// ranking nao tem posicao, e por isso nunca entra num Top X.
+function rankingOficialEm(teamId, quando) {
+  if (cacheDosTops.db !== state.db) {
+    const fotos = (state.db?.rankingSnapshots || []).slice().sort((a, b) => Number(a.cutoffAt || 0) - Number(b.cutoffAt || 0));
+    Object.assign(cacheDosTops, { db: state.db, fotos });
+  }
+  const { fotos } = cacheDosTops;
+  let baixo = 0;
+  let alto = fotos.length - 1;
+  let foto = null;
+  while (baixo <= alto) {
+    const meio = (baixo + alto) >> 1;
+    if (Number(fotos[meio].cutoffAt || 0) <= quando) {
+      foto = fotos[meio];
+      baixo = meio + 1;
+    } else alto = meio - 1;
+  }
+  return (teamId && foto?.byTeamId?.[teamId]?.validRank) || null;
+}
+
+function rivalDoMapa(match, teamId) {
+  if (match?.teamA?.id === teamId) return match.teamB?.id || "";
+  if (match?.teamB?.id === teamId) return match.teamA?.id || "";
+  return "";
+}
+
+// A posicao do adversario de `teamId` naquele mapa, na semana em que foi jogado.
+function rankingDoRival(match, teamId, quando = dateValue(match?.startedAt || match?.date)) {
+  return rankingOficialEm(rivalDoMapa(match, teamId), quando);
+}
+
+function contraTopPassa(posicao, top) {
+  return !top || Boolean(posicao && posicao <= Number(top));
+}
+
+function topSelect(atributo, top, contagem = null) {
+  const n = (corte) => (contagem ? ` (${contagem.get(corte) || 0})` : "");
+  return `
+    <select ${atributo} aria-label="Filtrar pelo ranking do adversário">
+      <option value="">Contra qualquer equipe</option>
+      ${RANKING_TOPS.map((corte) => `<option value="${corte}"${String(corte) === String(top) ? " selected" : ""}>Contra Top ${corte}${n(corte)}</option>`).join("")}
+    </select>`;
+}
+
+// O painel de Mapas fica sob Estatisticas no menu.
+function secaoDoMenu(section) {
+  return section === "maps" ? "stats" : section;
+}
+
+function statsFiltro(pagina = "jogadores") {
+  const query = routeQuery();
+  const chaves = STATS_FILTROS_DA_PAGINA[pagina] || STATS_FILTROS;
+  return Object.fromEntries(STATS_FILTROS.map((chave) => [chave, chaves.includes(chave) ? query.get(chave) || "" : ""]));
+}
+
+function statsFiltroAtivo(filtro) {
+  return STATS_FILTROS.some((chave) => filtro[chave]);
+}
+
+function statsQuery(filtro) {
+  const query = new URLSearchParams();
+  STATS_FILTROS.forEach((chave) => filtro[chave] && query.set(chave, filtro[chave]));
+  const texto = query.toString();
+  return texto ? `?${texto}` : "";
+}
+
+// Uma linha por jogador em cada mapa, com tudo o que o filtro compara ja resolvido.
+// A data e a da serie, como em Mapas, para os dois paineis contarem igual.
+function statsLinhasBase() {
+  if (cacheDasEstatisticas.db !== state.db) {
+    const linhas = [];
+    mapaSeriesBase().forEach((series) => {
+      const quandoSerie = mapaQuando(series);
+      const comum = {
+        series,
+        quandoSerie,
+        ano: String(new Date(quandoSerie).getFullYear()),
+        evento: series.eventId,
+        tier: eventTierChave(mapaEventoDaSerie(series)),
+        md: `md${seriesBestOf(series)}`,
+      };
+      (series.maps || []).forEach((match) => {
+        if (!match?.mapId || !Array.isArray(match.players) || !match.players.length) return;
+        const doMapa = { ...comum, match, quando: mapaQuandoDoJogo(match, series), decisivo: mapaDecisivo(match, series), patch: patchLabel(match.gameVersion), mapa: match.mapId };
+        match.players.forEach((player) => {
+          if (!Number(player.rounds)) return;
+          linhas.push({
+            ...doMapa,
+            player,
+            agente: player.agentSlug || slugify(player.agent || ""),
+            funcao: normalizeRoleKey(player.agentClass),
+            equipe: player.teamId || "",
+            atual: Boolean(playerById(player.id)?.currentTeam),
+            rival: rankingDoRival(match, player.teamId, doMapa.quando),
+          });
+        });
+      });
+    });
+    // Em ordem de data: a soma fica com a equipe mais recente de cada jogador.
+    linhas.sort((a, b) => a.quando - b.quando);
+    Object.assign(cacheDasEstatisticas, { db: state.db, linhas, chave: "", recorte: null });
+  }
+  return cacheDasEstatisticas.linhas;
+}
+
+function statsPreparaFiltro(filtro) {
+  return { ...filtro, deMs: filtro.de ? dateInputToStart(filtro.de) : 0, ateMs: filtro.ate ? dateInputToEnd(filtro.ate) : 0 };
+}
+
+function statsLinhaPassa(linha, f, ignorar = "") {
+  if (ignorar !== "ano" && f.ano && linha.ano !== f.ano) return false;
+  if (f.deMs && linha.quandoSerie < f.deMs) return false;
+  if (f.ateMs && linha.quandoSerie > f.ateMs) return false;
+  if (ignorar !== "evento" && f.evento && linha.evento !== f.evento) return false;
+  if (ignorar !== "tier" && f.tier && linha.tier !== f.tier) return false;
+  if (ignorar !== "formato" && f.formato && (f.formato === "decisivo" ? !linha.decisivo : linha.md !== f.formato)) return false;
+  if (ignorar !== "top" && !contraTopPassa(linha.rival, f.top)) return false;
+  if (ignorar !== "mapa" && f.mapa && linha.mapa !== f.mapa) return false;
+  if (ignorar !== "agente" && f.agente && linha.agente !== f.agente) return false;
+  if (ignorar !== "funcao" && f.funcao && linha.funcao !== f.funcao) return false;
+  if (ignorar !== "patch" && f.patch && linha.patch !== f.patch) return false;
+  if (ignorar !== "equipe" && f.equipe && linha.equipe !== f.equipe) return false;
+  if (f.atual && !linha.atual) return false;
+  return true;
+}
+
+function statsLinhas(f, ignorar = "") {
+  return statsLinhasBase().filter((linha) => statsLinhaPassa(linha, f, ignorar));
+}
+
+// Soma por jogador. A tabela parte do minimo escolhido ou, sem escolha, do corte
+// padrao; os lideres nunca descem do corte, para um mapa so nao liderar nada.
+function statsDados(linhas) {
+  const campeonatos = new Map();
+  linhas.forEach(({ player, evento }) => {
+    if (!campeonatos.has(player.id)) campeonatos.set(player.id, new Set());
+    campeonatos.get(player.id).add(evento);
+  });
+  const todos = aggregateMatchPlayers(linhas.map((linha) => ({ players: [linha.player] })));
+  todos.forEach((player) => {
+    player.campeonatos = campeonatos.get(player.id)?.size || 0;
+  });
+  const maximo = todos.reduce((maior, player) => Math.max(maior, Number(player.rounds || 0)), 0);
+  const corte = Math.max(1, Math.ceil(maximo * 0.2));
+  const pedido = routeQuery().get("rounds");
+  const minimo = pedido ? Math.min(Math.max(0, Number.parseInt(pedido, 10) || 0), maximo) : Math.min(corte, maximo);
+  const jogadores = todos.filter((player) => Number(player.rounds || 0) >= minimo).sort(tournamentPlayerStatSort);
+  const piso = mapaPiso(minimo, maximo);
+  const lideres = jogadores.filter((player) => Number(player.rounds || 0) >= piso);
+  return { todos, jogadores, lideres, maximo, minimo, piso };
+}
+
+// O recorte de um filtro fica guardado: ordenar a tabela, trocar de aba ou de
+// lider com o mesmo filtro nao soma tudo de novo (a soma leva ~80ms).
+function statsRecorte(filtro, pagina = "jogadores") {
+  statsLinhasBase();
+  const chave = `${pagina}${statsQuery(filtro)}`;
+  if (cacheDasEstatisticas.chave !== chave || !cacheDasEstatisticas.recorte) {
+    const f = statsPreparaFiltro(filtro);
+    const linhas = statsLinhas(f);
+    const somar = { jogadores: statsDados, equipes: statsEquipesDados, agentes: (lista) => statsAgentesDados(lista, filtro) }[pagina];
+    cacheDasEstatisticas.recorte = { f, linhas, dados: somar(linhas), facetas: statsFacetas(filtro, f, STATS_FILTROS_DA_PAGINA[pagina]) };
+    cacheDasEstatisticas.chave = chave;
+  }
+  return cacheDasEstatisticas.recorte;
+}
+
+// ---- filtros ----
+function statsFacetas(filtro, f, chaves = STATS_FILTROS) {
+  const facetas = {
+    ano: (linha) => [linha.ano],
+    evento: (linha) => [linha.evento],
+    tier: (linha) => [linha.tier],
+    formato: (linha) => [linha.md, linha.decisivo ? "decisivo" : ""],
+    mapa: (linha) => [linha.mapa],
+    agente: (linha) => [linha.agente],
+    funcao: (linha) => [linha.funcao],
+    patch: (linha) => [linha.patch !== "-" ? linha.patch : ""],
+    equipe: (linha) => [linha.equipe],
+    top: (linha) => RANKING_TOPS.filter((corte) => contraTopPassa(linha.rival, corte)).map(String),
+  };
+  // Cada faceta conta mapas, sem o proprio filtro, como em Mapas e Partidas.
+  const conta = (chave) => {
+    const mapas = new Map();
+    statsLinhasBase().forEach((linha) => {
+      if (!statsLinhaPassa(linha, f, chave)) return;
+      facetas[chave](linha).forEach((valor) => {
+        if (!valor) return;
+        if (!mapas.has(valor)) mapas.set(valor, new Set());
+        mapas.get(valor).add(linha.match.id);
+      });
+    });
+    if (filtro[chave] && !mapas.has(filtro[chave])) mapas.set(filtro[chave], new Set());
+    return [...mapas.entries()].map(([id, vistos]) => ({ id, n: vistos.size }));
+  };
+  const agentes = new Map(statsLinhasBase().map((linha) => [linha.agente, linha.player.agent]));
+  const porNome = (a, b) => a.nome.localeCompare(b.nome, "pt-BR");
+  const lista = (chave, nome, ordem = porNome) => (chaves.includes(chave) ? conta(chave).map((item) => ({ ...item, nome: nome(item.id) })).sort(ordem) : []);
+  return {
+    ano: lista("ano", (id) => id, (a, b) => b.id.localeCompare(a.id)),
+    evento: lista("evento", (id) => cacheDosMapas.eventos.get(id)?.name || id),
+    tier: lista("tier", (id) => `Tier ${id}`, (a, b) => (EVENT_TIER_ORDEM[b.id] || 0) - (EVENT_TIER_ORDEM[a.id] || 0)),
+    formato: lista("formato", (id) => MAPA_FORMATOS.find(([chave]) => chave === id)?.[1] || id.toUpperCase(), (a, b) => MAPA_FORMATOS.findIndex(([id]) => id === a.id) - MAPA_FORMATOS.findIndex(([id]) => id === b.id)),
+    mapa: lista("mapa", (id) => mapById(id)?.name || id),
+    agente: lista("agente", (id) => displayAgentName(agentes.get(id), id)),
+    funcao: lista("funcao", (id) => ROLE_ICONS[id]?.label || id),
+    patch: lista("patch", (id) => `Patch ${id}`, (a, b) => mapaComparaPatch(b.id, a.id)),
+    equipe: lista("equipe", mapaNomeDaEquipe),
+    top: new Map(chaves.includes("top") ? conta("top").map(({ id, n }) => [Number(id), n]) : []),
+  };
+}
+
+function statsFiltroCampos(filtro, facetas, pagina, minimo = null) {
+  const chaves = STATS_FILTROS_DA_PAGINA[pagina];
+  const tem = (chave) => chaves.includes(chave);
+  const select = (chave, todos, itens) => `
+    <select data-st-filtro="${chave}" aria-label="${escapeHtml(todos)}">
+      <option value="">${escapeHtml(todos)}</option>
+      ${itens.map(({ id, nome, n }) => `<option value="${escapeHtml(id)}"${id === filtro[chave] ? " selected" : ""}>${escapeHtml(nome)} (${n})</option>`).join("")}
+    </select>`;
+  const data = (chave, rotulo) => `<label class="vp-eq-data"><span>${rotulo}</span><input type="date" data-st-filtro="${chave}" value="${escapeHtml(filtro[chave])}"></label>`;
+  const barra = minimo ? `
+    <label class="vp-est-rounds" style="--cheio:${minimo.maximo ? (minimo.valor / minimo.maximo) * 100 : 0}%">
+      <span>${escapeHtml(minimo.rotulo)}</span>
+      <input type="range" min="0" max="${minimo.maximo}" step="1" value="${minimo.valor}" data-st-minimo="${minimo.chave}" aria-label="${escapeHtml(minimo.rotulo)}">
+      <b data-est-rounds-valor>${minimo.valor}</b>
+    </label>` : "";
+  const campos = {
+    ano: () => select("ano", "Todos os anos", facetas.ano),
+    de: () => data("de", "De"),
+    ate: () => data("ate", "Até"),
+    evento: () => select("evento", "Todos os campeonatos", facetas.evento),
+    tier: () => select("tier", "Todos os tiers", facetas.tier),
+    formato: () => select("formato", "Todos os formatos", facetas.formato),
+    top: () => topSelect('data-st-filtro="top"', filtro.top, facetas.top),
+    mapa: () => select("mapa", "Todos os mapas", facetas.mapa),
+    agente: () => select("agente", "Todos os agentes", facetas.agente),
+    funcao: () => select("funcao", "Todas as funções", facetas.funcao),
+    patch: () => select("patch", "Todos os patches", facetas.patch),
+    equipe: () => select("equipe", "Todas as equipes", facetas.equipe),
+    atual: () => `
+    <label class="ranking-details-toggle">
+      <input type="checkbox" data-st-filtro="atual" ${filtro.atual ? "checked" : ""} />
+      <span>Com equipe atual</span>
+    </label>`,
+  };
+  const ativo = chaves.some((chave) => filtro[chave]) || (pagina === "agentes" && routeQuery().get("agente"));
+  return `
+    ${Object.keys(campos).filter(tem).map((chave) => campos[chave]()).join("")}
+    ${barra}
+    ${ativo ? `<button type="button" class="vp-filtros-limpar" data-st-limpar>Limpar filtros</button>` : ""}
+  `;
+}
+
+function statsVazio() {
+  return `<p class="vp-est-vazio">Nenhum jogador com esses filtros.</p>`;
+}
+
+// ---- Visao Geral ----
+function statsCategorias() {
+  return [
+    ...tournamentEstCategorias(),
+    { rotulo: "Swing/R", valor: (player) => Number(playerSwingPerRound(player) || 0), texto: (player) => formatMaybeSwing(player) },
+  ];
+}
+
+function statsTotais() {
+  const total = (rotulo, campo) => ({ rotulo, valor: (player) => Number(player[campo] || 0), texto: (player) => String(player[campo] || 0) });
+  return [total("Mapas", "matches"), total("Abates", "kills"), total("Assistências", "assists"), total("First kills", "firstKills")];
+}
+
+function statsNomeDoJogador(player) {
+  return `${player.teamId ? teamLogo(player.teamId, "tiny") : ""}<strong title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong>`;
+}
+
+// Os cinco melhores num numero: o primeiro com o numero grande, os outros em linhas.
+function statsTop(categoria, jogadores) {
+  const top = jogadores
+    .filter((player) => categoria.valor(player) > 0)
+    .sort((a, b) => categoria.valor(b) - categoria.valor(a) || Number(b.rounds || 0) - Number(a.rounds || 0))
+    .slice(0, 5);
+  if (!top.length) return "";
+  const [primeiro, ...resto] = top;
+  return `
+    <section class="vp-st-top" aria-label="${escapeHtml(categoria.rotulo)}">
+      <h4>${escapeHtml(categoria.rotulo)}</h4>
+      <a class="vp-st-primeiro" href="${playerHref(primeiro)}">
+        <b>${escapeHtml(categoria.texto(primeiro))}</b>
+        <span>${statsNomeDoJogador(primeiro)}</span>
+      </a>
+      <ol>
+        ${resto.map((player, indice) => `<li><a href="${playerHref(player)}"><i>${indice + 2}</i><span>${statsNomeDoJogador(player)}</span><b>${escapeHtml(categoria.texto(player))}</b></a></li>`).join("")}
+      </ol>
+    </section>
+  `;
+}
+
+function statsInformacoes(linhas, dados) {
+  const mapas = new Map();
+  let abates = 0;
+  let cabeca = 0;
+  let tiros = 0;
+  linhas.forEach(({ match, player }) => {
+    mapas.set(match.id, Number(match.rounds || 0));
+    abates += Number(player.kills || 0);
+    cabeca += Number(player.headshots || 0);
+    tiros += Number(player.headshots || 0) + Number(player.bodyshots || 0) + Number(player.legshots || 0);
+  });
+  const rounds = [...mapas.values()].reduce((soma, valor) => soma + valor, 0);
+  const linhasDaFicha = [
+    ["Jogadores", String(dados.todos.length)],
+    ["Mapas", String(mapas.size)],
+    ["Rounds", String(rounds)],
+    ["Campeonatos", String(new Set(linhas.map((linha) => linha.evento)).size)],
+    ["Abates", String(abates)],
+    ["HS%", tiros ? pct((cabeca / tiros) * 100) : "-"],
+  ];
+  return `<section class="vp-resumo-bloco"><h3>Informações</h3><dl class="vp-ficha">${linhasDaFicha.map(([rotulo, valor]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd>${escapeHtml(valor)}</dd></div>`).join("")}</dl></section>`;
+}
+
+function statsRecordeCategorias() {
+  const numero = (campo) => (player) => Number(player[campo] || 0);
+  return [
+    { id: "abates", rotulo: "Abates", valor: numero("kills"), texto: (player) => String(player.kills || 0) },
+    { id: "assistencias", rotulo: "Assistências", valor: numero("assists"), texto: (player) => String(player.assists || 0) },
+    { id: "fk", rotulo: "First kills", valor: numero("firstKills"), texto: (player) => String(player.firstKills || 0) },
+    { id: "multi", rotulo: "4K ou mais", valor: (player) => Number(player.fourKills || 0) + Number(player.fiveKills || 0), texto: (player) => String(Number(player.fourKills || 0) + Number(player.fiveKills || 0)) },
+    { id: "acs", rotulo: "ACS", valor: numero("acs"), texto: (player) => fmt(player.acs, 0), minimo: 13 },
+    { id: "adr", rotulo: "ADR", valor: numero("adr"), texto: (player) => fmt(player.adr, 0), minimo: 13 },
+    { id: "raating", rotulo: "rAAting", valor: (player) => Number(officialRatingValue(player) || 0), texto: (player) => playerRating(player), minimo: 13 },
+  ];
+}
+
+// Taxa por round so conta mapa inteiro: 13 rounds e o menor placar possivel.
+function statsRecordesDe(linhas, categoria) {
+  return linhas
+    .filter(({ player }) => (!categoria.minimo || Number(player.rounds || 0) >= categoria.minimo) && categoria.valor(player) > 0)
+    .sort((a, b) => categoria.valor(b.player) - categoria.valor(a.player) || b.quando - a.quando);
+}
+
+// So o primeiro de cada numero: uma passada, sem ordenar as linhas todas.
+function statsRecordeDoTopo(linhas, categoria) {
+  let topo = null;
+  linhas.forEach((linha) => {
+    if (categoria.minimo && Number(linha.player.rounds || 0) < categoria.minimo) return;
+    const valor = categoria.valor(linha.player);
+    if (valor <= 0) return;
+    const melhor = topo ? categoria.valor(topo.player) : 0;
+    if (!topo || valor > melhor || (valor === melhor && linha.quando > topo.quando)) topo = linha;
+  });
+  return topo;
+}
+
+function statsRecordesFicha(linhas) {
+  const itens = statsRecordeCategorias()
+    .map((categoria) => ({ categoria, linha: statsRecordeDoTopo(linhas, categoria) }))
+    .filter(({ linha }) => linha);
+  if (!itens.length) return "";
+  return `
+    <section class="vp-resumo-bloco">
+      <h3>Recordes num mapa</h3>
+      <dl class="vp-ficha vp-mp-recordes">
+        ${itens.map(({ categoria, linha }) => `<div><dt>${escapeHtml(categoria.rotulo)}</dt><dd><a href="#/matches/${encodeURIComponent(linha.match.id)}">${escapeHtml(`${linha.player.nick}, ${categoria.texto(linha.player)} em ${linha.match.mapName || mapById(linha.mapa)?.name || ""}`)}</a></dd></div>`).join("")}
+      </dl>
+    </section>
+  `;
+}
+
+// O melhor rAAting de cada funcao, pela funcao do agente que o jogador mais usou.
+function statsPorFuncao(lideres, filtro) {
+  if (filtro.funcao || filtro.agente) return "";
+  const melhores = Object.keys(ROLE_ICONS).map((funcao) => {
+    const daFuncao = lideres.filter((player) => normalizeRoleKey(player.agentClass) === funcao);
+    return { funcao, player: daFuncao.reduce((topo, player) => (!topo || Number(officialRatingValue(player) || 0) > Number(officialRatingValue(topo) || 0) ? player : topo), null) };
+  }).filter(({ player }) => player);
+  if (!melhores.length) return "";
+  return `
+    <section class="vp-resumo-bloco">
+      <h3>rAAting por função</h3>
+      <dl class="vp-ficha vp-mp-destaques vp-st-funcoes">
+        ${melhores.map(({ funcao, player }) => `<div><dt><img src="${escapeHtml(assetPath(ROLE_ICONS[funcao].icon))}" alt="" loading="lazy" />${escapeHtml(ROLE_ICONS[funcao].label)}</dt><dd><a href="${playerHref(player)}">${player.teamId ? teamLogo(player.teamId, "tiny") : ""}<span>${escapeHtml(player.nick)}</span></a><b>${escapeHtml(playerRating(player))}</b></dd></div>`).join("")}
+      </dl>
+    </section>
+  `;
+}
+
+function statsGeralAba(linhas, dados, filtro) {
+  if (!dados.todos.length) return statsVazio();
+  return `
+    <section class="vp-eq-bloco vp-est vp-st-geral">
+      <div class="vp-est-lista vp-st-blocos">
+        ${dados.lideres.length ? `
+          <article class="vp-est-bloco">
+            <h3>Líderes<span>${escapeHtml(`a partir de ${dados.piso} rounds, ${dados.lideres.length} ${dados.lideres.length === 1 ? "jogador" : "jogadores"}`)}</span></h3>
+            <div class="vp-st-grade">${statsCategorias().map((categoria) => statsTop(categoria, dados.lideres)).join("")}</div>
+          </article>` : ""}
+        <article class="vp-est-bloco">
+          <h3>Totais</h3>
+          <div class="vp-st-grade">${statsTotais().map((categoria) => statsTop(categoria, dados.todos)).join("")}</div>
+        </article>
+      </div>
+      <aside class="vp-resumo" aria-label="Informações das estatísticas">
+        ${statsInformacoes(linhas, dados)}
+        ${statsRecordesFicha(linhas)}
+        ${statsPorFuncao(dados.lideres, filtro)}
+      </aside>
+    </section>
+  `;
+}
+
+// ---- Lideres: os cinco melhores de cada numero, como os leaderboards da HLTV ----
+// As nove categorias dos Melhores da semana, com o mesmo desempate da home, e mais
+// aberturas, mira e multikills. Com o link da home (semana e 4 mapas) o primeiro de
+// cada uma e o mesmo do carrossel.
+function statsLiderCategorias() {
+  const fkr = (player) => (player.rounds ? Number(player.firstKills || 0) / player.rounds : 0);
+  const fkfd = (player) => Number(player.firstKills || 0) - Number(player.firstDeaths || 0);
+  const tiros = (player) => Number(player.headshots || 0) + Number(player.bodyshots || 0) + Number(player.legshots || 0);
+  return [
+    ...PLAYER_OF_WEEK_CATEGORIES,
+    { key: "fkr", statLabel: "FK por round", value: fkr, format: (player) => fmt(fkr(player)) },
+    { key: "fkfd", statLabel: "FK-FD", value: fkfd, format: (player) => (fkfd(player) > 0 ? `+${fkfd(player)}` : String(fkfd(player))) },
+    // Mapa vindo do tracker nao tem tiros: quem so tem esses mapas fica fora do HS%.
+    { key: "hs", statLabel: "HS%", value: (player) => Number(player.hs || 0), format: (player) => pct(player.hs), tem: (player) => tiros(player) > 0 },
+    { key: "multi", statLabel: "Multikills", value: (player) => Number(player.multi_kill_rounds || 0), format: (player) => String(player.multi_kill_rounds || 0) },
+  ];
+}
+
+// Minimo em mapas: 1/5 do maximo, nunca abaixo dos 4 da home (nem acima do maximo).
+function statsLideresDados(todos) {
+  const maximo = todos.reduce((maior, player) => Math.max(maior, Number(player.matches || 0)), 0);
+  const padrao = Math.min(maximo, Math.max(PLAYER_OF_WEEK_MIN_MAPS, Math.ceil(maximo * 0.2)));
+  const pedido = routeQuery().get("mapas");
+  const minimo = pedido ? Math.min(Math.max(0, Number.parseInt(pedido, 10) || 0), maximo) : padrao;
+  return { maximo, minimo, jogadores: todos.filter((player) => Number(player.matches || 0) >= minimo) };
+}
+
+function statsMaisDias(quando, dias) {
+  const data = new Date(quando);
+  data.setDate(data.getDate() + dias);
+  return data.getTime();
+}
+
+function statsDataDoInput(quando) {
+  const data = new Date(quando);
+  return `${data.getFullYear()}-${String(data.getMonth() + 1).padStart(2, "0")}-${String(data.getDate()).padStart(2, "0")}`;
+}
+
+// A semana do ranking vai de terca a segunda, como a dos Melhores da semana.
+function statsSemanaDoFiltro(filtro) {
+  const inicio = dateInputToStart(filtro.de);
+  const fim = dateInputToStart(filtro.ate);
+  if (inicio === null || fim === null || new Date(inicio).getDay() !== RANKING_UPDATE_DAY) return null;
+  return statsMaisDias(inicio, 6) === fim ? inicio : null;
+}
+
+function statsSemanaHref(inicio, fim = statsMaisDias(inicio, 7), query = new URLSearchParams()) {
+  query.set("de", statsDataDoInput(inicio));
+  query.set("ate", statsDataDoInput(statsMaisDias(fim, -1)));
+  query.delete("ano");
+  query.delete("pagina");
+  return `#/stats/jogadores/lideres?${query}`;
+}
+
+function statsSemanaRotulo(inicio, fim) {
+  const ano = new Date(fim).getFullYear();
+  return `${playerWeekDateLabel(inicio)} - ${playerWeekDateLabel(fim)} de ${ano}`;
+}
+
+function statsPeriodoRotulo(filtro) {
+  if (filtro.de || filtro.ate) return [filtro.de, filtro.ate].map((valor) => (valor ? dataCurta(dateInputToStart(valor)) : "")).join(" - ").trim();
+  return filtro.ano || "Todo o período";
+}
+
+function statsSemanaBarra(filtro, lideres) {
+  const ultima = Number(latestRankingSnapshot()?.cutoffAt || rankingTuesdayStartOnOrBefore(Date.now())) - WEEK_MS;
+  const ultimaAberta = rankingTuesdayStartOnOrBefore(Date.now());
+  const primeira = rankingTuesdayStartOnOrBefore(statsLinhasBase()[0]?.quandoSerie || Date.now());
+  const semana = statsSemanaDoFiltro(filtro);
+  const seta = (destino, rotulo, texto) => (destino >= primeira && destino <= ultimaAberta
+    ? `<a class="vp-st-semana-seta" href="${statsSemanaHref(destino, undefined, routeQuery())}" aria-label="${rotulo}">${texto}</a>`
+    : `<span class="vp-st-semana-seta" aria-hidden="true">${texto}</span>`);
+  const n = lideres.jogadores.length;
+  return `
+    <div class="vp-st-semana">
+      ${semana === null
+        ? `<strong>${escapeHtml(statsPeriodoRotulo(filtro))}</strong><a class="vp-st-semana-ir" href="${statsSemanaHref(ultima, undefined, routeQuery())}">Última semana</a>`
+        : `${seta(statsMaisDias(semana, -7), "Semana anterior", "‹")}<strong>${escapeHtml(statsSemanaRotulo(semana, statsMaisDias(semana, 6)))}</strong>${seta(statsMaisDias(semana, 7), "Semana seguinte", "›")}`}
+      ${lideres.maximo ? `<span class="vp-sec-aside">${escapeHtml(`Mínimo de ${lideres.minimo} ${lideres.minimo === 1 ? "mapa" : "mapas"}, ${n} ${n === 1 ? "jogador" : "jogadores"}`)}</span>` : ""}
+    </div>
+  `;
+}
+
+function statsLiderFoto(player) {
+  const foto = playerById(player.id)?.photo || player.photo || "";
+  const reserva = assetPath(PLAYER_FALLBACK_PHOTO);
+  return `<img class="vp-st-lider-foto${foto ? "" : " is-silhouette"}" src="${escapeHtml(foto ? assetPath(foto) : reserva)}" alt="" loading="lazy" onerror="this.onerror=null; this.classList.add('is-silhouette'); this.src='${escapeHtml(reserva)}'" />`;
+}
+
+// O primeiro com foto, numero grande e a equipe; do segundo ao quinto em linhas.
+function statsLiderQuadro(categoria, jogadores) {
+  const top = jogadores.filter((player) => !categoria.tem || categoria.tem(player)).sort(playerOfWeekOrdem(categoria)).slice(0, 5);
+  if (!top.length) return "";
+  const [primeiro, ...resto] = top;
+  return `
+    <section class="vp-st-top vp-st-lider vp-st-lider-${categoria.key}" aria-label="${escapeHtml(categoria.statLabel)}">
+      <h4>${escapeHtml(categoria.statLabel)}</h4>
+      <a class="vp-st-lider-primeiro" href="${playerHref(primeiro)}">
+        <span class="vp-st-lider-txt">
+          <b>${escapeHtml(categoria.format(primeiro))}</b>
+          <span>${statsNomeDoJogador(primeiro)}</span>
+          <small>${escapeHtml(`${primeiro.matches} ${primeiro.matches === 1 ? "mapa" : "mapas"}, ${primeiro.rounds} rounds`)}</small>
+        </span>
+        ${statsLiderFoto(primeiro)}
+      </a>
+      <ol start="2">
+        ${resto.map((player, indice) => `<li><a href="${playerHref(player)}"><i>${indice + 2}</i><span>${statsNomeDoJogador(player)}</span><b>${escapeHtml(categoria.format(player))}</b></a></li>`).join("")}
+      </ol>
+    </section>
+  `;
+}
+
+// A faixa da semana fica mesmo sem jogo: e por ela que se volta para a anterior.
+function statsLideresAba(dados, filtro) {
+  const lideres = statsLideresDados(dados.todos);
+  return `
+    <section class="vp-eq-bloco vp-st-lideres">
+      ${statsSemanaBarra(filtro, lideres)}
+      ${!dados.todos.length ? statsVazio() : lideres.jogadores.length
+        ? `<div class="vp-st-lideres-grade">${statsLiderCategorias().map((categoria) => statsLiderQuadro(categoria, lideres.jogadores)).join("")}</div>`
+        : `<p class="vp-est-vazio">Nenhum jogador com esse mínimo.</p>`}
+    </section>
+  `;
+}
+
+// ---- Jogadores ----
+function statsColunas() {
+  const coluna = (key, label, value, texto) => ({ key, label, value, texto, celula: (row) => `<td class="numeric">${escapeHtml(texto(row))}</td>` });
+  return [
+    ...tournamentPlayerStatColumns(),
+    coluna("dpr", "DPR", (player) => Number(player.dpr || 0), (player) => fmt(player.dpr)),
+    coluna("fourKills", "4K", (player) => Number(player.fourKills || 0), (player) => String(player.fourKills || 0)),
+    coluna("fiveKills", "5K", (player) => Number(player.fiveKills || 0), (player) => String(player.fiveKills || 0)),
+    coluna("tradeKills", "Trade kills", (player) => Number(player.tradeKills || 0), (player) => String(player.tradeKills || 0)),
+    coluna("campeonatos", "Campeonatos", (player) => Number(player.campeonatos || 0), (player) => String(player.campeonatos || 0)),
+  ];
+}
+
+function statsJogadoresAba(dados) {
+  if (!dados.todos.length) return statsVazio();
+  const n = dados.jogadores.length;
+  return `
+    <section class="vp-eq-bloco vp-est vp-st-jogadores">
+      <div class="vp-est-lista">
+        ${n
+          ? tournamentEstTabela(null, { table: "players", titulo: "Jogadores", descricao: `${n} ${n === 1 ? "jogador" : "jogadores"}`, rows: dados.jogadores, columns: statsColunas(), fallback: tournamentPlayerStatSort, chave: "pagina", porPagina: 25, detalhe: true })
+          : `<p class="vp-est-vazio">Nenhum jogador com esse mínimo.</p>`}
+      </div>
+      ${dados.lideres.length ? tournamentEstLideres(dados.lideres, "Líderes") : ""}
+    </section>
+  `;
+}
+
+// ---- Recordes ----
+function statsRecordeLinha(linha, posicao, categoria) {
+  const { match, player } = linha;
+  const [deles, rival] = match.teamB?.id && player.teamId === match.teamB.id ? [match.teamB, match.teamA] : [match.teamA, match.teamB];
+  const event = mapaEventoDaSerie(linha.series);
+  const mapa = match.mapName || mapById(linha.mapa)?.name || "";
+  return `
+    <div class="vp-st-rec">
+      <i class="vp-st-rec-pos">${posicao}</i>
+      <b class="vp-st-rec-valor">${escapeHtml(categoria.texto(player))}</b>
+      <a class="vp-st-rec-jogador" href="${playerHref(player)}">${player.teamId ? teamLogo(player.teamId, "tiny") : ""}<span><strong title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong><small>${escapeHtml(`${player.kills}/${player.deaths}/${player.assists}`)}</small></span></a>
+      <span class="vp-st-rec-agente">${agentMiniIcon({ slug: player.agentSlug, name: player.agent, icon: player.agentIcon })}</span>
+      <a class="vp-st-rec-mapa" href="#/matches/${encodeURIComponent(match.id)}"><strong>${escapeHtml(mapa)}</strong><small>${escapeHtml(`${deles?.score ?? "-"}-${rival?.score ?? "-"} contra ${rival?.name || mapaNomeDaEquipe(rival?.id)}`)}</small></a>
+      <span class="vp-st-rec-evento" title="${escapeHtml(event?.name || "")}">${event ? eventLogo(event, "tiny") : ""}<span>${escapeHtml(event?.name || "")}</span></span>
+      <span class="vp-st-rec-data">${escapeHtml(dataCurta(linha.quando))}</span>
+    </div>
+  `;
+}
+
+function statsMarcos(linhas, dados) {
+  let aces = 0;
+  let quatro = 0;
+  const trinta = new Set();
+  linhas.forEach(({ player, match }) => {
+    aces += Number(player.fiveKills || 0);
+    quatro += Number(player.fourKills || 0);
+    if (Number(player.kills || 0) >= 30) trinta.add(`${match.id}:${player.id}`);
+  });
+  const ficha = [
+    ["Aces", String(aces)],
+    ["Rounds com 4K", String(quatro)],
+    ["30+ abates", `${trinta.size} ${trinta.size === 1 ? "vez" : "vezes"}`],
+  ];
+  const total = (rotulo, campo) => ({ rotulo, valor: (player) => Number(player[campo] || 0), texto: (player) => String(player[campo] || 0) });
+  return `
+    <section class="vp-resumo-bloco"><h3>Marcos</h3><dl class="vp-ficha">${ficha.map(([rotulo, valor]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd>${escapeHtml(valor)}</dd></div>`).join("")}</dl></section>
+    <div class="vp-st-trilho-tops">
+      ${statsTop(total("Mais aces", "fiveKills"), dados.todos)}
+      ${statsTop(total("Mais rounds com 4K", "fourKills"), dados.todos)}
+    </div>
+  `;
+}
+
+function statsRecordesAba(linhas, dados) {
+  if (!linhas.length) return statsVazio();
+  const categorias = statsRecordeCategorias();
+  const query = routeQuery();
+  const categoria = categorias.find((item) => item.id === query.get("recorde")) || categorias[0];
+  const ordenadas = statsRecordesDe(linhas, categoria);
+  const paginas = Math.max(1, Math.ceil(ordenadas.length / STATS_RECORDES_PAGINA));
+  const pagina = Math.min(paginas, Math.max(1, Number.parseInt(query.get("pagina") || "1", 10) || 1));
+  query.delete("pagina");
+  const inicio = (pagina - 1) * STATS_RECORDES_PAGINA;
+  // Empate divide a posicao: dois 40 abates ficam os dois em 3.
+  const posicaoDe = (indice) => {
+    const valor = categoria.valor(ordenadas[indice].player);
+    let primeiro = indice;
+    while (primeiro > 0 && categoria.valor(ordenadas[primeiro - 1].player) === valor) primeiro -= 1;
+    return primeiro + 1;
+  };
+  return `
+    <section class="vp-eq-bloco vp-est vp-st-recordes">
+      <div class="vp-est-lista">
+        <article class="vp-est-bloco">
+          <h3>Recordes num mapa<span>${escapeHtml(`${ordenadas.length} ${ordenadas.length === 1 ? "atuação" : "atuações"}`)}</span></h3>
+          <div class="vp-st-escolha" role="group" aria-label="Recorde">
+            ${categorias.map((item) => `<button type="button" data-st-recorde="${item.id}" aria-pressed="${item.id === categoria.id}">${escapeHtml(item.rotulo)}</button>`).join("")}
+          </div>
+          ${ordenadas.length
+            ? `<div class="vp-st-recs">${ordenadas.slice(inicio, inicio + STATS_RECORDES_PAGINA).map((linha, indice) => statsRecordeLinha(linha, posicaoDe(inicio + indice), categoria)).join("")}</div>`
+            : `<p class="vp-est-vazio">Nenhuma atuação com esses filtros.</p>`}
+          ${paginacaoDaLista(routePath().slice(2), pagina, paginas, query)}
+        </article>
+      </div>
+      <aside class="vp-resumo" aria-label="Marcos">
+        ${statsMarcos(linhas, dados)}
+      </aside>
+    </section>
+  `;
+}
+
+// ---- pagina ----
+function statsAba(aba, linhas, dados, filtro) {
+  if (aba === "lideres") return statsLideresAba(dados, filtro);
+  if (aba === "tabela") return statsJogadoresAba(dados);
+  if (aba === "recordes") return statsRecordesAba(linhas, dados);
+  return statsGeralAba(linhas, dados, filtro);
+}
+
+function renderStatsPage(id) {
+  if (id === "jogadores") return renderStatsJogadores();
+  if (id === "equipes") return renderStatsEquipes();
+  if (id === "agentes") return renderStatsAgentes();
+  return renderStatsHub();
+}
+
+function statsMil(valor) {
+  return Number(valor || 0).toLocaleString("pt-BR");
+}
+
+// ---- entrada: quatro quadrados em 2x2, cada um com a imagem do assunto ----
+// O que aparece em cada quadrado e sorteado a cada visita (pedido dele, 11/11/2026):
+// jogadores com foto, escudos, artes de mapa e icones de agente de quem ja jogou.
+function statsSorteia(lista, quantos) {
+  const copia = lista.slice();
+  for (let indice = copia.length - 1; indice > 0; indice -= 1) {
+    const outro = Math.floor(Math.random() * (indice + 1));
+    [copia[indice], copia[outro]] = [copia[outro], copia[indice]];
+  }
+  return copia.slice(0, quantos);
+}
+
+// Um jogador por equipe, para a fileira nao sair com cinco camisas iguais.
+function statsJogadoresDaVitrine(linhas, quantos) {
+  const ids = new Set(linhas.map((linha) => linha.player.id));
+  const porEquipe = new Map();
+  state.db.players.filter((player) => player.photo && ids.has(player.id)).forEach((player) => {
+    const equipe = player.teamId || player.id;
+    if (!porEquipe.has(equipe)) porEquipe.set(equipe, []);
+    porEquipe.get(equipe).push(player);
+  });
+  return statsSorteia([...porEquipe.values()].map((lista) => statsSorteia(lista, 1)[0]), quantos);
+}
+
+function statsVitrine(tipo, linhas) {
+  if (tipo === "jogadores") {
+    return statsJogadoresDaVitrine(linhas, 5)
+      .map((player) => `<img class="vp-sq-foto" src="${escapeHtml(assetPath(player.photo))}" alt="" loading="eager" onerror="this.remove()" />`)
+      .join("");
+  }
+  if (tipo === "equipes") {
+    // Um por escudo: equipes da mesma organizacao dividem o arquivo e saiam repetidas.
+    const ids = new Set(linhas.map((linha) => linha.equipe).filter(Boolean));
+    const porEscudo = new Map();
+    statsSorteia(state.db.teams.filter((team) => team.logo && ids.has(team.id)), Infinity).forEach((team) => porEscudo.has(team.logo) || porEscudo.set(team.logo, team));
+    return [...porEscudo.values()].slice(0, 9).map((team) => teamLogo(team.id, "vp-sq-escudo")).join("");
+  }
+  if (tipo === "mapas") {
+    const ids = new Set(linhas.map((linha) => linha.mapa));
+    return statsSorteia(state.db.maps.filter((map) => ids.has(map.id) && mapArtAttrs(map)), 5)
+      .map((map) => `<span class="vp-sq-fatia">${mapaArte(map, "eager")}<small>${escapeHtml(map.name)}</small></span>`)
+      .join("");
+  }
+  const agentes = new Map();
+  linhas.forEach(({ agente, player }) => agente && player.agentIcon && !agentes.has(agente) && agentes.set(agente, player.agentIcon));
+  return statsSorteia([...agentes.values()], 9)
+    .map((icone) => `<img class="vp-sq-agente" src="${escapeHtml(assetPath(icone))}" alt="" loading="eager" onerror="this.remove()" />`)
+    .join("");
+}
+
+// O numero do quadrado tambem e o fundo dele, enorme e quase apagado (modelo B,
+// escolha do dono em 11/11/2026). Em Mapas nao entra, a pedido dele: a arte ja
+// ocupa o quadrado.
+function renderStatsHub() {
+  const linhas = statsLinhasBase();
+  const contar = (valor) => new Set(linhas.map(valor).filter(Boolean)).size;
+  const mapas = new Map();
+  linhas.forEach(({ match }) => mapas.set(match.id, Number(match.rounds || 0)));
+  const rounds = [...mapas.values()].reduce((soma, valor) => soma + valor, 0);
+  const quadros = [
+    ["jogadores", "#/stats/jogadores", "Jogadores", contar((linha) => linha.player.id), `${statsMil(rounds)} rounds`],
+    ["equipes", "#/stats/equipes", "Equipes", contar((linha) => linha.equipe), `${statsMil(contar((linha) => linha.series.id || linha.series.seriesKey))} séries`],
+    ["mapas", "#/maps", "Mapas", contar((linha) => linha.mapa), `${statsMil(mapas.size)} jogados`],
+    ["agentes", "#/stats/agentes", "Agentes", contar((linha) => linha.agente), `${statsMil(linhas.length)} escolhas`],
+  ];
+  Shell(`
+    <section class="vp-stats-hub">
+      <header class="vp-sec vp-st-cabeca"><h1>Estatísticas</h1></header>
+      <nav class="vp-st-quadros" aria-label="Estatísticas">
+        ${quadros.map(([tipo, href, nome, numero, apoio]) => `
+          <a class="vp-st-quadro vp-sq-${tipo}" href="${href}">
+            ${tipo === "mapas" ? "" : `<span class="vp-sq-gigante" aria-hidden="true">${escapeHtml(statsMil(numero))}</span>`}
+            <span class="vp-sq-texto"><strong>${escapeHtml(nome)}</strong><b>${escapeHtml(statsMil(numero))}</b><span>${escapeHtml(apoio)}</span></span>
+            <span class="vp-sq-imagem" aria-hidden="true">${statsVitrine(tipo, linhas)}</span>
+          </a>`).join("")}
+      </nav>
+    </section>
+  `);
+}
+
+function statsCabeca(titulo, apoio) {
+  return `<header class="vp-sec vp-st-cabeca"><h1>${escapeHtml(titulo)}</h1><span class="vp-sec-aside">${escapeHtml(apoio)}</span></header>`;
+}
+
+function renderStatsJogadores() {
+  const aba = STATS_ABAS.includes(route().tab) ? route().tab : "geral";
+  const filtro = statsFiltro("jogadores");
+  const { linhas, dados, facetas } = statsRecorte(filtro, "jogadores");
+  const mapas = new Set(linhas.map((linha) => linha.match.id)).size;
+  const tabSlide = panelSlideSnapshot("stats-tabs", { selector: ".team-tab-panel", scope: "stats", key: aba, order: STATS_ABAS });
+  const query = statsQuery(filtro);
+  const lideres = aba === "lideres" ? statsLideresDados(dados.todos) : null;
+  const minimo = aba === "recordes" ? null
+    : lideres ? { chave: "mapas", rotulo: "Mapas mínimos", maximo: lideres.maximo, valor: lideres.minimo }
+    : { chave: "rounds", rotulo: "Rounds mínimos", maximo: dados.maximo, valor: dados.minimo };
+  Shell(`
+    <section class="team-page vp-stats-pagina">
+      ${statsCabeca("Jogadores", `${dados.todos.length} ${dados.todos.length === 1 ? "jogador" : "jogadores"}, ${mapas} ${mapas === 1 ? "mapa" : "mapas"}`)}
+      <nav class="team-tabs" aria-label="Abas das estatísticas de jogadores">
+        ${STATS_ABAS.map((tab) => `<a class="team-tab ${aba === tab ? "active" : ""}"${aba === tab ? ` aria-current="page"` : ""} href="#/stats/jogadores${tab === "geral" ? "" : `/${tab}`}${query}">${escapeHtml(STATS_ABA_ROTULOS[tab])}</a>`).join("")}
+      </nav>
+      <div class="vp-est-filtros vp-mp-filtros vp-st-filtros">${statsFiltroCampos(filtro, facetas, "jogadores", minimo)}</div>
+      <section class="team-tab-panel">
+        ${statsAba(aba, linhas, dados, filtro)}
+      </section>
+    </section>
+  `);
+  bindAbaDaEquipe(aba, renderStatsJogadores);
+  bindStats();
+  playPanelSlide(tabSlide);
+}
+
+// ---- Equipes: a tabela da aba Equipes do mapa, no banco inteiro ----
+// A nota da equipe e a do campeonato: a media dos jogadores dela pesada pelos
+// rounds, com cada jogador somado so nos mapas por ela.
+function statsEquipesDados(linhas) {
+  const porEquipe = new Map();
+  const todos = new Map();
+  linhas.forEach(({ match, series, equipe }) => {
+    if (!equipe) return;
+    if (!porEquipe.has(equipe)) porEquipe.set(equipe, new Map());
+    porEquipe.get(equipe).set(match.id, { match, series });
+    todos.set(match.id, { match, series });
+  });
+  const notas = aggregateMatchPlayers(linhas.filter((linha) => linha.equipe).map((linha) => ({ players: [{ ...linha.player, id: `${linha.equipe}|${linha.player.id}` }] })));
+  const pesos = new Map();
+  notas.forEach((row) => {
+    const equipe = row.id.split("|")[0];
+    const rounds = Number(row.rounds || 0);
+    const peso = pesos.get(equipe) || { rounds: 0, rating: 0, acs: 0, adr: 0, jogadores: 0 };
+    peso.rounds += rounds;
+    peso.rating += Number(officialRatingValue(row) || 0) * rounds;
+    peso.acs += Number(row.acs || 0) * rounds;
+    peso.adr += Number(row.adr || 0) * rounds;
+    peso.jogadores += 1;
+    pesos.set(equipe, peso);
+  });
+  const sequencias = mapaSequencias([...todos.values()]);
+  const equipes = [...porEquipe.entries()].map(([id, jogos]) => {
+    const soma = mapaSoma([...jogos.values()], id);
+    const peso = pesos.get(id) || { rounds: 0 };
+    const media = (campo) => (peso.rounds ? peso[campo] / peso.rounds : 0);
+    return { id, name: mapaNomeDaEquipe(id), soma, lados: mapaLados(soma, true), seguidas: sequencias.get(id) || 0, rating: media("rating"), acs: media("acs"), adr: media("adr"), jogadores: peso.jogadores || 0 };
+  });
+  const maximo = equipes.reduce((maior, linha) => Math.max(maior, linha.soma.mapas), 0);
+  const corte = Math.max(1, Math.ceil(maximo * 0.2));
+  const pedido = routeQuery().get("minimo");
+  const minimo = pedido ? Math.min(Math.max(0, Number.parseInt(pedido, 10) || 0), maximo) : Math.min(corte, maximo);
+  return { todas: equipes, equipes: equipes.filter((linha) => linha.soma.mapas >= minimo), maximo, minimo, piso: mapaPiso(minimo, maximo), mapas: todos.size };
+}
+
+function statsEquipeHref(teamId) {
+  return `#/teams/${encodeURIComponent(teamId)}`;
+}
+
+function statsEquipeColunas() {
+  const numero = (texto) => (row) => `<td class="numeric">${escapeHtml(texto(row))}</td>`;
+  const coluna = (key, label, value, texto, curta = true) => ({ key, label, value, texto, celula: numero(texto), curta });
+  return [
+    ...mapaEquipeColunas().map((column) => {
+      if (column.key === "team") return { ...column, celula: (row) => `<td><a class="tournament-stats-team-cell" href="${statsEquipeHref(row.id)}">${teamLogo(row.id, "tournament-stat-logo")}<span><strong>${escapeHtml(row.name)}</strong></span></a></td>` };
+      if (column.key === "seguidas" || column.key === "ultimo") return { ...column, curta: false };
+      return column;
+    }),
+    coluna("rating", "rAAting", (row) => row.rating, (row) => (row.rating ? fmt(row.rating) : "-")),
+    coluna("acs", "ACS", (row) => row.acs, (row) => (row.acs ? fmt(row.acs, 0) : "-")),
+    coluna("adr", "ADR", (row) => row.adr, (row) => (row.adr ? fmt(row.adr, 0) : "-")),
+    coluna("jogadores", "Jogadores", (row) => row.jogadores, (row) => String(row.jogadores), false),
+  ];
+}
+
+function renderStatsEquipes() {
+  const filtro = statsFiltro("equipes");
+  const { dados, facetas } = statsRecorte(filtro, "equipes");
+  const n = dados.equipes.length;
+  Shell(`
+    <section class="team-page vp-stats-pagina">
+      ${statsCabeca("Equipes", `${dados.todas.length} ${dados.todas.length === 1 ? "equipe" : "equipes"}, ${dados.mapas} ${dados.mapas === 1 ? "mapa" : "mapas"}`)}
+      <div class="vp-est-filtros vp-mp-filtros vp-st-filtros">${statsFiltroCampos(filtro, facetas, "equipes", { chave: "minimo", rotulo: "Mapas mínimos", maximo: dados.maximo, valor: dados.minimo })}</div>
+      <section class="team-tab-panel">
+        ${dados.todas.length ? `
+          <section class="vp-eq-bloco vp-est vp-st-equipes">
+            <div class="vp-est-lista">
+              ${n
+                ? tournamentEstTabela(null, { table: "statsteams", titulo: "Equipes", descricao: `${n} ${n === 1 ? "equipe" : "equipes"}`, rows: dados.equipes, columns: statsEquipeColunas(), fallback: mapaEquipeOrdem, chave: "pagina", porPagina: 25, detalhe: true })
+                : `<p class="vp-est-vazio">Nenhuma equipe com esse mínimo.</p>`}
+            </div>
+            ${n ? mapaEquipeDestaques(dados.equipes, dados.piso, statsEquipeHref) : ""}
+          </section>` : `<p class="vp-est-vazio">Nenhuma equipe com esses filtros.</p>`}
+      </section>
+    </section>
+  `);
+  bindAbaDaEquipe("equipes", renderStatsEquipes);
+  bindStats();
+}
+
+// ---- Agentes: a aba Agentes do campeonato no banco inteiro ----
+// So entram os lados que passam no filtro; a taxa de escolha e sobre esses lados.
+function statsAgentesDados(linhas, filtro) {
+  const porMapa = new Map();
+  const lados = new Set();
+  linhas.forEach(({ match, player, equipe }) => {
+    if (!porMapa.has(match.id)) porMapa.set(match.id, { ...match, players: [] });
+    porMapa.get(match.id).players.push(player);
+    lados.add(`${match.id}:${equipe}`);
+  });
+  const mapas = [...porMapa.values()];
+  let agentes = tournamentAgentRows(mapas, filtro.equipe);
+  agentes.forEach((row) => {
+    row.pickOpportunities = lados.size;
+    row.pickRate = pctValue(row.picks, lados.size);
+  });
+  // Com uma equipe so, o espelho nao existe: valem todos os mapas dela, como no mapa.
+  if (filtro.equipe) agentes = agentes.map((row) => ({ ...row, nonMirroredPicks: row.picks, nonMirroredWins: row.mapWins, nonMirroredLosses: row.mapLosses, winRateNM: pctValue(row.mapWins, row.picks) }));
+  return { mapas, agentes, composicoes: tournamentCompositionRows(mapas, filtro.equipe), lados: lados.size };
+}
+
+function renderStatsAgentes() {
+  const filtro = statsFiltro("agentes");
+  const { dados, facetas } = statsRecorte(filtro, "agentes");
+  const { agentes, composicoes: todas } = dados;
+  const ativoId = routeQuery().get("agente") || "";
+  const ativo = agentes.find((row) => row.id === ativoId) || null;
+  const composicoes = ativo ? todas.filter((row) => row.agents.some((agent) => (agent.slug || agent.name) === ativo.id)) : todas;
+  Shell(`
+    <section class="team-page vp-stats-pagina">
+      ${statsCabeca("Agentes", `${agentes.length} ${agentes.length === 1 ? "agente" : "agentes"}, ${dados.mapas.length} ${dados.mapas.length === 1 ? "mapa" : "mapas"}`)}
+      <div class="vp-est-filtros vp-mp-filtros vp-st-filtros">${statsFiltroCampos(filtro, facetas, "agentes")}</div>
+      <section class="team-tab-panel">
+        ${agentes.length ? `
+          <section class="vp-eq-bloco vp-est vp-ag-aba">
+            <div class="vp-est-lista">
+              ${tournamentEstTabela(null, { table: "agents", titulo: "Agentes", descricao: `${agentes.length} agentes`, rows: agentes, columns: tournamentAgenteColunas(ativo ? [ativo.id] : []), fallback: tournamentAgentStatSort, chave: "pagina-agentes", porPagina: 10, detalhe: true })}
+              ${tournamentEstTabela(null, { table: "compositions", titulo: "Composições", descricao: ativo ? `Só as que usaram ${ativo.name}` : `${todas.length} composições`, vazio: "Nenhuma composição com esse agente.", rows: composicoes, columns: tournamentComposicaoColunas(), fallback: tournamentCompositionStatSort, chave: "pagina-comps", porPagina: 10, detalhe: true })}
+            </div>
+            ${tournamentAgenteResumo(ativo || agentes[0], Boolean(ativo), todas)}
+          </section>` : `<p class="vp-est-vazio">Nenhum agente com esses filtros.</p>`}
+      </section>
+    </section>
+  `);
+  bindAbaDaEquipe("agentes", renderStatsAgentes);
+  bindStats();
+}
+
+// Trocar um filtro volta o minimo ao corte do recorte novo: um minimo de 300
+// rounds herdado do banco inteiro esvaziaria um campeonato de 120.
+function bindStats() {
+  const raiz = document.querySelector(".vp-stats-pagina");
+  if (!raiz) return;
+  const aplica = (mudanca, foco) => {
+    const query = routeQuery();
+    mudanca(query);
+    query.delete("pagina");
+    pushFilterState(routePath().slice(2), query, foco);
+  };
+  raiz.querySelectorAll("[data-st-filtro]").forEach((campo) => {
+    campo.addEventListener("change", () => {
+      const chave = campo.dataset.stFiltro;
+      const valor = campo.type === "checkbox" ? (campo.checked ? "1" : "") : campo.value;
+      aplica((query) => {
+        if (valor) query.set(chave, valor);
+        else query.delete(chave);
+        query.delete("rounds");
+        query.delete("minimo");
+        query.delete("mapas");
+        ["pagina-agentes", "pagina-comps"].forEach((pagina) => query.delete(pagina));
+      }, `[data-st-filtro="${chave}"]`);
+    });
+  });
+  const barra = raiz.querySelector("[data-st-minimo]");
+  barra?.addEventListener("input", () => {
+    barra.parentElement.style.setProperty("--cheio", `${Number(barra.max) ? (Number(barra.value) / Number(barra.max)) * 100 : 0}%`);
+    barra.parentElement.querySelector("[data-est-rounds-valor]").textContent = barra.value;
+  });
+  barra?.addEventListener("change", () => aplica((query) => query.set(barra.dataset.stMinimo, barra.value), `[data-st-minimo="${barra.dataset.stMinimo}"]`));
+  raiz.addEventListener("click", (event) => {
+    if (event.target.closest("[data-st-limpar]")) {
+      aplica((query) => [...STATS_FILTROS, "pagina-agentes", "pagina-comps"].forEach((chave) => query.delete(chave)), "[data-st-filtro]");
+      return;
+    }
+    const recorde = event.target.closest("[data-st-recorde]");
+    if (recorde) {
+      aplica((query) => {
+        if (recorde.dataset.stRecorde === "abates") query.delete("recorde");
+        else query.set("recorde", recorde.dataset.stRecorde);
+      }, `[data-st-recorde="${recorde.dataset.stRecorde}"]`);
     }
   });
 }
@@ -42340,7 +43331,22 @@ function homeSummaryLeaders() {
     },
     player: leader.player,
     windowLabel: leader.windowLabel,
+    windowStart: leader.windowStart,
+    windowEnd: leader.windowEnd,
   }));
+}
+
+// "Ver mais" abre a aba Lideres de Estatisticas com a mesma semana e o mesmo
+// minimo de mapas. O home.json antigo nao trazia a janela: vale a semana fechada
+// do ranking, que e a da home quando a semana teve jogo.
+function weekLeadersHref(leader) {
+  let inicio = Number(leader?.windowStart || 0);
+  let fim = Number(leader?.windowEnd || 0);
+  if (!inicio || !fim) {
+    fim = rankingTuesdayStartOnOrBefore(Date.now());
+    inicio = fim - WEEK_MS;
+  }
+  return statsSemanaHref(inicio, fim, new URLSearchParams({ mapas: String(PLAYER_OF_WEEK_MIN_MAPS) }));
 }
 
 // Melhores da semana: um lider por vez, deslizando para o lado, como o
@@ -42361,7 +43367,7 @@ function weekHighlights() {
   }
   return `
     <section class="vp-semana" aria-roledescription="carrossel" aria-labelledby="week-board-title">
-      <header class="vp-sec"><h2 id="week-board-title">Melhores da semana</h2></header>
+      <header class="vp-sec"><h2 id="week-board-title">Melhores da semana</h2><a class="vp-sec-more" href="${weekLeadersHref(leaders[0])}">Ver mais</a></header>
       <div class="vp-semana-cartao" tabindex="0" style="--vp-passo:${PLAYER_OF_WEEK_INTERVAL_MS}ms">
         <p class="vp-semana-cabeca"><span>${escapeHtml(leaders[0].windowLabel)}</span><span>Mínimo de ${PLAYER_OF_WEEK_MIN_MAPS} mapas</span></p>
         <div class="vp-semana-trilho">${leaders.map((leader) => weekSlide(leader, false)).join("")}${weekSlide(leaders[0], true)}</div>
@@ -42528,7 +43534,7 @@ function playerOfWeekLeaders() {
   return PLAYER_OF_WEEK_CATEGORIES
     .map((category) => {
       const player = playerOfWeekLeader(players, category);
-      return player ? { category, player, windowLabel } : null;
+      return player ? { category, player, windowLabel, windowStart: start, windowEnd: end } : null;
     })
     .filter(Boolean);
 }
@@ -42622,14 +43628,19 @@ function weeklyPlayerRows(matches) {
     .filter((player) => player.rounds > 0 && player.matches >= PLAYER_OF_WEEK_MIN_MAPS);
 }
 
-function playerOfWeekLeader(players, category) {
-  return players.slice().sort((a, b) => {
+// O desempate dos Melhores da semana, que a aba Lideres de Estatisticas tambem usa.
+function playerOfWeekOrdem(category) {
+  return (a, b) => {
     const valueA = Number(category.value(a) || 0);
     const valueB = Number(category.value(b) || 0);
     const metricDiff = category.lowIsBetter ? valueA - valueB : valueB - valueA;
     if (metricDiff !== 0) return metricDiff;
     return b.rounds - a.rounds || Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0) || a.nick.localeCompare(b.nick, "pt-BR");
-  })[0] || null;
+  };
+}
+
+function playerOfWeekLeader(players, category) {
+  return players.slice().sort(playerOfWeekOrdem(category))[0] || null;
 }
 
 function playerWeekDateLabel(value) {

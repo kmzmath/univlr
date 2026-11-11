@@ -139,12 +139,15 @@ function main() {
   state.ready = true;
 
   // Líderes da semana pela função real do app.js.
-  const leaders = playerOfWeekLeaders().map(({ category, player, windowLabel }) => ({
+  const leaders = playerOfWeekLeaders().map(({ category, player, windowLabel, windowStart, windowEnd }) => ({
     key: category.key,
     label: category.label,
     statLabel: category.statLabel,
     value: category.format(player),
     windowLabel,
+    // o "Ver mais" da home leva a aba Lideres de Estatisticas com esta semana
+    windowStart,
+    windowEnd,
     player: {
       id: player.id,
       // playerRouteId le routeSlug antes do id; sem ele o link vira o puuid cru

@@ -38,10 +38,16 @@ body {
 
 /* Nove abas desde as Threads (07/11/2026): a busca cede 40px para o menu caber
    numa linha a 1440px. Com 460px faltavam 21px e Cartinhas descia. Dez desde
-   Mapas (11/11/2026): mais 40px, pelo mesmo motivo. */
+   Mapas (11/11/2026): mais 40px, pelo mesmo motivo. Estatisticas no lugar de
+   Mapas (11/11/2026): o item e 34px mais largo e sobravam 19, entao o vao do
+   menu cai de 16 para 12 e a busca fica nos 380px. */
 @media (min-width: 1181px) {
   .topbar-inner {
     grid-template-columns: auto minmax(0, 1fr) minmax(300px, 380px) auto;
+  }
+
+  .topbar-inner .nav {
+    column-gap: 12px;
   }
 }
 
@@ -14276,5 +14282,775 @@ html[data-tema="claro"] .vp-mp-faixa {
 
   .vp-mp-jogo-patch {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   Estatisticas (11/11/2026): #/stats em tres abas. Visao Geral com os cinco
+   melhores de cada numero, Jogadores com a tabela do campeonato e Recordes
+   com as atuacoes num mapa. Filtros numa fileira, como na pagina do mapa.
+   ========================================================================== */
+
+.vp-st-cabeca h1 {
+  margin: 0;
+  font: 700 34px/1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vp-st-filtros select {
+  flex: 1 1 130px;
+}
+
+.vp-st-filtros .vp-est-rounds {
+  flex: 1 1 240px;
+}
+
+.vp-st-blocos {
+  display: grid;
+  gap: 28px;
+}
+
+.vp-st-blocos .vp-est-bloco + .vp-est-bloco {
+  margin-top: 0;
+}
+
+.vp-st-blocos .vp-est-bloco h3 {
+  margin-bottom: 12px;
+}
+
+/* Os cinco melhores: o primeiro com o numero grande e solto, os outros em linhas. */
+.vp-st-grade {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.vp-st-top {
+  display: grid;
+  align-content: start;
+  min-width: 0;
+  background: var(--surface);
+}
+
+.vp-st-top h4 {
+  margin: 0;
+  padding: 12px 14px 0;
+  color: var(--muted);
+  font: 600 12px/1.2 var(--font-text);
+}
+
+.vp-st-primeiro {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 4px 14px 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-st-primeiro b {
+  color: var(--ink);
+  font: 700 44px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-st-primeiro span,
+.vp-st-top li span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.vp-st-top strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-st-primeiro strong {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.vp-st-top .team-logo {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.vp-st-top ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.vp-st-top li + li {
+  border-top: 1px solid var(--line);
+}
+
+.vp-st-top li a {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 0 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-st-top li i {
+  color: var(--muted);
+  font: 600 12px/1 var(--font-text);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-st-top li b {
+  font: 600 16px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-st-top li a:hover,
+.vp-st-primeiro:hover {
+  background: var(--surface-2);
+}
+
+.vp-st-top a:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.vp-st-trilho-tops {
+  display: grid;
+  gap: 12px;
+}
+
+.vp-st-funcoes dt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vp-st-funcoes dt img {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+html[data-tema="claro"] .vp-st-funcoes dt img {
+  filter: brightness(0);
+  opacity: 0.72;
+}
+
+/* Recordes: a escolha do numero e uma linha por atuacao. */
+.vp-st-escolha {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 20px;
+  margin: 0 0 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.vp-st-escolha button {
+  padding: 10px 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font: 600 13px/1 var(--font-text);
+}
+
+.vp-st-escolha button:hover,
+.vp-st-escolha button[aria-pressed="true"] {
+  color: var(--ink);
+}
+
+.vp-st-escolha button[aria-pressed="true"] {
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+.vp-st-recs {
+  display: grid;
+  gap: 2px;
+}
+
+.vp-st-rec {
+  display: grid;
+  grid-template-columns: 28px 64px minmax(0, 1.3fr) 26px minmax(0, 1.2fr) minmax(0, 1.4fr) 72px;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 14px;
+  background: var(--surface);
+}
+
+.vp-st-rec > * {
+  min-width: 0;
+}
+
+.vp-st-rec-pos {
+  color: var(--muted);
+  font: 600 12px/1 var(--font-text);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-st-rec-valor {
+  font: 700 28px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-st-rec-jogador,
+.vp-st-rec-mapa {
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-st-rec-jogador {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vp-st-rec-jogador .team-logo {
+  flex: none;
+  width: 22px;
+  height: 22px;
+}
+
+.vp-st-rec-jogador > span,
+.vp-st-rec-mapa {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.vp-st-rec strong,
+.vp-st-rec small,
+.vp-st-rec-evento > span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vp-st-rec strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.vp-st-rec small {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-st-rec-jogador:hover strong,
+.vp-st-rec-mapa:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.vp-st-rec-evento {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.vp-st-rec-evento .event-logo {
+  flex: none;
+}
+
+.vp-st-rec-data {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+@media (max-width: 760px) {
+  .vp-st-grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vp-st-primeiro b {
+    font-size: 36px;
+  }
+
+  .vp-st-rec {
+    grid-template-columns: 22px 48px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "pos valor jogador agente"
+      ". . mapa mapa"
+      ". . evento data";
+    gap: 6px 10px;
+    padding: 10px 12px;
+  }
+
+  .vp-st-rec-pos { grid-area: pos; }
+  .vp-st-rec-valor { grid-area: valor; font-size: 24px; }
+  .vp-st-rec-jogador { grid-area: jogador; }
+  .vp-st-rec-agente { grid-area: agente; }
+  .vp-st-rec-mapa { grid-area: mapa; }
+  .vp-st-rec-evento { grid-area: evento; }
+  .vp-st-rec-data { grid-area: data; }
+}
+
+/* Entrada de Estatisticas (11/11/2026): 2x2 que ocupa a tela. Cada quadrado tem o
+   nome e os numeros no alto e uma faixa de imagem sorteada a cada visita, solta e
+   sangrando na base (modelo A, escolha do dono, com sorteio a pedido dele). */
+.vp-stats-hub {
+  width: 100%;
+  max-width: 1294px;
+  margin-inline: auto;
+}
+
+.vp-st-quadros {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: max(300px, calc((100svh - var(--topbar-h, 56px) - 132px) / 2));
+  gap: 12px;
+}
+
+.vp-st-quadro {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-width: 0;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.vp-st-quadro:hover {
+  background: var(--surface-2);
+}
+
+.vp-st-quadro:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.vp-sq-texto {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 4px 16px;
+  padding: 24px 28px 0;
+}
+
+.vp-sq-texto strong {
+  font: 700 44px/1 var(--font-display);
+}
+
+.vp-sq-texto b {
+  font: 700 56px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-sq-texto > span {
+  grid-column: 2;
+  color: var(--muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* A faixa e um container: fotos, escudos e icones medem pela largura e pela
+   altura dela, para caber inteiro em qualquer tela. */
+.vp-sq-imagem {
+  container-type: size;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  align-content: flex-end;
+  justify-content: center;
+  min-height: 0;
+  opacity: 0.86;
+  transition: opacity 220ms ease;
+}
+
+.vp-st-quadro:hover .vp-sq-imagem {
+  opacity: 1;
+}
+
+/* Jogadores: cinco recortes lado a lado, como foto de time, pisando na base. O
+   recorte ocupa uns 63% da foto: com 31% da largura cada, os cinco cabem ombro a
+   ombro. */
+.vp-sq-jogadores .vp-sq-imagem,
+.vp-sq-mapas .vp-sq-imagem {
+  flex-wrap: nowrap;
+}
+
+.vp-sq-foto {
+  --lado: min(31cqw, 100cqh);
+  flex: none;
+  width: var(--lado);
+  height: var(--lado);
+  margin-inline: calc(var(--lado) * -0.18);
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.vp-sq-foto:nth-child(3) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Equipes e Agentes: duas fileiras desencontradas, a de baixo com um a menos. */
+.vp-sq-imagem .team-logo.vp-sq-escudo {
+  --lado: min(16cqw, 42cqh);
+  flex: none;
+  width: var(--lado);
+  height: var(--lado);
+  /* Cada um ocupa sempre 1/5 da largura: em tela baixa o lado para pela altura e
+     cabia um sexto na fileira (6+3 em vez de 5+4). */
+  margin: 0 calc((19.6cqw - var(--lado)) / 2) calc(var(--lado) * 0.1);
+  background: none;
+}
+
+.vp-sq-equipes .vp-sq-imagem,
+.vp-sq-agentes .vp-sq-imagem {
+  padding-bottom: 12px;
+}
+
+.vp-sq-imagem .team-logo.vp-sq-escudo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Mapas: fatias inclinadas da arte, ate as bordas do quadrado. */
+.vp-sq-mapas .vp-sq-imagem {
+  align-items: stretch;
+  margin-top: 20px;
+}
+
+.vp-sq-fatia {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  margin-left: -4%;
+  overflow: hidden;
+  clip-path: polygon(16% 0, 100% 0, 84% 100%, 0 100%);
+}
+
+.vp-sq-fatia:first-child {
+  margin-left: 0;
+  clip-path: polygon(0 0, 100% 0, 84% 100%, 0 100%);
+}
+
+.vp-sq-fatia:last-child {
+  clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.vp-sq-fatia img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vp-sq-fatia small {
+  position: absolute;
+  bottom: 10px;
+  left: 8%;
+  color: #fff;
+  font: 600 12px/1 var(--font-text);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+/* Agentes: os icones soltos. */
+.vp-sq-agente {
+  --lado: min(15cqw, 42cqh);
+  flex: none;
+  width: var(--lado);
+  height: var(--lado);
+  margin: 0 calc((19.6cqw - var(--lado)) / 2) calc(var(--lado) * 0.1);
+  object-fit: contain;
+}
+
+@media (max-width: 760px) {
+  .vp-st-quadros {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: 260px;
+  }
+
+  .vp-sq-texto {
+    padding: 16px 16px 0;
+  }
+
+  .vp-sq-texto strong {
+    font-size: 30px;
+  }
+
+  .vp-sq-texto b {
+    font-size: 36px;
+  }
+
+  .vp-sq-texto > span {
+    font-size: 12px;
+  }
+
+  /* Cinco cabiam em 112px cada; quatro ficam maiores e enchem a faixa. */
+  .vp-sq-foto {
+    --lado: min(38cqw, 100cqh);
+  }
+
+  .vp-sq-foto:nth-child(5) {
+    display: none;
+  }
+}
+
+/* O numero do quadrado como textura do fundo: enorme, cortado e quase apagado,
+   atras do texto e das imagens (modelo B, escolha do dono; fora de Mapas). */
+.vp-st-quadro {
+  position: relative;
+  isolation: isolate;
+}
+
+.vp-sq-texto,
+.vp-sq-imagem {
+  position: relative;
+  z-index: 1;
+}
+
+.vp-sq-gigante {
+  position: absolute;
+  z-index: 0;
+  right: -0.03em;
+  bottom: -0.2em;
+  color: color-mix(in srgb, var(--ink) 10%, transparent);
+  font: 700 300px/1 "Oswald", var(--font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@media (max-width: 760px) {
+  .vp-sq-gigante {
+    font-size: 190px;
+  }
+}
+
+/* Lideres (11/11/2026): os cinco melhores de cada numero, como os leaderboards da
+   HLTV. O primeiro com a foto pisando na base do quadro; o rAAting ocupa 2x2. */
+.vp-st-lideres {
+  display: grid;
+  gap: 12px;
+}
+
+.vp-st-semana {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  min-height: 40px;
+}
+
+.vp-st-semana strong {
+  font: 700 22px/1.1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-st-semana-seta {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  background: var(--surface);
+  color: var(--ink);
+  font: 600 22px/1 var(--font-text);
+  text-decoration: none;
+}
+
+a.vp-st-semana-seta:hover {
+  background: var(--surface-2);
+}
+
+span.vp-st-semana-seta {
+  color: var(--muted);
+  opacity: 0.4;
+}
+
+.vp-st-semana-ir {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  text-underline-offset: 2px;
+}
+
+.vp-st-semana .vp-sec-aside {
+  margin-left: auto;
+}
+
+.vp-st-lideres-grade {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.vp-st-lider {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+}
+
+.vp-st-lider-primeiro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 8px;
+  min-width: 0;
+  min-height: 112px;
+  padding-left: 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-st-lider-primeiro:hover {
+  background: var(--surface-2);
+}
+
+.vp-st-lider-txt {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding-bottom: 12px;
+}
+
+.vp-st-lider-txt b {
+  font: 700 44px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-st-lider-txt > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.vp-st-lider-txt strong {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.vp-st-lider-txt small {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-st-lider-foto {
+  display: block;
+  width: 112px;
+  height: 112px;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.vp-st-lider-foto.is-silhouette {
+  opacity: 0.35;
+}
+
+/* rAAting: o quadro maior, com a foto grande e as linhas mais altas. */
+.vp-st-lider-rating {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.vp-st-lider-rating .vp-st-lider-txt {
+  padding-bottom: 20px;
+}
+
+.vp-st-lider-rating .vp-st-lider-txt b {
+  font-size: 80px;
+}
+
+.vp-st-lider-rating .vp-st-lider-txt strong {
+  font-size: 20px;
+}
+
+.vp-st-lider-rating .vp-st-lider-txt .team-logo {
+  width: 26px;
+  height: 26px;
+}
+
+.vp-st-lider-rating .vp-st-lider-txt small {
+  font-size: 13px;
+}
+
+.vp-st-lider-rating .vp-st-lider-foto {
+  width: 300px;
+  height: 300px;
+}
+
+.vp-st-lider-rating li a {
+  min-height: 40px;
+}
+
+.vp-st-lider-rating li strong {
+  font-size: 14px;
+}
+
+.vp-st-lider-rating li b {
+  font-size: 20px;
+}
+
+@media (max-width: 1100px) {
+  .vp-st-lideres-grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vp-st-lider-rating {
+    grid-row: auto;
+  }
+
+  .vp-st-lider-rating .vp-st-lider-foto {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 620px) {
+  .vp-st-lideres-grade {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vp-st-lider-rating {
+    grid-column: auto;
+  }
+
+  .vp-st-lider-rating .vp-st-lider-txt b {
+    font-size: 56px;
+  }
+
+  .vp-st-lider-rating .vp-st-lider-foto {
+    width: 160px;
+    height: 160px;
+  }
+
+  .vp-st-semana strong {
+    font-size: 18px;
+  }
+
+  .vp-st-semana .vp-sec-aside {
+    flex-basis: 100%;
+    margin-left: 0;
   }
 }

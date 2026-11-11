@@ -17449,8 +17449,11 @@ const TOURNAMENT_OVERRIDES = {
     prizePool: "-",
     tier: "B",
     type: "Online - Inters",
+    // A final estava marcada para 07/11 e nao aconteceu (dono, 11/11/2026); ainda
+    // sem data nova. Com a final: status "Finalizado", endAt (aqui e no
+    // campeonato.json da pasta), placar na Partida 31 e as colocacoes 1 e 2.
+    status: "Em andamento",
     startAt: "2026-09-06T13:00:00",
-    endAt: "2026-11-07T23:00:00",
     teamCount: 8,
     format: {
       summary: "Pontos corridos + playoffs",
@@ -17458,7 +17461,7 @@ const TOURNAMENT_OVERRIDES = {
         "Etapa 1: turno único, as 8 equipes se enfrentam uma vez (7 rodadas, 28 partidas)",
         "Etapa 2: eliminação simples com as 4 primeiras da Etapa 1",
         "Etapa 1 em MD3",
-        "Semifinais em MD3 em 01/11. Final em 07/11",
+        "Semifinais em MD3 em 01/11",
       ],
       standings: "Classificação da Etapa 1",
     },

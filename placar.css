@@ -3267,6 +3267,61 @@ body {
   min-width: 0;
 }
 
+/* Foto do trofeu solta no topo do trilho, sem fundo nem borda. A altura vem
+   fixa para o trilho medir a propria altura antes de a imagem chegar. */
+.vp-camp-trofeu {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 210px;
+  margin: 0;
+}
+
+.vp-camp-trofeu img {
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Numa coluna so, o trofeu sozinho no topo deixava 230px de vao entre a
+   colocacao e a ficha: ele vai para o lado de Informacoes, com a base no pe dela. */
+@media (max-width: 1180px) and (min-width: 561px) {
+  .vp-camp-lado:has(> .vp-camp-trofeu) {
+    grid-template-columns: minmax(0, 1fr) 200px;
+    column-gap: 24px;
+  }
+
+  .vp-camp-lado:has(> .vp-camp-trofeu) > * {
+    grid-column: 1 / -1;
+  }
+
+  .vp-camp-lado > .vp-camp-trofeu {
+    position: relative;
+    grid-column: 2;
+    grid-row: 1;
+    height: auto;
+  }
+
+  .vp-camp-lado > .vp-camp-trofeu img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-position: center bottom;
+  }
+
+  .vp-camp-lado > .vp-camp-trofeu + section {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .vp-camp-trofeu {
+    height: 160px;
+  }
+}
+
 .vp-ficha {
   margin: 0;
   background: var(--surface);

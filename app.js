@@ -33337,6 +33337,18 @@ function tournamentEtapasSection(campeonato) {
   `;
 }
 
+// A foto do trofeu do campeonato, quando existe arte propria (o generico nao entra:
+// ele e o desenho da fila de trofeus da equipe, nao a taca de verdade). Trilho da
+// Visao Geral, escolha do dono em 11/11/2026 entre capa, colocacao e trilho. O
+// Geral mostra o trofeu da etapa que decide; uma etapa so mostra o proprio, porque
+// quem vence uma classificatoria nao leva a taca.
+function tournamentTrofeuArte(event) {
+  const alvo = event?.isGeral ? event.campeonato?.decide : event;
+  if (!alvo) return "";
+  const arte = trophyImageCandidates(alvo, "champion").find((caminho) => !trophyImageIsGeneric(caminho));
+  return arte ? assetPath(arte) : "";
+}
+
 function tournamentFicha(event, matches) {
   const mapRows = tournamentMapPoolRows(event.mapPool || event.maps || [], matches).sort((a, b) => b.played - a.played);
   const maiorMapa = Math.max(1, ...mapRows.map((map) => map.played));
@@ -33353,8 +33365,10 @@ function tournamentFicha(event, matches) {
     patches.length ? [patches.length > 1 ? "Patches" : "Patch", escapeHtml(patches.join(", "))] : null,
     premio && premio !== "-" ? ["Prêmio", escapeHtml(premio)] : null,
   ].filter(Boolean);
+  const trofeu = tournamentTrofeuArte(event);
   return `
     <aside class="vp-camp-lado" aria-label="Informações do campeonato">
+      ${trofeu ? `<figure class="vp-camp-trofeu"><img src="${escapeHtml(trofeu)}" alt="${escapeHtml(`Troféu de ${event.name}`)}" onerror="this.parentElement.remove()" /></figure>` : ""}
       <section>
         ${sectionHead("Informações")}
         <dl class="vp-ficha">${linhas.map(([rotulo, valor]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd>${valor}</dd></div>`).join("")}</dl>

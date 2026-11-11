@@ -275,8 +275,83 @@ begin
 end;
 $topicos$;
 
+-- ------------------------------------------ apagar a conta (0010)
+-- Quem sai leva os proprios comentarios; resposta de outra pessoa embaixo de
+-- um deles fica, e o dele vira "Comentario removido." sem texto e sem autor.
+
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
+                        email_confirmed_at, created_at, updated_at, raw_user_meta_data)
+values
+  ('66666666-6666-6666-6666-666666666661', '00000000-0000-0000-0000-000000000000',
+   'authenticated', 'authenticated', 'sai@teste.univlr', '', now(), now(), now(),
+   '{"username":"sai_teste"}'),
+  ('66666666-6666-6666-6666-666666666662', '00000000-0000-0000-0000-000000000000',
+   'authenticated', 'authenticated', 'fica@teste.univlr', '', now(), now(), now(),
+   '{"username":"fica_teste"}');
+
+do $conta$
+declare
+  sai  uuid := '66666666-6666-6666-6666-666666666661';
+  fica uuid := '66666666-6666-6666-6666-666666666662';
+  c_raiz uuid; c_resposta uuid; c_neta uuid; c_sozinho uuid; c_folha uuid; c_cadeia uuid; c_cadeia2 uuid;
+  n int; t text;
+begin
+  -- Conta que vai sair: um comentario com resposta de outra pessoa, um sem
+  -- resposta, uma resposta dela a outra pessoa, e uma conversa so dela.
+  perform set_config('request.jwt.claims', json_build_object('sub', sai)::text, true);
+  set local role authenticated;
+  c_raiz    := public.post_comment('match', 'partida-conta', 'raiz de quem sai');
+  c_sozinho := public.post_comment('match', 'partida-conta', 'sem resposta nenhuma');
+  c_cadeia  := public.post_comment('match', 'partida-conta', 'conversa so minha');
+  c_cadeia2 := public.post_comment('match', 'partida-conta', 'eu mesma respondendo', c_cadeia);
+
+  perform set_config('request.jwt.claims', json_build_object('sub', fica)::text, true);
+  c_resposta := public.post_comment('match', 'partida-conta', 'resposta de quem fica', c_raiz);
+  insert into public.comment_votes (comment_id, user_id) values (c_raiz, fica);
+
+  perform set_config('request.jwt.claims', json_build_object('sub', sai)::text, true);
+  c_folha := public.post_comment('match', 'partida-conta', 'resposta de quem sai', c_resposta);
+
+  perform set_config('request.jwt.claims', json_build_object('sub', fica)::text, true);
+  c_neta := public.post_comment('match', 'partida-conta', 'neta de quem fica', c_folha);
+  reset role;
+
+  delete from auth.users where id = sai;
+
+  select count(*) into n from public.comments where id in (c_resposta, c_neta) and deleted_at is null and author_id = fica;
+  insert into _p (caso, esperado, obtido) values ('respostas de quem fica sobrevivem', '2', n::text);
+
+  select coalesce(body, 'NULO') || '|' || (deleted_at is not null)::text || '|' || coalesce(author_id::text, 'nulo')
+    into t from public.comments where id = c_raiz;
+  insert into _p (caso, esperado, obtido) values ('raiz com resposta vira removido sem autor', '|true|nulo', coalesce(t, 'sumiu'));
+
+  select coalesce(body, 'NULO') || '|' || (deleted_at is not null)::text || '|' || coalesce(author_id::text, 'nulo')
+    into t from public.comments where id = c_folha;
+  insert into _p (caso, esperado, obtido) values ('resposta com neta embaixo vira removido', '|true|nulo', coalesce(t, 'sumiu'));
+
+  select count(*) into n from public.comments where id in (c_sozinho, c_cadeia, c_cadeia2);
+  insert into _p (caso, esperado, obtido) values ('comentario sem resposta de ninguem sai', '0', n::text);
+
+  select count(*) into n from public.comment_votes where comment_id = c_raiz and user_id = fica;
+  insert into _p (caso, esperado, obtido) values ('voto de quem fica no removido continua', '1', n::text);
+
+  select count(*) into n from public.comments where author_id is null and deleted_at is null;
+  insert into _p (caso, esperado, obtido) values ('nenhum comentario vivo sem autor', '0', n::text);
+
+  -- A restricao segura um comentario vivo sem dono, mesmo de quem contorna a RPC.
+  begin
+    insert into public.comments (thread_id, author_id, body)
+    select thread_id, null, 'vivo sem dono' from public.comments where id = c_resposta;
+    insert into _p (caso, esperado, obtido) values ('comentario vivo sem autor', 'bloqueado', 'passou');
+  exception when check_violation then
+    insert into _p (caso, esperado, obtido) values ('comentario vivo sem autor', 'bloqueado', 'bloqueado');
+  end;
+end;
+$conta$;
+
 delete from auth.users where email in ('alice@teste.univlr', 'bruno@teste.univlr', 'carla@teste.univlr', 'davi@teste.univlr');
-delete from public.threads where subject_id = 'partida-pos';
+delete from auth.users where email in ('sai@teste.univlr', 'fica@teste.univlr');
+delete from public.threads where subject_id in ('partida-pos', 'partida-conta');
 
 select ordem, caso, esperado, obtido,
        case when esperado = obtido then 'ok' else 'DIVERGE' end as veredito

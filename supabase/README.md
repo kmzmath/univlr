@@ -27,6 +27,7 @@ existe e precisa passar antes de qualquer tela.
 | `migrations/0007_cartinhas.sql` | Conversas das cartinhas (`card`), com formato conferido |
 | `migrations/0008_threads_livres.sql` | Threads livres (`topics`, tipo `topic`), aviso `topic_reply`, view `topic_list` |
 | `migrations/0009_limite_de_assunto_e_mencoes.sql` | Formato e tamanho do `subject_id` (até 120 caracteres, letras, números, `-` e `_`) e no máximo 5 avisos de menção por comentário |
+| `migrations/0010_conta_apagada_preserva_respostas.sql` | Apagar a conta não apaga mais as respostas dos outros: o comentário com resposta embaixo vira "Comentário removido." sem autor |
 | `tests/rls_test.sql` | Ataques que precisam falhar |
 | `tests/positive_test.sql` | Operações legítimas que precisam passar |
 
@@ -189,6 +190,14 @@ O banco recusa qualquer outro formato (`threads_card_subject_format`), já que
 é uuid, que não existe ou que foi apagado. Quem apaga a conta leva os próprios
 comentários, mas a thread que abriu fica, com `author_id` nulo ("conta
 apagada" na tela). Quem abriu recebe o aviso `topic_reply` a cada comentário.
+
+Desde a `0010`, apagar a conta (pelo site ou pelo painel do Supabase) leva só
+os comentários dela que não têm resposta de ninguém embaixo. O que tem resposta
+de outra pessoa vira "Comentário removido.", com o texto apagado e o autor nulo,
+e as respostas, votos e denúncias dos outros ficam. Antes o `on delete cascade`
+do `parent_id` apagava tudo isso junto. A regra mora no gatilho
+`antes_de_apagar_perfil`; comentário vivo sem autor é recusado
+(`comments_autor_ou_apagado`).
 
 Desde a `0009` os outros cinco tipos (`match`, `event`, `team`, `player`,
 `article`) também têm formato: até 120 caracteres, só letras, números, `-` e

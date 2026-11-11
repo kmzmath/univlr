@@ -290,7 +290,7 @@
 
     const filhos = c.filhos.length
       ? `<div class="cmt-filhos ${nivel >= RECUO_MAX ? "sem-recuo" : ""}">
-           ${c.filhos.map((f) => umComentario(f, nivel + 1, autor, est)).join("")}
+           ${c.filhos.map((f) => umComentario(f, nivel + 1, apagado ? null : autor, est)).join("")}
          </div>`
       : "";
 

@@ -38460,7 +38460,7 @@ function bindAbaDaEquipe(id, refaz = renderTeamDetail) {
       return aplica((query) => ["evento", "de", "ate", "top", "rounds"].forEach((chave) => query.delete(`${prefixo}${chave}`)), `[data-eq-filtro="${prefixo}evento"]`);
     }
     if (event.target.closest("[data-eq-limpar]")) {
-      return aplica((query) => ["evento", "rival", "equipe", "mapa", "resultado", "colocacao", "tier", "ano", "de", "ate", "agente", "rounds", "patch", "formato", "minimo", "top"].forEach((chave) => query.delete(chave)), "[data-eq-filtro]");
+      return aplica((query) => ["evento", "rival", "equipe", "mapa", "resultado", "colocacao", "tier", "ano", "de", "ate", "agente", "funcao", "rounds", "patch", "formato", "minimo", "top"].forEach((chave) => query.delete(chave)), "[data-eq-filtro]");
     }
     const ordenar = event.target.closest("[data-tournament-stat-sort]");
     if (ordenar) {
@@ -40145,7 +40145,7 @@ function playerMapStatSort(a, b) {
 
 function playerEstFiltro() {
   const query = routeQuery();
-  return { ano: query.get("ano") || "", evento: query.get("evento") || "", equipe: query.get("equipe") || "", mapa: query.get("mapa") || "", top: query.get("top") || "" };
+  return { ano: query.get("ano") || "", evento: query.get("evento") || "", equipe: query.get("equipe") || "", mapa: query.get("mapa") || "", funcao: query.get("funcao") || "", top: query.get("top") || "" };
 }
 
 function playerSerieAno(series) {
@@ -40159,11 +40159,12 @@ function playerEstMapas(player, matches, filtro) {
   const series = matches.filter((item) => (!filtro.evento || item.eventId === filtro.evento) && (!filtro.ano || playerSerieAno(item) === filtro.ano));
   const mapas = filtro.mapa ? tournamentFilteredMapMatches(series, filtro.mapa) : tournamentStatMapMatches(series);
   return mapas
-    .map((match) => ({ ...match, players: (match.players || []).filter((row) => row.id === player.id && (!filtro.equipe || row.teamId === filtro.equipe) && contraTopPassa(filtro.top ? rankingDoRival(match, row.teamId) : null, filtro.top)) }))
+    .map((match) => ({ ...match, players: (match.players || []).filter((row) => row.id === player.id && (!filtro.equipe || row.teamId === filtro.equipe) && (!filtro.funcao || normalizeRoleKey(row.agentClass) === filtro.funcao) && contraTopPassa(filtro.top ? rankingDoRival(match, row.teamId) : null, filtro.top)) }))
     .filter((match) => match.players.length);
 }
 
-function playerEstFiltros(jogos, matches, filtro) {
+// Funcao = a do agente em cada mapa, na ordem de ROLE_ICONS; so as que o jogador fez.
+function playerEstFiltros(jogos, matches, filtro, funcoes = []) {
   const eventos = [...new Map(jogos.map((jogo) => [jogo.event.id, jogo.event])).values()].sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
   const equipes = [...new Set(jogos.map((jogo) => jogo.nossa).filter(Boolean))].map((id) => ({ id, nome: nomeNosJogos(jogos, id, (jogo) => jogo.nossa === id) })).sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
   const anos = [...new Set(matches.map(playerSerieAno).filter(Boolean))].sort().reverse();
@@ -40174,8 +40175,9 @@ function playerEstFiltros(jogos, matches, filtro) {
       <select data-eq-filtro="evento" aria-label="Filtrar por campeonato"><option value="">Todos os campeonatos</option>${teamOpcoes(eventos.map((event) => ({ id: event.id, nome: event.name })), filtro.evento)}</select>
       ${equipes.length > 1 ? `<select data-eq-filtro="equipe" aria-label="Filtrar por equipe"><option value="">Todas as equipes</option>${teamOpcoes(equipes, filtro.equipe)}</select>` : ""}
       <select data-eq-filtro="mapa" aria-label="Filtrar por mapa"><option value="">Todos os mapas</option>${teamOpcoes(mapas.map((mapa) => ({ id: mapa.id, nome: mapa.name })), filtro.mapa)}</select>
+      ${funcoes.length > 1 || filtro.funcao ? `<select data-eq-filtro="funcao" aria-label="Filtrar por função"><option value="">Todas as funções</option>${teamOpcoes(funcoes.map((funcao) => ({ id: funcao, nome: ROLE_ICONS[funcao].label })), filtro.funcao)}</select>` : ""}
       ${topSelect('data-eq-filtro="top"', filtro.top)}
-      ${filtro.ano || filtro.evento || filtro.equipe || filtro.mapa || filtro.top ? `<button type="button" class="vp-filtros-limpar" data-eq-limpar>Limpar filtros</button>` : ""}
+      ${filtro.ano || filtro.evento || filtro.equipe || filtro.mapa || filtro.funcao || filtro.top ? `<button type="button" class="vp-filtros-limpar" data-eq-limpar>Limpar filtros</button>` : ""}
     </div>
   `;
 }
@@ -40304,11 +40306,13 @@ function playerStatsTab(player, matches) {
   const todos = tournamentStatMapMatches(matches).filter((match) => (match.players || []).some((row) => row.id === player.id));
   const mapas = playerEstMapas(player, matches, filtro);
   const soma = aggregateMatchPlayers(mapas)[0];
+  const feitas = new Set(todos.flatMap((match) => match.players.filter((row) => row.id === player.id).map((row) => normalizeRoleKey(row.agentClass))));
+  const funcoes = Object.keys(ROLE_ICONS).filter((funcao) => feitas.has(funcao));
   return `
     <div class="vp-eq-coluna vp-eq-est">
       <div>
         ${sectionHead("Estatísticas", `${mapas.length} de ${todos.length} ${todos.length === 1 ? "mapa" : "mapas"}`)}
-        ${playerEstFiltros(jogos, matches, filtro)}
+        ${playerEstFiltros(jogos, matches, filtro, funcoes)}
       </div>
       ${soma ? `
         <section class="vp-eq-bloco vp-est">

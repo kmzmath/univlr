@@ -596,6 +596,7 @@
         }
       ],
       "name": "JUMS 2026",
+      "logo": "assets/tournament-icons/jums.png",
       "teams": 7,
       "endAt": "2026-10-31T17:17:26",
       "placementPoints": {

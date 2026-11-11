@@ -20081,6 +20081,7 @@ const TOURNAMENT_OVERRIDES = {
   "jums-2026": {
     name: "JUMS 2026",
     organizer: "FMDU",
+    logo: "assets/tournament-icons/jums.png",
     prizePool: "-",
     tier: "C",
     type: "Online",

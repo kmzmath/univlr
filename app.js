@@ -5395,7 +5395,7 @@ const TOURNAMENT_OVERRIDES = {
     "tier": "A",
     "type": "Online",
     "status": "Finalizado",
-    "teamCount": 44,
+    "teamCount": 42,
     "teams": [
       "azure_bears_black",
       "unb_green_olws_line_red_2024",
@@ -5438,9 +5438,7 @@ const TOURNAMENT_OVERRIDES = {
       "raposa_e_sports",
       "ovb_purple_2024",
       "inatel",
-      "cyberkongs",
-      "liga_atletica_unisinos_lau_2024",
-      "poli_plague_silver_delta_2024"
+      "cyberkongs"
     ],
     "teamNames": {
       "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
@@ -5484,9 +5482,7 @@ const TOURNAMENT_OVERRIDES = {
       "raposa_e_sports": "Raposa eSports",
       "ovb_purple_2024": "OVB Purple",
       "inatel": "Inatel White",
-      "cyberkongs": "Cyber Kongs Dourada",
-      "liga_atletica_unisinos_lau_2024": "Liga Atlética Unisinos - LAU",
-      "poli_plague_silver_delta_2024": "POLI Plague Silver Delta"
+      "cyberkongs": "Cyber Kongs Dourada"
     },
     "mapPool": [
       "Ascent",
@@ -5538,18 +5534,16 @@ const TOURNAMENT_OVERRIDES = {
       {"range": "25-32", "id": "fgv_alligators_valorant_2024"},
       {"range": "25-32", "id": "madness_ufop_2024"},
       {"range": "25-32", "id": "aufa_faesa"},
-      {"range": "33-44", "id": "aufa_line_b_2024"},
-      {"range": "33-44", "id": "unifesp_knights_2024"},
-      {"range": "33-44", "id": "unb_black"},
-      {"range": "33-44", "id": "ovb_purple_2024"},
-      {"range": "33-44", "id": "poli_plague_silver_echo_2024"},
-      {"range": "33-44", "id": "unirio_krakens"},
-      {"range": "33-44", "id": "ufpr_bbn"},
-      {"range": "33-44", "id": "usf_paragons_2024"},
-      {"range": "33-44", "id": "usf_e_sports_2024"},
-      {"range": "33-44", "id": "ufmg_fenix_b"},
-      {"range": "33-44", "id": "liga_atletica_unisinos_lau_2024"},
-      {"range": "33-44", "id": "poli_plague_silver_delta_2024"}
+      {"range": "33-42", "id": "aufa_line_b_2024"},
+      {"range": "33-42", "id": "unifesp_knights_2024"},
+      {"range": "33-42", "id": "unb_black"},
+      {"range": "33-42", "id": "ovb_purple_2024"},
+      {"range": "33-42", "id": "poli_plague_silver_echo_2024"},
+      {"range": "33-42", "id": "unirio_krakens"},
+      {"range": "33-42", "id": "ufpr_bbn"},
+      {"range": "33-42", "id": "usf_paragons_2024"},
+      {"range": "33-42", "id": "usf_e_sports_2024"},
+      {"range": "33-42", "id": "ufmg_fenix_b"}
     ],
     "seriesResults": {},
     "startAt": "2024-04-20T16:13:50.878Z",

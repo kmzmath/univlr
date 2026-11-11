@@ -28579,7 +28579,7 @@ function Shell(content, options = {}) {
             <span class="nav-indicator" aria-hidden="true"></span>
           </nav>
           <div class="global-search">
-            <input id="global-search" type="search" placeholder="Buscar time, jogador, campeonato, partida ou mapa" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" aria-label="Buscar no site" value="${searchValue}" ${options.skipSearch ? "disabled" : ""} />
+            <input id="global-search" type="search" placeholder="Buscar jogador, equipe ou campeonato" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" aria-label="Buscar no site" value="${searchValue}" ${options.skipSearch ? "disabled" : ""} />
             <span class="search-token">/</span>
             <div id="search-results" class="search-results ${state.searchOpen ? "open" : ""}" role="listbox" aria-label="Resultados da busca"></div>
             <span id="search-status" class="sr-only" role="status" aria-live="polite"></span>

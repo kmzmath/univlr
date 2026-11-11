@@ -2776,6 +2776,24 @@
       ]
     },
     {
+      "id": "marica-games-2026",
+      "name": "Maricá Games 2026",
+      "organizer": "FERJEE",
+      "source": "Histórico",
+      "sourceId": "",
+      "startAt": "2026-10-17T15:34:08",
+      "endAt": "2026-10-31T13:44:41",
+      "logo": "",
+      "folder": "campeonatos/Maricá Games 2026",
+      "files": [
+        "campeonatos/Maricá Games 2026/MARICA26_002_17-10-26_tropa_da_restinga_8_x_13_aura_unilasalle_lotus.json",
+        "campeonatos/Maricá Games 2026/MARICA26_005_17-10-26_vassouras_esports_3_x_13_aura_unilasalle_lotus.json",
+        "campeonatos/Maricá Games 2026/MARICA26_006_17-10-26_ufrj_minerva_5_x_13_wolf_gaming_lotus.json",
+        "campeonatos/Maricá Games 2026/MARICA26_007a_31-10-26_aura_unilasalle_3_x_13_wolf_gaming_ascent.json",
+        "campeonatos/Maricá Games 2026/MARICA26_007b_31-10-26_aura_unilasalle_2_x_13_wolf_gaming_abyss.json"
+      ]
+    },
+    {
       "id": "rivvalsgg",
       "name": "RivvalsGG",
       "organizer": "RivvalsGG",

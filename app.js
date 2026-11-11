@@ -105,6 +105,7 @@ const TROPHY_ART_FILES = new Set([
   "e-tusca-campeao.png",
   "jubs-2024-presencial-campeao.png",
   "jubs-etapa-presencial-campeao.png",
+  "marica-games-2026-campeao.png",
   "rivvalsgg-campeao.png",
   "unicup-rj-campeao.png",
 ]);
@@ -20074,6 +20075,75 @@ const TOURNAMENT_OVERRIDES = {
               ],
             },
           ],
+        },
+      ],
+    },
+  },
+  "marica-games-2026": {
+    name: "Maricá Games 2026",
+    organizer: "FERJEE",
+    prizePool: "-",
+    tier: "C",
+    type: "Online e Presencial",
+    status: "Finalizado",
+    startAt: "2026-10-17T15:34:08",
+    endAt: "2026-10-31T13:44:41",
+    teamCount: 6,
+    format: {
+      summary: "Eliminação simples",
+      details: [
+        "Classificatória online com 6 equipes em eliminação simples MD1",
+        "Os 2 primeiros da chave avançam à final presencial em Maricá",
+        "Final em MD3",
+      ],
+      standings: "Colocação oficial do campeonato",
+    },
+    teams: [
+      "vassouras_esports",
+      "ufrj_minerva",
+      "a2e_uff",
+      "tropa_da_restinga",
+      "aura_unilasalle",
+      "wolf_gaming",
+    ],
+    placements: [
+      { range: "1", id: "wolf_gaming" },
+      { range: "2", id: "aura_unilasalle" },
+      { range: "3-4", id: "vassouras_esports" },
+      { range: "3-4", id: "ufrj_minerva" },
+      { range: "5-6", id: "tropa_da_restinga" },
+      { range: "5-6", id: "a2e_uff" },
+    ],
+    bracket: {
+      title: "Eliminação simples",
+      regions: [
+        {
+          name: "Chave principal",
+          className: "playoff-bracket",
+          layout: "linked",
+          columns: [
+            {
+              title: "Rodada 1",
+              matches: [
+                { code: "Partida 2", bestOf: "MD1", band: 0, a: "tropa_da_restinga", scoreA: 8, b: "aura_unilasalle", scoreB: 13, winner: "aura_unilasalle" },
+                { code: "Partida 4", bestOf: "MD1", band: 1, a: "a2e_uff", scoreA: 0, b: "wolf_gaming", scoreB: 1, winner: "wolf_gaming", status: "W.O." },
+              ],
+            },
+            {
+              title: "Semifinais",
+              matches: [
+                { code: "Partida 5", label: "Semifinal", bestOf: "MD1", band: 0, from: ["Partida 2"], a: "vassouras_esports", scoreA: 3, b: "aura_unilasalle", scoreB: 13, winner: "aura_unilasalle" },
+                { code: "Partida 6", label: "Semifinal", bestOf: "MD1", band: 1, from: ["Partida 4"], a: "ufrj_minerva", scoreA: 5, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
+              ],
+            },
+            {
+              title: "Final presencial",
+              matches: [
+                { code: "Partida 7", label: "Final", bestOf: "MD3", band: 0.5, from: ["Partida 5", "Partida 6"], a: "aura_unilasalle", scoreA: 0, b: "wolf_gaming", scoreB: 2, winner: "wolf_gaming" },
+              ],
+            },
+          ],
+          terminalColumn: false,
         },
       ],
     },

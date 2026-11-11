@@ -192,7 +192,7 @@ apagada" na tela). Quem abriu recebe o aviso `topic_reply` a cada comentário.
 
 Desde a `0009` os outros cinco tipos (`match`, `event`, `team`, `player`,
 `article`) também têm formato: até 120 caracteres, só letras, números, `-` e
-`_` (`threads_subject_id_formato`; o maior id real, uma chave de série, tem 91).
+`_` (`threads_subject_id_formato`; o maior id real, uma chave de série, tem 91; aplicada no projeto em 11/11/2026).
 `post_comment()` recusa o resto com "assunto invalido". Antes um id de qualquer
 tamanho virava thread e engordava a `thread_counts` que todo visitante baixa.
 Se a migração encontrar threads antigas fora do formato, ela não falha: avisa

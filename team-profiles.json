@@ -10440,7 +10440,7 @@
               "profileConfidence": 8,
               "teamHistory": [
                 "ufrj_minerva",
-                "minerva_fem_ufrj"
+                "minerva_artemis"
               ]
             }
           ]
@@ -15430,6 +15430,136 @@
     "panterao_gaming": {
       "lineupHistory": [
         {
+          "from": "2023-09-09",
+          "to": "2024-05-04",
+          "firstSeenAt": 1694275751381,
+          "lastSeenAt": 1714861284303,
+          "matches": 20,
+          "source": "auto-json+players-history",
+          "profileConfidence": 212,
+          "players": [
+            {
+              "slot": 1,
+              "playerId": "40kvuGv2oS3JOiocW9a2QP9vIV8XMoG9CoDkG89LbO7c2grEowRSEBOV7bOYumbCZZwO3jYthCU93w",
+              "name": "mnc",
+              "handle": "mnc#0901",
+              "firstSeenAt": "2023-09-09",
+              "lastSeenAt": "2024-05-04",
+              "matches": 20,
+              "rounds": 355,
+              "profileMatches": 20,
+              "profileConfidence": 40,
+              "teamHistory": [
+                "panterao_gaming"
+              ]
+            },
+            {
+              "slot": 2,
+              "playerId": "tUv8w02M4QsBbm1YbMYn5uJDlgLZ6ePlQ_hBHA0H8SBnHh5VyAHFKb4BjwBxXmC5SByo-t3gbQnozg",
+              "name": "rigas",
+              "handle": "R1645#lll",
+              "firstSeenAt": "2023-09-09",
+              "lastSeenAt": "2024-05-04",
+              "matches": 20,
+              "rounds": 355,
+              "profileMatches": 20,
+              "profileConfidence": 40,
+              "teamHistory": [
+                "panterao_gaming"
+              ]
+            },
+            {
+              "slot": 3,
+              "playerId": "Q5Dgg-iGW-A_H1eeHDSPxJXJl6kWCRwHYe2ClHAZFymg85M4jBov-DVWAC4_yZaAWXMEjlWxc07OaA",
+              "name": "sabotaSSJ",
+              "handle": "sabotaSSJ#R4P",
+              "firstSeenAt": "2023-09-09",
+              "lastSeenAt": "2024-05-04",
+              "matches": 20,
+              "rounds": 355,
+              "profileMatches": 20,
+              "profileConfidence": 40,
+              "teamHistory": [
+                "panterao_gaming"
+              ]
+            },
+            {
+              "slot": 4,
+              "playerId": "LlEpV_huIehN7uGG7_lNgc2wWWdnonJp7PeQpxpoMNrq-IhM0CfojZiFUNBm0mcnF9hqaaMJs6enIw",
+              "name": "azevedo",
+              "handle": "azevedo#2909",
+              "firstSeenAt": "2023-09-09",
+              "lastSeenAt": "2023-09-30",
+              "matches": 12,
+              "rounds": 205,
+              "profileMatches": 12,
+              "profileConfidence": 24,
+              "teamHistory": [
+                "panterao_gaming"
+              ]
+            },
+            {
+              "slot": 5,
+              "playerId": "asKgV65X74b71uv2w5KvZhiTjV7kwShlzS0e5N4RCLTzlYylHLAJbC46YRwstRL5Vazn3H1LXXuk-Q",
+              "name": "M4v3r1ck",
+              "handle": "M4v3r1ck#0109",
+              "firstSeenAt": "2023-09-09",
+              "lastSeenAt": "2023-09-30",
+              "matches": 12,
+              "rounds": 205,
+              "profileMatches": 12,
+              "profileConfidence": 24,
+              "teamHistory": [
+                "panterao_gaming"
+              ]
+            },
+            {
+              "slot": 6,
+              "playerId": "j3U5ADnxYwRo-3Krd6T80Tw0_hWhbWkAva_wTmKvyrjI63C_YlojRsYoruN_-_T-xfni6SaaI9hi8g",
+              "name": "ESCkey",
+              "handle": "ESCkey#OBoss",
+              "firstSeenAt": "2024-04-20",
+              "lastSeenAt": "2024-05-04",
+              "matches": 8,
+              "rounds": 150,
+              "profileMatches": 8,
+              "profileConfidence": 32,
+              "currentTeam": "panterao_gaming",
+              "teamHistory": [
+                "panterao_gaming"
+              ]
+            },
+            {
+              "slot": 7,
+              "playerId": "38UgGE2Nt6HvM1crJngEOfGP3PypEeuphjBLUZSLURWV_aPRb9AoFOMExv-ywxblARKqg4Kzlx0xWQ",
+              "name": "тrovoada",
+              "handle": "тrovoada#XDD",
+              "firstSeenAt": "2024-05-04",
+              "lastSeenAt": "2024-05-04",
+              "matches": 5,
+              "rounds": 88,
+              "profileMatches": 0,
+              "profileConfidence": 0
+            },
+            {
+              "slot": 8,
+              "playerId": "w2IMScjkE7On-dIkGOLfw9kM1TabxbNPdLehnGM1HEGN6_myTd6cmnvB6dXKBP4V6m67r8QquQm68A",
+              "name": "Dav1Vani",
+              "handle": "Vani#cdtt",
+              "firstSeenAt": "2024-04-20",
+              "lastSeenAt": "2024-04-20",
+              "matches": 3,
+              "rounds": 62,
+              "profileMatches": 3,
+              "profileConfidence": 12,
+              "currentTeam": "panterao_gaming",
+              "teamHistory": [
+                "panterao_gaming"
+              ]
+            }
+          ]
+        },
+        {
           "from": "2026-06-20",
           "to": "2026-09-12",
           "firstSeenAt": 1781979191606,
@@ -15518,6 +15648,27 @@
                 "panterao_gaming"
               ]
             }
+          ]
+        }
+      ],
+      "nomes": [
+        {
+          "id": "oktoplus_gaming_cefet_mg_2024",
+          "nome": "Oktoplus Gaming",
+          "tag": "OKTP",
+          "logo": "assets/team-logos/oktoplus_gaming_cefet_mg_2024.png",
+          "cores": [
+            "#d81699",
+            "#c7128b"
+          ],
+          "desde": "2023-09-09",
+          "ate": "2024-09-28",
+          "eventos": [
+            "alianca-2023-2-classificatoria",
+            "alianca-2023-2-fase-de-grupos",
+            "alianca-2024-2-classificatoria",
+            "alianca-2024-classificatoria-1",
+            "alianca-2024-classificatoria-2"
           ]
         }
       ]
@@ -19135,13 +19286,116 @@
     "minerva_artemis": {
       "lineupHistory": [
         {
+          "from": "2023-09-09",
+          "to": "2023-09-09",
+          "firstSeenAt": 1694276181374,
+          "lastSeenAt": 1694296039684,
+          "matches": 4,
+          "source": "auto-json+players-history",
+          "profileConfidence": 40,
+          "players": [
+            {
+              "slot": 1,
+              "playerId": "8Vxx6_YLLOhaLLtv7-t-JLVjxIK8HvohTvjs6QcqIK_m6qXvVDoKzr3hvI-V-EliBIt6xEEVfEDBZw",
+              "name": "fersoca",
+              "handle": "fersoca#vapo",
+              "firstSeenAt": "2023-09-09",
+              "lastSeenAt": "2023-09-09",
+              "matches": 4,
+              "rounds": 78,
+              "profileMatches": 4,
+              "profileConfidence": 8,
+              "teamHistory": [
+                "ufrj_minerva",
+                "minerva_artemis"
+              ]
+            },
+            {
+              "slot": 2,
+              "playerId": "uAmqLtw2jHBg1Kedrla97_NXr7uloaLTxhfjte9SR-4-ZeotNOPDTeN3ZMehrxPQYuCzUoTuab88ig",
+              "name": "maria s2",
+              "handle": "maria s2#linda",
+              "firstSeenAt": "2023-09-09",
+              "lastSeenAt": "2023-09-09",
+              "matches": 4,
+              "rounds": 78,
+              "profileMatches": 4,
+              "profileConfidence": 8,
+              "teamHistory": [
+                "minerva_artemis"
+              ]
+            },
+            {
+              "slot": 3,
+              "playerId": "_pDi_03lRryfG5B1cqAzupFILDiwgjhW0rcdkazzDTCiQoyRERVlWT2OrcB-kCZvTbUF6FMwzE280Q",
+              "name": "thatasms",
+              "handle": "thatasms#linda",
+              "firstSeenAt": "2023-09-09",
+              "lastSeenAt": "2023-09-09",
+              "matches": 4,
+              "rounds": 78,
+              "profileMatches": 4,
+              "profileConfidence": 8,
+              "teamHistory": [
+                "minerva_artemis"
+              ]
+            },
+            {
+              "slot": 4,
+              "playerId": "c33T-c4QMiVLivHN8GAymJGQnWCG6zlxkgtu6BBKhempVSpRv2_fpRFjULEEyJcxu9RXRzWc_ElyGw",
+              "name": "attrame",
+              "handle": "attrame#david",
+              "firstSeenAt": "2023-09-09",
+              "lastSeenAt": "2023-09-09",
+              "matches": 3,
+              "rounds": 57,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "minerva_artemis"
+              ]
+            },
+            {
+              "slot": 5,
+              "playerId": "neu7p4SFUBcH1rY3X4AatrswGLRbMQ0D_1vjkqFBxSYOxF8Qde3yOWh9SiyWk83mXvjwE2MoVjs3Pw",
+              "name": "giunardi",
+              "handle": "walking on water#aim",
+              "firstSeenAt": "2023-09-09",
+              "lastSeenAt": "2023-09-09",
+              "matches": 3,
+              "rounds": 55,
+              "profileMatches": 3,
+              "profileConfidence": 6,
+              "teamHistory": [
+                "ufrj_canis_b",
+                "minerva_artemis"
+              ]
+            },
+            {
+              "slot": 6,
+              "playerId": "Mgo5RX4zIq-qj6rCizoNsjB6njtrVzzRYXyb4Zv4-ZCU_evkgXH6ahPK9UD3wg6FwhS4JPDD4VRAgw",
+              "name": "palaça",
+              "handle": "palaça#wlw",
+              "firstSeenAt": "2023-09-09",
+              "lastSeenAt": "2023-09-09",
+              "matches": 2,
+              "rounds": 44,
+              "profileMatches": 2,
+              "profileConfidence": 4,
+              "teamHistory": [
+                "minerva_artemis"
+              ]
+            }
+          ]
+        },
+        {
           "from": "2024-04-20",
           "to": "2024-05-04",
           "firstSeenAt": 1713629641533,
           "lastSeenAt": 1714848277148,
           "matches": 5,
           "source": "auto-json+players-history",
-          "profileConfidence": 20,
+          "profileConfidence": 32,
           "players": [
             {
               "slot": 1,
@@ -19161,6 +19415,21 @@
             },
             {
               "slot": 2,
+              "playerId": "_pDi_03lRryfG5B1cqAzupFILDiwgjhW0rcdkazzDTCiQoyRERVlWT2OrcB-kCZvTbUF6FMwzE280Q",
+              "name": "thatasms",
+              "handle": "thatasms#linda",
+              "firstSeenAt": "2024-04-20",
+              "lastSeenAt": "2024-05-04",
+              "matches": 5,
+              "rounds": 86,
+              "profileMatches": 5,
+              "profileConfidence": 10,
+              "teamHistory": [
+                "minerva_artemis"
+              ]
+            },
+            {
+              "slot": 3,
               "playerId": "ZdotpQACvpHRRN5Zd3hBx6IDvoNfIVsB3BkokLAVLGJZBSATWaUVr2Huwv-Mrau52orjkoJuv5RJxw",
               "name": "SuperPônei",
               "handle": "SuperPônei#001",
@@ -19170,21 +19439,6 @@
               "rounds": 86,
               "profileMatches": 0,
               "profileConfidence": 0
-            },
-            {
-              "slot": 3,
-              "playerId": "_pDi_03lRryfG5B1cqAzupFILDiwgjhW0rcdkazzDTCiQoyRERVlWT2OrcB-kCZvTbUF6FMwzE280Q",
-              "name": "thatasms",
-              "handle": "thatasms#linda",
-              "firstSeenAt": "2024-04-20",
-              "lastSeenAt": "2024-05-04",
-              "matches": 5,
-              "rounds": 86,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "teamHistory": [
-                "minerva_fem_ufrj"
-              ]
             },
             {
               "slot": 4,
@@ -19231,11 +19485,89 @@
               "lastSeenAt": "2024-05-04",
               "matches": 1,
               "rounds": 14,
-              "profileMatches": 0,
-              "profileConfidence": 0,
+              "profileMatches": 1,
+              "profileConfidence": 2,
               "teamHistory": [
-                "minerva_fem_ufrj"
+                "minerva_artemis"
               ]
+            }
+          ]
+        },
+        {
+          "from": "2024-09-28",
+          "to": "2024-09-28",
+          "firstSeenAt": 1727544739445,
+          "lastSeenAt": 1727549415538,
+          "matches": 2,
+          "source": "auto-json+players-history",
+          "profileConfidence": 12,
+          "players": [
+            {
+              "slot": 1,
+              "playerId": "Cl7a6Q8hzvSHU3T84nMR0vxVt6q7BYF0Bi3Zf5e128gLkuMSsBaKUMp0bqW9xo0fK4pv75X-VXOPbA",
+              "name": "DavyJones",
+              "handle": "DavyJonesAndThe6#momo",
+              "firstSeenAt": "2024-09-28",
+              "lastSeenAt": "2024-09-28",
+              "matches": 2,
+              "rounds": 28,
+              "profileMatches": 2,
+              "profileConfidence": 8,
+              "currentTeam": "minerva_artemis",
+              "teamHistory": [
+                "minerva_artemis"
+              ]
+            },
+            {
+              "slot": 2,
+              "playerId": "c33T-c4QMiVLivHN8GAymJGQnWCG6zlxkgtu6BBKhempVSpRv2_fpRFjULEEyJcxu9RXRzWc_ElyGw",
+              "name": "attrame",
+              "handle": "attrame#david",
+              "firstSeenAt": "2024-09-28",
+              "lastSeenAt": "2024-09-28",
+              "matches": 2,
+              "rounds": 28,
+              "profileMatches": 2,
+              "profileConfidence": 4,
+              "teamHistory": [
+                "minerva_artemis"
+              ]
+            },
+            {
+              "slot": 3,
+              "playerId": "mMcJ1G2ojSDo1yKKXXHoygGQg2KLjeBimW9ykJ7n1GAmpURLTfi-3bh4C56pGtV5cVIPJkoLBnTn7w",
+              "name": "Isinha Absurda",
+              "handle": "Isinha Absurda#vini",
+              "firstSeenAt": "2024-09-28",
+              "lastSeenAt": "2024-09-28",
+              "matches": 2,
+              "rounds": 28,
+              "profileMatches": 0,
+              "profileConfidence": 0
+            },
+            {
+              "slot": 4,
+              "playerId": "1i0Zs3lLh9J_sm0IfnAP0QNVYte9P1tdb9Ad_71ojmSnGuPIBYQ9QNilaRN3J1gvxm1yjNiV-gfr2Q",
+              "name": "marimari",
+              "handle": "marimari#BDM",
+              "firstSeenAt": "2024-09-28",
+              "lastSeenAt": "2024-09-28",
+              "matches": 2,
+              "rounds": 28,
+              "profileMatches": 0,
+              "profileConfidence": 0
+            },
+            {
+              "slot": 5,
+              "playerId": "bXV_ZuLNEqQY03JzI7gjkGx8soic3eNDIOrmImKDzdhDLSZVD-Q-qMmXQ5kIPQ5Z4tN4CA34Mc2bGQ",
+              "name": "nekogirl",
+              "handle": "nekogirl#zeno",
+              "firstSeenAt": "2024-09-28",
+              "lastSeenAt": "2024-09-28",
+              "matches": 2,
+              "rounds": 28,
+              "profileMatches": 0,
+              "profileConfidence": 0
             }
           ]
         },
@@ -19343,6 +19675,54 @@
                 "minerva_artemis"
               ]
             }
+          ]
+        }
+      ],
+      "nomes": [
+        {
+          "id": "minerva_fem_ufrj",
+          "nome": "UFRJ Minerva FEM",
+          "tag": "MNV",
+          "logo": "assets/team-logos/ufrj_minerva.png",
+          "cores": [
+            "#131732",
+            "#fdc725"
+          ],
+          "desde": "2023-09-09",
+          "ate": "2023-09-09",
+          "eventos": [
+            "alianca-2023-2-classificatoria"
+          ]
+        },
+        {
+          "id": "minerva_esports_ufrj_inclusivo_2024",
+          "nome": "UFRJ Minerva Inclusivo",
+          "tag": "ARTMS",
+          "logo": "assets/team-logos/ufrj_minerva.png",
+          "cores": [
+            "#131732",
+            "#fdc725"
+          ],
+          "desde": "2024-04-20",
+          "ate": "2024-05-04",
+          "eventos": [
+            "alianca-2024-classificatoria-1",
+            "alianca-2024-classificatoria-2"
+          ]
+        },
+        {
+          "id": "canis_valorant_inclusivo_2024",
+          "nome": "UFRJ Canis Inclusivo",
+          "tag": "CANIS",
+          "logo": "assets/team-logos/ufrj_canis.png",
+          "cores": [
+            "#2b2de3",
+            "#ffffff"
+          ],
+          "desde": "2024-09-28",
+          "ate": "2024-09-28",
+          "eventos": [
+            "alianca-2024-2-classificatoria"
           ]
         }
       ]
@@ -24195,7 +24575,7 @@
               "profileConfidence": 20,
               "teamHistory": [
                 "ufrj_canis_b",
-                "minerva_fem_ufrj"
+                "minerva_artemis"
               ]
             }
           ]
@@ -28998,88 +29378,6 @@
         }
       ]
     },
-    "canis_valorant_inclusivo_2024": {
-      "lineupHistory": [
-        {
-          "from": "2024-09-28",
-          "to": "2024-09-28",
-          "firstSeenAt": 1727544739445,
-          "lastSeenAt": 1727549415538,
-          "matches": 2,
-          "source": "auto-json+players-history",
-          "profileConfidence": 0,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "c33T-c4QMiVLivHN8GAymJGQnWCG6zlxkgtu6BBKhempVSpRv2_fpRFjULEEyJcxu9RXRzWc_ElyGw",
-              "name": "attrame",
-              "handle": "attrame#david",
-              "firstSeenAt": "2024-09-28",
-              "lastSeenAt": "2024-09-28",
-              "matches": 2,
-              "rounds": 28,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "teamHistory": [
-                "minerva_fem_ufrj"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "Cl7a6Q8hzvSHU3T84nMR0vxVt6q7BYF0Bi3Zf5e128gLkuMSsBaKUMp0bqW9xo0fK4pv75X-VXOPbA",
-              "name": "DavyJones",
-              "handle": "DavyJonesAndThe6#momo",
-              "firstSeenAt": "2024-09-28",
-              "lastSeenAt": "2024-09-28",
-              "matches": 2,
-              "rounds": 28,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "minerva_artemis",
-              "teamHistory": [
-                "minerva_artemis"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "mMcJ1G2ojSDo1yKKXXHoygGQg2KLjeBimW9ykJ7n1GAmpURLTfi-3bh4C56pGtV5cVIPJkoLBnTn7w",
-              "name": "Isinha Absurda",
-              "handle": "Isinha Absurda#vini",
-              "firstSeenAt": "2024-09-28",
-              "lastSeenAt": "2024-09-28",
-              "matches": 2,
-              "rounds": 28,
-              "profileMatches": 0,
-              "profileConfidence": 0
-            },
-            {
-              "slot": 4,
-              "playerId": "1i0Zs3lLh9J_sm0IfnAP0QNVYte9P1tdb9Ad_71ojmSnGuPIBYQ9QNilaRN3J1gvxm1yjNiV-gfr2Q",
-              "name": "marimari",
-              "handle": "marimari#BDM",
-              "firstSeenAt": "2024-09-28",
-              "lastSeenAt": "2024-09-28",
-              "matches": 2,
-              "rounds": 28,
-              "profileMatches": 0,
-              "profileConfidence": 0
-            },
-            {
-              "slot": 5,
-              "playerId": "bXV_ZuLNEqQY03JzI7gjkGx8soic3eNDIOrmImKDzdhDLSZVD-Q-qMmXQ5kIPQ5Z4tN4CA34Mc2bGQ",
-              "name": "nekogirl",
-              "handle": "nekogirl#zeno",
-              "firstSeenAt": "2024-09-28",
-              "lastSeenAt": "2024-09-28",
-              "matches": 2,
-              "rounds": 28,
-              "profileMatches": 0,
-              "profileConfidence": 0
-            }
-          ]
-        }
-      ]
-    },
     "each_griffins_valorant_2024": {
       "lineupHistory": [
         {
@@ -30227,140 +30525,6 @@
               "rounds": 159,
               "profileMatches": 0,
               "profileConfidence": 0
-            }
-          ]
-        }
-      ]
-    },
-    "oktoplus_gaming_cefet_mg_2024": {
-      "lineupHistory": [
-        {
-          "from": "2023-09-09",
-          "to": "2024-05-04",
-          "firstSeenAt": 1694275751381,
-          "lastSeenAt": 1714861284303,
-          "matches": 20,
-          "source": "auto-json+players-history",
-          "profileConfidence": 168,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "40kvuGv2oS3JOiocW9a2QP9vIV8XMoG9CoDkG89LbO7c2grEowRSEBOV7bOYumbCZZwO3jYthCU93w",
-              "name": "mnc",
-              "handle": "mnc#0901",
-              "firstSeenAt": "2023-09-09",
-              "lastSeenAt": "2024-05-04",
-              "matches": 20,
-              "rounds": 355,
-              "profileMatches": 20,
-              "profileConfidence": 40,
-              "teamHistory": [
-                "oktoplus_gaming_cefet_mg_2024"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "tUv8w02M4QsBbm1YbMYn5uJDlgLZ6ePlQ_hBHA0H8SBnHh5VyAHFKb4BjwBxXmC5SByo-t3gbQnozg",
-              "name": "rigas",
-              "handle": "R1645#lll",
-              "firstSeenAt": "2023-09-09",
-              "lastSeenAt": "2024-05-04",
-              "matches": 20,
-              "rounds": 355,
-              "profileMatches": 20,
-              "profileConfidence": 40,
-              "teamHistory": [
-                "oktoplus_gaming_cefet_mg_2024"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "Q5Dgg-iGW-A_H1eeHDSPxJXJl6kWCRwHYe2ClHAZFymg85M4jBov-DVWAC4_yZaAWXMEjlWxc07OaA",
-              "name": "sabotaSSJ",
-              "handle": "sabotaSSJ#R4P",
-              "firstSeenAt": "2023-09-09",
-              "lastSeenAt": "2024-05-04",
-              "matches": 20,
-              "rounds": 355,
-              "profileMatches": 20,
-              "profileConfidence": 40,
-              "teamHistory": [
-                "oktoplus_gaming_cefet_mg_2024"
-              ]
-            },
-            {
-              "slot": 4,
-              "playerId": "LlEpV_huIehN7uGG7_lNgc2wWWdnonJp7PeQpxpoMNrq-IhM0CfojZiFUNBm0mcnF9hqaaMJs6enIw",
-              "name": "azevedo",
-              "handle": "azevedo#2909",
-              "firstSeenAt": "2023-09-09",
-              "lastSeenAt": "2023-09-30",
-              "matches": 12,
-              "rounds": 205,
-              "profileMatches": 12,
-              "profileConfidence": 24,
-              "teamHistory": [
-                "oktoplus_gaming_cefet_mg_2024"
-              ]
-            },
-            {
-              "slot": 5,
-              "playerId": "asKgV65X74b71uv2w5KvZhiTjV7kwShlzS0e5N4RCLTzlYylHLAJbC46YRwstRL5Vazn3H1LXXuk-Q",
-              "name": "M4v3r1ck",
-              "handle": "M4v3r1ck#0109",
-              "firstSeenAt": "2023-09-09",
-              "lastSeenAt": "2023-09-30",
-              "matches": 12,
-              "rounds": 205,
-              "profileMatches": 12,
-              "profileConfidence": 24,
-              "teamHistory": [
-                "oktoplus_gaming_cefet_mg_2024"
-              ]
-            },
-            {
-              "slot": 6,
-              "playerId": "j3U5ADnxYwRo-3Krd6T80Tw0_hWhbWkAva_wTmKvyrjI63C_YlojRsYoruN_-_T-xfni6SaaI9hi8g",
-              "name": "ESCkey",
-              "handle": "ESCkey#OBoss",
-              "firstSeenAt": "2024-04-20",
-              "lastSeenAt": "2024-05-04",
-              "matches": 8,
-              "rounds": 150,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "panterao_gaming",
-              "teamHistory": [
-                "panterao_gaming"
-              ]
-            },
-            {
-              "slot": 7,
-              "playerId": "38UgGE2Nt6HvM1crJngEOfGP3PypEeuphjBLUZSLURWV_aPRb9AoFOMExv-ywxblARKqg4Kzlx0xWQ",
-              "name": "тrovoada",
-              "handle": "тrovoada#XDD",
-              "firstSeenAt": "2024-05-04",
-              "lastSeenAt": "2024-05-04",
-              "matches": 5,
-              "rounds": 88,
-              "profileMatches": 0,
-              "profileConfidence": 0
-            },
-            {
-              "slot": 8,
-              "playerId": "w2IMScjkE7On-dIkGOLfw9kM1TabxbNPdLehnGM1HEGN6_myTd6cmnvB6dXKBP4V6m67r8QquQm68A",
-              "name": "Dav1Vani",
-              "handle": "Vani#cdtt",
-              "firstSeenAt": "2024-04-20",
-              "lastSeenAt": "2024-04-20",
-              "matches": 3,
-              "rounds": 62,
-              "profileMatches": 0,
-              "profileConfidence": 0,
-              "currentTeam": "panterao_gaming",
-              "teamHistory": [
-                "panterao_gaming"
-              ]
             }
           ]
         }
@@ -34841,113 +35005,6 @@
               "profileConfidence": 4,
               "teamHistory": [
                 "ifsuldeminas_machado"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "minerva_fem_ufrj": {
-      "lineupHistory": [
-        {
-          "from": "2023-09-09",
-          "to": "2023-09-09",
-          "firstSeenAt": 1694276181374,
-          "lastSeenAt": 1694296039684,
-          "matches": 4,
-          "source": "auto-json+players-history",
-          "profileConfidence": 40,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "8Vxx6_YLLOhaLLtv7-t-JLVjxIK8HvohTvjs6QcqIK_m6qXvVDoKzr3hvI-V-EliBIt6xEEVfEDBZw",
-              "name": "fersoca",
-              "handle": "fersoca#vapo",
-              "firstSeenAt": "2023-09-09",
-              "lastSeenAt": "2023-09-09",
-              "matches": 4,
-              "rounds": 78,
-              "profileMatches": 4,
-              "profileConfidence": 8,
-              "teamHistory": [
-                "ufrj_minerva",
-                "minerva_fem_ufrj"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "uAmqLtw2jHBg1Kedrla97_NXr7uloaLTxhfjte9SR-4-ZeotNOPDTeN3ZMehrxPQYuCzUoTuab88ig",
-              "name": "maria s2",
-              "handle": "maria s2#linda",
-              "firstSeenAt": "2023-09-09",
-              "lastSeenAt": "2023-09-09",
-              "matches": 4,
-              "rounds": 78,
-              "profileMatches": 4,
-              "profileConfidence": 8,
-              "teamHistory": [
-                "minerva_fem_ufrj"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "_pDi_03lRryfG5B1cqAzupFILDiwgjhW0rcdkazzDTCiQoyRERVlWT2OrcB-kCZvTbUF6FMwzE280Q",
-              "name": "thatasms",
-              "handle": "thatasms#linda",
-              "firstSeenAt": "2023-09-09",
-              "lastSeenAt": "2023-09-09",
-              "matches": 4,
-              "rounds": 78,
-              "profileMatches": 4,
-              "profileConfidence": 8,
-              "teamHistory": [
-                "minerva_fem_ufrj"
-              ]
-            },
-            {
-              "slot": 4,
-              "playerId": "c33T-c4QMiVLivHN8GAymJGQnWCG6zlxkgtu6BBKhempVSpRv2_fpRFjULEEyJcxu9RXRzWc_ElyGw",
-              "name": "attrame",
-              "handle": "attrame#david",
-              "firstSeenAt": "2023-09-09",
-              "lastSeenAt": "2023-09-09",
-              "matches": 3,
-              "rounds": 57,
-              "profileMatches": 3,
-              "profileConfidence": 6,
-              "teamHistory": [
-                "minerva_fem_ufrj"
-              ]
-            },
-            {
-              "slot": 5,
-              "playerId": "neu7p4SFUBcH1rY3X4AatrswGLRbMQ0D_1vjkqFBxSYOxF8Qde3yOWh9SiyWk83mXvjwE2MoVjs3Pw",
-              "name": "giunardi",
-              "handle": "walking on water#aim",
-              "firstSeenAt": "2023-09-09",
-              "lastSeenAt": "2023-09-09",
-              "matches": 3,
-              "rounds": 55,
-              "profileMatches": 3,
-              "profileConfidence": 6,
-              "teamHistory": [
-                "ufrj_canis_b",
-                "minerva_fem_ufrj"
-              ]
-            },
-            {
-              "slot": 6,
-              "playerId": "Mgo5RX4zIq-qj6rCizoNsjB6njtrVzzRYXyb4Zv4-ZCU_evkgXH6ahPK9UD3wg6FwhS4JPDD4VRAgw",
-              "name": "palaça",
-              "handle": "palaça#wlw",
-              "firstSeenAt": "2023-09-09",
-              "lastSeenAt": "2023-09-09",
-              "matches": 2,
-              "rounds": 44,
-              "profileMatches": 2,
-              "profileConfidence": 4,
-              "teamHistory": [
-                "minerva_fem_ufrj"
               ]
             }
           ]

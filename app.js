@@ -428,7 +428,7 @@ const TOURNAMENT_OVERRIDES = {
       "poli_plague",
       "ime_wolves_red",
       "puc_priests",
-      "oktoplus_gaming_cefet_mg_2024",
+      "panterao_gaming",
       "caap_hellhounds_black_2024",
       "hunter_esports",
       "ufpr_bbn",
@@ -467,7 +467,7 @@ const TOURNAMENT_OVERRIDES = {
       "eefd_ufrj",
       "grf_gaming_anhembi",
       "pato",
-      "minerva_fem_ufrj",
+      "minerva_artemis",
       "acca_e_sports",
       "each_griffins_valorant_2024",
       "ufrgs_imperadores",
@@ -559,7 +559,7 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "Classificado",
-        "id": "oktoplus_gaming_cefet_mg_2024",
+        "id": "panterao_gaming",
         "note": "Grupo A, 3-3"
       },
       {
@@ -754,7 +754,7 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "33-44",
-        "id": "minerva_fem_ufrj",
+        "id": "minerva_artemis",
         "note": "Grupo B, 2-3"
       },
       {
@@ -991,11 +991,11 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 15",
               "seriesCode": 15,
               "bestOf": "MD1",
-              "a": "oktoplus_gaming_cefet_mg_2024",
+              "a": "panterao_gaming",
               "b": "wasdevils_utfpr",
               "scoreA": 13,
               "scoreB": 4,
-              "winner": "oktoplus_gaming_cefet_mg_2024",
+              "winner": "panterao_gaming",
               "group": "Grupo A"
             },
             {
@@ -1090,7 +1090,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 87",
               "seriesCode": 87,
               "bestOf": "MD1",
-              "a": "minerva_fem_ufrj",
+              "a": "minerva_artemis",
               "b": "acca_e_sports",
               "scoreA": 6,
               "scoreB": 13,
@@ -1267,7 +1267,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 23,
               "bestOf": "MD1",
               "a": "ime_wolves_red",
-              "b": "oktoplus_gaming_cefet_mg_2024",
+              "b": "panterao_gaming",
               "scoreA": 13,
               "scoreB": 0,
               "winner": "ime_wolves_red",
@@ -1488,7 +1488,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 106,
               "bestOf": "MD1",
               "a": "pato",
-              "b": "minerva_fem_ufrj",
+              "b": "minerva_artemis",
               "scoreA": 13,
               "scoreB": 2,
               "winner": "pato",
@@ -1640,11 +1640,11 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 40",
               "seriesCode": 40,
               "bestOf": "MD1",
-              "a": "oktoplus_gaming_cefet_mg_2024",
+              "a": "panterao_gaming",
               "b": "exatas_uel",
               "scoreA": 13,
               "scoreB": 4,
-              "winner": "oktoplus_gaming_cefet_mg_2024",
+              "winner": "panterao_gaming",
               "group": "Grupo A"
             },
             {
@@ -1895,11 +1895,11 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 126",
               "seriesCode": 126,
               "bestOf": "MD1",
-              "a": "minerva_fem_ufrj",
+              "a": "minerva_artemis",
               "b": "homem_passaro",
               "scoreA": 1,
               "scoreB": 0,
-              "winner": "minerva_fem_ufrj",
+              "winner": "minerva_artemis",
               "group": "Grupo B",
               "status": "W.O."
             },
@@ -1949,10 +1949,10 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 51,
               "bestOf": "MD1",
               "a": "epidemia_uem",
-              "b": "oktoplus_gaming_cefet_mg_2024",
+              "b": "panterao_gaming",
               "scoreA": 6,
               "scoreB": 13,
-              "winner": "oktoplus_gaming_cefet_mg_2024",
+              "winner": "panterao_gaming",
               "group": "Grupo A"
             },
             {
@@ -2179,11 +2179,11 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 137",
               "seriesCode": 137,
               "bestOf": "MD1",
-              "a": "minerva_fem_ufrj",
+              "a": "minerva_artemis",
               "b": "ufsc_titans_feminino",
               "scoreA": 13,
               "scoreB": 10,
-              "winner": "minerva_fem_ufrj",
+              "winner": "minerva_artemis",
               "group": "Grupo B"
             },
             {
@@ -2277,7 +2277,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 66",
               "seriesCode": 66,
               "bestOf": "MD1",
-              "a": "oktoplus_gaming_cefet_mg_2024",
+              "a": "panterao_gaming",
               "b": "caap_hellhounds",
               "scoreA": 2,
               "scoreB": 13,
@@ -2433,7 +2433,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 149,
               "bestOf": "MD1",
               "a": "ufmg_fenix_b",
-              "b": "minerva_fem_ufrj",
+              "b": "minerva_artemis",
               "scoreA": 13,
               "scoreB": 8,
               "winner": "ufmg_fenix_b",
@@ -2484,7 +2484,7 @@ const TOURNAMENT_OVERRIDES = {
               "seriesCode": 74,
               "bestOf": "MD1",
               "a": "fmv_pantera",
-              "b": "oktoplus_gaming_cefet_mg_2024",
+              "b": "panterao_gaming",
               "scoreA": 13,
               "scoreB": 6,
               "winner": "fmv_pantera",
@@ -2714,7 +2714,7 @@ const TOURNAMENT_OVERRIDES = {
               "status": "Classificado"
             },
             {
-              "id": "oktoplus_gaming_cefet_mg_2024",
+              "id": "panterao_gaming",
               "wins": 3,
               "losses": 3,
               "range": "12º",
@@ -2992,7 +2992,7 @@ const TOURNAMENT_OVERRIDES = {
               "status": "Eliminado"
             },
             {
-              "id": "minerva_fem_ufrj",
+              "id": "minerva_artemis",
               "wins": 2,
               "losses": 3,
               "range": "17º-22º",
@@ -3290,7 +3290,7 @@ const TOURNAMENT_OVERRIDES = {
       "hunter_esports",
       "maua_white_2023",
       "unicamp_tritons_black",
-      "oktoplus_gaming_cefet_mg_2024",
+      "panterao_gaming",
       "caap_hellhounds",
       "ime_wolves_red",
       "atletica_unifei",
@@ -3479,7 +3479,7 @@ const TOURNAMENT_OVERRIDES = {
       },
       {
         "range": "25-32",
-        "id": "oktoplus_gaming_cefet_mg_2024",
+        "id": "panterao_gaming",
         "note": "Grupo B, 0-7"
       },
       {
@@ -3567,7 +3567,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 6",
               "a": "unicamp_tritons_black",
-              "b": "oktoplus_gaming_cefet_mg_2024",
+              "b": "panterao_gaming",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "unicamp_tritons_black",
@@ -3717,7 +3717,7 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 22",
-              "a": "oktoplus_gaming_cefet_mg_2024",
+              "a": "panterao_gaming",
               "b": "caap_hellhounds",
               "scoreA": 0,
               "scoreB": 2,
@@ -3860,7 +3860,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 37",
               "a": "atletica_unifei",
-              "b": "oktoplus_gaming_cefet_mg_2024",
+              "b": "panterao_gaming",
               "scoreA": 1,
               "scoreB": 0,
               "winner": "atletica_unifei",
@@ -4029,7 +4029,7 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 55",
-              "a": "oktoplus_gaming_cefet_mg_2024",
+              "a": "panterao_gaming",
               "b": "fmv_pantera",
               "scoreA": 0,
               "scoreB": 1,
@@ -4192,7 +4192,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 72",
               "a": "ime_wolves_red",
-              "b": "oktoplus_gaming_cefet_mg_2024",
+              "b": "panterao_gaming",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "ime_wolves_red",
@@ -4326,7 +4326,7 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 86",
-              "a": "oktoplus_gaming_cefet_mg_2024",
+              "a": "panterao_gaming",
               "b": "hunter_esports",
               "scoreA": 0,
               "scoreB": 1,
@@ -4500,7 +4500,7 @@ const TOURNAMENT_OVERRIDES = {
             },
             {
               "code": "Partida 104",
-              "a": "oktoplus_gaming_cefet_mg_2024",
+              "a": "panterao_gaming",
               "b": "maua_white_2023",
               "scoreA": 0,
               "scoreB": 1,
@@ -4700,7 +4700,7 @@ const TOURNAMENT_OVERRIDES = {
               "status": "Eliminado"
             },
             {
-              "id": "oktoplus_gaming_cefet_mg_2024",
+              "id": "panterao_gaming",
               "wins": 0,
               "losses": 7,
               "range": "8º",
@@ -5414,7 +5414,7 @@ const TOURNAMENT_OVERRIDES = {
       "aufa_faesa",
       "minerva_artemis",
       "ufmg_fenix_b",
-      "oktoplus_gaming_cefet_mg_2024",
+      "panterao_gaming",
       "usp_stars",
       "laurp_royal_ps_orange_2024",
       "poli_plague_silver_echo_2024",
@@ -5442,7 +5442,7 @@ const TOURNAMENT_OVERRIDES = {
     ],
     "teamNames": {
       "azure_bears_black": "Azure Bears UTFPR - Black [VAL]",
-      "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
+      "unb_green_olws_line_red_2024": "UnB Green Owls Line RED",
       "ufu_saints": "UFU Saints",
       "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
       "uninassau_griffins": "Uninassau Griffins",
@@ -5458,7 +5458,7 @@ const TOURNAMENT_OVERRIDES = {
       "aufa_faesa": "AUFA LINE A",
       "minerva_artemis": "Minerva eSports UFRJ INCLUSIVO",
       "ufmg_fenix_b": "UFMG Fênix Valorant",
-      "oktoplus_gaming_cefet_mg_2024": "Oktoplus Gaming - CEFET-MG",
+      "panterao_gaming": "Oktoplus Gaming - CEFET-MG",
       "usp_stars": "Caaso Hogs - USP",
       "laurp_royal_ps_orange_2024": "LAURP Royal PS Orange",
       "poli_plague_silver_echo_2024": "POLI Plague Silver Echo",
@@ -5526,7 +5526,7 @@ const TOURNAMENT_OVERRIDES = {
       {"range": "17-24", "id": "fatec_ornyx_2024"},
       {"range": "17-24", "id": "ufg_eagles_blue"},
       {"range": "17-24", "id": "laurp_royal_ps_orange_2024"},
-      {"range": "25-32", "id": "oktoplus_gaming_cefet_mg_2024"},
+      {"range": "25-32", "id": "panterao_gaming"},
       {"range": "25-32", "id": "ufrj_minerva"},
       {"range": "25-32", "id": "minerva_artemis"},
       {"range": "25-32", "id": "furia_utfpr"},
@@ -5864,10 +5864,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 31,
                   "bestOf": "MD1",
                   "a": "ufmg_fenix_b",
-                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "b": "panterao_gaming",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "oktoplus_gaming_cefet_mg_2024"
+                  "winner": "panterao_gaming"
                 },
                 {
                   "code": "Partida 32",
@@ -6041,7 +6041,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 48,
                   "bestOf": "MD1",
                   "a": "cyberkongs",
-                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "b": "panterao_gaming",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "cyberkongs"
@@ -6347,7 +6347,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 82",
                   "seriesCode": 82,
                   "bestOf": "MD1",
-                  "a": "oktoplus_gaming_cefet_mg_2024",
+                  "a": "panterao_gaming",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -6507,7 +6507,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 97,
                   "bestOf": "MD1",
                   "a": "espm_overbite_misto",
-                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "b": "panterao_gaming",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "espm_overbite_misto"
@@ -6867,7 +6867,7 @@ const TOURNAMENT_OVERRIDES = {
       "unb_black",
       "uninassau_griffins",
       "ufu_saints",
-      "oktoplus_gaming_cefet_mg_2024",
+      "panterao_gaming",
       "liga_atletica_unisinos_lau_2024",
       "axis_anteaters",
       "ufscar_fire",
@@ -6911,7 +6911,7 @@ const TOURNAMENT_OVERRIDES = {
       "unb_black": "UNB Green Owls Black",
       "uninassau_griffins": "Uninassau Griffins",
       "ufu_saints": "UFU Saints",
-      "oktoplus_gaming_cefet_mg_2024": "Oktoplus Gaming - CEFET-MG",
+      "panterao_gaming": "Oktoplus Gaming - CEFET-MG",
       "liga_atletica_unisinos_lau_2024": "Liga Atlética Unisinos - LAU",
       "axis_anteaters": "AXIS Anteaters - Valorant",
       "ufscar_fire": "UFSCar FIRE VALORANT",
@@ -6975,7 +6975,7 @@ const TOURNAMENT_OVERRIDES = {
       {"range": "9-12", "id": "ufpr_bbn"},
       {"range": "9-12", "id": "ufu_saints"},
       {"range": "9-12", "id": "puc_priests"},
-      {"range": "13-16", "id": "oktoplus_gaming_cefet_mg_2024"},
+      {"range": "13-16", "id": "panterao_gaming"},
       {"range": "13-16", "id": "ufscar_fire"},
       {"range": "13-16", "id": "poli_plague"},
       {"range": "13-16", "id": "usf_sports_2024"},
@@ -7092,7 +7092,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 7",
                   "seriesCode": 7,
                   "bestOf": "MD1",
-                  "a": "oktoplus_gaming_cefet_mg_2024",
+                  "a": "panterao_gaming",
                   "b": "azure_bears_black",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -7712,7 +7712,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 67",
                   "seriesCode": 67,
                   "bestOf": "MD1",
-                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "b": "panterao_gaming",
                   "aLabel": "Sem equipe",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -7818,10 +7818,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 83,
                   "bestOf": "MD1",
                   "a": "unifei_calango_2024",
-                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "b": "panterao_gaming",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "oktoplus_gaming_cefet_mg_2024"
+                  "winner": "panterao_gaming"
                 },
                 {
                   "code": "Partida 84",
@@ -7971,11 +7971,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 98",
                   "seriesCode": 98,
                   "bestOf": "MD1",
-                  "a": "oktoplus_gaming_cefet_mg_2024",
+                  "a": "panterao_gaming",
                   "b": "axis_anteaters",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "oktoplus_gaming_cefet_mg_2024"
+                  "winner": "panterao_gaming"
                 },
                 {
                   "code": "Partida 99",
@@ -8061,10 +8061,10 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 106,
                   "bestOf": "MD1",
                   "a": "fgv_alligators_valorant_2024",
-                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "b": "panterao_gaming",
                   "scoreA": 0,
                   "scoreB": 1,
-                  "winner": "oktoplus_gaming_cefet_mg_2024"
+                  "winner": "panterao_gaming"
                 },
                 {
                   "code": "Partida 107",
@@ -8140,7 +8140,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 113,
                   "bestOf": "MD1",
                   "a": "fei_darkowls",
-                  "b": "oktoplus_gaming_cefet_mg_2024",
+                  "b": "panterao_gaming",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "fei_darkowls"
@@ -8351,7 +8351,7 @@ const TOURNAMENT_OVERRIDES = {
       "uninassau_griffins": "Uninassau Griffins",
       "fei_darkowls": "FEI eSports Valorant",
       "usp_cronos_2024": "USP Cronos",
-      "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
+      "unb_green_olws_line_red_2024": "UnB Green Owls Line RED",
       "usp_stars": "Caaso Hogs - USP",
       "caap_hellhounds": "CAAP Hellhounds",
       "laurp_royal_ps_orange_2024": "LAURP Royal PS Orange",
@@ -8989,7 +8989,7 @@ const TOURNAMENT_OVERRIDES = {
       "caap_hellhounds": "CAAP Hellhounds",
       "ufg_eagles": "UFG Eagles",
       "unb_black": "UNB Green Owls Black",
-      "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
+      "unb_green_olws_line_red_2024": "UnB Green Owls Line RED",
       "unicamp_tritons_black": "UNICAMP Tritons",
       "usp_cronos_2024": "USP Cronos"
     },
@@ -9177,7 +9177,7 @@ const TOURNAMENT_OVERRIDES = {
     "teamCount": 46,
     "teams": [
       "inatel",
-      "oktoplus_gaming_cefet_mg_2024",
+      "panterao_gaming",
       "ufg_eagles",
       "unb_green_olws_line_red_2024",
       "maua_b",
@@ -9205,7 +9205,7 @@ const TOURNAMENT_OVERRIDES = {
       "ufg_eagles_blue",
       "axis_anteaters",
       "unifei_calango_2024",
-      "canis_valorant_inclusivo_2024",
+      "minerva_artemis",
       "poli_plague",
       "unesa_cyborgs",
       "ibmec_sharks",
@@ -9225,9 +9225,9 @@ const TOURNAMENT_OVERRIDES = {
     ],
     "teamNames": {
       "inatel": "Inatel White",
-      "oktoplus_gaming_cefet_mg_2024": "Oktoplus Gaming - CEFET-MG",
+      "panterao_gaming": "Oktoplus Gaming - CEFET-MG",
       "ufg_eagles": "UFG Eagles Black",
-      "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
+      "unb_green_olws_line_red_2024": "UnB Green Owls Line RED",
       "maua_b": "Mauá Esports - IMT",
       "maua_blue": "Mauá Esports - IMT",
       "ufmt_turuna": "UFMT Turuna",
@@ -9253,7 +9253,7 @@ const TOURNAMENT_OVERRIDES = {
       "ufg_eagles_blue": "UFG Eagles Blue",
       "axis_anteaters": "AXIS Anteaters Black - Valorant",
       "unifei_calango_2024": "UNIFEI Calango",
-      "canis_valorant_inclusivo_2024": "Canis - Valorant Inclusivo",
+      "minerva_artemis": "Canis - Valorant Inclusivo",
       "poli_plague": "Poli Plague Gold",
       "unesa_cyborgs": "Team Valorant Cybers",
       "ibmec_sharks": "SharkS Ibmec",
@@ -9324,13 +9324,13 @@ const TOURNAMENT_OVERRIDES = {
       {"range": "25-32", "id": "espm_overbite_misto"},
       {"range": "33-46", "id": "fei_darkowls"},
       {"range": "33-46", "id": "ufpr_bbn"},
-      {"range": "33-46", "id": "canis_valorant_inclusivo_2024"},
+      {"range": "33-46", "id": "minerva_artemis"},
       {"range": "33-46", "id": "each_griffins_valorant_2024"},
       {"range": "33-46", "id": "poli_plague_silver_delta_c6f948a0_2024"},
       {"range": "33-46", "id": "pesadelo_renegadas_unb_2024"},
       {"range": "33-46", "id": "ufrj_canis_b"},
       {"range": "33-46", "id": "poli_plague_silver_echo_2024"},
-      {"range": "33-46", "id": "oktoplus_gaming_cefet_mg_2024"},
+      {"range": "33-46", "id": "panterao_gaming"},
       {"range": "33-46", "id": "unifei_calango_2024"},
       {"range": "33-46", "id": "ufs_warriowls"},
       {"range": "33-46", "id": "unirio_krakens"},
@@ -9458,7 +9458,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 12",
                   "seriesCode": 12,
                   "bestOf": "MD1",
-                  "a": "oktoplus_gaming_cefet_mg_2024",
+                  "a": "panterao_gaming",
                   "bLabel": "Sem adversário",
                   "status": "Bye",
                   "previewNote": "Avanço direto."
@@ -9601,11 +9601,11 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 27",
                   "seriesCode": 27,
                   "bestOf": "MD1",
-                  "a": "canis_valorant_inclusivo_2024",
+                  "a": "minerva_artemis",
                   "b": "ufs_warriowls",
                   "scoreA": 1,
                   "scoreB": 0,
-                  "winner": "canis_valorant_inclusivo_2024",
+                  "winner": "minerva_artemis",
                   "status": "Sem estatísticas",
                   "previewNote": "Vitória da Canis. O mapa fica fora das estatísticas."
                 },
@@ -9727,7 +9727,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 39",
                   "seriesCode": 39,
                   "bestOf": "MD1",
-                  "a": "oktoplus_gaming_cefet_mg_2024",
+                  "a": "panterao_gaming",
                   "b": "usp_stars",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -9800,7 +9800,7 @@ const TOURNAMENT_OVERRIDES = {
                   "seriesCode": 46,
                   "bestOf": "MD1",
                   "a": "caap_hellhounds",
-                  "b": "canis_valorant_inclusivo_2024",
+                  "b": "minerva_artemis",
                   "scoreA": 1,
                   "scoreB": 0,
                   "winner": "caap_hellhounds"
@@ -10145,7 +10145,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 84",
                   "seriesCode": 84,
                   "bestOf": "MD1",
-                  "a": "canis_valorant_inclusivo_2024",
+                  "a": "minerva_artemis",
                   "b": "stings_yellow",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -10214,7 +10214,7 @@ const TOURNAMENT_OVERRIDES = {
                   "code": "Partida 91",
                   "seriesCode": 91,
                   "bestOf": "MD1",
-                  "a": "oktoplus_gaming_cefet_mg_2024",
+                  "a": "panterao_gaming",
                   "b": "axis_anteaters_green_valorant_2024",
                   "scoreA": 0,
                   "scoreB": 1,
@@ -10531,7 +10531,7 @@ const TOURNAMENT_OVERRIDES = {
       "atletica_unifei"
     ],
     "teamNames": {
-      "unb_green_olws_line_red_2024": "UnB Green Olws Line RED",
+      "unb_green_olws_line_red_2024": "UnB Green Owls Line RED",
       "ufg_eagles_blue": "UFG Eagles Blue",
       "azure_bears_golden": "Azure Bears UTFPR - Golden [VAL]",
       "ufg_eagles": "UFG Eagles Black",
@@ -11180,7 +11180,7 @@ const TOURNAMENT_OVERRIDES = {
       "uninassau_griffins": "Uninassau Griffins",
       "macklogic_red": "MackLogic",
       "ufg_eagles": "UFG Eagles Black",
-      "unb_green_olws_line_red_2024": "UnB Green Olws Line RED"
+      "unb_green_olws_line_red_2024": "UnB Green Owls Line RED"
     },
     "mapPool": [
       "Abyss",
@@ -43607,7 +43607,10 @@ const HISTORICAL_TEAM_ROUTE_ALIASES = {
   "caaso_hogs_usp_2024": "usp_stars",
   "usp_caaso_hogs_jubs_2024": "usp_stars",
   "undb_reapers": "undbala",
-  "estacio_cybers_rj_2024": "unesa_cyborgs"
+  "estacio_cybers_rj_2024": "unesa_cyborgs",
+  "minerva_fem_ufrj": "minerva_artemis",
+  "oktoplus_gaming_cefet_mg_2024": "panterao_gaming",
+  "canis_valorant_inclusivo_2024": "minerva_artemis"
 };
 
 function teamById(id) {

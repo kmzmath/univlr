@@ -619,8 +619,12 @@ def read_team_infos(states_by_sigla, logos_by_slug):
             "stateFlag": state.get("icon", ""),
             "stateRegion": state.get("region", ""),
             "colors": [c for c in (hex_color(row.get("cor1")), hex_color(row.get("cor2"))) if c],
+            # So as redes preenchidas: uma chave vazia aqui apagaria a do
+            # perfil manual no merge do app.js.
             "socials": {
-                "instagram": row.get("instagram", ""),
+                rede: row.get(rede, "")
+                for rede in ("website", "instagram", "x", "twitch", "youtube", "discord")
+                if row.get(rede, "")
             },
             "succeeds": slug_key(row.get("sucede", "")),
         }

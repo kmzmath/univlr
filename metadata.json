@@ -209,7 +209,8 @@
         "#292925"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/pinguinspuc/",
+        "x": "https://x.com/pinguins_puc"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -232,7 +233,7 @@
         "#610600"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/acca.ufpel/"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -254,9 +255,7 @@
         "#c7dbe4",
         "#040411"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -307,7 +306,7 @@
         "#fec200"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atleticaagroufg/"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -320,17 +319,17 @@
       "displayName": "Anhanguera Alien Attack",
       "org": "Faculdade Anhanguera de Uberlândia",
       "orgTag": "Anhanguera Uberlândia",
-      "logo": "",
+      "logo": "assets/team-logos/alien_attack.png",
       "state": "MG",
       "stateName": "Minas Gerais",
       "stateFlag": "assets/state-flags/mg.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#76239f",
-        "#535918"
+        "#3e8253",
+        "#020013"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atleticaabducao/"
       },
       "lineup": []
     },
@@ -351,9 +350,7 @@
         "#f8f9fb",
         "#c65f1a"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -374,7 +371,7 @@
         "#c38d4d"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atleticasustenta/"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -397,7 +394,7 @@
         "#012843"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atleticaunifei/"
       },
       "lineup": [
         {
@@ -441,7 +438,7 @@
         "#012843"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atleticaunifei/"
       },
       "lineup": []
     },
@@ -463,7 +460,7 @@
         "#faa139"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/aufaesports1/"
       },
       "lineup": []
     },
@@ -485,7 +482,7 @@
         "#faa139"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/aufaesports1/"
       },
       "lineup": []
     },
@@ -506,9 +503,7 @@
         "#0847cd",
         "#00020c"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -609,7 +604,7 @@
         "#e1e3e2"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/axis_anteaters/"
       },
       "lineup": []
     },
@@ -706,7 +701,9 @@
         "#fefeff"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/azure_bears/"
+        "instagram": "https://www.instagram.com/azure_bears/",
+        "x": "https://x.com/azure_bears",
+        "twitch": "https://www.twitch.tv/azure_bears"
       },
       "lineup": []
     },
@@ -728,7 +725,9 @@
         "#fefeff"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/azure_bears/"
+        "instagram": "https://www.instagram.com/azure_bears/",
+        "x": "https://x.com/azure_bears",
+        "twitch": "https://www.twitch.tv/azure_bears"
       },
       "lineup": [
         {
@@ -777,7 +776,9 @@
         "#fefeff"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/azure_bears/"
+        "instagram": "https://www.instagram.com/azure_bears/",
+        "x": "https://x.com/azure_bears",
+        "twitch": "https://www.twitch.tv/azure_bears"
       },
       "lineup": [
         {
@@ -826,7 +827,9 @@
         "#fefeff"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/azure_bears/"
+        "instagram": "https://www.instagram.com/azure_bears/",
+        "x": "https://x.com/azure_bears",
+        "twitch": "https://www.twitch.tv/azure_bears"
       },
       "lineup": [
         {
@@ -870,7 +873,9 @@
         "#fefeff"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/azure_bears/"
+        "instagram": "https://www.instagram.com/azure_bears/",
+        "x": "https://x.com/azure_bears",
+        "twitch": "https://www.twitch.tv/azure_bears"
       },
       "lineup": []
     },
@@ -892,7 +897,9 @@
         "#fefeff"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/azure_bears/"
+        "instagram": "https://www.instagram.com/azure_bears/",
+        "x": "https://x.com/azure_bears",
+        "twitch": "https://www.twitch.tv/azure_bears"
       },
       "lineup": [
         {
@@ -951,7 +958,9 @@
         "#fefeff"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/azure_bears/"
+        "instagram": "https://www.instagram.com/azure_bears/",
+        "x": "https://x.com/azure_bears",
+        "twitch": "https://www.twitch.tv/azure_bears"
       },
       "lineup": [
         {
@@ -1003,7 +1012,9 @@
         "#fefeff"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/azure_bears/"
+        "instagram": "https://www.instagram.com/azure_bears/",
+        "x": "https://x.com/azure_bears",
+        "twitch": "https://www.twitch.tv/azure_bears"
       },
       "lineup": [
         {
@@ -1041,17 +1052,17 @@
       "displayName": "UNIVEM Barba Negra",
       "org": "Centro Universitário Eurípides de Marília",
       "orgTag": "UNIVEM",
-      "logo": "",
+      "logo": "assets/team-logos/barba_negra_univem.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#239f4e",
-        "#491859"
+        "#eed67e",
+        "#272b3a"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/aabarbanegra/"
       },
       "lineup": []
     },
@@ -1116,9 +1127,7 @@
         "#2d8ab2",
         "#b3e5e8"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -1161,9 +1170,7 @@
         "#067aad",
         "#011840"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -1183,9 +1190,7 @@
         "#2d1f72",
         "#2eaaed"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -1206,6 +1211,7 @@
         "#f9f9f8"
       ],
       "socials": {
+        "website": "https://linktr.ee/brutalUFSJ",
         "instagram": "https://www.instagram.com/brutalufsj/"
       },
       "lineup": [
@@ -1269,7 +1275,8 @@
         "#fdfdfd"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/caap.esports/"
+        "instagram": "https://www.instagram.com/caap.esports/",
+        "x": "https://x.com/esportscaap"
       },
       "lineup": [
         {
@@ -1327,7 +1334,8 @@
         "#fdfdfd"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/caap.esports/"
+        "instagram": "https://www.instagram.com/caap.esports/",
+        "x": "https://x.com/esportscaap"
       },
       "lineup": [
         {
@@ -1366,7 +1374,7 @@
       "displayName": "CAAP Hellhounds Black",
       "org": "Universidade Federal do ABC",
       "orgTag": "UFABC",
-      "logo": "assets/team-logos/caap_hellhounds.png",
+      "logo": "assets/team-logos/caap_hellhounds_black_2024.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
@@ -1376,7 +1384,8 @@
         "#fdfdfd"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/caap.esports/",
+        "x": "https://x.com/esportscaap"
       },
       "lineup": []
     },
@@ -1398,7 +1407,8 @@
         "#fdfdfd"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/caap.esports/"
+        "instagram": "https://www.instagram.com/caap.esports/",
+        "x": "https://x.com/esportscaap"
       },
       "lineup": [
         {
@@ -1447,7 +1457,8 @@
         "#fdfdfd"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/caap.esports/"
+        "instagram": "https://www.instagram.com/caap.esports/",
+        "x": "https://x.com/esportscaap"
       },
       "lineup": [
         {
@@ -1456,28 +1467,6 @@
         }
       ],
       "lineupRegistered": true
-    },
-    {
-      "id": "canis_valorant_inclusivo_2024",
-      "sourceId": "2955",
-      "slug": "canis_valorant_inclusivo_2024",
-      "tag": "CANIS",
-      "displayName": "UFRJ Canis Inclusivo",
-      "org": "Universidade Federal do Rio de Janeiro",
-      "orgTag": "UFRJ",
-      "logo": "assets/team-logos/ufrj_canis.png",
-      "state": "RJ",
-      "stateName": "Rio de Janeiro",
-      "stateFlag": "assets/state-flags/rj.webp",
-      "stateRegion": "Sudeste",
-      "colors": [
-        "#2b2de3",
-        "#ffffff"
-      ],
-      "socials": {
-        "instagram": ""
-      },
-      "lineup": []
     },
     {
       "id": "carrascos_fd8j",
@@ -1496,9 +1485,7 @@
         "#761b21",
         "#fcfdfc"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -1544,9 +1531,7 @@
         "#b66345",
         "#16252d"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -1674,9 +1659,7 @@
         "#014382",
         "#ba9009"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -1697,7 +1680,7 @@
         "#243269"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/compressoraesports/"
       },
       "lineup": []
     },
@@ -1719,7 +1702,8 @@
         "#546893"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/cyberkongsbr/"
+        "instagram": "https://www.instagram.com/cyberkongsbr/",
+        "x": "https://x.com/cyberkongs"
       },
       "lineup": [
         {
@@ -1767,7 +1751,9 @@
         "#9c9c9d"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/eachgriffins",
+        "instagram": "https://www.instagram.com/eachgriffins/",
+        "x": "https://x.com/eachgriffins"
       },
       "lineup": []
     },
@@ -1779,17 +1765,17 @@
       "displayName": "UFRJ EEFD",
       "org": "Universidade Federal do Rio de Janeiro",
       "orgTag": "UFRJ",
-      "logo": "",
+      "logo": "assets/team-logos/eefd_ufrj.png",
       "state": "RJ",
       "stateName": "Rio de Janeiro",
       "stateFlag": "assets/state-flags/rj.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#9f9b23",
-        "#184059"
+        "#2b2b2b",
+        "#fdfdfd"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atletica_eefd_ufrj/"
       },
       "lineup": []
     },
@@ -1801,17 +1787,17 @@
       "displayName": "UEM Epidemia",
       "org": "Universidade Estadual de Maringá",
       "orgTag": "UEM",
-      "logo": "",
+      "logo": "assets/team-logos/epidemia_uem.png",
       "state": "PR",
       "stateName": "Paraná",
       "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
       "colors": [
-        "#9f4c23",
-        "#185948"
+        "#e93237",
+        "#201d1f"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/epidemiauem/"
       },
       "lineup": []
     },
@@ -1833,7 +1819,7 @@
         "#00012f"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/overbite.espm"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -1846,17 +1832,17 @@
       "displayName": "UEL Exatas",
       "org": "Universidade Estadual de Londrina",
       "orgTag": "UEL",
-      "logo": "",
+      "logo": "assets/team-logos/exatas_uel.png",
       "state": "PR",
       "stateName": "Paraná",
       "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
       "colors": [
-        "#9f232d",
-        "#18592d"
+        "#894e91",
+        "#332c35"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/exatasuel/"
       },
       "lineup": []
     },
@@ -1878,7 +1864,7 @@
         "#010000"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/facensowls/"
       },
       "lineup": []
     },
@@ -1899,9 +1885,7 @@
         "#303849",
         "#503534"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -1942,7 +1926,7 @@
       "slug": "fatec_ornyx_2024",
       "tag": "ORNYX",
       "displayName": "FATEC Ornyx",
-      "org": "Faculdade de Tecnologia",
+      "org": "Faculdade de Tecnologia de Americana",
       "orgTag": "FATEC Americana",
       "logo": "assets/team-logos/fatec_ornyx_2024.png",
       "state": "SP",
@@ -1954,7 +1938,7 @@
         "#feffff"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atleticafatecam/"
       },
       "lineup": []
     },
@@ -1964,7 +1948,7 @@
       "slug": "fatec_pg",
       "tag": "FATEC",
       "displayName": "FATEC PG",
-      "org": "Faculdade de Tecnologia",
+      "org": "Faculdade de Tecnologia de Praia Grande",
       "orgTag": "FATEC Praia Grande",
       "logo": "assets/team-logos/fatec_pg.png",
       "state": "SP",
@@ -2190,16 +2174,18 @@
       "org": "Fundação Getulio Vargas",
       "orgTag": "FGV",
       "logo": "assets/team-logos/fgv_alligators_valorant_2024.png",
-      "state": "",
-      "stateName": "",
-      "stateFlag": "",
-      "stateRegion": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
       "colors": [
         "#ffd31c",
         "#000000"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/alligatorsfgv",
+        "instagram": "https://www.instagram.com/fgv_alligators/",
+        "x": "https://x.com/fgv_alligators"
       },
       "lineup": []
     },
@@ -2220,9 +2206,7 @@
         "#676c64",
         "#f3b307"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -2233,17 +2217,17 @@
       "displayName": "FMV Pantera",
       "org": "Centro Universitário de Valença",
       "orgTag": "UNIFAA",
-      "logo": "",
+      "logo": "assets/team-logos/fmv_pantera.png",
       "state": "RJ",
       "stateName": "Rio de Janeiro",
       "stateFlag": "assets/state-flags/rj.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#2d239f",
-        "#593818"
+        "#79a97b",
+        "#20271c"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/esports.pantera/"
       },
       "lineup": []
     },
@@ -2265,7 +2249,7 @@
         "#002e61"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/hopshot.fsa/"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -2336,9 +2320,7 @@
         "#454547",
         "#5c0000"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -2350,16 +2332,17 @@
       "org": "Universidade Federal de Goiás",
       "orgTag": "UFG",
       "logo": "assets/team-logos/gambiarra_ufg.png",
-      "state": "SP",
-      "stateName": "São Paulo",
-      "stateFlag": "assets/state-flags/sp.webp",
-      "stateRegion": "Sudeste",
+      "state": "GO",
+      "stateName": "Goiás",
+      "stateFlag": "assets/state-flags/go.webp",
+      "stateRegion": "Centro-Oeste",
       "colors": [
         "#75878d",
         "#52c4ed"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/atleticaagroufg/"
+        "website": "https://linktr.ee/gambiarraufg",
+        "instagram": "https://www.instagram.com/gambiarraufg/"
       },
       "lineup": [
         {
@@ -2417,9 +2400,7 @@
         "#021325",
         "#fdfefd"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -2461,9 +2442,7 @@
         "#181916",
         "#e8e9e4"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -2483,9 +2462,7 @@
         "#fdeb01",
         "#df0011"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -2506,7 +2483,8 @@
         "#043a58"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/unbgreenowls/"
+        "instagram": "https://www.instagram.com/unbgreenowls/",
+        "x": "https://x.com/unbgreenowls"
       },
       "lineup": [
         {
@@ -2555,7 +2533,8 @@
         "#043a58"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/unbgreenowls/"
+        "instagram": "https://www.instagram.com/unbgreenowls/",
+        "x": "https://x.com/unbgreenowls"
       },
       "lineup": [
         {
@@ -2614,7 +2593,8 @@
         "#043a58"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/unbgreenowls/"
+        "instagram": "https://www.instagram.com/unbgreenowls/",
+        "x": "https://x.com/unbgreenowls"
       },
       "lineup": [
         {
@@ -2660,18 +2640,16 @@
       "displayName": "Anhembi GRF Gaming",
       "org": "Universidade Anhembi Morumbi",
       "orgTag": "Anhembi Morumbi",
-      "logo": "",
+      "logo": "assets/team-logos/grf_gaming_anhembi.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#9f4823",
-        "#185946"
+        "#eb8a07",
+        "#033033"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -2738,17 +2716,17 @@
       "displayName": "Fatec Grifo Urubus do Pix",
       "org": "Faculdade de Tecnologia de Barueri",
       "orgTag": "Fatec Barueri",
-      "logo": "",
+      "logo": "assets/team-logos/grifo_urubus_do_pix.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#239f82",
-        "#59184d"
+        "#d08728",
+        "#6e0c08"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atletica_barueri/"
       },
       "lineup": []
     },
@@ -2770,7 +2748,7 @@
         "#fdf3e6"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/unificadagrifos/"
       },
       "lineup": []
     },
@@ -2836,7 +2814,7 @@
         "#fcba43"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/hunteresportss/"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -2906,9 +2884,7 @@
         "#9f9b23",
         "#184059"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -2928,9 +2904,7 @@
         "#36f22e",
         "#b2f9ba"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -2951,7 +2925,7 @@
         "#f2d881"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/atleticamidas"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -2964,18 +2938,16 @@
       "displayName": "IFSULDEMINAS Machado",
       "org": "Instituto Federal do Sul de Minas Gerais",
       "orgTag": "IFSULDEMINAS Machado",
-      "logo": "",
+      "logo": "assets/team-logos/ifsuldeminas_machado.png",
       "state": "MG",
       "stateName": "Minas Gerais",
       "stateFlag": "assets/state-flags/mg.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#23409f",
-        "#592318"
+        "#2f9c41",
+        "#cc181d"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -2996,7 +2968,9 @@
         "#fc1143"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/imewolves/"
+        "website": "https://linktr.ee/imewolves",
+        "instagram": "https://www.instagram.com/imewolves/",
+        "x": "https://x.com/imewolves"
       },
       "lineup": [
         {
@@ -3047,9 +3021,7 @@
         "#da9516",
         "#221390"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -3070,7 +3042,8 @@
         "#e6e6e6"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/inatelesports/"
+        "instagram": "https://www.instagram.com/inatelesports/",
+        "x": "https://x.com/inatele_sports"
       },
       "lineup": [
         {
@@ -3119,7 +3092,8 @@
         "#e6e6e6"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/inatelesports/"
+        "instagram": "https://www.instagram.com/inatelesports/",
+        "x": "https://x.com/inatele_sports"
       },
       "lineup": [
         {
@@ -3173,7 +3147,8 @@
         "#e6e6e6"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/inatelesports/"
+        "instagram": "https://www.instagram.com/inatelesports/",
+        "x": "https://x.com/inatele_sports"
       },
       "lineup": [
         {
@@ -3227,7 +3202,8 @@
         "#040404"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/inatelesports/"
+        "instagram": "https://www.instagram.com/inatelesports/",
+        "x": "https://x.com/inatele_sports"
       },
       "lineup": [
         {
@@ -3279,7 +3255,8 @@
         "#020101"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/aaaincinera",
+        "instagram": "https://www.instagram.com/aaaincinera/"
       },
       "lineup": [
         {
@@ -3318,18 +3295,16 @@
       "displayName": "Unicuritiba Intoxicados",
       "org": "Centro Universitário Curitiba",
       "orgTag": "UNICURITIBA",
-      "logo": "",
+      "logo": "assets/team-logos/intoxicados_unicuritiba.png",
       "state": "PR",
       "stateName": "Paraná",
       "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
       "colors": [
-        "#9f3123",
-        "#18593a"
+        "#114063",
+        "#ffffff"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -3350,7 +3325,8 @@
         "#010100"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/laurp_royalps/",
+        "x": "https://x.com/laurp_royalps"
       },
       "lineup": []
     },
@@ -3420,9 +3396,7 @@
         "#081929",
         "#c72d31"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -3465,7 +3439,7 @@
         "#fdb509"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/aaacompufms/"
+        "instagram": "https://www.instagram.com/lunaticaesports/"
       },
       "lineup": [
         {
@@ -3525,7 +3499,8 @@
         "#6b37c9"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/mackenzielogic/"
+        "instagram": "https://www.instagram.com/mackenzielogic/",
+        "x": "https://x.com/mackenzielogic"
       },
       "lineup": [
         {
@@ -3583,7 +3558,8 @@
         "#ff5556"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/mackenzielogic/"
+        "instagram": "https://www.instagram.com/mackenzielogic/",
+        "x": "https://x.com/mackenzielogic"
       },
       "lineup": [
         {
@@ -3642,7 +3618,8 @@
         "#ffffff"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/mackenzielogic/"
+        "instagram": "https://www.instagram.com/mackenzielogic/",
+        "x": "https://x.com/mackenzielogic"
       },
       "lineup": [
         {
@@ -3691,7 +3668,8 @@
         "#78061d"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/mackenzielogic/"
+        "instagram": "https://www.instagram.com/mackenzielogic/",
+        "x": "https://x.com/mackenzielogic"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -3713,9 +3691,7 @@
         "#328dfc",
         "#ffffff"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -3758,7 +3734,8 @@
         "#fefffe"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/madnessloucomotiva/",
+        "x": "https://x.com/madnessufop"
       },
       "lineup": []
     },
@@ -3852,7 +3829,7 @@
         "#fefdfd"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/esportsmaua/"
       },
       "lineup": []
     },
@@ -3864,17 +3841,17 @@
       "displayName": "Mauá White",
       "org": "Instituto Mauá de Tecnologia",
       "orgTag": "MAUÁ",
-      "logo": "",
+      "logo": "assets/team-logos/maua_white_2023.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#9f2b23",
-        "#185937"
+        "#ffffff",
+        "#000000"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/esportsmaua/"
       },
       "lineup": []
     },
@@ -3940,7 +3917,9 @@
         "#fdc725"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/minervaesports/"
+        "website": "https://linktr.ee/minervaesports",
+        "instagram": "https://www.instagram.com/minervaesports/",
+        "x": "https://x.com/minervaesports"
       },
       "lineup": [
         {
@@ -3971,28 +3950,6 @@
       "lineupRegistered": true
     },
     {
-      "id": "minerva_fem_ufrj",
-      "sourceId": "3014",
-      "slug": "minerva_fem_ufrj",
-      "tag": "MNV",
-      "displayName": "UFRJ Minerva FEM",
-      "org": "Universidade Federal do Rio de Janeiro",
-      "orgTag": "UFRJ",
-      "logo": "",
-      "state": "RJ",
-      "stateName": "Rio de Janeiro",
-      "stateFlag": "assets/state-flags/rj.webp",
-      "stateRegion": "Sudeste",
-      "colors": [
-        "#239f88",
-        "#591849"
-      ],
-      "socials": {
-        "instagram": ""
-      },
-      "lineup": []
-    },
-    {
       "id": "minerva_thunders",
       "sourceId": "2836",
       "slug": "minerva_thunders",
@@ -4010,7 +3967,9 @@
         "#fdc725"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/minervaesports/"
+        "website": "https://linktr.ee/minervaesports",
+        "instagram": "https://www.instagram.com/minervaesports/",
+        "x": "https://x.com/minervaesports"
       },
       "lineup": [
         {
@@ -4073,9 +4032,7 @@
         "#fbfbfb",
         "#506676"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -4095,9 +4052,7 @@
         "#7a8593",
         "#76ca38"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -4117,9 +4072,7 @@
         "#04b3ef",
         "#0054a6"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -4139,9 +4092,7 @@
         "#020202",
         "#e44239"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -4236,6 +4187,7 @@
         "#060405"
       ],
       "socials": {
+        "website": "https://beacons.ai/octacore",
         "instagram": "https://www.instagram.com/aaacpucpr/"
       },
       "lineup": [
@@ -4283,9 +4235,7 @@
         "#560204",
         "#daa153"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -4305,17 +4255,15 @@
         "#219691",
         "#cb1b66"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
-      "id": "oktoplus_gaming_cefet_mg_2024",
-      "sourceId": "2921",
-      "slug": "oktoplus_gaming_cefet_mg_2024",
+      "id": "oktoplus_pink",
+      "sourceId": "3005",
+      "slug": "oktoplus_pink",
       "tag": "OKTP",
-      "displayName": "Oktoplus Gaming",
+      "displayName": "Oktoplus Gaming Pink",
       "org": "Centro Federal de Educação Tecnológica de Minas Gerais",
       "orgTag": "CEFET/MG",
       "logo": "assets/team-logos/oktoplus_gaming_cefet_mg_2024.png",
@@ -4328,29 +4276,8 @@
         "#c7128b"
       ],
       "socials": {
-        "instagram": ""
-      },
-      "lineup": []
-    },
-    {
-      "id": "oktoplus_pink",
-      "sourceId": "3005",
-      "slug": "oktoplus_pink",
-      "tag": "OKTP",
-      "displayName": "Oktoplus Gaming Pink",
-      "org": "Centro Federal de Educação Tecnológica de Minas Gerais",
-      "orgTag": "CEFET/MG",
-      "logo": "",
-      "state": "MG",
-      "stateName": "Minas Gerais",
-      "stateFlag": "assets/state-flags/mg.webp",
-      "stateRegion": "Sudeste",
-      "colors": [
-        "#9f3c23",
-        "#185940"
-      ],
-      "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/oktoplus.gaming/",
+        "youtube": "https://www.youtube.com/@Oktoplus.Gaming"
       },
       "lineup": []
     },
@@ -4372,7 +4299,7 @@
         "#00012f"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/overbite.espm"
       },
       "lineup": []
     },
@@ -4394,7 +4321,7 @@
         "#00012f"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/overbite.espm"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -4404,7 +4331,7 @@
       "sourceId": "2823",
       "slug": "panterao_gaming",
       "tag": "PANT",
-      "displayName": "Panterao Gaming",
+      "displayName": "Panterão Gaming",
       "org": "Centro Federal de Educação Tecnológica de Minas Gerais",
       "orgTag": "CEFET/MG",
       "logo": "assets/team-logos/panterao.png",
@@ -4465,7 +4392,7 @@
         "#fefeff"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/patoutfesports/"
       },
       "lineup": []
     },
@@ -4487,7 +4414,8 @@
         "#ee2e86"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/atleticapesadelo",
+        "instagram": "https://www.instagram.com/atleticapesadelo/"
       },
       "lineup": []
     },
@@ -4509,7 +4437,8 @@
         "#d6d6d5"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/poliplague/"
+        "instagram": "https://www.instagram.com/poliplague/",
+        "x": "https://x.com/poli_plague"
       },
       "lineup": [
         {
@@ -4547,7 +4476,7 @@
       "displayName": "POLI Plague Silver Delta",
       "org": "Universidade de São Paulo",
       "orgTag": "USP",
-      "logo": "assets/team-logos/poli_plague.png",
+      "logo": "assets/team-logos/poli_plague_silver.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
@@ -4557,7 +4486,8 @@
         "#d6d6d5"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/poliplague/",
+        "x": "https://x.com/poli_plague"
       },
       "lineup": []
     },
@@ -4569,7 +4499,7 @@
       "displayName": "POLI Plague Silver Echo",
       "org": "Universidade de São Paulo",
       "orgTag": "USP",
-      "logo": "assets/team-logos/poli_plague.png",
+      "logo": "assets/team-logos/poli_plague_silver.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
@@ -4579,7 +4509,8 @@
         "#d6d6d5"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/poliplague/",
+        "x": "https://x.com/poli_plague"
       },
       "lineup": []
     },
@@ -4601,7 +4532,7 @@
         "#c9c9c9"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/clerigospucrio/"
       },
       "lineup": []
     },
@@ -4623,7 +4554,7 @@
         "#030202"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/puc.priests/"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -4646,7 +4577,8 @@
         "#ffffff"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/puccampcardinals/"
+        "instagram": "https://www.instagram.com/puccampcardinals/",
+        "x": "https://x.com/puccardinals"
       },
       "lineup": [
         {
@@ -4714,7 +4646,8 @@
         "#000001"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/puccampcardinals/"
+        "instagram": "https://www.instagram.com/puccampcardinals/",
+        "x": "https://x.com/puccardinals"
       },
       "lineup": [
         {
@@ -4773,7 +4706,7 @@
         "#060101"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/sistematica.gg/"
+        "instagram": "https://www.instagram.com/sistematica_esports/"
       },
       "lineup": [
         {
@@ -4822,7 +4755,7 @@
         "#b23a4b"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/sistematica.gg/"
+        "instagram": "https://www.instagram.com/sistematica_esports/"
       },
       "lineup": [
         {
@@ -4870,7 +4803,7 @@
         "#71413d"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/corujaopuclon/"
       },
       "lineup": []
     },
@@ -4891,9 +4824,7 @@
         "#feb641",
         "#126439"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -4914,7 +4845,7 @@
         "#090816"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/rahnagg/"
       },
       "lineup": [
         {
@@ -4960,17 +4891,17 @@
       "displayName": "Unesp Rain King Harpia",
       "org": "Universidade Estadual Paulista",
       "orgTag": "Unesp",
-      "logo": "",
+      "logo": "assets/team-logos/rain_king_unesp.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#6d9f23",
-        "#182359"
+        "#fc3105",
+        "#009f7b"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/rainking_unesp/"
       },
       "lineup": []
     },
@@ -4982,17 +4913,17 @@
       "displayName": "Unesp Rain King",
       "org": "Universidade Estadual Paulista",
       "orgTag": "Unesp",
-      "logo": "",
+      "logo": "assets/team-logos/rain_king_unesp.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#239f8e",
-        "#591846"
+        "#fc3105",
+        "#009f7b"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/rainking_unesp/"
       },
       "lineup": []
     },
@@ -5014,7 +4945,8 @@
         "#fefdfd"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/raposautf_esports/",
+        "x": "https://x.com/raposa_esports"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -5036,9 +4968,7 @@
         "#030202",
         "#fefefe"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -5059,7 +4989,8 @@
         "#f79827"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atcfalcons/",
+        "x": "https://x.com/atcfalcons"
       },
       "lineup": []
     },
@@ -5139,9 +5070,7 @@
         "#4c4ea6",
         "#dcc7c6"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -5232,7 +5161,7 @@
         "#8ec8e4"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/stings.ba/"
       },
       "lineup": []
     },
@@ -5244,17 +5173,18 @@
       "displayName": "USP Supernova",
       "org": "Universidade de São Paulo",
       "orgTag": "USP",
-      "logo": "",
+      "logo": "assets/team-logos/supernova_usp.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#9f239b",
-        "#3b5918"
+        "#1f5f71",
+        "#000000"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/aaagwsupernova",
+        "instagram": "https://www.instagram.com/supernova.aaagw/"
       },
       "lineup": []
     },
@@ -5288,17 +5218,19 @@
       "displayName": "Unesp Texugods",
       "org": "Universidade Estadual Paulista",
       "orgTag": "Unesp Bauru",
-      "logo": "",
+      "logo": "assets/team-logos/texugods_unesp.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#23749f",
-        "#591827"
+        "#e2a847",
+        "#020e3b"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/texugods",
+        "instagram": "https://www.instagram.com/texugodsunesp/",
+        "x": "https://x.com/texugods"
       },
       "lineup": []
     },
@@ -5308,7 +5240,7 @@
       "slug": "tigre_branco",
       "tag": "TIGRE",
       "displayName": "Tigre Branco",
-      "org": "Faculdade de Tecnologia",
+      "org": "Faculdade de Tecnologia de Ourinhos",
       "orgTag": "FATEC Ourinhos",
       "logo": "assets/team-logos/tigre_branco.png",
       "state": "SP",
@@ -5384,7 +5316,7 @@
         "#fdfcfc"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/edftatuzao"
+        "instagram": "https://www.instagram.com/edftatuzao/"
       },
       "lineup": [
         {
@@ -5432,9 +5364,7 @@
         "#ce1913",
         "#050405"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -5476,9 +5406,7 @@
         "#263783",
         "#fdfdfd"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -5524,9 +5452,7 @@
         "#253858",
         "#f5d529"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -5682,9 +5608,7 @@
         "#b5e3fd",
         "#323392"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -5705,7 +5629,7 @@
         "#010001"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/e.sports.ufac/"
       },
       "lineup": []
     },
@@ -5726,9 +5650,7 @@
         "#2faaec",
         "#2d1e73"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -5779,7 +5701,9 @@
         "#fefefe"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/ufgeagles/"
+        "instagram": "https://www.instagram.com/ufgeagles/",
+        "x": "https://x.com/UFGEagles",
+        "twitch": "https://www.twitch.tv/ufgeagles"
       },
       "lineup": [
         {
@@ -5827,7 +5751,9 @@
         "#fefefe"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/ufgeagles/"
+        "instagram": "https://www.instagram.com/ufgeagles/",
+        "x": "https://x.com/UFGEagles",
+        "twitch": "https://www.twitch.tv/ufgeagles"
       },
       "lineup": [
         {
@@ -5871,7 +5797,9 @@
         "#fefefe"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/ufgeagles/"
+        "instagram": "https://www.instagram.com/ufgeagles/",
+        "x": "https://x.com/UFGEagles",
+        "twitch": "https://www.twitch.tv/ufgeagles"
       },
       "lineup": [
         {
@@ -5927,7 +5855,7 @@
         "#d94606"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/aaacompdds_/"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -5940,17 +5868,18 @@
       "displayName": "UFGD Golden Lovers",
       "org": "Universidade Federal da Grande Dourados",
       "orgTag": "UFGD",
-      "logo": "",
+      "logo": "assets/team-logos/ufgd_golden_lovers.png",
       "state": "MS",
       "stateName": "Mato Grosso do Sul",
       "stateFlag": "assets/state-flags/ms.webp",
       "stateRegion": "Centro-Oeste",
       "colors": [
-        "#23979f",
-        "#591839"
+        "#f4bb58",
+        "#361806"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/ufgdgoldenlovers",
+        "instagram": "https://www.instagram.com/ufgdgoldenlovers/"
       },
       "lineup": []
     },
@@ -5971,9 +5900,7 @@
         "#fefeff",
         "#d5ab65"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -5993,9 +5920,7 @@
         "#28282d",
         "#cfcac6"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -6038,7 +5963,9 @@
         "#fdc66e"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/ufmgesports/"
+        "website": "https://linktr.ee/ufmgesports",
+        "instagram": "https://www.instagram.com/ufmgesports/",
+        "x": "https://x.com/ufmgesports"
       },
       "lineup": [
         {
@@ -6087,7 +6014,8 @@
         "#fbfbf9"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/atletica.turuna/"
+        "instagram": "https://www.instagram.com/atletica.turuna/",
+        "x": "https://x.com/ufmtturuna"
       },
       "lineup": [
         {
@@ -6126,18 +6054,16 @@
       "displayName": "UFPB Saruês",
       "org": "Universidade Federal da Paraíba",
       "orgTag": "UFPB",
-      "logo": "",
+      "logo": "assets/team-logos/ufpb_sarues.png",
       "state": "PB",
       "stateName": "Paraíba",
       "stateFlag": "assets/state-flags/pb.webp",
       "stateRegion": "Nordeste",
       "colors": [
-        "#5f6b7a",
-        "#e6e8eb"
+        "#081e72",
+        "#a677a7"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -6180,7 +6106,8 @@
         "#fefefe"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/ufprburningbunnies/"
+        "instagram": "https://www.instagram.com/ufprburningbunnies/",
+        "x": "https://x.com/ufpr_bbn"
       },
       "lineup": [
         {
@@ -6244,7 +6171,8 @@
         "#fefefe"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/ufprburningbunnies/"
+        "instagram": "https://www.instagram.com/ufprburningbunnies/",
+        "x": "https://x.com/ufpr_bbn"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -6257,17 +6185,17 @@
       "displayName": "UFRGS Imperadores",
       "org": "Universidade Federal do Rio Grande do Sul",
       "orgTag": "UFRGS",
-      "logo": "",
+      "logo": "assets/team-logos/ufrgs_imperadores.png",
       "state": "RS",
       "stateName": "Rio Grande do Sul",
       "stateFlag": "assets/state-flags/rs.webp",
       "stateRegion": "Sul",
       "colors": [
-        "#9f8023",
-        "#184e59"
+        "#bba975",
+        "#191c1c"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/imperadores.ufrgs/"
       },
       "lineup": []
     },
@@ -6289,6 +6217,7 @@
         "#ffffff"
       ],
       "socials": {
+        "website": "https://linktr.ee/UFRJCanis",
         "instagram": "https://www.instagram.com/ufrjcanis/"
       },
       "lineup": [
@@ -6329,6 +6258,7 @@
         "#ffffff"
       ],
       "socials": {
+        "website": "https://linktr.ee/UFRJCanis",
         "instagram": "https://www.instagram.com/ufrjcanis/"
       },
       "lineup": [],
@@ -6352,7 +6282,9 @@
         "#fdc725"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/minervaesports/"
+        "website": "https://linktr.ee/minervaesports",
+        "instagram": "https://www.instagram.com/minervaesports/",
+        "x": "https://x.com/minervaesports"
       },
       "lineup": [
         {
@@ -6401,18 +6333,16 @@
       "displayName": "UFRN Impetuosa",
       "org": "Universidade Federal do Rio Grande do Norte",
       "orgTag": "UFRN",
-      "logo": "",
+      "logo": "assets/team-logos/ufrn_impetuosa.png",
       "state": "RN",
       "stateName": "Rio Grande do Norte",
       "stateFlag": "assets/state-flags/rn.webp",
       "stateRegion": "Nordeste",
       "colors": [
-        "#239f57",
-        "#4e1859"
+        "#4b75ee",
+        "#efc349"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -6432,9 +6362,7 @@
         "#f07436",
         "#282828"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -6534,7 +6462,8 @@
         "#fafcfb"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/ufswarriowls/"
+        "instagram": "https://www.instagram.com/ufswarriowls/",
+        "x": "https://x.com/ufswarriowls"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -6547,17 +6476,18 @@
       "displayName": "UFSC Titans Feminino",
       "org": "Universidade Federal de Santa Catarina",
       "orgTag": "UFSC",
-      "logo": "",
+      "logo": "assets/team-logos/ufsc_titans_sc_2024.png",
       "state": "SC",
       "stateName": "Santa Catarina",
       "stateFlag": "assets/state-flags/sc.webp",
       "stateRegion": "Sul",
       "colors": [
-        "#23429f",
-        "#592218"
+        "#fafcfb",
+        "#ff1039"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/ufsctitans/",
+        "x": "https://x.com/ufsctitans"
       },
       "lineup": []
     },
@@ -6579,7 +6509,8 @@
         "#ff1039"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/ufsctitans/",
+        "x": "https://x.com/ufsctitans"
       },
       "lineup": []
     },
@@ -6601,7 +6532,9 @@
         "#000000"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/ufscarfire/"
+        "website": "https://linktr.ee/ufscarfire",
+        "instagram": "https://www.instagram.com/ufscarfire/",
+        "x": "https://x.com/ufscarfire"
       },
       "lineup": [
         {
@@ -6669,9 +6602,7 @@
         "#fefefe",
         "#d7ad00"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [],
       "lineupRegistered": true
     },
@@ -6871,7 +6802,7 @@
         "#593c18"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atleticaanalitica/"
       },
       "lineup": []
     },
@@ -6892,9 +6823,7 @@
         "#00a675",
         "#010001"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -6902,7 +6831,7 @@
       "sourceId": "2912",
       "slug": "unb_green_olws_line_red_2024",
       "tag": "OWLS",
-      "displayName": "UnB Green Olws Red",
+      "displayName": "UnB Green Owls Red",
       "org": "Universidade de Brasília",
       "orgTag": "UnB",
       "logo": "assets/team-logos/green_owls.png",
@@ -6915,7 +6844,8 @@
         "#043a58"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/unbgreenowls/",
+        "x": "https://x.com/unbgreenowls"
       },
       "lineup": []
     },
@@ -6927,17 +6857,18 @@
       "displayName": "UnB Green Owls GC",
       "org": "Universidade de Brasília",
       "orgTag": "UnB",
-      "logo": "",
+      "logo": "assets/team-logos/green_owls.png",
       "state": "DF",
       "stateName": "Distrito Federal",
       "stateFlag": "assets/state-flags/df.webp",
       "stateRegion": "Centro-Oeste",
       "colors": [
-        "#239f2f",
-        "#391859"
+        "#00a675",
+        "#043a58"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/unbgreenowls/",
+        "x": "https://x.com/unbgreenowls"
       },
       "lineup": []
     },
@@ -6958,9 +6889,7 @@
         "#c562ac",
         "#b6b6b7"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -6980,9 +6909,7 @@
         "#020202",
         "#e6e6e6"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -7024,9 +6951,7 @@
         "#36bced",
         "#0e2655"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -7037,17 +6962,18 @@
       "displayName": "UNICAMP Mermaids",
       "org": "Universidade Estadual de Campinas",
       "orgTag": "UNICAMP",
-      "logo": "",
+      "logo": "assets/team-logos/unicamp_mermaids.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#86239f",
-        "#4b5918"
+        "#ed698b",
+        "#00131a"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/UnicampMermaids",
+        "instagram": "https://www.instagram.com/unicampmermaids/"
       },
       "lineup": []
     },
@@ -7155,9 +7081,7 @@
         "#7a8a9a",
         "#fefefe"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -7203,9 +7127,7 @@
         "#f9c901",
         "#0c0b04"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -7226,7 +7148,7 @@
         "#ff2121"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/calango_esports/"
       },
       "lineup": [
         {
@@ -7269,10 +7191,10 @@
       "org": "Universidade Federal de São Paulo",
       "orgTag": "UNIFESP",
       "logo": "assets/team-logos/unifesp_erex.png",
-      "state": "",
-      "stateName": "",
-      "stateFlag": "",
-      "stateRegion": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
       "colors": [
         "#000b07",
         "#519a21"
@@ -7317,16 +7239,16 @@
       "org": "Universidade Federal de São Paulo",
       "orgTag": "UNIFESP",
       "logo": "assets/team-logos/unifesp_knights_2024.png",
-      "state": "",
-      "stateName": "",
-      "stateFlag": "",
-      "stateRegion": "",
+      "state": "SP",
+      "stateName": "São Paulo",
+      "stateFlag": "assets/state-flags/sp.webp",
+      "stateRegion": "Sudeste",
       "colors": [
         "#269b37",
         "#babbbc"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/unifesp.knights/"
       },
       "lineup": []
     },
@@ -7347,9 +7269,7 @@
         "#0249f3",
         "#fefefe"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -7382,18 +7302,16 @@
       "displayName": "UNIGRAN Sarristas",
       "org": "Centro Universitário da Grande Dourados",
       "orgTag": "UNIGRAN",
-      "logo": "",
+      "logo": "assets/team-logos/unigran_sarristas_ms_2024.png",
       "state": "MS",
       "stateName": "Mato Grosso do Sul",
       "stateFlag": "assets/state-flags/ms.webp",
       "stateRegion": "Centro-Oeste",
       "colors": [
-        "#9f2352",
-        "#18591a"
+        "#199cd5",
+        "#f8d536"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -7414,7 +7332,7 @@
         "#fad506"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/uninassau.recife/"
+        "instagram": "https://www.instagram.com/uninassau.griffins/"
       },
       "lineup": [
         {
@@ -7473,7 +7391,7 @@
         "#fe9216"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atleticaiiidemarco/"
       },
       "lineup": []
     },
@@ -7485,18 +7403,16 @@
       "displayName": "UNIP LADITech",
       "org": "Universidade Paulista",
       "orgTag": "UNIP",
-      "logo": "",
+      "logo": "assets/team-logos/unip_laditech.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#9f2384",
-        "#2f5918"
+        "#fcf100",
+        "#fc1328"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -7516,9 +7432,7 @@
         "#f1c083",
         "#2a8991"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [],
       "lineupRegistered": true
     },
@@ -7540,7 +7454,9 @@
         "#024778"
       ],
       "socials": {
-        "instagram": "https://www.instagram.com/unirioesports/"
+        "website": "https://linktr.ee/uniriokrakenesports",
+        "instagram": "https://www.instagram.com/unirioesports/",
+        "x": "https://x.com/unirioesports"
       },
       "lineup": [
         {
@@ -7649,9 +7565,7 @@
         "#072357",
         "#01030e"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -7694,6 +7608,7 @@
         "#212429"
       ],
       "socials": {
+        "website": "https://linktr.ee/atleticatroianos",
         "instagram": "https://www.instagram.com/atleticatroianosunit/"
       },
       "lineup": [
@@ -7742,6 +7657,7 @@
         "#838283"
       ],
       "socials": {
+        "website": "https://linktr.ee/atleticatroianos",
         "instagram": "https://www.instagram.com/atleticatroianosunit/"
       },
       "lineup": [],
@@ -7765,7 +7681,7 @@
         "#fefefe"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atleticaunivap/"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -7788,7 +7704,7 @@
         "#fefefe"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atleticaunivap/"
       },
       "lineup": [],
       "lineupRegistered": true
@@ -7811,7 +7727,7 @@
         "#e7e5e5"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/timeunivasf/"
       },
       "lineup": [
         {
@@ -7862,9 +7778,7 @@
         "#5b5b5b",
         "#030203"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -7927,7 +7841,7 @@
         "#000000"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/usfesports/"
       },
       "lineup": []
     },
@@ -7949,7 +7863,7 @@
         "#000000"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/usfesports/"
       },
       "lineup": []
     },
@@ -7961,17 +7875,19 @@
       "displayName": "USJT Polaris",
       "org": "Universidade São Judas Tadeu",
       "orgTag": "USJT",
-      "logo": "",
+      "logo": "assets/team-logos/usjt_polaris.png",
       "state": "SP",
       "stateName": "São Paulo",
       "stateFlag": "assets/state-flags/sp.webp",
       "stateRegion": "Sudeste",
       "colors": [
-        "#9f2331",
-        "#18592b"
+        "#02174c",
+        "#f8a30c"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/usjtpolaris",
+        "instagram": "https://www.instagram.com/usjtpolaris/",
+        "x": "https://x.com/usjtpolaris"
       },
       "lineup": []
     },
@@ -7993,7 +7909,9 @@
         "#090837"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/uspcronos",
+        "instagram": "https://www.instagram.com/uspcronos/",
+        "x": "https://x.com/uspcronos"
       },
       "lineup": []
     },
@@ -8122,9 +8040,7 @@
         "#75020c",
         "#75020c"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": [
         {
           "slot": 1,
@@ -8161,17 +8077,19 @@
       "displayName": "UTFPR WASDEVILS",
       "org": "Universidade Tecnológica Federal do Paraná",
       "orgTag": "UTFPR Campo Mourão",
-      "logo": "",
+      "logo": "assets/team-logos/wasdevils_utfpr.png",
       "state": "PR",
       "stateName": "Paraná",
       "stateFlag": "assets/state-flags/pr.webp",
       "stateRegion": "Sul",
       "colors": [
-        "#9f2382",
-        "#2e5918"
+        "#fa0d33",
+        "#010302"
       ],
       "socials": {
-        "instagram": ""
+        "website": "https://linktr.ee/wasdevils",
+        "instagram": "https://www.instagram.com/wasdevils/",
+        "x": "https://x.com/wasdevils"
       },
       "lineup": []
     },
@@ -8193,7 +8111,7 @@
         "#4c127a"
       ],
       "socials": {
-        "instagram": ""
+        "instagram": "https://www.instagram.com/atletica.cybernetica/"
       },
       "lineup": []
     },
@@ -8215,6 +8133,7 @@
         "#858585"
       ],
       "socials": {
+        "website": "https://linktr.ee/wolfgamingcefet",
         "instagram": "https://www.instagram.com/wg.cefetrj/"
       },
       "lineup": [
@@ -8273,9 +8192,7 @@
         "#2c681a",
         "#580474"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -8295,9 +8212,7 @@
         "#548148",
         "#252641"
       ],
-      "socials": {
-        "instagram": ""
-      },
+      "socials": {},
       "lineup": []
     },
     {
@@ -8306,7 +8221,7 @@
       "slug": "xxii_setembro_fatec",
       "tag": "FATEC",
       "displayName": "XXII Setembro FATEC",
-      "org": "Faculdade de Tecnologia",
+      "org": "Faculdade de Tecnologia de São José dos Campos",
       "orgTag": "FATEC São José dos Campos",
       "logo": "assets/team-logos/xxii_setembro_fatec.png",
       "state": "SP",
@@ -8318,7 +8233,7 @@
         "#b1d74b"
       ],
       "socials": {
-        "instagram": "https://www.facebook.com/atletica.fatecsjc/"
+        "website": "https://www.facebook.com/atletica.fatecsjc/"
       },
       "lineup": [
         {
@@ -21481,7 +21396,7 @@
       "currentTeam": "",
       "teamHistory": [
         "ufrj_canis_b",
-        "minerva_fem_ufrj"
+        "minerva_artemis"
       ],
       "nickHistory": [
         "walking on water#aim"
@@ -23949,7 +23864,7 @@
       "puuid": "LlEpV_huIehN7uGG7_lNgc2wWWdnonJp7PeQpxpoMNrq-IhM0CfojZiFUNBm0mcnF9hqaaMJs6enIw",
       "currentTeam": "",
       "teamHistory": [
-        "oktoplus_gaming_cefet_mg_2024"
+        "panterao_gaming"
       ],
       "nickHistory": [
         "azevedo#2909"
@@ -24184,7 +24099,7 @@
       "currentTeam": "",
       "teamHistory": [
         "ufrj_minerva",
-        "minerva_fem_ufrj"
+        "minerva_artemis"
       ],
       "nickHistory": [
         "fersoca#vapo"
@@ -24470,7 +24385,7 @@
       "puuid": "asKgV65X74b71uv2w5KvZhiTjV7kwShlzS0e5N4RCLTzlYylHLAJbC46YRwstRL5Vazn3H1LXXuk-Q",
       "currentTeam": "",
       "teamHistory": [
-        "oktoplus_gaming_cefet_mg_2024"
+        "panterao_gaming"
       ],
       "nickHistory": [
         "M4v3r1ck#0109"
@@ -26277,7 +26192,7 @@
       "puuid": "40kvuGv2oS3JOiocW9a2QP9vIV8XMoG9CoDkG89LbO7c2grEowRSEBOV7bOYumbCZZwO3jYthCU93w",
       "currentTeam": "",
       "teamHistory": [
-        "oktoplus_gaming_cefet_mg_2024"
+        "panterao_gaming"
       ],
       "nickHistory": [
         "mnc#0901"
@@ -26446,7 +26361,7 @@
       "puuid": "tUv8w02M4QsBbm1YbMYn5uJDlgLZ6ePlQ_hBHA0H8SBnHh5VyAHFKb4BjwBxXmC5SByo-t3gbQnozg",
       "currentTeam": "",
       "teamHistory": [
-        "oktoplus_gaming_cefet_mg_2024"
+        "panterao_gaming"
       ],
       "nickHistory": [
         "rigas#032"
@@ -26498,7 +26413,7 @@
       "puuid": "Q5Dgg-iGW-A_H1eeHDSPxJXJl6kWCRwHYe2ClHAZFymg85M4jBov-DVWAC4_yZaAWXMEjlWxc07OaA",
       "currentTeam": "",
       "teamHistory": [
-        "oktoplus_gaming_cefet_mg_2024"
+        "panterao_gaming"
       ],
       "nickHistory": [
         "sabotaSSJ#R4P"
@@ -26797,7 +26712,7 @@
       "puuid": "c33T-c4QMiVLivHN8GAymJGQnWCG6zlxkgtu6BBKhempVSpRv2_fpRFjULEEyJcxu9RXRzWc_ElyGw",
       "currentTeam": "",
       "teamHistory": [
-        "minerva_fem_ufrj"
+        "minerva_artemis"
       ],
       "nickHistory": [
         "attrame#david"
@@ -27395,7 +27310,7 @@
       "puuid": "uAmqLtw2jHBg1Kedrla97_NXr7uloaLTxhfjte9SR-4-ZeotNOPDTeN3ZMehrxPQYuCzUoTuab88ig",
       "currentTeam": "",
       "teamHistory": [
-        "minerva_fem_ufrj"
+        "minerva_artemis"
       ],
       "nickHistory": [
         "maria s2#linda"
@@ -27564,7 +27479,7 @@
       "puuid": "Mgo5RX4zIq-qj6rCizoNsjB6njtrVzzRYXyb4Zv4-ZCU_evkgXH6ahPK9UD3wg6FwhS4JPDD4VRAgw",
       "currentTeam": "",
       "teamHistory": [
-        "minerva_fem_ufrj"
+        "minerva_artemis"
       ],
       "nickHistory": [
         "palaça#wlw"
@@ -27850,7 +27765,7 @@
       "puuid": "_pDi_03lRryfG5B1cqAzupFILDiwgjhW0rcdkazzDTCiQoyRERVlWT2OrcB-kCZvTbUF6FMwzE280Q",
       "currentTeam": "",
       "teamHistory": [
-        "minerva_fem_ufrj"
+        "minerva_artemis"
       ],
       "nickHistory": [
         "thatasms#linda"

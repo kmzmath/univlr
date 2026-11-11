@@ -66,7 +66,27 @@ def load_schedule():
     return rows, counts
 
 
-def publish(through, preview):
+# O que vem do banco em cada carta (card_reveal_details.cjs). Numa carta ja
+# revelada isso fica congelado: o dia postado nao muda quando entra partida nova
+# ou quando o banco do site ganha outros anos (decisao do dono, 24/10/2026).
+CAMPOS_DO_BANCO = ("teamLogo", "teamColor", "role", "profileHref", "stats", "agents", "recentMatches")
+
+
+def publicadas_congeladas():
+    """Os detalhes de cada carta da pagina publica, por thread, e ate que dia."""
+    manifest_path = PUBLIC / "manifest.json"
+    if not manifest_path.is_file():
+        return {}, None
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    ate = manifest.get("publishedThrough")
+    congeladas = {}
+    for entry in manifest.get("days", []):
+        for card in entry.get("cards", []):
+            congeladas[card["thread"]] = {campo: card[campo] for campo in CAMPOS_DO_BANCO if campo in card}
+    return congeladas, (date.fromisoformat(ate) if ate else None)
+
+
+def publish(through, preview, recalcular=False):
     rows, counts = load_schedule()
     if through < date(2026, 10, 22) or through > date(2026, 11, 24):
         raise ValueError("Escolha uma data entre 22/10 e 24/11/2026")
@@ -91,15 +111,22 @@ def publish(through, preview):
         if key not in ids:
             raise ValueError(f"Jogador ausente dos elegíveis: {key}")
         selected_ids.append(ids[key])
-    if selected_ids:
+    # Carta ja revelada reaproveita os detalhes publicados; so as novas vao ao
+    # banco. `--recalcular-publicadas` refaz todas, para quando o dono pedir.
+    congeladas, publicado_ate = ({}, None) if recalcular else publicadas_congeladas()
+    novas = [puuid for puuid in selected_ids if f"2026:{puuid}" not in congeladas]
+    if novas:
         process = subprocess.run(
             ["node", str(ROOT / "scripts/card_reveal_details.cjs")],
-            input=json.dumps(selected_ids), text=True, capture_output=True,
+            input=json.dumps(novas), text=True, capture_output=True,
             encoding="utf-8", cwd=ROOT, check=True,
         )
         details = json.loads(process.stdout)
     else:
         details = {}
+    for puuid in selected_ids:
+        if puuid not in details:
+            details[puuid] = congeladas[f"2026:{puuid}"]
     # Quem estava em cada arquivo na edicao anterior. Quando o calendario muda a
     # posicao de alguem, o NNN.webp passa a ser de outra pessoa, e a imagem velha
     # e mais nova que o PNG de origem: so pela data ela nunca seria regravada.
@@ -160,12 +187,16 @@ def publish(through, preview):
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     label = "Prévia local" if preview else "Página pública"
-    print(f"{label} atualizada até {through:%d/%m/%Y}: {len(released)} cartinhas liberadas")
+    print(f"{label} atualizada até {through:%d/%m/%Y}: {len(released)} cartinhas liberadas, "
+          f"{len(novas)} com detalhes novos e {len(selected_ids) - len(novas)} congeladas"
+          + (f" (publicadas até {publicado_ate:%d/%m})" if publicado_ate else ""))
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ate", required=True, type=date.fromisoformat, metavar="AAAA-MM-DD")
     parser.add_argument("--preview", action="store_true", help="Permite preparar uma edição futura localmente")
+    parser.add_argument("--recalcular-publicadas", action="store_true",
+                        help="Refaz os detalhes das cartas já reveladas (só a pedido do dono)")
     args = parser.parse_args()
-    publish(args.ate, args.preview)
+    publish(args.ate, args.preview, args.recalcular_publicadas)

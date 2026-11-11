@@ -40,6 +40,13 @@ Depois dos jogos restantes, recalcule os overalls, atualize o CSV do calendário
 
 O navegador busca o manifesto sem cache, mas a página só muda para o público quando os arquivos gerados são publicados no site. A atualização diária requer executar este comando e publicar a nova versão antes das 21:30.
 
+**Desde 11/11/2026 (o banco do site passou a ter 2023 a 2025):**
+
+- Carta já revelada fica congelada: os detalhes que vêm do banco (números, agentes, últimos jogos, escudo, cor e função) são copiados do `manifest.json` publicado, e só as cartas novas vão ao banco. Para refazer as publicadas, só a pedido do dono, use `--recalcular-publicadas`.
+- Os detalhes das cartas novas saem de um banco montado só com os mapas de 2026 (horário de Brasília), pela mesma `buildDatabase` do site (`scripts/card_reveal_details.cjs`, uns 3 s). Ler o `database.json` inteiro somava a carreira desde 2023 sob o rótulo da temporada. O link do perfil continua sendo o endereço do site.
+- Conferido em 11/11: numa cópia da `main` de antes da publicação (só 2026), o gerador novo devolve as 168 cartas byte a byte iguais ao antigo; na prévia, `--ate 2026-11-10` reproduz o manifesto publicado, e o lote de 11/11 sai com os mesmos mapas, abates e últimos jogos que a `main` daria (rAAting com até 0,001 de diferença, do contexto econômico que agora usa todos os anos).
+- O gerador do overall (`ferramentas/cartinhas/`) ainda lê o banco inteiro: não recalcule overalls com o banco do site sem filtrar a temporada.
+
 ## Testes
 
 ```sh

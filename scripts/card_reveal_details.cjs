@@ -1,9 +1,76 @@
 // Recebe PUUIDs pela entrada padrão e devolve apenas os perfis solicitados.
+//
+// As cartinhas sao da temporada 2026. Desde que o banco do site passou a ter
+// 2023, 2024 e 2025 (previa-2025, 11/11/2026), os numeros da carta saem de um
+// banco montado aqui so com os mapas de 2026, pela mesma buildDatabase do
+// app.js que gera o perfil. Ler o database.json inteiro somava a carreira toda
+// sob o rotulo da temporada. O endereco do perfil continua vindo do banco do
+// site, que e onde o link da carta abre.
 const fs = require("node:fs");
+const path = require("node:path");
 const { decode } = require("../db-codec.js");
 
+const ROOT = path.resolve(__dirname, "..");
+const TEMPORADA = 2026;
+// Ano no horario de Brasilia (UTC-3): um mapa das 22h de 31/12 e do ano dele.
+const anoEmBrasilia = (ms) => new Date(Number(ms) - 3 * 60 * 60 * 1000).getUTCFullYear();
+
+// --- Stubs de navegador, os mesmos do build_database.js: o app.js mexe em DOM
+// e fetch no topo do arquivo, e o init() para na primeira espera sem efeito.
+const noop = () => {};
+const stubElement = {
+  innerHTML: "", addEventListener: noop, removeEventListener: noop,
+  querySelector: () => null, querySelectorAll: () => [],
+  classList: { add: noop, remove: noop, toggle: noop, contains: () => false },
+  style: {}, dataset: {}, setAttribute: noop, appendChild: noop, focus: noop,
+};
+globalThis.window = globalThis;
+globalThis.document = {
+  title: "", getElementById: () => stubElement, querySelector: () => null, querySelectorAll: () => [],
+  createElement: () => ({ ...stubElement }), addEventListener: noop, removeEventListener: noop,
+  body: stubElement, documentElement: stubElement,
+};
+globalThis.location = { hash: "" };
+globalThis.history = { pushState: noop, replaceState: noop };
+globalThis.requestAnimationFrame = () => 0;
+globalThis.fetch = () => new Promise(noop);
+for (const script of ["raating-core.js", "ranking-core.js", "app.js"]) {
+  (0, eval)(fs.readFileSync(path.join(ROOT, script), "utf8"));
+}
+// O app.js chama console.log/warn no build; a saida padrao e o JSON da carta.
+console.log = console.warn = (...args) => process.stderr.write(args.join(" ") + String.fromCharCode(10));
+
+const readJson = (relPath) => JSON.parse(fs.readFileSync(path.join(ROOT, relPath), "utf8"));
+const readJsonOptional = (relPath) => { try { return readJson(relPath); } catch (error) { return null; } };
+
+function bancoDaTemporada() {
+  const manifest = readJson("data-sources.json");
+  const loaded = [];
+  for (const event of manifest.events || []) {
+    for (const filePath of event.files || []) {
+      let raw;
+      try {
+        raw = readJson(filePath);
+      } catch (error) {
+        loaded.push({ eventId: event.id, path: filePath, error });
+        continue;
+      }
+      if (anoEmBrasilia(raw?.matchInfo?.gameStartMillis) === TEMPORADA) loaded.push({ eventId: event.id, path: filePath, raw });
+    }
+  }
+  return buildDatabase(
+    manifest.events,
+    loaded,
+    prepareMetadata(readJson("metadata.json")),
+    prepareTeamProfiles(readJsonOptional("team-profiles.json")),
+    readJsonOptional("ranking-weights.json"),
+  );
+}
+
 const requested = JSON.parse(fs.readFileSync(0, "utf8"));
-const db = decode(JSON.parse(fs.readFileSync("database.json", "utf8")));
+const db = bancoDaTemporada();
+const site = decode(readJson("database.json"));
+const enderecoNoSite = new Map(site.players.map((player) => [player.puuid, player.routeSlug || player.id]));
 const playerById = new Map(db.players.map((player) => [player.puuid, player]));
 const eventById = new Map(db.tournaments.map((event) => [event.id, event]));
 const teamById = new Map((db.metadata.teams || []).map((team) => [team.id, team]));
@@ -111,7 +178,7 @@ for (const puuid of requested) {
     teamLogo: publicAsset(team?.logo),
     teamColor: teamLineColor(team),
     role: agents[0]?.role || "",
-    profileHref: `/#/players/${player.routeSlug || player.id}`,
+    profileHref: `/#/players/${enderecoNoSite.get(puuid) || player.routeSlug || player.id}`,
     stats: {
       raating: player.raating_3,
       acs: player.acs,

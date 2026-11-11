@@ -425,12 +425,13 @@ assert.strictEqual(context.teamPassagens(azr, paradaDaEquipe).jogadores.get("fic
 
 // Inatividade: 150 dias sem jogar tira do ranking oficial, a volta recoloca, e rodar de novo nao muda nada.
 const DIA = 24 * 60 * 60 * 1000;
-const semanaFalsa = () => ({ teams: [{ id: "a", validRank: 1, overallRank: 1 }, { id: "b", validRank: 2, overallRank: 2 }, { id: "c", validRank: 3, overallRank: 3, inherits: ["velha"] }, { id: "d", validRank: null, overallRank: 4, provisional: true }], byTeamId: {} });
+// `matches`: equipe sem partida nunca tem posicao valida (166a400).
+const semanaFalsa = () => ({ teams: [{ id: "a", validRank: 1, overallRank: 1, matches: 9 }, { id: "b", validRank: 2, overallRank: 2, matches: 9 }, { id: "c", validRank: 3, overallRank: 3, matches: 9, inherits: ["velha"] }, { id: "d", validRank: null, overallRank: 4, matches: 9, provisional: true }], byTeamId: {} });
 const datasFalsas = new Map([["a", [1000 * DIA]], ["b", [800 * DIA]], ["velha", [990 * DIA]], ["d", [1000 * DIA]]]);
 const semanaInativa = context.rankingAplicaInatividade(semanaFalsa(), datasFalsas, 1001 * DIA, 150, []);
 assert.deepStrictEqual(semanaInativa.teams.map((row) => row.validRank), [1, null, 2, null], "a parada sai e quem esta abaixo sobe");
 assert.strictEqual(semanaInativa.teams[1].inactive, true, "a parada fica inativa");
-assert.strictEqual(semanaInativa.teams[3].inactive, undefined, "provisoria continua provisoria");
+assert.strictEqual(semanaInativa.teams[3].inactive, false, "provisoria continua provisoria");
 assert.deepStrictEqual(context.rankingAplicaInatividade(semanaInativa, datasFalsas, 1001 * DIA, 150, []).teams.map((row) => row.validRank), [1, null, 2, null], "aplicar de novo nao muda nada");
 assert.deepStrictEqual(context.rankingAplicaInatividade(semanaFalsa(), datasFalsas, 900 * DIA, 150, []).teams.map((row) => row.validRank), [1, 2, 3, null], "na semana em que jogava, ela continua");
 assert.strictEqual(context.rankingDiasSemJogar(100 * DIA, 300 * DIA, [[120 * DIA, 220 * DIA]]), 100, "parada do cenario inteiro nao conta");

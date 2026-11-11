@@ -1060,7 +1060,7 @@
     "alianca-2024-classificatoria-1": {
       "name": "Copa Aliança 2024.1 - Classificatória 1",
       "logo": "assets/tournament-icons/copa_alianca.png",
-      "teams": 44,
+      "teams": 42,
       "endAt": "2024-04-22T14:38:44.44Z",
       "defaultPhase": "qualifier",
       "phaseRules": [
@@ -1076,7 +1076,7 @@
         "13-16": 18,
         "17-24": 12,
         "25-32": 8,
-        "33-44": 4
+        "33-42": 4
       },
       "bestOfGroup": "alianca-2024-1-classificatorias"
     },

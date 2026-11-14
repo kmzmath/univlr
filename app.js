@@ -20661,10 +20661,10 @@ const TOURNAMENT_OVERRIDES = {
     prizePool: "R$15.000",
     tier: "S",
     type: "Online - Final presencial",
-    // Quartas em 17 e 18/10/2026, semifinais em 24/10; final ainda sem data.
-    // Com a final: status "Finalizado", endAt e as colocacoes 1 e 2.
-    status: "Em andamento",
+    // Quartas em 17 e 18/10/2026, semifinais em 24/10 e final presencial em 14/11.
+    status: "Finalizado",
     startAt: "2026-10-17T00:00:00",
+    endAt: "2026-11-14T17:52:02",
     teamCount: 8,
     // O pool da fase de grupos: as quartas e as semis ja jogaram os 7.
     mapPool: ["Abyss", "Ascent", "Haven", "Lotus", "Split", "Summit", "Sunset"],
@@ -20679,9 +20679,10 @@ const TOURNAMENT_OVERRIDES = {
       ],
       standings: "Coloca\u00e7\u00e3o oficial do campeonato",
     },
-    // Rotulos iguais aos de ranking-weights.json. So os eliminados nas quartas
-    // e nas semis ja tem colocacao; o campeonato em andamento nao pontua no ranking.
+    // Rotulos iguais aos de ranking-weights.json.
     placements: [
+      { range: "1", id: "ceub_octopus", note: "Campe\u00e3o" },
+      { range: "2", id: "azure_bears_golden", note: "Vice" },
       { range: "3-4", id: "ufu_saints", note: "Semifinal" },
       { range: "3-4", id: "caap_hellhounds", note: "Semifinal" },
       { range: "5-8", id: "macklogic_red", note: "Quartas de final" },
@@ -20710,7 +20711,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Final",
               matches: [
-                { code: "Partida 7", bestOf: "MD5", a: "azure_bears_golden", b: "ceub_octopus" },
+                { code: "Partida 7", bestOf: "MD5", a: "azure_bears_golden", scoreA: 1, b: "ceub_octopus", scoreB: 3, winner: "ceub_octopus" },
               ],
             },
           ],

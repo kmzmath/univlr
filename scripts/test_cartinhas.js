@@ -222,7 +222,7 @@ const perfis = JSON.parse(require("child_process").execFileSync("node", [path.jo
 }));
 const quando = (match) => new Date(match.startedAt || match.date).getTime();
 for (const puuid of puuids) {
-  const jogador = banco.players.find((player) => player.puuid === puuid);
+  const jogador = banco.players.find((player) => [player.id, player.puuid, ...(player.accounts || [])].includes(puuid));
   const dele = banco.matches
     .filter((match) => (match.players || []).some((row) => row.puuid === puuid || row.id === jogador.id))
     .sort((a, b) => quando(b) - quando(a));

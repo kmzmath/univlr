@@ -70,8 +70,13 @@ function bancoDaTemporada() {
 const requested = JSON.parse(fs.readFileSync(0, "utf8"));
 const db = bancoDaTemporada();
 const site = decode(readJson("database.json"));
-const enderecoNoSite = new Map(site.players.map((player) => [player.puuid, player.routeSlug || player.id]));
-const playerById = new Map(db.players.map((player) => [player.puuid, player]));
+// A carta guarda o PUUID da conta principal, mas o banco poe em player.puuid a
+// conta usada por ultimo (a de torneio da final da Univava, em 14/11/2026).
+// Por isso o jogador e achado por qualquer uma das contas dele.
+const contasDe = (player) => [player.id, player.puuid, ...(player.accounts || [])].filter(Boolean);
+const porConta = (players, valor) => new Map(players.flatMap((player) => contasDe(player).map((conta) => [conta, valor(player)])));
+const enderecoNoSite = porConta(site.players, (player) => player.routeSlug || player.id);
+const playerById = porConta(db.players, (player) => player);
 const eventById = new Map(db.tournaments.map((event) => [event.id, event]));
 const teamById = new Map((db.metadata.teams || []).map((team) => [team.id, team]));
 

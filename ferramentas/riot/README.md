@@ -42,6 +42,7 @@ continuam funcionando - só os que baixam partida é que param.
 | `PegaCustomMatch.py` | baixa as partidas custom de todos os cadastrados | `out_tournament/`, e o PUUID resolvido de volta no `players.xlsx` |
 | `PegaTeamMatch.py` | o mesmo, mirando 1 ou 2 equipes | `out_tournament/` |
 | `PegaPlayerMatch.py` | o mesmo, mirando jogadores | `out_tournament/` |
+| `PegaTournamentMatch.py` | partidas do **servidor de torneio** da Riot (últimas 12 h), que os três acima não enxergam | `out_torneio_esports/`, e com `--vincular` as contas de torneio no `players.xlsx` |
 | `AuditaNicksPartidas.py` | acha quem jogou e não bate com o cadastro | `out_auditoria_nicks/` |
 | `AtualizaNicks.py` | pergunta à Riot o Riot ID de hoje de toda conta conhecida (as da planilha e as que só aparecem em `campeonatos/`) e acha pelo nick o PUUID de quem não tem | `dados_excel/riot_ids_atuais.json` (o perfil mostra esse nome como nick atual), e no `players.xlsx` o nick novo numa coluna `nick N` e o PUUID achado; a coluna `Jogador` não muda |
 | `analiseMatches.py` | relatório por partida e por equipe, com identidade, KAST, ACS e rAAting iguais aos do site | `analiseMatches_<pasta>.xlsx` |
@@ -62,6 +63,28 @@ As quatro análises usam por padrão `trabalho/Finalizados/Válidos` e descartam
 repetições pelo `matchInfo.matchId`. Depois de regenerar os winrates de situação,
 rode `scripts/build_metadata.py` e `scripts/build_database.js`: o rAAting 3.0 do
 site e dos relatórios depende dessa mesma distribuição de estados.
+
+## Partida no servidor de torneio
+
+Quando a organização roda a partida no servidor de torneio da Riot (rota
+`esports`, `region: "tournament"` no JSON), cada jogador entra com uma conta de
+torneio, com a sigla da equipe e a tag `#epval` (ex.: `AZR greiN#epval`), e
+**PUUID próprio**. Essas contas não têm matchlist, então o `PegaTeamMatch` volta
+com zero partidas. O `PegaTournamentMatch.py` vai pela lista de partidas
+recentes da fila de torneio, que só guarda **as últimas 12 horas**: rode no dia.
+
+```
+python PegaTournamentMatch.py                         # só lista o que houve no servidor
+python PegaTournamentMatch.py golden ceub --vincular  # baixa o confronto e cadastra as contas
+python ../../scripts/build_metadata.py                # para o site reconhecer as contas novas
+```
+
+A conta de torneio desconhecida é ligada ao jogador pelo nick sem a sigla
+(`AZR greiN` -> `greiN`), procurando só nos elencos das equipes pedidas e só
+quando casa com um jogador. O `--vincular` grava o PUUID numa coluna `puuid N`
+livre (cria a próxima se a linha estiver cheia) e o Riot ID numa `nick N`, com
+backup da planilha antes. Mapa reiniciado ou abortado sai como rejeitado, com o
+motivo, pelas mesmas regras do `PegaCustomMatch` (vencedor com 13 rounds etc.).
 
 ## Duas armadilhas que já custaram caro
 

@@ -14712,6 +14712,10 @@
       "id": "1C3PML8GceP1vxyPMgbBRh2h2FLvKPmfnDp8fWo4zCBabnhU74Y2gjnqd9dFFc3iPAqALGFw6VvOdQ",
       "name": "reyblock",
       "puuid": "1C3PML8GceP1vxyPMgbBRh2h2FLvKPmfnDp8fWo4zCBabnhU74Y2gjnqd9dFFc3iPAqALGFw6VvOdQ",
+      "accounts": [
+        "1C3PML8GceP1vxyPMgbBRh2h2FLvKPmfnDp8fWo4zCBabnhU74Y2gjnqd9dFFc3iPAqALGFw6VvOdQ",
+        "AlearnrLtR_sJQci5v8e1Lp9bJIckMrs88d1OHGPCacgH9q0WCPkEHiO7mUiNKlKv6kAT4FwTxmLQQ"
+      ],
       "currentTeam": "ceub_octopus",
       "teamHistory": [
         "ceub_octopus",
@@ -14719,7 +14723,8 @@
       ],
       "nickHistory": [
         "reybl0ck#rbck",
-        "reyblock#rbck"
+        "reyblock#rbck",
+        "OCT reyblock#epval"
       ],
       "photo": "assets/player-photos/ceub_octopus/reyblock_new.png"
     },
@@ -14741,12 +14746,17 @@
       "id": "hR0K82-UBEAoRU-4Yc7FMR3lYhP4kb2th1cbu3EzwmKeTM4Yt9cBs7oIvY-cV0cvX8Txtf7RII_PaA",
       "name": "seki",
       "puuid": "hR0K82-UBEAoRU-4Yc7FMR3lYhP4kb2th1cbu3EzwmKeTM4Yt9cBs7oIvY-cV0cvX8Txtf7RII_PaA",
+      "accounts": [
+        "hR0K82-UBEAoRU-4Yc7FMR3lYhP4kb2th1cbu3EzwmKeTM4Yt9cBs7oIvY-cV0cvX8Txtf7RII_PaA",
+        "zRDLB0w5MMYgMR-SRNVXQ7rmE4zzlSDVd532RwhwZKdI24bgnUhDx_RnDiAfzZ0BpzlSALtPu9XQTw"
+      ],
       "currentTeam": "ceub_octopus",
       "teamHistory": [
         "ceub_octopus"
       ],
       "nickHistory": [
-        "seki#hanei"
+        "seki#hanei",
+        "OCT seki#epval"
       ],
       "photo": "assets/player-photos/ceub_octopus/seki_new.png"
     },
@@ -14754,6 +14764,10 @@
       "id": "H12pckbkNnpJiUS5h9AhhHRTP1c_S30dXLfWm2sWdxmlmH6qCcw9UuiS_61TNYTnFj5fETRyLamb_Q",
       "name": "gbzz",
       "puuid": "H12pckbkNnpJiUS5h9AhhHRTP1c_S30dXLfWm2sWdxmlmH6qCcw9UuiS_61TNYTnFj5fETRyLamb_Q",
+      "accounts": [
+        "H12pckbkNnpJiUS5h9AhhHRTP1c_S30dXLfWm2sWdxmlmH6qCcw9UuiS_61TNYTnFj5fETRyLamb_Q",
+        "wfGKLk-n5BT-FuxdDWr1CH5NjNTJtgXH-7xrX8qG_JAxnQ9LPh9-M5PxBYYURksbWPKeNmizLnmOKQ"
+      ],
       "currentTeam": "ceub_octopus",
       "teamHistory": [
         "ceub_octopus"
@@ -14761,7 +14775,8 @@
       "nickHistory": [
         "gbzz#CEI",
         "big0d#CEI",
-        "gbz#555"
+        "gbz#555",
+        "OCT gbz#epval"
       ],
       "photo": "assets/player-photos/ceub_octopus/gbz_new.png"
     },
@@ -14769,6 +14784,10 @@
       "id": "dsUDB7RGqdpVQg2f9bE8kKdEjkvK734PTW650lVHStgXWL4onVHvK3FVXPFZnUCIwJDdFHSGwk_HeQ",
       "name": "chadu",
       "puuid": "dsUDB7RGqdpVQg2f9bE8kKdEjkvK734PTW650lVHStgXWL4onVHvK3FVXPFZnUCIwJDdFHSGwk_HeQ",
+      "accounts": [
+        "dsUDB7RGqdpVQg2f9bE8kKdEjkvK734PTW650lVHStgXWL4onVHvK3FVXPFZnUCIwJDdFHSGwk_HeQ",
+        "B4ru4FpsGTZ81WnTl0oAcOlrb7pg-FTexkSFqS7WAI16ie_4vRTihYxjgs0SgFChNPbVF0Yz4YSH7A"
+      ],
       "currentTeam": "ceub_octopus",
       "teamHistory": [
         "ceub_octopus"
@@ -14776,7 +14795,8 @@
       "nickHistory": [
         "PSC chadu#lari",
         "chadu#lari",
-        "chadu#2007"
+        "chadu#2007",
+        "OCT chadu#epval"
       ],
       "photo": "assets/player-photos/ceub_octopus/chadu_new.png"
     },
@@ -15428,6 +15448,10 @@
       "id": "Q87L0X2L2tuqfTZvknWwY9_0rWThK-5XIGqjJwMoMDmPKLSBDefLMJkXJv7mtgv4dahfinFLJfSUjQ",
       "name": "André",
       "puuid": "Q87L0X2L2tuqfTZvknWwY9_0rWThK-5XIGqjJwMoMDmPKLSBDefLMJkXJv7mtgv4dahfinFLJfSUjQ",
+      "accounts": [
+        "Q87L0X2L2tuqfTZvknWwY9_0rWThK-5XIGqjJwMoMDmPKLSBDefLMJkXJv7mtgv4dahfinFLJfSUjQ",
+        "Gc9lst-ot8dqLjDK5uUt3OzjnpjVSPPGJ13iZSQppA6bw90Y_Im6NUHEI1t-dl9TdpocZ-C6scGaVw"
+      ],
       "currentTeam": "azure_bears_golden",
       "teamHistory": [
         "azure_bears",
@@ -15435,7 +15459,8 @@
         "azure_bears_red"
       ],
       "nickHistory": [
-        "andre#aaa12"
+        "andre#aaa12",
+        "AZR andre#epval"
       ],
       "photo": "assets/player-photos/azure_bears/andre_new.png"
     },
@@ -15446,7 +15471,8 @@
       "accounts": [
         "6Ny-jKzYdIG6NNcruXAnjCT3wMCc3SUoJh6cAYPPFxD483ZkQLzZ1k8cEqgnmB5ZmtkjBhcFQ7tJ3A",
         "HP4bJimjIloPUdKaUbwD2w8GWxV5sEzIqKA_1lbu_r-GYuUYTN8xGccPtJUQXbKfCo2i6Tt-748fLw",
-        "JAShDH59aK-5Pu2LlHTCf-K6q47HXDoKbybr5_dYsHQxUsqlmbq86nafQXY-2FlUHTDrOAbXqvzFOw"
+        "JAShDH59aK-5Pu2LlHTCf-K6q47HXDoKbybr5_dYsHQxUsqlmbq86nafQXY-2FlUHTDrOAbXqvzFOw",
+        "roCuS5n_VGvCj-hIIRUQM1TMTTJSeYoKpk2Lw_O14YUueMZmiquoNzIsCqXlu4zhnLlNuSUMQqMHoA"
       ],
       "currentTeam": "azure_bears_golden",
       "teamHistory": [
@@ -15456,7 +15482,8 @@
         "greiN#quel",
         "AZR greinzera#quel",
         "japa918",
-        "japa918#ysl"
+        "japa918#ysl",
+        "AZR greiN#epval"
       ],
       "photo": "assets/player-photos/azure_bears/greinzera_new.png"
     },
@@ -15464,12 +15491,17 @@
       "id": "DkDfO8DUoK3OJEthXMm-Tqyx0cGLicsrhdT4hZyjMgnh-zYOzQ4xzOJOayHADu5NsCr-v33tKC4bPQ",
       "name": "Kick",
       "puuid": "DkDfO8DUoK3OJEthXMm-Tqyx0cGLicsrhdT4hZyjMgnh-zYOzQ4xzOJOayHADu5NsCr-v33tKC4bPQ",
+      "accounts": [
+        "DkDfO8DUoK3OJEthXMm-Tqyx0cGLicsrhdT4hZyjMgnh-zYOzQ4xzOJOayHADu5NsCr-v33tKC4bPQ",
+        "5JilqnsPSITmM_rhuRionM4DqEZ4qGWKb8KqtIxdXZph7WRRGL8TOQhEi-IAN5BZdRgy7BIvGj0b8Q"
+      ],
       "currentTeam": "azure_bears_golden",
       "teamHistory": [
         "azure_bears_golden"
       ],
       "nickHistory": [
-        "Kick#SchrB"
+        "Kick#SchrB",
+        "AZR Kick#epval"
       ],
       "photo": "assets/player-photos/azure_bears/kick.png"
     },
@@ -15479,7 +15511,8 @@
       "puuid": "9RC7tkp-JebW_pAJ--JgBEnv9AqneDAXYHUdsBVSyJyKZVur3lJCEAGhdeAVRbnDQhsejkKxlGeRQQ",
       "accounts": [
         "9RC7tkp-JebW_pAJ--JgBEnv9AqneDAXYHUdsBVSyJyKZVur3lJCEAGhdeAVRbnDQhsejkKxlGeRQQ",
-        "5zDd6Ce0y9KLtfoTzSutVm8IKWjx7g9KgWsISuuViw-DmYi20qaBm4IFGuI6hbJ_Z4UJxZa3ach1Ww"
+        "5zDd6Ce0y9KLtfoTzSutVm8IKWjx7g9KgWsISuuViw-DmYi20qaBm4IFGuI6hbJ_Z4UJxZa3ach1Ww",
+        "16jxjN0wYGX2W8iOR5YdORlWds-Fyh5leaUlYy_rls6qKiUa9W-xIdjcyT3R8uMmh815zxWq-cIyBA"
       ],
       "currentTeam": "azure_bears_golden",
       "teamHistory": [
@@ -15488,7 +15521,8 @@
       ],
       "nickHistory": [
         "taek#aim",
-        "alluka#tired"
+        "alluka#tired",
+        "AZR taek#epval"
       ],
       "photo": "assets/player-photos/azure_bears/taek_new.png"
     },
@@ -15496,6 +15530,10 @@
       "id": "KJ6FeYnH8RqbZHU-b0PJ3HlIsQD332VvNy9l29N9UV8XUmcZCZxrrh2k7TP9t7H0QRgxlMsYzPVd2g",
       "name": "piM",
       "puuid": "KJ6FeYnH8RqbZHU-b0PJ3HlIsQD332VvNy9l29N9UV8XUmcZCZxrrh2k7TP9t7H0QRgxlMsYzPVd2g",
+      "accounts": [
+        "KJ6FeYnH8RqbZHU-b0PJ3HlIsQD332VvNy9l29N9UV8XUmcZCZxrrh2k7TP9t7H0QRgxlMsYzPVd2g",
+        "x1i8RfDS4v6OdIx6U_9PWZO7Qf53Uqx5_u-UMmRXgEWmd2LFMhqgGC8aBZfn8dxKST64UrwvEZ4oAg"
+      ],
       "currentTeam": "azure_bears_golden",
       "teamHistory": [
         "azure_bears_golden",
@@ -15503,7 +15541,8 @@
         "azure_bears_black"
       ],
       "nickHistory": [
-        "piM#まいさ"
+        "piM#まいさ",
+        "AZR piM#epval"
       ],
       "photo": "assets/player-photos/azure_bears/pim_new.png"
     },
@@ -16434,6 +16473,10 @@
       "id": "uMAKnx1b2jQH9uLNWNJDfLDpa-agbwj5eIAWxLFqk8eSFYw6pz3sT4-RNn_WibW2ylccVgzY1tGBmQ",
       "name": "JotaVe",
       "puuid": "uMAKnx1b2jQH9uLNWNJDfLDpa-agbwj5eIAWxLFqk8eSFYw6pz3sT4-RNn_WibW2ylccVgzY1tGBmQ",
+      "accounts": [
+        "uMAKnx1b2jQH9uLNWNJDfLDpa-agbwj5eIAWxLFqk8eSFYw6pz3sT4-RNn_WibW2ylccVgzY1tGBmQ",
+        "MptWioFz33Hcm7e2T5TmYVUw315q8eVvo-3KqmmFHuAI6edaL1bEjlMm_s4Fi4Fz_NQUownhIc_NYg"
+      ],
       "currentTeam": "ceub_octopus",
       "teamHistory": [
         "ceub_octopus",
@@ -16441,7 +16484,8 @@
         "black_cyber"
       ],
       "nickHistory": [
-        "JotaVe#2511"
+        "JotaVe#2511",
+        "OCT JotaVe#epval"
       ],
       "photo": "assets/player-photos/ceub_octopus/Jotave.png"
     },

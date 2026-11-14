@@ -226,14 +226,16 @@ def link_accounts(reg: Registry, links: List[Tuple[str, Dict[str, Any]]]) -> int
     return len(links)
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser(description="Partidas do servidor de torneio da Riot (ultimas 12 h).")
-    ap.add_argument("equipes", nargs="*", help="0 = so listar; 1 = partidas da equipe; 2 = confronto direto.")
-    ap.add_argument("--vincular", action="store_true", help="grava no players.xlsx as contas casadas por nick.")
-    args = ap.parse_args()
-
+def coletar(equipes: List[str], vincular: bool = False) -> List[Dict[str, Any]]:
+    """
+    Busca as partidas de torneio das ultimas 12 h e salva as validas das
+    equipes pedidas. Devolve um registro por partida das equipes (ou por
+    partida do servidor, sem equipes): matchId, start, map, rejeitada (motivo
+    ou None), arquivo (Path salvo ou None) e contas_novas (quantas so casaram
+    pelo nick e ainda nao estao no players.xlsx depois desta chamada).
+    """
     reg = Registry()
-    targets = resolve_teams(args.equipes, list(reg.teams_to_players)) if args.equipes else []
+    targets = resolve_teams(equipes, list(reg.teams_to_players)) if equipes else []
     pool = [pk for t in targets for pk in reg.teams_to_players.get(t, [])] or list(reg.player_to_team)
 
     client = pcm.RiotClient(pcm.RIOT_API_KEY, ESPORTS_ROUTE, pcm.RIOT_ROUTING)
@@ -264,8 +266,14 @@ def main() -> None:
 
     found.sort(key=lambda x: x[0])
     saved = 0
+    records: List[Dict[str, Any]] = []
     for start, mid, match, ident in found:
         mi = match.get("matchInfo") or {}
+        rec: Dict[str, Any] = {
+            "matchId": mid, "start": start, "map": pcm.normalize_map_name(mi.get("mapId")),
+            "rejeitada": None, "arquivo": None, "contas_novas": 0,
+        }
+        records.append(rec)
         when = datetime.fromtimestamp(start / 1000, pcm.BRAZIL_TZ).strftime("%d/%m %H:%M")
         rounds = pcm.get_rounds_won_by_side(match)
         teams = " x ".join(f'{d["teamName"]} ({d["teamId"]})' for d in ident["detected"]) or "equipes nao reconhecidas"
@@ -281,6 +289,7 @@ def main() -> None:
         reason = reject_reason(match)
         if reason:
             print(f"  REJEITADA: {reason}")
+            rec["rejeitada"] = reason
             continue
         if not targets:
             continue
@@ -297,17 +306,30 @@ def main() -> None:
                 old.unlink()
         pcm.save_json(matches_dir / name, match)
         print(f"  salva: {matches_dir / name}")
+        rec["arquivo"] = matches_dir / name
+        rec["contas_novas"] = len(ident["to_link"])
         links.extend(ident["to_link"])
 
     if targets:
         print(f"\nSalvas: {saved}")
-        if links and args.vincular:
+        if links and vincular:
             link_accounts(reg, links)
+            for rec in records:
+                rec["contas_novas"] = 0
         elif links:
             print(
                 f"\nATENCAO: {len({p['puuid'] for _pk, p in links})} conta(s) de torneio ainda nao estao no players.xlsx;"
                 " sem elas o site nao reconhece os jogadores. Rode de novo com --vincular."
             )
+    return records
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description="Partidas do servidor de torneio da Riot (ultimas 12 h).")
+    ap.add_argument("equipes", nargs="*", help="0 = so listar; 1 = partidas da equipe; 2 = confronto direto.")
+    ap.add_argument("--vincular", action="store_true", help="grava no players.xlsx as contas casadas por nick.")
+    args = ap.parse_args()
+    coletar(args.equipes, vincular=args.vincular)
 
 
 if __name__ == "__main__":

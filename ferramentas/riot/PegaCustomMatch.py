@@ -711,6 +711,7 @@ def normalize_map_name(map_value: Any) -> str:
         "pitt": "pearl",
         "bonsai": "split",
         "juliett": "sunset",
+        "plummet": "summit",
     }
 
     return map_aliases.get(token, token if token else "unknown")

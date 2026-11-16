@@ -492,11 +492,29 @@ assert(context.fichaJogador({ ...jogadorFicha, ekpr: 0.71 }).includes("Métricas
 assert.strictEqual(context.playerComposicao(jogadorFicha), "", "com a composicao vazia, o bloco nao aparece");
 assert(context.playerComposicao({ ...jogadorFicha, kill_rating: 1.12 }).includes("Composição da rAAting 3.0"), "com um valor de composicao, o bloco aparece");
 
-// O K / D sai das linhas de jogador de cada mapa da serie, que existem mesmo
-// antes de carregar o detalhe da partida (o `recent` do jogador so guarda 6).
-const comJogador = (serie, linhas) => ({ ...serie, maps: serie.maps.map((mapa, i) => ({ ...mapa, players: linhas[i] ? [{ id: "outro", kills: 30, deaths: 1 }, { id: "aldeath", kills: linhas[i][0], deaths: linhas[i][1] }] : [{ id: "outro", kills: 30, deaths: 1 }] })) });
-assert.deepStrictEqual(Array.from(context.kdDoJogadorNaSerie(jogadorFicha, comJogador(md3, [[20, 10], [15, 12], [9, 14]]))), [44, 36], "o K / D da serie soma os tres mapas do jogador");
-assert.strictEqual(context.kdDoJogadorNaSerie(jogadorFicha, comJogador(md1, [])), null, "serie em que o jogador nao jogou nao tem K / D");
+// A aba Partidas do jogador e uma lista so, com uma linha por mapa. Os numeros saem
+// das linhas de jogador de cada mapa da serie, que existem mesmo antes de carregar
+// o detalhe da partida (o `recent` do jogador so guarda 6).
+const comJogador = (serie, linhas) => ({ ...serie, maps: serie.maps.map((mapa, i) => ({ ...mapa, players: linhas[i] ? [{ id: "outro", teamId: "ceub", kills: 30, deaths: 1 }, { id: "aldeath", teamId: "azr", agent: "Viper", agentIcon: "assets/agent-icons/viper.png", kills: linhas[i][0], deaths: linhas[i][1], assists: 4, acs: 231.4, raating_3: linhas[i][2] }] : [{ id: "outro", teamId: "ceub", kills: 30, deaths: 1 }] })) });
+const jogosDoJogador = context.playerJogos(jogadorFicha, [comJogador(md3, [[20, 10, 1.32], [15, 12, 1.0], [9, 14, 0.8]])]);
+const blocosDoJogador = context.playerPartidasBlocos(jogadorFicha, jogosDoJogador);
+assert.deepStrictEqual(blocosDoJogador[0].mapas.map(({ match, linha }) => `${match.mapName} ${linha.kills}-${linha.deaths}`), ["Bind 20-10", "Abyss 15-12", "Ascent 9-14"], "uma linha por mapa, na ordem em que foram jogados");
+assert.deepStrictEqual(context.playerPartidasBlocos(jogadorFicha, jogosDoJogador, "abyss")[0].mapas.map(({ match }) => match.mapName), ["Abyss"], "com o filtro de mapa, so a linha daquele mapa");
+assert.strictEqual(context.playerPartidasBlocos(jogadorFicha, [{ series: comJogador(md1, []), nossa: "mack", equipes: ["mack", "ceub"] }]).length, 0, "serie em que o jogador nao jogou nao entra na lista");
+const listaDoJogador = context.playerPartidasLista(blocosDoJogador);
+assert.strictEqual((listaDoJogador.match(/<a class="vp-pj/g) || []).length, 3, "a lista tem uma linha clicavel por mapa");
+assert.strictEqual((listaDoJogador.match(/class="vp-pj-confronto"/g) || []).length, 1, "a serie aparece uma vez, na linha do primeiro mapa");
+assert.strictEqual((listaDoJogador.match(/vp-pj-segue/g) || []).length, 2, "os outros mapas da serie continuam a linha de cima");
+assert(listaDoJogador.includes("Rush Series 3ª Edição") && listaDoJogador.includes("CEUB Octopus Vulgaris"), "a linha da serie traz o campeonato e o adversario");
+assert(listaDoJogador.includes('vp-pj-rounds vp-jl-v"><b>13</b><i>:</i><b>8</b>') && listaDoJogador.includes('vp-pj-rounds vp-jl-d"><b>13</b><i>:</i><b>15</b>'), "cada mapa traz o placar em rounds do lado do jogador, com vitoria e derrota marcadas");
+assert(listaDoJogador.includes('title="Viper"') && listaDoJogador.includes("<b>20</b><i>/</i><b>10</b><i>/</i><b>4</b>") && listaDoJogador.includes(">231<"), "agente, K / D / A e ACS de cada mapa");
+assert(listaDoJogador.includes('vp-pj-nota perf-strong">1.32<') && listaDoJogador.includes('vp-pj-nota perf-danger">0.80<'), "a rAAting do mapa vem com o tom da escala do site");
+assert(listaDoJogador.includes('href="#/matches/azr-ceub-2"'), "cada linha abre o mapa dela");
+const numerosDoJogador = context.playerPartidasNumeros(blocosDoJogador);
+assert(numerosDoJogador.includes("<dd>0-1</dd>") && numerosDoJogador.includes("<dd>1-2</dd>") && numerosDoJogador.includes("<dd>44-36</dd>"), "os numeros somam a serie, os mapas e o K / D das linhas da lista");
+// A pagina fecha perto de 30 linhas e nunca corta uma serie no meio.
+const blocosDePagina = [28, 3, 1, 30, 2].map((quantos, i) => ({ jogo: { id: i }, mapas: Array.from({ length: quantos }) }));
+assert.deepStrictEqual(Array.from(context.playerPartidasPaginas(blocosDePagina), (pagina) => pagina.reduce((soma, bloco) => soma + bloco.mapas.length, 0)), [28, 4, 30, 2], "a serie que nao cabe inteira vai para a pagina seguinte");
 
 // ---------------------------------------------------------------- Tarefa 10
 // Pagina de campeonato com os dados reais do TOURNAMENT_OVERRIDES: campanha de

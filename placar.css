@@ -11844,17 +11844,6 @@ a.vp-cj-equipe:hover span {
   border-top: 1px solid var(--line);
 }
 
-/* ---- aba Partidas: a coluna extra sao os abates e mortes do jogador ---- */
-.vp-jl:has(.vp-jl-kd) {
-  grid-template-columns: 46px minmax(0, 1fr) 56px 54px 104px;
-}
-
-.vp-jl-kd {
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-}
-
 /* ---- aba Campeonatos ---- */
 .vp-cp-cab.vp-cp-jog,
 .vp-cp.vp-cp-jog {
@@ -12144,20 +12133,6 @@ a.vp-cj-equipe:hover span {
 
   .vp-ev-logos:has(a:nth-child(13)) {
     display: none;
-  }
-
-  .vp-jl:has(.vp-jl-kd) {
-    grid-template-columns: 42px minmax(0, 1fr) 50px;
-  }
-
-  .vp-jl-kd {
-    grid-column: 1;
-    font-size: 12px;
-    text-align: left;
-  }
-
-  .vp-jl-kd + .vp-jl-mapas {
-    grid-column: 2 / -1;
   }
 
   .vp-et-logo {
@@ -13196,18 +13171,13 @@ html[data-tema="claro"] :is(.tournament-stats-player-cell, .tournament-stats-tea
   grid-template-columns: 40px minmax(0, 1fr) 52px minmax(0, 1fr) 112px;
 }
 
-.vp-jl:has(.vp-jl-kd) {
-  grid-template-columns: 40px minmax(0, 1fr) 52px minmax(0, 1fr) 46px 84px;
-}
-
 .vp-jl-nossa {
   flex-direction: row-reverse;
   text-align: right;
 }
 
 @media (max-width: 760px) {
-  .vp-jl,
-  .vp-jl:has(.vp-jl-kd) {
+  .vp-jl {
     grid-template-columns: 42px minmax(0, 1fr) 50px minmax(0, 1fr);
   }
 }
@@ -15052,5 +15022,271 @@ span.vp-st-semana-seta {
   .vp-st-semana .vp-sec-aside {
     flex-basis: 100%;
     margin-left: 0;
+  }
+}
+
+/* ---- jogador, aba Partidas: uma lista so, com uma linha por mapa (15/11) ----
+   A serie fica a esquerda e aparece uma vez; cada mapa tem a sua linha a direita.
+   O traco entre series atravessa a lista, e o traco entre mapas da mesma serie
+   so cobre a parte dos mapas: e ele que mostra que a serie continua. Em tela de
+   1181 a 1365px quem encolhe primeiro e o trilho, ate 260px, e nao a lista. */
+.vp-eq-aba.vp-pf-partidas.vp-jogos {
+  grid-template-columns: minmax(0, 922px) clamp(260px, calc(100% - 954px), 340px);
+}
+
+.vp-pj-lista {
+  display: grid;
+  background: var(--surface);
+}
+
+.vp-pj {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  column-gap: 16px;
+  min-height: 40px;
+  padding: 0 14px;
+  color: inherit;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.vp-pj + .vp-pj:not(.vp-pj-segue) {
+  border-top: 1px solid var(--line);
+}
+
+a.vp-pj:hover {
+  background: var(--surface-2);
+}
+
+/* O adversario tem largura fixa e fica inteiro; quem cede e o nome do campeonato. */
+.vp-pj-serie {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 242px;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.vp-pj-mapa {
+  display: grid;
+  grid-template-columns: 62px 48px 24px 78px 30px 46px;
+  align-items: center;
+  gap: 12px;
+}
+
+.vp-pj-segue .vp-pj-mapa {
+  border-top: 1px solid var(--line);
+}
+
+.vp-pj-cab {
+  min-height: 30px;
+  color: var(--muted);
+  font: 600 12px/1 var(--font-text);
+}
+
+.vp-pj-cab .vp-pj-mapa > :nth-child(2),
+.vp-pj-cab .vp-pj-mapa > :nth-child(4) {
+  text-align: center;
+}
+
+.vp-pj-cab .vp-pj-mapa > :nth-child(n + 5) {
+  text-align: right;
+}
+
+.vp-pj-data {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-pj-evento {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.vp-pj-evento .event-logo {
+  flex: none;
+}
+
+.vp-pj-confronto {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.vp-pj-nossa {
+  display: flex;
+  flex: none;
+}
+
+.vp-pj-confronto .team-logo {
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+
+.vp-pj-confronto .vp-jl-placar {
+  flex: none;
+  width: 40px;
+}
+
+.vp-pj-confronto strong {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vp-pj-nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vp-pj-rounds {
+  font-size: 16px;
+}
+
+.vp-pj-agente {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.vp-pj-agente img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* Cada numero numa caixa de dois digitos: as barras ficam uma embaixo da outra. */
+.vp-pj-kda {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-pj-kda b {
+  min-width: 2ch;
+  font-weight: 500;
+  text-align: right;
+}
+
+.vp-pj-kda i {
+  color: var(--muted);
+  font-style: normal;
+}
+
+.vp-pj-n {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-pj-nota {
+  font: 700 16px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.vp-pj-nota.perf-strong { color: var(--perf-strong); }
+.vp-pj-nota.perf-good { color: var(--perf-good); }
+.vp-pj-nota.perf-positive { color: var(--perf-positive); }
+.vp-pj-nota.perf-bad { color: var(--perf-bad); }
+.vp-pj-nota.perf-danger { color: var(--perf-danger); }
+
+.vp-pj-vazio {
+  margin: 0;
+  padding: 14px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* A linha decide pelo tamanho da propria lista, e nao pelo da tela: com o trilho ao
+   lado ela tem 823px numa tela de 1181, e sozinha tem 904px numa de 940. */
+.vp-pf-partidas .vp-jogos-lista {
+  container: partidas / inline-size;
+}
+
+/* Sem largura para as duas partes lado a lado: a serie sobe para cima dos mapas
+   dela, e o cabecalho fica so com as colunas dos mapas. Nada rola de lado. */
+@container partidas (max-width: 859px) {
+  .vp-pj {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vp-pj-serie {
+    padding-top: 10px;
+  }
+
+  .vp-pj-segue .vp-pj-serie,
+  .vp-pj-cab .vp-pj-serie {
+    display: none;
+  }
+
+  .vp-pj-mapa {
+    grid-template-columns: minmax(0, 1fr) 48px 24px 78px 30px 46px;
+    min-height: 38px;
+  }
+}
+
+/* No celular a serie ocupa duas linhas: data e campeonato, depois o confronto. */
+@container partidas (max-width: 540px) {
+  .vp-pj {
+    padding: 0 12px;
+  }
+
+  .vp-pj-serie {
+    grid-template-columns: 56px minmax(0, 1fr);
+    row-gap: 6px;
+  }
+
+  .vp-pj-confronto {
+    grid-column: 1 / -1;
+  }
+
+  .vp-pj-mapa {
+    grid-template-columns: minmax(0, 1fr) 44px 22px 70px 28px 42px;
+    gap: 6px;
+  }
+
+  .vp-pj-agente,
+  .vp-pj-agente img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .vp-pj-kda {
+    gap: 2px;
+  }
+}
+
+@container partidas (max-width: 319px) {
+  .vp-pj-mapa {
+    grid-template-columns: minmax(0, 1fr) 40px 20px 62px 26px 38px;
+    font-size: 12px;
+  }
+
+  .vp-pj-cab {
+    font-size: 11px;
+  }
+
+  .vp-pj-agente,
+  .vp-pj-agente img {
+    width: 20px;
+    height: 20px;
   }
 }

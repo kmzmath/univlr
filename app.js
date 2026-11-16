@@ -37794,7 +37794,7 @@ function teamJogosPorCampeonato(jogos) {
 // Uma linha por serie, como a lista da HLTV: a equipe se repete em todas, entao so o
 // adversario, o placar e os mapas aparecem. Cada linha tem 44px, contra 74 da linha
 // geral, e a coluna tem os 550px da lista da home.
-function teamJogoLinha(team, jogo, kd = "") {
+function teamJogoLinha(team, jogo) {
   const rivalId = teamJogoRival(jogo, team);
   const nome = nomeNaEpoca(rivalId, jogo.event, eventoDoJogo(jogo));
   const [nosso, deles] = teamFormaPlacar(team, jogo);
@@ -37808,13 +37808,12 @@ function teamJogoLinha(team, jogo, kd = "") {
     <span class="vp-jl-rival vp-jl-nossa">${teamLogo(team.id, "", eventoDoJogo(jogo))}<strong title="${escapeHtml(nossoNome)}"><span class="nome-rolante">${escapeHtml(nossoNome)}</span></strong></span>
     <span class="vp-jl-placar${decidido ? (venceu ? " vp-jl-v" : " vp-jl-d") : ""}"><b>${escapeHtml(nosso)}</b><i>:</i><b>${escapeHtml(deles)}</b></span>
     <span class="vp-jl-rival">${teamLogo(rivalId, "", eventoDoJogo(jogo))}<strong title="${escapeHtml(nome)}"><span class="nome-rolante">${escapeHtml(nome)}</span></strong></span>
-    ${kd ? `<span class="vp-jl-kd" title="Abates e mortes">${escapeHtml(kd)}</span>` : ""}
     <span class="vp-jl-mapas" title="${escapeHtml(mapas)}"><span class="nome-rolante">${escapeHtml(mapas)}</span></span>
   `;
   return jogo.series ? `<a class="vp-jl" href="${matchSeriesHref(jogo.series)}">${corpo}</a>` : `<span class="vp-jl">${corpo}</span>`;
 }
 
-function teamJogosGrupos(team, grupos, linha = (jogo) => teamJogoLinha(team, jogo)) {
+function teamJogosGrupos(team, grupos) {
   const visiveis = new Set(visibleTournaments().map((event) => event.id));
   return grupos
     .map((grupo) => {
@@ -37822,7 +37821,7 @@ function teamJogosGrupos(team, grupos, linha = (jogo) => teamJogoLinha(team, jog
       return `
         <section class="vp-jogos-grupo">
           <h3 class="vp-jogos-titulo">${visiveis.has(grupo.event.id) ? `<a href="#/tournaments/${escapeHtml(grupo.event.id)}">${titulo}</a>` : `<span class="vp-jogos-oculto">${titulo}</span>`}<span>${grupo.total} ${grupo.total === 1 ? "série" : "séries"}</span></h3>
-          <div class="vp-jl-lista">${grupo.jogos.map(linha).join("")}</div>
+          <div class="vp-jl-lista">${grupo.jogos.map((jogo) => teamJogoLinha(team, jogo)).join("")}</div>
         </section>
       `;
     })
@@ -39808,14 +39807,6 @@ function fichaJogador(player) {
   `;
 }
 
-// Abates e mortes do jogador na serie inteira, somando os mapas. As linhas de
-// jogador de cada mapa existem mesmo antes de o detalhe da partida carregar.
-function kdDoJogadorNaSerie(player, series) {
-  const linhas = (series?.maps || []).map((mapa) => (mapa.players || []).find((linha) => linha.id === player.id)).filter(Boolean);
-  if (!linhas.length) return null;
-  return [linhas.reduce((soma, linha) => soma + Number(linha.kills || 0), 0), linhas.reduce((soma, linha) => soma + Number(linha.deaths || 0), 0)];
-}
-
 // Os cinco agentes mais jogados, nas linhas de Informacoes: mapas e parte do total.
 function agentesTrilho(player) {
   const agentes = (player.agentStats || []).slice(0, 5);
@@ -39981,18 +39972,105 @@ function playerJogoPassa(jogo, filtro, ignorar = "") {
   return true;
 }
 
-function playerJogoLinha(player, jogo) {
-  const kd = kdDoJogadorNaSerie(player, jogo.series);
-  return teamJogoLinha({ id: jogo.nossa }, jogo, kd ? kd.join("-") : "-");
+// ---- aba Partidas do jogador: uma lista so, com uma linha por mapa ----
+// A serie (data, campeonato, placar e adversario) aparece uma vez, na linha do
+// primeiro mapa, e cada mapa traz os numeros do jogador nele. Sao 69% de series de
+// um mapa so, entao quase toda linha sai completa.
+const PLAYER_MAPAS_PAGINA = 30;
+
+// Os mapas da serie em que o jogador entrou, na ordem em que foram jogados. Com o
+// filtro de mapa, so as linhas daquele mapa.
+function playerJogoMapas(player, jogo, mapaId = "") {
+  return (jogo.series?.maps || [])
+    .map((match) => ({ match, linha: (match.players || []).find((row) => row.id === player.id) }))
+    .filter(({ match, linha }) => linha && (!mapaId || match.mapId === mapaId));
 }
 
-function playerPartidasNumeros(player, jogos) {
-  const vitorias = jogos.filter((jogo) => jogo.vencedor === jogo.nossa).length;
-  const derrotas = jogos.filter((jogo) => jogo.perdedor === jogo.nossa).length;
-  const soma = jogos.reduce((total, jogo) => {
-    const placar = seriesScoreForTeam(jogo.series, jogo.nossa);
-    const kd = kdDoJogadorNaSerie(player, jogo.series) || [0, 0];
-    return { mapas: total.mapas + placar.mapsFor, contra: total.contra + placar.mapsAgainst, kills: total.kills + kd[0], deaths: total.deaths + kd[1] };
+function playerPartidasBlocos(player, jogos, mapaId = "") {
+  return jogos
+    .map((jogo) => ({ jogo, mapas: playerJogoMapas(player, jogo, mapaId) }))
+    .filter((bloco) => bloco.mapas.length)
+    .sort((a, b) => maisRecentePrimeiro(a.jogo, b.jogo));
+}
+
+// A pagina fecha perto de 30 linhas e nunca corta uma serie no meio.
+function playerPartidasPaginas(blocos) {
+  const paginas = [[]];
+  let linhas = 0;
+  blocos.forEach((bloco) => {
+    if (linhas && linhas + bloco.mapas.length > PLAYER_MAPAS_PAGINA) {
+      paginas.push([]);
+      linhas = 0;
+    }
+    paginas[paginas.length - 1].push(bloco);
+    linhas += bloco.mapas.length;
+  });
+  return paginas;
+}
+
+function playerMapaLinha(jogo, { match, linha }, primeira) {
+  const nossa = jogo.nossa;
+  const rivalId = teamJogoRival(jogo, { id: nossa });
+  const evento = eventoDoJogo(jogo);
+  const rival = nomeNaEpoca(rivalId, jogo.event, evento);
+  const equipe = nomeNaEpoca(nossa, jogo.event, evento);
+  const [series, seriesDeles] = teamFormaPlacar({ id: nossa }, jogo);
+  const equipeNoMapa = linha.teamId || nossa;
+  const rounds = scoreForTeamInMatch(match, equipeNoMapa);
+  const roundsDeles = match.teamA.id === equipeNoMapa ? match.teamB.score : match.teamA.score;
+  const venceuMapa = match.winnerId ? (match.winnerId === equipeNoMapa ? " vp-jl-v" : " vp-jl-d") : "";
+  const venceuSerie = jogo.vencedor ? (jogo.vencedor === nossa ? " vp-jl-v" : " vp-jl-d") : "";
+  const agente = linha.agent || "";
+  const icone = linha.agentIcon || "";
+  const nota = officialRatingValue(linha);
+  const serie = primeira
+    ? `
+      <span class="vp-pj-data">${escapeHtml(jogo.quando ? dataCurta(jogo.quando) : "-")}</span>
+      <span class="vp-pj-evento" title="${escapeHtml(jogo.event.name)}">${eventLogo(jogo.event, "tiny")}<span class="nome-rolante">${escapeHtml(jogo.event.name)}</span></span>
+      <span class="vp-pj-confronto">
+        <span class="vp-pj-nossa" title="${escapeHtml(equipe)}">${teamLogo(nossa, "", evento)}</span>
+        <span class="vp-jl-placar${venceuSerie}"><b>${escapeHtml(String(series))}</b><i>:</i><b>${escapeHtml(String(seriesDeles))}</b></span>
+        ${teamLogo(rivalId, "", evento)}
+        <strong title="${escapeHtml(rival)}"><span class="nome-rolante">${escapeHtml(rival)}</span></strong>
+      </span>`
+    : `<span class="sr-only">${escapeHtml(`${jogo.event.name}, contra ${rival}`)}</span>`;
+  return `
+    <a class="vp-pj${primeira ? "" : " vp-pj-segue"}" href="#/matches/${encodeURIComponent(match.id)}">
+      <span class="vp-pj-serie">${serie}</span>
+      <span class="vp-pj-mapa">
+        <span class="vp-pj-nome">${escapeHtml(match.mapName || mapById(match.mapId)?.name || "-")}</span>
+        <span class="vp-jl-placar vp-pj-rounds${venceuMapa}"><b>${escapeHtml(String(rounds ?? "-"))}</b><i>:</i><b>${escapeHtml(String(roundsDeles ?? "-"))}</b></span>
+        <span class="vp-pj-agente"${agente ? ` title="${escapeHtml(agente)}"` : ""}>${icone ? `<img src="${escapeHtml(assetPath(icone))}" alt="${escapeHtml(agente)}" loading="lazy" onerror="this.remove()" />` : escapeHtml(agente ? agente.slice(0, 3) : "-")}</span>
+        <span class="vp-pj-kda"><b>${Number(linha.kills || 0)}</b><i>/</i><b>${Number(linha.deaths || 0)}</b><i>/</i><b>${Number(linha.assists || 0)}</b></span>
+        <span class="vp-pj-n">${escapeHtml(Number.isFinite(Number(linha.acs)) ? fmt(linha.acs, 0) : "-")}</span>
+        <span class="vp-pj-nota ${Number.isFinite(nota) ? ratingTone(nota) : ""}">${escapeHtml(Number.isFinite(nota) ? fmt(nota) : "-")}</span>
+      </span>
+    </a>
+  `;
+}
+
+function playerPartidasLista(blocos) {
+  return `
+    <div class="vp-pj-lista">
+      <div class="vp-pj vp-pj-cab" aria-hidden="true">
+        <span class="vp-pj-serie"><span>Data</span><span>Campeonato</span><span>Partida</span></span>
+        <span class="vp-pj-mapa"><span>Mapa</span><span>Rounds</span><span></span><span>K / D / A</span><span>ACS</span><span>rAAting</span></span>
+      </div>
+      ${blocos.map(({ jogo, mapas }) => mapas.map((mapa, indice) => playerMapaLinha(jogo, mapa, indice === 0)).join("")).join("")}
+    </div>
+  `;
+}
+
+// Os numeros acompanham as linhas que estao na lista: com o filtro de mapa, mapas,
+// abates e mortes sao so os daquele mapa.
+function playerPartidasNumeros(blocos) {
+  const vitorias = blocos.filter(({ jogo }) => jogo.vencedor === jogo.nossa).length;
+  const derrotas = blocos.filter(({ jogo }) => jogo.perdedor === jogo.nossa).length;
+  const soma = blocos.flatMap((bloco) => bloco.mapas).reduce((total, { match, linha }) => {
+    if (match.winnerId) total[match.winnerId === linha.teamId ? "mapas" : "contra"] += 1;
+    total.kills += Number(linha.kills || 0);
+    total.deaths += Number(linha.deaths || 0);
+    return total;
   }, { mapas: 0, contra: 0, kills: 0, deaths: 0 });
   const linhas = [
     ["Séries", `${vitorias}-${derrotas}`],
@@ -40003,7 +40081,17 @@ function playerPartidasNumeros(player, jogos) {
   return `<dl class="vp-ficha">${linhas.map(([rotulo, valor]) => `<div><dt>${escapeHtml(rotulo)}</dt><dd>${escapeHtml(valor)}</dd></div>`).join("")}</dl>`;
 }
 
-function playerPartidasFiltros(player, jogos, filtro) {
+// As barras contam os mapas que ele jogou, e ignoram o proprio filtro de mapa.
+function playerPartidasMapas(blocos, filtro) {
+  const contagem = new Map();
+  blocos.flatMap((bloco) => bloco.mapas).forEach(({ match }) => {
+    if (match.mapName) contagem.set(match.mapName, (contagem.get(match.mapName) || 0) + 1);
+  });
+  const mapas = barrasDosMapas(contagem, filtro.mapa ? [filtro.mapa] : [], "data-eq-mapa");
+  return mapas ? `<div class="vp-jogos-mapas">${sectionHead("Mapas jogados")}${mapas}</div>` : "";
+}
+
+function playerPartidasFiltros(jogos, filtro) {
   const eventos = [...new Map(jogos.filter((jogo) => playerJogoPassa(jogo, filtro, "evento")).map((jogo) => [jogo.event.id, jogo.event])).values()]
     .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
   const equipes = [...new Set(jogos.filter((jogo) => playerJogoPassa(jogo, filtro, "equipe")).map((jogo) => jogo.nossa).filter(Boolean))]
@@ -40016,36 +40104,43 @@ function playerPartidasFiltros(player, jogos, filtro) {
   const ativo = filtro.evento || filtro.equipe || filtro.rival || filtro.mapa || filtro.resultado;
   const botao = (valor, rotulo, quantos) => `<button type="button" data-eq-alterna="resultado" data-valor="${valor}" aria-pressed="${filtro.resultado === valor}">${rotulo} <b>${quantos}</b></button>`;
   return `
-    <aside class="vp-resumo" aria-label="Filtros das partidas">
-      <section class="vp-resumo-bloco vp-jogos-filtro">
-        <h3>Filtros ${ativo ? `<button type="button" class="vp-filtros-limpar" data-eq-limpar>Limpar filtros</button>` : ""}</h3>
-        <select data-eq-filtro="evento" aria-label="Filtrar por campeonato"><option value="">Todos os campeonatos</option>${teamOpcoes(eventos.map((event) => ({ id: event.id, nome: event.name })), filtro.evento)}</select>
-        ${equipes.length > 1 || filtro.equipe ? `<select data-eq-filtro="equipe" aria-label="Filtrar por equipe"><option value="">Todas as equipes</option>${teamOpcoes(equipes, filtro.equipe)}</select>` : ""}
-        <select data-eq-filtro="rival" aria-label="Filtrar por adversário"><option value="">Todos os adversários</option>${teamOpcoes(rivais, filtro.rival)}</select>
-        <div class="vp-eq-escolha">
-          ${botao("v", "Vitórias", paraResultado.filter((jogo) => jogo.vencedor === jogo.nossa).length)}
-          ${botao("d", "Derrotas", paraResultado.filter((jogo) => jogo.perdedor === jogo.nossa).length)}
-        </div>
-      </section>
-      ${playerPartidasNumeros(player, jogos.filter((jogo) => playerJogoPassa(jogo, filtro)))}
-    </aside>
+    <section class="vp-resumo-bloco vp-jogos-filtro">
+      <h3>Filtros ${ativo ? `<button type="button" class="vp-filtros-limpar" data-eq-limpar>Limpar filtros</button>` : ""}</h3>
+      <select data-eq-filtro="evento" aria-label="Filtrar por campeonato"><option value="">Todos os campeonatos</option>${teamOpcoes(eventos.map((event) => ({ id: event.id, nome: event.name })), filtro.evento)}</select>
+      ${equipes.length > 1 || filtro.equipe ? `<select data-eq-filtro="equipe" aria-label="Filtrar por equipe"><option value="">Todas as equipes</option>${teamOpcoes(equipes, filtro.equipe)}</select>` : ""}
+      <select data-eq-filtro="rival" aria-label="Filtrar por adversário"><option value="">Todos os adversários</option>${teamOpcoes(rivais, filtro.rival)}</select>
+      <div class="vp-eq-escolha">
+        ${botao("v", "Vitórias", paraResultado.filter((jogo) => jogo.vencedor === jogo.nossa).length)}
+        ${botao("d", "Derrotas", paraResultado.filter((jogo) => jogo.perdedor === jogo.nossa).length)}
+      </div>
+    </section>
   `;
 }
 
 function playerPartidasTab(player, jogos) {
   const filtro = playerPartidasFiltro();
-  const visiveis = jogos.filter((jogo) => playerJogoPassa(jogo, filtro));
-  const { grupos, paginador } = jogosNaPagina(visiveis);
-  const contagem = visiveis.length < jogos.length ? `${visiveis.length} de ${jogos.length} séries` : `${jogos.length} ${jogos.length === 1 ? "série" : "séries"}`;
+  const blocos = playerPartidasBlocos(player, jogos.filter((jogo) => playerJogoPassa(jogo, filtro)), filtro.mapa);
+  const conta = (lista) => lista.reduce((soma, bloco) => soma + bloco.mapas.length, 0);
+  const mapas = conta(blocos);
+  const total = conta(playerPartidasBlocos(player, jogos));
+  const plural = (quantos, um, varios) => `${quantos} ${quantos === 1 ? um : varios}`;
+  const contagem = mapas < total ? `${mapas} de ${plural(total, "mapa", "mapas")}` : `${plural(total, "mapa", "mapas")} em ${plural(blocos.length, "série", "séries")}`;
+  const paginas = playerPartidasPaginas(blocos);
+  const query = routeQuery();
+  const pagina = Math.min(paginas.length, Math.max(1, Number.parseInt(query.get("pagina") || "1", 10) || 1));
+  query.delete("pagina");
   return `
-    <section class="vp-eq-aba vp-eq-partidas vp-jogos vp-pf-partidas">
-      ${playerPartidasFiltros(player, jogos, filtro)}
+    <section class="vp-eq-aba vp-jogos vp-pf-partidas">
       <div class="vp-jogos-lista">
         ${sectionHead("Partidas", contagem)}
-        ${grupos.length ? teamJogosGrupos(null, grupos, (jogo) => playerJogoLinha(player, jogo)) : `<div class="empty-state">Nenhuma partida com esses filtros. Tire um filtro para ver mais.</div>`}
-        ${paginador}
+        ${blocos.length ? playerPartidasLista(paginas[pagina - 1]) : `<p class="vp-pj-vazio">Nenhuma partida com esses filtros.</p>`}
+        ${paginacaoDaLista(routePath().slice(2), pagina, paginas.length, query)}
       </div>
-      ${teamPartidasMapas(jogos.filter((jogo) => playerJogoPassa(jogo, filtro, "mapa")), filtro)}
+      <aside class="vp-resumo" aria-label="Filtros e mapas das partidas">
+        ${playerPartidasFiltros(jogos, filtro)}
+        ${playerPartidasNumeros(blocos)}
+        ${playerPartidasMapas(playerPartidasBlocos(player, jogos.filter((jogo) => playerJogoPassa(jogo, filtro, "mapa"))), filtro)}
+      </aside>
     </section>
   `;
 }

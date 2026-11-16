@@ -260,6 +260,8 @@
       // Patch notes se corrige a qualquer hora; a thread geral, so nos 15 minutos.
       const alvo = db.topics.find((x) => x.id === p_topic_id && x.author_id === uid && !x.deleted_at && (x.secao === "patch" || Date.parse(x.created_at) > Date.now() - 15 * 60000));
       if (!alvo) throw { message: "so da para editar thread propria, nos primeiros 15 minutos", code: "P0001" };
+      // 0012: patch notes so se edita sendo admin na hora da edicao.
+      if (alvo.secao === "patch" && db.profiles.find((x) => x.id === uid)?.role !== "admin") throw { message: "so admin edita patch notes", code: "P0001" };
       const maximo = alvo.secao === "patch" ? 8000 : 2000;
       if (body.length > maximo) throw { message: `texto pode ter no maximo ${maximo} caracteres`, code: "P0001" };
       Object.assign(alvo, { title, body, edited_at: agora() });

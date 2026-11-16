@@ -521,6 +521,19 @@ begin
     insert into _r (teste, esperado, resultado) values ('conta comum edita patch notes do admin', 'bloqueado',
       case when SQLERRM like '%so da para editar thread propria%' then 'ok' else 'FALHOU - ' || SQLERRM end);
   end;
+
+  -- ATAQUE - quem deixou de ser admin reescreve o proprio patch notes (0012).
+  reset role;
+  update public.profiles set role = 'user' where id = adm;
+  perform set_config('request.jwt.claims', json_build_object('sub', adm)::text, true);
+  set local role authenticated;
+  begin
+    perform public.edit_topic(t_patch, 'Patch notes reescrito', 'texto de ex-admin');
+    insert into _r (teste, esperado, resultado) values ('ex-admin edita o proprio patch notes', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('ex-admin edita o proprio patch notes', 'bloqueado',
+      case when SQLERRM like '%so admin edita patch notes%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
   reset role;
 end;
 $patch$;

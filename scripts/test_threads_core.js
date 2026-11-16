@@ -175,6 +175,10 @@ async function rejeita(promessa, trecho) {
   assert.ok((await C.listarTopicos()).itens.some((x) => x.id === p1), "sem secao, a lista traz tudo");
   assert.strictEqual((await C.topico(p1)).secao, "patch", "a thread sabe que e patch notes");
   assert.strictEqual(C.mensagemDeErro({ message: "so admin publica patch notes" }), "Só admin publica patch notes.");
+  assert.strictEqual(C.mensagemDeErro({ message: "so admin edita patch notes" }), "Só admin edita patch notes.");
+  // Admin corrige o proprio patch notes; o Supabase falso segue a 0012.
+  await C.editarTopico(p1, "Patch notes 16/11 corrigido", "b".repeat(8000));
+  assert.strictEqual((await C.topico(p1)).title, "Patch notes 16/11 corrigido", "admin edita o proprio patch notes");
   assert.strictEqual(C.mensagemDeErro({ message: "texto pode ter no maximo 8000 caracteres" }), "O texto pode ter no máximo 8.000 caracteres.");
 
   // A mensagem do banco chega sem acento; a tela mostra escrita direito.

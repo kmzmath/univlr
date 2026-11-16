@@ -677,6 +677,7 @@
       "Só dá para editar a própria thread, nos primeiros 15 minutos.",
     "texto pode ter no maximo 8000 caracteres": "O texto pode ter no máximo 8.000 caracteres.",
     "so admin publica patch notes": "Só admin publica patch notes.",
+    "so admin edita patch notes": "Só admin edita patch notes.",
     "secao desconhecida": "Essa seção do Fórum não existe.",
     "thread nao existe": "Esta thread não existe mais.",
     "thread nao encontrada": "Esta thread não existe mais.",

@@ -311,8 +311,9 @@
 
   function podeEditar(t) {
     const perfil = window.Community.perfil();
-    // Patch notes se corrige a qualquer hora (0011); a thread geral, so nos 15 minutos.
-    return Boolean(perfil && t.author_id === perfil.id && (ehPatch(t) || Date.now() - Date.parse(t.created_at) < EDITA_MINUTOS * 60000));
+    // Patch notes se corrige a qualquer hora, sendo admin na hora (0011 e 0012);
+    // a thread geral, so nos 15 minutos.
+    return Boolean(perfil && t.author_id === perfil.id && (ehPatch(t) ? ehAdmin() : Date.now() - Date.parse(t.created_at) < EDITA_MINUTOS * 60000));
   }
 
   function podeApagar(t) {

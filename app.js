@@ -36178,7 +36178,7 @@ function tournamentTeamStatColumns() {
 }
 
 function tournamentStatsSortState(table) {
-  const fallback = table === "teams" ? { key: "lugar", direction: "asc" } : table === "agents" || table === "compositions" ? { key: "picks", direction: "desc" } : table === "mapteams" || table === "statsteams" ? { key: "mapas", direction: "desc" } : { key: "rating", direction: "desc" };
+  const fallback = table === "teams" || table === "trofeus" ? { key: table === "teams" ? "lugar" : "posicao", direction: "asc" } : table === "agents" || table === "compositions" ? { key: "picks", direction: "desc" } : table === "mapteams" || table === "statsteams" ? { key: "mapas", direction: "desc" } : { key: "rating", direction: "desc" };
   return state.tournamentStatsSort?.[table] || fallback;
 }
 
@@ -38868,7 +38868,7 @@ function bindAbaDaEquipe(id, refaz = renderTeamDetail) {
     const ordenar = event.target.closest("[data-tournament-stat-sort]");
     if (ordenar) {
       const [table, key] = String(ordenar.dataset.tournamentStatSort || "").split(":");
-      const colunas = table === "agents" ? tournamentAgenteColunas() : table === "compositions" ? tournamentComposicaoColunas() : table === "maps" ? playerMapaColunas() : table === "mapteams" ? mapaEquipeColunas() : table === "statsteams" ? statsEquipeColunas() : tournamentPlayerStatColumns();
+      const colunas = table === "agents" ? tournamentAgenteColunas() : table === "compositions" ? tournamentComposicaoColunas() : table === "maps" ? playerMapaColunas() : table === "mapteams" ? mapaEquipeColunas() : table === "statsteams" ? statsEquipeColunas() : table === "trofeus" ? medalhasColunas() : tournamentPlayerStatColumns();
       const column = colunas.find((item) => item.key === key);
       if (!column) return;
       const atual = tournamentStatsSortState(table);
@@ -42879,8 +42879,43 @@ function medalhasLinha(linha, posicao) {
   `;
 }
 
+// O cabecalho ordena como as tabelas de estatistica (pedido dele em 16/11/2026):
+// mesmo botao, mesma seta e o estado em state.tournamentStatsSort.trofeus. A
+// posicao (#) e sempre a do quadro olimpico, e o empate na coluna escolhida fica
+// na ordem olimpica.
+function medalhasColunas() {
+  return [
+    { key: "posicao", label: "#", direction: "asc", value: (linha) => linha.posicao },
+    { key: "jogador", label: "Jogador", type: "text", direction: "asc", value: (linha) => linha.player.nick },
+    { key: "ouro", label: "Ouro", value: (linha) => linha.ouro.length },
+    { key: "prata", label: "Prata", value: (linha) => linha.prata.length },
+    { key: "bronze", label: "Bronze", value: (linha) => linha.bronze.length },
+    { key: "total", label: "Total", value: (linha) => linha.total },
+  ];
+}
+
+function medalhasOrdenadas(quadro) {
+  quadro.forEach((linha, indice) => {
+    linha.posicao = medalhasPosicao(quadro, indice);
+    linha.ordem = indice;
+  });
+  return tournamentSortedStatRows("trofeus", quadro, medalhasColunas(), (a, b) => a.ordem - b.ordem);
+}
+
+function medalhasCabecalho() {
+  const atual = tournamentStatsSortState("trofeus");
+  return `
+    <div class="vp-st-tr-cabeca">
+      ${medalhasColunas().map((coluna) => {
+        const ativa = atual.key === coluna.key;
+        const seta = ativa ? (atual.direction === "asc" ? "▲" : "▼") : "";
+        return `<button type="button" class="tournament-stat-sort${ativa ? " active" : ""}" data-tournament-stat-sort="trofeus:${coluna.key}" aria-pressed="${ativa}"><span>${escapeHtml(coluna.label)}</span><i aria-hidden="true">${seta}</i></button>`;
+      }).join("")}
+    </div>`;
+}
+
 function statsTrofeusAba(filtro) {
-  const quadro = medalhasQuadro(medalhasIndice(), statsPreparaFiltro(filtro));
+  const quadro = medalhasOrdenadas(medalhasQuadro(medalhasIndice(), statsPreparaFiltro(filtro)));
   if (!quadro.length) return `<p class="vp-est-vazio">Nenhuma medalha com esses filtros.</p>`;
   const query = routeQuery();
   const paginas = Math.max(1, Math.ceil(quadro.length / STATS_TROFEUS_PAGINA));
@@ -42891,8 +42926,8 @@ function statsTrofeusAba(filtro) {
     <section class="vp-st-trofeus">
       <article class="vp-est-bloco">
         <h3>Troféus<span>${escapeHtml(`${quadro.length} ${quadro.length === 1 ? "jogador" : "jogadores"}`)}</span></h3>
-        <div class="vp-st-tr-cabeca" aria-hidden="true"><span>#</span><span>Jogador</span><span>Ouro</span><span>Prata</span><span>Bronze</span><span>Total</span></div>
-        <div class="vp-st-trs">${quadro.slice(inicio, inicio + STATS_TROFEUS_PAGINA).map((linha, indice) => medalhasLinha(linha, medalhasPosicao(quadro, inicio + indice))).join("")}</div>
+        ${medalhasCabecalho()}
+        <div class="vp-st-trs">${quadro.slice(inicio, inicio + STATS_TROFEUS_PAGINA).map((linha) => medalhasLinha(linha, linha.posicao)).join("")}</div>
         ${paginacaoDaLista(routePath().slice(2), pagina, paginas, query)}
       </article>
     </section>

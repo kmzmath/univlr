@@ -143,4 +143,25 @@ assert(html.includes('title="Vice-campeão, Copa e1"'), "a prata tambem");
 assert(/class="vp-st-tr-total"[^>]*>2</.test(html), "o total");
 assert(!/—/.test(html), "nunca travessao");
 
+// Ordenar pelo cabecalho, como nas tabelas de estatistica (16/11/2026, pedido dele).
+// A posicao (#) continua a do quadro olimpico; empate na coluna fica na ordem olimpica.
+const ordem = (key, direction) => {
+  rodar(`state.tournamentStatsSort = ${JSON.stringify({ trofeus: { key, direction } })};`);
+  return valor(context.medalhasOrdenadas(context.medalhasQuadro(porJogador, {})).map((l) => `${l.player.nick}:${l.posicao}`));
+};
+rodar("state.tournamentStatsSort = {};");
+assert.deepStrictEqual(valor(context.medalhasOrdenadas(context.medalhasQuadro(porJogador, {})).map((l) => l.player.nick)), ["Tres", "Dois", "Um", "Quatro"], "sem clique, a ordem olimpica");
+assert.deepStrictEqual(ordem("bronze", "desc"), ["Quatro:4", "Tres:1", "Dois:2", "Um:2"], "bronze primeiro, e a posicao continua a do quadro");
+assert.deepStrictEqual(ordem("prata", "asc"), ["Dois:2", "Um:2", "Quatro:4", "Tres:1"], "segundo clique inverte");
+assert.deepStrictEqual(ordem("jogador", "asc"), ["Dois:2", "Quatro:4", "Tres:1", "Um:2"], "jogador em ordem alfabetica");
+assert.deepStrictEqual(ordem("total", "desc"), ["Tres:1", "Dois:2", "Um:2", "Quatro:4"], "total, com o empate na ordem olimpica");
+const colunasDoQuadro = valor(context.medalhasColunas().map((c) => [c.key, c.direction || "desc"]));
+assert.deepStrictEqual(colunasDoQuadro, [["posicao", "asc"], ["jogador", "asc"], ["ouro", "desc"], ["prata", "desc"], ["bronze", "desc"], ["total", "desc"]], "as seis colunas e a direcao do primeiro clique");
+rodar(`state.tournamentStatsSort = { trofeus: { key: "prata", direction: "desc" } };`);
+const cabeca = context.medalhasCabecalho();
+["posicao", "jogador", "ouro", "prata", "bronze", "total"].forEach((key) => assert(cabeca.includes(`data-tournament-stat-sort="trofeus:${key}"`), `cabecalho ordena por ${key}`));
+assert(/data-tournament-stat-sort="trofeus:prata"[^>]*aria-pressed="true"/.test(cabeca) && cabeca.includes("▼"), "a coluna ativa marcada, com a seta");
+assert((cabeca.match(/aria-pressed="true"/g) || []).length === 1, "so uma coluna ativa");
+rodar("state.tournamentStatsSort = {};");
+
 console.log("Recordes numa serie e Trofeus: testes passaram");

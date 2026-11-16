@@ -14863,9 +14863,30 @@ html[data-tema="claro"] .vp-st-funcoes dt img {
   text-transform: uppercase;
 }
 
-.vp-st-tr-cabeca span:last-child,
 .vp-st-tr-total {
   text-align: center;
+}
+
+/* O cabecalho ordena, com o botao das tabelas de estatistica. */
+.vp-st-tr-cabeca .tournament-stat-sort {
+  min-width: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  white-space: nowrap;
+}
+
+.vp-st-tr-cabeca .tournament-stat-sort:last-child {
+  justify-content: center;
+}
+
+.vp-st-tr-cabeca .tournament-stat-sort:hover,
+.vp-st-tr-cabeca .tournament-stat-sort.active {
+  color: var(--ink);
+}
+
+.vp-st-tr-cabeca .tournament-stat-sort i {
+  font-size: 8px;
 }
 
 .vp-st-trs {
@@ -15038,8 +15059,16 @@ html[data-tema="claro"] .vp-st-funcoes dt img {
 /* Tela estreita: a linha vira bloco. O jogador e o total em cima e uma linha por
    cor embaixo, com o nome da cor no lugar do cabecalho. */
 @media (max-width: 760px) {
+  /* Sem colunas para alinhar, o cabecalho vira uma faixa que so ordena. */
   .vp-st-tr-cabeca {
-    display: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    padding: 8px 12px;
+  }
+
+  .vp-st-tr-cabeca .tournament-stat-sort {
+    width: auto;
   }
 
   .vp-st-tr {

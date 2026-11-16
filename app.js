@@ -25331,6 +25331,9 @@ const state = {
   // Resumo da semana aberto por padrao desde 07/11, depois da trajetoria e dos
   // destaques com motivo. Fechar vale ate recarregar a pagina.
   rankingResumo: true,
+  // O ultimo estado escolhido na aba "Por estado": volta nele quem sai para o
+  // Nacional e entra de novo. O estado da tela e o da URL (?estado=).
+  rankingEstado: "",
   rankingSort: { key: "", direction: "default" },
   // Ordenacao da tabela de /eventos por clique no cabecalho, incluindo a coluna
   // Data. O seletor "ordenar por inicio/termino" saiu: eram duas perguntas
@@ -30088,11 +30091,14 @@ function renderRankingPage(teamId = route().id || "") {
   const snapshot = selectedRankingSnapshot();
   const aba = rankingRouteTab();
   const semanaMatches = rankingWeekMatches(snapshot);
+  const uf = rankingEstadoDaRota();
+  if (uf) state.rankingEstado = uf;
   Shell(`
-    <section class="vp-ranking${state.rankingResumo ? " com-resumo" : ""}">
+    <section class="vp-ranking${state.rankingResumo ? " com-resumo" : ""}${uf ? " por-estado" : ""}">
       <div class="vp-lista-pagina ranking-full-panel">
         <header class="vp-sec">
           <h1>Ranking</h1>
+          ${rankingAbrangencia(uf)}
           <span class="lista-contagem" data-ranking-count>${escapeHtml(aba === "partidas" ? rankingWeekMatchesSummary(semanaMatches, snapshot) : rankingScopeSummary(scope))}</span>
         </header>
         <div class="ranking-page-toolbar">
@@ -30120,15 +30126,17 @@ function renderRankingPage(teamId = route().id || "") {
             </div>
           </div></div>`}
         </div>
+        ${uf ? rankingPainelDeEstados(uf, scope) : ""}
         ${aba === "partidas" ? rankingWeekMatchesSection(semanaMatches) : rankingAccordion(rows, scope, state.rankingShowDetails)}
       </div>
       <aside class="vp-resumo" data-ranking-trilho aria-label="Resumo do ranking">
-        ${trilhoDoRanking(snapshot, rankingLider(snapshot))}
+        ${trilhoDoRanking(snapshot, rankingLiderDaVista(snapshot))}
       </aside>
     </section>
   `);
   bindRankingVersionPicker();
   bindRankingTabSwitch();
+  bindRankingEstados();
   bindTrilhoDoRanking();
   bindResumoDoRanking();
   if (state.rankingListaEntra) {
@@ -30275,7 +30283,204 @@ function rankingRowsForScope(teams, scope) {
   const sorted = scope === "all"
     ? rows.slice().sort(rankingOrdemEntreTodas)
     : rows.filter((row) => rankingIsValid(row.ranking)).sort((a, b) => (a.ranking.validRank || 9999) - (b.ranking.validRank || 9999) || b.ranking.score - a.ranking.score || a.team.name.localeCompare(b.team.name));
-  return applyRankingSort(sorted.map((row, index) => ({ ...row, displayRank: index + 1, defaultIndex: index })));
+  const uf = rankingEstadoDaRota();
+  if (!uf) return applyRankingSort(sorted.map((row, index) => ({ ...row, displayRank: index + 1, defaultIndex: index })));
+  // Por estado: a mesma ordem da lista nacional, recortada. A posicao no Brasil e
+  // o lugar na lista nacional do mesmo escopo, como a pessoa veria no Nacional.
+  return applyRankingSort(
+    sorted
+      .map((row, index) => ({ ...row, posicaoNacional: index + 1 }))
+      .filter((row) => equipeUf(row.team) === uf)
+      .map((row, index) => ({ ...row, displayRank: index + 1, defaultIndex: index, estado: uf })),
+  );
+}
+
+// Aba "Por estado" do Ranking, no espirito do regional da HLTV: regioes na ordem do
+// IBGE e, em cada uma, os estados com equipe na lista. A preposicao monta "em Sao
+// Paulo", "no Rio de Janeiro" e "na Paraiba" na contagem e no cartao.
+const RANKING_REGIOES = [
+  ["Norte", ["AC", "AP", "AM", "PA", "RO", "RR", "TO"]],
+  ["Nordeste", ["AL", "BA", "CE", "MA", "PB", "PE", "PI", "RN", "SE"]],
+  ["Centro-Oeste", ["DF", "GO", "MT", "MS"]],
+  ["Sudeste", ["ES", "MG", "RJ", "SP"]],
+  ["Sul", ["PR", "RS", "SC"]],
+];
+
+const ESTADOS_DO_BRASIL = {
+  AC: ["Acre", "no"],
+  AL: ["Alagoas", "em"],
+  AP: ["Amapá", "no"],
+  AM: ["Amazonas", "no"],
+  BA: ["Bahia", "na"],
+  CE: ["Ceará", "no"],
+  DF: ["Distrito Federal", "no"],
+  ES: ["Espírito Santo", "no"],
+  GO: ["Goiás", "em"],
+  MA: ["Maranhão", "no"],
+  MT: ["Mato Grosso", "em"],
+  MS: ["Mato Grosso do Sul", "em"],
+  MG: ["Minas Gerais", "em"],
+  PA: ["Pará", "no"],
+  PB: ["Paraíba", "na"],
+  PR: ["Paraná", "no"],
+  PE: ["Pernambuco", "em"],
+  PI: ["Piauí", "no"],
+  RJ: ["Rio de Janeiro", "no"],
+  RN: ["Rio Grande do Norte", "no"],
+  RS: ["Rio Grande do Sul", "no"],
+  RO: ["Rondônia", "em"],
+  RR: ["Roraima", "em"],
+  SC: ["Santa Catarina", "em"],
+  SP: ["São Paulo", "em"],
+  SE: ["Sergipe", "em"],
+  TO: ["Tocantins", "no"],
+};
+
+// A ordem em que os estados aparecem no painel: regiao, depois nome. E ela que
+// decide para que lado a lista desliza na troca de estado.
+const RANKING_ORDEM_DOS_ESTADOS = RANKING_REGIOES.flatMap(([, ufs]) => ufs.slice().sort((a, b) => ESTADOS_DO_BRASIL[a][0].localeCompare(ESTADOS_DO_BRASIL[b][0], "pt-BR")));
+
+function equipeUf(team) {
+  return String(team?.profile?.state || team?.state || "").trim().toUpperCase();
+}
+
+// So a pagina do Ranking le o estado: #/teams tambem usa ?estado= para o filtro dela.
+function rankingEstadoDaRota() {
+  if (route().section !== "ranking") return "";
+  const uf = String(routeQuery().get("estado") || "").trim().toUpperCase();
+  return ESTADOS_DO_BRASIL[uf] ? uf : "";
+}
+
+function nomeDoEstado(uf) {
+  return ESTADOS_DO_BRASIL[uf]?.[0] || uf;
+}
+
+function noEstado(uf) {
+  const [nome, preposicao] = ESTADOS_DO_BRASIL[uf] || [uf, "em"];
+  return `${preposicao} ${nome}`;
+}
+
+// Posicao entre as validas do estado, a mesma conta da posicao nacional (a
+// canonica) contando so as equipes dele. Variacao, cartao, trajetoria e destaques
+// saem daqui.
+const rankingPosicoesNoEstadoCache = new WeakMap();
+function rankingPosicaoNoEstado(snapshot, teamId, uf) {
+  if (!snapshot || !uf) return null;
+  let porEstado = rankingPosicoesNoEstadoCache.get(snapshot);
+  if (!porEstado) {
+    porEstado = new Map();
+    rankingPosicoesNoEstadoCache.set(snapshot, porEstado);
+  }
+  let posicoes = porEstado.get(uf);
+  if (!posicoes) {
+    const ordem = rankingPorPosicao(snapshot).filter((ranking) => equipeUf(teamById(ranking.id)) === uf);
+    posicoes = new Map(ordem.map((ranking, indice) => [ranking.id, indice + 1]));
+    porEstado.set(uf, posicoes);
+  }
+  return posicoes.get(teamId) || null;
+}
+
+// Quantas equipes cada estado tem na lista da semana, no escopo escolhido.
+function rankingEquipesPorEstado(snapshot, scope) {
+  const contagem = {};
+  rankingLinhasDaSemana(snapshot)
+    .filter((row) => scope === "all" || rankingIsValid(row.ranking))
+    .forEach((row) => {
+      const uf = equipeUf(row.team);
+      if (ESTADOS_DO_BRASIL[uf]) contagem[uf] = (contagem[uf] || 0) + 1;
+    });
+  return contagem;
+}
+
+// Entrar em "Por estado" volta no ultimo estado escolhido; na primeira vez, no
+// estado com mais equipes na lista.
+function rankingEstadoPadrao() {
+  if (ESTADOS_DO_BRASIL[state.rankingEstado]) return state.rankingEstado;
+  const contagem = rankingEquipesPorEstado(selectedRankingSnapshot(), state.rankingScope === "all" ? "all" : "valid");
+  return Object.keys(contagem).sort((a, b) => contagem[b] - contagem[a] || a.localeCompare(b))[0] || "SP";
+}
+
+function rankingLiderDaVista(snapshot) {
+  const uf = rankingEstadoDaRota();
+  if (!uf) return rankingLider(snapshot);
+  const ranking = rankingPorPosicao(snapshot).find((item) => rankingPosicaoNoEstado(snapshot, item.id, uf) === 1);
+  const team = ranking ? teamById(ranking.id) : null;
+  return team ? { team, ranking, snapshot, estado: uf } : null;
+}
+
+function rankingAbrangencia(uf) {
+  return `
+    <div class="ranking-abrangencia" role="group" aria-label="Abrangência do ranking">
+      <button type="button" data-ranking-abrangencia="nacional" aria-pressed="${!uf}" class="${uf ? "" : "active"}">Nacional</button>
+      <button type="button" data-ranking-abrangencia="estado" aria-pressed="${Boolean(uf)}" class="${uf ? "active" : ""}">Por estado</button>
+    </div>
+  `;
+}
+
+// O painel de estados: regioes em colunas, com bandeira, nome e quantas equipes o
+// estado tem na lista. Estado sem equipe nao aparece, menos o escolhido, que fica
+// visivel mesmo vazio para a pessoa saber onde esta.
+function rankingPainelDeEstados(uf, scope) {
+  return `<div class="ranking-estados" data-ranking-estados><div class="ranking-estados-corpo"><div class="ranking-estados-grade">${rankingRegioesDoPainel(uf, scope)}</div></div></div>`;
+}
+
+function rankingRegioesDoPainel(uf, scope) {
+  const contagem = rankingEquipesPorEstado(selectedRankingSnapshot(), scope);
+  return RANKING_REGIOES.map(([regiao, ufs]) => {
+    const estados = RANKING_ORDEM_DOS_ESTADOS.filter((sigla) => ufs.includes(sigla) && (contagem[sigla] || sigla === uf));
+    if (!estados.length) return "";
+    return `
+      <div class="ranking-regiao" role="group" aria-label="${escapeHtml(regiao)}">
+        <span class="ranking-regiao-nome" aria-hidden="true">${escapeHtml(regiao)}</span>
+        ${estados
+          .map((sigla) => {
+            const total = contagem[sigla] || 0;
+            return `<button type="button" data-ranking-estado="${sigla}" aria-pressed="${sigla === uf}" aria-label="${escapeHtml(`${nomeDoEstado(sigla)}, ${total} ${total === 1 ? "equipe" : "equipes"}`)}" class="${sigla === uf ? "active" : ""}"><img src="${escapeHtml(assetPath(`assets/state-flags/${sigla.toLowerCase()}.webp`))}" alt="" width="20" height="14" loading="lazy" onerror="this.style.visibility='hidden'" /><span>${escapeHtml(nomeDoEstado(sigla))}</span><small>${total}</small></button>`;
+          })
+          .join("")}
+      </div>
+    `;
+  }).join("");
+}
+
+// Trocar de abrangencia ou de estado passa pela URL, como todo filtro: o Back
+// desfaz um passo. A lista sai para o lado da ordem do painel (o Nacional fica
+// antes de todos os estados) e a nova entra pelo outro, como na aba de partidas.
+function trocarEstadoDoRanking(uf) {
+  const atual = rankingEstadoDaRota();
+  if (uf === atual) return;
+  if (uf) state.rankingEstado = uf;
+  const params = routeQuery();
+  if (uf) params.set("estado", uf);
+  else params.delete("estado");
+  params.delete("limite");
+  const ordem = ["", ...RANKING_ORDEM_DOS_ESTADOS];
+  const avanca = ordem.indexOf(uf) > ordem.indexOf(atual);
+  state.rankingListaEntra = avanca ? "vp-entra-direita" : "vp-entra-esquerda";
+  const lista = document.querySelector(".ranking-accordion, .ranking-week-matches, .ranking-vazio");
+  lista?.classList.remove("vp-entra-esquerda", "vp-entra-direita");
+  lista?.classList.add(avanca ? "vp-sai-esquerda" : "vp-sai-direita");
+  if (!atual) state.rankingEstadosAbrem = true;
+  if (!uf) document.querySelector("[data-ranking-estados]")?.classList.add("fechando");
+  // setTimeout e nao animationend: em aba oculta a animacao nao avanca.
+  window.setTimeout(() => pushFilterState("ranking", params), RANKING_ABA_MS);
+}
+
+function bindRankingEstados() {
+  document.querySelectorAll("[data-ranking-abrangencia]").forEach((button) => {
+    button.addEventListener("click", () => trocarEstadoDoRanking(button.dataset.rankingAbrangencia === "estado" ? rankingEstadoDaRota() || rankingEstadoPadrao() : ""));
+  });
+  const painel = document.querySelector("[data-ranking-estados]");
+  if (!painel) return;
+  if (state.rankingEstadosAbrem) {
+    state.rankingEstadosAbrem = false;
+    painel.classList.add("abrindo");
+    window.setTimeout(() => painel.classList.remove("abrindo"), RANKING_ABA_MS);
+  }
+  painel.addEventListener("click", (event) => {
+    const botao = event.target.closest("[data-ranking-estado]");
+    if (botao) trocarEstadoDoRanking(botao.dataset.rankingEstado);
+  });
 }
 
 function rankingRowExistsInSnapshot(ranking) {
@@ -30354,7 +30559,10 @@ function rankingPositionChange(row) {
   const team = row.team || row;
   const snapshot = row.snapshot || latestRankingSnapshot();
   const ranking = row.ranking || snapshot?.byTeamId?.[team.id] || team.ranking || {};
-  const currentRank = rankingCanonicalPosition(ranking);
+  // Na aba "Por estado" a variacao e a do lugar dentro do estado, como no regional
+  // da HLTV: quem sobe no Brasil pode ficar parado entre as do proprio estado.
+  const posicao = (semana) => (row.estado ? rankingPosicaoNoEstado(semana, team.id, row.estado) : rankingCanonicalPosition(semana === snapshot ? ranking : semana.byTeamId?.[team.id]));
+  const currentRank = rankingCanonicalPosition(ranking) ? posicao(snapshot) : null;
   if (!currentRank) {
     return { label: "-", className: "muted", title: "Equipe ainda não entrou no ranking válido." };
   }
@@ -30364,7 +30572,7 @@ function rankingPositionChange(row) {
     return { label: "-", className: "muted", title: "Sem semana anterior para comparação." };
   }
 
-  const previousRank = rankingCanonicalPosition(previousSnapshot.byTeamId?.[team.id]);
+  const previousRank = posicao(previousSnapshot);
   if (!previousRank) {
     return { label: "NOVO", className: "new", title: "Entrou no ranking válido nesta semana." };
   }
@@ -30395,6 +30603,14 @@ function rankingScopeSummary(scope) {
   const total = snapshotTeams.length || state.db.teams.filter((team) => Number(team.matches || 0) > 0).length;
   const validCount = snapshotTeams.length ? snapshotTeams.filter(rankingIsValid).length : state.db.teams.filter((team) => Number(team.matches || 0) > 0 && teamIsRankingValid(team)).length;
   const minimumMatches = state.db.rankingMinimumMatches || 9;
+  const uf = rankingEstadoDaRota();
+  if (uf) {
+    const doEstado = snapshotTeams.filter((ranking) => equipeUf(teamById(ranking.id)) === uf);
+    const validas = doEstado.filter(rankingIsValid).length;
+    const equipes = (n, adjetivo = "") => `${n} ${n === 1 ? "equipe" : "equipes"}${adjetivo ? ` ${n === 1 ? adjetivo : `${adjetivo}s`}` : ""}`;
+    if (scope === "all") return `${equipes(doEstado.length)} ${noEstado(uf)}, ${validas} ${validas === 1 ? "válida" : "válidas"}`;
+    return `${equipes(validas, "válida")} ${noEstado(uf)}`;
+  }
   // Devolvia "" no escopo "Apenas válidos", que e o padrao da pagina: o slot da
   // esquerda da barra nascia vazio e os 721px de controle ficavam sozinhos
   // contra 617px de vao. O texto e o contrapeso, e ele tem informacao real.
@@ -30440,10 +30656,13 @@ function rankingWeekWindow(snapshot = selectedRankingSnapshot()) {
 function rankingWeekMatches(snapshot = selectedRankingSnapshot()) {
   const janela = rankingWeekWindow(snapshot);
   if (!janela) return [];
+  // Por estado, entram as partidas com pelo menos uma equipe do estado.
+  const uf = rankingEstadoDaRota();
+  const doEstado = (series) => !uf || [series.teamA?.id, series.teamB?.id].some((id) => equipeUf(teamById(id)) === uf);
   return allMatchSeries()
     .filter((series) => {
       const at = Number(series.startedAt || 0);
-      return at > janela.inicio && at <= janela.fim;
+      return at > janela.inicio && at <= janela.fim && doEstado(series);
     })
     .sort(compareSeriesDateDesc);
 }
@@ -30483,7 +30702,7 @@ function rotuloDasNovasPartidas(total) {
 // variantes responsivas. Copiar isso a mao seria manter duas verdades.
 function rankingWeekMatchesSection(matches) {
   if (!matches.length) {
-    return `<div class="empty-state">Nenhuma partida entrou nesta versão do ranking.</div>`;
+    return `<p class="ranking-vazio ranking-week-matches">Nenhuma partida entrou nesta versão do ranking.</p>`;
   }
   const params = routeQuery();
   params.set("aba", "partidas");
@@ -30516,7 +30735,8 @@ function equipeEmFoco(snapshot = selectedRankingSnapshot()) {
   const aberta = document.querySelector(".ranking-accordion-item.open")?.dataset.rankingTeamId;
   const ranking = aberta ? snapshot?.byTeamId?.[aberta] : null;
   const team = ranking ? teamById(aberta) : null;
-  return team ? { team, ranking, snapshot } : rankingLider(snapshot);
+  const uf = rankingEstadoDaRota();
+  return team ? { team, ranking, snapshot, ...(uf ? { estado: uf } : {}) } : rankingLiderDaVista(snapshot);
 }
 
 function rankingPorPosicao(snapshot) {
@@ -30536,11 +30756,13 @@ function semanasDoRanking() {
 }
 
 // Semanas seguidas na lideranca, contadas para tras a partir da semana escolhida.
-function semanasNaLideranca(snapshot, teamId) {
+// Com estado, a lideranca e a do estado.
+function semanasNaLideranca(snapshot, teamId, uf = "") {
   const semanas = semanasDoRanking();
   let indice = semanas.findIndex((semana) => semana.id === snapshot?.id);
   let total = 0;
-  while (indice >= 0 && rankingPorPosicao(semanas[indice])[0]?.id === teamId) {
+  const lidera = (semana) => (uf ? rankingPosicaoNoEstado(semana, teamId, uf) === 1 : rankingPorPosicao(semana)[0]?.id === teamId);
+  while (indice >= 0 && lidera(semanas[indice])) {
     total += 1;
     indice -= 1;
   }
@@ -30559,13 +30781,14 @@ function movimentoDaEquipe(row) {
 
 function cartaoDoRanking(row) {
   if (!row) return "";
-  const { team, ranking, snapshot } = row;
-  const posicao = rankingCanonicalPosition(ranking);
-  const semanas = posicao === 1 ? semanasNaLideranca(snapshot, team.id) : 0;
+  const { team, ranking, snapshot, estado } = row;
+  const posicao = estado ? (rankingCanonicalPosition(ranking) ? rankingPosicaoNoEstado(snapshot, team.id, estado) : null) : rankingCanonicalPosition(ranking);
+  const semanas = posicao === 1 ? semanasNaLideranca(snapshot, team.id, estado) : 0;
   const nota = fmt(ranking.score ?? team.rankingScore ?? team.points, 1);
   const logo = assetPath(team.profile?.logo || team.logo || "");
   const partidas = Number.isFinite(Number(ranking.matches)) ? Number(ranking.matches) : team.matches;
-  const rotulo = posicao === 1 ? "Líder do ranking" : posicao ? `${posicao}º no ranking` : rankingStatusLabel(ranking);
+  const onde = estado ? noEstado(estado) : "do ranking";
+  const rotulo = posicao === 1 ? `Líder ${onde}` : posicao ? `${posicao}º ${estado ? onde : "no ranking"}` : rankingStatusLabel(ranking);
   return plateCard({
     classe: `vp-slide vp-camisa-equipe${nota.length > 4 ? " vp-valor-longo" : ""}`,
     team,
@@ -30638,7 +30861,8 @@ function trajetoriaDaEquipe(foco) {
   const indice = semanas.findIndex((semana) => semana.id === snapshot?.id);
   const fim = Math.min(semanas.length - 1, indice + 2);
   const janela = indice < 0 ? [] : semanas.slice(Math.max(0, fim - RANKING_GRAFICO_SEMANAS + 1), fim + 1);
-  const posicoes = team ? janela.map((semana) => rankingCanonicalPosition(semana.byTeamId?.[team.id])) : [];
+  const uf = foco?.estado || "";
+  const posicoes = team ? janela.map((semana) => (uf ? rankingPosicaoNoEstado(semana, team.id, uf) : rankingCanonicalPosition(semana.byTeamId?.[team.id]))) : [];
   const titulo = team ? `Trajetória da ${team.sourceTag || team.tag || team.name}` : "Trajetória";
   if (!team || janela.length < 2 || posicoes.filter(Boolean).length < 2) {
     const aviso = team ? `${team.name} ainda não tem duas semanas na lista.` : "Nenhuma equipe na lista nesta semana.";
@@ -30685,12 +30909,16 @@ function trajetoriaDaEquipe(foco) {
 function destaquesDaSemana(snapshot) {
   const anterior = previousRankingSnapshot(snapshot);
   if (!anterior) return "";
+  // Por estado, os destaques sao os do estado, com o lugar dentro dele.
+  const uf = rankingEstadoDaRota();
+  const posicao = (semana, ranking) => (uf ? rankingPosicaoNoEstado(semana, ranking.id, uf) : rankingCanonicalPosition(semana === snapshot ? ranking : semana.byTeamId?.[ranking.id]));
   const linhas = rankingPorPosicao(snapshot)
+    .filter((ranking) => !uf || equipeUf(teamById(ranking.id)) === uf)
     .map((ranking) => {
-      const antes = rankingCanonicalPosition(anterior.byTeamId?.[ranking.id]);
-      const agora = rankingCanonicalPosition(ranking);
+      const antes = posicao(anterior, ranking);
+      const agora = posicao(snapshot, ranking);
       const team = teamById(ranking.id);
-      return antes && team ? { team, agora, delta: antes - agora } : null;
+      return antes && agora && team ? { team, agora, delta: antes - agora, uf } : null;
     })
     .filter((linha) => linha?.delta);
   const subida = linhas.filter((linha) => linha.delta > 0).sort((a, b) => b.delta - a.delta || a.agora - b.agora)[0];
@@ -30704,9 +30932,9 @@ function destaquesDaSemana(snapshot) {
   `;
 }
 
-function destaqueDaSemana(rotulo, { team, agora, delta }) {
+function destaqueDaSemana(rotulo, { team, agora, delta, uf }) {
   return `
-    <a class="vp-destaque pintura-de-equipe" href="#/ranking/${escapeHtml(team.id)}" ${teamAccentStyle(team)}>
+    <a class="vp-destaque pintura-de-equipe" href="#/ranking/${escapeHtml(team.id)}${uf ? `?estado=${uf}` : ""}" ${teamAccentStyle(team)}>
       <small>${escapeHtml(rotulo)}</small>
       ${teamLogo(team.id)}
       <strong title="${escapeHtml(team.name)}">${escapeHtml(team.name)}</strong>
@@ -30862,8 +31090,12 @@ function rankingSortHeader(key, label, extraClass = "") {
   `;
 }
 
+// Vazio em texto cinza solto, nunca a placa clara do .empty-state (pedido do dono).
 function rankingAccordionRows(rows) {
-  return rows.length ? rows.map(rankingAccordionItem).join("") : `<div class="empty-state">Nenhuma equipe válida ainda. Mostre "Todas" para ver as equipes provisórias.</div>`;
+  if (rows.length) return rows.map(rankingAccordionItem).join("");
+  const uf = rankingEstadoDaRota();
+  if (uf) return `<p class="ranking-vazio">Nenhuma equipe${state.rankingScope === "all" ? "" : " válida"} ${escapeHtml(noEstado(uf))} nesta semana.</p>`;
+  return `<p class="ranking-vazio">Nenhuma equipe válida ainda. Mostre "Todas" para ver as equipes provisórias.</p>`;
 }
 
 function rankingAccordionItem(row) {
@@ -30879,7 +31111,7 @@ function rankingAccordionItem(row) {
       <button class="ranking-accordion-button pintura-de-equipe" type="button" data-ranking-toggle aria-expanded="false" aria-controls="${panelId}" ${teamAccentStyle(team)}>
         <span class="rank-cell${displayRank === 1 ? " rank-lider" : ""}">${displayRank}</span>
         ${rankingPositionChangeLabel(row)}
-        <span class="ranking-team-cell">${teamLogo(team.id)}<span><strong>${escapeHtml(team.name)}</strong><small>${escapeHtml(team.sourceTag || team.tag || team.id)} - ${matchesCount} partidas</small></span></span>
+        <span class="ranking-team-cell">${teamLogo(team.id)}<span><strong>${escapeHtml(team.name)}</strong><small>${escapeHtml(team.sourceTag || team.tag || team.id)}${row.posicaoNacional ? ` - ${row.posicaoNacional}º no Brasil` : ""} - ${matchesCount} ${Number(matchesCount) === 1 ? "partida" : "partidas"}</small></span></span>
         <span class="numeric ranking-score-cell">${fmt(ranking.score ?? team.rankingScore ?? team.points, 1)}</span>
         <span class="ranking-lineup-inline optional">${rankingInlineLineup(team, cutoffAt)}</span>
         <span class="numeric optional ranking-detail-cell" data-label="Desempenho">${fmt(blocks.competitive, 1)}</span>
@@ -31414,6 +31646,10 @@ function bindRankingScoreDetailsToggle() {
 function updateRankingToolbarSummaries(scope) {
   const count = document.querySelector("[data-ranking-count]");
   if (count) count.textContent = rankingScopeSummary(scope);
+  // As contagens do painel de estados mudam com a semana e com o escopo. O clique
+  // e delegado no painel, entao trocar o miolo nao perde o listener.
+  const estados = document.querySelector("[data-ranking-estados] .ranking-estados-grade");
+  if (estados) estados.innerHTML = rankingRegioesDoPainel(rankingEstadoDaRota(), scope);
   const botao = document.querySelector('[data-ranking-tab="partidas"]');
   if (!botao) return;
   const total = rankingWeekMatches().length;

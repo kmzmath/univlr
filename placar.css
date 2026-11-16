@@ -8573,6 +8573,141 @@ a.vp-tabela-linha:hover strong {
   outline-offset: -2px;
 }
 
+/* Nacional e Por estado: o mesmo sublinhado de Validas e Todas, maior e ao lado do
+   titulo, porque troca a lista inteira e nao so o recorte dela. */
+.vp-ranking .ranking-abrangencia {
+  display: inline-flex;
+  gap: 18px;
+  margin-left: 12px;
+}
+
+.vp-ranking .ranking-abrangencia button {
+  padding: 4px 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  color: var(--muted);
+  cursor: pointer;
+  font: 600 16px/1.2 var(--font-text);
+}
+
+.vp-ranking .ranking-abrangencia button:hover {
+  color: var(--ink);
+}
+
+.vp-ranking .ranking-abrangencia button.active {
+  color: var(--ink);
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+.vp-ranking .ranking-abrangencia button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* O painel de estados, como o regional da HLTV: regioes em colunas e, em cada uma,
+   bandeira, nome e quantas equipes o estado tem na lista. Abre e fecha pela altura
+   (0fr a 1fr) quando a pessoa entra e sai de "Por estado". */
+.vp-ranking .ranking-estados {
+  display: grid;
+  grid-template-rows: 1fr;
+  margin: 0 0 12px;
+  background: var(--surface);
+  border-radius: 2px;
+}
+
+.vp-ranking .ranking-estados-corpo {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.vp-ranking .ranking-estados-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px 28px;
+  padding: 16px 20px;
+}
+
+.vp-ranking .ranking-estados.abrindo {
+  animation: ranking-estados-abre 220ms ease;
+}
+
+.vp-ranking .ranking-estados.fechando {
+  animation: ranking-estados-fecha 220ms ease forwards;
+}
+
+@keyframes ranking-estados-abre { from { grid-template-rows: 0fr; margin-bottom: 0; opacity: 0; } }
+@keyframes ranking-estados-fecha { to { grid-template-rows: 0fr; margin-bottom: 0; opacity: 0; } }
+
+.vp-ranking .ranking-regiao {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.vp-ranking .ranking-regiao-nome {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font: 600 16px/1.2 var(--font-text);
+}
+
+.vp-ranking .ranking-regiao button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 28px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  color: var(--ink);
+  cursor: pointer;
+  font: 500 14px/1.2 var(--font-text);
+  text-align: left;
+}
+
+.vp-ranking .ranking-regiao img {
+  flex: none;
+  width: 20px;
+  height: 14px;
+  object-fit: cover;
+}
+
+.vp-ranking .ranking-regiao button span {
+  min-width: 0;
+}
+
+.vp-ranking .ranking-regiao button small {
+  margin-left: auto;
+  padding-left: 8px;
+  color: var(--muted);
+  font: 500 12px/1 var(--font-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-ranking .ranking-regiao button:hover span {
+  box-shadow: inset 0 -2px var(--line-dark);
+}
+
+.vp-ranking .ranking-regiao button.active span {
+  font-weight: 700;
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+.vp-ranking .ranking-regiao button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Vazio em texto cinza solto, sem placa. */
+.vp-ranking .ranking-vazio {
+  margin: 0;
+  padding: 14px 12px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
 /* As colunas numa conta so. A equipe tem o tamanho do nome mais longo (179px, mais
    logo) e a nota cola nela. Tudo em pixel, menos a sobra no status: em pixel a troca
    entre lineup e blocos anima, e sem gap a trilha zerada nao deixa vao para tras. */
@@ -9089,6 +9224,31 @@ a.vp-tabela-linha:hover strong {
   .vp-ranking .vp-nota-bloco {
     grid-area: nota;
   }
+
+  /* Por estado: o painel entra entre a barra e o resto. Sem ele na pagina a area
+     nao existe, senao a grade deixaria um vao de 16px no Nacional. */
+  .vp-ranking.por-estado {
+    grid-template-areas:
+      "titulo"
+      "barra"
+      "estados"
+      "lista";
+  }
+
+  .vp-ranking.por-estado.com-resumo {
+    grid-template-areas:
+      "titulo titulo"
+      "barra barra"
+      "estados estados"
+      "cartao grafico"
+      "lista lista"
+      "movimentos nota";
+  }
+
+  .vp-ranking .ranking-estados {
+    grid-area: estados;
+    margin: 0;
+  }
 }
 
 /* A barra em duas linhas. */
@@ -9145,6 +9305,18 @@ a.vp-tabela-linha:hover strong {
     gap: 16px;
   }
 
+  .vp-ranking.por-estado.com-resumo {
+    grid-template-areas:
+      "titulo"
+      "barra"
+      "estados"
+      "cartao"
+      "lista"
+      "grafico"
+      "movimentos"
+      "nota";
+  }
+
   .vp-ranking .vp-sec .lista-contagem {
     margin-left: 0;
   }
@@ -9174,6 +9346,23 @@ a.vp-tabela-linha:hover strong {
 @media (max-width: 560px) {
   .vp-ranking .ranking-page-toolbar {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Duas colunas que se equilibram: a regiao desce inteira, sem quebrar no meio. */
+  .vp-ranking .ranking-estados-grade {
+    display: block;
+    columns: 2;
+    column-gap: 20px;
+    padding: 12px 16px 0;
+  }
+
+  .vp-ranking .ranking-regiao {
+    break-inside: avoid;
+    padding-bottom: 12px;
+  }
+
+  .vp-ranking .ranking-abrangencia {
+    margin-left: 4px;
   }
 
   .vp-ranking .ranking-page-toolbar .ranking-tab-switch {

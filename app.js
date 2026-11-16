@@ -37242,10 +37242,21 @@ function teamFormaPlacar(team, { series, match }) {
   return (match.a === team.id ? [match.scoreA, match.scoreB] : [match.scoreB, match.scoreA]).map((valor) => valor ?? "-");
 }
 
+// O placar de uma partida nas listas da equipe e do jogador: MD1 mostra os rounds
+// do mapa, como a lista de Partidas (`matchListScore`), porque "1:0" nao diz nada
+// que o mapa nao diga melhor. Serie com placar oficial diferente do jogado (W.O.,
+// mapa sem arquivo) continua em mapas.
+function teamPlacarDaLinha(team, jogo) {
+  const mapa = jogo.series?.mapCount === 1 && !jogo.series.officialResultNote ? jogo.series.maps[0] : null;
+  if (mapa?.teamA.id === team.id) return [mapa.teamA.score, mapa.teamB.score];
+  if (mapa?.teamB.id === team.id) return [mapa.teamB.score, mapa.teamA.score];
+  return teamFormaPlacar(team, jogo);
+}
+
 function teamFormaItem(team, jogo) {
   const rivalId = teamJogoRival(jogo, team);
   const nome = nomeNaEpoca(rivalId, jogo.event, eventoDoJogo(jogo));
-  const [nosso, deles] = teamFormaPlacar(team, jogo);
+  const [nosso, deles] = teamPlacarDaLinha(team, jogo);
   const venceu = jogo.vencedor === team.id;
   const resultado = venceu ? "Vitória" : jogo.vencedor ? "Derrota" : "Sem vencedor";
   const corpo = `
@@ -38124,7 +38135,7 @@ function teamJogosPorCampeonato(jogos) {
 function teamJogoLinha(team, jogo) {
   const rivalId = teamJogoRival(jogo, team);
   const nome = nomeNaEpoca(rivalId, jogo.event, eventoDoJogo(jogo));
-  const [nosso, deles] = teamFormaPlacar(team, jogo);
+  const [nosso, deles] = teamPlacarDaLinha(team, jogo);
   const decidido = Boolean(jogo.vencedor);
   const venceu = jogo.vencedor === team.id;
   const mapas = jogo.series ? (jogo.series.mapNames || []).filter(Boolean).join(", ") : jogo.match?.status || (decidido ? "Sem estatísticas" : "A jogar");

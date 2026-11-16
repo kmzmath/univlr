@@ -18,6 +18,13 @@
   const POR_PAGINA = 50;
   const PAINEL_LIMITE = 5;
   const EDITA_MINUTOS = 15;
+  // Patch notes (16/11/2026, pedido do dono): secao do Forum que so admin
+  // publica (regra no banco, 0011), com texto maior e painel proprio.
+  const PATCH_PAINEL = 3;
+  const MAXIMO = { geral: 2000, patch: 8000 };
+  const ehPatch = (t) => Boolean(t && t.secao === "patch");
+  const ehAdmin = () => Boolean(window.Community && window.Community.ehAdmin && window.Community.ehAdmin());
+  const dataCurta = (iso) => new Date(iso).toLocaleDateString("pt-BR");
   const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
   const hrefDaThread = (id) => `#/forum/${encodeURIComponent(id)}`;
@@ -132,30 +139,80 @@
     </a>`;
   }
 
-  async function renderLista() {
-    const pagina = Math.max(1, parseInt(window.routeQuery().get("pagina"), 10) || 1);
-    const minhaVez = casca(blocoNovaConversa, `<header class="vp-sec"><h1>Fórum</h1></header>${carregando}`);
-    let resultado;
-    try {
-      resultado = await window.Community.listarTopicos({ pagina, porPagina: POR_PAGINA });
-    } catch (erro) {
-      preenche(minhaVez, "[data-th-principal]", `<header class="vp-sec"><h1>Fórum</h1></header>${falhou(erro)}`);
-      return;
-    }
-    const { itens, total } = resultado;
-    const paginas = Math.max(1, Math.ceil(total / POR_PAGINA));
-    const contagem = `<p class="lista-contagem" role="status" aria-live="polite">${total} ${total === 1 ? "thread" : "threads"}</p>`;
-    const corpo = itens.length
-      ? `<div class="th-bloco th-tabela-bloco">
+  // Patch notes: data e titulo, com as respostas ao lado, como o painel da home.
+  function linhaDePatch(t) {
+    return `<a class="th-linha" href="${hrefDaThread(t.id)}">
+      <span class="th-titulo" title="${esc(t.title)}">${esc(t.title)}</span>
+      <span class="th-meta">${esc(dataCurta(t.created_at))}</span>
+      <span class="atv-conta th-conta">${Number(t.respostas) || 0}</span>
+    </a>`;
+  }
+
+  const botaoPatch = () => (ehAdmin() ? `<div class="th-pe"><a class="th-nova sec" href="#/forum/nova?secao=patch">+ Patch notes</a></div>` : "");
+
+  // Some sem nenhum patch notes, menos para o admin, que precisa do botao.
+  function painelDePatch({ itens, total }) {
+    if (!itens.length && !ehAdmin()) return "";
+    return `
+      <section class="th-patch">
+        <header class="vp-sec"><h2>Patch notes</h2>${total > PATCH_PAINEL ? `<a class="vp-sec-more" href="#/forum/patch-notes">Ver todos</a>` : ""}</header>
+        ${itens.length ? `<div class="th-bloco">${itens.map(linhaDePatch).join("")}</div>` : `<p class="th-vazio">Nenhum patch notes ainda.</p>`}
+        ${botaoPatch()}
+      </section>`;
+  }
+
+  // A tabela do Forum e as linhas compactas do celular, com a paginacao.
+  function tabelaDeThreads(itens, secao, pagina, paginas) {
+    return `<div class="th-bloco th-tabela-bloco">
            <table class="th-tabela">
              <thead><tr><th scope="col">Tópico</th><th scope="col" class="th-c-num">Respostas</th><th scope="col">Autor</th><th scope="col">Atividade</th></tr></thead>
              <tbody>${itens.map(linhaDaTabela).join("")}</tbody>
            </table>
          </div>
          <div class="th-bloco th-compactas">${itens.map(linhaCompacta).join("")}</div>
-         ${window.paginacaoDaLista("forum", pagina, paginas, new URLSearchParams())}`
-      : `<p class="th-vazio">Nenhuma thread ainda.</p>`;
-    preenche(minhaVez, "[data-th-principal]", `<header class="vp-sec"><h1>Fórum</h1>${contagem}</header>${corpo}`);
+         ${window.paginacaoDaLista(secao, pagina, paginas, new URLSearchParams())}`;
+  }
+
+  async function renderLista() {
+    const pagina = Math.max(1, parseInt(window.routeQuery().get("pagina"), 10) || 1);
+    const minhaVez = casca(blocoNovaConversa, `<header class="vp-sec"><h1>Fórum</h1></header>${carregando}`);
+    let resultado;
+    let patch;
+    try {
+      [resultado, patch] = await Promise.all([
+        window.Community.listarTopicos({ pagina, porPagina: POR_PAGINA, secao: "geral" }),
+        window.Community.listarTopicos({ pagina: 1, porPagina: PATCH_PAINEL, secao: "patch" }),
+      ]);
+    } catch (erro) {
+      preenche(minhaVez, "[data-th-principal]", `<header class="vp-sec"><h1>Fórum</h1></header>${falhou(erro)}`);
+      return;
+    }
+    const painel = painelDePatch(patch);
+    const { itens, total } = resultado;
+    const paginas = Math.max(1, Math.ceil(total / POR_PAGINA));
+    const contagem = `<p class="lista-contagem" role="status" aria-live="polite">${total} ${total === 1 ? "thread" : "threads"}</p>`;
+    const corpo = itens.length ? tabelaDeThreads(itens, "forum", pagina, paginas) : `<p class="th-vazio">Nenhuma thread ainda.</p>`;
+    // Com o painel em cima, a tabela ganha o proprio titulo para nao parecer parte dele.
+    const titulo = painel ? `<header class="vp-sec"><h2>Threads</h2></header>` : "";
+    preenche(minhaVez, "[data-th-principal]", `<header class="vp-sec"><h1>Fórum</h1>${contagem}</header>${painel}${titulo}${corpo}`);
+  }
+
+  // #/forum/patch-notes: todos os patch notes, na tabela do Forum.
+  async function renderPatchNotes() {
+    const pagina = Math.max(1, parseInt(window.routeQuery().get("pagina"), 10) || 1);
+    const cabeca = `<a class="th-voltar" href="#/forum">‹ Fórum</a><header class="vp-sec"><h1>Patch notes</h1></header>`;
+    const minhaVez = casca(blocoNovaConversa, `${cabeca}${carregando}`);
+    let resultado;
+    try {
+      resultado = await window.Community.listarTopicos({ pagina, porPagina: POR_PAGINA, secao: "patch" });
+    } catch (erro) {
+      preenche(minhaVez, "[data-th-principal]", `${cabeca}${falhou(erro)}`);
+      return;
+    }
+    const { itens, total } = resultado;
+    const paginas = Math.max(1, Math.ceil(total / POR_PAGINA));
+    const corpo = itens.length ? tabelaDeThreads(itens, "forum/patch-notes", pagina, paginas) : `<p class="th-vazio">Nenhum patch notes ainda.</p>`;
+    preenche(minhaVez, "[data-th-principal]", `${cabeca}${corpo}${botaoPatch()}`);
   }
 
   // ------------------------------------------------------------- formulario
@@ -164,23 +221,23 @@
   // formulario tem a cara do que vai ser publicado. Serve para abrir e para
   // editar.
 
-  function cartaoFormulario({ titulo = "", texto = "", autor, botao, cancelar }) {
+  function cartaoFormulario({ titulo = "", texto = "", autor, botao, cancelar, secao = "geral" }) {
     return `
       <form class="th-bloco th-cartao th-form" data-th-form novalidate>
         <div class="th-cabeca">
           <label class="sr-only" for="th-titulo">Título</label>
-          <input class="th-input-titulo" id="th-titulo" name="titulo" maxlength="120" placeholder="Título da thread" value="${esc(titulo)}" autocomplete="off" required />
+          <input class="th-input-titulo" id="th-titulo" name="titulo" maxlength="120" placeholder="${secao === "patch" ? "Título do patch notes" : "Título da thread"}" value="${esc(titulo)}" autocomplete="off" required />
           <div class="th-meta">${window.Comments.avatar(autor)}<span>${esc(autor)}</span></div>
         </div>
         <div class="th-corpo">
           <label class="sr-only" for="th-texto">Texto (opcional)</label>
-          <textarea class="th-input-texto" id="th-texto" name="texto" maxlength="2000" placeholder="Texto (opcional)">${esc(texto)}</textarea>
+          <textarea class="th-input-texto" id="th-texto" name="texto" maxlength="${MAXIMO[secao] || MAXIMO.geral}" placeholder="Texto (opcional)">${esc(texto)}</textarea>
         </div>
         <p class="th-erro" role="alert" hidden></p>
         <div class="th-acoes">
           <button class="th-nova" type="submit">${botao}</button>
           <a class="th-cancelar" href="${cancelar}">Cancelar</a>
-          <small class="th-dica-form">Título de 5 a 120 caracteres · texto opcional</small>
+          <small class="th-dica-form">${secao === "patch" ? "Título de 5 a 120 caracteres · texto até 8.000" : "Título de 5 a 120 caracteres · texto opcional"}</small>
         </div>
       </form>`;
   }
@@ -221,12 +278,15 @@
   function renderNova() {
     const rascunho = rascunhoAtual();
     const perfil = window.Community.perfil();
+    const secao = window.routeQuery().get("secao") === "patch" ? "patch" : "geral";
     let principal;
     if (!logado()) {
       principal = `<div class="th-bloco th-aviso"><p>Entre na sua conta para abrir uma thread.</p>
         <button type="button" class="th-nova" data-th-login>Entrar ou criar conta</button></div>`;
     } else if (window.Community.banido()) {
       principal = `<div class="th-bloco th-aviso"><p>Sua conta está suspensa e não pode abrir threads agora.</p></div>`;
+    } else if (secao === "patch" && !ehAdmin()) {
+      principal = `<div class="th-bloco th-aviso"><p>Só admin publica patch notes.</p></div>`;
     } else {
       principal = cartaoFormulario({
         autor: perfil.username,
@@ -234,12 +294,13 @@
         texto: rascunho ? rascunho.texto : "",
         botao: "Publicar",
         cancelar: "#/forum",
+        secao,
       });
     }
-    casca(outrasThreads(null), `<a class="th-voltar" href="#/forum">‹ Fórum</a><h1 class="sr-only">Nova thread</h1>${principal}`, true);
+    casca(outrasThreads(null), `<a class="th-voltar" href="#/forum">‹ Fórum</a><h1 class="sr-only">${secao === "patch" ? "Novo patch notes" : "Nova thread"}</h1>${principal}`, true);
     const form = document.querySelector("[data-th-form]");
     ligaFormulario(form, async (titulo, texto) => {
-      const id = await window.Community.criarTopico(titulo, texto);
+      const id = await window.Community.criarTopico(titulo, texto, secao);
       window.location.hash = hrefDaThread(id);
     });
     // Foco no titulo so na chegada: num redesenho a pessoa pode estar no texto.
@@ -250,7 +311,8 @@
 
   function podeEditar(t) {
     const perfil = window.Community.perfil();
-    return Boolean(perfil && t.author_id === perfil.id && Date.now() - Date.parse(t.created_at) < EDITA_MINUTOS * 60000);
+    // Patch notes se corrige a qualquer hora (0011); a thread geral, so nos 15 minutos.
+    return Boolean(perfil && t.author_id === perfil.id && (ehPatch(t) || Date.now() - Date.parse(t.created_at) < EDITA_MINUTOS * 60000));
   }
 
   function podeApagar(t) {
@@ -268,6 +330,7 @@
     return `
       <article class="th-bloco th-cartao">
         <div class="th-cabeca">
+          ${ehPatch(t) ? `<a class="th-secao" href="#/forum/patch-notes">Patch notes</a>` : ""}
           <h1>${esc(t.title)}</h1>
           <div class="th-meta">
             ${autor ? window.Comments.avatar(autor.username) : ""}
@@ -335,6 +398,7 @@
         autor: t.autor ? t.autor.username : "",
         botao: "Salvar",
         cancelar: hrefDaThread(t.id),
+        secao: t.secao || "geral",
       });
       const form = lugar.querySelector("[data-th-form]");
       // Cancelar volta ao cartao sem recarregar a pagina (a rota e a mesma).
@@ -358,6 +422,7 @@
   function renderThreads(id) {
     if (!id) return renderLista();
     if (id === "nova") return renderNova();
+    if (id === "patch-notes") return renderPatchNotes();
     return renderThread(decodeURIComponent(id));
   }
 

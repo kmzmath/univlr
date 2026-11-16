@@ -13021,6 +13021,20 @@ a.vp-cj-equipe:hover span {
 
 .th-cabeca { padding: 20px 22px 14px; }
 
+/* Patch notes (16/11/2026): o rotulo da secao acima do titulo, que leva a lista. */
+.th-secao {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font: 600 12px/1 var(--font-text);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.th-secao:hover { color: var(--ink); }
+.th-patch { min-width: 0; }
+
 .th-cabeca h1,
 .th-aviso h1 {
   margin: 0 0 10px;

@@ -10,6 +10,7 @@ const raiz = path.join(__dirname, "..");
 const ALICE = "11111111-1111-4111-8111-111111111111";
 const BRUNO = "22222222-2222-4222-8222-222222222222";
 const ORFA = "33333333-3333-4333-8333-333333333333";
+const ADM = "44444444-4444-4444-8444-444444444444";
 const espera = (ms) => new Promise((ok) => setTimeout(ok, ms));
 
 function novoContexto() {
@@ -23,6 +24,7 @@ function novoContexto() {
       usuarios: [
         { id: ALICE, email: "alice@teste.univlr", senha: "a", username: "alice_teste" },
         { id: BRUNO, email: "bruno@teste.univlr", senha: "b", username: "bruno_teste" },
+        { id: ADM, email: "adm@teste.univlr", senha: "c", username: "adm_teste", role: "admin" },
       ],
       topicos: [{ id: ORFA, autor: null, title: "Thread de conta apagada", body: "", minutosAtras: 600 }],
     },
@@ -157,6 +159,23 @@ async function rejeita(promessa, trecho) {
   assert.strictEqual(Cm.assuntoDaThread("topic", t1), null, "apagada nao vira assunto");
   await C.carregarContagens();
   assert.ok(!Cm.atividadeFaixa(5).includes("#/forum/"), "thread livre nao entra na atividade recente");
+
+  // Patch notes (0011): so admin publica, ate 8.000 caracteres, e as listas
+  // separam as secoes; sem secao, a lista traz tudo (painel da home).
+  await entra(C, "bruno@teste.univlr", "b");
+  await rejeita(C.criarTopico("Patch notes falso", "x", "patch"), "so admin publica patch notes");
+  await entra(C, "adm@teste.univlr", "c");
+  await rejeita(C.criarTopico("Thread geral comprida", "a".repeat(2001)), "no maximo 2000");
+  const p1 = await C.criarTopico("Patch notes 16/11", "a".repeat(8000), "patch");
+  assert.ok(/^[0-9a-f-]{36}$/.test(p1), "admin publica patch notes de 8000");
+  const patches = await C.listarTopicos({ secao: "patch" });
+  assert.deepStrictEqual(JSON.parse(JSON.stringify(patches.itens.map((x) => [x.id, x.secao]))), [[p1, "patch"]], "a lista de patch notes so tem eles");
+  const gerais = await C.listarTopicos({ secao: "geral" });
+  assert.ok(!gerais.itens.some((x) => x.id === p1) && gerais.total === 3, "a lista geral nao tem patch notes");
+  assert.ok((await C.listarTopicos()).itens.some((x) => x.id === p1), "sem secao, a lista traz tudo");
+  assert.strictEqual((await C.topico(p1)).secao, "patch", "a thread sabe que e patch notes");
+  assert.strictEqual(C.mensagemDeErro({ message: "so admin publica patch notes" }), "Só admin publica patch notes.");
+  assert.strictEqual(C.mensagemDeErro({ message: "texto pode ter no maximo 8000 caracteres" }), "O texto pode ter no máximo 8.000 caracteres.");
 
   // A mensagem do banco chega sem acento; a tela mostra escrita direito.
   assert.strictEqual(C.mensagemDeErro({ message: "titulo precisa ter entre 5 e 120 caracteres" }), "O título precisa ter entre 5 e 120 caracteres.");

@@ -1,0 +1,23 @@
+Patch notes 16/11: Troféus, Recordes numa série e rAAting sem limites
+
+[b]Estatísticas[/b]
+- [url=#/stats/jogadores/trofeus]Troféus[/url]: aba nova em Estatísticas > Jogadores, um quadro de medalhas no estilo olímpico. Cada jogador aparece com as taças de cada cor, e dá para ordenar por ouro, prata, bronze ou total e filtrar por ano, tier e equipe. 3º/4º lugar conta como bronze.
+- [url=#/stats/jogadores/recordes?por=serie]Recordes numa série[/url]: os Recordes agora têm "Num mapa" e "Numa série". Na série entram as séries de 2 mapas ou mais, somando os números de todos os mapas. O recorde de abates é do khianh, com 101 numa MD5.
+- Agentes por mapa: clicar num mapa ordena os agentes pelo uso naquele mapa, e clicar num agente ordena os mapas pelo uso dele. Vale nas páginas de campeonato, equipe e jogador.
+
+[b]rAAting[/b]
+- O rAAting 3.0 não tem mais limite. Antes, cada parte da nota parava em 1,80, a nota de um mapa não passava de 1,79 e 74 mapas estavam empatados no topo. Agora a única referência é a mediana em 1,00: o maior mapa do site é 2,95 (spMM, 30/7 em 13 rounds), e uma atuação muito ruim pode ficar abaixo de zero.
+- Quem tem muitos mapas quase não muda: nenhum jogador com 20 mapas ou mais mudou de nota no perfil. A nota de um campeonato agora é a mesma pela soma dos rounds e pela média dos mapas.
+- O ranking das equipes usa a nota dos mapas, então o histórico teve pequenos ajustes (nenhuma equipe andou mais de 2 posições numa semana). O ranking atual ficou igual.
+
+[b]Ranking[/b]
+- [url=#/ranking]Por estado[/url]: aba nova no Ranking, com a posição e a variação de cada equipe dentro do estado, escolhido pelas regiões do Brasil.
+- Equipe parada: quando uma parada passa do prazo de inatividade, a equipe sai do ranking desde o último jogo, e não só quando o prazo vence. O histórico foi refeito com essa regra.
+
+[b]Perfis[/b]
+- Jogador, aba Carreira: histórico do ranking, com a posição da equipe em que ele estava em cada semana. A tabela Equipes agora ordena por coluna.
+- Equipe: na aba Partidas e nas Últimas partidas, a MD1 mostra o placar em rounds (13-7) no lugar de 1-0.
+- A Black Cyber agora é uma fase da CEUB Octopus, com um perfil só.
+
+[b]Fórum[/b]
+- O Fórum ganhou esta seção de Patch notes. Comentem aqui o que acharam das mudanças, ou o que encontrarem de errado.

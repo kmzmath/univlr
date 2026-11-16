@@ -28,6 +28,7 @@ existe e precisa passar antes de qualquer tela.
 | `migrations/0008_threads_livres.sql` | Threads livres (`topics`, tipo `topic`), aviso `topic_reply`, view `topic_list` |
 | `migrations/0009_limite_de_assunto_e_mencoes.sql` | Formato e tamanho do `subject_id` (até 120 caracteres, letras, números, `-` e `_`) e no máximo 5 avisos de menção por comentário |
 | `migrations/0010_conta_apagada_preserva_respostas.sql` | Apagar a conta não apaga mais as respostas dos outros: o comentário com resposta embaixo vira "Comentário removido." sem autor |
+| `migrations/0011_patch_notes.sql` | Seção `patch` do Fórum: só admin publica, texto até 8.000 caracteres e correção sem a janela de 15 minutos; `topic_list` ganha `secao`. Aplicar antes de subir o front |
 | `tests/rls_test.sql` | Ataques que precisam falhar |
 | `tests/positive_test.sql` | Operações legítimas que precisam passar |
 

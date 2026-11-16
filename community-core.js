@@ -311,7 +311,7 @@
   // o id do topico como subject_id. Escrita so pelas RPCs do 0008.
 
   const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
-  const COLUNAS_TOPICO_RESUMO = "id, title, created_at, edited_at, author_username, respostas, ultima_atividade";
+  const COLUNAS_TOPICO_RESUMO = "id, title, created_at, edited_at, author_username, respostas, ultima_atividade, secao";
   let topicosCache = []; // as 5 mais recentes, para o painel da home (sincrono)
   const titulos = new Map(); // id -> titulo, para assuntoDaThread (sincrono)
 
@@ -322,11 +322,13 @@
   }
 
   // Ordem pela ultima atividade, como na HLTV: a thread comentada agora sobe.
-  async function listarTopicos({ pagina = 1, porPagina = 50 } = {}) {
+  // `secao` separa os patch notes (0011) das threads comuns; sem ela vem tudo,
+  // como no painel da home.
+  async function listarTopicos({ pagina = 1, porPagina = 50, secao = "" } = {}) {
     const de = (Math.max(1, pagina) - 1) * porPagina;
-    const { data, error, count } = await api()
-      .from("topic_list")
-      .select(COLUNAS_TOPICO_RESUMO, { count: "exact" })
+    let consulta = api().from("topic_list").select(COLUNAS_TOPICO_RESUMO, { count: "exact" });
+    if (secao) consulta = consulta.eq("secao", secao);
+    const { data, error, count } = await consulta
       .order("ultima_atividade", { ascending: false })
       .range(de, de + porPagina - 1);
     if (error) throw error;
@@ -352,7 +354,7 @@
     if (!UUID.test(String(id || ""))) return null;
     const { data, error } = await api()
       .from("topics")
-      .select("id, title, body, created_at, edited_at, deleted_at, author_id, profiles(username, role, fav_team, fav_player)")
+      .select("id, title, body, created_at, edited_at, deleted_at, author_id, secao, profiles(username, role, fav_team, fav_player)")
       .eq("id", id)
       .maybeSingle();
     if (error) throw error;
@@ -366,8 +368,12 @@
     await Promise.all([carregarTopicosRecentes(), invalidarContagens()]);
   }
 
-  async function criarTopico(titulo, texto) {
-    const { data, error } = await api().rpc("create_topic", { p_title: titulo, p_body: texto || "" });
+  // A secao so vai quando nao e a geral: a chamada de dois argumentos e a
+  // mesma de antes do 0011.
+  async function criarTopico(titulo, texto, secao = "geral") {
+    const args = { p_title: titulo, p_body: texto || "" };
+    if (secao !== "geral") args.p_secao = secao;
+    const { data, error } = await api().rpc("create_topic", args);
     if (error) throw error;
     await depoisDeEscrever();
     return data;
@@ -669,6 +675,9 @@
     "limite diario de threads atingido": "Você chegou ao limite de threads por hoje.",
     "so da para editar thread propria, nos primeiros 15 minutos":
       "Só dá para editar a própria thread, nos primeiros 15 minutos.",
+    "texto pode ter no maximo 8000 caracteres": "O texto pode ter no máximo 8.000 caracteres.",
+    "so admin publica patch notes": "Só admin publica patch notes.",
+    "secao desconhecida": "Essa seção do Fórum não existe.",
     "thread nao existe": "Esta thread não existe mais.",
     "thread nao encontrada": "Esta thread não existe mais.",
     "conta suspensa": "Sua conta está suspensa.",

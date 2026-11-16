@@ -275,6 +275,66 @@ begin
 end;
 $topicos$;
 
+-- ------------------------------------------ patch notes (0011)
+-- Admin publica na secao `patch` com ate 8.000 caracteres e edita depois dos 15
+-- minutos; a conversa, o aviso e a lista sao os de qualquer thread. A chamada
+-- antiga, de dois argumentos, continua abrindo thread geral.
+
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
+                        email_confirmed_at, created_at, updated_at, raw_user_meta_data)
+values
+  ('77777777-7777-7777-7777-777777777781', '00000000-0000-0000-0000-000000000000',
+   'authenticated', 'authenticated', 'ana_patch@teste.univlr', '', now(), now(), now(),
+   '{"username":"ana_patch_teste"}'),
+  ('77777777-7777-7777-7777-777777777782', '00000000-0000-0000-0000-000000000000',
+   'authenticated', 'authenticated', 'beto_patch@teste.univlr', '', now(), now(), now(),
+   '{"username":"beto_patch_teste"}');
+update public.profiles set role = 'admin' where id = '77777777-7777-7777-7777-777777777781';
+
+do $patch$
+declare
+  ana  uuid := '77777777-7777-7777-7777-777777777781';
+  beto uuid := '77777777-7777-7777-7777-777777777782';
+  t_patch uuid; t_geral uuid; t_beto uuid; c_beto uuid;
+  n int; t text;
+begin
+  perform set_config('request.jwt.claims', json_build_object('sub', ana)::text, true);
+  set local role authenticated;
+
+  t_patch := public.create_topic('Patch notes 16/11', repeat('a', 8000), 'patch');
+  select count(*) into n from public.topic_list where id = t_patch and secao = 'patch';
+  insert into _p (caso, esperado, obtido) values ('admin publica patch notes de 8000', '1', n::text);
+
+  t_geral := public.create_topic('Thread geral da ana', '');
+  select secao into t from public.topic_list where id = t_geral;
+  insert into _p (caso, esperado, obtido) values ('chamada de dois argumentos abre thread geral', 'geral', coalesce(t, 'nulo'));
+
+  perform set_config('request.jwt.claims', json_build_object('sub', beto)::text, true);
+  t_beto := public.create_topic('Thread do beto', 'oi', 'geral');
+  select secao into t from public.topic_list where id = t_beto;
+  insert into _p (caso, esperado, obtido) values ('conta comum abre thread geral', 'geral', coalesce(t, 'nulo'));
+
+  c_beto := public.post_comment('topic', t_patch::text, 'boa atualizacao');
+  select respostas into n from public.topic_list where id = t_patch;
+  insert into _p (caso, esperado, obtido) values ('patch notes recebe comentario', '1', n::text);
+
+  reset role;
+  select count(*) into n from public.notifications where user_id = ana and kind = 'topic_reply' and comment_id = c_beto;
+  insert into _p (caso, esperado, obtido) values ('admin recebe aviso no patch notes', '1', n::text);
+
+  -- Depois dos 15 minutos o patch notes ainda se corrige.
+  update public.topics set created_at = now() - interval '1 day' where id = t_patch;
+  perform set_config('request.jwt.claims', json_build_object('sub', ana)::text, true);
+  set local role authenticated;
+  perform public.edit_topic(t_patch, 'Patch notes 16/11 corrigido', repeat('b', 8000));
+  select title into t from public.topics where id = t_patch and edited_at is not null and body = repeat('b', 8000);
+  insert into _p (caso, esperado, obtido) values ('admin edita patch notes depois de 15 minutos', 'Patch notes 16/11 corrigido', coalesce(t, 'nao editou'));
+  reset role;
+end;
+$patch$;
+
+delete from auth.users where email in ('ana_patch@teste.univlr', 'beto_patch@teste.univlr');
+
 -- ------------------------------------------ apagar a conta (0010)
 -- Quem sai leva os proprios comentarios; resposta de outra pessoa embaixo de
 -- um deles fica, e o dele vira "Comentario removido." sem texto e sem autor.

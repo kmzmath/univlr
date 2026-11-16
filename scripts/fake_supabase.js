@@ -34,7 +34,7 @@
       const quando = new Date(Date.now() - (t.minutosAtras || 5) * 60000).toISOString();
       return {
         id: t.id, author_id: t.autor || null, title: t.apagado ? "" : t.title, body: t.apagado ? "" : t.body || "",
-        created_at: quando, edited_at: null, deleted_at: t.apagado ? quando : null,
+        created_at: quando, edited_at: null, deleted_at: t.apagado ? quando : null, secao: t.secao || "geral",
       };
     }),
     notifications: [],
@@ -82,6 +82,7 @@
           author_username: p ? p.username : null,
           respostas: vivos.length,
           ultima_atividade: vivos.reduce((max, c) => (c.created_at > max ? c.created_at : max), t.created_at),
+          secao: t.secao,
         };
       });
   }
@@ -230,18 +231,23 @@
       c.body = "";
       c.deleted_at = agora();
     },
-    create_topic({ p_title, p_body }) {
+    // Patch notes (0011): secao `patch` so para admin, com ate 8.000 caracteres.
+    create_topic({ p_title, p_body, p_secao }) {
       const uid = sessao?.user.id;
       if (!uid) throw { message: "nao autenticado", code: "P0001" };
       const title = limpaTitulo(p_title);
       const body = String(p_body || "").trim();
+      const secao = p_secao ?? "geral";
+      if (!["geral", "patch"].includes(secao)) throw { message: "secao desconhecida", code: "P0001" };
+      if (secao === "patch" && db.profiles.find((x) => x.id === uid)?.role !== "admin") throw { message: "so admin publica patch notes", code: "P0001" };
       if (!tituloValido(title)) throw { message: "titulo precisa ter entre 5 e 120 caracteres", code: "P0001" };
-      if (body.length > 2000) throw { message: "texto pode ter no maximo 2000 caracteres", code: "P0001" };
+      const maximo = secao === "patch" ? 8000 : 2000;
+      if (body.length > maximo) throw { message: `texto pode ter no maximo ${maximo} caracteres`, code: "P0001" };
       const desde = (min) => db.topics.filter((x) => x.author_id === uid && Date.parse(x.created_at) > Date.now() - min * 60000).length;
       if (desde(60) >= 3) throw { message: "muitas threads seguidas, espere um pouco", code: "P0001" };
       if (desde(1440) >= 10) throw { message: "limite diario de threads atingido", code: "P0001" };
       const id = novoId();
-      db.topics.push({ id, author_id: uid, title, body, created_at: agora(), edited_at: null, deleted_at: null });
+      db.topics.push({ id, author_id: uid, title, body, created_at: agora(), edited_at: null, deleted_at: null, secao });
       db.threads.push({ id: novoId(), subject_kind: "topic", subject_id: id, created_at: agora() });
       return id;
     },
@@ -251,9 +257,11 @@
       const title = limpaTitulo(p_title);
       const body = String(p_body || "").trim();
       if (!tituloValido(title)) throw { message: "titulo precisa ter entre 5 e 120 caracteres", code: "P0001" };
-      if (body.length > 2000) throw { message: "texto pode ter no maximo 2000 caracteres", code: "P0001" };
-      const alvo = db.topics.find((x) => x.id === p_topic_id && x.author_id === uid && !x.deleted_at && Date.parse(x.created_at) > Date.now() - 15 * 60000);
+      // Patch notes se corrige a qualquer hora; a thread geral, so nos 15 minutos.
+      const alvo = db.topics.find((x) => x.id === p_topic_id && x.author_id === uid && !x.deleted_at && (x.secao === "patch" || Date.parse(x.created_at) > Date.now() - 15 * 60000));
       if (!alvo) throw { message: "so da para editar thread propria, nos primeiros 15 minutos", code: "P0001" };
+      const maximo = alvo.secao === "patch" ? 8000 : 2000;
+      if (body.length > maximo) throw { message: `texto pode ter no maximo ${maximo} caracteres`, code: "P0001" };
       Object.assign(alvo, { title, body, edited_at: agora() });
     },
     delete_topic({ p_topic_id }) {

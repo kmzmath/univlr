@@ -450,7 +450,83 @@ begin
 end;
 $assunto$;
 
+-- ----------------------------------------------------------- patch notes (0011)
+-- Secao `patch` do Forum: so admin publica. Cada caso confere a MENSAGEM do erro,
+-- para o teste nao passar so porque a funcao de tres argumentos ainda nao existe.
+
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
+                        email_confirmed_at, created_at, updated_at, raw_user_meta_data)
+values
+  ('77777777-7777-7777-7777-777777777771', '00000000-0000-0000-0000-000000000000',
+   'authenticated', 'authenticated', 'adm_patch@teste.univlr', '', now(), now(), now(),
+   '{"username":"adm_patch_teste"}'),
+  ('77777777-7777-7777-7777-777777777772', '00000000-0000-0000-0000-000000000000',
+   'authenticated', 'authenticated', 'eva_patch@teste.univlr', '', now(), now(), now(),
+   '{"username":"eva_patch_teste"}');
+update public.profiles set role = 'admin' where id = '77777777-7777-7777-7777-777777777771';
+
+do $patch$
+declare
+  adm uuid := '77777777-7777-7777-7777-777777777771';
+  eva uuid := '77777777-7777-7777-7777-777777777772';
+  t_patch uuid;
+begin
+  perform set_config('request.jwt.claims', json_build_object('sub', adm)::text, true);
+  set local role authenticated;
+  t_patch := public.create_topic('Patch notes do teste', 'texto', 'patch');
+
+  perform set_config('request.jwt.claims', json_build_object('sub', eva)::text, true);
+
+  -- ATAQUE - conta comum publica patch notes chamando a RPC direto.
+  begin
+    perform public.create_topic('Patch notes falso', 'texto', 'patch');
+    insert into _r (teste, esperado, resultado) values ('conta comum publica patch notes', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('conta comum publica patch notes', 'bloqueado',
+      case when SQLERRM like '%so admin publica patch notes%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - secao inventada.
+  begin
+    perform public.create_topic('Secao inventada aqui', '', 'anuncios');
+    insert into _r (teste, esperado, resultado) values ('secao inventada', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('secao inventada', 'bloqueado',
+      case when SQLERRM like '%secao desconhecida%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - thread geral com o limite do patch notes.
+  begin
+    perform public.create_topic('Thread geral comprida', repeat('a', 2001), 'geral');
+    insert into _r (teste, esperado, resultado) values ('thread geral com 2001 caracteres', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('thread geral com 2001 caracteres', 'bloqueado',
+      case when SQLERRM like '%no maximo 2000 caracteres%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - trocar a secao direto na tabela.
+  begin
+    update public.topics set secao = 'patch' where author_id = eva;
+    insert into _r (teste, esperado, resultado) values ('trocar secao direto na tabela', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('trocar secao direto na tabela', 'bloqueado',
+      case when SQLERRM like '%permission denied%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - editar o patch notes de outra pessoa.
+  begin
+    perform public.edit_topic(t_patch, 'Patch notes trocado', 'texto da eva');
+    insert into _r (teste, esperado, resultado) values ('conta comum edita patch notes do admin', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('conta comum edita patch notes do admin', 'bloqueado',
+      case when SQLERRM like '%so da para editar thread propria%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+  reset role;
+end;
+$patch$;
+
 -- ------------------------------------------------------------------ limpeza
+delete from auth.users where email in ('adm_patch@teste.univlr', 'eva_patch@teste.univlr');
 delete from auth.users where email in ('alice@teste.univlr', 'bruno@teste.univlr');
 delete from auth.users where email like 'mencao_@teste.univlr';
 delete from public.threads where subject_id in ('partida-de-teste', 'outra-partida');

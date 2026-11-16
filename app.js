@@ -20661,6 +20661,10 @@ const TOURNAMENT_OVERRIDES = {
     prizePool: "R$15.000",
     tier: "S",
     type: "Online - Final presencial",
+    // MVP da Univava 2026 inteira (classificatorias, grupos e playoffs), pela
+    // conta principal do chadu. Fica na etapa que decide o campeonato, como o
+    // "univava" com etapas espera. Formula na materia de 14/11/2026.
+    mvp: "dsUDB7RGqdpVQg2f9bE8kKdEjkvK734PTW650lVHStgXWL4onVHvK3FVXPFZnUCIwJDdFHSGwk_HeQ",
     // Quartas em 17 e 18/10/2026, semifinais em 24/10 e final presencial em 14/11.
     status: "Finalizado",
     startAt: "2026-10-17T00:00:00",

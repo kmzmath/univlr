@@ -12,15 +12,15 @@ const vm = require("vm");
 const raiz = path.join(__dirname, "..");
 const ler = (arquivo) => fs.readFileSync(path.join(raiz, arquivo), "utf8");
 const manifesto = JSON.parse(ler("cartas/manifest.json"));
-const TEXTO = "É revelado um lote de cartinhas por dia, em ordem do menor para o maior overall. No total são 216 cartinhas, de jogadores com pelo menos 200 rounds e 12 mapas jogados no ano. Última revelação em 24 de novembro.";
+const TEXTO = "É revelado um lote de cartinhas por dia, em ordem do menor para o maior overall. No total são 216 cartinhas, de jogadores com pelo menos 200 rounds e 12 mapas jogados no ano. Última revelação em 19 de novembro.";
 
 // ------------------------------------------------------------- manifesto
 
 const reveladas = manifesto.days.filter((day) => day.cards);
 assert.strictEqual(manifesto.total, 216);
-assert.strictEqual(manifesto.days.length, 33);
+assert.strictEqual(manifesto.days.length, 28);
 assert.strictEqual(manifesto.days.reduce((soma, day) => soma + day.count, 0), 216);
-assert.strictEqual(manifesto.days.at(-1).date, "2026-11-24");
+assert.strictEqual(manifesto.days.at(-1).date, "2026-11-19");
 assert(manifesto.days.every((day, i) => !day.cards || i < reveladas.length), "so os primeiros dias tem cartinhas");
 assert(reveladas.every((day) => day.cards.length === day.count), "dia revelado traz todas as cartinhas dele");
 assert(reveladas.at(-1).date <= manifesto.publishedThrough);

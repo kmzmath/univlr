@@ -45,12 +45,12 @@ def load_schedule():
         raise ValueError(f"Esperadas 216 cartinhas; encontradas {len(rows)}")
     dates = [date.fromisoformat(row["Data"]) for row in rows]
     counts = Counter(dates)
-    if dates[0] != date(2026, 10, 23) or dates[-1] != date(2026, 11, 24):
-        raise ValueError("O calendário precisa ir de 23/10 a 24/11")
+    if dates[0] != date(2026, 10, 23) or dates[-1] != date(2026, 11, 19):
+        raise ValueError("O calendário precisa ir de 23/10 a 19/11")
     if max(counts.values()) > 10:
         raise ValueError("Há um dia com mais de 10 cartinhas")
-    if len(counts) != 33:
-        raise ValueError("O calendário precisa ter 33 dias")
+    if len(counts) != 28:
+        raise ValueError("O calendário precisa ter 28 dias")
     if sum(count for day, count in counts.items() if day > date(2026, 11, 14)) != 20:
         raise ValueError("O top 20 precisa ficar após a final do UNIVAVÁ")
     if any(dates[i] > dates[i + 1] for i in range(len(dates) - 1)):
@@ -88,8 +88,8 @@ def publicadas_congeladas():
 
 def publish(through, preview, recalcular=False):
     rows, counts = load_schedule()
-    if through < date(2026, 10, 22) or through > date(2026, 11, 24):
-        raise ValueError("Escolha uma data entre 22/10 e 24/11/2026")
+    if through < date(2026, 10, 22) or through > date(2026, 11, 19):
+        raise ValueError("Escolha uma data entre 22/10 e 19/11/2026")
     if through > date.today() and not preview:
         raise ValueError("Data futura: use --preview apenas para preparar uma versão local")
 

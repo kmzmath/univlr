@@ -103,6 +103,47 @@ rankingAplicaInatividade(historical, new Map([["a", [start]]]), start + DAY, 150
 assert.equal(historical.teams[0].inactive, false, "dissolucao atual nao e projetada para semanas antigas");
 assert.equal(historical.teams[0].rosterSize, 5);
 
+// Retificacao (16/11/2026): com horizonte, a parada que passou do prazo tira a
+// equipe desde o ultimo jogo, e nao so do dia em que estourou.
+{
+  const L = date("2025-05-01"); // maio a novembro: nenhum dia de recesso no caminho
+  const em = (dias) => L + dias * DAY;
+  const semana = () => ({ teams: [{ id: "a", matches: 12, overallRank: 1, rosterSize: 5, score: 70 }, { id: "b", matches: 12, overallRank: 2, rosterSize: 5, score: 60 }], byTeamId: {} });
+  const roda = (jogosA, corte, horizonte, extra = {}) => {
+    const fim = Math.max(corte, horizonte || corte);
+    const datas = new Map([["a", jogosA], ["b", activeScene(L, fim)]]);
+    return rankingAplicaInatividade(semana(), datas, corte, 150, null, { horizonte, ...extra });
+  };
+  const posicoes = (ranking) => ranking.teams.map((row) => row.validRank);
+
+  assert.deepEqual(posicoes(roda([L, em(200)], em(30), em(210))), [null, 1], "parada que passou do prazo sai desde o ultimo jogo, mesmo com volta depois");
+  assert.equal(roda([L, em(200)], em(30), em(210)).teams[0].inactiveReason, "inactivity");
+  assert.deepEqual(posicoes(roda([L, em(200)], em(30))), [1, 2], "sem horizonte, nada do futuro entra");
+  assert.deepEqual(posicoes(roda([L, em(140)], em(30), em(210))), [1, 2], "parada menor que o prazo nao muda nada");
+  assert.deepEqual(posicoes(roda([L], em(30), em(150))), [1, 2], "parada aberta ainda no prazo nao e confirmada");
+  assert.deepEqual(posicoes(roda([L], em(30), em(151))), [null, 1], "parada aberta confirmada no horizonte");
+  assert.deepEqual(posicoes(roda([L], em(6), em(200))), [1, 2], "o primeiro ranking depois do ultimo jogo fica");
+  assert.deepEqual(posicoes(roda([L], em(7), em(200))), [null, 1], "a partir do segundo, sai");
+  assert.deepEqual(posicoes(roda([L, em(200)], em(30), em(100))), [1, 2], "jogo depois do horizonte nao e conhecido");
+  assert.deepEqual(posicoes(roda([L, em(200)], em(210), em(220))), [1, 2], "depois da volta, conta a parada nova");
+
+  const fechada = roda([L, em(200)], em(30), em(210));
+  const antes = JSON.stringify(fechada);
+  rankingAplicaInatividade(fechada, new Map([["a", [L, em(200)]], ["b", activeScene(L, em(210))]]), em(30), 150, null, { horizonte: em(210) });
+  assert.equal(JSON.stringify(fechada), antes, "retificar de novo nao muda nada");
+  assert.equal(fechada.teams[0].score, 70, "a retificacao nao mexe na nota");
+
+  const dissolvida = { id: "a", currentLineup: roster(5), profile: { competitiveStatus: "dissolved" } };
+  assert.equal(roda([L], em(30), em(60), { teams: [dissolvida] }).teams[0].inactiveReason, "dissolved", "dissolvida sem jogo depois sai desde o ultimo jogo");
+  assert.deepEqual(posicoes(roda([L, em(40)], em(30), em(60), { teams: [dissolvida] })), [1, 2], "dissolvida que jogou depois continua naquela semana");
+  assert.deepEqual(posicoes(roda([L], em(6), em(60), { teams: [dissolvida] })), [1, 2], "dissolvida tambem fica no primeiro ranking depois do ultimo jogo");
+
+  // O recesso continua fora da conta: parada de 20/11 a 20/05 soma so 29 dias.
+  const fimDoAno = date("2025-11-20");
+  const recesso = new Map([["a", [fimDoAno]], ["b", activeScene(fimDoAno, date("2026-05-20"))]]);
+  assert.equal(rankingAplicaInatividade(semana(), recesso, date("2025-12-09"), 150, null, { horizonte: date("2026-05-20") }).teams[0].inactive, false, "recesso nao conta na retificacao");
+}
+
 // A mesma politica vale se o motor de notas estiver indisponivel.
 const core = window.RankingCore;
 window.RankingCore = undefined;

@@ -136,6 +136,9 @@ function main() {
   // sai diferente da que o navegador calcula — foi o que aconteceu na primeira
   // geração (11-18 de ago aqui contra 11-25 no navegador).
   ensureCurrentRankingSnapshot(state.db);
+  // Também como no init(): a seta da home compara com a semana anterior, que a
+  // retificação de inatividade pode renumerar.
+  rankingInatividadeNasSemanas(state.db);
   state.ready = true;
 
   // Líderes da semana pela função real do app.js.

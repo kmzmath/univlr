@@ -26258,11 +26258,32 @@ function rankingDatasDeJogo(matches, matchSeries) {
   return datas;
 }
 
+// Os dias com jogo de alguem, sem repetir e em ordem, uma vez por mapa de datas: a
+// passada das semanas pede as paradas do cenario mais de 200 vezes ao carregar.
+function rankingDiasDoCenario(datas) {
+  const cache = rankingDiasDoCenario.cache || (rankingDiasDoCenario.cache = new WeakMap());
+  if (!cache.has(datas)) cache.set(datas, [...new Set([...datas.values()].flat())].sort((a, b) => a - b));
+  return cache.get(datas);
+}
+
+// Quantos itens da lista ordenada ficam ate `limite`, inclusive.
+function rankingQuantosAte(lista, limite) {
+  let inicio = 0;
+  let fim = lista.length;
+  while (inicio < fim) {
+    const meio = (inicio + fim) >> 1;
+    if (lista[meio] <= limite) inicio = meio + 1;
+    else fim = meio;
+  }
+  return inicio;
+}
+
 // As paradas do cenario inteiro: 30 dias ou mais sem jogo de ninguem. Elas nao contam
 // para a inatividade: sem isso, o intervalo de nov/24 a mai/25 deixava todas as equipes
 // inativas ao mesmo tempo, e o ranking daquelas semanas ficava vazio.
 function rankingParadasDoCenario(datas, cutoffAt = Infinity) {
-  const dias = [...new Set([...datas.values()].flat())].filter((dia) => dia <= cutoffAt).sort((a, b) => a - b);
+  const todos = rankingDiasDoCenario(datas);
+  const dias = todos.slice(0, rankingQuantosAte(todos, cutoffAt));
   const paradas = dias.flatMap((dia, indice) => (indice && dia - dias[indice - 1] >= 30 * DAY_MS ? [[dias[indice - 1], dia]] : []));
   // A parada ainda aberta tambem conta, sem depender de uma partida futura.
   const ultimo = dias.at(-1);
@@ -26285,8 +26306,8 @@ function rankingParadasDeInatividade(datas, cutoffAt, weights = {}) {
   const paradas = rankingParadasDoCenario(datas, cutoffAt);
   const meses = Array.isArray(weights?.inactivityExcludedMonths) ? weights.inactivityExcludedMonths : [12, 1, 2, 3, 4];
   const excluidos = [...new Set(meses.map(Number).filter((mes) => Number.isInteger(mes) && mes >= 1 && mes <= 12))];
-  const conhecidas = [...datas.values()].flat().filter((dia) => dia <= cutoffAt);
-  const primeiro = conhecidas.length ? Math.min(...conhecidas) : cutoffAt;
+  const todos = rankingDiasDoCenario(datas);
+  const primeiro = todos.length && todos[0] <= cutoffAt ? todos[0] : cutoffAt;
   for (let ano = new Date(primeiro).getUTCFullYear() - 1; ano <= new Date(cutoffAt).getUTCFullYear(); ano += 1) {
     for (const mes of excluidos) {
       // Brasilia (UTC-3), independente do fuso do navegador.
@@ -26315,11 +26336,38 @@ function rankingUltimoJogo(datas, ids, cutoffAt) {
   }, 0);
 }
 
+// O primeiro jogo de qualquer uma das ids depois do corte, ou 0.
+function rankingProximoJogo(datas, ids, cutoffAt) {
+  return ids.reduce((proximo, id) => {
+    const lista = datas.get(id) || [];
+    const depois = lista[rankingQuantosAte(lista, cutoffAt)];
+    return depois && (!proximo || depois < proximo) ? depois : proximo;
+  }, 0);
+}
+
+// A parada que comeca em `ultimo` passou do prazo antes do proximo jogo ou do
+// horizonte? So o que se sabe ate o horizonte entra, e as paradas do cenario sao
+// as conhecidas ate o fim da parada da equipe.
+function rankingParadaEstourou(datas, ultimo, proximo, horizonte, dias, teto, weights, pausasPorFim) {
+  const fim = proximo && proximo <= horizonte ? proximo : horizonte;
+  const corridos = (fim - ultimo) / DAY_MS;
+  if (corridos > teto) return true;
+  // Dia contavel nunca passa de dia corrido.
+  if (corridos <= dias) return false;
+  if (!pausasPorFim.has(fim)) pausasPorFim.set(fim, rankingParadasDeInatividade(datas, fim, weights));
+  return rankingDiasSemJogar(ultimo, fim, pausasPorFim.get(fim)) > dias;
+}
+
 // Equipe sem jogar ha mais de `dias`, contando so o tempo em que o cenario estava
 // ativo, fica inativa naquela semana e sai do ranking oficial; volta quando jogar de
 // novo. A nota nao muda: so quem esta ativo e numerado.
 // Serve ao calculo de cada semana e as semanas ja gravadas no banco, que recebem a
 // regra ao carregar, e por isso rodar duas vezes nao muda nada.
+// Retificacao (decisao do dono em 16/11/2026): com `context.horizonte` depois do
+// corte, a parada que passou do prazo ate o horizonte, mesmo de quem voltou depois,
+// tira a equipe desde o ultimo jogo, e a dissolvida sem jogo depois sai tambem. O
+// primeiro ranking depois do ultimo jogo fica, para esse resultado aparecer uma vez.
+// Sem horizonte (o calculo de cada semana), nada do futuro entra.
 function rankingAplicaInatividade(ranking, datas, cutoffAt, dias, paradas = null, context = {}) {
   const linhas = ranking?.teams || Object.values(ranking?.byTeamId || {});
   const pausas = paradas || rankingParadasDeInatividade(datas, cutoffAt, context.weights);
@@ -26327,6 +26375,9 @@ function rankingAplicaInatividade(ranking, datas, cutoffAt, dias, paradas = null
   const minimo = rankingMinimumRosterSize(context.weights);
   const prazoIncompleto = rankingIncompleteRosterInactivityDays(context.weights);
   const teto = rankingInactivityMaxCalendarDays(context.weights);
+  const horizonte = Number(context.horizonte) || 0;
+  const retifica = horizonte > cutoffAt;
+  const pausasPorFim = context.pausasPorFim || new Map();
   // Uma marca antiga de inatividade pode estar errada. Reavaliar todas as
   // linhas permite recuperar essas equipes sem reativar dissolvidas/sucedidas.
   const ordenadas = linhas.slice().sort((a, b) => (a.overallRank || Infinity) - (b.overallRank || Infinity));
@@ -26334,11 +26385,16 @@ function rankingAplicaInatividade(ranking, datas, cutoffAt, dias, paradas = null
   ordenadas.forEach((row) => {
     const equipe = equipes.get(row.id);
     if (context.currentWeek && equipe && !row.succeededBy) row.rosterSize = rankingRosterKnown(equipe) ? teamActiveRoster(equipe).length : null;
-    const ultimo = rankingUltimoJogo(datas, [row.id, ...(row.inherits || []), ...(row.performanceInherits || [])], cutoffAt);
+    const ids = [row.id, ...(row.inherits || []), ...(row.performanceInherits || [])];
+    const ultimo = rankingUltimoJogo(datas, ids, cutoffAt);
     const tempo = ultimo ? rankingDiasSemJogar(ultimo, cutoffAt, pausas) : 0;
     const incompleto = Number.isFinite(row.rosterSize) && row.rosterSize < minimo;
-    const encerrada = context.currentWeek && equipe?.profile?.competitiveStatus === "dissolved";
-    const motivo = row.succeededBy ? "succession" : encerrada ? "dissolved" : ultimo && incompleto && tempo > prazoIncompleto ? "incomplete-roster" : ultimo && (tempo > dias || (cutoffAt - ultimo) / DAY_MS > teto) ? "inactivity" : "";
+    const depoisDoUltimoRanking = Boolean(retifica && ultimo && cutoffAt - ultimo >= 7 * DAY_MS);
+    const proximo = depoisDoUltimoRanking ? rankingProximoJogo(datas, ids, cutoffAt) : 0;
+    const semVolta = depoisDoUltimoRanking && !(proximo && proximo <= horizonte);
+    const encerrada = equipe?.profile?.competitiveStatus === "dissolved" && (context.currentWeek || semVolta);
+    const parada = ultimo && (tempo > dias || (cutoffAt - ultimo) / DAY_MS > teto || (depoisDoUltimoRanking && rankingParadaEstourou(datas, ultimo, proximo, horizonte, dias, teto, context.weights, pausasPorFim)));
+    const motivo = row.succeededBy ? "succession" : encerrada ? "dissolved" : ultimo && incompleto && tempo > prazoIncompleto ? "incomplete-roster" : parada ? "inactivity" : "";
     const valida = !motivo && !row.provisional && Number(row.matches || 0) > 0;
     if (valida) posicao += 1;
     [row, ranking.byTeamId?.[row.id]].filter(Boolean).forEach((linha) => {
@@ -26360,7 +26416,10 @@ function rankingInatividadeNasSemanas(db) {
   const datas = rankingDatasDeJogo(db.matches, db.matchSeries);
   const dias = rankingInactivityDays(db.rankingWeights);
   const currentCutoff = rankingTuesdayStartOnOrBefore(Date.now());
-  snapshots.forEach((snapshot) => rankingAplicaInatividade(snapshot, datas, Number(snapshot.cutoffAt || 0), dias, null, { teams: db.teams, weights: db.rankingWeights, currentWeek: Number(snapshot.cutoffAt) >= currentCutoff }));
+  // O horizonte e a terca da semana atual: a retificacao anda junto com o ranking
+  // semanal, e a semana atual fica igual a regra sem retificacao.
+  const pausasPorFim = new Map();
+  snapshots.forEach((snapshot) => rankingAplicaInatividade(snapshot, datas, Number(snapshot.cutoffAt || 0), dias, null, { teams: db.teams, weights: db.rankingWeights, currentWeek: Number(snapshot.cutoffAt) >= currentCutoff, horizonte: currentCutoff, pausasPorFim }));
   const atual = snapshots.reduce((maior, snapshot) => (Number(snapshot.cutoffAt || 0) > Number(maior.cutoffAt || 0) ? snapshot : maior));
   applyRankingResultToTeams(db.teams || [], atual);
   db.teams?.sort(compareTeamsByCanonicalRank);

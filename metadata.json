@@ -1131,29 +1131,6 @@
       "lineup": []
     },
     {
-      "id": "black_cyber",
-      "sourceId": "2881",
-      "slug": "black_cyber",
-      "tag": "BCYB",
-      "displayName": "Black Cyber",
-      "org": "Centro Universitário de Brasília",
-      "orgTag": "CEUB",
-      "logo": "assets/team-logos/black_cyber.png",
-      "state": "DF",
-      "stateName": "Distrito Federal",
-      "stateFlag": "assets/state-flags/df.webp",
-      "stateRegion": "Centro-Oeste",
-      "colors": [
-        "#051518",
-        "#864aad"
-      ],
-      "socials": {
-        "instagram": "https://www.instagram.com/atletica.cybernetica/"
-      },
-      "lineup": [],
-      "lineupRegistered": true
-    },
-    {
       "id": "bluesharks",
       "sourceId": "2990",
       "slug": "bluesharks",
@@ -14628,7 +14605,7 @@
       "currentTeam": "",
       "teamHistory": [
         "ceub_octopus_vulgaris",
-        "black_cyber"
+        "ceub_octopus"
       ],
       "nickHistory": [
         "Pockaus#5551",
@@ -14646,7 +14623,7 @@
         "ceub_octopus_vulgaris",
         "ceub_octopus",
         "ceub_octopus_vulgaris",
-        "black_cyber"
+        "ceub_octopus"
       ],
       "nickHistory": [
         "Dante#Aim1",
@@ -14718,8 +14695,7 @@
       ],
       "currentTeam": "ceub_octopus",
       "teamHistory": [
-        "ceub_octopus",
-        "black_cyber"
+        "ceub_octopus"
       ],
       "nickHistory": [
         "reybl0ck#rbck",
@@ -14734,8 +14710,7 @@
       "puuid": "utlNcp1v2kLIG9L8w4ahS188beOZUaf-rrpIU2ipwKACAysaPKayQmx8OxVpcGArKqVFtEl9ioGr-Q",
       "currentTeam": "ceub_octopus",
       "teamHistory": [
-        "ceub_octopus",
-        "black_cyber"
+        "ceub_octopus"
       ],
       "nickHistory": [
         "kzr#bala"
@@ -16481,7 +16456,7 @@
       "teamHistory": [
         "ceub_octopus",
         "ceub_octopus_vulgaris",
-        "black_cyber"
+        "ceub_octopus"
       ],
       "nickHistory": [
         "JotaVe#2511",
@@ -16556,7 +16531,7 @@
       "currentTeam": "",
       "teamHistory": [
         "ceub_octopus_vulgaris",
-        "black_cyber",
+        "ceub_octopus",
         "white_cyber"
       ],
       "nickHistory": [
@@ -16571,7 +16546,7 @@
       "currentTeam": "",
       "teamHistory": [
         "ceub_octopus_vulgaris",
-        "black_cyber"
+        "ceub_octopus"
       ],
       "nickHistory": [
         "akdouble#solo",
@@ -19440,7 +19415,7 @@
       "puuid": "vdN7vcJwzKb27aJ4m3s6IptuJof2wwoyNLwPnyexTy3IczlmnTq24ssMzn8yFDjIHNpRhFdZRYpROA",
       "currentTeam": "",
       "teamHistory": [
-        "black_cyber"
+        "ceub_octopus"
       ],
       "nickHistory": [
         "BZRK#OQJF"
@@ -19518,7 +19493,7 @@
       "puuid": "O3hykWMgIJM_FdAX9ffI0MUod5Tfa3-aCIoxHRkOKcJL4BUYg2vPTrSh-lKyEJ8SoI9qBR-1OdhSRw",
       "currentTeam": "",
       "teamHistory": [
-        "black_cyber"
+        "ceub_octopus"
       ],
       "nickHistory": [
         "clau#JR01"
@@ -20577,7 +20552,7 @@
       "puuid": "qRStuRkWN2o7JpsXCC9tBQ92vTqtkuyaLPHtsvRUeYHdTRLs4t2q7NP15x43KmWmPSE88ePyTq1qUg",
       "currentTeam": "",
       "teamHistory": [
-        "black_cyber"
+        "ceub_octopus"
       ],
       "nickHistory": [
         "ShadownZ#MVP"
@@ -21074,7 +21049,7 @@
       "puuid": "cF8kWiGv0O0HVuow-L57DDsUCuCdJ4yt6Cmn9MHQcJfYlB6JA_EozKlhlWiteEsaafmz5e-7LOdXCw",
       "currentTeam": "",
       "teamHistory": [
-        "black_cyber"
+        "ceub_octopus"
       ],
       "nickHistory": [
         "MEZA#SVT"
@@ -21610,7 +21585,7 @@
       "puuid": "-f3SP3oscguiR2qb-KsppitSSqN5PiBkxYB5dHZikImM4c-K6cOLtL5NhoI3QWlgLzPsOuuMIhlQ2w",
       "currentTeam": "",
       "teamHistory": [
-        "black_cyber"
+        "ceub_octopus"
       ],
       "nickHistory": [
         "Alusion#2870"
@@ -21702,7 +21677,7 @@
       "puuid": "ZyXZiPBMAaitv7lFzCK1621u_oVULcWebGpZtmUcuoEt3NJhnLyoPTOIWc8dNtEEVRjmFoNZjUIzYA",
       "currentTeam": "",
       "teamHistory": [
-        "black_cyber"
+        "ceub_octopus"
       ],
       "nickHistory": [
         "breachney Spears#S223"

@@ -2932,6 +2932,145 @@
     "ceub_octopus": {
       "lineupHistory": [
         {
+          "from": "2025-05-11",
+          "to": "2025-11-30",
+          "firstSeenAt": 1747004545643,
+          "lastSeenAt": 1764525909546,
+          "matches": 51,
+          "source": "auto-json+players-history",
+          "profileConfidence": 714,
+          "players": [
+            {
+              "slot": 1,
+              "playerId": "1C3PML8GceP1vxyPMgbBRh2h2FLvKPmfnDp8fWo4zCBabnhU74Y2gjnqd9dFFc3iPAqALGFw6VvOdQ",
+              "name": "reyblock",
+              "handle": "reyblock#rbck",
+              "firstSeenAt": "2025-05-11",
+              "lastSeenAt": "2025-11-30",
+              "matches": 50,
+              "rounds": 1025,
+              "profileMatches": 50,
+              "profileConfidence": 200,
+              "currentTeam": "ceub_octopus",
+              "teamHistory": [
+                "ceub_octopus"
+              ]
+            },
+            {
+              "slot": 2,
+              "playerId": "x2CH5wSlgIpaT7Pe44AXQb6Eb1phYUDI2a7wqfej6p0CdhqbtzCmLyCQ8KPyniuzUjnZ1ACCi87c_Q",
+              "name": "Pockaus",
+              "handle": "teletubbies#PCK",
+              "firstSeenAt": "2025-05-11",
+              "lastSeenAt": "2025-11-30",
+              "matches": 45,
+              "rounds": 916,
+              "profileMatches": 45,
+              "profileConfidence": 90,
+              "teamHistory": [
+                "ceub_octopus_vulgaris",
+                "ceub_octopus"
+              ]
+            },
+            {
+              "slot": 3,
+              "playerId": "uMAKnx1b2jQH9uLNWNJDfLDpa-agbwj5eIAWxLFqk8eSFYw6pz3sT4-RNn_WibW2ylccVgzY1tGBmQ",
+              "name": "JotaVe",
+              "handle": "JotaVe#2511",
+              "firstSeenAt": "2025-05-11",
+              "lastSeenAt": "2025-11-30",
+              "matches": 29,
+              "rounds": 608,
+              "profileMatches": 29,
+              "profileConfidence": 116,
+              "currentTeam": "ceub_octopus",
+              "teamHistory": [
+                "ceub_octopus",
+                "ceub_octopus_vulgaris"
+              ]
+            },
+            {
+              "slot": 4,
+              "playerId": "vdN7vcJwzKb27aJ4m3s6IptuJof2wwoyNLwPnyexTy3IczlmnTq24ssMzn8yFDjIHNpRhFdZRYpROA",
+              "name": "BZRK",
+              "handle": "BZRK#OQJF",
+              "firstSeenAt": "2025-05-11",
+              "lastSeenAt": "2025-09-13",
+              "matches": 28,
+              "rounds": 569,
+              "profileMatches": 28,
+              "profileConfidence": 56,
+              "teamHistory": [
+                "ceub_octopus"
+              ]
+            },
+            {
+              "slot": 5,
+              "playerId": "qRStuRkWN2o7JpsXCC9tBQ92vTqtkuyaLPHtsvRUeYHdTRLs4t2q7NP15x43KmWmPSE88ePyTq1qUg",
+              "name": "ShadownZ",
+              "handle": "ShadownZ#MVP",
+              "firstSeenAt": "2025-05-11",
+              "lastSeenAt": "2025-08-14",
+              "matches": 26,
+              "rounds": 531,
+              "profileMatches": 26,
+              "profileConfidence": 52,
+              "teamHistory": [
+                "ceub_octopus"
+              ]
+            },
+            {
+              "slot": 6,
+              "playerId": "utlNcp1v2kLIG9L8w4ahS188beOZUaf-rrpIU2ipwKACAysaPKayQmx8OxVpcGArKqVFtEl9ioGr-Q",
+              "name": "kzr",
+              "handle": "kzr#bala",
+              "firstSeenAt": "2025-05-31",
+              "lastSeenAt": "2025-08-16",
+              "matches": 23,
+              "rounds": 467,
+              "profileMatches": 23,
+              "profileConfidence": 92,
+              "currentTeam": "ceub_octopus",
+              "teamHistory": [
+                "ceub_octopus"
+              ]
+            },
+            {
+              "slot": 7,
+              "playerId": "Abyzg-ryjZq3nuI40Y9TDynjAVoUF96mK_brMKbjG3RqFOtvG4jcYOkclDuM77coCe6CtvFAilXgrA",
+              "name": "Dante",
+              "handle": "Dante#Jully",
+              "firstSeenAt": "2025-09-20",
+              "lastSeenAt": "2025-11-30",
+              "matches": 16,
+              "rounds": 330,
+              "profileMatches": 16,
+              "profileConfidence": 32,
+              "currentTeam": "ceub_octopus_vulgaris",
+              "teamHistory": [
+                "ceub_octopus_vulgaris",
+                "ceub_octopus"
+              ]
+            },
+            {
+              "slot": 8,
+              "playerId": "eSFhl60EM5MvR6SBVKD-iF1BnLtiBlmodeo8LTYwjPXTH9JS9VIavYcVJhrL1cZd_R3kGt2vxHrlag",
+              "name": "akdouble",
+              "handle": "AK no Vandal#JESUS",
+              "firstSeenAt": "2025-10-15",
+              "lastSeenAt": "2025-11-30",
+              "matches": 14,
+              "rounds": 306,
+              "profileMatches": 14,
+              "profileConfidence": 28,
+              "teamHistory": [
+                "ceub_octopus_vulgaris",
+                "ceub_octopus"
+              ]
+            }
+          ]
+        },
+        {
           "from": "2026-04-04",
           "to": "2026-11-14",
           "firstSeenAt": 1775325466108,
@@ -2953,8 +3092,7 @@
               "profileConfidence": 216,
               "currentTeam": "ceub_octopus",
               "teamHistory": [
-                "ceub_octopus",
-                "black_cyber"
+                "ceub_octopus"
               ]
             },
             {
@@ -2986,8 +3124,7 @@
               "profileConfidence": 192,
               "currentTeam": "ceub_octopus",
               "teamHistory": [
-                "ceub_octopus",
-                "black_cyber"
+                "ceub_octopus"
               ]
             },
             {
@@ -3036,8 +3173,7 @@
               "currentTeam": "ceub_octopus",
               "teamHistory": [
                 "ceub_octopus",
-                "ceub_octopus_vulgaris",
-                "black_cyber"
+                "ceub_octopus_vulgaris"
               ]
             },
             {
@@ -3075,7 +3211,28 @@
           ]
         }
       ],
-      "collectiveInheritancePolicy": "none_between_cyber_and_octopus"
+      "nomes": [
+        {
+          "id": "black_cyber",
+          "nome": "Black Cyber",
+          "tag": "BCYB",
+          "logo": "assets/team-logos/black_cyber.png",
+          "cores": [
+            "#051518",
+            "#864aad"
+          ],
+          "desde": "2025-05-08",
+          "ate": "2025-11-30",
+          "eventos": [
+            "copa-alianca-2025-classificatoria-4",
+            "jubs-2025-fase-inicial",
+            "lbeu-2025-1-split-fase-suica",
+            "lbeu-2025-1-split-off-season",
+            "lbeu-2025-2-split-championship",
+            "lbeu-2025-2-split-fase-suica"
+          ]
+        }
+      ]
     },
     "ceub_octopus_vulgaris": {
       "lineupHistory": [
@@ -3133,7 +3290,7 @@
               "profileConfidence": 66,
               "teamHistory": [
                 "ceub_octopus_vulgaris",
-                "black_cyber"
+                "ceub_octopus"
               ]
             },
             {
@@ -3166,8 +3323,7 @@
               "currentTeam": "ceub_octopus_vulgaris",
               "teamHistory": [
                 "ceub_octopus_vulgaris",
-                "ceub_octopus",
-                "black_cyber"
+                "ceub_octopus"
               ]
             },
             {
@@ -3215,7 +3371,7 @@
               "profileConfidence": 8,
               "teamHistory": [
                 "ceub_octopus_vulgaris",
-                "black_cyber",
+                "ceub_octopus",
                 "white_cyber"
               ]
             }
@@ -19826,7 +19982,7 @@
               "profileConfidence": 0,
               "teamHistory": [
                 "ceub_octopus_vulgaris",
-                "black_cyber",
+                "ceub_octopus",
                 "white_cyber"
               ]
             },
@@ -19855,7 +20011,7 @@
               "profileConfidence": 0,
               "teamHistory": [
                 "ceub_octopus_vulgaris",
-                "black_cyber"
+                "ceub_octopus"
               ]
             },
             {
@@ -25413,154 +25569,6 @@
         }
       ]
     },
-    "black_cyber": {
-      "lineupHistory": [
-        {
-          "from": "2025-05-11",
-          "to": "2025-11-30",
-          "firstSeenAt": 1747004545643,
-          "lastSeenAt": 1764525909546,
-          "matches": 51,
-          "source": "auto-json+players-history",
-          "profileConfidence": 510,
-          "players": [
-            {
-              "slot": 1,
-              "playerId": "1C3PML8GceP1vxyPMgbBRh2h2FLvKPmfnDp8fWo4zCBabnhU74Y2gjnqd9dFFc3iPAqALGFw6VvOdQ",
-              "name": "reyblock",
-              "handle": "reyblock#rbck",
-              "firstSeenAt": "2025-05-11",
-              "lastSeenAt": "2025-11-30",
-              "matches": 50,
-              "rounds": 1025,
-              "profileMatches": 50,
-              "profileConfidence": 100,
-              "currentTeam": "ceub_octopus",
-              "teamHistory": [
-                "ceub_octopus",
-                "black_cyber"
-              ]
-            },
-            {
-              "slot": 2,
-              "playerId": "x2CH5wSlgIpaT7Pe44AXQb6Eb1phYUDI2a7wqfej6p0CdhqbtzCmLyCQ8KPyniuzUjnZ1ACCi87c_Q",
-              "name": "Pockaus",
-              "handle": "teletubbies#PCK",
-              "firstSeenAt": "2025-05-11",
-              "lastSeenAt": "2025-11-30",
-              "matches": 45,
-              "rounds": 916,
-              "profileMatches": 45,
-              "profileConfidence": 90,
-              "teamHistory": [
-                "ceub_octopus_vulgaris",
-                "black_cyber"
-              ]
-            },
-            {
-              "slot": 3,
-              "playerId": "uMAKnx1b2jQH9uLNWNJDfLDpa-agbwj5eIAWxLFqk8eSFYw6pz3sT4-RNn_WibW2ylccVgzY1tGBmQ",
-              "name": "JotaVe",
-              "handle": "JotaVe#2511",
-              "firstSeenAt": "2025-05-11",
-              "lastSeenAt": "2025-11-30",
-              "matches": 29,
-              "rounds": 608,
-              "profileMatches": 29,
-              "profileConfidence": 58,
-              "currentTeam": "ceub_octopus",
-              "teamHistory": [
-                "ceub_octopus",
-                "ceub_octopus_vulgaris",
-                "black_cyber"
-              ]
-            },
-            {
-              "slot": 4,
-              "playerId": "vdN7vcJwzKb27aJ4m3s6IptuJof2wwoyNLwPnyexTy3IczlmnTq24ssMzn8yFDjIHNpRhFdZRYpROA",
-              "name": "BZRK",
-              "handle": "BZRK#OQJF",
-              "firstSeenAt": "2025-05-11",
-              "lastSeenAt": "2025-09-13",
-              "matches": 28,
-              "rounds": 569,
-              "profileMatches": 28,
-              "profileConfidence": 56,
-              "teamHistory": [
-                "black_cyber"
-              ]
-            },
-            {
-              "slot": 5,
-              "playerId": "qRStuRkWN2o7JpsXCC9tBQ92vTqtkuyaLPHtsvRUeYHdTRLs4t2q7NP15x43KmWmPSE88ePyTq1qUg",
-              "name": "ShadownZ",
-              "handle": "ShadownZ#MVP",
-              "firstSeenAt": "2025-05-11",
-              "lastSeenAt": "2025-08-14",
-              "matches": 26,
-              "rounds": 531,
-              "profileMatches": 26,
-              "profileConfidence": 52,
-              "teamHistory": [
-                "black_cyber"
-              ]
-            },
-            {
-              "slot": 6,
-              "playerId": "utlNcp1v2kLIG9L8w4ahS188beOZUaf-rrpIU2ipwKACAysaPKayQmx8OxVpcGArKqVFtEl9ioGr-Q",
-              "name": "kzr",
-              "handle": "kzr#bala",
-              "firstSeenAt": "2025-05-31",
-              "lastSeenAt": "2025-08-16",
-              "matches": 23,
-              "rounds": 467,
-              "profileMatches": 23,
-              "profileConfidence": 46,
-              "currentTeam": "ceub_octopus",
-              "teamHistory": [
-                "ceub_octopus",
-                "black_cyber"
-              ]
-            },
-            {
-              "slot": 7,
-              "playerId": "Abyzg-ryjZq3nuI40Y9TDynjAVoUF96mK_brMKbjG3RqFOtvG4jcYOkclDuM77coCe6CtvFAilXgrA",
-              "name": "Dante",
-              "handle": "Dante#Jully",
-              "firstSeenAt": "2025-09-20",
-              "lastSeenAt": "2025-11-30",
-              "matches": 16,
-              "rounds": 330,
-              "profileMatches": 16,
-              "profileConfidence": 32,
-              "currentTeam": "ceub_octopus_vulgaris",
-              "teamHistory": [
-                "ceub_octopus_vulgaris",
-                "ceub_octopus",
-                "black_cyber"
-              ]
-            },
-            {
-              "slot": 8,
-              "playerId": "eSFhl60EM5MvR6SBVKD-iF1BnLtiBlmodeo8LTYwjPXTH9JS9VIavYcVJhrL1cZd_R3kGt2vxHrlag",
-              "name": "akdouble",
-              "handle": "AK no Vandal#JESUS",
-              "firstSeenAt": "2025-10-15",
-              "lastSeenAt": "2025-11-30",
-              "matches": 14,
-              "rounds": 306,
-              "profileMatches": 14,
-              "profileConfidence": 28,
-              "teamHistory": [
-                "ceub_octopus_vulgaris",
-                "black_cyber"
-              ]
-            }
-          ]
-        }
-      ],
-      "collectiveInheritancePolicy": "none_between_cyber_and_octopus"
-    },
     "ufs_warriowls": {
       "lineupHistory": [
         {
@@ -28876,7 +28884,7 @@
               "profileConfidence": 14,
               "teamHistory": [
                 "ceub_octopus_vulgaris",
-                "black_cyber",
+                "ceub_octopus",
                 "white_cyber"
               ]
             },

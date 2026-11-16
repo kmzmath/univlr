@@ -14266,7 +14266,7 @@ const TOURNAMENT_OVERRIDES = {
       "sem_totem",
       "ufu_saints",
       "unicamp_tritons_black",
-      "black_cyber",
+      "ceub_octopus",
       "rahnag",
       "azure_bears_golden",
       "beyond",
@@ -14376,7 +14376,7 @@ const TOURNAMENT_OVERRIDES = {
         "note": "13º na classificação on-line"
       },
       {
-        "id": "black_cyber",
+        "id": "ceub_octopus",
         "range": "9-16",
         "note": "14º na classificação on-line"
       },
@@ -14633,10 +14633,10 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 9",
               "bestOf": "MD3",
               "a": "ufs_warriowls",
-              "b": "black_cyber",
+              "b": "ceub_octopus",
               "scoreA": 0,
               "scoreB": 2,
-              "winner": "black_cyber"
+              "winner": "ceub_octopus"
             },
             {
               "code": "Partida 10",
@@ -14856,10 +14856,10 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 31",
               "bestOf": "MD3",
               "a": "castor_vai",
-              "b": "black_cyber",
+              "b": "ceub_octopus",
               "scoreA": 0,
               "scoreB": 2,
-              "winner": "black_cyber"
+              "winner": "ceub_octopus"
             },
             {
               "code": "Partida 32",
@@ -15106,11 +15106,11 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 56",
               "bestOf": "MD3",
-              "a": "black_cyber",
+              "a": "ceub_octopus",
               "b": "ufu_saints",
               "scoreA": 2,
               "scoreB": 0,
-              "winner": "black_cyber"
+              "winner": "ceub_octopus"
             },
             {
               "code": "Partida 57",
@@ -15311,7 +15311,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 77",
               "bestOf": "MD3",
-              "a": "black_cyber",
+              "a": "ceub_octopus",
               "b": "ufmt_turuna",
               "scoreA": 0,
               "scoreB": 2,
@@ -15455,7 +15455,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 91",
               "bestOf": "MD3",
-              "a": "black_cyber",
+              "a": "ceub_octopus",
               "b": "azure_bears_golden",
               "scoreA": 0,
               "scoreB": 2,
@@ -15644,7 +15644,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               "code": "Partida 111",
               "bestOf": "MD3",
-              "a": "black_cyber",
+              "a": "ceub_octopus",
               "b": "wolf_gaming",
               "scoreA": 0,
               "scoreB": 2,
@@ -15670,7 +15670,7 @@ const TOURNAMENT_OVERRIDES = {
               "code": "Partida 113",
               "bestOf": "MD3",
               "a": "uninassau_griffins",
-              "b": "black_cyber",
+              "b": "ceub_octopus",
               "scoreA": 2,
               "scoreB": 0,
               "winner": "uninassau_griffins"
@@ -15863,7 +15863,7 @@ const TOURNAMENT_OVERRIDES = {
           "status": "Classificatório"
         },
         {
-          "id": "black_cyber",
+          "id": "ceub_octopus",
           "wins": 3,
           "losses": 3,
           "points": 9,
@@ -16585,7 +16585,7 @@ const TOURNAMENT_OVERRIDES = {
       "axis_blossom",
       "azure_bears_black",
       "azure_bears_golden",
-      "black_cyber",
+      "ceub_octopus",
       "caap_hellhounds",
       "fei_darkowls",
       "fm_alligators",
@@ -16651,7 +16651,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 8", a: "pato", scoreA: 13, b: "ufpr_bbn", scoreB: 11, winner: "pato", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Sem estatísticas." },
             { code: "Partida 9", a: "fei_darkowls", scoreA: 13, b: "white_cyber", scoreB: 4, winner: "fei_darkowls", bestOf: "MD1" },
             { code: "Partida 10", a: "ufu_insane", scoreA: 13, b: "furia_utfpr", scoreB: 4, winner: "ufu_insane", bestOf: "MD1" },
-            { code: "Partida 11", a: "black_cyber", scoreA: 13, b: "puc_clerigos", scoreB: 4, winner: "black_cyber", bestOf: "MD1" },
+            { code: "Partida 11", a: "ceub_octopus", scoreA: 13, b: "puc_clerigos", scoreB: 4, winner: "ceub_octopus", bestOf: "MD1" },
             { code: "Partida 12", a: "puc_priests", scoreA: 13, b: "stings_yellow", scoreB: 5, winner: "puc_priests", bestOf: "MD1" },
             { code: "Partida 13", a: "azure_bears_golden", scoreA: 13, b: "unb_black", scoreB: 5, winner: "azure_bears_golden", bestOf: "MD1" },
           ],
@@ -16673,7 +16673,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 23", a: "ufu_insane", scoreA: 13, b: "puc_priests", scoreB: 9, winner: "ufu_insane", bestOf: "MD1" },
             { code: "Partida 24", a: "stings_yellow", scoreA: 13, b: "white_cyber", scoreB: 5, winner: "stings_yellow", bestOf: "MD1" },
             { code: "Partida 25", a: "furia_utfpr", scoreA: 13, b: "ufpr_bbn", scoreB: 5, winner: "furia_utfpr", bestOf: "MD1" },
-            { code: "Partida 26", a: "black_cyber", scoreA: 13, b: "fei_darkowls", scoreB: 4, winner: "black_cyber", bestOf: "MD1" },
+            { code: "Partida 26", a: "ceub_octopus", scoreA: 13, b: "fei_darkowls", scoreB: 4, winner: "ceub_octopus", bestOf: "MD1" },
           ],
         },
         {
@@ -16692,7 +16692,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 35", a: "ufpr_bbn", scoreA: 13, b: "white_cyber", scoreB: 7, winner: "ufpr_bbn", bestOf: "MD1" },
             { code: "Partida 36", a: "fei_darkowls", scoreA: 13, b: "puc_priests", scoreB: 9, winner: "fei_darkowls", bestOf: "MD1" },
             { code: "Partida 37", a: "azure_bears_golden", scoreA: 13, b: "ufu_insane", scoreB: 8, winner: "azure_bears_golden", bestOf: "MD1" },
-            { code: "Partida 38", a: "caap_hellhounds", scoreA: 14, b: "black_cyber", scoreB: 12, winner: "caap_hellhounds", bestOf: "MD1" },
+            { code: "Partida 38", a: "caap_hellhounds", scoreA: 14, b: "ceub_octopus", scoreB: 12, winner: "caap_hellhounds", bestOf: "MD1" },
           ],
         },
         {
@@ -16710,7 +16710,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 46", a: "minerva_thunders", scoreA: 13, b: "wolf_gaming", scoreB: 10, winner: "minerva_thunders", bestOf: "MD1" },
             { code: "Partida 47", a: "inatel", scoreA: 13, b: "axis_blossom", scoreB: 11, winner: "inatel", bestOf: "MD1" },
             { code: "Partida 48", a: "ufu_insane", scoreA: 13, b: "fei_darkowls", scoreB: 10, winner: "ufu_insane", bestOf: "MD1" },
-            { code: "Partida 49", a: "macklogic_red", scoreA: 13, b: "black_cyber", scoreB: 7, winner: "macklogic_red", bestOf: "MD1" },
+            { code: "Partida 49", a: "macklogic_red", scoreA: 13, b: "ceub_octopus", scoreB: 7, winner: "macklogic_red", bestOf: "MD1" },
             { code: "Partida 50", a: "ufpr_bbn", scoreA: 13, b: "stings_yellow", scoreB: 3, winner: "ufpr_bbn", bestOf: "MD1" },
           ],
         },
@@ -16731,7 +16731,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 60", a: "azure_bears_black", scoreA: 13, b: "puc_priests", scoreB: 8, winner: "azure_bears_black", bestOf: "MD1" },
             { code: "Partida 61", a: "macklogic_red", scoreA: 13, b: "fm_alligators", scoreB: 1, winner: "macklogic_red", bestOf: "MD1" },
             { code: "Partida 62", a: "fei_darkowls", scoreA: 13, b: "ufpr_bbn", scoreB: 3, winner: "fei_darkowls", bestOf: "MD1" },
-            { code: "Partida 63", a: "black_cyber", scoreA: 13, b: "stings_yellow", scoreB: 6, winner: "black_cyber", bestOf: "MD1" },
+            { code: "Partida 63", a: "ceub_octopus", scoreA: 13, b: "stings_yellow", scoreB: 6, winner: "ceub_octopus", bestOf: "MD1" },
           ],
         },
         {
@@ -16747,7 +16747,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 70", a: "macklogic_red", scoreA: 13, b: "ufu_saints", scoreB: 9, winner: "macklogic_red", bestOf: "MD1" },
             { code: "Partida 71", a: "azure_bears_black", scoreA: 13, b: "unesa_cyborgs", scoreB: 7, winner: "azure_bears_black", bestOf: "MD1" },
             { code: "Partida 72", a: "ufu_insane", scoreA: 13, b: "minerva_thunders", scoreB: 9, winner: "ufu_insane", bestOf: "MD1", status: "Sem estatísticas", previewNote: "Sem estatísticas." },
-            { code: "Partida 73", a: "black_cyber", scoreA: 13, b: "ufpr_bbn", scoreB: 4, winner: "black_cyber", bestOf: "MD1" },
+            { code: "Partida 73", a: "ceub_octopus", scoreA: 13, b: "ufpr_bbn", scoreB: 4, winner: "ceub_octopus", bestOf: "MD1" },
             { code: "Partida 74", a: "unicamp_tritons_black", scoreA: 13, b: "fei_darkowls", scoreB: 10, winner: "unicamp_tritons_black", bestOf: "MD1" },
             { code: "Partida 75", a: "axis_anteaters", scoreA: 13, b: "puc_priests", scoreB: 11, winner: "axis_anteaters", bestOf: "MD1" },
           ],
@@ -16775,7 +16775,7 @@ const TOURNAMENT_OVERRIDES = {
           matches: [
             { code: "Partida 86", a: "ufpr_bbn", scoreA: 13, b: "totale_umc", scoreB: 10, winner: "ufpr_bbn", bestOf: "MD1" },
             { code: "Partida 87", a: "minerva_thunders", scoreA: 13, b: "macklogic_white", scoreB: 5, winner: "minerva_thunders", bestOf: "MD1" },
-            { code: "Partida 88", a: "ufu_saints", scoreA: 13, b: "black_cyber", scoreB: 6, winner: "ufu_saints", bestOf: "MD1" },
+            { code: "Partida 88", a: "ufu_saints", scoreA: 13, b: "ceub_octopus", scoreB: 6, winner: "ufu_saints", bestOf: "MD1" },
             { code: "Partida 89", a: "azure_bears_golden", scoreA: 13, b: "unicamp_tritons_black", scoreB: 6, winner: "azure_bears_golden", bestOf: "MD1" },
             { code: "Partida 90", a: "azure_bears_black", scoreA: 20, b: "caap_hellhounds", scoreB: 18, winner: "azure_bears_black", bestOf: "MD1" },
             { code: "Partida 91", a: "axis_blossom", scoreA: 17, b: "ifsp_midas", scoreB: 15, winner: "axis_blossom", bestOf: "MD1" },
@@ -16807,7 +16807,7 @@ const TOURNAMENT_OVERRIDES = {
           matches: [
             { code: "Partida 104", a: "ifsp_midas", scoreA: 13, b: "totale_umc", scoreB: 8, winner: "ifsp_midas", bestOf: "MD1" },
             { code: "Partida 105", a: "unicamp_tritons_black", scoreA: 16, b: "hunter_esports", scoreB: 14, winner: "unicamp_tritons_black", bestOf: "MD1" },
-            { code: "Partida 106", a: "axis_blossom", scoreA: 14, b: "black_cyber", scoreB: 12, winner: "axis_blossom", bestOf: "MD1" },
+            { code: "Partida 106", a: "axis_blossom", scoreA: 14, b: "ceub_octopus", scoreB: 12, winner: "axis_blossom", bestOf: "MD1" },
             { code: "Partida 107", a: "ufu_saints", scoreA: 13, b: "caap_hellhounds", scoreB: 4, winner: "ufu_saints", bestOf: "MD1" },
             { code: "Partida 108", a: "ufu_insane", scoreA: 13, b: "inatel", scoreB: 4, winner: "ufu_insane", bestOf: "MD1" },
             { code: "Partida 109", a: "wolf_gaming", scoreA: 13, b: "macklogic_white", scoreB: 9, winner: "wolf_gaming", bestOf: "MD1" },
@@ -16829,7 +16829,7 @@ const TOURNAMENT_OVERRIDES = {
         { id: "axis_blossom", wins: 4, losses: 5, range: "-", status: "Off Season" },
         { id: "azure_bears_black", wins: 6, losses: 2, range: "-", status: "Championship" },
         { id: "azure_bears_golden", wins: 7, losses: 1, range: "-", status: "Championship" },
-        { id: "black_cyber", wins: 4, losses: 4, range: "-", status: "Off Season" },
+        { id: "ceub_octopus", wins: 4, losses: 4, range: "-", status: "Off Season" },
         { id: "caap_hellhounds", wins: 6, losses: 4, range: "-", status: "Sem divis\u00e3o" },
         { id: "fei_darkowls", wins: 3, losses: 4, range: "-", status: "Off Season" },
         { id: "fm_alligators", wins: 0, losses: 10, range: "-", status: "Sem divis\u00e3o" },
@@ -16978,10 +16978,10 @@ const TOURNAMENT_OVERRIDES = {
     type: "Online - Playoffs",
     status: "Finalizado",
     teamCount: 5,
-    teams: ["axis_blossom", "black_cyber", "fei_darkowls", "hunter_esports", "wolf_gaming"],
+    teams: ["axis_blossom", "ceub_octopus", "fei_darkowls", "hunter_esports", "wolf_gaming"],
     mapPool: ["Ascent", "Bind", "Corrode", "Haven", "Icebox", "Lotus", "Sunset"],
     seriesResults: {
-      "114": { a: "black_cyber", b: "wolf_gaming", scoreA: 1, scoreB: 2, note: "Placar oficial. 1 dos 3 mapas fica fora das estatísticas porque os dados da partida estão incompletos." },
+      "114": { a: "ceub_octopus", b: "wolf_gaming", scoreA: 1, scoreB: 2, note: "Placar oficial. 1 dos 3 mapas fica fora das estatísticas porque os dados da partida estão incompletos." },
     },
     format: {
       summary: "Elimina\u00e7\u00e3o dupla",
@@ -17017,7 +17017,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Primeiros confrontos",
               matches: [
-                { code: "Partida 114", a: "black_cyber", scoreA: 1, b: "wolf_gaming", scoreB: 2, winner: "wolf_gaming", bestOf: "MD3", playedAt: "2025-07-18T01:15:51Z", previewNote: "Placar oficial. 1 dos 3 mapas fica fora das estatísticas porque os dados da partida estão incompletos." },
+                { code: "Partida 114", a: "ceub_octopus", scoreA: 1, b: "wolf_gaming", scoreB: 2, winner: "wolf_gaming", bestOf: "MD3", playedAt: "2025-07-18T01:15:51Z", previewNote: "Placar oficial. 1 dos 3 mapas fica fora das estatísticas porque os dados da partida estão incompletos." },
                 { code: "Partida 120", a: "axis_blossom", scoreA: 2, b: "hunter_esports", scoreB: 0, winner: "axis_blossom", bestOf: "MD3" },
               ],
             },
@@ -23683,7 +23683,7 @@ const TOURNAMENT_OVERRIDES = {
       "ufmg_fenix_b",
       "maua_blue",
       "green_owls_noctua",
-      "black_cyber",
+      "ceub_octopus",
       "univap_carrascos",
       "cyberkongs",
       "pucc_cardinals",
@@ -23702,7 +23702,7 @@ const TOURNAMENT_OVERRIDES = {
       { range: "5-6", id: "fei_darkowls", note: "Decis\u00e3o de vaga inferior" },
       { range: "5-6", id: "wolf_gaming", note: "Decis\u00e3o de vaga inferior" },
       { range: "7-8", id: "brutal_esports", note: "Rodada de 4 inferior" },
-      { range: "7-8", id: "black_cyber", note: "Rodada de 4 inferior" },
+      { range: "7-8", id: "ceub_octopus", note: "Rodada de 4 inferior" },
       { range: "9-12", id: "axis_anteaters", note: "Rodada de 8 inferior" },
       { range: "9-12", id: "macklogic_white", note: "Rodada de 8 inferior" },
       { range: "9-12", id: "green_owls_noctua", note: "Rodada de 8 inferior" },
@@ -23750,7 +23750,7 @@ const TOURNAMENT_OVERRIDES = {
                 { code: "Partida 3", a: "aaicei_pinguins", scoreA: 9, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
                 { code: "Partida 4", a: "a2e_uff", scoreA: 8, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
                 { code: "Partida 5", a: "furia_utfpr", scoreA: 1, b: "ufgd_duendes", scoreB: 0, winner: "furia_utfpr", status: "W.O." },
-                { code: "Partida 6", a: "macklogic_white", scoreA: 5, b: "black_cyber", scoreB: 13, winner: "black_cyber" },
+                { code: "Partida 6", a: "macklogic_white", scoreA: 5, b: "ceub_octopus", scoreB: 13, winner: "ceub_octopus" },
                 { code: "Partida 7", a: "ufrj_canis_b", scoreA: 1, b: "raposa_e_sports", scoreB: 0, winner: "ufrj_canis_b", status: "W.O." },
                 { code: "Partida 8", a: "brutal_esports", scoreA: 15, b: "univap_carrascos", scoreB: 13, winner: "brutal_esports" },
                 { code: "Partida 9", a: "fei_darkowls", scoreA: 1, bLabel: "Sem advers\u00e1rio", scoreB: 0, winner: "fei_darkowls" },
@@ -23768,7 +23768,7 @@ const TOURNAMENT_OVERRIDES = {
               matches: [
                 { code: "Partida 17", a: "axis_anteaters", scoreA: 13, b: "ufmg_fenix_b", scoreB: 2, winner: "axis_anteaters" },
                 { code: "Partida 18", a: "caap_hellhounds", scoreA: 13, b: "wolf_gaming", scoreB: 8, winner: "caap_hellhounds" },
-                { code: "Partida 19", a: "furia_utfpr", scoreA: 7, b: "black_cyber", scoreB: 13, winner: "black_cyber" },
+                { code: "Partida 19", a: "furia_utfpr", scoreA: 7, b: "ceub_octopus", scoreB: 13, winner: "ceub_octopus" },
                 { code: "Partida 20", a: "ufrj_canis_b", scoreA: 13, b: "brutal_esports", scoreB: 7, winner: "ufrj_canis_b" },
                 { code: "Partida 21", a: "fei_darkowls", scoreA: 13, b: "agronomia_ufg", scoreB: 10, winner: "fei_darkowls" },
                 { code: "Partida 22", a: "ufpr_bbn", scoreA: 15, b: "pucc_cardinals", scoreB: 17, winner: "pucc_cardinals" },
@@ -23780,7 +23780,7 @@ const TOURNAMENT_OVERRIDES = {
               title: "Quartas de final superior",
               matches: [
                 { code: "Partida 25", a: "axis_anteaters", scoreA: 8, b: "caap_hellhounds", scoreB: 13, winner: "caap_hellhounds" },
-                { code: "Partida 26", a: "black_cyber", scoreA: 8, b: "ufrj_canis_b", scoreB: 13, winner: "ufrj_canis_b" },
+                { code: "Partida 26", a: "ceub_octopus", scoreA: 8, b: "ufrj_canis_b", scoreB: 13, winner: "ufrj_canis_b" },
                 { code: "Partida 27", a: "fei_darkowls", scoreA: 13, b: "pucc_cardinals", scoreB: 8, winner: "fei_darkowls" },
                 { code: "Partida 28", a: "green_owls_noctua", scoreA: 8, b: "hunter_esports", scoreB: 13, winner: "hunter_esports" },
               ],
@@ -23838,7 +23838,7 @@ const TOURNAMENT_OVERRIDES = {
               matches: [
                 { code: "Partida 51", a: "green_owls_noctua", scoreA: 9, b: "wolf_gaming", scoreB: 13, winner: "wolf_gaming" },
                 { code: "Partida 52", a: "pucc_cardinals", scoreA: 8, b: "brutal_esports", scoreB: 13, winner: "brutal_esports" },
-                { code: "Partida 53", a: "black_cyber", scoreA: 13, b: "macklogic_white", scoreB: 3, winner: "black_cyber" },
+                { code: "Partida 53", a: "ceub_octopus", scoreA: 13, b: "macklogic_white", scoreB: 3, winner: "ceub_octopus" },
                 { code: "Partida 54", a: "axis_anteaters", scoreA: 5, b: "aaicei_pinguins", scoreB: 13, winner: "aaicei_pinguins" },
               ],
             },
@@ -23846,7 +23846,7 @@ const TOURNAMENT_OVERRIDES = {
               title: "Rodada de 4 inferior",
               matches: [
                 { code: "Partida 55", a: "wolf_gaming", scoreA: 13, b: "brutal_esports", scoreB: 10, winner: "wolf_gaming" },
-                { code: "Partida 56", a: "black_cyber", scoreA: 13, b: "aaicei_pinguins", scoreB: 15, winner: "aaicei_pinguins" },
+                { code: "Partida 56", a: "ceub_octopus", scoreA: 13, b: "aaicei_pinguins", scoreB: 15, winner: "aaicei_pinguins" },
               ],
             },
             {
@@ -24195,7 +24195,7 @@ const TOURNAMENT_OVERRIDES = {
       "wolf_gaming",
       "maua_b",
       "a2e_uff",
-      "black_cyber",
+      "ceub_octopus",
       "axis_anteaters",
       "ufu_saints",
       "ufrj_canis_b",
@@ -24222,7 +24222,7 @@ const TOURNAMENT_OVERRIDES = {
       { range: "Classificado", id: "wolf_gaming", note: "7-3" },
       { range: "Classificado", id: "maua_b", note: "6-3" },
       { range: "Classificado", id: "a2e_uff", note: "6-4" },
-      { range: "Classificado", id: "black_cyber", note: "6-4" },
+      { range: "Classificado", id: "ceub_octopus", note: "6-4" },
       { range: "Classificado", id: "axis_anteaters", note: "5-4" },
       { range: "Classificado", id: "ufu_saints", note: "4-0" },
       { range: "Classificado", id: "ufrj_canis_b", note: "4-5" },
@@ -24251,7 +24251,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 1", a: "a2e_uff", scoreA: 13, b: "ifsp_midas", scoreB: 7, winner: "a2e_uff" },
             { code: "Partida 2", a: "ufu_insane", scoreA: 13, b: "azure_bears_red", scoreB: 9, winner: "ufu_insane" },
             { code: "Partida 3", a: "azure_bears_black", scoreA: 13, b: "ufmt_turuna", scoreB: 5, winner: "azure_bears_black" },
-            { code: "Partida 4", a: "black_cyber", scoreA: 13, b: "unir_sentinelas", scoreB: 3, winner: "black_cyber" },
+            { code: "Partida 4", a: "ceub_octopus", scoreA: 13, b: "unir_sentinelas", scoreB: 3, winner: "ceub_octopus" },
             { code: "Partida 5", a: "inatel", scoreA: 13, b: "axis_anteaters", scoreB: 8, winner: "inatel" },
             { code: "Partida 6", a: "ufrj_canis_b", scoreA: 13, b: "sheriff_iff", scoreB: 1, winner: "ufrj_canis_b" },
             { code: "Partida 7", a: "fei_darkowls", scoreA: 13, b: "unirv_rushone", scoreB: 6, winner: "fei_darkowls" },
@@ -24266,7 +24266,7 @@ const TOURNAMENT_OVERRIDES = {
           bestOf: "MD1",
           matches: [
             { code: "Partida 11", a: "a2e_uff", scoreA: 14, b: "ufpr_bbn", scoreB: 12, winner: "a2e_uff" },
-            { code: "Partida 12", a: "azure_bears_golden", scoreA: 13, b: "black_cyber", scoreB: 4, winner: "azure_bears_golden" },
+            { code: "Partida 12", a: "azure_bears_golden", scoreA: 13, b: "ceub_octopus", scoreB: 4, winner: "azure_bears_golden" },
             { code: "Partida 13", a: "ufu_insane", scoreA: 13, b: "maua_blue", scoreB: 3, winner: "ufu_insane" },
             { code: "Partida 14", a: "fei_darkowls", scoreA: 14, b: "ufrj_canis_b", scoreB: 12, winner: "fei_darkowls" },
             { code: "Partida 15", a: "maua_b", scoreA: 13, b: "unifesp_erex", scoreB: 3, winner: "maua_b" },
@@ -24290,7 +24290,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 26", a: "axis_anteaters", scoreA: 13, b: "azure_bears_white", scoreB: 1, winner: "axis_anteaters" },
             { code: "Partida 27", a: "azure_bears_red", scoreA: 13, b: "unirv_rushone", scoreB: 8, winner: "azure_bears_red" },
             { code: "Partida 28", a: "ufmt_turuna", scoreA: 13, b: "ufpr_bbn", scoreB: 6, winner: "ufmt_turuna" },
-            { code: "Partida 29", a: "black_cyber", scoreA: 13, b: "ifsp_midas", scoreB: 7, winner: "black_cyber" },
+            { code: "Partida 29", a: "ceub_octopus", scoreA: 13, b: "ifsp_midas", scoreB: 7, winner: "ceub_octopus" },
             { code: "Partida 30", a: "macklogic_white", scoreA: 13, b: "maua_blue", scoreB: 8, winner: "macklogic_white" },
             { code: "Partida 31", a: "unifesp_erex", scoreA: 13, b: "inatel", scoreB: 11, winner: "unifesp_erex" },
             { code: "Partida 32", a: "wolf_gaming", scoreA: 13, b: "ufrj_canis_b", scoreB: 5, winner: "wolf_gaming" },
@@ -24306,7 +24306,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 35", a: "a2e_uff", scoreA: 13, b: "macklogic_white", scoreB: 5, winner: "a2e_uff" },
             { code: "Partida 36", a: "unifesp_erex", scoreA: 13, b: "azure_bears_red", scoreB: 11, winner: "unifesp_erex" },
             { code: "Partida 37", a: "wolf_gaming", scoreA: 13, b: "ufmt_turuna", scoreB: 9, winner: "wolf_gaming" },
-            { code: "Partida 38", a: "black_cyber", scoreA: 13, b: "fei_darkowls", scoreB: 5, winner: "black_cyber" },
+            { code: "Partida 38", a: "ceub_octopus", scoreA: 13, b: "fei_darkowls", scoreB: 5, winner: "ceub_octopus" },
             { code: "Partida 39", a: "azure_bears_white", scoreA: 13, b: "sheriff_iff", scoreB: 11, winner: "azure_bears_white" },
             { code: "Partida 40", a: "inatel", scoreA: 13, b: "espm_overbite_misto", scoreB: 4, winner: "inatel" },
             { code: "Partida 41", a: "axis_anteaters", scoreA: 13, b: "ufrj_canis_b", scoreB: 6, winner: "axis_anteaters" },
@@ -24321,7 +24321,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 43", a: "azure_bears_golden", scoreA: 13, b: "azure_bears_black", scoreB: 2, winner: "azure_bears_golden" },
             { code: "Partida 44", a: "maua_b", scoreA: 13, b: "a2e_uff", scoreB: 3, winner: "maua_b" },
             { code: "Partida 45", a: "ufu_saints", scoreA: 13, b: "wolf_gaming", scoreB: 7, winner: "ufu_saints" },
-            { code: "Partida 46", a: "black_cyber", scoreA: 13, b: "unifesp_erex", scoreB: 4, winner: "black_cyber" },
+            { code: "Partida 46", a: "ceub_octopus", scoreA: 13, b: "unifesp_erex", scoreB: 4, winner: "ceub_octopus" },
             { code: "Partida 47", a: "espm_overbite_misto", scoreA: 13, b: "unir_sentinelas", scoreB: 1, winner: "espm_overbite_misto" },
             { code: "Partida 48", a: "ufrj_canis_b", scoreA: 13, b: "totale_umc", scoreB: 5, winner: "ufrj_canis_b" },
             { code: "Partida 49", a: "sheriff_iff", scoreA: 13, b: "ifsp_midas", scoreB: 5, winner: "sheriff_iff" },
@@ -24341,7 +24341,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 58", a: "ufmt_turuna", scoreA: 13, b: "a2e_uff", scoreB: 6, winner: "ufmt_turuna" },
             { code: "Partida 59", a: "azure_bears_white", scoreA: 13, b: "totale_umc", scoreB: 10, winner: "azure_bears_white" },
             { code: "Partida 60", a: "ifsp_midas", scoreA: 13, b: "unir_sentinelas", scoreB: 1, winner: "ifsp_midas" },
-            { code: "Partida 61", a: "black_cyber", scoreA: 13, b: "macklogic_white", scoreB: 10, winner: "black_cyber" },
+            { code: "Partida 61", a: "ceub_octopus", scoreA: 13, b: "macklogic_white", scoreB: 10, winner: "ceub_octopus" },
             { code: "Partida 62", a: "azure_bears_red", scoreA: 13, b: "fei_darkowls", scoreB: 7, winner: "azure_bears_red" },
             { code: "Partida 63", a: "ufrj_canis_b", scoreA: 13, b: "espm_overbite_misto", scoreB: 3, winner: "ufrj_canis_b" },
           ],
@@ -24355,7 +24355,7 @@ const TOURNAMENT_OVERRIDES = {
             { code: "Partida 67", a: "axis_anteaters", scoreA: 13, b: "azure_bears_black", scoreB: 10, winner: "axis_anteaters" },
             { code: "Partida 68", a: "wolf_gaming", scoreA: 13, b: "ufpr_bbn", scoreB: 2, winner: "wolf_gaming" },
             { code: "Partida 69", a: "maua_b", scoreA: 13, b: "sheriff_iff", scoreB: 10, winner: "maua_b" },
-            { code: "Partida 71", a: "black_cyber", scoreA: 13, b: "a2e_uff", scoreB: 8, winner: "black_cyber" },
+            { code: "Partida 71", a: "ceub_octopus", scoreA: 13, b: "a2e_uff", scoreB: 8, winner: "ceub_octopus" },
             { code: "Partida 72", a: "fei_darkowls", scoreA: 13, b: "ifsp_midas", scoreB: 11, winner: "fei_darkowls" },
             { code: "Partida 73", a: "espm_overbite_misto", scoreA: 13, b: "unifesp_erex", scoreB: 7, winner: "espm_overbite_misto" },
             { code: "Partida 75", a: "azure_bears_red", scoreA: 13, b: "maua_blue", scoreB: 8, winner: "azure_bears_red" },
@@ -24366,7 +24366,7 @@ const TOURNAMENT_OVERRIDES = {
           status: "Conclu\u00edda",
           bestOf: "MD1",
           matches: [
-            { code: "Partida 76", a: "wolf_gaming", scoreA: 13, b: "black_cyber", scoreB: 9, winner: "wolf_gaming" },
+            { code: "Partida 76", a: "wolf_gaming", scoreA: 13, b: "ceub_octopus", scoreB: 9, winner: "wolf_gaming" },
             { code: "Partida 77", a: "ufu_saints", scoreA: 13, b: "maua_b", scoreB: 10, winner: "ufu_saints" },
             { code: "Partida 78", a: "azure_bears_golden", scoreA: 13, b: "axis_anteaters", scoreB: 9, winner: "azure_bears_golden" },
             { code: "Partida 79", a: "ufrj_canis_b", scoreA: 13, b: "azure_bears_black", scoreB: 5, winner: "ufrj_canis_b" },
@@ -24383,7 +24383,7 @@ const TOURNAMENT_OVERRIDES = {
           bestOf: "MD1",
           matches: [
             { code: "Partida 85", a: "wolf_gaming", scoreA: 15, b: "fei_darkowls", scoreB: 13, winner: "wolf_gaming" },
-            { code: "Partida 86", a: "ufu_saints", scoreA: 14, b: "black_cyber", scoreB: 12, winner: "ufu_saints" },
+            { code: "Partida 86", a: "ufu_saints", scoreA: 14, b: "ceub_octopus", scoreB: 12, winner: "ufu_saints" },
             { code: "Partida 87", a: "maua_b", scoreA: 13, b: "ufrj_canis_b", scoreB: 7, winner: "maua_b" },
             { code: "Partida 88", a: "ifsp_midas", scoreA: 13, b: "azure_bears_white", scoreB: 10, winner: "ifsp_midas" },
             { code: "Partida 89", a: "sheriff_iff", scoreA: 13, b: "totale_umc", scoreB: 9, winner: "sheriff_iff" },
@@ -24400,7 +24400,7 @@ const TOURNAMENT_OVERRIDES = {
           matches: [
             { code: "Partida 94", a: "azure_bears_golden", scoreA: 13, b: "ufrj_canis_b", scoreB: 3, winner: "azure_bears_golden" },
             { code: "Partida 95", a: "a2e_uff", scoreA: 13, b: "wolf_gaming", scoreB: 11, winner: "a2e_uff" },
-            { code: "Partida 96", a: "maua_b", scoreA: 13, b: "black_cyber", scoreB: 11, winner: "maua_b" },
+            { code: "Partida 96", a: "maua_b", scoreA: 13, b: "ceub_octopus", scoreB: 11, winner: "maua_b" },
             { code: "Partida 97", a: "ufu_saints", scoreA: 13, b: "fei_darkowls", scoreB: 5, winner: "ufu_saints" },
             { code: "Partida 98", a: "axis_anteaters", scoreA: 13, b: "macklogic_white", scoreB: 5, winner: "axis_anteaters" },
             { code: "Partida 99", a: "totale_umc", scoreA: 13, b: "maua_blue", scoreB: 10, winner: "totale_umc" },
@@ -24416,7 +24416,7 @@ const TOURNAMENT_OVERRIDES = {
         { id: "wolf_gaming", wins: 7, losses: 3, range: "-", status: "Championship" },
         { id: "maua_b", wins: 6, losses: 3, range: "-", status: "Championship" },
         { id: "a2e_uff", wins: 6, losses: 4, range: "-", status: "Championship" },
-        { id: "black_cyber", wins: 6, losses: 4, range: "-", status: "Championship" },
+        { id: "ceub_octopus", wins: 6, losses: 4, range: "-", status: "Championship" },
         { id: "axis_anteaters", wins: 5, losses: 4, range: "-", status: "Championship" },
         { id: "ufu_saints", wins: 4, losses: 0, range: "-", status: "Championship" },
         { id: "ufrj_canis_b", wins: 4, losses: 5, range: "-", status: "Championship" },
@@ -24460,7 +24460,7 @@ const TOURNAMENT_OVERRIDES = {
     },
     teams: [
       "ufu_saints",
-      "black_cyber",
+      "ceub_octopus",
       "azure_bears_golden",
       "wolf_gaming",
       "axis_anteaters",
@@ -24470,7 +24470,7 @@ const TOURNAMENT_OVERRIDES = {
     ],
     placements: [
       { range: "1", id: "ufu_saints" },
-      { range: "2", id: "black_cyber" },
+      { range: "2", id: "ceub_octopus" },
       { range: "3", id: "azure_bears_golden", note: "Final inferior" },
       { range: "4", id: "wolf_gaming", note: "Semifinal inferior" },
       { range: "5-6", id: "axis_anteaters", note: "Quartas de final inferior" },
@@ -24488,7 +24488,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Grande final",
               matches: [
-                { code: "Partida 130", bestOf: "MD5", a: "ufu_saints", scoreA: 3, b: "black_cyber", scoreB: 0, winner: "ufu_saints" },
+                { code: "Partida 130", bestOf: "MD5", a: "ufu_saints", scoreA: 3, b: "ceub_octopus", scoreB: 0, winner: "ufu_saints" },
               ],
             },
           ],
@@ -24500,7 +24500,7 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Quartas de final superior",
               matches: [
-                { code: "Partida 104", bestOf: "MD3", a: "black_cyber", scoreA: 2, b: "azure_bears_golden", scoreB: 1, winner: "black_cyber" },
+                { code: "Partida 104", bestOf: "MD3", a: "ceub_octopus", scoreA: 2, b: "azure_bears_golden", scoreB: 1, winner: "ceub_octopus" },
                 { code: "Partida 105", bestOf: "MD3", a: "maua_b", scoreA: 2, b: "a2e_uff", scoreB: 0, winner: "maua_b" },
                 { code: "Partida 106", bestOf: "MD3", a: "ufu_saints", scoreA: 2, b: "ufrj_canis_b", scoreB: 0, winner: "ufu_saints" },
                 { code: "Partida 107", bestOf: "MD3", a: "axis_anteaters", scoreA: 2, b: "wolf_gaming", scoreB: 0, winner: "axis_anteaters" },
@@ -24509,14 +24509,14 @@ const TOURNAMENT_OVERRIDES = {
             {
               title: "Semifinais superior",
               matches: [
-                { code: "Partida 110", bestOf: "MD3", a: "maua_b", scoreA: 1, b: "black_cyber", scoreB: 2, winner: "black_cyber" },
+                { code: "Partida 110", bestOf: "MD3", a: "maua_b", scoreA: 1, b: "ceub_octopus", scoreB: 2, winner: "ceub_octopus" },
                 { code: "Partida 111", bestOf: "MD3", a: "ufu_saints", scoreA: 2, b: "axis_anteaters", scoreB: 0, winner: "ufu_saints" },
               ],
             },
             {
               title: "Final superior",
               matches: [
-                { code: "Partida 114", bestOf: "MD3", a: "ufu_saints", scoreA: 1, b: "black_cyber", scoreB: 2, winner: "black_cyber" },
+                { code: "Partida 114", bestOf: "MD3", a: "ufu_saints", scoreA: 1, b: "ceub_octopus", scoreB: 2, winner: "ceub_octopus" },
               ],
             },
           ],
@@ -45554,7 +45554,8 @@ const HISTORICAL_TEAM_ROUTE_ALIASES = {
   "unb_green_owls_a_2023": "unb_black",
   "unb_green_owls_b_2023": "unb_green_olws_line_red_2024",
   "mackenzie_tecmack_2023": "macklogic_red",
-  "azure_bears_blue_2023": "azure_bears_golden"
+  "azure_bears_blue_2023": "azure_bears_golden",
+  "black_cyber": "ceub_octopus"
 };
 
 function teamById(id) {

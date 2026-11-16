@@ -26,7 +26,7 @@ Sem `database.json`, o app cai no modo antigo: baixa todos os arquivos brutos e 
 
 ## Campos principais
 
-- `raating_3`: rating oficial, clamp visual `0.30` a `1.80`.
+- `raating_3`: rating oficial, **sem limites** desde 16/11/2026 (decisão do dono): cada componente é `1 + 0.28 * z`, sem cortar o z em 3 nem o componente em `0.30` a `1.80`, e a nota não é cortada. A mediana de um mapa continua perto de `1.00` (1,011). Antes, 74 mapas paravam juntos em `1.791574`; hoje o maior é 2,95 e há 16 mapas negativos (o menor, -0,16). O rAAting 1.0 (`raating_1`) continua com os cortes antigos. Sem cortes a fórmula é linear nas taxas por round, então a nota de um jogador num campeonato (ou num mapa, ou numa equipe) é a mesma pela média das notas de cada mapa pesada pelos rounds e pela soma de todos os campos: as duas convenções, que antes chegavam a inverter pódio, agora coincidem (5.627 notas de campeonato conferidas, diferença máxima 7e-16). `scripts/test_nota_pela_soma.js` trava isso.
 - `raating_1`: rating legado/auditoria.
 - `rating`: alias compatível de `raating_3`.
 - `sample_status`: `OK` com `rounds >= 50`, senão `LOW`. O número vem de `SAMPLE_MIN_ROUNDS` em `raating-core.js:11` e a página `/stats` lê a constante em runtime — o doc dizia 60, que nunca foi o valor do código.

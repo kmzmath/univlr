@@ -475,9 +475,11 @@ RAATING_3_BASELINES = {
 
 
 def _raa3_subrating(metric: float, baseline: Tuple[float, float]) -> float:
+    # Sem limites desde 16/11/2026 (decisao do dono): o z nao e cortado em 3 nem
+    # o componente em 0,30 a 1,80, igual ao raating-core.js.
     median, iqr = baseline
-    z_score = clamp((metric - median) / abs(iqr), -3.0, 3.0) if iqr else 0.0
-    return clamp(1.0 + 0.28 * z_score, 0.30, 1.80)
+    z_score = (metric - median) / abs(iqr) if iqr else 0.0
+    return 1.0 + 0.28 * z_score
 
 
 def rAAting_3_0_value(values: Dict[str, float]) -> float:
@@ -531,7 +533,7 @@ def rAAting_3_0_value(values: Dict[str, float]) -> float:
         + 0.08 * subratings["kast"]
         - 0.008426
     )
-    return clamp(rating, 0.30, 1.80)
+    return rating
 
 
 def sheet_name_safe(name: str) -> str:

@@ -78,10 +78,14 @@
     return 0;
   }
 
+  // Sem limites desde 16/11/2026 (decisao do dono): o rAAting so reflete a
+  // mediana em 1,00. O z nao e cortado em 3 nem o componente em 0,30 a 1,80; o
+  // corte deixava 74 mapas empatados em 1,791574 e tirava a ordem do topo.
+  // RATING_MIN e RATING_MAX seguem so para o rAAting 1.0, que e legado.
   function subRating(metric, baseline) {
     const iqr = Math.abs(finiteNumber(baseline.iqr, 0));
-    const z = iqr ? clamp((finiteNumber(metric) - finiteNumber(baseline.median)) / iqr, -3, 3) : 0;
-    return clamp(1 + 0.28 * z, RATING_MIN, RATING_MAX);
+    const z = iqr ? (finiteNumber(metric) - finiteNumber(baseline.median)) / iqr : 0;
+    return 1 + 0.28 * z;
   }
 
   function calculateRaating3(row = {}) {
@@ -143,8 +147,8 @@
       0.0241 * mkPerR;
 
     return {
-      raating_3: clamp(unadjusted, RATING_MIN, RATING_MAX),
-      rating_3_like: clamp(unadjusted, RATING_MIN, RATING_MAX),
+      raating_3: unadjusted,
+      rating_3_like: unadjusted,
       rating_3_like_unadjusted: unadjusted,
       rating_recon_proxy: ratingReconProxy,
       rating_version: "raa3",

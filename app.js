@@ -25245,8 +25245,8 @@ const cacheDosMapas = { db: null, series: [], eventos: new Map(), ultimos: new M
 // Estatisticas dos jogadores (11/11/2026), pelo mesmo motivo.
 // #/stats e a entrada unica (11/11/2026, pedido dele): quatro quadrados que levam a
 // Jogadores, Equipes, Mapas (o painel #/maps) e Agentes.
-const STATS_ABAS = ["geral", "lideres", "tabela", "recordes"];
-const STATS_ABA_ROTULOS = { geral: "Visão Geral", lideres: "Líderes", tabela: "Tabela", recordes: "Recordes" };
+const STATS_ABAS = ["geral", "lideres", "tabela", "recordes", "trofeus"];
+const STATS_ABA_ROTULOS = { geral: "Visão Geral", lideres: "Líderes", tabela: "Tabela", recordes: "Recordes", trofeus: "Troféus" };
 // `mapas` e o minimo da aba Lideres, em mapas como nos Melhores da semana.
 const STATS_FILTROS = ["ano", "de", "ate", "evento", "tier", "formato", "top", "mapa", "agente", "funcao", "patch", "equipe", "atual", "rounds", "minimo", "mapas"];
 // Os filtros que cada pagina mostra e aplica. Agentes usa `agente` para destacar uma
@@ -25255,7 +25255,14 @@ const STATS_FILTROS_DA_PAGINA = {
   jogadores: ["ano", "de", "ate", "evento", "tier", "formato", "top", "mapa", "agente", "funcao", "patch", "equipe", "atual", "rounds", "mapas"],
   equipes: ["ano", "de", "ate", "evento", "tier", "formato", "top", "mapa", "patch", "minimo"],
   agentes: ["ano", "de", "ate", "evento", "tier", "formato", "top", "mapa", "patch", "equipe"],
+  // Recordes numa serie (16/11/2026): o que e de um mapa so nao corta uma serie.
+  series: ["ano", "de", "ate", "evento", "tier", "formato", "top", "equipe", "atual"],
+  // Trofeus (16/11/2026): ano e periodo pelo fim do campeonato, equipe da medalha.
+  trofeus: ["ano", "de", "ate", "tier", "equipe"],
 };
+const STATS_TROFEUS_PAGINA = 25;
+const STATS_FORMATOS_DA_SERIE = ["md3", "md5"];
+const cacheDasMedalhas = { db: null, porJogador: new Map() };
 const STATS_RECORDES_PAGINA = 20;
 const cacheDasEstatisticas = { db: null, linhas: [], chave: "", recorte: null };
 // Filtro "contra Top X" (11/11/2026, cortes da HLTV): Estatisticas, perfil e equipe.
@@ -42057,7 +42064,11 @@ function secaoDoMenu(section) {
 function statsFiltro(pagina = "jogadores") {
   const query = routeQuery();
   const chaves = STATS_FILTROS_DA_PAGINA[pagina] || STATS_FILTROS;
-  return Object.fromEntries(STATS_FILTROS.map((chave) => [chave, chaves.includes(chave) ? query.get(chave) || "" : ""]));
+  const filtro = Object.fromEntries(STATS_FILTROS.map((chave) => [chave, chaves.includes(chave) ? query.get(chave) || "" : ""]));
+  // Numa serie o Formato so oferece MD3 e MD5: MD1 ou mapa decisivo vindo de um
+  // link antigo cortaria a lista sem aparecer na barra.
+  if (pagina === "series" && !STATS_FORMATOS_DA_SERIE.includes(filtro.formato)) filtro.formato = "";
+  return filtro;
 }
 
 function statsFiltroAtivo(filtro) {
@@ -42165,8 +42176,10 @@ function statsRecorte(filtro, pagina = "jogadores") {
   if (cacheDasEstatisticas.chave !== chave || !cacheDasEstatisticas.recorte) {
     const f = statsPreparaFiltro(filtro);
     const linhas = statsLinhas(f);
-    const somar = { jogadores: statsDados, equipes: statsEquipesDados, agentes: (lista) => statsAgentesDados(lista, filtro) }[pagina];
-    cacheDasEstatisticas.recorte = { f, linhas, dados: somar(linhas), facetas: statsFacetas(filtro, f, STATS_FILTROS_DA_PAGINA[pagina]) };
+    const somar = { jogadores: statsDados, series: statsDados, trofeus: statsDados, equipes: statsEquipesDados, agentes: (lista) => statsAgentesDados(lista, filtro) }[pagina];
+    // Em Trofeus cada opcao do filtro conta medalhas, e nao mapas.
+    const facetas = pagina === "trofeus" ? medalhasFacetas(filtro, f) : statsFacetas(filtro, f, STATS_FILTROS_DA_PAGINA[pagina]);
+    cacheDasEstatisticas.recorte = { f, linhas, dados: somar(linhas), facetas };
     cacheDasEstatisticas.chave = chave;
   }
   return cacheDasEstatisticas.recorte;
@@ -42238,7 +42251,7 @@ function statsFiltroCampos(filtro, facetas, pagina, minimo = null) {
     ate: () => data("ate", "Até"),
     evento: () => select("evento", "Todos os campeonatos", facetas.evento),
     tier: () => select("tier", "Todos os tiers", facetas.tier),
-    formato: () => select("formato", "Todos os formatos", facetas.formato),
+    formato: () => select("formato", "Todos os formatos", pagina === "series" ? facetas.formato.filter(({ id }) => STATS_FORMATOS_DA_SERIE.includes(id)) : facetas.formato),
     top: () => topSelect('data-st-filtro="top"', filtro.top, facetas.top),
     mapa: () => select("mapa", "Todos os mapas", facetas.mapa),
     agente: () => select("agente", "Todos os agentes", facetas.agente),
@@ -42343,6 +42356,29 @@ function statsRecordesDe(linhas, categoria) {
   return linhas
     .filter(({ player }) => (!categoria.minimo || Number(player.rounds || 0) >= categoria.minimo) && categoria.valor(player) > 0)
     .sort((a, b) => categoria.valor(b.player) - categoria.valor(a.player) || b.quando - a.quando);
+}
+
+// Uma atuacao numa serie e o jogador somado nos mapas dela, como a soma de
+// Estatisticas. So entra serie em que ele jogou 2 mapas ou mais: numa MD1 a serie
+// e o proprio mapa e repetiria o recorde por mapa.
+function statsSeriesDe(linhas) {
+  const grupos = new Map();
+  linhas.forEach((linha) => {
+    const chave = `${linha.series.id || linha.series.seriesKey}|${linha.player.id}`;
+    if (!grupos.has(chave)) grupos.set(chave, []);
+    grupos.get(chave).push(linha);
+  });
+  const validos = [...grupos.entries()].filter(([, lista]) => new Set(lista.map((linha) => linha.match.id)).size >= 2);
+  const somas = new Map(
+    aggregateMatchPlayers(validos.flatMap(([chave, lista]) => lista.map((linha) => ({ players: [{ ...linha.player, id: chave }] })))).map((row) => [row.id, row])
+  );
+  return validos.map(([chave, lista]) => ({
+    chave,
+    series: lista[0].series,
+    player: { ...somas.get(chave), id: lista[0].player.id },
+    linhas: lista,
+    quando: Math.max(...lista.map((linha) => linha.quando)),
+  }));
 }
 
 // So o primeiro de cada numero: uma passada, sem ordenar as linhas todas.
@@ -42587,6 +42623,35 @@ function statsRecordeLinha(linha, posicao, categoria) {
   `;
 }
 
+// Uma atuacao numa serie: os agentes de cada mapa e a serie inteira no lugar do mapa.
+function statsRecordeSerieLinha(item, posicao, categoria) {
+  const { series, player, linhas } = item;
+  const doLadoB = Boolean(series.teamB?.id) && player.teamId === series.teamB.id;
+  const [nos, eles] = doLadoB ? [series.scoreB, series.scoreA] : [series.scoreA, series.scoreB];
+  const rival = doLadoB ? series.teamA : series.teamB;
+  const mapas = linhas.slice().sort((a, b) => Number(a.match.mapNumber || 0) - Number(b.match.mapNumber || 0) || a.quando - b.quando);
+  const event = mapaEventoDaSerie(series);
+  return `
+    <div class="vp-st-rec vp-st-rec-serie">
+      <i class="vp-st-rec-pos">${posicao}</i>
+      <b class="vp-st-rec-valor">${escapeHtml(categoria.texto(player))}</b>
+      <a class="vp-st-rec-jogador" href="${playerHref(player)}">${player.teamId ? teamLogo(player.teamId, "tiny") : ""}<span><strong title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong><small>${escapeHtml(`${player.kills}/${player.deaths}/${player.assists}`)}</small></span></a>
+      <span class="vp-st-rec-agente">${mapas.map(({ player: doMapa }) => agentMiniIcon({ slug: doMapa.agentSlug, name: doMapa.agent, icon: doMapa.agentIcon })).join("")}</span>
+      <a class="vp-st-rec-mapa" href="${matchSeriesHref(series)}"><strong>${escapeHtml(mapas.map(({ match, mapa }) => match.mapName || mapById(mapa)?.name || "").join(", "))}</strong><small>${escapeHtml(`${nos ?? "-"}-${eles ?? "-"} contra ${rival?.name || mapaNomeDaEquipe(rival?.id)}`)}</small></a>
+      <span class="vp-st-rec-evento" title="${escapeHtml(event?.name || "")}">${event ? eventLogo(event, "tiny") : ""}<span>${escapeHtml(event?.name || "")}</span></span>
+      <span class="vp-st-rec-data">${escapeHtml(dataCurta(item.quando))}</span>
+    </div>
+  `;
+}
+
+// A soma por serie fica no recorte: trocar de numero nao soma de novo.
+function statsSeriesDoRecorte(linhas) {
+  const recorte = cacheDasEstatisticas.recorte;
+  if (recorte?.linhas !== linhas) return statsSeriesDe(linhas);
+  recorte.series ||= statsSeriesDe(linhas);
+  return recorte.series;
+}
+
 function statsMarcos(linhas, dados) {
   let aces = 0;
   let quatro = 0;
@@ -42611,12 +42676,13 @@ function statsMarcos(linhas, dados) {
   `;
 }
 
-function statsRecordesAba(linhas, dados) {
+function statsRecordesAba(linhas, dados, porSerie = false) {
   if (!linhas.length) return statsVazio();
   const categorias = statsRecordeCategorias();
   const query = routeQuery();
   const categoria = categorias.find((item) => item.id === query.get("recorde")) || categorias[0];
-  const ordenadas = statsRecordesDe(linhas, categoria);
+  const ordenadas = statsRecordesDe(porSerie ? statsSeriesDoRecorte(linhas) : linhas, categoria);
+  const desenha = porSerie ? statsRecordeSerieLinha : statsRecordeLinha;
   const paginas = Math.max(1, Math.ceil(ordenadas.length / STATS_RECORDES_PAGINA));
   const pagina = Math.min(paginas, Math.max(1, Number.parseInt(query.get("pagina") || "1", 10) || 1));
   query.delete("pagina");
@@ -42632,13 +42698,17 @@ function statsRecordesAba(linhas, dados) {
     <section class="vp-eq-bloco vp-est vp-st-recordes">
       <div class="vp-est-lista">
         <article class="vp-est-bloco">
-          <h3>Recordes num mapa<span>${escapeHtml(`${ordenadas.length} ${ordenadas.length === 1 ? "atuação" : "atuações"}`)}</span></h3>
+          <h3>${porSerie ? "Recordes numa série" : "Recordes num mapa"}<span>${escapeHtml(`${ordenadas.length} ${ordenadas.length === 1 ? "atuação" : "atuações"}`)}</span></h3>
+          <div class="vp-st-escolha vp-st-modo" role="group" aria-label="Recordes por">
+            <button type="button" data-st-por="mapa" aria-pressed="${!porSerie}">Num mapa</button>
+            <button type="button" data-st-por="serie" aria-pressed="${porSerie}">Numa série</button>
+          </div>
           <div class="vp-st-escolha" role="group" aria-label="Recorde">
             ${categorias.map((item) => `<button type="button" data-st-recorde="${item.id}" aria-pressed="${item.id === categoria.id}">${escapeHtml(item.rotulo)}</button>`).join("")}
           </div>
           ${ordenadas.length
-            ? `<div class="vp-st-recs">${ordenadas.slice(inicio, inicio + STATS_RECORDES_PAGINA).map((linha, indice) => statsRecordeLinha(linha, posicaoDe(inicio + indice), categoria)).join("")}</div>`
-            : `<p class="vp-est-vazio">Nenhuma atuação com esses filtros.</p>`}
+            ? `<div class="vp-st-recs">${ordenadas.slice(inicio, inicio + STATS_RECORDES_PAGINA).map((linha, indice) => desenha(linha, posicaoDe(inicio + indice), categoria)).join("")}</div>`
+            : `<p class="vp-est-vazio">${porSerie ? "Nenhuma série com esses filtros." : "Nenhuma atuação com esses filtros."}</p>`}
           ${paginacaoDaLista(routePath().slice(2), pagina, paginas, query)}
         </article>
       </div>
@@ -42649,11 +42719,192 @@ function statsRecordesAba(linhas, dados) {
   `;
 }
 
+// ---- Trofeus (16/11/2026): quadro de medalhas no estilo olimpico ----
+// A regra e a do hall do perfil (playerTrophyAchievements), calculada uma vez para
+// todos: a equipe cadastrada no podio de um campeonato visivel e encerrado da a
+// medalha a quem jogou por ela ali, pela equipe com mais series do jogador naquele
+// campeonato. O MVP fica fora. Chamar o hall de cada perfil levava 2 segundos.
+function medalhasDasEquipes(eventos) {
+  const cadastradas = new Set((state.db?.teams || []).map((team) => team.id));
+  const trofeus = new Map();
+  eventos.forEach((event) => {
+    if (!eventIsDone(event)) return;
+    trophyPlacementRows(event).forEach((row, index) => {
+      const teamId = row.id || row.teamId;
+      if (!cadastradas.has(teamId)) return;
+      const lugar = trophyPlacementInfo(row, index);
+      if (!lugar) return;
+      const chave = `${event.id}|${teamId}`;
+      if (trofeus.has(chave) && trofeus.get(chave).placement <= lugar.value) return;
+      trofeus.set(chave, {
+        event,
+        placement: lugar.value,
+        placementLabel: lugar.label,
+        trophyKey: lugar.trophyKey,
+        podiumClass: lugar.podiumClass,
+        date: Number(event.end || event.start || 0),
+      });
+    });
+  });
+  return trofeus;
+}
+
+// A equipe do jogador num mapa sai da cor do lado, como em playerInMatchTeam.
+function medalhasDosJogadores(series, trofeus) {
+  const campanhas = new Map();
+  series.forEach((item) => {
+    (item.maps || []).forEach((match) => {
+      (match.players || []).forEach((player) => {
+        const teamId = match.teamA?.color === player.teamColor ? match.teamA?.id : match.teamB?.id;
+        if (!player.id || !teamId) return;
+        const chave = `${item.eventId}|${player.id}`;
+        if (!campanhas.has(chave)) campanhas.set(chave, { eventId: item.eventId, playerId: player.id, equipes: new Map() });
+        const equipes = campanhas.get(chave).equipes;
+        if (!equipes.has(teamId)) equipes.set(teamId, new Set());
+        equipes.get(teamId).add(item);
+      });
+    });
+  });
+  const porJogador = new Map();
+  campanhas.forEach(({ eventId, playerId, equipes }) => {
+    const [principal] = [...equipes.entries()].sort(([a, seriesA], [b, seriesB]) => seriesB.size - seriesA.size || a.localeCompare(b));
+    const trofeu = trofeus.get(`${eventId}|${teamById(principal[0])?.id}`);
+    if (!trofeu) return;
+    if (!porJogador.has(playerId)) porJogador.set(playerId, []);
+    porJogador.get(playerId).push({ ...trofeu, teamId: principal[0] });
+  });
+  porJogador.forEach((lista) => lista.sort((a, b) => b.date - a.date || a.placement - b.placement || String(a.event.name || "").localeCompare(String(b.event.name || ""), "pt-BR")));
+  return porJogador;
+}
+
+function medalhasIndice() {
+  if (cacheDasMedalhas.db !== state.db) {
+    Object.assign(cacheDasMedalhas, { db: state.db, porJogador: medalhasDosJogadores(mapaSeriesBase(), medalhasDasEquipes(visibleTournaments())) });
+  }
+  return cacheDasMedalhas.porJogador;
+}
+
+// O ano e o periodo sao os do fim do campeonato; a equipe e a da medalha.
+function medalhaPassa(trofeu, f, ignorar = "") {
+  if (ignorar !== "ano" && f.ano && String(new Date(trofeu.date).getFullYear()) !== f.ano) return false;
+  if (f.deMs && trofeu.date < f.deMs) return false;
+  if (f.ateMs && trofeu.date > f.ateMs) return false;
+  if (ignorar !== "tier" && f.tier && eventTierChave(trofeu.event) !== f.tier) return false;
+  if (ignorar !== "equipe" && f.equipe && trofeu.teamId !== f.equipe) return false;
+  return true;
+}
+
+// Ordem olimpica: ouro, depois prata, depois bronze; o empate fica em ordem alfabetica.
+// So perfis do site, como no hall do perfil.
+function medalhasQuadro(porJogador, f = {}) {
+  const linhas = [];
+  porJogador.forEach((trofeus, id) => {
+    const player = playerById(id);
+    if (!player || player.id !== id || !playerTemPerfil(player)) return;
+    const validos = trofeus.filter((trofeu) => medalhaPassa(trofeu, f));
+    if (!validos.length) return;
+    linhas.push({
+      player,
+      ouro: validos.filter((trofeu) => trofeu.placement === 1),
+      prata: validos.filter((trofeu) => trofeu.placement === 2),
+      bronze: validos.filter((trofeu) => trofeu.placement >= 3),
+      total: validos.length,
+    });
+  });
+  return linhas.sort((a, b) => b.ouro.length - a.ouro.length || b.prata.length - a.prata.length || b.bronze.length - a.bronze.length || String(a.player.nick || "").localeCompare(String(b.player.nick || ""), "pt-BR"));
+}
+
+// Mesmo ouro, prata e bronze dividem a posicao.
+function medalhasPosicao(lista, indice) {
+  const chave = (linha) => `${linha.ouro.length}|${linha.prata.length}|${linha.bronze.length}`;
+  let primeiro = indice;
+  while (primeiro > 0 && chave(lista[primeiro - 1]) === chave(lista[indice])) primeiro -= 1;
+  return primeiro + 1;
+}
+
+// Cada opcao do filtro conta medalhas, sem o proprio filtro, como as de mapas.
+function medalhasFacetas(filtro, f) {
+  const conta = (chave, valorDe) => {
+    const total = new Map();
+    medalhasIndice().forEach((trofeus, id) => {
+      const player = playerById(id);
+      if (!player || player.id !== id || !playerTemPerfil(player)) return;
+      trofeus.forEach((trofeu) => {
+        const valor = medalhaPassa(trofeu, f, chave) && valorDe(trofeu);
+        if (valor) total.set(valor, (total.get(valor) || 0) + 1);
+      });
+    });
+    if (filtro[chave] && !total.has(filtro[chave])) total.set(filtro[chave], 0);
+    return [...total.entries()].map(([id, n]) => ({ id, n }));
+  };
+  return {
+    ano: conta("ano", (trofeu) => String(new Date(trofeu.date).getFullYear())).map((item) => ({ ...item, nome: item.id })).sort((a, b) => b.id.localeCompare(a.id)),
+    tier: conta("tier", (trofeu) => eventTierChave(trofeu.event)).map((item) => ({ ...item, nome: `Tier ${item.id}` })).sort((a, b) => (EVENT_TIER_ORDEM[b.id] || 0) - (EVENT_TIER_ORDEM[a.id] || 0)),
+    equipe: conta("equipe", (trofeu) => trofeu.teamId).map((item) => ({ ...item, nome: mapaNomeDaEquipe(item.id) })).sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")),
+  };
+}
+
+// A taca de verdade do campeonato, com o nome na dica e o link para ele.
+function medalhaTaca(trofeu) {
+  const nome = `${trofeu.placementLabel}, ${trofeu.event.name || ""}`;
+  return `<a class="vp-st-taca" href="#/events/${encodeURIComponent(trofeu.event.id)}" title="${escapeHtml(nome)}" aria-label="${escapeHtml(nome)}">${trophyVisual(trofeu)}</a>`;
+}
+
+// Uma linha do quadro: cada cor e uma coluna com o numero e as tacas daquela cor
+// (escolha do dono em 16/11/2026), e a foto entre a logo e o nick (pedido dele).
+// Quem esta sem equipe veste a ultima, com "Ultima:", como na lista de Jogadores.
+function medalhasLinha(linha, posicao) {
+  const { player } = linha;
+  const atual = playerPrimaryTeam(player);
+  const team = atual || teamById(player.teamId);
+  const nomeDaEquipe = atual?.name || (team ? `Última: ${team.name}` : "Sem equipe");
+  const coluna = (cor, rotulo, trofeus) => `
+      <span class="vp-st-tr-medalha ${cor}${trofeus.length ? "" : " vazia"}" data-rotulo="${rotulo}">
+        <b class="vp-st-tr-n">${trofeus.length}</b>
+        <span class="vp-st-tr-tacas">${trofeus.map(medalhaTaca).join("")}</span>
+      </span>`;
+  return `
+    <div class="vp-st-tr">
+      <i class="vp-st-tr-pos">${posicao}</i>
+      <a class="vp-st-tr-jogador" href="${playerHref(player)}">
+        ${team ? teamLogo(team.id, "tiny") : ""}
+        ${playerFigure(player, team, "vp-st-tr-foto")}
+        <span class="vp-st-tr-nome"><strong title="${escapeHtml(player.nick)}">${escapeHtml(player.nick)}</strong><small>${escapeHtml(nomeDaEquipe)}</small></span>
+      </a>
+      ${coluna("ouro", "Ouro", linha.ouro)}
+      ${coluna("prata", "Prata", linha.prata)}
+      ${coluna("bronze", "Bronze", linha.bronze)}
+      <b class="vp-st-tr-total" data-rotulo="Total">${linha.total}</b>
+    </div>
+  `;
+}
+
+function statsTrofeusAba(filtro) {
+  const quadro = medalhasQuadro(medalhasIndice(), statsPreparaFiltro(filtro));
+  if (!quadro.length) return `<p class="vp-est-vazio">Nenhuma medalha com esses filtros.</p>`;
+  const query = routeQuery();
+  const paginas = Math.max(1, Math.ceil(quadro.length / STATS_TROFEUS_PAGINA));
+  const pagina = Math.min(paginas, Math.max(1, Number.parseInt(query.get("pagina") || "1", 10) || 1));
+  query.delete("pagina");
+  const inicio = (pagina - 1) * STATS_TROFEUS_PAGINA;
+  return `
+    <section class="vp-st-trofeus">
+      <article class="vp-est-bloco">
+        <h3>Troféus<span>${escapeHtml(`${quadro.length} ${quadro.length === 1 ? "jogador" : "jogadores"}`)}</span></h3>
+        <div class="vp-st-tr-cabeca" aria-hidden="true"><span>#</span><span>Jogador</span><span>Ouro</span><span>Prata</span><span>Bronze</span><span>Total</span></div>
+        <div class="vp-st-trs">${quadro.slice(inicio, inicio + STATS_TROFEUS_PAGINA).map((linha, indice) => medalhasLinha(linha, medalhasPosicao(quadro, inicio + indice))).join("")}</div>
+        ${paginacaoDaLista(routePath().slice(2), pagina, paginas, query)}
+      </article>
+    </section>
+  `;
+}
+
 // ---- pagina ----
 function statsAba(aba, linhas, dados, filtro) {
   if (aba === "lideres") return statsLideresAba(dados, filtro);
   if (aba === "tabela") return statsJogadoresAba(dados);
-  if (aba === "recordes") return statsRecordesAba(linhas, dados);
+  if (aba === "recordes") return statsRecordesAba(linhas, dados, routeQuery().get("por") === "serie");
+  if (aba === "trofeus") return statsTrofeusAba(filtro);
   return statsGeralAba(linhas, dados, filtro);
 }
 
@@ -42754,13 +43005,16 @@ function statsCabeca(titulo, apoio) {
 
 function renderStatsJogadores() {
   const aba = STATS_ABAS.includes(route().tab) ? route().tab : "geral";
-  const filtro = statsFiltro("jogadores");
-  const { linhas, dados, facetas } = statsRecorte(filtro, "jogadores");
+  // Recordes numa serie tem os filtros de uma serie (sem mapa, agente, funcao e
+  // patch); Trofeus, os de um campeonato (ano, periodo, tier e equipe).
+  const pagina = aba === "trofeus" ? "trofeus" : aba === "recordes" && routeQuery().get("por") === "serie" ? "series" : "jogadores";
+  const filtro = statsFiltro(pagina);
+  const { linhas, dados, facetas } = statsRecorte(filtro, pagina);
   const mapas = new Set(linhas.map((linha) => linha.match.id)).size;
   const tabSlide = panelSlideSnapshot("stats-tabs", { selector: ".team-tab-panel", scope: "stats", key: aba, order: STATS_ABAS });
   const query = statsQuery(filtro);
   const lideres = aba === "lideres" ? statsLideresDados(dados.todos) : null;
-  const minimo = aba === "recordes" ? null
+  const minimo = aba === "recordes" || aba === "trofeus" ? null
     : lideres ? { chave: "mapas", rotulo: "Mapas mínimos", maximo: lideres.maximo, valor: lideres.minimo }
     : { chave: "rounds", rotulo: "Rounds mínimos", maximo: dados.maximo, valor: dados.minimo };
   Shell(`
@@ -42769,7 +43023,7 @@ function renderStatsJogadores() {
       <nav class="team-tabs" aria-label="Abas das estatísticas de jogadores">
         ${STATS_ABAS.map((tab) => `<a class="team-tab ${aba === tab ? "active" : ""}"${aba === tab ? ` aria-current="page"` : ""} href="#/stats/jogadores${tab === "geral" ? "" : `/${tab}`}${query}">${escapeHtml(STATS_ABA_ROTULOS[tab])}</a>`).join("")}
       </nav>
-      <div class="vp-est-filtros vp-mp-filtros vp-st-filtros">${statsFiltroCampos(filtro, facetas, "jogadores", minimo)}</div>
+      <div class="vp-est-filtros vp-mp-filtros vp-st-filtros">${statsFiltroCampos(filtro, facetas, pagina, minimo)}</div>
       <section class="team-tab-panel">
         ${statsAba(aba, linhas, dados, filtro)}
       </section>
@@ -42946,6 +43200,20 @@ function bindStats() {
   raiz.addEventListener("click", (event) => {
     if (event.target.closest("[data-st-limpar]")) {
       aplica((query) => [...STATS_FILTROS, "pagina-agentes", "pagina-comps"].forEach((chave) => query.delete(chave)), "[data-st-filtro]");
+      return;
+    }
+    // Numa serie os filtros de um mapa so saem da URL, para nada cortar escondido.
+    const por = event.target.closest("[data-st-por]");
+    if (por) {
+      aplica((query) => {
+        if (por.dataset.stPor !== "serie") {
+          query.delete("por");
+          return;
+        }
+        query.set("por", "serie");
+        ["mapa", "agente", "funcao", "patch"].forEach((chave) => query.delete(chave));
+        if (query.get("formato") && !STATS_FORMATOS_DA_SERIE.includes(query.get("formato"))) query.delete("formato");
+      }, `[data-st-por="${por.dataset.stPor}"]`);
       return;
     }
     const recorde = event.target.closest("[data-st-recorde]");

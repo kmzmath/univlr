@@ -30,6 +30,7 @@ existe e precisa passar antes de qualquer tela.
 | `migrations/0010_conta_apagada_preserva_respostas.sql` | Apagar a conta não apaga mais as respostas dos outros: o comentário com resposta embaixo vira "Comentário removido." sem autor |
 | `migrations/0011_patch_notes.sql` | Seção `patch` do Fórum: só admin publica, texto até 8.000 caracteres e correção sem a janela de 15 minutos; `topic_list` ganha `secao`. Aplicar antes de subir o front |
 | `migrations/0012_patch_notes_so_admin_edita.sql` | Editar patch notes exige ser admin na hora da edição (a 0011 só conferia a autoria, e quem perdesse o papel continuaria editando) |
+| `migrations/0013_fotos_do_patch_notes.sql` | Pasta pública `patch-notes` do Storage (até 5 MB, WebP, PNG e JPEG): só admin envia, lista e apaga; as fotos aparecem só em patch notes, por `[img]` |
 | `tests/rls_test.sql` | Ataques que precisam falhar |
 | `tests/positive_test.sql` | Operações legítimas que precisam passar |
 

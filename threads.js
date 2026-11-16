@@ -233,6 +233,14 @@
           <label class="sr-only" for="th-texto">Texto (opcional)</label>
           <textarea class="th-input-texto" id="th-texto" name="texto" maxlength="${MAXIMO[secao] || MAXIMO.geral}" placeholder="Texto (opcional)">${esc(texto)}</textarea>
         </div>
+        ${secao === "patch" ? `
+        <div class="th-previa" data-th-previa-area hidden></div>
+        <div class="th-ferramentas">
+          <button type="button" class="th-acao" data-th-foto>Adicionar foto</button>
+          <button type="button" class="th-acao" data-th-previa>Pré-visualizar</button>
+          <input type="file" accept="image/*" multiple hidden data-th-foto-arquivo />
+          <span class="th-foto-status" role="status" aria-live="polite" data-th-foto-status></span>
+        </div>` : ""}
         <p class="th-erro" role="alert" hidden></p>
         <div class="th-acoes">
           <button class="th-nova" type="submit">${botao}</button>
@@ -260,6 +268,85 @@
         erro.hidden = false;
         botao.disabled = false;
       }
+    });
+  }
+
+  // ------------------------------------------------- foto e pre-visualizacao
+  //
+  // So no patch notes (pedido do dono em 16/11/2026). A foto e reduzida aqui, no
+  // navegador, para ate 1600px de largura em WebP (PNG onde o navegador nao gera
+  // WebP), vai para a pasta publica do Storage (0013) e entra no texto como
+  // [img]endereco[/img], onde esta o cursor.
+
+  async function reduzFoto(arquivo, largura = 1600) {
+    const imagem = await createImageBitmap(arquivo);
+    const escala = Math.min(1, largura / imagem.width);
+    const tela = document.createElement("canvas");
+    tela.width = Math.round(imagem.width * escala);
+    tela.height = Math.round(imagem.height * escala);
+    tela.getContext("2d").drawImage(imagem, 0, 0, tela.width, tela.height);
+    if (imagem.close) imagem.close();
+    const comoArquivo = (tipo, qualidade) => new Promise((ok) => tela.toBlob(ok, tipo, qualidade));
+    const webp = await comoArquivo("image/webp", 0.85);
+    return webp && webp.type === "image/webp" ? webp : comoArquivo("image/png");
+  }
+
+  function inserirNoCursor(campo, trecho) {
+    const inicio = campo.selectionStart ?? campo.value.length;
+    const fim = campo.selectionEnd ?? inicio;
+    campo.value = campo.value.slice(0, inicio) + trecho + campo.value.slice(fim);
+    campo.selectionStart = campo.selectionEnd = inicio + trecho.length;
+  }
+
+  // O cartao como vai ficar, com o mesmo desenho do publicado.
+  function previaHtml(form) {
+    const titulo = form.titulo.value.trim() || "Sem título";
+    const texto = form.texto.value;
+    return `
+      <div class="th-cabeca">
+        <span class="th-secao">Patch notes</span>
+        <h1>${esc(titulo)}</h1>
+      </div>
+      ${texto.trim() ? `<div class="th-corpo">${window.Comments.corpo(texto, { imagens: true })}</div>` : ""}`;
+  }
+
+  function ligaFerramentasDePatch(form) {
+    if (!form) return;
+    const area = form.querySelector("[data-th-previa-area]");
+    const botaoPrevia = form.querySelector("[data-th-previa]");
+    const arquivo = form.querySelector("[data-th-foto-arquivo]");
+    const status = form.querySelector("[data-th-foto-status]");
+    const erro = form.querySelector(".th-erro");
+    if (!area || !botaoPrevia || !arquivo) return;
+
+    const emPrevia = () => form.classList.contains("th-em-previa");
+    const mostraPrevia = (ligar) => {
+      form.classList.toggle("th-em-previa", ligar);
+      area.hidden = !ligar;
+      area.innerHTML = ligar ? previaHtml(form) : "";
+      botaoPrevia.textContent = ligar ? "Voltar a editar" : "Pré-visualizar";
+      if (!ligar) form.texto.focus();
+    };
+    botaoPrevia.addEventListener("click", () => mostraPrevia(!emPrevia()));
+
+    form.querySelector("[data-th-foto]").addEventListener("click", () => arquivo.click());
+    arquivo.addEventListener("change", async () => {
+      const lista = [...arquivo.files];
+      arquivo.value = "";
+      erro.hidden = true;
+      for (let i = 0; i < lista.length; i += 1) {
+        status.textContent = lista.length > 1 ? `Enviando foto ${i + 1} de ${lista.length}...` : "Enviando foto...";
+        try {
+          const url = await window.Community.enviarFotoDePatch(await reduzFoto(lista[i]));
+          inserirNoCursor(form.texto, `\n[img]${url}[/img]\n`);
+        } catch (e) {
+          erro.textContent = window.Community.mensagemDeErro(e);
+          erro.hidden = false;
+          break;
+        }
+      }
+      status.textContent = "";
+      if (emPrevia()) area.innerHTML = previaHtml(form);
     });
   }
 
@@ -299,6 +386,7 @@
     }
     casca(outrasThreads(null), `<a class="th-voltar" href="#/forum">‹ Fórum</a><h1 class="sr-only">${secao === "patch" ? "Novo patch notes" : "Nova thread"}</h1>${principal}`, true);
     const form = document.querySelector("[data-th-form]");
+    if (secao === "patch") ligaFerramentasDePatch(form);
     ligaFormulario(form, async (titulo, texto) => {
       const id = await window.Community.criarTopico(titulo, texto, secao);
       window.location.hash = hrefDaThread(id);
@@ -342,7 +430,7 @@
             <span aria-hidden="true">·</span><span>${respostas} ${respostas === 1 ? "resposta" : "respostas"}</span>
           </div>
         </div>
-        ${t.body ? `<div class="th-corpo">${window.Comments.corpo(t.body)}</div>` : ""}
+        ${t.body ? `<div class="th-corpo">${window.Comments.corpo(t.body, { imagens: ehPatch(t) })}</div>` : ""}
         ${acoes ? `<div class="th-acoes">${acoes}</div>` : ""}
       </article>`;
   }
@@ -402,6 +490,7 @@
         secao: t.secao || "geral",
       });
       const form = lugar.querySelector("[data-th-form]");
+      if (ehPatch(t)) ligaFerramentasDePatch(form);
       // Cancelar volta ao cartao sem recarregar a pagina (a rota e a mesma).
       form.querySelector(".th-cancelar").addEventListener("click", (ev) => {
         ev.preventDefault();

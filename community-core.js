@@ -390,6 +390,28 @@
     return salvo;
   }
 
+  // Fotos dos patch notes (0013): pasta publica `patch-notes` do Storage, so admin
+  // envia. A foto chega aqui ja reduzida (a reducao precisa de canvas, e mora na
+  // tela); o endereco publico e o que vai no texto, dentro de [img].
+  const PASTA_DAS_FOTOS = "patch-notes";
+  const EXTENSAO_DA_FOTO = { "image/webp": "webp", "image/png": "png", "image/jpeg": "jpg" };
+
+  function prefixoDasFotos() {
+    return `${SUPABASE_URL}/storage/v1/object/public/${PASTA_DAS_FOTOS}/`;
+  }
+
+  async function enviarFotoDePatch(foto) {
+    const ext = EXTENSAO_DA_FOTO[foto && foto.type];
+    if (!ext) throw { message: "formato de foto nao aceito" };
+    const agora = new Date();
+    const id = (window.crypto && window.crypto.randomUUID && window.crypto.randomUUID()) || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+    const caminho = `${agora.getFullYear()}/${String(agora.getMonth() + 1).padStart(2, "0")}/${id}.${ext}`;
+    const pasta = api().storage.from(PASTA_DAS_FOTOS);
+    const { error } = await pasta.upload(caminho, foto, { contentType: foto.type, upsert: false });
+    if (error) throw error;
+    return pasta.getPublicUrl(caminho).data.publicUrl;
+  }
+
   async function apagarTopico(id) {
     const { error } = await api().rpc("delete_topic", { p_topic_id: id });
     if (error) throw error;
@@ -678,6 +700,9 @@
     "texto pode ter no maximo 8000 caracteres": "O texto pode ter no máximo 8.000 caracteres.",
     "so admin publica patch notes": "Só admin publica patch notes.",
     "so admin edita patch notes": "Só admin edita patch notes.",
+    "formato de foto nao aceito": "Essa foto não é WebP, PNG nem JPEG.",
+    "new row violates row-level security policy": "Você não tem permissão para isso.",
+    "The object exceeded the maximum allowed size": "A foto passou de 5 MB.",
     "secao desconhecida": "Essa seção do Fórum não existe.",
     "thread nao existe": "Esta thread não existe mais.",
     "thread nao encontrada": "Esta thread não existe mais.",
@@ -742,6 +767,8 @@
     criarTopico,
     editarTopico,
     apagarTopico,
+    prefixoDasFotos,
+    enviarFotoDePatch,
     titulosDeTopicos,
     tituloDoTopico,
     votar,

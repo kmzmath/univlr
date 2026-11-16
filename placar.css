@@ -13035,6 +13035,38 @@ a.vp-cj-equipe:hover span {
 .th-secao:hover { color: var(--ink); }
 .th-patch { min-width: 0; }
 
+/* Fotos e pre-visualizacao do patch notes (16/11/2026). A foto fica solta no
+   texto, na largura do cartao no maximo, sem moldura. Na pre-visualizacao os
+   campos somem (continuam no formulario, para o rascunho e o envio) e o cartao
+   aparece como vai ficar. */
+.cmt-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+  border-radius: 2px;
+}
+
+.th-ferramentas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 0 22px 12px;
+}
+
+.th-foto-status {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.th-em-previa > .th-cabeca,
+.th-em-previa > .th-corpo {
+  display: none;
+}
+
+.th-previa .th-cabeca h1 { margin-bottom: 0; }
+
 .th-cabeca h1,
 .th-aviso h1 {
   margin: 0 0 10px;

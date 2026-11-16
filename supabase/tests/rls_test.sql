@@ -464,6 +464,8 @@ values
    'authenticated', 'authenticated', 'eva_patch@teste.univlr', '', now(), now(), now(),
    '{"username":"eva_patch_teste"}');
 update public.profiles set role = 'admin' where id = '77777777-7777-7777-7777-777777777771';
+-- Uma pasta qualquer, sem regra nenhuma, para o admin tentar escrever fora da dele.
+insert into storage.buckets (id, name) values ('outra-pasta-teste', 'outra-pasta-teste') on conflict (id) do nothing;
 
 do $patch$
 declare
@@ -520,6 +522,27 @@ begin
   exception when others then
     insert into _r (teste, esperado, resultado) values ('conta comum edita patch notes do admin', 'bloqueado',
       case when SQLERRM like '%so da para editar thread propria%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - conta comum envia foto para a pasta dos patch notes (0013). O
+  -- Storage grava em storage.objects com o papel de quem envia, entao a regra
+  -- e esta mesma.
+  begin
+    insert into storage.objects (bucket_id, name) values ('patch-notes', 'teste/eva.webp');
+    insert into _r (teste, esperado, resultado) values ('conta comum envia foto de patch notes', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('conta comum envia foto de patch notes', 'bloqueado',
+      case when SQLERRM like '%row-level security%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - admin envia arquivo para outra pasta: a regra e so da pasta dos patch notes.
+  perform set_config('request.jwt.claims', json_build_object('sub', adm)::text, true);
+  begin
+    insert into storage.objects (bucket_id, name) values ('outra-pasta-teste', 'teste/adm.webp');
+    insert into _r (teste, esperado, resultado) values ('admin envia arquivo para outra pasta', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('admin envia arquivo para outra pasta', 'bloqueado',
+      case when SQLERRM like '%row-level security%' then 'ok' else 'FALHOU - ' || SQLERRM end);
   end;
 
   -- ATAQUE - quem deixou de ser admin reescreve o proprio patch notes (0012).

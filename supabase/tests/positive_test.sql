@@ -329,7 +329,14 @@ begin
   perform public.edit_topic(t_patch, 'Patch notes 16/11 corrigido', repeat('b', 8000));
   select title into t from public.topics where id = t_patch and edited_at is not null and body = repeat('b', 8000);
   insert into _p (caso, esperado, obtido) values ('admin edita patch notes depois de 15 minutos', 'Patch notes 16/11 corrigido', coalesce(t, 'nao editou'));
+
+  -- Foto do patch notes (0013): o admin envia para a pasta publica e ve o que enviou.
+  insert into storage.objects (bucket_id, name) values ('patch-notes', 'teste/ana.webp');
+  select count(*) into n from storage.objects where bucket_id = 'patch-notes' and name = 'teste/ana.webp';
+  insert into _p (caso, esperado, obtido) values ('admin envia foto de patch notes', '1', n::text);
   reset role;
+  select count(*) into n from storage.buckets where id = 'patch-notes' and public and 'image/webp' = any (allowed_mime_types);
+  insert into _p (caso, esperado, obtido) values ('pasta das fotos publica e so de imagem', '1', n::text);
 end;
 $patch$;
 

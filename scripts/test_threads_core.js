@@ -31,7 +31,8 @@ function novoContexto() {
   };
   const document = { addEventListener: () => {}, querySelector: () => null, querySelectorAll: () => [], getElementById: () => null, body: { scrollHeight: 0 } };
   window.document = document;
-  const context = { window, document, console, Date, Map, Set, Promise, URL, URLSearchParams, setTimeout, clearTimeout, JSON, Math };
+  window.Blob = Blob;
+  const context = { window, document, console, Date, Map, Set, Promise, URL, URLSearchParams, setTimeout, clearTimeout, JSON, Math, Blob };
   window.window = window;
   vm.createContext(context);
   for (const arq of ["scripts/fake_supabase.js", "community-core.js", "comments.js"]) {
@@ -176,6 +177,25 @@ async function rejeita(promessa, trecho) {
   assert.strictEqual((await C.topico(p1)).secao, "patch", "a thread sabe que e patch notes");
   assert.strictEqual(C.mensagemDeErro({ message: "so admin publica patch notes" }), "Só admin publica patch notes.");
   assert.strictEqual(C.mensagemDeErro({ message: "so admin edita patch notes" }), "Só admin edita patch notes.");
+  // Fotos do patch notes (0013): so admin envia, e o [img] so vira foto quando a
+  // opcao esta ligada e o endereco e da pasta patch-notes do nosso Supabase.
+  const prefixo = C.prefixoDasFotos();
+  assert.ok(/^https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/object\/public\/patch-notes\/$/.test(prefixo), "prefixo da pasta publica");
+  const foto = await C.enviarFotoDePatch(new w.Blob(["x"], { type: "image/webp" }));
+  assert.ok(foto.startsWith(prefixo) && /^[0-9]{4}\/[0-9]{2}\/[A-Za-z0-9-]+\.webp$/.test(foto.slice(prefixo.length)), `admin envia foto: ${foto}`);
+  await rejeita(C.enviarFotoDePatch(new w.Blob(["x"], { type: "image/gif" })), "formato de foto nao aceito");
+  const Cmt = w.Comments;
+  const comFoto = Cmt.corpo(`antes\n[img]${foto}[/img]\ndepois`, { imagens: true });
+  assert.ok(comFoto.includes(`<img class="cmt-img" src="${foto}" alt="" loading="lazy">`), "foto da pasta vira imagem");
+  assert.ok(!/<br>\s*<img|<img[^>]*>\s*<br>/.test(comFoto), "sem linha vazia em volta da foto");
+  assert.ok(!Cmt.corpo(`[img]${foto}[/img]`).includes("<img"), "sem a opcao (comentario, thread comum), [img] fica texto");
+  assert.ok(!Cmt.corpo("[img]https://exemplo.com/x.png[/img]", { imagens: true }).includes("<img"), "endereco de fora nao vira imagem");
+  const injecao = Cmt.corpo(`[img]${prefixo}a.webp" onerror="alert(1)[/img]`, { imagens: true });
+  assert.ok(!injecao.includes("<img") && !/onerror="/.test(injecao), "aspas no endereco nao viram atributo");
+  await entra(C, "bruno@teste.univlr", "b");
+  await rejeita(C.enviarFotoDePatch(new w.Blob(["x"], { type: "image/webp" })), "row-level security");
+  await entra(C, "adm@teste.univlr", "c");
+
   // Admin corrige o proprio patch notes; o Supabase falso segue a 0012.
   await C.editarTopico(p1, "Patch notes 16/11 corrigido", "b".repeat(8000));
   assert.strictEqual((await C.topico(p1)).title, "Patch notes 16/11 corrigido", "admin edita o proprio patch notes");

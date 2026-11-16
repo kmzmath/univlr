@@ -284,9 +284,29 @@
     return { access_token: `token-${u.id}`, refresh_token: "r", user: { id: u.id, email: u.email } };
   }
 
+  // Storage so com o que o envio de foto usa (0013): a pasta patch-notes aceita
+  // so admin, com a mesma mensagem da RLS do Supabase.
+  const arquivos = [];
+  function pastaFalsa(url, pasta) {
+    return {
+      async upload(caminho, arquivo, opcoes) {
+        await espera();
+        const uid = sessao?.user.id;
+        const admin = db.profiles.find((x) => x.id === uid)?.role === "admin";
+        if (pasta !== "patch-notes" || !admin) return { data: null, error: { message: "new row violates row-level security policy", statusCode: "403" } };
+        arquivos.push({ pasta, caminho, tipo: opcoes && opcoes.contentType, arquivo });
+        return { data: { path: caminho }, error: null };
+      },
+      getPublicUrl(caminho) {
+        return { data: { publicUrl: `${url}/storage/v1/object/public/${pasta}/${caminho}` } };
+      },
+    };
+  }
+
   window.supabase = {
-    createClient() {
+    createClient(url) {
       const cliente = {
+        storage: { from: (pasta) => pastaFalsa(url, pasta) },
         from: (tabela) => new Consulta(tabela),
         async rpc(nome, args) {
           await espera();

@@ -181,7 +181,10 @@
     });
   }
 
-  function corpo(texto) {
+  // `imagens`: so o patch notes (e a pre-visualizacao dele) liga. Ai [img]endereco[/img]
+  // vira foto, mas so com o endereco da pasta patch-notes do nosso Supabase e so com
+  // caracteres de caminho: o texto ja foi escapado, e aspas nunca casam aqui.
+  function corpo(texto, opcoes = {}) {
     let out = esc(texto);
 
     // [code] guardado antes de qualquer outra tag ser interpretada.
@@ -215,6 +218,13 @@
       return `<a class="cmt-url" href="${href.startsWith("#") ? RAIZ + href : href}"${externo}>${href}</a>`;
     });
 
+    if (opcoes.imagens) {
+      const prefixo = window.Community && window.Community.prefixoDasFotos ? window.Community.prefixoDasFotos() : "";
+      out = out.replace(/\[img\]([^\[\]\s]+)\[\/img\]/gi, (todo, url) =>
+        prefixo && url.startsWith(prefixo) && /^[A-Za-z0-9:\/._-]+$/.test(url) ? `<img class="cmt-img" src="${url}" alt="" loading="lazy">` : todo
+      );
+    }
+
     out = out.replace(/\[hr\]/gi, '<hr class="cmt-hr">');
 
     // Mencao a usuario, que ja existia.
@@ -224,8 +234,8 @@
 
     // <br> colado em bloco vira linha vazia na tela: o proprio bloco ja quebra.
     out = out
-      .replace(/<br>\s*(<(?:hr|blockquote|h3|h4|h5)\b)/gi, "$1")
-      .replace(/(<\/(?:blockquote|h3|h4|h5)>|<hr class="cmt-hr">)\s*<br>/gi, "$1");
+      .replace(/<br>\s*(<(?:hr|blockquote|h3|h4|h5)\b|<img class="cmt-img")/gi, "$1")
+      .replace(/(<\/(?:blockquote|h3|h4|h5)>|<hr class="cmt-hr">|<img class="cmt-img"[^>]*>)\s*<br>/gi, "$1");
 
     // Devolve o [code] guardado, agora sim como texto literal.
     out = out.replace(/\u0000CODE(\d+)\u0000/g, (todo, i) => `<code class="cmt-code">${blocos[Number(i)]}</code>`);

@@ -37584,7 +37584,10 @@ function teamLineDaEpoca(team) {
   };
 }
 
-function teamRankingChart(history, primeiraPartida = 0, provisorias = [], lineDaEpoca = null, teamId = "") {
+// `opcoes` serve ao perfil do jogador: `kpis` troca os numeros de cima ([valor,
+// rotulo]) e `faixa` desenha embaixo a equipe de cada trecho. Linhas com `teamId`
+// quebram na troca de equipe e levam ao Ranking da equipe daquela semana.
+function teamRankingChart(history, primeiraPartida = 0, provisorias = [], lineDaEpoca = null, teamId = "", opcoes = {}) {
   const validas = history
     .slice()
     .sort((a, b) => dateValue(a.date) - dateValue(b.date))
@@ -37616,7 +37619,7 @@ function teamRankingChart(history, primeiraPartida = 0, provisorias = [], lineDa
   // que muda de tipo comeca no ultimo ponto do anterior para as duas se tocarem.
   const trechos = rows.reduce((lista, row, indice) => {
     const anterior = rows[indice - 1];
-    const seguida = indice && dateValue(row.date) - dateValue(anterior.date) <= 8 * DAY_MS;
+    const seguida = indice && dateValue(row.date) - dateValue(anterior.date) <= 8 * DAY_MS && (row.teamId || "") === (anterior.teamId || "");
     const tipo = row.provisorio ? "provisorio" : "valido";
     if (seguida && lista.at(-1).tipo === tipo) lista.at(-1).pontos.push(row);
     else lista.push({ tipo, pontos: seguida ? [anterior, row] : [row] });
@@ -37652,7 +37655,8 @@ function teamRankingChart(history, primeiraPartida = 0, provisorias = [], lineDa
       // dos dois lados. Fora dele, o balao cresce para dentro do grafico.
       // Clicar na semana abre o Ranking daquela semana com a equipe aberta. Antes
       // era um span focavel: o clique so prendia o balao na tela.
-      const href = teamId && row.semana ? `#/ranking/${encodeURIComponent(teamId)}?semana=${encodeURIComponent(row.semana)}` : "";
+      const alvo = row.teamId || teamId;
+      const href = alvo && row.semana ? `#/ranking/${encodeURIComponent(alvo)}?semana=${encodeURIComponent(row.semana)}` : "";
       const tag = href ? "a" : "span";
       return `
         <${tag} class="ranking-chart-hotspot${left < 35 ? " na-esquerda" : left > 65 ? " na-direita" : ""}" style="--esq:${fmt(esquerda, 3)};--larg:${fmt(direita - esquerda, 3)};--c:${fmt(((left - esquerda) / (direita - esquerda)) * 100, 2)};--y:${fmt(top, 2)}" ${href ? `href="${escapeHtml(href)}"` : `tabindex="0"`} aria-label="${escapeHtml(`${formatDate(row.date)} ${rankingHistoryRankLabel(row.rank)}`)}">
@@ -37678,9 +37682,11 @@ function teamRankingChart(history, primeiraPartida = 0, provisorias = [], lineDa
   return `
     <div class="ranking-chart-card">
       <dl class="ranking-chart-kpis">
+        ${opcoes.kpis ? opcoes.kpis.map(([valor, rotulo]) => `<div><dd>${escapeHtml(valor)}</dd><dt>${escapeHtml(rotulo)}</dt></div>`).join("") : `
         <div><dd>${rankingHistoryRankLabel(latest.rank)}</dd><dt>${latestIsCurrent ? "Posição atual" : "Última posição"}</dt></div>
         <div><dd>#${best}</dd><dt>Melhor</dt></div>
         <div><dd>${validas.length}</dd><dt>${validas.length === 1 ? "Semana válida" : "Semanas válidas"}</dt></div>
+        `}
       </dl>
       <div class="vp-eq-escolha ranking-chart-periodo" role="group" aria-label="Período">
         <button type="button" data-eq-periodo="" aria-pressed="${!todos}">Ativo</button>
@@ -37701,6 +37707,32 @@ function teamRankingChart(history, primeiraPartida = 0, provisorias = [], lineDa
         </div>
         <div class="ranking-chart-hotspots" style="--n:${rows.length}">${pointHotspots}</div>
       </div>
+      ${opcoes.faixa ? rankingChartFaixa(rows, (data) => (x(data) / width) * 100) : ""}
+    </div>
+  `;
+}
+
+// A equipe de cada trecho, alinhada no tempo embaixo do grafico: um trecho por
+// sequencia de semanas seguidas da mesma equipe, como a linha.
+function rankingChartFaixa(rows, posicao) {
+  const trechos = rows.reduce((lista, row, indice) => {
+    const anterior = rows[indice - 1];
+    if (indice && row.teamId === anterior.teamId && dateValue(row.date) - dateValue(anterior.date) <= 8 * DAY_MS) lista.at(-1).fim = row.date;
+    else lista.push({ teamId: row.teamId, inicio: row.date, fim: row.date });
+    return lista;
+  }, []);
+  const inicios = trechos.map((trecho) => posicao(trecho.inicio));
+  return `
+    <div class="ranking-chart-equipes">
+      ${trechos.map((trecho, indice) => {
+        const nome = teamById(trecho.teamId)?.name || displayTeamName(trecho.teamId);
+        const esquerda = inicios[indice];
+        // O logo tem 20px: sem espaco ate o proximo trecho, ele sairia por cima do
+        // outro. Abaixo de 3,5% some sempre; abaixo de 7%, so na faixa estreita.
+        const espaco = indice < trechos.length - 1 ? inicios[indice + 1] - esquerda : Infinity;
+        const classe = espaco < 3.5 ? " sem-logo" : espaco < 7 ? " logo-apertado" : "";
+        return `<a class="ranking-chart-equipe${classe}" href="#/teams/${escapeHtml(trecho.teamId)}" style="--esq:${fmt(esquerda, 3)};--larg:${fmt(Math.max(posicao(trecho.fim) - esquerda, 0), 3)}" title="${escapeHtml(nome)}">${teamLogo(trecho.teamId, "tiny")}<span class="ranking-chart-equipe-nome">${escapeHtml(nome)}</span></a>`;
+      }).join("")}
     </div>
   `;
 }
@@ -40161,7 +40193,7 @@ function ratingComponentDefinitions() {
 
 // A aba Carreira: as faixas sao a titularidade e a tabela e o elenco, com as mesmas
 // regras da pagina de equipe, para os dois lados contarem a mesma historia.
-function playerCarreiraTab(player, { teamRows, tournamentRows }) {
+function playerCarreiraTab(player, { teamRows, tournamentRows, matches }) {
   const linhas = playerPassagens(player, teamRows);
   const movimentos = playerMovimentos(linhas);
   const nicks = playerNicksAnteriores(player);
@@ -40176,6 +40208,7 @@ function playerCarreiraTab(player, { teamRows, tournamentRows }) {
           ${sectionHead("Equipes", `${linhas.length} ${linhas.length === 1 ? "equipe" : "equipes"}`)}
           ${playerPassagensTabela(player, linhas)}
         </section>
+        ${playerRankingSecao(player, linhas, matches)}
         ${playerEvolucao(tournamentRows)}
       </div>
       <aside class="vp-equipe-trilho">
@@ -40183,6 +40216,73 @@ function playerCarreiraTab(player, { teamRows, tournamentRows }) {
         ${nicks.length ? `<section>${sectionHead("Nicks anteriores")}<ul class="vp-pf-nicks">${nicks.map((nick) => `<li>${escapeHtml(nick)}</li>`).join("")}</ul></section>` : ""}
       </aside>
     </div>
+  `;
+}
+
+// O ranking do jogador ao longo do tempo (decisao do dono em 16/11/2026, modelo A):
+// em cada semana, a posicao da equipe em que ele estava no elenco. A semana vale do
+// primeiro mapa por ela ate o primeiro ranking depois do ultimo, a mesma regua da
+// inatividade, ou ate hoje na equipe atual. Stand-in nao conta, e com duas equipes
+// na mesma semana vale a do mapa mais recente.
+function playerRankingHistory(player, linhas, matches) {
+  const fotos = (state.db?.rankingSnapshots || []).slice().sort((a, b) => Number(a.cutoffAt || 0) - Number(b.cutoffAt || 0));
+  const passagens = linhas
+    .filter((linha) => linha.team && !linha.standin)
+    .flatMap((linha) => linha.elenco.map((trecho, indice, trechos) => ({
+      teamId: linha.teamId,
+      inicio: trecho.inicio,
+      fim: linha.current && indice === trechos.length - 1 ? Infinity : trecho.fim + 7 * DAY_MS,
+    })));
+  if (!passagens.length || !fotos.length) return [];
+  const mapas = new Map();
+  (matches || []).forEach((series) => (series.maps || []).forEach((match) => {
+    const row = (match.players || []).find((item) => (playerById(item.id)?.id || item.id) === player.id);
+    const quando = dateValue(match.startedAt || series.startedAt);
+    if (!row?.teamId || !quando) return;
+    if (!mapas.has(row.teamId)) mapas.set(row.teamId, []);
+    mapas.get(row.teamId).push(quando);
+  }));
+  mapas.forEach((lista) => lista.sort((a, b) => a - b));
+  const ultimoMapa = (teamId, corte) => {
+    const lista = mapas.get(teamId) || [];
+    return lista[rankingQuantosAte(lista, corte) - 1] || 0;
+  };
+  return fotos.flatMap((foto) => {
+    const corte = Number(foto.cutoffAt || 0);
+    const candidatas = passagens.filter((passagem) => corte >= passagem.inicio && corte < passagem.fim);
+    if (!candidatas.length) return [];
+    const { teamId } = candidatas.reduce((melhor, passagem) => (ultimoMapa(passagem.teamId, corte) > ultimoMapa(melhor.teamId, corte) ? passagem : melhor));
+    const row = foto.byTeamId?.[teamId];
+    if (!row?.matches || rankingIsInactive(row)) return [];
+    const rank = row.validRank || null;
+    // Semana provisoria da equipe: a posicao entre todas, pontilhada como na equipe.
+    const provisorio = !rank && row.provisional && Number(row.rank) > 0 ? rankingPosicaoEntreTodas(foto, teamId) : null;
+    if (!rank && !provisorio) return [];
+    return [{ semana: foto.id, date: corte, rank, provisorio, points: row.score, note: rankingIsValid(row) ? foto.label : `${foto.label} - ${rankingStatusLabel(row).toLowerCase()}`, teamId }];
+  });
+}
+
+// O mesmo grafico da equipe, com a equipe de cada semana no balao e a faixa embaixo.
+function playerRankingSecao(player, linhas, matches) {
+  const historico = playerRankingHistory(player, linhas, matches);
+  const validas = historico.filter((row) => row.rank);
+  if (!validas.length) return "";
+  const equipes = new Set(historico.map((row) => row.teamId));
+  const daEquipe = new Map([...equipes].map((teamId) => [teamId, teamLineDaEpoca(teamById(teamId))]));
+  const equipeDaSemana = new Map(historico.map((row) => [dateValue(row.date), row.teamId]));
+  const lineDaEpoca = (data) => daEquipe.get(equipeDaSemana.get(dateValue(data)))?.(data) || null;
+  const inicio = Math.min(...linhas.filter((linha) => equipes.has(linha.teamId)).flatMap((linha) => linha.elenco.map((trecho) => trecho.inicio)));
+  const noTop = validas.filter((row) => row.rank <= 10).length;
+  const kpis = [
+    [`#${Math.min(...validas.map((row) => row.rank))}`, "Melhor"],
+    [String(noTop), noTop === 1 ? "Semana no top 10" : "Semanas no top 10"],
+    [String(validas.length), validas.length === 1 ? "Semana ranqueada" : "Semanas ranqueadas"],
+  ];
+  return `
+    <section class="vp-s-ranking-jogador" style="--team-line:var(--ink)">
+      ${sectionHead("Histórico do ranking")}
+      ${teamRankingChart(validas, inicio, historico.filter((row) => row.provisorio), lineDaEpoca, "", { kpis, faixa: true })}
+    </section>
   `;
 }
 

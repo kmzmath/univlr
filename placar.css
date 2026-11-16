@@ -11997,6 +11997,74 @@ a.vp-cj-equipe:hover span {
 }
 
 /* ---- aba Carreira ---- */
+/* Historico do ranking do jogador: a mesma altura do rAAting por campeonato, e a
+   equipe de cada trecho embaixo, alinhada com a linha. O nome so aparece quando o
+   trecho tem largura para ele; o logo fica sempre, e o balao mostra o nome. */
+.vp-perfil .vp-s-ranking-jogador .ranking-chart-stage {
+  height: 200px;
+}
+
+.ranking-chart-equipes {
+  position: relative;
+  height: 30px;
+  margin-top: 6px;
+  container: faixa / inline-size;
+}
+
+/* O ultimo trecho, colado na borda, empurraria o logo para fora da tela. */
+.ranking-chart-equipe {
+  position: absolute;
+  top: 0;
+  left: min(calc(var(--esq) * 1%), calc(100% - 20px));
+  width: calc(var(--larg) * 1%);
+  min-width: 2px;
+  height: 30px;
+  container-type: inline-size;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 6px;
+  border-top: 2px solid var(--line-dark);
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.ranking-chart-equipe:hover,
+.ranking-chart-equipe:focus-visible {
+  border-top-color: var(--muted);
+  color: var(--text);
+}
+
+.ranking-chart-equipe .team-logo {
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+.ranking-chart-equipe-nome {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@container (max-width: 90px) {
+  .ranking-chart-equipe-nome {
+    display: none;
+  }
+}
+
+.ranking-chart-equipe.sem-logo .team-logo {
+  display: none;
+}
+
+@container faixa (max-width: 700px) {
+  .ranking-chart-equipe.logo-apertado .team-logo {
+    display: none;
+  }
+}
+
 .vp-et-car {
   grid-template-columns: 30px minmax(0, 1fr) 132px 50px 44px 44px 54px 38px 38px 50px;
 }
@@ -13324,12 +13392,12 @@ html[data-tema="claro"] :is(.tournament-stats-player-cell, .tournament-stats-tea
 }
 
 /* ---- Historico do ranking: periodo e semanas provisorias (08/11) ---- */
-.vp-s-ranking-equipe .ranking-chart-card {
+:is(.vp-s-ranking-equipe, .vp-s-ranking-jogador) .ranking-chart-card {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
 }
 
-.vp-s-ranking-equipe .ranking-chart-stage {
+:is(.vp-s-ranking-equipe, .vp-s-ranking-jogador) :is(.ranking-chart-stage, .ranking-chart-equipes) {
   grid-column: 1 / -1;
 }
 

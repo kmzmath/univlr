@@ -230,12 +230,32 @@
     // Mencao a usuario, que ja existia.
     out = out.replace(/@([A-Za-z0-9_]{3,20})/g, `<a class="cmt-mencao" href="${RAIZ}#/u/$1">@$1</a>`);
 
+    // Lista do markdown (16/11/2026): linhas seguidas que comecam com "- " viram
+    // uma lista com marcador. "-1" sem espaco continua texto.
+    const linhas = [];
+    let itens = null;
+    const fechaLista = () => {
+      if (itens) linhas.push(`<ul class="cmt-itens">${itens.map((item) => `<li>${item}</li>`).join("")}</ul>`);
+      itens = null;
+    };
+    out.split("\n").forEach((linha) => {
+      const item = /^- (.*)$/.exec(linha);
+      if (item) {
+        (itens = itens || []).push(item[1]);
+        return;
+      }
+      fechaLista();
+      linhas.push(linha);
+    });
+    fechaLista();
+    out = linhas.join("\n");
+
     out = out.replace(/\n/g, "<br>");
 
     // <br> colado em bloco vira linha vazia na tela: o proprio bloco ja quebra.
     out = out
-      .replace(/<br>\s*(<(?:hr|blockquote|h3|h4|h5)\b|<img class="cmt-img")/gi, "$1")
-      .replace(/(<\/(?:blockquote|h3|h4|h5)>|<hr class="cmt-hr">|<img class="cmt-img"[^>]*>)\s*<br>/gi, "$1");
+      .replace(/<br>\s*(<(?:hr|blockquote|h3|h4|h5|ul)\b|<img class="cmt-img")/gi, "$1")
+      .replace(/(<\/(?:blockquote|h3|h4|h5|ul)>|<hr class="cmt-hr">|<img class="cmt-img"[^>]*>)\s*<br>/gi, "$1");
 
     // Devolve o [code] guardado, agora sim como texto literal.
     out = out.replace(/\u0000CODE(\d+)\u0000/g, (todo, i) => `<code class="cmt-code">${blocos[Number(i)]}</code>`);
@@ -344,13 +364,16 @@
     { tag: "hr", rotulo: "\u2014", titulo: "Linha", sozinho: true },
   ];
 
-  function barraFormatacao() {
+  // `extras`: botoes a mais, antes da ajuda. O formulario das threads usa a
+  // mesma barra (16/11/2026) e o patch notes poe ali o botao de imagem.
+  function barraFormatacao(extras = "") {
     return `
       <div class="cmt-barra" role="toolbar" aria-label="Formatação">
         ${BOTOES.map((b) => `
           <button type="button" class="cmt-barra-botao ${b.classe || ""}"
                   data-tag="${esc(b.tag)}" ${b.sozinho ? 'data-sozinho="1"' : ""}
                   title="${esc(b.titulo)}" aria-label="${esc(b.titulo)}">${b.rotulo}</button>`).join("")}
+        ${extras}
         <button type="button" class="cmt-barra-botao ajuda" data-ajuda="1"
                 title="Como formatar" aria-label="Como formatar" aria-expanded="false">?</button>
       </div>`;
@@ -368,15 +391,17 @@
     ["[url=endereço]texto[/url]", "link"],
     ["[url]endereço[/url]", "link mostrando o próprio endereço"],
     ["[hr]", "linha separando"],
+    ["- texto", "item de lista, uma linha por item"],
     ["@usuario", "menciona alguém, e a pessoa é avisada"],
   ];
 
-  function painelAjuda() {
+  // `extras`: linhas a mais, como a da foto no patch notes.
+  function painelAjuda(extras = []) {
     return `
       <div class="cmt-ajuda" hidden>
         <table>
           <tbody>
-            ${AJUDA.map(([codigo, oque]) => `<tr><td><code>${esc(codigo)}</code></td><td>${esc(oque)}</td></tr>`).join("")}
+            ${[...AJUDA, ...extras].map(([codigo, oque]) => `<tr><td><code>${esc(codigo)}</code></td><td>${esc(oque)}</td></tr>`).join("")}
           </tbody>
         </table>
         <p>Só valem essas. Qualquer outra coisa entre colchetes fica como você escreveu.</p>
@@ -904,5 +929,9 @@
     setTimeout(() => alvo.classList.remove("destacado"), 2600);
   }
 
-  window.Comments = { shell, montar, novaRender, avatar, quando, corpo, selo, selos: selosDeFa, atividadeHome, atividadeFaixa, atividadeLarga, atividadeNoPainel, assuntoDaThread };
+  window.Comments = {
+    shell, montar, novaRender, avatar, quando, corpo, selo, selos: selosDeFa, atividadeHome, atividadeFaixa, atividadeLarga, atividadeNoPainel, assuntoDaThread,
+    // A barra de formatacao, para o formulario das threads (16/11/2026).
+    barra: barraFormatacao, ajuda: painelAjuda, aplicaTag,
+  };
 })();

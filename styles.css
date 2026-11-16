@@ -16063,14 +16063,16 @@ img {
   color: var(--muted);
 }
 
-/* ------------------------------------------- o que as tags viram na tela */
+/* ------------------------------------------- o que as tags viram na tela
+   Vale no comentario e no corpo da thread e do patch notes (16/11/2026): antes
+   o texto da thread nao tinha nada disto, e o link saia igual ao resto. */
 
-.cmt-corpo .cmt-u { text-decoration: underline; text-underline-offset: 2px; }
+:is(.cmt-corpo, .th-corpo) .cmt-u { text-decoration: underline; text-underline-offset: 2px; }
 
 /* Cabecalho DENTRO de um comentario: escala propria, bem menor que a da
    pagina. Um [h1] com o tamanho do titulo da materia deixaria qualquer um
    gritar mais alto que o artigo so escrevendo tres caracteres. */
-.cmt-corpo .cmt-h {
+:is(.cmt-corpo, .th-corpo) .cmt-h {
   font-family: var(--font-display);
   font-weight: 800;
   line-height: 1.25;
@@ -16078,12 +16080,12 @@ img {
   color: var(--ink);
 }
 
-.cmt-corpo .cmt-h:first-child { margin-top: 0; }
-.cmt-corpo .cmt-h1 { font-size: var(--text-xl); }
-.cmt-corpo .cmt-h2 { font-size: var(--text-lg); }
-.cmt-corpo .cmt-h3 { font-size: var(--text-md); text-transform: uppercase; letter-spacing: 0.04em; }
+:is(.cmt-corpo, .th-corpo) .cmt-h:first-child { margin-top: 0; }
+:is(.cmt-corpo, .th-corpo) .cmt-h1 { font-size: var(--text-xl); }
+:is(.cmt-corpo, .th-corpo) .cmt-h2 { font-size: var(--text-lg); }
+:is(.cmt-corpo, .th-corpo) .cmt-h3 { font-size: var(--text-md); text-transform: uppercase; letter-spacing: 0.04em; }
 
-.cmt-corpo .cmt-quote {
+:is(.cmt-corpo, .th-corpo) .cmt-quote {
   margin: var(--space-3) 0;
   padding: var(--space-2) var(--space-4);
   border-left: 2px solid var(--line-dark);
@@ -16091,7 +16093,7 @@ img {
   font-style: italic;
 }
 
-.cmt-corpo .cmt-code {
+:is(.cmt-corpo, .th-corpo) .cmt-code {
   display: inline-block;
   max-width: 100%;
   padding: var(--space-2) var(--space-3);
@@ -16105,13 +16107,13 @@ img {
   vertical-align: middle;
 }
 
-.cmt-corpo .cmt-hr {
+:is(.cmt-corpo, .th-corpo) .cmt-hr {
   margin: var(--space-4) 0;
   border: 0;
   border-top: 1px solid var(--line);
 }
 
-.cmt-corpo .cmt-url {
+:is(.cmt-corpo, .th-corpo) .cmt-url {
   color: var(--brand-text);
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -16122,7 +16124,7 @@ img {
    Fechado, o texto fica com a mesma cor do fundo: some sem mudar o tamanho da
    linha, entao revelar nao empurra o resto do comentario. */
 
-.cmt-corpo .cmt-spoiler {
+:is(.cmt-corpo, .th-corpo) .cmt-spoiler {
   background: var(--surface-2);
   color: transparent;
   border-radius: var(--radius-sm);
@@ -16133,14 +16135,14 @@ img {
   user-select: none;
 }
 
-.cmt-corpo .cmt-spoiler:hover { background: var(--surface-3); }
+:is(.cmt-corpo, .th-corpo) .cmt-spoiler:hover { background: var(--surface-3); }
 
-.cmt-corpo .cmt-spoiler:focus-visible {
+:is(.cmt-corpo, .th-corpo) .cmt-spoiler:focus-visible {
   outline: 2px solid var(--brand-text);
   outline-offset: 1px;
 }
 
-.cmt-corpo .cmt-spoiler.aberto {
+:is(.cmt-corpo, .th-corpo) .cmt-spoiler.aberto {
   background: transparent;
   color: inherit;
   cursor: auto;
@@ -16149,7 +16151,18 @@ img {
 }
 
 /* Link e mencao dentro de um spoiler fechado nao podem vazar a cor. */
-.cmt-corpo .cmt-spoiler:not(.aberto) a { color: transparent; }
+:is(.cmt-corpo, .th-corpo) .cmt-spoiler:not(.aberto) a { color: transparent; }
+
+/* Lista do markdown: linhas com "- " (16/11/2026). */
+:is(.cmt-corpo, .th-corpo) .cmt-itens {
+  margin: var(--space-2) 0;
+  padding-left: 1.4em;
+  list-style: disc;
+}
+
+:is(.cmt-corpo, .th-corpo) .cmt-itens li { margin: 2px 0; }
+:is(.cmt-corpo, .th-corpo) .cmt-itens li::marker { color: var(--muted); }
+:is(.cmt-corpo, .th-corpo) .cmt-url:hover { color: var(--ink); }
 
 @media (max-width: 560px) {
   .cmt-ajuda td:first-child { width: auto; }

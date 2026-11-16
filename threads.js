@@ -25,6 +25,9 @@
   const ehPatch = (t) => Boolean(t && t.secao === "patch");
   const ehAdmin = () => Boolean(window.Community && window.Community.ehAdmin && window.Community.ehAdmin());
   const dataCurta = (iso) => new Date(iso).toLocaleDateString("pt-BR");
+  // Botao de imagem na barra de formatacao do patch notes, com o desenho de uma
+  // foto (moldura, sol e montanha) na cor do texto do botao.
+  const BOTAO_IMAGEM = `<button type="button" class="cmt-barra-botao" data-th-foto title="Imagem" aria-label="Adicionar imagem"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="1.5" y="2.5" width="13" height="11" rx="1"></rect><circle cx="5.5" cy="6" r="1.2"></circle><path d="M2 12l4-4 3 3 2-2 3 3"></path></svg></button>`;
   const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
   const hrefDaThread = (id) => `#/forum/${encodeURIComponent(id)}`;
@@ -230,13 +233,14 @@
           <div class="th-meta">${window.Comments.avatar(autor)}<span>${esc(autor)}</span></div>
         </div>
         <div class="th-corpo">
+          ${window.Comments.barra(secao === "patch" ? BOTAO_IMAGEM : "")}
+          ${window.Comments.ajuda(secao === "patch" ? [["[img]endereço[/img]", "foto (o botão de imagem envia e escreve isto)"]] : [])}
           <label class="sr-only" for="th-texto">Texto (opcional)</label>
           <textarea class="th-input-texto" id="th-texto" name="texto" maxlength="${MAXIMO[secao] || MAXIMO.geral}" placeholder="Texto (opcional)">${esc(texto)}</textarea>
         </div>
         ${secao === "patch" ? `
         <div class="th-previa" data-th-previa-area hidden></div>
         <div class="th-ferramentas">
-          <button type="button" class="th-acao" data-th-foto>Adicionar foto</button>
           <button type="button" class="th-acao" data-th-previa>Pré-visualizar</button>
           <input type="file" accept="image/*" multiple hidden data-th-foto-arquivo />
           <span class="th-foto-status" role="status" aria-live="polite" data-th-foto-status></span>
@@ -254,6 +258,21 @@
   // erro, a mensagem aparece no cartao e o que foi digitado continua la.
   function ligaFormulario(form, acao) {
     if (!form) return;
+    // A barra de formatacao dos comentarios (16/11/2026): o botao envolve a
+    // selecao no texto, e o "?" abre a ajuda.
+    form.addEventListener("click", (ev) => {
+      const botao = ev.target.closest("[data-tag]");
+      if (botao) {
+        window.Comments.aplicaTag(form.texto, botao.dataset.tag, botao.hasAttribute("data-sozinho"));
+        return;
+      }
+      const ajuda = ev.target.closest("[data-ajuda]");
+      const painel = form.querySelector(".cmt-ajuda");
+      if (!ajuda || !painel) return;
+      painel.hidden = !painel.hidden;
+      ajuda.setAttribute("aria-expanded", String(!painel.hidden));
+      ajuda.classList.toggle("ativo", !painel.hidden);
+    });
     const erro = form.querySelector(".th-erro");
     const botao = form.querySelector("button[type=submit]");
     form.addEventListener("submit", async (ev) => {
@@ -525,6 +544,23 @@
       ev.preventDefault();
       window.Auth?.abrir("entrar");
     }
+  });
+
+  // Spoiler no texto da thread e na pre-visualizacao: o dos comentarios so ouve
+  // dentro da conversa, e aqui ele ficaria fechado para sempre.
+  const abreSpoiler = (spoiler) => {
+    spoiler.classList.toggle("aberto");
+    spoiler.removeAttribute("title");
+  };
+  document.addEventListener("click", (ev) => {
+    const spoiler = ev.target.closest && ev.target.closest(".th-corpo [data-spoiler], .th-previa [data-spoiler]");
+    if (spoiler) abreSpoiler(spoiler);
+  });
+  document.addEventListener("keydown", (ev) => {
+    const spoiler = ev.target.closest && ev.target.closest(".th-corpo [data-spoiler], .th-previa [data-spoiler]");
+    if (!spoiler || (ev.key !== "Enter" && ev.key !== " ")) return;
+    ev.preventDefault();
+    abreSpoiler(spoiler);
   });
 
   window.Threads = { painelHome, renderThreads, hrefDaThread };

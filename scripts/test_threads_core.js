@@ -32,7 +32,7 @@ function novoContexto() {
   const document = { addEventListener: () => {}, querySelector: () => null, querySelectorAll: () => [], getElementById: () => null, body: { scrollHeight: 0 } };
   window.document = document;
   window.Blob = Blob;
-  const context = { window, document, console, Date, Map, Set, Promise, URL, URLSearchParams, setTimeout, clearTimeout, JSON, Math, Blob };
+  const context = { window, document, console, Date, Map, Set, Promise, URL, URLSearchParams, setTimeout, clearTimeout, JSON, Math, Blob, Event };
   window.window = window;
   vm.createContext(context);
   for (const arq of ["scripts/fake_supabase.js", "community-core.js", "comments.js"]) {
@@ -192,6 +192,26 @@ async function rejeita(promessa, trecho) {
   assert.ok(!Cmt.corpo("[img]https://exemplo.com/x.png[/img]", { imagens: true }).includes("<img"), "endereco de fora nao vira imagem");
   const injecao = Cmt.corpo(`[img]${prefixo}a.webp" onerror="alert(1)[/img]`, { imagens: true });
   assert.ok(!injecao.includes("<img") && !/onerror="/.test(injecao), "aspas no endereco nao viram atributo");
+  // Visual de markdown (16/11/2026): linhas com "- " viram lista, sem linha vazia
+  // em volta; "-1" sem espaco continua texto.
+  const itens = Cmt.corpo("Antes\n- [b]um[/b]\n- [url=#/stats]dois[/url]\nDepois\n-1 nao e item");
+  assert.ok(itens.includes('<ul class="cmt-itens"><li><strong>um</strong></li><li><a class="cmt-url"'), `lista com os itens formatados: ${itens}`);
+  assert.ok(/Antes<ul class="cmt-itens">/.test(itens) && /<\/ul>Depois<br>-1 nao e item/.test(itens), "sem linha vazia em volta da lista, e -1 continua texto");
+  assert.strictEqual((itens.match(/<li>/g) || []).length, 2, "dois itens");
+
+  // A barra de formatacao dos comentarios, aberta para o formulario das threads
+  // (16/11/2026): os mesmos botoes, extras antes da ajuda (a imagem do patch
+  // notes) e linhas extras na ajuda.
+  const barra = Cmt.barra();
+  assert.deepStrictEqual(JSON.parse(JSON.stringify((barra.match(/data-tag="([a-z0-9]+)"/g) || []).map((x) => x.slice(10, -1)))), ["b", "i", "u", "s", "h2", "quote", "code", "spoiler", "url", "hr"], "os dez botoes dos comentarios");
+  assert.ok(barra.includes("data-ajuda"), "com o botao de ajuda");
+  const comImagem = Cmt.barra('<button type="button" class="cmt-barra-botao" data-th-foto>img</button>');
+  assert.ok(comImagem.indexOf("data-th-foto") > comImagem.lastIndexOf('data-tag="hr"') && comImagem.indexOf("data-th-foto") < comImagem.indexOf("data-ajuda"), "botao extra depois dos de tag e antes da ajuda");
+  assert.ok(Cmt.ajuda().includes("- texto"), "a ajuda mostra a lista");
+  assert.ok(Cmt.ajuda([["[img]endereço[/img]", "foto"]]).includes("[img]endereço[/img]"), "linha extra na ajuda");
+  const area = { value: "ola mundo", selectionStart: 4, selectionEnd: 9, focus() {}, dispatchEvent() {} };
+  Cmt.aplicaTag(area, "b");
+  assert.strictEqual(area.value, "ola [b]mundo[/b]", "aplicaTag envolve a selecao");
   await entra(C, "bruno@teste.univlr", "b");
   await rejeita(C.enviarFotoDePatch(new w.Blob(["x"], { type: "image/webp" })), "row-level security");
   await entra(C, "adm@teste.univlr", "c");

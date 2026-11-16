@@ -25448,6 +25448,7 @@ async function init() {
     state.ready = true;
     window.addEventListener("hashchange", render);
     bindFilterDropdownMotion();
+    bindMapaAgenteOrdem();
     // Sessao entra depois do banco: o cabecalho ja existe para receber o
     // espaco da conta, e uma falha de rede aqui nao pode derrubar o site
     // inteiro - sem conta o UNIVLR continua sendo o que sempre foi.
@@ -35910,7 +35911,35 @@ function tournamentMapAgentColumns(rows) {
 // Cinco degraus, do escuro ao claro: a cor mostra o tamanho e o numero, o valor exato.
 const TOURNAMENT_MAPA_DEGRAUS = [[1, 19], [20, 39], [40, 59], [60, 79], [80, 100]];
 
+// Agentes por mapa ordena por clique (16/11/2026, pedido do dono): o mapa ordena os
+// agentes pela taxa nele, o agente ordena os mapas pela taxa dele, e os dois valem
+// juntos. Empate fica na ordem de antes (popularidade e mapas jogados).
+function mapaAgenteOrdena(rows, agentColumns, ordem = {}) {
+  const taxa = (row, key) => Number(row.agentRates.get(key)?.rate || 0);
+  const mapa = rows.find((row) => row.id === ordem.mapa);
+  const agente = agentColumns.some((agent) => agent.key === ordem.agente) ? ordem.agente : "";
+  return {
+    rows: agente ? rows.slice().sort((a, b) => taxa(b, agente) - taxa(a, agente)) : rows,
+    agentColumns: mapa ? agentColumns.slice().sort((a, b) => taxa(mapa, b.key) - taxa(mapa, a.key)) : agentColumns,
+  };
+}
+
+// Um ouvinte so, ligado na carga: a tabela aparece no campeonato, na equipe e no
+// jogador, e redesenhar a rota vale para as tres. Clicar de novo no ativo desliga.
+function bindMapaAgenteOrdem() {
+  document.addEventListener("click", (event) => {
+    const botao = event.target.closest("[data-ma-mapa], [data-ma-agente]");
+    if (!botao) return;
+    const atual = { mapa: "", agente: "", ...state.mapaAgenteOrdem };
+    const [eixo, valor] = "maMapa" in botao.dataset ? ["mapa", botao.dataset.maMapa] : ["agente", botao.dataset.maAgente];
+    state.mapaAgenteOrdem = { ...atual, [eixo]: atual[eixo] === valor ? "" : valor };
+    render();
+  });
+}
+
 function tournamentMapAgentPickrateTable(rows, agentColumns) {
+  const ordem = { mapa: "", agente: "", ...state.mapaAgenteOrdem };
+  ({ rows, agentColumns } = mapaAgenteOrdena(rows, agentColumns, ordem));
   const totalRow = tournamentMapTotalAgentRow(rows, agentColumns);
   return `
     <article class="vp-est-bloco vp-ma-bloco">
@@ -35923,14 +35952,17 @@ function tournamentMapAgentPickrateTable(rows, agentColumns) {
       <table class="vp-ma">
         <thead>
           <tr>
-            <th scope="col">Mapa</th>
+            <th scope="col"><button type="button" class="vp-ma-ordem" data-ma-agente="" aria-pressed="${!ordem.agente}">Mapa</button></th>
             <th scope="col" title="Mapas jogados">#</th>
-            ${agentColumns.map((agent) => `<th scope="col" title="${escapeHtml(`${agent.name || agent.key}${agent.role ? ` - ${roleDisplayInfo(agent.role).label}` : ""}`)}">${tournamentAgentLogo(agent)}</th>`).join("")}
+            ${agentColumns.map((agent) => {
+              const nome = `${agent.name || agent.key}${agent.role ? ` - ${roleDisplayInfo(agent.role).label}` : ""}`;
+              return `<th scope="col"><button type="button" class="vp-ma-ordem" data-ma-agente="${escapeHtml(agent.key)}" aria-pressed="${ordem.agente === agent.key}" title="${escapeHtml(nome)}" aria-label="${escapeHtml(`Ordenar os mapas por ${agent.name || agent.key}`)}">${tournamentAgentLogo(agent)}</button></th>`;
+            }).join("")}
           </tr>
         </thead>
         <tbody>
-          ${totalRow ? tournamentMapAgentPickrateRow(totalRow, agentColumns, true) : ""}
-          ${rows.map((row) => tournamentMapAgentPickrateRow(row, agentColumns)).join("")}
+          ${totalRow ? tournamentMapAgentPickrateRow(totalRow, agentColumns, true, !ordem.mapa) : ""}
+          ${rows.map((row) => tournamentMapAgentPickrateRow(row, agentColumns, false, ordem.mapa === row.id)).join("")}
         </tbody>
       </table>
     </article>
@@ -35959,15 +35991,15 @@ function tournamentMapTotalAgentRow(rows, agentColumns) {
   return total;
 }
 
-function tournamentMapAgentPickrateRow(row, agentColumns, summary = false) {
-  const nome = summary
-    ? `<span class="vp-ma-nome"><span>${escapeHtml(row.name)}</span></span>`
-    : `<a class="vp-ma-nome" href="#/maps/${escapeHtml(row.id)}">${tournamentMapasArte(row.mapa)}<span>${escapeHtml(row.name)}</span></a>`;
+// O nome do mapa ordena os agentes pela taxa nele (antes levava a pagina do mapa);
+// "Todos" volta a ordem de popularidade.
+function tournamentMapAgentPickrateRow(row, agentColumns, summary = false, ativo = false) {
+  const nome = `<button type="button" class="vp-ma-nome" data-ma-mapa="${summary ? "" : escapeHtml(row.id)}" aria-pressed="${ativo}">${summary ? "" : tournamentMapasArte(row.mapa)}<span>${escapeHtml(row.name)}</span></button>`;
   return `
-    <tr class="${summary ? "vp-ma-todos" : ""}">
+    <tr class="${[summary ? "vp-ma-todos" : "", ativo && !summary ? "vp-ma-ativo" : ""].filter(Boolean).join(" ")}">
       <td class="vp-ma-mapa">${nome}</td>
       <td class="vp-ma-n">${escapeHtml(String(row.matches || 0))}</td>
-      ${agentColumns.map((agent) => tournamentMapAgentPickrateCell(agent, row.agentRates.get(agent.key)?.rate || 0)).join("")}
+      ${agentColumns.map((agent) => tournamentMapAgentPickrateCell(agent, row.agentRates.get(agent.key)?.rate || 0, agent.key === state.mapaAgenteOrdem?.agente)).join("")}
     </tr>
   `;
 }
@@ -35975,11 +36007,13 @@ function tournamentMapAgentPickrateRow(row, agentColumns, summary = false) {
 // Quem foi usado aparece com pelo menos 1%, para nao se confundir com quem ficou de
 // fora. No bloco do celular cada numero leva o icone, porque o cabecalho some, e os
 // mais usados vem primeiro.
-function tournamentMapAgentPickrateCell(agent, rate) {
+// A taxa tambem e botao: ate 1180px o cabecalho some, e e por ela que se ordena os
+// mapas pelo agente. A coluna do agente escolhido fica marcada.
+function tournamentMapAgentPickrateCell(agent, rate, ativo = false) {
   const valor = rate > 0 ? Math.max(1, Math.round(clamp(rate, 0, 100))) : 0;
   if (!valor) return `<td class="vp-ma-zero">-</td>`;
   const degrau = TOURNAMENT_MAPA_DEGRAUS.findIndex(([, maximo]) => valor <= maximo) + 1;
-  return `<td class="vp-ma-taxa vp-ma-n${degrau}" style="--ordem:${100 - valor}" title="${escapeHtml(agent.name || agent.key)}">${tournamentAgentLogo(agent)}<span>${valor}%</span></td>`;
+  return `<td class="vp-ma-taxa vp-ma-n${degrau}${ativo ? " vp-ma-sel" : ""}" style="--ordem:${100 - valor}"><button type="button" class="vp-ma-celula" data-ma-agente="${escapeHtml(agent.key)}" title="${escapeHtml(agent.name || agent.key)}">${tournamentAgentLogo(agent)}<span>${valor}%</span></button></td>`;
 }
 
 function tournamentStatMapMatches(matches) {
@@ -36178,6 +36212,8 @@ function tournamentTeamStatColumns() {
 }
 
 function tournamentStatsSortState(table) {
+  // A Carreira, sem clique, fica na ordem em que as linhas chegam (nenhuma coluna).
+  if (table === "carreira") return state.tournamentStatsSort?.carreira || { key: "", direction: "desc" };
   const fallback = table === "teams" || table === "trofeus" ? { key: table === "teams" ? "lugar" : "posicao", direction: "asc" } : table === "agents" || table === "compositions" ? { key: "picks", direction: "desc" } : table === "mapteams" || table === "statsteams" ? { key: "mapas", direction: "desc" } : { key: "rating", direction: "desc" };
   return state.tournamentStatsSort?.[table] || fallback;
 }
@@ -38868,7 +38904,7 @@ function bindAbaDaEquipe(id, refaz = renderTeamDetail) {
     const ordenar = event.target.closest("[data-tournament-stat-sort]");
     if (ordenar) {
       const [table, key] = String(ordenar.dataset.tournamentStatSort || "").split(":");
-      const colunas = table === "agents" ? tournamentAgenteColunas() : table === "compositions" ? tournamentComposicaoColunas() : table === "maps" ? playerMapaColunas() : table === "mapteams" ? mapaEquipeColunas() : table === "statsteams" ? statsEquipeColunas() : table === "trofeus" ? medalhasColunas() : tournamentPlayerStatColumns();
+      const colunas = table === "agents" ? tournamentAgenteColunas() : table === "compositions" ? tournamentComposicaoColunas() : table === "maps" ? playerMapaColunas() : table === "mapteams" ? mapaEquipeColunas() : table === "statsteams" ? statsEquipeColunas() : table === "trofeus" ? medalhasColunas() : table === "carreira" ? playerCarreiraColunas(null) : tournamentPlayerStatColumns();
       const column = colunas.find((item) => item.key === key);
       if (!column) return;
       const atual = tournamentStatsSortState(table);
@@ -40323,11 +40359,40 @@ function playerPassagens(player, teamRows) {
   });
 }
 
+// A tabela Equipes da Carreira ordena pelo cabecalho (16/11/2026, pedido do dono),
+// com o botao e o estado das tabelas de estatistica. Sem clique fica a ordem de
+// antes: a equipe atual e depois a mais recente. Quem nao tem numero vai para o fim.
+function playerCarreiraColunas(player) {
+  const numero = (linha, campo) => {
+    const stats = playerTemPerfil(player) ? playerStatsForTeam(player, linha.teamId) : null;
+    return stats?.matches ? Number(campo(stats)) : -1e9;
+  };
+  return [
+    { key: "equipe", label: "Equipe", type: "text", direction: "asc", value: (linha) => linha.team?.name || linha.teamId },
+    { key: "periodo", label: "Período", value: (linha) => Number(linha.elenco?.[0]?.inicio || linha.start || 0) },
+    { key: "tempo", label: "Tempo", value: (linha) => (linha.elenco || []).reduce((soma, trecho) => soma + Math.max(DAY_MS, trecho.fim - trecho.inicio), 0) },
+    { key: "mapas", label: "Mapas", value: (linha) => Number(linha.maps || 0) },
+    { key: "series", label: "Séries", value: (linha) => Number(linha.series || 0) },
+    { key: "rating", label: "rAAting", value: (linha) => numero(linha, officialRatingValue) },
+    { key: "acs", label: "ACS", value: (linha) => numero(linha, (stats) => stats.acs) },
+    { key: "kd", label: "K:D", value: (linha) => numero(linha, (stats) => stats.kd) },
+    { key: "trofeus", label: "Troféus", value: (linha) => linha.trophies.length },
+  ];
+}
+
 function playerPassagensTabela(player, linhas) {
+  const colunas = playerCarreiraColunas(player);
+  const atual = tournamentStatsSortState("carreira");
+  const ordenadas = atual.key ? tournamentSortedStatRows("carreira", linhas, colunas, (a, b) => linhas.indexOf(a) - linhas.indexOf(b)) : linhas;
+  const cabecalho = colunas.map((coluna) => {
+    const ativa = atual.key === coluna.key;
+    const seta = ativa ? (atual.direction === "asc" ? "▲" : "▼") : "";
+    return `<button type="button" class="tournament-stat-sort${ativa ? " active" : ""}" data-tournament-stat-sort="carreira:${coluna.key}" aria-pressed="${ativa}"><span>${escapeHtml(coluna.label)}</span><i aria-hidden="true">${seta}</i></button>`;
+  }).join("");
   return `
     <div class="vp-elenco-tabela">
-      <div class="vp-et vp-et-car vp-et-cab" aria-hidden="true"><span></span><span>Equipe</span><span>Período</span><span>Tempo</span><span>Mapas</span><span>Séries</span><span>rAAting</span><span>ACS</span><span>K:D</span><span>Troféus</span></div>
-      ${linhas.map((linha) => {
+      <div class="vp-et vp-et-car vp-et-cab"><span></span>${cabecalho}</div>
+      ${ordenadas.map((linha) => {
         const nome = linha.team?.name || linha.teamId;
         const nota = linha.current ? "Equipe atual" : linha.standin ? "Stand-in" : "";
         const miolo = `

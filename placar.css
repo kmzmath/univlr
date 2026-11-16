@@ -7579,6 +7579,56 @@ a.vp-tabela-linha:hover strong {
   opacity: 1;
 }
 
+/* Ordenar por clique (16/11/2026): o nome do mapa ordena os agentes, e o agente
+   (no cabecalho e na taxa, que segue na tela estreita) ordena os mapas. O mapa
+   escolhido acende a arte; o agente escolhido ganha a linha da marca embaixo. */
+button.vp-ma-nome,
+.vp-ma-ordem,
+.vp-ma-celula {
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+button.vp-ma-nome {
+  width: 100%;
+}
+
+.vp-ma-ordem,
+.vp-ma-celula {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0;
+  color: inherit;
+}
+
+.vp-ma th:first-child .vp-ma-ordem {
+  justify-content: flex-start;
+}
+
+.vp-ma-ordem:hover,
+.vp-ma-ordem[aria-pressed="true"] {
+  color: var(--ink);
+}
+
+.vp-ma-ordem[aria-pressed="true"]:not([data-ma-agente=""]),
+.vp-ma td.vp-ma-sel {
+  box-shadow: inset 0 -2px var(--brand);
+}
+
+.vp-ma-ativo .vp-ma-nome {
+  box-shadow: inset 3px 0 var(--brand);
+}
+
+.vp-ma-ativo .vp-ma-nome img {
+  opacity: 1;
+}
+
 /* Com 29 agentes a coluna cai a 32px aqui, e "100%" em 12px pede 33px. */
 @media (min-width: 1181px) and (max-width: 1320px) {
   .vp-ma td {
@@ -7636,6 +7686,11 @@ a.vp-tabela-linha:hover strong {
 
   .vp-ma-nome {
     width: 100%;
+  }
+
+  .vp-ma td .vp-ma-celula {
+    flex: 1 1 auto;
+    align-self: stretch;
   }
 }
 
@@ -12076,6 +12131,51 @@ a.vp-cj-equipe:hover span {
 
 .vp-et-cab.vp-et-car > :nth-child(3) {
   text-align: left;
+}
+
+/* A tabela Equipes da Carreira ordena pelo cabecalho (16/11/2026), com o botao das
+   tabelas de estatistica. A seta so ocupa lugar na coluna ativa. */
+.vp-et-cab.vp-et-car .tournament-stat-sort {
+  width: 100%;
+  min-height: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  white-space: nowrap;
+}
+
+.vp-et-cab.vp-et-car > .tournament-stat-sort:nth-child(n + 4) {
+  justify-content: flex-end;
+}
+
+.vp-et-cab.vp-et-car .tournament-stat-sort:hover,
+.vp-et-cab.vp-et-car .tournament-stat-sort.active {
+  color: var(--ink);
+}
+
+.vp-et-cab.vp-et-car .tournament-stat-sort i {
+  width: auto;
+  font-size: 8px;
+}
+
+/* Na tela estreita as colunas viram rotulos em cada numero e o cabecalho sumia; aqui
+   ele fica como uma faixa que so ordena, para a ordenacao nao desaparecer. */
+@media (max-width: 760px) {
+  .vp-et-cab.vp-et.vp-et-car {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    min-height: 0;
+    padding: 8px 14px;
+  }
+
+  .vp-et-cab.vp-et-car > span:first-child {
+    display: none;
+  }
+
+  .vp-et-cab.vp-et-car .tournament-stat-sort {
+    width: auto;
+  }
 }
 
 .vp-movimento:has(> .vp-et-logo) {

@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "total": 216,
-  "publishedThrough": "2026-11-18",
+  "publishedThrough": "2026-11-19",
   "days": [
     {
       "date": "2026-10-23",
@@ -31279,7 +31279,617 @@
     },
     {
       "date": "2026-11-19",
-      "count": 4
+      "count": 4,
+      "cards": [
+        {
+          "rank": 4,
+          "thread": "2026:dsUDB7RGqdpVQg2f9bE8kKdEjkvK734PTW650lVHStgXWL4onVHvK3FVXPFZnUCIwJDdFHSGwk_HeQ",
+          "name": "chadu",
+          "team": "CEUB Octopus",
+          "overall": 91,
+          "image": "cards/004.webp",
+          "opponentStrength": 0.1168,
+          "teamLogo": "/assets/team-logos/ceub_octopus.png",
+          "teamColor": "#b050cd",
+          "role": "Controlador",
+          "profileHref": "/#/players/chadu",
+          "stats": {
+            "raating": 1.30770007758262,
+            "acs": 228.13676286072774,
+            "adr": 114.64115432873275,
+            "kd": 1.6009389671361502,
+            "kast": 78.92095357590966,
+            "kpr": 0.8557089084065245,
+            "apr": 0.21580928481806774,
+            "hs": 33.56164383561644,
+            "kills": 682,
+            "deaths": 426,
+            "assists": 172,
+            "rounds": 797,
+            "maps": 43
+          },
+          "agents": [
+            {
+              "name": "Viper",
+              "icon": "/assets/agent-icons/viper.png",
+              "role": "Controlador",
+              "maps": 18,
+              "rounds": 335,
+              "share": 0.4186046511627907
+            },
+            {
+              "name": "Cypher",
+              "icon": "/assets/agent-icons/cypher.png",
+              "role": "Sentinela",
+              "maps": 16,
+              "rounds": 285,
+              "share": 0.37209302325581395
+            },
+            {
+              "name": "Chamber",
+              "icon": "/assets/agent-icons/chamber.png",
+              "role": "Sentinela",
+              "maps": 6,
+              "rounds": 118,
+              "share": 0.13953488372093023
+            },
+            {
+              "name": "Killjoy",
+              "icon": "/assets/agent-icons/killjoy.png",
+              "role": "Sentinela",
+              "maps": 1,
+              "rounds": 22,
+              "share": 0.023255813953488372
+            },
+            {
+              "name": "Veto",
+              "icon": "/https://static.wikia.nocookie.net/valorant/images/4/4e/Veto_icon.png/revision/latest/scale-to-width-down/1000?cb=20251007182648",
+              "role": "Sentinela",
+              "maps": 1,
+              "rounds": 22,
+              "share": 0.023255813953488372
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-11-14T20:15:24.745Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Sunset",
+              "opponent": "Azure Bears Golden",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "13-4",
+              "result": "V",
+              "rating": 1.4782065306293706,
+              "kills": 17,
+              "deaths": 9,
+              "assists": 4,
+              "agent": "Cypher",
+              "agentIcon": "/assets/agent-icons/cypher.png",
+              "href": "/#/matches/24541abf-1099-47ed-a0e4-124641581642"
+            },
+            {
+              "date": "2026-11-14T19:16:06.169Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Summit",
+              "opponent": "Azure Bears Golden",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "13-6",
+              "result": "V",
+              "rating": 1.3663062198344307,
+              "kills": 15,
+              "deaths": 9,
+              "assists": 11,
+              "agent": "Cypher",
+              "agentIcon": "/assets/agent-icons/cypher.png",
+              "href": "/#/matches/eef72170-18ea-4b04-97e0-53bfba024767"
+            },
+            {
+              "date": "2026-11-14T18:33:14.992Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Abyss",
+              "opponent": "Azure Bears Golden",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "13-2",
+              "result": "V",
+              "rating": 1.2850736006680954,
+              "kills": 11,
+              "deaths": 5,
+              "assists": 8,
+              "agent": "Astra",
+              "agentIcon": "/assets/agent-icons/astra.png",
+              "href": "/#/matches/6fe412ab-d316-4150-9701-fce5abc627cf"
+            },
+            {
+              "date": "2026-11-14T17:26:07.758Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Lotus",
+              "opponent": "Azure Bears Golden",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "9-13",
+              "result": "D",
+              "rating": 1.1747723475690486,
+              "kills": 17,
+              "deaths": 16,
+              "assists": 3,
+              "agent": "Viper",
+              "agentIcon": "/assets/agent-icons/viper.png",
+              "href": "/#/matches/e51bab2f-8f92-4902-af77-14affe8de646"
+            },
+            {
+              "date": "2026-10-24T20:00:40.432Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Haven",
+              "opponent": "CAAP Hellhounds",
+              "opponentLogo": "/assets/team-logos/caap_hellhounds.png",
+              "score": "13-8",
+              "result": "V",
+              "rating": 1.7164441220809599,
+              "kills": 25,
+              "deaths": 11,
+              "assists": 6,
+              "agent": "Cypher",
+              "agentIcon": "/assets/agent-icons/cypher.png",
+              "href": "/#/matches/fc94ab38-a32a-490e-9369-d5429e6cb8d9"
+            }
+          ]
+        },
+        {
+          "rank": 3,
+          "thread": "2026:utlNcp1v2kLIG9L8w4ahS188beOZUaf-rrpIU2ipwKACAysaPKayQmx8OxVpcGArKqVFtEl9ioGr-Q",
+          "name": "kzr",
+          "team": "CEUB Octopus",
+          "overall": 91,
+          "image": "cards/003.webp",
+          "opponentStrength": 0.1111,
+          "teamLogo": "/assets/team-logos/ceub_octopus.png",
+          "teamColor": "#b050cd",
+          "role": "Iniciador",
+          "profileHref": "/#/players/kzr",
+          "stats": {
+            "raating": 1.3092529422721162,
+            "acs": 245.28555678059536,
+            "adr": 122.71995589856671,
+            "kd": 1.5037593984962405,
+            "kast": 82.69018743109152,
+            "kpr": 0.8820286659316428,
+            "apr": 0.3296582138919515,
+            "hs": 39.464285714285715,
+            "kills": 800,
+            "deaths": 532,
+            "assists": 299,
+            "rounds": 907,
+            "maps": 48
+          },
+          "agents": [
+            {
+              "name": "Sova",
+              "icon": "/assets/agent-icons/sova.png",
+              "role": "Iniciador",
+              "maps": 25,
+              "rounds": 467,
+              "share": 0.5208333333333334
+            },
+            {
+              "name": "Fade",
+              "icon": "/assets/agent-icons/fade.png",
+              "role": "Iniciador",
+              "maps": 16,
+              "rounds": 294,
+              "share": 0.3333333333333333
+            },
+            {
+              "name": "Chamber",
+              "icon": "/assets/agent-icons/chamber.png",
+              "role": "Sentinela",
+              "maps": 2,
+              "rounds": 46,
+              "share": 0.041666666666666664
+            },
+            {
+              "name": "Viper",
+              "icon": "/assets/agent-icons/viper.png",
+              "role": "Controlador",
+              "maps": 1,
+              "rounds": 22,
+              "share": 0.020833333333333332
+            },
+            {
+              "name": "Reyna",
+              "icon": "/assets/agent-icons/reyna.png",
+              "role": "Duelista",
+              "maps": 1,
+              "rounds": 22,
+              "share": 0.020833333333333332
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-10-24T20:00:40.432Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Haven",
+              "opponent": "CAAP Hellhounds",
+              "opponentLogo": "/assets/team-logos/caap_hellhounds.png",
+              "score": "13-8",
+              "result": "V",
+              "rating": 0.7931467471278301,
+              "kills": 9,
+              "deaths": 12,
+              "assists": 9,
+              "agent": "Sova",
+              "agentIcon": "/assets/agent-icons/sova.png",
+              "href": "/#/matches/fc94ab38-a32a-490e-9369-d5429e6cb8d9"
+            },
+            {
+              "date": "2026-10-24T19:20:05.398Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Summit",
+              "opponent": "CAAP Hellhounds",
+              "opponentLogo": "/assets/team-logos/caap_hellhounds.png",
+              "score": "13-3",
+              "result": "V",
+              "rating": 1.1743965820418754,
+              "kills": 14,
+              "deaths": 11,
+              "assists": 6,
+              "agent": "Sova",
+              "agentIcon": "/assets/agent-icons/sova.png",
+              "href": "/#/matches/ff739503-51e1-47fc-9048-bbdff1d1db14"
+            },
+            {
+              "date": "2026-10-18T17:48:29.775Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Lotus",
+              "opponent": "UFMT Turuna",
+              "opponentLogo": "/assets/team-logos/ufmt_turuna.png",
+              "score": "13-4",
+              "result": "V",
+              "rating": 1.3200767778718359,
+              "kills": 16,
+              "deaths": 12,
+              "assists": 5,
+              "agent": "Fade",
+              "agentIcon": "/assets/agent-icons/fade.png",
+              "href": "/#/matches/4250499e-6eae-4e4c-82d5-0fe5fedbf07e"
+            },
+            {
+              "date": "2026-10-18T17:01:05.911Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Split",
+              "opponent": "UFMT Turuna",
+              "opponentLogo": "/assets/team-logos/ufmt_turuna.png",
+              "score": "13-7",
+              "result": "V",
+              "rating": 1.662099717708414,
+              "kills": 24,
+              "deaths": 12,
+              "assists": 9,
+              "agent": "Fade",
+              "agentIcon": "/assets/agent-icons/fade.png",
+              "href": "/#/matches/16e065a4-12d8-4afc-9cdd-62a65c4dba76"
+            },
+            {
+              "date": "2026-09-19T20:25:15.939Z",
+              "event": "UNIVAVÁ - Fase de Grupos",
+              "map": "Sunset",
+              "opponent": "Green Owls Jacurutu",
+              "opponentLogo": "/assets/team-logos/green_owls.png",
+              "score": "13-5",
+              "result": "V",
+              "rating": 0.8750789012307442,
+              "kills": 13,
+              "deaths": 14,
+              "assists": 4,
+              "agent": "Sage",
+              "agentIcon": "/assets/agent-icons/sage.png",
+              "href": "/#/matches/a6eec749-309c-4b0a-8dbd-c28a83d77cdc"
+            }
+          ]
+        },
+        {
+          "rank": 2,
+          "thread": "2026:n3COjILgyLe7YZclY7krI-eQ8hsis4BJkkhxGbQlzLtMWmtRFqZJAqySEgPCwseGWFU2f9Vw0vc6WQ",
+          "name": "badaBIGBOSS",
+          "team": "CEUB Octopus Vulgaris",
+          "overall": 91,
+          "image": "cards/002.webp",
+          "opponentStrength": -0.0279,
+          "teamLogo": "/assets/team-logos/ceub_octopus.png",
+          "teamColor": "#b050cd",
+          "role": "Duelista",
+          "profileHref": "/#/players/bada",
+          "stats": {
+            "raating": 1.4706107502806247,
+            "acs": 272.1924528301887,
+            "adr": 133.38301886792453,
+            "kd": 1.723127035830619,
+            "kast": 76.41509433962264,
+            "kpr": 0.9981132075471698,
+            "apr": 0.21132075471698114,
+            "hs": 31.230529595015575,
+            "kills": 529,
+            "deaths": 307,
+            "assists": 112,
+            "rounds": 530,
+            "maps": 27
+          },
+          "agents": [
+            {
+              "name": "Phoenix",
+              "icon": "/assets/agent-icons/phoenix.png",
+              "role": "Duelista",
+              "maps": 13,
+              "rounds": 253,
+              "share": 0.48148148148148145
+            },
+            {
+              "name": "Chamber",
+              "icon": "/assets/agent-icons/chamber.png",
+              "role": "Sentinela",
+              "maps": 8,
+              "rounds": 151,
+              "share": 0.2962962962962963
+            },
+            {
+              "name": "Raze",
+              "icon": "/assets/agent-icons/raze.png",
+              "role": "Duelista",
+              "maps": 4,
+              "rounds": 75,
+              "share": 0.14814814814814814
+            },
+            {
+              "name": "Waylay",
+              "icon": "/assets/agent-icons/waylay.png",
+              "role": "Duelista",
+              "maps": 1,
+              "rounds": 28,
+              "share": 0.037037037037037035
+            },
+            {
+              "name": "Cypher",
+              "icon": "/assets/agent-icons/cypher.png",
+              "role": "Sentinela",
+              "maps": 1,
+              "rounds": 23,
+              "share": 0.037037037037037035
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-10-18T23:57:14.692Z",
+              "event": "Rush Series 3ª Edição",
+              "map": "Ascent",
+              "opponent": "Azure Bears Black",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "13-7",
+              "result": "V",
+              "rating": 1.6593562116963836,
+              "kills": 21,
+              "deaths": 9,
+              "assists": 7,
+              "agent": "Phoenix",
+              "agentIcon": "/assets/agent-icons/phoenix.png",
+              "href": "/#/matches/069b8433-c9bb-42cb-9c8d-c77edca9d11f"
+            },
+            {
+              "date": "2026-10-18T22:52:15.613Z",
+              "event": "Rush Series 3ª Edição",
+              "map": "Abyss",
+              "opponent": "Azure Bears Black",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "15-13",
+              "result": "V",
+              "rating": 1.5751514786776337,
+              "kills": 31,
+              "deaths": 16,
+              "assists": 1,
+              "agent": "Waylay",
+              "agentIcon": "/assets/agent-icons/waylay.png",
+              "href": "/#/matches/c9d6fd9f-1dd5-4288-acd6-78cf94c6cbf8"
+            },
+            {
+              "date": "2026-10-18T22:04:12.141Z",
+              "event": "Rush Series 3ª Edição",
+              "map": "Bind",
+              "opponent": "Azure Bears Black",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "8-13",
+              "result": "D",
+              "rating": 1.2985548001637919,
+              "kills": 20,
+              "deaths": 13,
+              "assists": 6,
+              "agent": "Phoenix",
+              "agentIcon": "/assets/agent-icons/phoenix.png",
+              "href": "/#/matches/77c65048-c8c8-4cc2-ad20-d316fea8a340"
+            },
+            {
+              "date": "2026-10-18T21:07:38.077Z",
+              "event": "Rush Series 3ª Edição",
+              "map": "Lotus",
+              "opponent": "MackLogic White",
+              "opponentLogo": "/assets/team-logos/macklogic_white.png",
+              "score": "13-6",
+              "result": "V",
+              "rating": 1.6508765568976653,
+              "kills": 19,
+              "deaths": 10,
+              "assists": 10,
+              "agent": "Phoenix",
+              "agentIcon": "/assets/agent-icons/phoenix.png",
+              "href": "/#/matches/8cdd7879-c8fd-4d2a-80c3-c856bad3925e"
+            },
+            {
+              "date": "2026-10-18T19:59:23.640Z",
+              "event": "Rush Series 3ª Edição",
+              "map": "Lotus",
+              "opponent": "Mauá Esports",
+              "opponentLogo": "/assets/team-logos/maua_blue.png",
+              "score": "13-10",
+              "result": "V",
+              "rating": 1.4750208086174903,
+              "kills": 21,
+              "deaths": 12,
+              "assists": 6,
+              "agent": "Phoenix",
+              "agentIcon": "/assets/agent-icons/phoenix.png",
+              "href": "/#/matches/a8f00315-c867-4822-91fe-ee02c629a566"
+            }
+          ]
+        },
+        {
+          "rank": 1,
+          "thread": "2026:H12pckbkNnpJiUS5h9AhhHRTP1c_S30dXLfWm2sWdxmlmH6qCcw9UuiS_61TNYTnFj5fETRyLamb_Q",
+          "name": "gbzz",
+          "team": "CEUB Octopus",
+          "overall": 91,
+          "image": "cards/001.webp",
+          "opponentStrength": 0.1185,
+          "teamLogo": "/assets/team-logos/ceub_octopus.png",
+          "teamColor": "#b050cd",
+          "role": "Duelista",
+          "profileHref": "/#/players/gbzz",
+          "stats": {
+            "raating": 1.326770297649192,
+            "acs": 269.475,
+            "adr": 137.9455882352941,
+            "kd": 1.5131264916467781,
+            "kast": 80.14705882352942,
+            "kpr": 0.9323529411764706,
+            "apr": 0.35294117647058826,
+            "hs": 31.85893604303646,
+            "kills": 634,
+            "deaths": 419,
+            "assists": 240,
+            "rounds": 680,
+            "maps": 37
+          },
+          "agents": [
+            {
+              "name": "Phoenix",
+              "icon": "/assets/agent-icons/phoenix.png",
+              "role": "Duelista",
+              "maps": 18,
+              "rounds": 317,
+              "share": 0.4864864864864865
+            },
+            {
+              "name": "Vyse",
+              "icon": "/assets/agent-icons/vyse.png",
+              "role": "Sentinela",
+              "maps": 8,
+              "rounds": 150,
+              "share": 0.21621621621621623
+            },
+            {
+              "name": "Sage",
+              "icon": "/assets/agent-icons/sage.png",
+              "role": "Sentinela",
+              "maps": 5,
+              "rounds": 88,
+              "share": 0.13513513513513514
+            },
+            {
+              "name": "Cypher",
+              "icon": "/assets/agent-icons/cypher.png",
+              "role": "Sentinela",
+              "maps": 2,
+              "rounds": 46,
+              "share": 0.05405405405405406
+            },
+            {
+              "name": "Fade",
+              "icon": "/assets/agent-icons/fade.png",
+              "role": "Iniciador",
+              "maps": 1,
+              "rounds": 22,
+              "share": 0.02702702702702703
+            }
+          ],
+          "recentMatches": [
+            {
+              "date": "2026-11-14T20:15:24.745Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Sunset",
+              "opponent": "Azure Bears Golden",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "13-4",
+              "result": "V",
+              "rating": 0.7867274720859845,
+              "kills": 8,
+              "deaths": 13,
+              "assists": 6,
+              "agent": "Phoenix",
+              "agentIcon": "/assets/agent-icons/phoenix.png",
+              "href": "/#/matches/24541abf-1099-47ed-a0e4-124641581642"
+            },
+            {
+              "date": "2026-11-14T19:16:06.169Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Summit",
+              "opponent": "Azure Bears Golden",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "13-6",
+              "result": "V",
+              "rating": 1.8155844722138395,
+              "kills": 33,
+              "deaths": 13,
+              "assists": 5,
+              "agent": "Phoenix",
+              "agentIcon": "/assets/agent-icons/phoenix.png",
+              "href": "/#/matches/eef72170-18ea-4b04-97e0-53bfba024767"
+            },
+            {
+              "date": "2026-11-14T18:33:14.992Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Abyss",
+              "opponent": "Azure Bears Golden",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "13-2",
+              "result": "V",
+              "rating": 1.275149525152022,
+              "kills": 13,
+              "deaths": 10,
+              "assists": 9,
+              "agent": "Phoenix",
+              "agentIcon": "/assets/agent-icons/phoenix.png",
+              "href": "/#/matches/6fe412ab-d316-4150-9701-fce5abc627cf"
+            },
+            {
+              "date": "2026-11-14T17:26:07.758Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Lotus",
+              "opponent": "Azure Bears Golden",
+              "opponentLogo": "/assets/team-logos/azure_bears.png",
+              "score": "9-13",
+              "result": "D",
+              "rating": 0.9734512194705085,
+              "kills": 13,
+              "deaths": 16,
+              "assists": 9,
+              "agent": "Fade",
+              "agentIcon": "/assets/agent-icons/fade.png",
+              "href": "/#/matches/e51bab2f-8f92-4902-af77-14affe8de646"
+            },
+            {
+              "date": "2026-10-24T20:00:40.432Z",
+              "event": "UNIVAVÁ - Playoffs",
+              "map": "Haven",
+              "opponent": "CAAP Hellhounds",
+              "opponentLogo": "/assets/team-logos/caap_hellhounds.png",
+              "score": "13-8",
+              "result": "V",
+              "rating": 1.080566330877966,
+              "kills": 17,
+              "deaths": 16,
+              "assists": 7,
+              "agent": "Phoenix",
+              "agentIcon": "/assets/agent-icons/phoenix.png",
+              "href": "/#/matches/fc94ab38-a32a-490e-9369-d5429e6cb8d9"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

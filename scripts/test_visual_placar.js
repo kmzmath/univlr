@@ -191,7 +191,7 @@ assert.strictEqual(context.eventDatesShort({ status: "Em andamento", start: diaU
 // Carrossel dos melhores da semana: um lider por vez, o primeiro clonado no fim
 // e um tracinho por categoria. Sem ninguem com o minimo de mapas, o estado
 // vazio de hoje continua.
-const categorias = ["Melhor rAAting 3.0", "Melhor ACS", "Melhor ADR", "Melhor KAST", "Melhor Swing/R", "Melhor K/D", "Melhor KPR", "Melhor DPR", "Melhor APR"];
+const categorias = ["Melhor rAAting 3.1", "Melhor ACS", "Melhor ADR", "Melhor KAST", "Melhor Swing/R", "Melhor K/D", "Melhor KPR", "Melhor DPR", "Melhor APR"];
 const lideres = categorias.map((label, i) => ({
   key: `k${i}`, label, statLabel: label.replace("Melhor ", ""), value: String(100 + i), windowLabel: "13 de out - 20 de out",
   player: { id: `p${i}`, nick: i % 2 ? "Gutoso" : "bada", teamId: i % 2 ? "azr" : "ceub", matches: 11, rounds: 217, photo: "" },
@@ -355,9 +355,9 @@ assert(/@media \(max-width: 640px\)\s*\{[^@]*\.vp-sb td\.numeric:not\(\[data-col
 const avancadas = context.scoreboardColumns("advanced");
 const cabecalhoAvancado = context.scoreboardHeader("k-a|k-b", avancadas);
 assert(cabecalhoAvancado.includes('class="vp-sb-grupos"'), "o avancado agrupa as colunas numa linha de cima");
-assert(/colspan="6"[^>]*>Componentes do rAAting</.test(cabecalhoAvancado), "os seis componentes do rAAting ficam sob um titulo so");
+assert(/colspan="6"[^>]*>Partes do rAAting</.test(cabecalhoAvancado), "as seis partes do rAAting ficam sob um titulo so");
 assert(/colspan="4"[^>]*>Ajustado por economia</.test(cabecalhoAvancado), "as quatro medidas por economia ficam sob um titulo so");
-assert(cabecalhoAvancado.includes("<span>Kill</span>") && cabecalhoAvancado.includes("Ordenar por KillRating"), "o nome curto vai no cabecalho e o completo no rotulo de acessibilidade");
+assert(cabecalhoAvancado.includes("<span>Sobrev.</span>") && cabecalhoAvancado.includes("Ordenar por Sobrevivência"), "o nome curto vai no cabecalho e o completo no rotulo de acessibilidade");
 assert(!/<span>[A-Za-z]+Rating<\/span>/.test(cabecalhoAvancado), "nenhum nome comprido de componente no cabecalho");
 assert(!context.scoreboardHeader("k-a|k-b", colunas).includes("vp-sb-grupos"), "o padrao nao tem a linha de grupos");
 
@@ -487,10 +487,10 @@ assert.strictEqual((ficha.match(/class="vp-nm-col"/g) || []).length, 3, "a ficha
 ["Geral", "Por round", "Abertura e trades"].forEach((rotulo) => assert(ficha.includes(`<h3>${rotulo}</h3>`), `a ficha tem a tabela ${rotulo}`));
 assert.strictEqual((ficha.match(/<dt>/g) || []).length, 6 + 7 + 5 + 9, "seis destaques e as linhas das tres tabelas");
 assert(ficha.includes("--n:3"), "sem as metricas, as tabelas dividem a largura em tres");
-assert(!ficha.includes("Métricas rAAting 3.0"), "com as metricas todas vazias, o grupo nao aparece");
-assert(context.fichaJogador({ ...jogadorFicha, ekpr: 0.71 }).includes("Métricas rAAting 3.0"), "com uma metrica, o grupo aparece");
+assert(!ficha.includes("Métricas rAAting 3.1"), "com as metricas todas vazias, o grupo nao aparece");
+assert(context.fichaJogador({ ...jogadorFicha, ekpr: 0.71 }).includes("Métricas rAAting 3.1"), "com uma metrica, o grupo aparece");
 assert.strictEqual(context.playerComposicao(jogadorFicha), "", "com a composicao vazia, o bloco nao aparece");
-assert(context.playerComposicao({ ...jogadorFicha, kill_rating: 1.12 }).includes("Composição da rAAting 3.0"), "com um valor de composicao, o bloco aparece");
+assert(context.playerComposicao({ ...jogadorFicha, parte_abate: 0.12 }).includes("Composição da rAAting 3.1"), "com um valor de composicao, o bloco aparece");
 
 // A aba Partidas do jogador e uma lista so, com uma linha por mapa. Os numeros saem
 // das linhas de jogador de cada mapa da serie, que existem mesmo antes de carregar
@@ -760,7 +760,7 @@ assert(detalhes.includes('<b class="vp-rk-nota-final">99.9</b>'), "a nota do pai
 assert.strictEqual((estiloDoRanking.match(/^\.vp-rk-nota \{/gm) || []).length, 1, "so a nota da home define .vp-rk-nota");
 // Com "Detalhes da nota" ligado em tela estreita, os quatro blocos descem para
 // uma segunda linha, e cada numero precisa do proprio rotulo.
-for (const rotulo of ["Desempenho", "Conquistas", "Forma", "rAAting 3.0"]) {
+for (const rotulo of ["Desempenho", "Conquistas", "Forma", "rAAting 3.1"]) {
   assert(ler("app.js").includes(`<span class="numeric optional ranking-detail-cell" data-label="${rotulo}">`), `a celula de ${rotulo} leva o rotulo`);
 }
 assert(/@media \(max-width: 1180px\)\s*\{[^@]*data-details-visible="true"\][^{]*\.ranking-detail-cell::before/.test(estiloDoRanking), "o rotulo aparece na segunda linha em tela estreita");

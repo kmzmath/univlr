@@ -25429,6 +25429,7 @@ async function init() {
     const packed = window.DbCodec ? await loadDatabaseOrNull(DATABASE_MANIFEST) : null;
     if (packed) {
       state.db = window.DbCodec.decode(packed);
+      aplicarContextoDoRaating(state.db);
     } else {
       const [manifest, rawMetadata, rawTeamProfiles, rankingWeights] = await Promise.all([
         loadJson(SOURCE_MANIFEST),
@@ -25736,10 +25737,16 @@ function buildDatabase(events, loadedFiles, metadata, teamProfiles, rankingWeigh
     uniqueMatches.set(matchId, file);
   }
 
+  // rAAting 3.1: a nota mede a distancia ate a media do grupo deste build. Nada
+  // de media antiga durante a leitura; depois de ler todas as partidas, a media
+  // sai das contagens de todas as linhas, vai para o contexto (e para o banco) e
+  // as notas sao refeitas antes de qualquer agregado.
+  RaaRatingCore.setGroupCenter(null);
   const raatingContext = buildRaatingContext([...uniqueMatches.values()]);
   const ratingMetadata = { ...metadata, raatingContext };
   const matches = [...uniqueMatches.values()].map((file) => parseMatchFile(file, ratingMetadata)).filter(Boolean);
   matches.sort((a, b) => b.startedAt - a.startedAt);
+  raatingContext.centro = applyRaatingCenter(matches);
   const matchSeries = aggregateMatchSeries(matches);
 
   const teams = aggregateTeams(matches, ratingMetadata);
@@ -28042,6 +28049,25 @@ function deltaDeathPp(metadata, allies, enemies) {
 function applyRaatingFields(row) {
   const applied = RaaRatingCore.applyRatingFields(row);
   return applyRaatingAliases(applied);
+}
+
+// A media do grupo do build: as contagens de todas as linhas jogador x mapa,
+// divididas pela soma dos rounds. Liga a media no nucleo e refaz a nota de cada
+// linha com ela.
+function applyRaatingCenter(matches) {
+  const center = RaaRatingCore.groupCenter((matches || []).flatMap((match) => match.players || []));
+  RaaRatingCore.setGroupCenter(center);
+  for (const match of matches || []) {
+    for (const player of match.players || []) applyRaatingFields(player);
+  }
+  return center;
+}
+
+// O navegador (e o build_home) recalcula notas com a media que esta no banco.
+// Banco sem media (antigo, em cache): sem nota, para nunca sair uma nota com
+// outra media.
+function aplicarContextoDoRaating(db) {
+  RaaRatingCore.setGroupCenter(db?.metadata?.raatingContext?.centro || null);
 }
 
 function applyRaatingAliases(row) {

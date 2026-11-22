@@ -164,4 +164,47 @@ confereSwing(rodada({ round: defesaVence, eventos: [[10000, "a1", "a1"]] }), { a
 }
 confereSwing(rodada({ round: { winningTeam: "Blue", roundResult: "Round timer expired" }, eventos: [[10000, "a1", "d1"]], dano: { d1: { a1: 60, a2: 40 } } }), { a1: 27.5, a2: 22.5, d1: -25, d2: -25 }, "lado desconhecido");
 
+// ---------- media do grupo no build e no navegador ----------
+{
+  const linhasT2 = [
+    { rounds: 20, eKillPoints: 16, eDeathPoints: 14, eDamageTotal: 2400, eKastPoints: 14, adjustedRoundSwingTotalPp: 60, multiKillPoints: 5 },
+    { rounds: 24, eKillPoints: 12, eDeathPoints: 19, eDamageTotal: 2100, eKastPoints: 15, adjustedRoundSwingTotalPp: -80, multiKillPoints: 2 },
+    { rounds: 13, eKillPoints: 14, eDeathPoints: 6, eDamageTotal: 2300, eKastPoints: 11, adjustedRoundSwingTotalPp: 95, multiKillPoints: 6 },
+  ];
+  const partidas = () => linhasT2.map((linha, i) => ({ id: `m${i}`, players: [{ ...linha, puuid: `p${i}` }] }));
+  const mediaPesada = (ms) => {
+    const linhas = ms.flatMap((m) => m.players);
+    return linhas.reduce((s, l) => s + l.raating_3 * l.rounds, 0) / linhas.reduce((s, l) => s + l.rounds, 0);
+  };
+  const ms = partidas();
+  const centro = ctx.applyRaatingCenter(ms);
+  approx(mediaPesada(ms), 1, 1e-12, "media pesada das notas do build");
+  approx(ms[0].players[0].raating_3, 1.09041277777778, 1e-12, "nota refeita com a media");
+  assert.equal(JSON.stringify(ctx.RaaRatingCore.getGroupCenter()), JSON.stringify(centro), "o nucleo fica com a media do build");
+  // media velha nao vaza
+  ctx.RaaRatingCore.setGroupCenter({ abate: 9, sobrevivencia: 9, dano: 9, kast: 9, swing: 9, multikill: 9 });
+  const outra = partidas();
+  ctx.applyRaatingCenter(outra);
+  approx(mediaPesada(outra), 1, 1e-12, "media velha nao vaza");
+  // o banco leva a media; sem ela, nada de nota
+  ctx.aplicarContextoDoRaating({ metadata: { raatingContext: { centro } } });
+  assert.equal(JSON.stringify(ctx.RaaRatingCore.getGroupCenter()), JSON.stringify(centro), "o navegador le a media do banco");
+  ctx.aplicarContextoDoRaating({ metadata: {} });
+  assert.equal(ctx.RaaRatingCore.getGroupCenter(), null, "banco sem media: sem nota");
+  ctx.aplicarContextoDoRaating(null);
+  assert.equal(ctx.RaaRatingCore.getGroupCenter(), null, "sem banco: sem nota");
+}
+// a fonte do build: buildDatabase zera a media no comeco e grava a do build no contexto
+assert(/function buildDatabase\([^)]*\) \{[\s\S]*?RaaRatingCore\.setGroupCenter\(null\)[\s\S]*?raatingContext\.centro = applyRaatingCenter\(matches\)[\s\S]*?aggregateMatchSeries\(matches\)/.test(fonteDoApp), "buildDatabase: zera, calcula a media e so depois agrega");
+assert(/state\.db = window\.DbCodec\.decode\(packed\);[\s\S]{0,400}aplicarContextoDoRaating\(state\.db\)/.test(fonteDoApp), "init: le a media do banco");
+{
+  const home = fs.readFileSync(path.join(raiz, "scripts", "build_home.js"), "utf8");
+  assert(/codec\.decode\([^\n]*\);\s*\n\s*state\.db = db;[\s\S]{0,200}aplicarContextoDoRaating\(db\)/.test(home) || /aplicarContextoDoRaating\(db\)/.test(home), "build_home: le a media do banco");
+  const build = fs.readFileSync(path.join(raiz, "scripts", "build_database.js"), "utf8");
+  for (const parte of ["parte_abate", "parte_sobrevivencia", "parte_dano", "parte_kast", "parte_swing", "parte_multikill"]) assert(build.includes(`"${parte}"`), `DEAD_PLAYER_FIELDS poda ${parte}`);
+  for (const velho of ["rating_recon_proxy", "kill_rating", "rating_3_like"]) assert(!build.includes(`"${velho}"`), `DEAD_PLAYER_FIELDS sem ${velho}`);
+  const exportador = fs.readFileSync(path.join(raiz, "ferramentas", "riot", "export_site_match_stats.js"), "utf8");
+  assert(/applyRaatingCenter\(/.test(exportador) && /raatingCenter:/.test(exportador), "export_site_match_stats: liga a media das partidas do site e grava na saida");
+}
+
 console.log("rAAting 3.1 no round: testes passaram");

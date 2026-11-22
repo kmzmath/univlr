@@ -201,8 +201,13 @@ function main() {
   const matchFiles = [...uniqueMatches.values()];
   // O modelo economico faz parte do contexto global do site. Recalcula-lo so
   // com uma pasta/campeonato alteraria o mesmo jogador conforme o recorte.
-  const raatingContext = buildRaatingContext(canonicalSiteMatchFiles());
+  const canonicalFiles = canonicalSiteMatchFiles();
+  const raatingContext = buildRaatingContext(canonicalFiles);
   const ratingMetadata = { ...metadata, raatingContext };
+  // rAAting 3.1: a media do grupo tambem e a do site inteiro, a mesma do build.
+  RaaRatingCore.setGroupCenter(null);
+  const canonicalMatches = canonicalFiles.map((file) => parseMatchFile(file, ratingMetadata)).filter(Boolean);
+  raatingContext.centro = applyRaatingCenter(canonicalMatches);
   const matches = [];
   for (const file of matchFiles) {
     let match;
@@ -227,6 +232,7 @@ function main() {
     invalidFiles,
     duplicateFiles,
     ecoObservedKills: raatingContext.ecoObservedKills,
+    raatingCenter: raatingContext.centro,
     teamOrder: (metadata.teams || []).map((team) => team.id).filter(Boolean),
     matches: matches.map((match) => ({
       id: match.id,

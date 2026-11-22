@@ -128,6 +128,9 @@ function main() {
   const startedAt = Date.now();
   const db = codec.decode(JSON.parse(fs.readFileSync(path.join(ROOT, "database.json"), "utf8")));
   state.db = db;
+  // A media do grupo do rAAting 3.1 vem do banco, como no navegador: os lideres
+  // da semana recalculam a nota.
+  aplicarContextoDoRaating(db);
   // Nome composto das etapas e campeonatos (o mesmo do navegador). Só aqui e no
   // init(): o database.json continua com o nome de antes.
   aplicarCampeonatos(state.db);

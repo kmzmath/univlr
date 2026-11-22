@@ -146,11 +146,11 @@ function main() {
   // a um contra app.js, raating-core.js e ranking-core.js, inclusive contra o
   // acesso dinâmico por RAATING_AGGREGATE_FIELDS — nenhum aparece lá.
   // São ~100 mil instâncias: 3,2 MB crus, 0,7 MB no gzip.
+  // rAAting 3.1: as seis partes (parte_*) seguem a mesma regra - o navegador
+  // recalcula com a media do grupo gravada em metadata.raatingContext.
   const DEAD_PLAYER_FIELDS = [
-    "ekpr", "edpr", "eadr", "ekast",
-    "adjusted_swing_percent", "rating_3_like_unadjusted", "rating_recon_proxy", "rating_3_like",
-    "damage_rating", "multi_kill_rating", "kill_rating", "round_swing_rating",
-    "survival_rating", "kast_rating", "mk_per_r",
+    "ekpr", "edpr", "eadr", "ekast", "adjusted_swing_percent", "mk_per_r",
+    "parte_abate", "parte_sobrevivencia", "parte_dano", "parte_kast", "parte_swing", "parte_multikill",
   ];
   let strippedFields = 0;
   const stripDead = (player) => {

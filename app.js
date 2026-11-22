@@ -25805,11 +25805,101 @@ function buildRaatingContext(matchFiles) {
   }
   const ecoModel = RaaRatingCore.createEcoModel(killRows);
   return {
-    ratingVersion: "raa3",
+    ratingVersion: "raa3.1",
     ecoModel,
     ecoFallback: ecoModel.hasObservedEco ? "observed_kill_events" : "neutral_1.00",
     ecoObservedKills: killRows.length,
+    // A chance de o ataque vencer por (vivos do ataque, vivos da defesa, spike),
+    // medida nas partidas a cada build. Objeto simples: vai para o banco.
+    spikeTable: measureSpikeTable(matchFiles),
+    // A media do grupo precisa das contagens de todas as partidas: o buildDatabase
+    // preenche depois de ler todas (applyRaatingCenter).
+    centro: null,
   };
+}
+
+const SPIKE_DETONATION_MS = 45000;
+
+// Tabela de chance com spike do rAAting 3.1 (especificacao de 21/11/2026), pela
+// regra de scripts/estudos/medir_chance_spike.js: vivos no inicio = elenco do lado
+// na partida; abates deduplicados por tempo|quem matou|vitima; o plantio entra
+// antes de um abate no mesmo instante; nada conta depois do desarme, da explosao
+// (plantio + 45 s) ou da eliminacao; cada situacao conta uma vez por round; round
+// sem o papel do vencedor fica de fora. Chave "AvD" sem spike e "AvDb" com spike;
+// p = vitorias do ataque / rounds em que a situacao apareceu.
+function measureSpikeTable(matchFiles) {
+  const visitas = {};
+  const vitorias = {};
+  for (const file of matchFiles || []) {
+    const raw = file.raw || {};
+    const sideByPuuid = new Map();
+    const rosters = { Blue: new Set(), Red: new Set() };
+    for (const player of raw.players || []) {
+      if (player.isObserver || !["Blue", "Red"].includes(player.teamId) || !player.puuid) continue;
+      sideByPuuid.set(player.puuid, player.teamId);
+      rosters[player.teamId].add(player.puuid);
+    }
+    for (const round of officialRoundResults(raw)) {
+      const venc = round.winningTeam;
+      const papel = round.winningTeamRole;
+      if (!["Blue", "Red"].includes(venc) || !["Attacker", "Defender"].includes(papel)) continue;
+      const outro = venc === "Blue" ? "Red" : "Blue";
+      const ataque = papel === "Attacker" ? venc : outro;
+      const defesa = ataque === "Blue" ? "Red" : "Blue";
+      const ataqueVenceu = papel === "Attacker";
+
+      const eventos = [];
+      const vistos = new Set();
+      for (const row of round.playerStats || []) {
+        for (const kill of row.kills || []) {
+          const t = kill.timeSinceRoundStartMillis;
+          if (t === null || t === undefined) continue;
+          const victim = String(kill.victim || "");
+          if (!victim || !sideByPuuid.has(victim)) continue;
+          let killer = String(kill.killer || "");
+          if (!killer || !sideByPuuid.has(killer)) killer = "";
+          const chave = `${Number(t)}|${killer}|${victim}`;
+          if (vistos.has(chave)) continue;
+          vistos.add(chave);
+          eventos.push({ tipo: "morte", t: Number(t), victim });
+        }
+      }
+      const plantio = round.bombPlanter && Number.isFinite(Number(round.plantRoundTime)) ? Number(round.plantRoundTime) : null;
+      if (plantio !== null) eventos.push({ tipo: "plantio", t: plantio, ordem: -1 });
+      const fim = round.bombDefuser && Number.isFinite(Number(round.defuseRoundTime))
+        ? Number(round.defuseRoundTime)
+        : plantio !== null ? plantio + SPIKE_DETONATION_MS : Infinity;
+      eventos.sort((a, b) => a.t - b.t || (a.ordem ?? 0) - (b.ordem ?? 0));
+
+      const vivos = { Blue: new Set(rosters.Blue), Red: new Set(rosters.Red) };
+      let plantada = false;
+      const vistosNoRound = new Set();
+      const marcar = () => {
+        const a = vivos[ataque].size;
+        const d = vivos[defesa].size;
+        if (d > 0 && (a > 0 || plantada)) vistosNoRound.add(`${a}v${d}${plantada ? "b" : ""}`);
+      };
+      marcar();
+      for (const evento of eventos) {
+        if (evento.t > fim) break;
+        if (evento.tipo === "plantio") plantada = true;
+        else {
+          const lado = vivos.Blue.has(evento.victim) ? "Blue" : vivos.Red.has(evento.victim) ? "Red" : "";
+          if (!lado) continue;
+          vivos[lado].delete(evento.victim);
+        }
+        marcar();
+        if (vivos[defesa].size === 0 || (vivos[ataque].size === 0 && !plantada)) break;
+      }
+      for (const chave of vistosNoRound) {
+        visitas[chave] = (visitas[chave] || 0) + 1;
+        vitorias[chave] = (vitorias[chave] || 0) + (ataqueVenceu ? 1 : 0);
+      }
+    }
+  }
+  const tabela = {};
+  for (const chave of Object.keys(visitas).sort()) tabela[chave] = { n: visitas[chave], p: vitorias[chave] / visitas[chave] };
+  return tabela;
 }
 
 function applyTeamRankings(teams, matches, matchSeries, players, tournaments, rankingWeights) {
@@ -27810,6 +27900,18 @@ function stateWinRate(metadata, allies, enemies) {
   if (allies <= 0) return 0;
   if (enemies <= 0) return 1;
   return Number(metadata.stateWinratesByKey?.get(`${allies}v${enemies}`) ?? 0.5);
+}
+
+// Chance de o ataque vencer no rAAting 3.1: defesa sem vivos = 1; ataque sem
+// vivos e sem spike = 0; ataque sem vivos com spike usa a tabela (a defesa ainda
+// tem de desarmar). Celula que falta (elenco maior que 5, banco pequeno) cai na
+// tabela simetrica do metadata.
+function attackWinChance(metadata, ataque, defesa, plantada) {
+  if (defesa <= 0) return 1;
+  if (ataque <= 0 && !plantada) return 0;
+  const celula = metadata?.raatingContext?.spikeTable?.[`${ataque}v${defesa}${plantada ? "b" : ""}`];
+  if (!celula) return stateWinRate(metadata, ataque, defesa);
+  return celula.p;
 }
 
 function deltaKillPp(metadata, allies, enemies) {

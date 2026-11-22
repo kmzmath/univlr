@@ -247,7 +247,7 @@
           <div class="news-placar-nota">
             <a class="news-placar-jogador" href="#/players/${esc(jog?.routeSlug || jogador.nick)}">${escudo}${esc(jogador.nick)}</a>
             <span class="news-placar-valor">${num(jogador.raating_3 ?? jogador.rating, 2)}</span>
-            <span class="news-placar-rotulo">rAAting 3.0</span>
+            <span class="news-placar-rotulo">rAAting 3.1</span>
           </div>
           <div class="news-placar-grade">
             ${colunas.map(([r, v]) => `<div class="news-placar-item"><strong>${esc(v)}</strong><span>${esc(r)}</span></div>`).join("")}

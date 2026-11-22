@@ -207,4 +207,32 @@ assert(/state\.db = window\.DbCodec\.decode\(packed\);[\s\S]{0,400}aplicarContex
   assert(/applyRaatingCenter\(/.test(exportador) && /raatingCenter:/.test(exportador), "export_site_match_stats: liga a media das partidas do site e grava na saida");
 }
 
+// ---------- telas: nome 3.1 e as seis partes em pontos ----------
+{
+  const PARTES = [["Abate", "parte_abate"], ["Sobrevivência", "parte_sobrevivencia"], ["Dano", "parte_dano"], ["KAST", "parte_kast"], ["Swing", "parte_swing"], ["Multi-kill", "parte_multikill"]];
+  const copia = (x) => JSON.parse(JSON.stringify(x));
+  const defs = ctx.ratingComponentDefinitions();
+  assert.deepEqual(copia(defs.map((d) => d.key)), PARTES.map(([, campo]) => campo), "perfil: as seis partes, na ordem");
+  assert.deepEqual(copia(defs.map((d) => d.label)), PARTES.map(([rotulo]) => rotulo), "perfil: os nomes das partes");
+  const colunas = vm.runInContext("SCOREBOARD_ADVANCED_COLUMNS", ctx).filter((c) => c.grupo === "Partes do rAAting");
+  assert.deepEqual(copia(colunas.map((c) => c.key)), PARTES.map(([, campo]) => campo), "colunas: as seis partes");
+  assert.deepEqual(copia(colunas.map((c) => c.label)), PARTES.map(([rotulo]) => rotulo), "colunas: os nomes das partes");
+  assert.equal(colunas[0].format(0.12), ctx.signedDecimal(0.12, 2), "colunas: parte com sinal e duas casas");
+  const linha = { raating_3: 1.23, rating_version: "raa3.1", parte_abate: 0.12, parte_sobrevivencia: -0.03, parte_dano: 0.05, parte_kast: 0.01, parte_swing: 0.08, parte_multikill: 0 };
+  const dica = ctx.ratingBreakdownTooltip(linha);
+  assert(dica.startsWith(`rAAting 3.1: ${ctx.fmt(1.23)}`), "dica: nome e nota");
+  for (const [rotulo, campo] of PARTES) assert(dica.includes(`${rotulo}: ${ctx.signedDecimal(linha[campo], 2)}`), `dica: ${rotulo} com sinal`);
+  assert(ctx.ratingFormulaText().startsWith("rAAting 3.1 ="), "formula: nome novo");
+  // a versao vem antes do numero: linha do banco antigo em cache nao aparece com o nome novo
+  assert.equal(ctx.officialRatingValue({ raating_3: 1.3, rating_version: "raa3.1" }), 1.3);
+  assert(Number.isNaN(ctx.officialRatingValue({ raating_3: 1.3, rating_version: "raa3" })), "versao antiga nao aparece");
+  assert.equal(ctx.officialRatingValue({ raating_3: NaN, rating: 1.2, rating_version: "raa3.1" }), 1.2);
+  assert.equal(ctx.playerRating({ raating_3: NaN, rating: NaN }), "-", "sem nota, traco");
+  assert(!/rAAting 3\.0/.test(fonteDoApp), "nenhum rAAting 3.0 no app.js");
+  assert(!/rAAting 3\.0/.test(fs.readFileSync(path.join(raiz, "news.js"), "utf8")), "nenhum rAAting 3.0 no news.js");
+  assert(!/"raa3"/.test(fonteDoApp), "nenhuma versao raa3 no app.js");
+  assert(!/interquartil|0,30 e 1,80|desempenho mediano/.test(fonteDoApp), "o glossario descreve a 3.1, nao a regua da 3.0");
+  assert(/term: "rAAting 3\.1",\s*\n\s*short: "[^"]*média/.test(fonteDoApp), "o glossario fala da media do grupo");
+}
+
 console.log("rAAting 3.1 no round: testes passaram");

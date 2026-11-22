@@ -120,7 +120,7 @@ const PLAYER_OF_WEEK_INTERVAL_MS = 4500;
 const PLAYER_OF_WEEK_IDLE_RESUME_MS = 5000;
 const PLAYER_OF_WEEK_MIN_MAPS = 4;
 const PLAYER_OF_WEEK_CATEGORIES = [
-  { key: "rating", label: "Melhor rAAting 3.0", title: "Melhor jogador da semana", statLabel: "rAAting 3.0", value: (player) => officialRatingValue(player), format: (player) => playerRating(player) },
+  { key: "rating", label: "Melhor rAAting 3.1", title: "Melhor jogador da semana", statLabel: "rAAting 3.1", value: (player) => officialRatingValue(player), format: (player) => playerRating(player) },
   { key: "acs", label: "Melhor ACS", title: "Melhor média de combate", statLabel: "ACS", value: (player) => player.acs, format: (player) => fmt(player.acs, 0) },
   { key: "adr", label: "Melhor ADR", title: "Mais dano por round", statLabel: "ADR", value: (player) => player.adr, format: (player) => fmt(player.adr, 0) },
   { key: "kast", label: "Melhor KAST", title: "Mais participação em rounds", statLabel: "KAST", value: (player) => player.kast, format: (player) => pct(player.kast) },
@@ -28526,7 +28526,7 @@ function playerFromMetadata(player) {
     rating: 0,
     raating_1: 0,
     raating_3: 0,
-    rating_version: "raa3",
+    rating_version: "raa3.1",
     sample_status: "LOW",
     ...emptyRaatingAggregateFields(),
     firstKills: 0,
@@ -30351,9 +30351,9 @@ function sortedTeamsByName(teams) {
 const METRIC_GLOSSARY = [
   {
     key: "rating",
-    term: "rAAting 3.0",
-    short: "Nota geral do jogador. 1.00 é o desempenho mediano do cenário.",
-    long: "Nota geral do jogador no cenário universitário. 1.00 é o desempenho mediano: metade dos jogadores fica acima, metade abaixo. Cada 0,28 acima ou abaixo equivale a um intervalo interquartil de distância dessa mediana, e a escala é travada entre 0,30 e 1,80.",
+    term: "rAAting 3.1",
+    short: "Nota geral do jogador. 1,00 é a média de todos os jogadores do cenário.",
+    long: "Nota geral do jogador no cenário universitário, pela fórmula do Rating 3.0 da HLTV levada para o Valorant. 1,00 é a média de todos os jogadores. A nota soma seis partes (abate, sobrevivência, dano, KAST, swing e multi-kill), cada uma pela distância do jogador até essa média.",
   },
   { key: "acs", term: "ACS", short: "Pontuação de combate da partida dividida pelos rounds jogados.", long: "Average Combat Score: a pontuação de combate registrada na partida, dividida pelos rounds jogados." },
   { key: "adr", term: "ADR", short: "Dano causado por round jogado.", long: "Average Damage per Round: dano total causado dividido pelos rounds jogados." },
@@ -31263,7 +31263,7 @@ function comoANotaEFeita() {
     ["Desempenho", 70, `Vitórias, força dos adversários e margem de rounds. Um jogo perde metade do peso a cada ${meiaVida} dias.`],
     ["Conquistas", 15, `Pontos por colocação em campeonatos. Zeram em ${vida} meses.`],
     ["Forma recente", 10, `Desempenho nos últimos ${janela} dias.`],
-    ["rAAting 3.0 dos jogadores", 5, "rAAting 3.0 dos jogadores da formação."],
+    ["rAAting 3.1 dos jogadores", 5, "rAAting 3.1 dos jogadores da formação."],
   ];
   return `
     <section class="vp-resumo-bloco vp-nota-bloco" aria-label="Como a nota é feita">
@@ -31373,7 +31373,7 @@ function rankingAccordion(rows, scope = "valid", showDetails = false) {
         ${rankingSortHeader("competitive", "Desempenho", "numeric optional ranking-detail-cell")}
         ${rankingSortHeader("achievements", "Conquistas", "numeric optional ranking-detail-cell")}
         ${rankingSortHeader("recentForm", "Forma", "numeric optional ranking-detail-cell")}
-        ${rankingSortHeader("rosterStrength", "rAAting 3.0", "numeric optional ranking-detail-cell")}
+        ${rankingSortHeader("rosterStrength", "rAAting 3.1", "numeric optional ranking-detail-cell")}
         ${rankingSortHeader("status", "Status", "ranking-status-cell")}
         <span></span>
       </div>
@@ -31424,7 +31424,7 @@ function rankingAccordionItem(row) {
         <span class="numeric optional ranking-detail-cell" data-label="Desempenho">${fmt(blocks.competitive, 1)}</span>
         <span class="numeric optional ranking-detail-cell" data-label="Conquistas">${fmt(blocks.achievements, 1)}</span>
         <span class="numeric optional ranking-detail-cell" data-label="Forma">${fmt(blocks.recentForm, 1)}</span>
-        <span class="numeric optional ranking-detail-cell" data-label="rAAting 3.0">${fmt(blocks.rosterStrength, 1)}</span>
+        <span class="numeric optional ranking-detail-cell" data-label="rAAting 3.1">${fmt(blocks.rosterStrength, 1)}</span>
         <span class="ranking-status-cell">${rankingStatusChip(team, ranking)}</span>
         <span class="ranking-toggle-mark" aria-hidden="true">+</span>
       </button>
@@ -31599,7 +31599,7 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null, 
     ["Desempenho", blocks.competitive, 70, "Mede desempenho coletivo através dos resultados, qualidade dos adversários e dominância."],
     ["Conquistas", blocks.achievements, 15, "Soma os pontos de cada colocação em campeonatos encerrados; das classificatórias da UNIVAVÁ, conta só a de maior pontuação. Cada ponto perde valor em linha reta até zerar em 10 meses. A equipe com mais pontos vale 100, e as demais, a proporção dela."],
     ["Forma recente", blocks.recentForm, 10, "Desempenho em uma janela de 60 dias, meia-vida de 30 dias."],
-    ["rAAting 3.0 jogadores", blocks.rosterStrength, 5, "Usa o rAAting 3.0 individual da formação, com as partidas de cada jogador por qualquer equipe, mais a estabilidade do core e a profundidade."],
+    ["rAAting 3.1 jogadores", blocks.rosterStrength, 5, "Usa o rAAting 3.1 individual da formação, com as partidas de cada jogador por qualquer equipe, mais a estabilidade do core e a profundidade."],
   ];
   const fatia = (valor, peso) => Math.round(((rankingSafeScore(valor) * peso) / 100) * 100) / 100;
   const secao = (titulo, legenda, corpo, extra = "") => `<section class="vp-rk-secao${extra}"><h3>${escapeHtml(titulo)}<small>${escapeHtml(legenda)}</small></h3>${corpo}</section>`;
@@ -31620,13 +31620,13 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null, 
         )}
         ${secao("Modelos estatísticos", "leituras independentes", rankingModelGrid(ranking.models || {}))}
         ${secao(
-          "Momento e rAAting 3.0",
+          "Momento e rAAting 3.1",
           "forma recente e lineup",
           `<div class="vp-rk-dados">
             ${rankingDado("Partidas recentes", recent.matches ?? 0, "Quantidade de jogos na janela de 60 dias.", 0, 8)}
             ${rankingDado("Desempenho ajustado", recent.adjustedPerformance, "Resultado recente ajustado pela força do adversário e margem.")}
             ${rankingDado("Dominância recente", recent.dominance, "Controle de placar na janela recente.")}
-            ${rankingDado("rAAting individual", roster.individualRating, "rAAting 3.0 dos jogadores por esta equipe, ajustado pelo nível dos adversários.")}
+            ${rankingDado("rAAting individual", roster.individualRating, "rAAting 3.1 dos jogadores por esta equipe, ajustado pelo nível dos adversários.")}
             ${rankingDado("Estabilidade core", roster.coreStability, "Quanto do core atual aparece nos jogos recentes da equipe.")}
             ${rankingDado("Profundidade", roster.depth, "Quantidade de jogadores com volume suficiente pela equipe.")}
           </div>`,
@@ -31637,12 +31637,12 @@ function rankingExplanationPanel(team, rankingOverride = null, cutoffAt = null, 
   return `
     <div class="vp-rk-detalhes" style="--team-line:${teamLineColor(team.id)}">
       <div class="vp-rk-topo">
-        <div class="vp-rk-nota-bloco ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText("A nota final mistura desempenho coletivo, conquistas, momento recente e rAAting 3.0 dos jogadores. Todos os blocos já chegam normalizados em 0-100.")}">
+        <div class="vp-rk-nota-bloco ${rankingTooltipClass()}" tabindex="0" data-tooltip="${rankingTooltipText("A nota final mistura desempenho coletivo, conquistas, momento recente e rAAting 3.1 dos jogadores. Todos os blocos já chegam normalizados em 0-100.")}">
           <b class="vp-rk-nota-final">${fmt(score, 1)}</b>
           <small>nota final</small>
         </div>
         <div class="vp-rk-formula">
-          <p>70% desempenho, 15% conquistas, 10% forma recente e 5% rAAting 3.0 dos jogadores.</p>
+          <p>70% desempenho, 15% conquistas, 10% forma recente e 5% rAAting 3.1 dos jogadores.</p>
           <div class="vp-rk-soma" aria-hidden="true">${partes.map(([label, valor, peso]) => `<i style="--w:${fatia(valor, peso)}%" title="${escapeHtml(`${label}: ${fmt(fatia(valor, peso), 1)}`)}"></i>`).join("")}</div>
           <div class="vp-rk-soma-legenda">${partes.map(([label, valor, peso]) => `<span><i></i>${escapeHtml(label)} <b>${fmt(fatia(valor, peso), 1)}</b></span>`).join("")}</div>
         </div>
@@ -32534,8 +32534,8 @@ const SCOREBOARD_STANDARD_COLUMNS = [
   {
     key: "rating",
     col: "rating",
-    label: "rAAting 3.0",
-    summaryLabel: "rAAting 3.0",
+    label: "rAAting 3.1",
+    summaryLabel: "rAAting 3.1",
     summaryTitle: "rAAting média dos jogadores, ponderada por rounds.",
     headingClass: "rating-heading",
     aggregate: "weighted",
@@ -32563,12 +32563,12 @@ const SCOREBOARD_STANDARD_COLUMNS = [
 
 const SCOREBOARD_ADVANCED_COLUMNS = [
   SCOREBOARD_STANDARD_COLUMNS[0],
-  { key: "kill_rating", col: "kill-rating", label: "KillRating", short: "Kill", grupo: "Componentes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "kill_rating"), format: (value) => formatScoreboardNumber(value) },
-  { key: "damage_rating", col: "damage-rating", label: "DamageRating", short: "Dano", grupo: "Componentes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "damage_rating"), format: (value) => formatScoreboardNumber(value) },
-  { key: "round_swing_rating", col: "round-swing-rating", label: "RoundSwingRating", short: "Swing", grupo: "Componentes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "round_swing_rating"), format: (value) => formatScoreboardNumber(value) },
-  { key: "survival_rating", col: "survival-rating", label: "SurvivalRating", short: "Sobrev.", grupo: "Componentes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "survival_rating"), format: (value) => formatScoreboardNumber(value) },
-  { key: "kast_rating", col: "kast-rating", label: "KASTRating", short: "KAST", grupo: "Componentes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "kast_rating"), format: (value) => formatScoreboardNumber(value) },
-  { key: "multi_kill_rating", col: "multi-kill-rating", label: "MultiKillRating", short: "Multi", grupo: "Componentes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "multi_kill_rating"), format: (value) => formatScoreboardNumber(value) },
+  { key: "parte_abate", col: "kill-rating", label: "Abate", short: "Abate", grupo: "Partes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "parte_abate"), format: (value) => formatRatingPart(value) },
+  { key: "parte_sobrevivencia", col: "survival-rating", label: "Sobrevivência", short: "Sobrev.", grupo: "Partes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "parte_sobrevivencia"), format: (value) => formatRatingPart(value) },
+  { key: "parte_dano", col: "damage-rating", label: "Dano", short: "Dano", grupo: "Partes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "parte_dano"), format: (value) => formatRatingPart(value) },
+  { key: "parte_kast", col: "kast-rating", label: "KAST", short: "KAST", grupo: "Partes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "parte_kast"), format: (value) => formatRatingPart(value) },
+  { key: "parte_swing", col: "round-swing-rating", label: "Swing", short: "Swing", grupo: "Partes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "parte_swing"), format: (value) => formatRatingPart(value) },
+  { key: "parte_multikill", col: "multi-kill-rating", label: "Multi-kill", short: "Multi", grupo: "Partes do rAAting", aggregate: "weighted", value: (player) => metricValue(player, "parte_multikill"), format: (value) => formatRatingPart(value) },
   { key: "ekpr", col: "ekpr", label: "eKPR", grupo: "Ajustado por economia", aggregate: "weighted", value: (player) => metricValue(player, "ekpr"), format: (value) => formatScoreboardNumber(value) },
   { key: "edpr", col: "edpr", label: "eDPR", grupo: "Ajustado por economia", aggregate: "weighted", value: (player) => metricValue(player, "edpr"), format: (value) => formatScoreboardNumber(value) },
   { key: "eadr", col: "eadr", label: "eADR", grupo: "Ajustado por economia", aggregate: "weighted", value: (player) => metricValue(player, "eadr"), format: (value) => formatScoreboardNumber(value, 0) },
@@ -32898,7 +32898,7 @@ function lineupMetricLevel(value, scale) {
 
 function lineupStatRows() {
   return [
-    { key: "rating", label: "rAAting 3.0", value: (player) => officialRatingValue(player) || 0, format: (value, player) => playerRating(player) },
+    { key: "rating", label: "rAAting 3.1", value: (player) => officialRatingValue(player) || 0, format: (value, player) => playerRating(player) },
     { key: "acs", label: "ACS", value: (player) => player.acs || 0, format: (value) => fmt(value, 0) },
     { key: "kd", label: "K/D", value: (player) => player.kd || 0, format: (value) => fmt(value) },
     { key: "kast", label: "KAST", value: (player) => player.kast || 0, format: (value) => pct(value) },
@@ -33131,7 +33131,7 @@ function matchMvpCard(player, mapCount) {
         rotulo: mapCount > 1 ? "Melhor da série" : "Melhor do mapa",
         tag,
         valor: playerRating(player),
-        apoio: `rAAting 3.0, ${player.rounds || 0} rounds`,
+        apoio: `rAAting 3.1, ${player.rounds || 0} rounds`,
       })}
       <div class="vp-mvp-stats"><span><small>ACS</small><b>${escapeHtml(fmt(player.acs, 0))}</b></span><span><small>KAST</small><b>${escapeHtml(pct(player.kast))}</b></span><span><small>ADR</small><b>${escapeHtml(fmt(player.adr, 0))}</b></span><span><small>Swing/R</small><b>${escapeHtml(`${signedDecimal(playerSwingPerRound(player))} pp`)}</b></span></div>
     </section>
@@ -33190,11 +33190,19 @@ function metricValue(row, key, fallbackKey = "") {
   return NaN;
 }
 
+// A versao vem antes do numero: uma linha de outra versao (banco antigo em
+// cache) nao aparece com o nome do rAAting 3.1.
 function officialRatingValue(player) {
+  if (player?.rating_version && player.rating_version !== "raa3.1") return NaN;
   const primary = metricValue(player, "raating_3");
   if (Number.isFinite(primary)) return primary;
-  if (player?.rating_version && player.rating_version !== "raa3") return NaN;
   return metricValue(player, "rating");
+}
+
+// Uma parte do rAAting 3.1 (beta x distancia ate a media do grupo), em pontos com sinal.
+function formatRatingPart(value) {
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? signedDecimal(numeric, 2) : "-";
 }
 
 function playerSwingPerRound(player) {
@@ -33231,28 +33239,15 @@ function sampleStatusChip(player) {
 }
 
 function ratingFormulaText(separator = "\n") {
-  return [
-    "rAAting 3.0 =",
-    "25% Kills",
-    "+ 15% Dano",
-    "+ 4% Multi-kills",
-    "+ 33% Round Swing",
-    "+ 15% Sobrevivência",
-    "+ 8% KAST",
-  ].join(separator);
+  return ["rAAting 3.1 =", "1", ...ratingComponentDefinitions().map(({ label }) => `+ ${label}`)].join(separator);
 }
 
 function ratingBreakdownTooltip(player) {
   return [
-    `rAAting 3.0: ${playerRating(player)}`,
+    `rAAting 3.1: ${playerRating(player)}`,
     "",
-    "Composição:",
-    `KillRating: ${formatMaybeMetric(player, "kill_rating")}`,
-    `DamageRating: ${formatMaybeMetric(player, "damage_rating")}`,
-    `RoundSwingRating: ${formatMaybeMetric(player, "round_swing_rating")}`,
-    `SurvivalRating: ${formatMaybeMetric(player, "survival_rating")}`,
-    `KASTRating: ${formatMaybeMetric(player, "kast_rating")}`,
-    `MultiKillRating: ${formatMaybeMetric(player, "multi_kill_rating")}`,
+    "Partes:",
+    ...ratingComponentDefinitions().map(({ key, label }) => `${label}: ${formatRatingPart(metricValue(player, key))}`),
     "",
     ratingFormulaText("\n"),
   ].join("\n");
@@ -36972,7 +36967,7 @@ function tournamentAgentStatColumns() {
     { key: "uniquePlayers", label: "Jogadores", value: (row) => Number(row.uniquePlayers || 0) },
     { key: "uniqueTeams", label: "Equipes", value: (row) => Number(row.uniqueTeams || 0) },
     { key: "uniqueMaps", label: "Mapas", value: (row) => Number(row.uniqueMaps || 0) },
-    { key: "rating", label: "rAAting 3.0", value: (row) => Number(row.rating || 0) },
+    { key: "rating", label: "rAAting 3.1", value: (row) => Number(row.rating || 0) },
     { key: "acs", label: "ACS", value: (row) => Number(row.acs || 0) },
     { key: "kd", label: "K:D", value: (row) => Number(row.kd || 0) },
     { key: "kast", label: "KAST", value: (row) => Number(row.kast || 0) },
@@ -37187,7 +37182,7 @@ function tournamentCompositionStatColumns() {
     { key: "roundDiff", label: "+/-", value: (row) => Number(row.roundDiff || 0) },
     { key: "uniqueTeams", label: "Equipes", value: (row) => Number(row.uniqueTeams || 0) },
     { key: "uniqueMaps", label: "Mapas únicos", value: (row) => Number(row.uniqueMaps || 0) },
-    { key: "rating", label: "rAAting 3.0", value: (row) => Number(row.rating || 0) },
+    { key: "rating", label: "rAAting 3.1", value: (row) => Number(row.rating || 0) },
     { key: "acs", label: "ACS", value: (row) => Number(row.acs || 0) },
     { key: "kd", label: "K:D", value: (row) => Number(row.kd || 0) },
     { key: "kast", label: "KAST", value: (row) => Number(row.kast || 0) },
@@ -40190,7 +40185,7 @@ function playerCapa(player, team, cor, trophies) {
           <span class="vp-cj-acoes">${equipe}${window.Favorites ? window.Favorites.botao("player", playerRouteId(player.id)) : ""}</span>
         </div>
         <dl class="vp-cj-numeros">
-          <div class="vp-cj-nota"><dd>${escapeHtml(playerRating(player))}</dd><dt>rAAting 3.0</dt></div>
+          <div class="vp-cj-nota"><dd>${escapeHtml(playerRating(player))}</dd><dt>rAAting 3.1</dt></div>
           ${numeros.map(([valor, rotulo]) => `<div><dd>${escapeHtml(valor)}</dd><dt>${escapeHtml(rotulo)}</dt></div>`).join("")}
         </dl>
       </div>
@@ -40373,7 +40368,7 @@ function playerInformacoes(player, { matches, jogos, teamRows, tournamentRows, t
 }
 
 // Os numeros do jogador: os seis principais em destaque e o resto em tabelas por
-// assunto, nas linhas de Informacoes. As metricas da rAAting 3.0 entram so quando
+// assunto, nas linhas de Informacoes. As metricas da rAAting 3.1 entram so quando
 // existe valor: quem so tem partida antiga fica sem a coluna.
 function fichaJogador(player) {
   const rounds = Number(player.rounds || 0);
@@ -40382,7 +40377,7 @@ function fichaJogador(player) {
   const swing = playerSwingPerRound(player);
   const tom = (valor) => (valor > 0 ? "vp-bom" : valor < 0 ? "vp-ruim" : "");
   const destaque = [
-    ["rAAting 3.0", playerRating(player)],
+    ["rAAting 3.1", playerRating(player)],
     ["K/D", fmt(player.kd)],
     ["ACS", fmt(player.acs, 0)],
     ["ADR", fmt(player.adr, 0)],
@@ -40410,7 +40405,7 @@ function fichaJogador(player) {
       ["Saves em derrota", formatMaybeMetric(player, "savedLossRounds", 0)],
       ["Sobrev. em vitória", formatMaybeMetric(player, "survivedWinRounds", 0), "", "Sobrevivências em rounds vencidos."],
     ]],
-    metricas.some(([, valor]) => valor !== "-") ? ["Métricas rAAting 3.0", metricas] : null,
+    metricas.some(([, valor]) => valor !== "-") ? ["Métricas rAAting 3.1", metricas] : null,
   ].filter(Boolean);
   const valor = (classe, texto) => `<dd${classe ? ` class="${classe}"` : ""}>${escapeHtml(String(texto))}</dd>`;
   return `
@@ -40476,12 +40471,12 @@ function porMapaPlaca(player) {
 
 function ratingComponentDefinitions() {
   return [
-    { key: "kill_rating", label: "KillRating", description: "Produção de kills ajustada por economia e contexto." },
-    { key: "damage_rating", label: "DamageRating", description: "Dano efetivo ajustado por economia." },
-    { key: "round_swing_rating", label: "RoundSwingRating", description: "Impacto médio do jogador na chance de vitória dos rounds." },
-    { key: "survival_rating", label: "SurvivalRating", description: "Qualidade de sobrevivência e mortes, incluindo trades, opening deaths e saves em derrota." },
-    { key: "kast_rating", label: "KASTRating", description: "Participação útil em rounds: kill, assistência, sobrevivência em round vencido ou morte tradada." },
-    { key: "multi_kill_rating", label: "MultiKillRating", description: "Explosividade em rounds com 2K, 3K, 4K ou 5K." },
+    { key: "parte_abate", label: "Abate", description: "Abates por round, ajustados pela economia do duelo, contra a média do grupo." },
+    { key: "parte_sobrevivencia", label: "Sobrevivência", description: "Rounds sem morrer, com as mortes ajustadas pela economia, contra a média do grupo." },
+    { key: "parte_dano", label: "Dano", description: "Dano por round, ajustado pela economia, contra a média do grupo." },
+    { key: "parte_kast", label: "KAST", description: "Rounds com abate, assistência, sobrevivência em vitória ou morte trocada, contra a média do grupo." },
+    { key: "parte_swing", label: "Swing", description: "Quanto o jogador mudou a chance de vitória dos rounds, contra a média do grupo." },
+    { key: "parte_multikill", label: "Multi-kill", description: "Rounds com dois ou mais abates, contra a média do grupo." },
   ];
 }
 
@@ -41054,7 +41049,7 @@ function playerEstFiltros(jogos, matches, filtro, funcoes = []) {
   `;
 }
 
-// A nota de 1,00 fica no meio da barra: para a direita o que puxa a rAAting para cima.
+// A parte 0 (a média do grupo) fica no meio da barra: para a direita o que puxa a rAAting para cima.
 function playerComposicao(soma) {
   const linhas = ratingComponentDefinitions()
     .map((item) => ({ ...item, nota: metricValue(soma, item.key) }))
@@ -41062,13 +41057,13 @@ function playerComposicao(soma) {
   if (!linhas.length) return "";
   return `
     <section class="vp-resumo-bloco">
-      <h3>Composição da rAAting 3.0</h3>
+      <h3>Composição da rAAting 3.1</h3>
       <div class="vp-cm">
         ${linhas.map(({ label, description, nota }) => `
           <div class="vp-cm-linha" title="${escapeHtml(description)}">
-            <span>${escapeHtml(label.replace("Rating", ""))}</span>
-            <i class="${nota >= 1 ? "vp-cm-mais" : "vp-cm-menos"}" style="--v:${fmt(clamp(Math.abs(nota - 1) * 2, 0, 1) * 50, 1)}%"></i>
-            <b>${escapeHtml(fmt(nota))}</b>
+            <span>${escapeHtml(label)}</span>
+            <i class="${nota >= 0 ? "vp-cm-mais" : "vp-cm-menos"}" style="--v:${fmt(clamp(Math.abs(nota) * 2.5, 0, 1) * 50, 1)}%"></i>
+            <b>${escapeHtml(formatRatingPart(nota))}</b>
           </div>
         `).join("")}
       </div>
@@ -45960,7 +45955,7 @@ function playerTable(players) {
   return `
     <div class="table-wrap">
       <table>
-        <thead><tr><th class="numeric">#</th><th>Jogador</th><th>Equipe</th><th class="numeric">rAAting 3.0</th><th class="numeric">Rounds</th><th class="numeric">Mapas</th><th class="numeric">ACS</th><th class="numeric">K/D</th><th class="numeric">ADR</th><th class="numeric">KAST</th><th class="numeric">Swing/R</th><th class="numeric">FK-FD</th></tr></thead>
+        <thead><tr><th class="numeric">#</th><th>Jogador</th><th>Equipe</th><th class="numeric">rAAting 3.1</th><th class="numeric">Rounds</th><th class="numeric">Mapas</th><th class="numeric">ACS</th><th class="numeric">K/D</th><th class="numeric">ADR</th><th class="numeric">KAST</th><th class="numeric">Swing/R</th><th class="numeric">FK-FD</th></tr></thead>
         <tbody>${players.map((player, index) => {
           const team = teamById(player.teamId);
           const fkFdDiff = Number(player.firstKills || 0) - Number(player.firstDeaths || 0);

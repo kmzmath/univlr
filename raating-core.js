@@ -180,8 +180,11 @@
     return `${attackerBucket || ""}|${victimBucket || ""}`;
   }
 
+  // rAAting 3.1: a reta que passa pelos dois exemplos oficiais da HLTV, sem o
+  // limite de 0,35 a 1,75 (nunca atuava no univlr) e sem dividir pela media
+  // (ajuste sem fonte). p e a chance de quem matou vencer o duelo, medida por faixa.
   function rawEcoMultiplier(pDuel) {
-    return clamp(2.095 - 2.074 * finiteNumber(pDuel, 0.5), 0.35, 1.75);
+    return 2.095 - 2.074 * finiteNumber(pDuel, 0.5);
   }
 
   function createEcoModel(killRows = []) {
@@ -209,21 +212,16 @@
       }
     }
 
+    // meanRaw fica so como diagnostico (a media crua dos abates observados).
     const meanRaw =
       observed.reduce((sum, row) => sum + finiteNumber(rawByKey.get(ecoPairKey(row.attackerBucket, row.victimBucket)), 1), 0) /
       observed.length;
-    const normalizer = meanRaw > 0 ? meanRaw : 1;
-    const multipliers = new Map([...rawByKey.entries()].map(([key, value]) => [key, value / normalizer]));
-    return { counts, multipliers, meanRaw: normalizer, hasObservedEco: true };
+    return { counts, multipliers: rawByKey, meanRaw, hasObservedEco: true };
   }
 
   function ecoMultiplier(model, attackerBucket, victimBucket) {
     if (!model?.hasObservedEco || !attackerBucket || !victimBucket) return 1;
     return finiteNumber(model.multipliers?.get(ecoPairKey(attackerBucket, victimBucket)), 1);
-  }
-
-  function reducedEcoMultiplier(multiplier, strength) {
-    return 1 + finiteNumber(strength, 1) * (finiteNumber(multiplier, 1) - 1);
   }
 
   return {
@@ -248,6 +246,5 @@
     ecoBucket,
     createEcoModel,
     ecoMultiplier,
-    reducedEcoMultiplier,
   };
 });

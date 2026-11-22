@@ -207,6 +207,11 @@ const ARMOR_EXTRA_HP = {
   "": 0,
   "4DEC83D5-4902-9AB3-BED6-A7A390761157": 25,
   "822BCAB2-40A2-324E-C137-E09195AD7692": 50,
+  // Regen Shield (650 creditos, 25 de escudo ativo que absorve 100% e regenera de
+  // uma reserva de 50): quem usa absorve de 125 a 175 no round. A Riot da o dano
+  // somado por round, sem hora, e a regeneracao nao aparece nos dados; o meio
+  // minimiza o pior erro. Origem: escolha (rAAting 3.1, 21/11/2026).
+  "B1B9086D-41BD-A516-5D29-E3B34A6F1644": 50,
 };
 
 const WEAPON_NAMES = {
@@ -27607,7 +27612,8 @@ function applyEffectiveDamage(damageByVictim, armorExtraByPuuid, events, stats, 
     for (const [attacker, damage] of effective.entries()) {
       if (damage > 0 && stats.has(attacker)) {
         const ecoMultiplier = RaaRatingCore.ecoMultiplier(ecoModel, ecoBucketByPuuid?.get(attacker), ecoBucketByPuuid?.get(victim));
-        const adjustedDamage = damage * RaaRatingCore.reducedEcoMultiplier(ecoMultiplier, 0.5);
+        // rAAting 3.1: o dano usa o multiplicador inteiro (a HLTV ajusta o dano pelo duelo).
+        const adjustedDamage = damage * ecoMultiplier;
         stats.get(attacker).damage += damage;
         stats.get(attacker).eDamageTotal += adjustedDamage;
       }
@@ -27698,12 +27704,6 @@ function applyKastStats(events, participants, killsCountRound, assistantSet, vic
   const tradeKillEvents = new Set();
   const tradedDeaths = new Set();
   const failedTradeDeaths = new Set();
-  const kastEcoMultipliers = new Map();
-  const addKastMultiplier = (puuid, multiplier) => {
-    if (!puuid || !stats.has(puuid)) return;
-    if (!kastEcoMultipliers.has(puuid)) kastEcoMultipliers.set(puuid, []);
-    kastEcoMultipliers.get(puuid).push(RaaRatingCore.reducedEcoMultiplier(multiplier, 0.35));
-  };
 
   for (const event of events) {
     if (!event.victim) continue;
@@ -27711,8 +27711,6 @@ function applyKastStats(events, participants, killsCountRound, assistantSet, vic
     deathsByVictim.get(event.victim).push(event);
     const current = deathTimeByVictim.get(event.victim);
     if (current === undefined || event.time < current) deathTimeByVictim.set(event.victim, event.time);
-    if (event.killer) addKastMultiplier(event.killer, event.ecoMultiplier);
-    for (const assistant of event.assistants || []) addKastMultiplier(assistant, event.ecoMultiplier);
   }
 
   for (const [victim, deaths] of deathsByVictim.entries()) {
@@ -27740,7 +27738,6 @@ function applyKastStats(events, participants, killsCountRound, assistantSet, vic
 
       if (tradedBy) {
         tradedDeaths.add(victim);
-        addKastMultiplier(victim, death.ecoMultiplier);
         if (stats.has(victim)) stats.get(victim).tradedDeaths += 1;
         if (stats.has(tradedBy)) stats.get(tradedBy).tradeKills += 1;
       } else if (teamHasAliveMateAfter(victim, victimSide, death.time, participants, sideByPuuid, deathTimeByVictim)) {
@@ -27777,16 +27774,14 @@ function applyKastStats(events, participants, killsCountRound, assistantSet, vic
     const survivedWinCond = survivedCond && side === winningTeam;
     const savedLossCond = survivedCond && ["Blue", "Red"].includes(winningTeam) && side !== winningTeam;
     const tradedCond = tradedDeaths.has(puuid);
-    if (survivedWinCond) {
-      stats.get(puuid).survivedWinRounds += 1;
-      addKastMultiplier(puuid, 1);
-    }
+    if (survivedWinCond) stats.get(puuid).survivedWinRounds += 1;
     if (savedLossCond) stats.get(puuid).savedLossRounds += 1;
     if (killCond || assistCond || survivedCond || tradedCond) stats.get(puuid).kastLegacyRounds += 1;
     if (killCond || assistCond || survivedWinCond || tradedCond) {
       stats.get(puuid).kastRounds += 1;
-      const multipliers = kastEcoMultipliers.get(puuid) || [];
-      stats.get(puuid).eKastPoints += multipliers.length ? Math.max(...multipliers) : 1;
+      // rAAting 3.1: o KAST da nota nao tem ajuste de economia (lacuna: a HLTV
+      // ajusta pela chance da acao, sem publicar os numeros).
+      stats.get(puuid).eKastPoints += 1;
     }
   }
 }

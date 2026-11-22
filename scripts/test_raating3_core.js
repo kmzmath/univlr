@@ -81,18 +81,14 @@ assert(mais(30) > 1.8, "sem teto");
 const baixa = C.calculateRaating3({ rounds: 60, eKillPoints: 0, eDeathPoints: 500, eDamageTotal: 0, eKastPoints: 0, adjustedRoundSwingTotalPp: -2000, multiKillPoints: 0 });
 assert(baixa.raating_3 < 0, "sem piso, a nota muito baixa fica negativa");
 
-const model = RaaRatingCore.createEcoModel([
-  { attackerBucket: "$0-$1000", victimBucket: "$4700+" },
-  { attackerBucket: "$4700+", victimBucket: "$0-$1000" },
-  { attackerBucket: "$4700+", victimBucket: "$0-$1000" },
-  { attackerBucket: "$3550-$4700", victimBucket: "$3550-$4700" },
-]);
-const observedMean = [
-  RaaRatingCore.ecoMultiplier(model, "$0-$1000", "$4700+"),
-  RaaRatingCore.ecoMultiplier(model, "$4700+", "$0-$1000"),
-  RaaRatingCore.ecoMultiplier(model, "$4700+", "$0-$1000"),
-  RaaRatingCore.ecoMultiplier(model, "$3550-$4700", "$3550-$4700"),
-].reduce((sum, value) => sum + value, 0) / 4;
-approx(observedMean, 1, 1e-12);
+// Economia sem ajustes sem fonte (especificacao de 21/11/2026): o multiplicador e
+// 2,095 - 2,074 * p, sem dividir pela media e sem o limite de 0,35 a 1,75.
+// 1 abate do par A|B e 9 do B|A: p(A|B) = 0,1 e p(B|A) = 0,9.
+const linhasEco = [{ attackerBucket: "$0-$1000", victimBucket: "$4700+" }, ...Array(9).fill({ attackerBucket: "$4700+", victimBucket: "$0-$1000" })];
+const modelo = RaaRatingCore.createEcoModel(linhasEco);
+approx(RaaRatingCore.ecoMultiplier(modelo, "$0-$1000", "$4700+"), 1.8876, 1e-12); // a 3.0 parava em 1,75
+approx(RaaRatingCore.ecoMultiplier(modelo, "$4700+", "$0-$1000"), 0.2284, 1e-12); // a 3.0 parava em 0,35
+approx(RaaRatingCore.ecoMultiplier(modelo, "$1700-$2700", "$1700-$2700"), 1.058, 1e-12); // par sem abate: p = 0,5
+assert.equal(RaaRatingCore.ecoMultiplier(RaaRatingCore.createEcoModel([]), "$0-$1000", "$4700+"), 1, "sem abates, multiplicador neutro");
 
 console.log("rAAting 3.1 core tests passed");

@@ -235,4 +235,22 @@ assert(/state\.db = window\.DbCodec\.decode\(packed\);[\s\S]{0,400}aplicarContex
   assert(/term: "rAAting 3\.1",\s*\n\s*short: "[^"]*média/.test(fonteDoApp), "o glossario fala da media do grupo");
 }
 
+// ---------- partes recalculadas no navegador quando o banco nao as guarda ----------
+{
+  const linha = { rounds: 20, eKillPoints: 16, eDeathPoints: 14, eDamageTotal: 2400, eKastPoints: 14, adjustedRoundSwingTotalPp: 60, multiKillPoints: 5, rating_version: "raa3.1", raating_3: 1.09 };
+  const centro = ctx.RaaRatingCore.groupCenter([linha, { rounds: 24, eKillPoints: 12, eDeathPoints: 19, eDamageTotal: 2100, eKastPoints: 15, adjustedRoundSwingTotalPp: -80, multiKillPoints: 2 }]);
+  ctx.RaaRatingCore.setGroupCenter(centro);
+  const esperado = ctx.RaaRatingCore.calculateRaating3(linha);
+  for (const parte of ["parte_abate", "parte_sobrevivencia", "parte_dano", "parte_kast", "parte_swing", "parte_multikill"]) {
+    approx(ctx.metricValue(linha, parte), esperado[parte], 1e-15, `placar: ${parte} recalculada`);
+  }
+  assert(Number.isNaN(ctx.metricValue({ ...linha, rating_version: "raa3" }, "parte_abate")), "linha de outra versao: sem parte");
+  assert(Number.isNaN(ctx.metricValue({ ...linha, rounds: 0 }, "parte_abate")), "sem rounds: sem parte");
+  const { raating_3: _semNota, rating_version: _semVersao, ...semNota } = linha;
+  assert(Number.isNaN(ctx.metricValue(semNota, "parte_abate")), "linha sem nota propria (ficha de perfil sem 3.1): sem parte");
+  ctx.RaaRatingCore.setGroupCenter(null);
+  assert(Number.isNaN(ctx.metricValue(linha, "parte_abate")), "sem media do grupo: sem parte");
+  assert(Number.isNaN(ctx.metricValue(linha, "ekpr")), "so as partes sao recalculadas");
+}
+
 console.log("rAAting 3.1 no round: testes passaram");

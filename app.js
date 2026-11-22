@@ -33187,6 +33187,13 @@ function metricValue(row, key, fallbackKey = "") {
     const fallback = Number(row?.[fallbackKey]);
     if (Number.isFinite(fallback)) return fallback;
   }
+  // As partes do rAAting 3.1 nao ficam no banco (o build poda as das linhas de
+  // partida): a tela recalcula pelas contagens, com a media do grupo do banco. So
+  // em linha com nota 3.1 propria, para a parte sempre acompanhar a nota mostrada.
+  if (String(key).startsWith("parte_") && Number(row?.rounds) > 0 && row.rating_version === "raa3.1" && Number.isFinite(Number(row.raating_3))) {
+    const value = Number(RaaRatingCore.calculateRaating3(row)[key]);
+    if (Number.isFinite(value)) return value;
+  }
   return NaN;
 }
 

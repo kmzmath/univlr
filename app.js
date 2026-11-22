@@ -26676,8 +26676,15 @@ function parseMatchFile(file, metadata) {
     sideSummary: matchSideSummary(roundResults),
     players,
     teamStats,
-    mvp: players.slice().sort((a, b) => Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0))[0],
+    mvp: matchMapMvp(players),
   };
+}
+
+// O melhor da partida: o maior rAAting do mapa (empate fica com quem vem antes).
+// No build, a leitura acontece antes da media do grupo; applyRaatingCenter escolhe
+// de novo depois de refazer as notas.
+function matchMapMvp(players) {
+  return players.slice().sort((a, b) => Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0))[0];
 }
 
 function matchSideSummary(roundResults) {
@@ -28059,6 +28066,8 @@ function applyRaatingCenter(matches) {
   RaaRatingCore.setGroupCenter(center);
   for (const match of matches || []) {
     for (const player of match.players || []) applyRaatingFields(player);
+    // o MVP do mapa depende da nota: escolhido de novo, ja com a media
+    if (match.players?.length) match.mvp = matchMapMvp(match.players);
   }
   return center;
 }
@@ -30352,8 +30361,8 @@ const METRIC_GLOSSARY = [
   {
     key: "rating",
     term: "rAAting 3.1",
-    short: "Nota geral do jogador. 1,00 é a média de todos os jogadores do cenário.",
-    long: "Nota geral do jogador no cenário universitário, pela fórmula do Rating 3.0 da HLTV levada para o Valorant. 1,00 é a média de todos os jogadores. A nota soma seis partes (abate, sobrevivência, dano, KAST, swing e multi-kill), cada uma pela distância do jogador até essa média.",
+    short: "Nota geral do jogador. 1.00 é a média de todos os rounds jogados no cenário.",
+    long: "Nota geral do jogador no cenário universitário. 1.00 é a média de todos os rounds jogados no cenário. A nota soma seis partes (abate, sobrevivência, dano, KAST, swing e multi-kill), cada uma pela distância do jogador até essa média.",
   },
   { key: "acs", term: "ACS", short: "Pontuação de combate da partida dividida pelos rounds jogados.", long: "Average Combat Score: a pontuação de combate registrada na partida, dividida pelos rounds jogados." },
   { key: "adr", term: "ADR", short: "Dano causado por round jogado.", long: "Average Damage per Round: dano total causado dividido pelos rounds jogados." },

@@ -233,6 +233,12 @@ assert(/state\.db = window\.DbCodec\.decode\(packed\);[\s\S]{0,400}aplicarContex
   assert(!/"raa3"/.test(fonteDoApp), "nenhuma versao raa3 no app.js");
   assert(!/interquartil|0,30 e 1,80|desempenho mediano/.test(fonteDoApp), "o glossario descreve a 3.1, nao a regua da 3.0");
   assert(/term: "rAAting 3\.1",\s*\n\s*short: "[^"]*média/.test(fonteDoApp), "o glossario fala da media do grupo");
+  {
+    const verbete = fonteDoApp.slice(fonteDoApp.indexOf('term: "rAAting 3.1"'), fonteDoApp.indexOf('{ key: "acs", term: "ACS"'));
+    assert(!/HLTV/.test(verbete), "o glossario nao cita fonte (regra do site)");
+    assert(!/média de todos os jogadores/.test(verbete), "1.00 e a media dos rounds, nao a do jogador tipico (a carreira tipica fica em 0,91)");
+    assert(/média de todos os rounds/.test(verbete), "o glossario diz que 1.00 e a media de todos os rounds");
+  }
 }
 
 // ---------- partes recalculadas no navegador quando o banco nao as guarda ----------
@@ -251,6 +257,18 @@ assert(/state\.db = window\.DbCodec\.decode\(packed\);[\s\S]{0,400}aplicarContex
   ctx.RaaRatingCore.setGroupCenter(null);
   assert(Number.isNaN(ctx.metricValue(linha, "parte_abate")), "sem media do grupo: sem parte");
   assert(Number.isNaN(ctx.metricValue(linha, "ekpr")), "so as partes sao recalculadas");
+}
+
+// ---------- o MVP do mapa sai depois da media do grupo (revisao final) ----------
+{
+  // na leitura, sem media, toda nota e NaN e o MVP ficava no primeiro da lista
+  const fraco = { puuid: "x1", rounds: 20, eKillPoints: 8, eDeathPoints: 17, eDamageTotal: 1400, eKastPoints: 10, adjustedRoundSwingTotalPp: -60, multiKillPoints: 1 };
+  const forte = { puuid: "x2", rounds: 20, eKillPoints: 22, eDeathPoints: 9, eDamageTotal: 3400, eKastPoints: 17, adjustedRoundSwingTotalPp: 90, multiKillPoints: 8 };
+  const partida = { id: "mvp1", players: [fraco, forte] };
+  partida.mvp = partida.players[0];
+  ctx.applyRaatingCenter([partida, { id: "mvp2", players: [{ ...fraco, puuid: "x3" }, { ...forte, puuid: "x4" }] }]);
+  assert.equal(partida.mvp.puuid, "x2", "o MVP do mapa e o maior rAAting 3.1, escolhido depois da media");
+  assert(partida.mvp === partida.players[1], "o MVP aponta para a linha do jogador");
 }
 
 console.log("rAAting 3.1 no round: testes passaram");

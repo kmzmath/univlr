@@ -46,6 +46,17 @@ for (const match of db.matches || []) {
     if (!(difNota <= 1e-9) || !(difLegado <= 1e-9)) piores.push({ chave, nick: player.nick, banco: player.raating_3, esperado: esperado.raating_31, difNota, difLegado });
   }
 }
+// O MVP do mapa tem de ser o maior rAAting 3.1 do mapa (empate fica com quem vem
+// antes). Na revisao final, ele saia escolhido antes da media do grupo existir.
+let mvpErrado = 0;
+for (const match of db.matches || []) {
+  const players = match.players || [];
+  if (!players.length) continue;
+  let melhor = players[0];
+  for (const player of players) if (Number(player.raating_3) > Number(melhor.raating_3)) melhor = player;
+  if (!match.mvp || match.mvp.puuid !== melhor.puuid) mvpErrado += 1;
+}
+if (mvpErrado) falhas.push(`MVP do mapa fora do maior rAAting em ${mvpErrado} mapas`);
 const faltando = Object.keys(oraculo.linhas).filter((chave) => !vistas.has(chave));
 if (faltando.length) falhas.push(`${faltando.length} linhas do oráculo fora do banco (ex.: ${faltando[0]})`);
 if (!(maiorNota <= 1e-9)) falhas.push(`raating_3: maior diferença ${maiorNota}`);

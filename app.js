@@ -27590,7 +27590,7 @@ function aggregateMatchPlayerRoundStats(players, roundResults, metadata) {
     applyFirstDuelStats(events, stats, sideByPuuid);
     applyEffectiveDamage(damageByVictim, armorExtraByPuuid, events, stats, ecoBucketByPuuid, metadata.raatingContext?.ecoModel);
     applyEcoKillDeathStats(events, stats);
-    applyRoundSwingStats(events, participants, round, stats, sideByPuuid, rosters, metadata);
+    applyRoundSwingStats(events, participants, round, stats, sideByPuuid, rosters, metadata, damageByVictim);
     applyKastStats(events, participants, killsCountRound, assistantSet, victimsSet, damageByReceiver, stats, sideByPuuid, round.winningTeam);
     applyMultiKillStats(participants, killsCountRound, stats);
   }
@@ -27719,72 +27719,189 @@ function applyEcoKillDeathStats(events, stats) {
   }
 }
 
-function applyRoundSwingStats(events, participants, round, stats, sideByPuuid, rosters, metadata) {
+// Swing do rAAting 1.0 (legado): tabela simetrica, todos os abates do round
+// (inclusive os de depois do fim), sem residuo nem correcao. Nao muda.
+function applyLegacyRoundSwing(events, participants, stats, sideByPuuid, rosters, metadata) {
   const alive = {
     Blue: new Set(rosters.Blue),
     Red: new Set(rosters.Red),
   };
-  const roundSwing = new Map([...participants].map((puuid) => [puuid, 0]));
   const legacySwing = new Map([...participants].map((puuid) => [puuid, 0]));
-  const addSwing = (map, puuid, amount) => {
-    if (!puuid || !map.has(puuid)) return;
-    map.set(puuid, map.get(puuid) + amount);
+  const addSwing = (puuid, amount) => {
+    if (!puuid || !legacySwing.has(puuid)) return;
+    legacySwing.set(puuid, legacySwing.get(puuid) + amount);
   };
 
   for (const event of events) {
     const victim = event.victim;
     if (!victim || !sideByPuuid.has(victim)) continue;
-
     const victimSide = alive.Blue.has(victim) ? "Blue" : alive.Red.has(victim) ? "Red" : "";
     if (!victimSide) continue;
     const enemySide = victimSide === "Blue" ? "Red" : "Blue";
-    const deathSwing = deltaDeathPp(metadata, alive[victimSide].size, alive[enemySide].size);
-    addSwing(roundSwing, victim, deathSwing);
-    addSwing(legacySwing, victim, deathSwing);
+    addSwing(victim, deltaDeathPp(metadata, alive[victimSide].size, alive[enemySide].size));
 
     const killer = event.killer;
     if (killer && sideByPuuid.has(killer) && stats.has(killer)) {
       const killerSide = sideByPuuid.get(killer);
       const killerEnemySide = killerSide === "Blue" ? "Red" : "Blue";
-      const killSwing = deltaKillPp(metadata, alive[killerSide].size, alive[killerEnemySide].size);
-      addSwing(roundSwing, killer, killSwing);
-      addSwing(legacySwing, killer, killSwing);
+      addSwing(killer, deltaKillPp(metadata, alive[killerSide].size, alive[killerEnemySide].size));
     }
 
     alive[victimSide].delete(victim);
   }
 
+  for (const [puuid, value] of legacySwing.entries()) {
+    if (stats.has(puuid)) stats.get(puuid).impactTotalLegacy += value;
+  }
+}
+
+// Swing do rAAting 3.1 (especificacao de 21/11/2026; a conta e a da variante
+// "final" de scripts/estudos/raating_variantes.js):
+// - chance pela tabela com spike (attackWinChance), quando o lado do ataque e
+//   conhecido; sem ele, a tabela simetrica de antes;
+// - cada morte: a vitima soma a mudanca da chance do time dela; o lado de quem
+//   matou soma o contrario, dividido entre os inimigos da vitima que deram dano
+//   nela no round, na proporcao do dano cru (sem dano registrado, tudo para quem
+//   matou);
+// - abate em aliado: quem matou leva a perda inteira, a vitima nao perde, e os
+//   vivos do rival dividem o ganho; suicidio ou morte sem autor: a vitima fica
+//   com a perda e os vivos do rival dividem o ganho;
+// - plantio: o salto da chance vai para os vivos do ataque e e cobrado dos vivos
+//   da defesa;
+// - o round fecha pelo motivo da Riot (desarme, explosao em plantio + 45 s,
+//   eliminacao): nada depois conta, e o residuo ate 100% vai para os vivos do
+//   vencedor naquele momento;
+// - o round soma zero.
+function applyRoundSwingStats(events, participants, round, stats, sideByPuuid, rosters, metadata, damageByVictim) {
+  applyLegacyRoundSwing(events, participants, stats, sideByPuuid, rosters, metadata);
+
+  const outro = (lado) => (lado === "Blue" ? "Red" : "Blue");
+  const alive = { Blue: new Set(rosters.Blue), Red: new Set(rosters.Red) };
+  const roundSwing = new Map([...participants].map((puuid) => [puuid, 0]));
+  const addSwing = (puuid, amount) => {
+    if (!puuid || !roundSwing.has(puuid)) return;
+    roundSwing.set(puuid, roundSwing.get(puuid) + amount);
+  };
+
+  let ataque = "";
+  const venc = round.winningTeam;
+  const papel = round.winningTeamRole;
+  if (["Blue", "Red"].includes(venc) && ["Attacker", "Defender"].includes(papel)) ataque = papel === "Attacker" ? venc : outro(venc);
+  const usaSpike = Boolean(ataque);
+  let plantada = false;
+  const chanceDo = (lado) => {
+    const pAta = attackWinChance(metadata, alive[ataque].size, alive[outro(ataque)].size, plantada);
+    return lado === ataque ? pAta : 1 - pAta;
+  };
+
+  const fila = events.map((event) => ({ tipo: "morte", time: event.time, event }));
+  const plantio = ataque && round.bombPlanter && Number.isFinite(Number(round.plantRoundTime)) ? Number(round.plantRoundTime) : null;
+  if (plantio !== null) fila.push({ tipo: "plantio", time: plantio, ordem: -1 });
+  fila.sort((a, b) => a.time - b.time || (a.ordem ?? 0) - (b.ordem ?? 0));
+
+  // as mortes pela explosao caem de 0 a 1,6 s depois dos 45 s: 50 ms de folga
+  let fimTempo = Infinity;
+  if (round.roundResult === "Bomb defused" && Number.isFinite(Number(round.defuseRoundTime))) fimTempo = Number(round.defuseRoundTime);
+  else if (round.roundResult === "Bomb detonated" && plantio !== null) fimTempo = plantio + SPIKE_DETONATION_MS - 50;
+  let acabou = false;
+  const vivosEm = (lado) => [...alive[lado]].filter((puuid) => participants.has(puuid)).length;
+
+  for (const item of fila) {
+    if (acabou || item.time > fimTempo) continue;
+    if (item.tipo === "plantio") {
+      const antes = chanceDo(ataque);
+      plantada = true;
+      const salto = (chanceDo(ataque) - antes) * 100;
+      const atacantes = [...alive[ataque]].filter((puuid) => roundSwing.has(puuid));
+      for (const puuid of atacantes) addSwing(puuid, salto / atacantes.length);
+      const defensores = [...alive[outro(ataque)]].filter((puuid) => roundSwing.has(puuid));
+      for (const puuid of defensores) addSwing(puuid, -salto / defensores.length);
+      continue;
+    }
+
+    const event = item.event;
+    const victim = event.victim;
+    if (!victim || !sideByPuuid.has(victim)) continue;
+    const victimSide = alive.Blue.has(victim) ? "Blue" : alive.Red.has(victim) ? "Red" : "";
+    if (!victimSide) continue;
+    const enemySide = outro(victimSide);
+
+    let deathSwing;
+    let creditoInimigo;
+    if (usaSpike) {
+      const antes = chanceDo(victimSide);
+      alive[victimSide].delete(victim);
+      deathSwing = (chanceDo(victimSide) - antes) * 100;
+      alive[victimSide].add(victim);
+      creditoInimigo = -deathSwing;
+    } else {
+      deathSwing = deltaDeathPp(metadata, alive[victimSide].size, alive[enemySide].size);
+    }
+    addSwing(victim, deathSwing);
+
+    const rivaisVivos = () => [...alive[enemySide]].filter((puuid) => roundSwing.has(puuid));
+    const killer = event.killer;
+    if (killer && sideByPuuid.has(killer) && stats.has(killer)) {
+      const killerSide = sideByPuuid.get(killer);
+      if (killerSide === victimSide) {
+        if (killer !== victim) {
+          addSwing(victim, -deathSwing);
+          addSwing(killer, deathSwing);
+        }
+        const rivais = rivaisVivos();
+        for (const puuid of rivais) addSwing(puuid, -deathSwing / rivais.length);
+      } else {
+        const credito = usaSpike ? creditoInimigo : deltaKillPp(metadata, alive[killerSide].size, alive[outro(killerSide)].size);
+        const dano = damageByVictim?.get(victim);
+        const autores = dano ? [...dano.entries()].filter(([puuid, valor]) => valor > 0 && roundSwing.has(puuid)) : [];
+        const totalDano = autores.reduce((soma, [, valor]) => soma + valor, 0);
+        if (totalDano > 0) {
+          for (const [puuid, valor] of autores) addSwing(puuid, (credito * valor) / totalDano);
+        } else {
+          addSwing(killer, credito);
+        }
+      }
+    } else {
+      const rivais = rivaisVivos();
+      for (const puuid of rivais) addSwing(puuid, -deathSwing / rivais.length);
+    }
+
+    alive[victimSide].delete(victim);
+    if (ataque) {
+      const defesa = outro(ataque);
+      if (vivosEm(defesa) === 0 || (vivosEm(ataque) === 0 && !plantada)) acabou = true;
+    }
+  }
+
   const winningTeam = ["Blue", "Red"].includes(round.winningTeam) ? round.winningTeam : "";
   if (winningTeam) {
-    const losingTeam = winningTeam === "Blue" ? "Red" : "Blue";
+    const losingTeam = outro(winningTeam);
     const winnerAlive = alive[winningTeam];
     const loserAlive = alive[losingTeam];
     const winnerParticipants = [...participants].filter((puuid) => sideByPuuid.get(puuid) === winningTeam);
     const loserParticipants = [...participants].filter((puuid) => sideByPuuid.get(puuid) === losingTeam);
     const winnerCreditTargets = (winnerAlive.size ? [...winnerAlive] : winnerParticipants).filter((puuid) => roundSwing.has(puuid));
     const loserDebitTargets = (loserAlive.size ? [...loserAlive] : loserParticipants).filter((puuid) => roundSwing.has(puuid));
-    const residual = Math.max(0, (1 - stateWinRate(metadata, winnerAlive.size, loserAlive.size)) * 100);
+    const chanceFinal = usaSpike ? chanceDo(winningTeam) : stateWinRate(metadata, winnerAlive.size, loserAlive.size);
+    const residual = Math.max(0, (1 - chanceFinal) * 100);
     if (residual > 0 && winnerCreditTargets.length && loserDebitTargets.length) {
       const credit = residual / winnerCreditTargets.length;
       const debit = residual / loserDebitTargets.length;
-      winnerCreditTargets.forEach((puuid) => addSwing(roundSwing, puuid, credit));
-      loserDebitTargets.forEach((puuid) => addSwing(roundSwing, puuid, -debit));
+      winnerCreditTargets.forEach((puuid) => addSwing(puuid, credit));
+      loserDebitTargets.forEach((puuid) => addSwing(puuid, -debit));
     }
   }
 
   const total = [...roundSwing.values()].reduce((sum, value) => sum + value, 0);
   if (Math.abs(total) > 1e-6 && roundSwing.size) {
     const correction = total / roundSwing.size;
-    for (const puuid of roundSwing.keys()) addSwing(roundSwing, puuid, -correction);
+    for (const puuid of roundSwing.keys()) addSwing(puuid, -correction);
   }
 
   for (const [puuid, value] of roundSwing.entries()) {
     if (!stats.has(puuid)) continue;
     stats.get(puuid).impactTotal += value;
     stats.get(puuid).adjustedRoundSwingTotalPp += value;
-  }
-  for (const [puuid, value] of legacySwing.entries()) {
-    if (stats.has(puuid)) stats.get(puuid).impactTotalLegacy += value;
   }
 }
 

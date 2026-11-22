@@ -40,7 +40,30 @@ def assert_close(actual, expected, label, tolerance=1e-9):
         raise AssertionError(f"{label}: {actual} != {expected}")
 
 
+def check_raating_3_1_formula():
+    """A formula do rAAting 3.1 no Python, sem depender do banco: tres linhas, a
+    media delas e as notas fixadas pela conta do estudo (scripts/estudos/nota_beta.js)."""
+    linhas = [
+        {"rounds": 20, "eKillPoints": 16, "eDeathPoints": 14, "eDamageTotal": 2400, "eKastPoints": 14, "adjustedRoundSwingTotalPp": 60, "multiKillPoints": 5},
+        {"rounds": 24, "eKillPoints": 12, "eDeathPoints": 19, "eDamageTotal": 2100, "eKastPoints": 15, "adjustedRoundSwingTotalPp": -80, "multiKillPoints": 2},
+        {"rounds": 13, "eKillPoints": 14, "eDeathPoints": 6, "eDamageTotal": 2300, "eKastPoints": 11, "adjustedRoundSwingTotalPp": 95, "multiKillPoints": 6},
+    ]
+    rounds = sum(linha["rounds"] for linha in linhas)
+    soma = {campo: sum(linha[campo] for linha in linhas) for campo in linhas[0] if campo != "rounds"}
+    center = {
+        "abate": soma["eKillPoints"] / rounds,
+        "sobrevivencia": 1 - soma["eDeathPoints"] / rounds,
+        "dano": soma["eDamageTotal"] / rounds / 100,
+        "kast": soma["eKastPoints"] / rounds,
+        "swing": soma["adjustedRoundSwingTotalPp"] / rounds,
+        "multikill": soma["multiKillPoints"] / rounds,
+    }
+    for linha, esperado in zip(linhas, (1.09041277777778, 0.553756944444444, 1.68473675213675)):
+        assert_close(analysis.raating_3_1_value(linha, center), esperado, "formula do rAAting 3.1", tolerance=1e-12)
+
+
 def main():
+    check_raating_3_1_formula()
     payload = analysis.run_site_pipeline(ROOT / "campeonatos", recursive=True)
     unexpected_invalid = [
         row for row in payload.get("invalidFiles") or []
@@ -82,7 +105,7 @@ def main():
     for record in omen_records:
         for name in analysis.SITE_AGGREGATE_FIELDS:
             omen_totals[name] += float(record.aggregate.get(name, 0) or 0)
-    assert_close(omen_summary[30], analysis.rAAting_3_0_value(omen_totals), "Omen rAAting 3.0")
+    assert_close(omen_summary[30], analysis.raating_3_1_value(omen_totals, payload["raatingCenter"]), "Omen rAAting 3.1")
 
     map_rows = map_analysis.analyze_maps(ROOT / "campeonatos", recursive=True)
     if sum(row.matches for row in map_rows.values()) != payload["uniqueMatchCount"]:

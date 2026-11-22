@@ -15,7 +15,7 @@ from openpyxl.utils import get_column_letter
 
 # ---- CONFIG PARA RODAR DIRETO NO VS CODE ----
 import config_hub
-from analiseMatches import SITE_AGGREGATE_FIELDS, rAAting_3_0_value, run_site_pipeline
+from analiseMatches import SITE_AGGREGATE_FIELDS, raating_3_1_value, raating_center, run_site_pipeline
 
 # A pasta de trabalho fica fora do repo: e la que estao os JSONs brutos e as
 # saidas de analise. Ver config_hub.
@@ -171,7 +171,7 @@ SUMMARY_HEADERS = [
     "Clutches",
     "Imp.Total (pp)",
     "Imp/Round (pp)",
-    "rAAting 3.0",
+    "rAAting 3.1",
 ]
 
 MAP_HEADERS = ["Mapa"] + SUMMARY_HEADERS
@@ -208,7 +208,7 @@ DETAIL_HEADERS = [
     "Clutches",
     "Imp.Total (pp)",
     "Imp/Round (pp)",
-    "rAAting 3.0",
+    "rAAting 3.1",
 ]
 
 
@@ -971,7 +971,7 @@ def aggregate_records(records: List[AgentPickRecord], pickrate_denominator: int,
     dpr = safe_div(total_deaths, total_rounds)
     apr = safe_div(total_assists, total_rounds)
     imp_pr = safe_div(total_impact, total_rounds)
-    rtg = rAAting_3_0_value(totals)
+    rtg = raating_3_1_value(totals, raating_center())
 
     return [
         agent_name,

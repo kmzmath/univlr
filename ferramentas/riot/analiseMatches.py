@@ -191,7 +191,7 @@ HEADERS = [
     "Clutches",
     "Imp.Total (pp)",
     "Imp/Round (pp)",
-    "rAAting 3.0",
+    "rAAting 3.1",
     "rAAting 1.0",
     "Partidas",
 ]
@@ -340,6 +340,8 @@ def run_site_pipeline(input_dir: Path, recursive: bool) -> Dict[str, Any]:
         raise SystemExit(f"Saida invalida do pipeline do site: {exc}") from exc
     if not isinstance(payload, dict):
         raise SystemExit("Saida invalida do pipeline do site: objeto JSON esperado.")
+    global RAATING_CENTER
+    RAATING_CENTER = payload.get("raatingCenter")
     return payload
 
 
@@ -464,76 +466,47 @@ def rAAting_1_0_value(
     return clamp(rating, 0.30, 1.80)
 
 
-RAATING_3_BASELINES = {
-    "kill": (0.69080751, 0.1786497375),
-    "damage": (1.01149739, 0.23446389),
-    "multikill": (0.2241625, 0.11087375),
-    "round_swing": (-0.3482385, 4.0305735),
-    "survival": (0.285871175, 0.08546929),
-    "kast": (0.71465847, 0.0765002825),
+# rAAting 3.1 (especificacao de 21/11/2026), igual ao calculateRaating3 do
+# raating-core.js: a formula estimada da HLTV com o beta do dano dividido por 1,5,
+# e a nota e 1 + soma de beta * (taxa - media do grupo). A media do grupo vem do
+# pipeline do site (campo raatingCenter do export_site_match_stats.js), a mesma do build.
+RAATING_3_1_BETAS = {
+    "abate": 0.4941,
+    "sobrevivencia": 0.3795,
+    "dano": 0.428 / 1.5,
+    "kast": 0.2602,
+    "swing": 0.03748,
+    "multikill": 0.0241,
 }
 
-
-def _raa3_subrating(metric: float, baseline: Tuple[float, float]) -> float:
-    # Sem limites desde 16/11/2026 (decisao do dono): o z nao e cortado em 3 nem
-    # o componente em 0,30 a 1,80, igual ao raating-core.js.
-    median, iqr = baseline
-    z_score = (metric - median) / abs(iqr) if iqr else 0.0
-    return 1.0 + 0.28 * z_score
+RAATING_CENTER: Optional[Dict[str, float]] = None
 
 
-def rAAting_3_0_value(values: Dict[str, float]) -> float:
-    """Porta a formula agregada oficial de raating-core.js."""
+def raating_center() -> Optional[Dict[str, float]]:
+    """A media do grupo do ultimo pipeline do site lido (run_site_pipeline)."""
+    return RAATING_CENTER
+
+
+def raating_3_1_value(values: Dict[str, float], center: Optional[Dict[str, float]]) -> float:
+    """Porta a nota do raating-core.js (rAAting 3.1). Sem media do grupo, NaN."""
+    if not center:
+        return float("nan")
     rounds = max(0.0, float(values.get("rounds", 0)))
-    if not rounds:
-        return 0.30
-
-    ekpr = float(values.get("eKillPoints", values.get("kills", 0))) / rounds
-    edpr = float(values.get("eDeathPoints", values.get("deaths", 0))) / rounds
-    eadr = float(values.get("eDamageTotal", values.get("damage", 0))) / rounds
-    ekast = float(values.get("eKastPoints", values.get("kastRounds", 0))) / rounds
-    mk_per_round = float(values.get("multiKillPoints", 0)) / rounds
-    adjusted_swing = float(values.get("adjustedRoundSwingTotalPp", values.get("impactTotal", 0))) / rounds
-    opening_kills = float(values.get("firstKills", 0)) / rounds
-    opening_deaths = float(values.get("firstDeaths", 0)) / rounds
-    trade_denials = float(values.get("tradeDenials", 0)) / rounds
-    traded_deaths = float(values.get("tradedDeaths", 0)) / rounds
-    failed_trade_deaths = float(values.get("failedTradeDeaths", 0)) / rounds
-    saved_losses = float(values.get("savedLossRounds", 0)) / rounds
-    survived_wins = float(values.get("survivedWinRounds", 0)) / rounds
-
-    metric_kill = ekpr + 0.025 * opening_kills + 0.015 * trade_denials
-    metric_damage = eadr / 100.0
-    metric_multikill = mk_per_round
-    metric_round_swing = adjusted_swing
-    metric_survival = (
-        (1.0 - edpr)
-        + 0.04 * traded_deaths
-        - 0.04 * failed_trade_deaths
-        - 0.03 * opening_deaths
-        - 0.02 * saved_losses
-        + 0.015 * survived_wins
-    )
-    metric_kast = ekast
-
-    subratings = {
-        "kill": _raa3_subrating(metric_kill, RAATING_3_BASELINES["kill"]),
-        "damage": _raa3_subrating(metric_damage, RAATING_3_BASELINES["damage"]),
-        "multikill": _raa3_subrating(metric_multikill, RAATING_3_BASELINES["multikill"]),
-        "round_swing": _raa3_subrating(metric_round_swing, RAATING_3_BASELINES["round_swing"]),
-        "survival": _raa3_subrating(metric_survival, RAATING_3_BASELINES["survival"]),
-        "kast": _raa3_subrating(metric_kast, RAATING_3_BASELINES["kast"]),
-    }
-    rating = (
-        0.25 * subratings["kill"]
-        + 0.15 * subratings["damage"]
-        + 0.04 * subratings["multikill"]
-        + 0.33 * subratings["round_swing"]
-        + 0.15 * subratings["survival"]
-        + 0.08 * subratings["kast"]
-        - 0.008426
-    )
-    return rating
+    if rounds:
+        x = {
+            "abate": float(values.get("eKillPoints", values.get("kills", 0))) / rounds,
+            "sobrevivencia": 1.0 - float(values.get("eDeathPoints", values.get("deaths", 0))) / rounds,
+            "dano": float(values.get("eDamageTotal", values.get("damage", 0))) / rounds / 100.0,
+            "kast": float(values.get("eKastPoints", values.get("kastRounds", 0))) / rounds,
+            "swing": float(values.get("adjustedRoundSwingTotalPp", values.get("impactTotal", 0))) / rounds,
+            "multikill": float(values.get("multiKillPoints", 0)) / rounds,
+        }
+    else:
+        x = {parte: 0.0 for parte in RAATING_3_1_BETAS}
+    nota = 1.0
+    for parte, beta in RAATING_3_1_BETAS.items():
+        nota += beta * (x[parte] - float(center[parte]))
+    return nota
 
 
 def sheet_name_safe(name: str) -> str:
@@ -1332,7 +1305,7 @@ def _apply_number_formats(ws, start_row: int, end_row: int) -> None:
     # 9  ACS (2dp)
     # 13-16 KPR/DPR/APR/ADR (2dp)
     # 25-26 Impact (2dp)
-    # 27 rAAting 3.0 (3dp)
+    # 27 rAAting 3.1 (3dp)
     # 28 rAAting 1.0 (3dp)
     for r in range(start_row, end_row + 1):
         ws.cell(row=r, column=4).number_format = "0.0%"
@@ -1415,7 +1388,7 @@ def compute_player_summary_cells(player_name: str, recs: List[RowRecord]) -> Lis
     legacy_kast = safe_div(totals["kastLegacyRounds"], float(total_rounds))
     legacy_impact = safe_div(totals["impactTotalLegacy"], float(total_rounds))
     raa1 = rAAting_1_0_value(legacy_kast, kpr, dpr, apr, adr, legacy_impact)
-    raa3 = rAAting_3_0_value(totals)
+    raa3 = raating_3_1_value(totals, RAATING_CENTER)
 
     return [
         player_name,

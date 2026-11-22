@@ -53,6 +53,8 @@ globalThis.fetch = () => new Promise(noop);
 for (const rel of ["raating-core.js", "ranking-core.js", "app.js"]) {
   (0, eval)(fs.readFileSync(path.join(ROOT, rel), "utf8"));
 }
+// rAAting 3.1: a nota mede a distancia ate a media do grupo; aqui, a do banco publicado.
+aplicarContextoDoRaating(require(path.join(ROOT, "db-codec.js")).decode(JSON.parse(fs.readFileSync(path.join(ROOT, "database.json"), "utf8"))));
 
 const COLETE_DESCONHECIDO = "TRACKER-COLETE-DESCONHECIDO";
 const CAMPOS = [

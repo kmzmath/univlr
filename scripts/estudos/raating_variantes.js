@@ -509,6 +509,7 @@ function linhasDeReferencia(ratingMetadata) {
         damage: player.damage,
         kastRounds: player.kastRounds,
         raating_3: player.raating_3,
+        raating_1: player.raating_1,
         ...Object.fromEntries(CAMPOS.map((campo) => [campo, player[campo]])),
       });
     }
@@ -620,5 +621,5 @@ function main() {
   console.log(`gravado em ${saida} (${((Date.now() - inicio) / 1000).toFixed(0)}s)`);
 }
 
-module.exports = { VARIANTES, configurar, instalar, restaurar };
+module.exports = { VARIANTES, CAMPOS, configurar, instalar, restaurar, rodar, linhasDeReferencia };
 if (require.main === module) main();

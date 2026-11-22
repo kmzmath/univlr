@@ -41,6 +41,12 @@ vm.runInContext(fs.readFileSync(path.join(raiz, "app.js"), "utf8"), context);
 const Core = context.RaaRatingCore;
 const perto = (a, b, rotulo) => assert(Math.abs(a - b) < 1e-9, `${rotulo}: ${a} != ${b}`);
 
+// rAAting 3.1: a nota mede a distancia ate a media do grupo, que o build grava no
+// banco. Aqui, uma media qualquer de duas linhas tipicas; a linearidade nao depende dela.
+Core.setGroupCenter(Core.groupCenter([
+  { rounds: 20, eKillPoints: 15, eDeathPoints: 14, eDamageTotal: 2200, eKastPoints: 14, adjustedRoundSwingTotalPp: 0, multiKillPoints: 4 },
+  { rounds: 22, eKillPoints: 14, eDeathPoints: 16, eDamageTotal: 2300, eKastPoints: 15, adjustedRoundSwingTotalPp: -10, multiKillPoints: 5 },
+]));
 // Um mapa de jogador com os campos que o banco guarda; a nota do mapa e a do nucleo.
 const mapa = (id, kills, deaths, rounds, extra = {}) => {
   const linha = {

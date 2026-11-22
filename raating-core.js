@@ -17,22 +17,25 @@
     { label: "$3550-$4700", min: 3550, max: 4700 },
     { label: "$4700+", min: 4700, max: Infinity },
   ];
-  const RATING_3_WEIGHTS = {
-    KillRating: 0.25,
-    DamageRating: 0.15,
-    MultiKillRating: 0.04,
-    RoundSwingRating: 0.33,
-    SurvivalRating: 0.15,
-    KASTRating: 0.08,
-  };
-  const RATING_3_BASELINES = {
-    metric_kill: { median: 0.69080751, iqr: 0.1786497375 },
-    metric_damage: { median: 1.01149739, iqr: 0.23446389 },
-    metric_multikill: { median: 0.2241625, iqr: 0.11087375 },
-    metric_round_swing: { median: -0.3482385, iqr: 4.0305735 },
-    metric_survival: { median: 0.285871175, iqr: 0.08546929 },
-    metric_kast: { median: 0.71465847, iqr: 0.0765002825 },
-  };
+  // rAAting 3.1 (especificacao de 21/11/2026): a formula estimada da HLTV
+  // (r/GlobalOffensive, "HLTV3 formula reversed with 0.03 error"), com o beta do
+  // dano dividido por 1,5 (no CS a vida e 100; no Valorant, 150 com colete
+  // pesado; decisao do dono, apoiada no dano por abate medido, 1,43). A nota e
+  // 1 + soma de beta * (taxa - media do grupo): 1,00 fica na media, como na HLTV.
+  const RATING_31_BETAS = Object.freeze({
+    abate: 0.4941,
+    sobrevivencia: 0.3795,
+    dano: 0.428 / 1.5,
+    kast: 0.2602,
+    swing: 0.03748,
+    multikill: 0.0241,
+  });
+  const RATING_31_PARTS = Object.freeze(["abate", "sobrevivencia", "dano", "kast", "swing", "multikill"]);
+  // A media do grupo: soma das contagens de todas as linhas jogador x mapa do
+  // build dividida pela soma dos rounds. O build calcula e grava no banco; o
+  // navegador le de la. Sem ela, a nota nao existe (NaN), para nunca sair uma
+  // nota com outra media.
+  let groupCenterAtual = null;
 
   function finiteNumber(value, fallback = 0) {
     const numeric = Number(value);
@@ -78,106 +81,84 @@
     return 0;
   }
 
-  // Sem limites desde 16/11/2026 (decisao do dono): o rAAting so reflete a
-  // mediana em 1,00. O z nao e cortado em 3 nem o componente em 0,30 a 1,80; o
-  // corte deixava 74 mapas empatados em 1,791574 e tirava a ordem do topo.
-  // RATING_MIN e RATING_MAX seguem so para o rAAting 1.0, que e legado.
-  function subRating(metric, baseline) {
-    const iqr = Math.abs(finiteNumber(baseline.iqr, 0));
-    const z = iqr ? (finiteNumber(metric) - finiteNumber(baseline.median)) / iqr : 0;
-    return 1 + 0.28 * z;
+  // As contagens que entram na nota, com as trocas de sempre para linhas que nao
+  // tem os campos ajustados pela economia.
+  function ratingCounts(row = {}) {
+    return {
+      rounds: Math.max(0, finiteNumber(row.rounds ?? row.playerRounds)),
+      eKillPoints: finiteNumber(row.eKillPoints, finiteNumber(row.kills)),
+      eDeathPoints: finiteNumber(row.eDeathPoints, finiteNumber(row.deaths)),
+      eDamageTotal: finiteNumber(row.eDamageTotal, finiteNumber(row.damage)),
+      eKastPoints: finiteNumber(row.eKastPoints, finiteNumber(row.kastRounds)),
+      adjustedRoundSwingTotalPp: finiteNumber(row.adjustedRoundSwingTotalPp, finiteNumber(row.impactTotal)),
+      multiKillPoints: finiteNumber(row.multiKillPoints, multiKillPointsFromCounts(row)),
+    };
   }
 
-  function calculateRaating3(row = {}) {
-    const rounds = Math.max(0, finiteNumber(row.rounds ?? row.playerRounds));
-    const eKillPoints = finiteNumber(row.eKillPoints, finiteNumber(row.kills));
-    const eDeathPoints = finiteNumber(row.eDeathPoints, finiteNumber(row.deaths));
-    const eDamageTotal = finiteNumber(row.eDamageTotal, finiteNumber(row.damage));
-    const eKastPoints = finiteNumber(row.eKastPoints, finiteNumber(row.kastRounds));
-    const adjustedRoundSwingTotalPp = finiteNumber(row.adjustedRoundSwingTotalPp, finiteNumber(row.impactTotal));
-    const mkWeightedPoints = finiteNumber(row.multiKillPoints, multiKillPointsFromCounts(row));
-    const ekpr = rounds ? eKillPoints / rounds : 0;
-    const edpr = rounds ? eDeathPoints / rounds : 0;
-    const eadr = rounds ? eDamageTotal / rounds : 0;
-    const ekast = rounds ? (100 * eKastPoints) / rounds : 0;
-    const mkPerR = rounds ? mkWeightedPoints / rounds : 0;
-    const adjustedSwingPercent = rounds ? adjustedRoundSwingTotalPp / rounds : 0;
-    const openingKillsPerRound = rounds ? finiteNumber(row.firstKills ?? row.openingKills) / rounds : 0;
-    const openingDeathsPerRound = rounds ? finiteNumber(row.firstDeaths ?? row.openingDeaths) / rounds : 0;
-    const tradeDenialsPerRound = rounds ? finiteNumber(row.tradeDenials) / rounds : 0;
-    const tradedDeathsPerRound = rounds ? finiteNumber(row.tradedDeaths) / rounds : 0;
-    const failedTradeDeathsPerRound = rounds ? finiteNumber(row.failedTradeDeaths) / rounds : 0;
-    const savedLossRoundsPerRound = rounds ? finiteNumber(row.savedLossRounds) / rounds : 0;
-    const survivedWinRoundsPerRound = rounds ? finiteNumber(row.survivedWinRounds) / rounds : 0;
-
-    const metricKill = ekpr + 0.025 * openingKillsPerRound + 0.015 * tradeDenialsPerRound;
-    const metricDamage = eadr / 100;
-    const metricMultikill = mkPerR;
-    const metricRoundSwing = adjustedSwingPercent;
-    const metricSurvival =
-      (1 - edpr) +
-      0.04 * tradedDeathsPerRound -
-      0.04 * failedTradeDeathsPerRound -
-      0.03 * openingDeathsPerRound -
-      0.02 * savedLossRoundsPerRound +
-      0.015 * survivedWinRoundsPerRound;
-    const metricKast = ekast / 100;
-
-    const KillRating = subRating(metricKill, RATING_3_BASELINES.metric_kill);
-    const DamageRating = subRating(metricDamage, RATING_3_BASELINES.metric_damage);
-    const MultiKillRating = subRating(metricMultikill, RATING_3_BASELINES.metric_multikill);
-    const RoundSwingRating = subRating(metricRoundSwing, RATING_3_BASELINES.metric_round_swing);
-    const SurvivalRating = subRating(metricSurvival, RATING_3_BASELINES.metric_survival);
-    const KASTRating = subRating(metricKast, RATING_3_BASELINES.metric_kast);
-    const unadjusted =
-      RATING_3_WEIGHTS.KillRating * KillRating +
-      RATING_3_WEIGHTS.DamageRating * DamageRating +
-      RATING_3_WEIGHTS.MultiKillRating * MultiKillRating +
-      RATING_3_WEIGHTS.RoundSwingRating * RoundSwingRating +
-      RATING_3_WEIGHTS.SurvivalRating * SurvivalRating +
-      RATING_3_WEIGHTS.KASTRating * KASTRating -
-      0.008426;
-    const ratingReconProxy =
-      0.1358 +
-      0.4941 * ekpr +
-      0.3795 * (1 - edpr) +
-      0.428 * (eadr / 100) +
-      0.2602 * (ekast / 100) +
-      0.03748 * adjustedSwingPercent +
-      0.0241 * mkPerR;
-
+  // As seis taxas por round, na unidade da formula: abate e sobrevivencia por
+  // round, dano por round / 100, KAST como fracao, swing em pontos percentuais e
+  // os pontos de multi-kill por round. Com 0 rounds, todas valem 0.
+  function ratesFromCounts(c) {
+    const r = c.rounds;
     return {
-      raating_3: unadjusted,
-      rating_3_like: unadjusted,
-      rating_3_like_unadjusted: unadjusted,
-      rating_recon_proxy: ratingReconProxy,
-      rating_version: "raa3",
+      abate: r ? c.eKillPoints / r : 0,
+      sobrevivencia: r ? 1 - c.eDeathPoints / r : 0,
+      dano: r ? c.eDamageTotal / r / 100 : 0,
+      kast: r ? c.eKastPoints / r : 0,
+      swing: r ? c.adjustedRoundSwingTotalPp / r : 0,
+      multikill: r ? c.multiKillPoints / r : 0,
+    };
+  }
+
+  function ratingRates(row = {}) {
+    return ratesFromCounts(ratingCounts(row));
+  }
+
+  // Soma as contagens de todas as linhas (inclusive as de 0 rounds) e divide pela
+  // soma dos rounds. Sem rounds, nao ha media.
+  function groupCenter(rows = []) {
+    const soma = { rounds: 0, eKillPoints: 0, eDeathPoints: 0, eDamageTotal: 0, eKastPoints: 0, adjustedRoundSwingTotalPp: 0, multiKillPoints: 0 };
+    for (const row of rows || []) {
+      const c = ratingCounts(row);
+      for (const campo of Object.keys(soma)) soma[campo] += c[campo];
+    }
+    return soma.rounds > 0 ? ratesFromCounts(soma) : null;
+  }
+
+  function setGroupCenter(center) {
+    groupCenterAtual = center ? Object.fromEntries(RATING_31_PARTS.map((parte) => [parte, Number(center[parte])])) : null;
+  }
+
+  function getGroupCenter() {
+    return groupCenterAtual;
+  }
+
+  // Sem limites desde 16/11/2026 (decisao do dono). RATING_MIN e RATING_MAX
+  // seguem so para o rAAting 1.0, que e legado. A nota e linear nas contagens:
+  // a nota da soma de varias linhas e a media das notas pesada pelos rounds.
+  function calculateRaating3(row = {}, center = groupCenterAtual) {
+    const c = ratingCounts(row);
+    const rounds = c.rounds;
+    const x = ratesFromCounts(c);
+    const partes = {};
+    let nota = 1;
+    for (const parte of RATING_31_PARTS) {
+      const valor = center ? RATING_31_BETAS[parte] * (x[parte] - Number(center[parte])) : NaN;
+      partes[`parte_${parte}`] = valor;
+      nota += valor;
+    }
+    return {
+      raating_3: nota,
+      rating_version: "raa3.1",
       sample_status: rounds >= SAMPLE_MIN_ROUNDS ? "OK" : "LOW",
       sampleStatus: rounds >= SAMPLE_MIN_ROUNDS ? "OK" : "LOW",
-      ekpr,
-      edpr,
-      eadr,
-      ekast,
-      mk_per_r: mkPerR,
-      adjusted_swing_percent: adjustedSwingPercent,
-      metric_kill: metricKill,
-      metric_damage: metricDamage,
-      metric_multikill: metricMultikill,
-      metric_round_swing: metricRoundSwing,
-      metric_survival: metricSurvival,
-      metric_kast: metricKast,
-      kill_rating: KillRating,
-      damage_rating: DamageRating,
-      multi_kill_rating: MultiKillRating,
-      round_swing_rating: RoundSwingRating,
-      survival_rating: SurvivalRating,
-      kast_rating: KASTRating,
-      KillRating,
-      DamageRating,
-      MultiKillRating,
-      RoundSwingRating,
-      SurvivalRating,
-      KASTRating,
+      ekpr: x.abate,
+      edpr: rounds ? c.eDeathPoints / rounds : 0,
+      eadr: rounds ? c.eDamageTotal / rounds : 0,
+      ekast: rounds ? (100 * c.eKastPoints) / rounds : 0,
+      mk_per_r: x.multikill,
+      adjusted_swing_percent: x.swing,
+      ...partes,
     };
   }
 
@@ -250,13 +231,17 @@
     RATING_MAX,
     SAMPLE_MIN_ROUNDS,
     ECO_BUCKETS,
-    RATING_3_WEIGHTS,
-    RATING_3_BASELINES,
+    RATING_31_BETAS,
+    RATING_31_PARTS,
     finiteNumber,
     clamp,
     calculateRaating1,
     calculateRating: calculateRaating1,
     calculateRaating3,
+    ratingRates,
+    groupCenter,
+    setGroupCenter,
+    getGroupCenter,
     applyRatingFields,
     multiKillPointsFromCounts,
     multiKillPointsForKills,

@@ -42,13 +42,23 @@ Tamanho, do início ao fim: `app.js` -14,5 KB (-3,2 KB em gzip), `styles.css` -0
 
 Em todas as etapas: `database.json`, `team-profiles.json` e `home.json` (fora o carimbo de hora) iguais ao commit anterior, 25 testes passando, e 107 rotas varridas no navegador sem erro de JavaScript.
 
+### Etapa 4 - decisões do dono (23 e 24/11)
+
+| Item | Decisão | Feito e medido |
+|---|---|---|
+| 4.1 Morte pela própria ação e abate em aliado | Não dão abate a ninguém fora do swing | `1ee4264`. 2.698 e 92 de 388.289 abates saem dos pontos de abate, do K do KAST, do multi-kill e do first kill (do jogador e da equipe). O K do placar, da Riot, já não os contava. Carreira: mediana 0,002, máximo 0,019; top 10 igual; MVP muda em 28 mapas; ranking de equipes igual. A cópia em Python que recontava abates não era chamada e saiu (-1.468 linhas); os relatórios em uso rodam o `app.js` |
+| 4.4 Campanhas vencidas nos rankings antigos | Tirar | `eb9f283`. 53.317 de 73.339 campanhas; banco 73,3 -> 61,3 MB (19,0 -> 18,1 MB em gzip); ler o banco no navegador 568 -> 468 ms. As 153 semanas desenham o mesmo HTML |
+| 4.2 Banco gerado no deploy | Sim, nessa ordem | O Render roda `NODE_OPTIONS=--max-old-space-size=4096 node scripts/build_database.js` a cada deploy (o build precisa de 2 a 3 GB; o Render tem 8 GB). Conferido o primeiro deploy com o banco gerado lá, `database.json` e `home.json` saíram do git |
+| 4.3 `TOURNAMENT_OVERRIDES` num JSON | Não fazer | Com o banco gerado no deploy, a chave velha no site deixa de acontecer; sobrava só 77 KB em gzip |
+
 ## O que o dono precisa fazer
 
 1. **Aplicar a 0014** no SQL Editor do Supabase: `begin; 0014; rls_test; positive_test; rollback;`, tudo `ok`, e então aplicar de verdade (ver `supabase/README.md`).
-2. **Push**, quando quiser publicar. Os quatro commits só existem aqui.
+2. **Fluxo novo de dados:** o `database.json` e o `home.json` não vão mais no commit. Para ver localmente, rode o build como sempre; para publicar, siga commitando o que vem antes dele (as partidas, o `metadata.json`, o `data-sources.json` e o `team-profiles.json` do `build_metadata.py` e do `build_lineup_history.js`, e o `app.js`), e o Render monta o banco no deploy. Se o build falhar lá, o Render mantém o site anterior no ar e o log do deploy diz o motivo.
 
 ## O que ficou de fora
 
-- **Etapa 4** (decisões do dono): abate na própria spike, `database.json` fora do git, `TOURNAMENT_OVERRIDES` num JSON e enxugar os rankings antigos.
+- **O histórico do git** segue com os 480 MB das versões antigas do banco: reescrever o histórico é destrutivo e muda o repositório de quem já clonou. O banco só parou de crescer nele.
+- **Nomes sem uso que já existiam** em `analiseMatches.py` e `analiseAgentes.py` (`iter_json_files`, `load_match` e constantes de configuração): ficaram, porque não eram da cópia removida.
 - **21 classes CSS** que só o código apagado desenhava seguem no `styles.css`/`placar.css`: a varredura de CSS ficou fora do plano, porque uma classe montada em template escapa da busca.
 - **Os stubs de navegador seguem copiados em 11 scripts e testes**; só os dois builds passaram para o `carrega_app.js`.

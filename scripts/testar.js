@@ -19,6 +19,11 @@ const testes = [
   ...nomes("scripts", /^test_.*\.py$/).map((f) => ["python", [`scripts/${f}`]]),
 ];
 
+// O banco nao fica no git (o Render gera no deploy); cinco testes leem ele.
+if (!fs.existsSync(path.join(ROOT, "database.json"))) {
+  console.log("aviso: sem database.json; rode antes `node scripts/build_database.js`\n");
+}
+
 let falhas = 0;
 for (const [comando, args] of testes) {
   const r = spawnSync(comando, args, { cwd: ROOT, encoding: "utf8" });

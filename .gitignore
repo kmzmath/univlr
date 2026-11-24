@@ -30,3 +30,10 @@ ferramentas/riot/__pycache__/
 /campeonatos/Univavá/Fase de Grupos/Claude outputs/
 /dados_excel/*.tmp
 /campeonatos/Univavá/Fase de Grupos/*.xlsx
+
+# O banco e a home sao gerados a cada deploy pelo Render (Build Command:
+# NODE_OPTIONS=--max-old-space-size=4096 node scripts/build_database.js, desde
+# 24/11/2026). Commitados, eles chegavam a 77 MB de um limite de 100 MB e
+# somavam ~6 MB ao historico por commit. O build local segue gravando os dois.
+/database.json
+/home.json

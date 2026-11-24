@@ -31,7 +31,7 @@ existe e precisa passar antes de qualquer tela.
 | `migrations/0011_patch_notes.sql` | Seção `patch` do Fórum: só admin publica, texto até 8.000 caracteres e correção sem a janela de 15 minutos; `topic_list` ganha `secao`. Aplicar antes de subir o front |
 | `migrations/0012_patch_notes_so_admin_edita.sql` | Editar patch notes exige ser admin na hora da edição (a 0011 só conferia a autoria, e quem perdesse o papel continuaria editando) |
 | `migrations/0013_fotos_do_patch_notes.sql` | Pasta pública `patch-notes` do Storage (até 5 MB, WebP, PNG e JPEG): só admin envia, lista e apaga; as fotos aparecem só em patch notes, por `[img]` |
-| `migrations/0014_limite_em_paralelo_e_suspensao.sql` | O limite de comentários e de threads passa a valer com chamadas em paralelo (trava por conta até o fim da transação), e a conta suspensa deixa de trocar bio, favoritos e nome e de editar o próprio comentário. Escrita em 23/11/2026, **ainda não aplicada** no projeto. A corrida em si não foi reproduzida: o PGlite dos testes tem uma conexão só |
+| `migrations/0014_limite_em_paralelo_e_suspensao.sql` | O limite de comentários e de threads passa a valer com chamadas em paralelo (trava por conta até o fim da transação), e a conta suspensa deixa de trocar bio, favoritos e nome e de editar o próprio comentário. Escrita em 23/11/2026 e aplicada no projeto em 24/11/2026 (conferido no catálogo: trava no `post_comment` e no `create_topic`, suspensão no `edit_comment`, no `set_username` e no `with check` da política da bio). A corrida em si não foi reproduzida: o PGlite dos testes tem uma conexão só |
 | `tests/rls_test.sql` | Ataques que precisam falhar |
 | `tests/positive_test.sql` | Operações legítimas que precisam passar |
 

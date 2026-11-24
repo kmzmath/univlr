@@ -53,7 +53,7 @@ Em todas as etapas: `database.json`, `team-profiles.json` e `home.json` (fora o 
 
 ## O que o dono precisa fazer
 
-1. **Aplicar a 0014** no SQL Editor do Supabase: `begin; 0014; rls_test; positive_test; rollback;`, tudo `ok`, e então aplicar de verdade (ver `supabase/README.md`).
+1. ~~Aplicar a 0014 no Supabase~~: aplicada pelo dono em 24/11/2026 e conferida no catálogo do banco.
 2. **Fluxo novo de dados:** o `database.json` e o `home.json` não vão mais no commit. Para ver localmente, rode o build como sempre; para publicar, siga commitando o que vem antes dele (as partidas, o `metadata.json`, o `data-sources.json` e o `team-profiles.json` do `build_metadata.py` e do `build_lineup_history.js`, e o `app.js`), e o Render monta o banco no deploy. Se o build falhar lá, o Render mantém o site anterior no ar e o log do deploy diz o motivo.
 
 ## O que ficou de fora

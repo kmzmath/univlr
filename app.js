@@ -25401,19 +25401,30 @@ function routeIsHome() {
 async function init() {
   renderLoading();
   try {
+    // Os arquivos do proprio site comecam a baixar ja. O banco, o maior de
+    // todos, so saia depois do Supabase responder (~0,6 s medidos em 23/11).
+    // O catch vazio so cala o aviso de promessa sem tratamento: o erro volta
+    // no await la embaixo e vai para a tela de erro.
+    const bancoPedido = window.DbCodec ? loadDatabaseOrNull(DATABASE_MANIFEST) : Promise.resolve(null);
+    bancoPedido.catch(() => {});
+    const resumoPedido = routeIsHome() ? loadJsonOptional(HOME_MANIFEST) : null;
     // A home desenha noticias e discussoes recentes de forma SINCRONA, entao os
     // dois precisam estar em memoria antes do primeiro render - buscar depois
     // faria os blocos entrarem do nada e empurrarem a pagina para baixo. Sao
-    // consultas pequenas e nenhuma delas derruba o site se falhar.
-    await Promise.all([
+    // consultas pequenas e nenhuma delas derruba o site se falhar. O Supabase
+    // tem prazo: lento ou fora do ar, o site segue sem ele, e a comunidade
+    // entra num desenho novo quando chegar.
+    const comunidade = window.Community ? window.Community.carregarResumo().catch(() => null) : null;
+    const [, comunidadeNoPrazo] = await Promise.all([
       window.News?.carregar(),
-      window.Community?.carregarResumo().catch(() => null),
+      comunidade && comPrazo(comunidade.then(() => true), 3000),
     ]);
+    if (comunidade && !comunidadeNoPrazo) comunidade.then(() => state.ready && render());
     // Primeiro render pelo resumo: ~8 KB gzip contra 5,3 MB do banco inteiro,
     // sem JSON.parse de 96 mil nós no caminho. Só vale para a home - qualquer
     // outra rota espera o banco completo, que já vem logo atrás.
-    if (routeIsHome()) {
-      const summary = await loadJsonOptional(HOME_MANIFEST);
+    if (resumoPedido && routeIsHome()) {
+      const summary = await resumoPedido;
       if (summary?.format === "univlr-home@1") {
         state.homeSummary = summary;
         state.db = homeSummaryDb(summary);
@@ -25426,7 +25437,7 @@ async function init() {
     // Caminho rápido: banco pré-agregado por scripts/build_database.js.
     // Sem database.json (ex.: dados novos ainda não processados), cai no
     // pipeline completo no navegador, que baixa todos os arquivos brutos.
-    const packed = window.DbCodec ? await loadDatabaseOrNull(DATABASE_MANIFEST) : null;
+    const packed = await bancoPedido;
     if (packed) {
       state.db = window.DbCodec.decode(packed);
       aplicarContextoDoRaating(state.db);
@@ -25696,6 +25707,12 @@ async function loadDatabaseOrNull(path) {
     if (error.status === 404) return null;
     throw error;
   }
+}
+
+// Espera a promessa ate `ms` e depois segue sem ela (ela continua correndo).
+// Sem constante de prazo aqui: o init() roda antes desta linha (TDZ).
+function comPrazo(promessa, ms) {
+  return Promise.race([promessa, new Promise((resolve) => setTimeout(resolve, ms))]);
 }
 
 async function loadJsonOptional(path) {
@@ -32201,7 +32218,9 @@ function renderMatchDetail(id) {
   const series = matchSeries(match);
   const aggregateMode = route().tab === "all" && (series.length > 1 || normalizeMatchItem(match).officialResultNote);
   const selectedMatches = aggregateMode ? series : [match];
-  const pendingDetail = selectedMatches.filter((item) => item.detailPending);
+  // O bruto so serve a linha de rounds, que o modo serie nao desenha: o placar,
+  // o comparativo e as tabelas da serie saem do banco.
+  const pendingDetail = aggregateMode ? [] : selectedMatches.filter((item) => item.detailPending);
   if (pendingDetail.length) {
     ensureMatchDetails(pendingDetail);
     return Shell(`<div class="empty-state">Carregando detalhes da partida...</div>`);
@@ -45589,9 +45608,16 @@ function bindSearch() {
     });
   }
 
-  document.addEventListener("click", (event) => {
-    if (!event.target.closest(".global-search")) fechar();
-  });
+  // Um ouvinte so, para o site inteiro: antes cada desenho somava mais um, que
+  // seguia fechando a busca de uma pagina que ja nao existia. Ele fecha a busca
+  // do desenho atual.
+  state.fecharBusca = fechar;
+  if (!state.searchClickBound) {
+    state.searchClickBound = true;
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".global-search")) state.fecharBusca();
+    });
+  }
   renderResults();
 }
 

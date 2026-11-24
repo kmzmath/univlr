@@ -546,7 +546,11 @@
     try {
       const { data, error } = await api()
         .from("thread_counts")
-        .select("subject_kind, subject_id, comentarios, ultimo_em");
+        .select("subject_kind, subject_id, comentarios, ultimo_em")
+        // O Supabase corta a resposta em 1.000 linhas por padrao. Sem ordem o
+        // corte tiraria linhas ao acaso, inclusive a atividade mais nova; assim
+        // saem as mais antigas. Thread sem comentario (ultimo_em nulo) vai ao fim.
+        .order("ultimo_em", { ascending: false, nullsFirst: false });
       if (error) throw error;
       contagens = new Map((data || []).map((r) => [chave(r.subject_kind, r.subject_id), r]));
     } catch (erro) {

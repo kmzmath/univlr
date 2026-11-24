@@ -179,6 +179,21 @@ function main() {
     delete snapshot.ranking;
   }
 
+  // Poda 3 (23/11/2026): campanha vencida (score 0) nos rankings antigos. A
+  // unica tela que le campanha de semana passada (rankingAchievementSummary)
+  // mostra so as com pontos; eram 54 mil das 73 mil, 12 MB do banco. O ranking
+  // atual fica inteiro: a semana corrente divide os objetos de time com ele.
+  const timesDoRankingAtual = new Set(db.ranking.teams || []);
+  let campanhasVencidas = 0;
+  for (const snapshot of db.rankingSnapshots || []) {
+    for (const team of snapshot.teams || []) {
+      if (timesDoRankingAtual.has(team) || !Array.isArray(team.achievements)) continue;
+      const comPontos = team.achievements.filter((row) => Number(row.score) > 0);
+      campanhasVencidas += team.achievements.length - comPontos.length;
+      team.achievements = comPontos;
+    }
+  }
+
   const payload = codec.encode(db);
   const json = JSON.stringify(payload);
 
@@ -216,7 +231,7 @@ function main() {
   console.log(`database.json gerado em ${((Date.now() - startedAt) / 1000).toFixed(1)}s`);
   console.log(`  arquivos lidos: ${loaded.length} (falhas: ${db.failedFiles.length}, duplicados: ${db.duplicateFiles.length})`);
   console.log(`  partidas: ${db.matches.length} (roundResults podados: ${strippedMatches})`);
-  console.log(`  campos mortos removidos: ${strippedFields}`);
+  console.log(`  campos mortos removidos: ${strippedFields} | campanhas vencidas fora dos rankings antigos: ${campanhasVencidas}`);
   console.log(`  times: ${db.teams.length} | jogadores: ${db.players.length} | snapshots de ranking: ${db.rankingSnapshots.length}`);
   console.log(`  tamanho: ${mb(json.length)} bruto | ${mb(gzipBytes)} gzip | nós: ${payload.nodes.length}`);
   // A tabela de pontos casa pelo id do evento e pelo rotulo da colocacao, e as

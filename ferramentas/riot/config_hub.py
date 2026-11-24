@@ -91,6 +91,20 @@ def texto_seguro(valor):
     return "'" + valor if valor.startswith(PREFIXOS_DE_FORMULA) else valor
 
 
+def grava_texto(celula, valor):
+    """
+    Grava na planilha sem mudar o valor e sem virar formula.
+
+    O texto_seguro e para o CSV. No xlsx o apostrofo dele vira parte do valor:
+    o PUUID que comeca com "-" voltava como "'-..." e o jogador perdia as
+    partidas. Celula marcada como texto nunca e avaliada, e o openpyxl so
+    transforma em formula o que comeca com "=".
+    """
+    celula.value = valor
+    if isinstance(valor, str):
+        celula.data_type = "s"
+
+
 PLAYERS_XLSX = planilha("players.xlsx")
 TEAMS_XLSX = planilha("teams.xlsx")
 ROUND_STATE_WINRATES_XLSX = planilha("round_state_winrates.xlsx")

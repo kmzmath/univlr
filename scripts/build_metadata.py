@@ -176,6 +176,15 @@ def title_from_slug(slug):
     return " ".join(part.upper() if part.lower() in KNOWN_ACRONYMS else part.capitalize() for part in parts if part)
 
 
+# Planilha que sumiu nao e "sem dados": em 18/09/2026 players.xlsx e teams.xlsx
+# sumiram, e o build gravaria o metadata.json sem nenhum jogador e terminaria
+# com sucesso. As oito do dados_excel/ estao no git; faltar uma e erro.
+def exige(path):
+    if not path.exists():
+        raise SystemExit(f"ERRO: falta {path.parent.name}/{path.name}. Nada foi gravado.")
+    return path
+
+
 # Riot ID de HOJE de cada conta, consultado na Riot por
 # ferramentas/riot/AtualizaNicks.py. O perfil mostra este nome como "nick
 # atual"; sem ele, o site so conhece o nome com que a conta jogou a ultima
@@ -366,9 +375,7 @@ def event_date_value(value):
 
 
 def read_tournament_infos():
-    path = DATA_ROOT / "tournaments.xlsx"
-    if not path.exists():
-        return {}
+    path = exige(DATA_ROOT / "tournaments.xlsx")
 
     tournaments = {}
     for row in load_rows(path):
@@ -476,9 +483,7 @@ def escreve_json(caminho, dados):
 
 
 def read_states():
-    path = DATA_ROOT / "estados.xlsx"
-    if not path.exists():
-        return []
+    path = exige(DATA_ROOT / "estados.xlsx")
     states = []
     for row in load_rows(path):
         sigla = row.get("sigla", "").upper()
@@ -500,9 +505,7 @@ def read_states():
 
 
 def read_agents():
-    path = DATA_ROOT / "agents.xlsx"
-    if not path.exists():
-        return []
+    path = exige(DATA_ROOT / "agents.xlsx")
     agents = []
     for row in load_rows(path):
         slug = row.get("slug", "").lower()
@@ -521,9 +524,7 @@ def read_agents():
 
 
 def read_maps():
-    path = DATA_ROOT / "maps.xlsx"
-    if not path.exists():
-        return []
+    path = exige(DATA_ROOT / "maps.xlsx")
     maps = []
     for row in load_rows(path):
         slug = row.get("slug", "").lower()
@@ -564,9 +565,7 @@ def parse_win_percent(value):
 
 
 def read_state_winrates():
-    path = DATA_ROOT / "round_state_winrates.xlsx"
-    if not path.exists():
-        return []
+    path = exige(DATA_ROOT / "round_state_winrates.xlsx")
 
     rows = list(load_rows(path))
     output = []
@@ -594,9 +593,7 @@ def read_state_winrates():
 
 
 def read_team_infos(states_by_sigla, logos_by_slug):
-    path = DATA_ROOT / "teams_infos.xlsx"
-    if not path.exists():
-        return {}
+    path = exige(DATA_ROOT / "teams_infos.xlsx")
     teams = {}
     for row in load_rows(path):
         slug = slug_key(row.get("slug", ""))
@@ -632,9 +629,7 @@ def read_team_infos(states_by_sigla, logos_by_slug):
 
 
 def read_team_lineups():
-    path = DATA_ROOT / "teams.xlsx"
-    if not path.exists():
-        return {}
+    path = exige(DATA_ROOT / "teams.xlsx")
 
     teams = {}
     for row in load_rows(path):
@@ -696,9 +691,7 @@ def read_teams(states_by_sigla):
 
 
 def read_players():
-    path = DATA_ROOT / "players.xlsx"
-    if not path.exists():
-        return []
+    path = exige(DATA_ROOT / "players.xlsx")
     players = []
     photos = player_photo_index()
 
@@ -837,9 +830,11 @@ def main():
     }
     warn_lineups_sem_jogador(metadata["teams"], metadata["players"])
     warn_sucessoes_invalidas(metadata["teams"])
+    # Le tudo antes de gravar o primeiro arquivo: falta de planilha para aqui
+    # sem deixar metadata.json novo ao lado de data-sources.json velho.
+    data_sources = build_data_sources()
     output_path = ROOT / "metadata.json"
     escreve_json(output_path, metadata)
-    data_sources = build_data_sources()
     sources_path = ROOT / "data-sources.json"
     escreve_json(sources_path, data_sources)
     print(

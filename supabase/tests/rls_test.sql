@@ -561,7 +561,64 @@ begin
 end;
 $patch$;
 
+-- ------------------------------------------------- suspensao cala a conta (0014)
+-- Conta propria, para nao herdar suspensao nem limite dos blocos de cima. Cada
+-- caso confere a MENSAGEM: sem a 0014 o nome cairia na regra dos 30 dias e a
+-- bio passaria, e "deu erro" sozinho nao provaria nada.
+
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
+                        email_confirmed_at, created_at, updated_at, raw_user_meta_data)
+values
+  ('14141414-1414-1414-1414-141414141414', '00000000-0000-0000-0000-000000000000',
+   'authenticated', 'authenticated', 'susp@teste.univlr', '', now(), now(), now(),
+   '{"username":"susp_teste"}');
+
+do $suspensa$
+declare
+  sus uuid := '14141414-1414-1414-1414-141414141414';
+  c_sus uuid;
+  n int;
+begin
+  perform set_config('request.jwt.claims', json_build_object('sub', sus)::text, true);
+  set local role authenticated;
+  c_sus := public.post_comment('match', 'partida-de-teste', 'antes da suspensao');
+  reset role;
+  update public.profiles set banned_until = now() + interval '1 day' where id = sus;
+  set local role authenticated;
+
+  -- ATAQUE - suspensa reescreve o proprio comentario dentro dos 15 minutos.
+  begin
+    perform public.edit_comment(c_sus, 'reescrito durante a suspensao');
+    insert into _r (teste, esperado, resultado) values ('suspensa edita comentario', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('suspensa edita comentario', 'bloqueado',
+      case when SQLERRM like '%conta suspensa%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - suspensa troca a bio (e, pelo mesmo caminho, os favoritos).
+  begin
+    update public.profiles set bio = 'texto da suspensa' where id = sus;
+    get diagnostics n = row_count;
+    insert into _r (teste, esperado, resultado) values ('suspensa troca a bio', 'bloqueado', 'FALHOU - passou em ' || n || ' linha');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('suspensa troca a bio', 'bloqueado',
+      case when SQLERRM like '%row-level security%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+
+  -- ATAQUE - suspensa troca o nome para despistar a moderacao.
+  begin
+    perform public.set_username('outro_nome_susp');
+    insert into _r (teste, esperado, resultado) values ('suspensa troca o nome', 'bloqueado', 'FALHOU - passou');
+  exception when others then
+    insert into _r (teste, esperado, resultado) values ('suspensa troca o nome', 'bloqueado',
+      case when SQLERRM like '%conta suspensa%' then 'ok' else 'FALHOU - ' || SQLERRM end);
+  end;
+  reset role;
+end;
+$suspensa$;
+
 -- ------------------------------------------------------------------ limpeza
+delete from auth.users where email = 'susp@teste.univlr';
 delete from auth.users where email in ('adm_patch@teste.univlr', 'eva_patch@teste.univlr');
 delete from auth.users where email in ('alice@teste.univlr', 'bruno@teste.univlr');
 delete from auth.users where email like 'mencao_@teste.univlr';

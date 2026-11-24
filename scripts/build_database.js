@@ -75,12 +75,46 @@ function readJson(relPath) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relPath), "utf8"));
 }
 
+// Opcional e so a FALTA do arquivo. JSON quebrado virava null em silencio: o
+// ranking saia sem os pesos e o lider mudava de nota com o build "ok".
 function readJsonOptional(relPath) {
   try {
     return readJson(relPath);
   } catch (error) {
-    return null;
+    if (error.code === "ENOENT") return null;
+    throw error;
   }
+}
+
+// O build do navegador descarta em silencio o arquivo que nao abre, o nome que
+// nao se le e o arquivo sem as duas equipes; e, quando o placar do nome nao bate
+// com o do arquivo, da a vitoria a quem fez mais rounds. Aqui qualquer um deles
+// para o build, antes de gravar.
+function checkMatchFiles(loaded) {
+  const problems = [];
+  for (const file of loaded) {
+    if (file.error) {
+      problems.push(`${file.path}: nao abriu (${file.error.message})`);
+      continue;
+    }
+    const meta = parseFileName(file.path);
+    if (!meta) {
+      problems.push(`${file.path}: nome fora do padrao`);
+      continue;
+    }
+    const red = file.raw.teams?.find((team) => team.teamId === "Red");
+    const blue = file.raw.teams?.find((team) => team.teamId === "Blue");
+    if (!red || !blue) {
+      problems.push(`${file.path}: sem as equipes Red e Blue`);
+      continue;
+    }
+    if (meta.inferTeamsFromPlayers) continue;
+    const bate =
+      (meta.scoreA === red.roundsWon && meta.scoreB === blue.roundsWon) ||
+      (meta.scoreA === blue.roundsWon && meta.scoreB === red.roundsWon);
+    if (!bate) problems.push(`${file.path}: placar do nome ${meta.scoreA}x${meta.scoreB}, no arquivo ${red.roundsWon}x${blue.roundsWon}`);
+  }
+  if (problems.length) throw new Error(`arquivo de partida com problema:\n  ${problems.join("\n  ")}`);
 }
 
 function checkRosterPlayerIdentities(db, metadata) {
@@ -134,6 +168,7 @@ function main() {
     }
   }
 
+  checkMatchFiles(loaded);
   const metadata = prepareMetadata(rawMetadata);
   const teamProfiles = prepareTeamProfiles(rawTeamProfiles);
   const db = buildDatabase(manifest.events, loaded, metadata, teamProfiles, rankingWeights);
@@ -187,9 +222,9 @@ function main() {
 
   const payload = codec.encode(db);
   const json = JSON.stringify(payload);
-  writeFileWithRetry(OUTPUT, json);
 
   // Round-trip: garante que o que o navegador vai decodificar bate com o build.
+  // Confere ANTES de gravar: banco reprovado nao substitui o que esta no disco.
   const decoded = codec.decode(JSON.parse(json));
   const checks = [
     ["partidas", decoded.matches.length === db.matches.length],
@@ -210,6 +245,12 @@ function main() {
     ],
   ];
   const failures = checks.filter(([, ok]) => !ok);
+  if (failures.length) {
+    for (const [name] of failures) console.error(`  ERRO: round-trip falhou em "${name}"; database.json nao foi gravado`);
+    process.exitCode = 1;
+    return;
+  }
+  writeFileWithRetry(OUTPUT, json);
 
   const gzipBytes = zlib.gzipSync(json).length;
   const mb = (bytes) => `${(bytes / 1048576).toFixed(1)} MB`;
@@ -281,17 +322,15 @@ function main() {
   try {
     require("child_process").execFileSync(process.execPath, [path.join(__dirname, "build_home.js")], { stdio: "inherit" });
   } catch (error) {
-    console.error("  aviso: build_home.js falhou - rode `node scripts/build_home.js` antes de commitar");
+    // home.json velho pinta a home com dados de antes: e erro, nao aviso.
+    console.error("  ERRO: build_home.js falhou - rode `node scripts/build_home.js` antes de commitar");
+    process.exitCode = 1;
   }
   if (payload.droppedFunctions > 0) {
     console.warn(`  aviso: ${payload.droppedFunctions} funções descartadas na serialização`);
   }
-  if (failures.length) {
-    for (const [name] of failures) console.error(`  ERRO: round-trip falhou em "${name}"`);
-    process.exitCode = 1;
-  } else {
-    console.log("  round-trip de decodificação: ok");
-  }
+  console.log("  round-trip de decodificação: ok");
 }
 
-main();
+if (require.main === module) main();
+else module.exports = { checkMatchFiles, readJsonOptional };

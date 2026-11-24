@@ -209,7 +209,7 @@ def link_accounts(reg: Registry, links: List[Tuple[str, Dict[str, Any]]]) -> int
         if free is None:
             n = max([pcm.alt_puuid_index_from_key(h) or 1 for h in headers]) + 1
             free, _ = pcm.ensure_column(ws, headers, f"puuid{n}")
-        ws.cell(row, free).value = p["puuid"]
+        config_hub.grava_texto(ws.cell(row, free), p["puuid"])
 
         riot_id = f'{p["gameName"]}#{p["tagLine"]}'
         nick_cols = [c for c, _h in pcm.get_nick_columns(headers)]
@@ -217,7 +217,7 @@ def link_accounts(reg: Registry, links: List[Tuple[str, Dict[str, Any]]]) -> int
             col = next((c for c in nick_cols if not ws.cell(row, c).value), None)
             if col is None:
                 col, _ = pcm.create_next_nick_column(ws, headers)
-            ws.cell(row, col).value = riot_id
+            config_hub.grava_texto(ws.cell(row, col), riot_id)
         print(f"  vinculado: {riot_id} -> {label_of(pk)}")
     pcm.normalize_players_sheet_layout(ws, headers)
     wb.save(xlsx)

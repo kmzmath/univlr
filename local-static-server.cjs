@@ -30,8 +30,12 @@ const recusa = (res, status, texto) => {
 };
 
 const server = http.createServer((req, res) => {
-  const url = new URL(req.url, `http://${req.headers.host || "127.0.0.1"}`);
-  if (!HOSTS.has(url.hostname)) return recusa(res, 403, "Forbidden");
+  // O Host do cabecalho, e nao o da URL: `GET //127.0.0.1/x` faria o URL
+  // achar que o host e local mesmo com o Host de outro dominio.
+  const host = String(req.headers.host || "").toLowerCase().replace(/:\d+$/, "");
+  if (!HOSTS.has(host)) return recusa(res, 403, "Forbidden");
+  if (!req.url.startsWith("/") || req.url.startsWith("//")) return recusa(res, 400, "Bad request");
+  const url = new URL(req.url, "http://127.0.0.1");
 
   let pathname;
   try {
@@ -43,9 +47,12 @@ const server = http.createServer((req, res) => {
   if (pathname === "/") pathname = "/index.html";
 
   // .git, .env, .claude e a pasta de trabalho nao sao do site. O Windows nao
-  // diferencia maiuscula, entao a comparacao tambem nao.
+  // diferencia maiuscula, ignora ponto e espaco no fim do nome ("trabalho ")
+  // e aceita nome curto ("TRABAL~1") e fluxo alternativo ("x::$DATA"): o site
+  // nao usa nenhum desses, entao eles saem antes de comparar.
   const partes = pathname.split(/[\\/]/).filter(Boolean);
-  if (partes.some((parte) => parte.startsWith(".")) || partes[0]?.toLowerCase() === "trabalho") {
+  const suspeita = (parte) => parte.startsWith(".") || /[. ]$/.test(parte) || /[~:]/.test(parte);
+  if (partes.some(suspeita) || partes[0]?.toLowerCase() === "trabalho") {
     return recusa(res, 403, "Forbidden");
   }
 

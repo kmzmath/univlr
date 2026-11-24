@@ -51,10 +51,17 @@ function pede(porta, caminho, host = `127.0.0.1:${porta}`) {
     assert.strictEqual(await pede(porta, "/TRABALHO/x.json"), 403, "nem com maiuscula");
     assert.strictEqual(await pede(porta, "/%2e%2egit/config"), 403, "nem codificado");
     assert.strictEqual(await pede(porta, "/..%2fHub%20Uni2/x.json"), 403, "pasta vizinha nao sai");
+    assert.strictEqual(await pede(porta, "/trabalho%20/x.json"), 403, "nem com espaco no fim (Windows)");
+    assert.strictEqual(await pede(porta, "/trabalho./x.json"), 403, "nem com ponto no fim (Windows)");
+    assert.strictEqual(await pede(porta, "/TRABAL~1/x.json"), 403, "nem pelo nome curto (Windows)");
+    assert.strictEqual(await pede(porta, "/app.js::$DATA"), 403, "nem pelo fluxo alternativo (Windows)");
     assert.strictEqual(await pede(porta, "/", "univlr.exemplo.invalid"), 403, "outro Host e recusado");
+    assert.strictEqual(await pede(porta, "//127.0.0.1/app.js", "univlr.exemplo.invalid"), 403, "Host de fora com URL apontando para ca");
+    assert.strictEqual(await pede(porta, "//127.0.0.1/app.js"), 400, "URL que comeca com //");
+    assert.strictEqual(await pede(porta, "/", `[::1]:${porta}`), 200, "IPv6 local vale");
     assert.strictEqual(await pede(porta, "/%E0%A4%A"), 400, "% malformado");
     assert.strictEqual(await pede(porta, "/"), 200, "e o servidor segue de pe");
-    console.log("ok: servidor local serve o site e recusa 7 caminhos e Hosts de fora");
+    console.log("ok: servidor local serve o site e recusa 11 caminhos e 2 Hosts de fora");
   } finally {
     servidor.kill();
   }

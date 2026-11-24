@@ -23,7 +23,10 @@ includes('const primary = metricValue(player, "raating_3")', "official rating pr
 includes('player.rating_version !== "raa3.1"', "a rating of another version is not labeled as rAAting 3.1");
 includes('return Number.isFinite(rating) ? fmt(rating) : "-"', "rAAting 3.1 is formatted with two decimals");
 
-includes('players.filter(isOfficialRatingSample)', "official player rankings filter sample_status = OK");
+// `players.filter(isOfficialRatingSample)` so existia em playerRankingRows(),
+// que nenhuma tela chamava (a pagina de Jogadores nao ordena por rAAting, por
+// decisao do dono): a assertiva protegia codigo morto. Saiu com a funcao em
+// 23/11/2026, junto com isOfficialRatingSample e sampleStatusChip.
 includes('Number(officialRatingValue(b) || 0) - Number(officialRatingValue(a) || 0)', "official rankings sort by rAAting 3.1 descending");
 includes('Number(b.rounds || 0) - Number(a.rounds || 0)', "official player ranking tie-breaks by rounds");
 
@@ -33,7 +36,10 @@ includes('Number(b.rounds || 0) - Number(a.rounds || 0)', "official player ranki
 // devolve `${signedDecimal(value)} pp` e aparece em 5 lugares renderizados,
 // ao lado do proprio signed(fkFdDiff) da linha seguinte.
 includes('formatMaybeSwing(player)', "Swing/R is rendered with positive sign support");
-includes('signed(fkFdDiff)', "FK-FD is rendered with positive sign support");
+// `signed(fkFdDiff)` so existia em playerTable(), nunca chamada e removida em
+// 23/11/2026. As tabelas vivas (campeonato, perfil e estatisticas) escrevem o
+// sinal com signed(fkFd(player)).
+includes('signed(fkFd(player))', "FK-FD is rendered with positive sign support");
 
 // A composicao saiu do painel proprio (playerRatingCompositionPanel, removido
 // em 24/10/2026) e hoje e um bloco da aba Estatisticas (playerComposicao), que

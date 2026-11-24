@@ -1433,16 +1433,6 @@
     return counts;
   }
 
-  function groupBy(rows, keyFn) {
-    const groups = new Map();
-    for (const row of rows) {
-      const key = keyFn(row);
-      if (!groups.has(key)) groups.set(key, []);
-      groups.get(key).push(row);
-    }
-    return groups;
-  }
-
   function indexById(ids) {
     return new Map(ids.map((id, index) => [id, index]));
   }

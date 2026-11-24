@@ -8,16 +8,9 @@ const DATA_SOURCES = path.join(ROOT, "data-sources.json");
 const METADATA = path.join(ROOT, "metadata.json");
 const TEAM_PROFILES = path.join(ROOT, "team-profiles.json");
 
-const FILENAME_TEAM_ALIASES = {
-  azr: "azure_bears",
-  caap: "caap_hellhounds",
-  fei: "fei_darkowls",
-  mackred: "macklogic_red",
-  pucc: "pucc_cardinals",
-  tritons: "unicamp_tritons_red",
-  uspstars: "usp_stars",
-  axissupernova: "axis_anteaters",
-};
+// O nome do arquivo e lido pelo parseFileName do proprio app.js: esta copia
+// tinha regras de codigo e data diferentes e um dia divergiria do site.
+require("./carrega_app.js");
 
 const LEGACY_TEAM_ID_ALIASES = {
   azure_bears_s: "azure_bears_silver",
@@ -78,54 +71,6 @@ function normalizeNameKey(value) {
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "");
-}
-
-function parseFileName(sourcePath) {
-  const filename = sourcePath.split(/[\\/]/).pop();
-  const stem = filename.replace(/(?:\.json)+$/i, "");
-  const tokens = stem.split("_").filter(Boolean);
-  const scoreIndex = tokens.findIndex((token, index) => /^\d+$/.test(token) && tokens[index + 1]?.toLowerCase() === "x" && /^\d+$/.test(tokens[index + 2] || ""));
-  if (scoreIndex < 2 || scoreIndex + 4 > tokens.length) return parseCompactRivalsFile(stem);
-
-  const beforeScore = tokens.slice(0, scoreIndex);
-  const codeIndex = beforeScore.findIndex((token) => /^\d+[a-z]?$/i.test(token));
-  // A equipe vem logo depois da data. Só o código não basta: PREJUBS_SP_FINALa
-  // não tem código só de número e a equipe sairia com o prefixo inteiro.
-  const dateIndex = beforeScore.findIndex((token) => /^\d{2}-\d{2}-\d{2,4}$/.test(token) || /^\d{4}-\d{2}-\d{2}$/.test(token));
-  const teamAStart = dateIndex >= 0 ? dateIndex + 1 : codeIndex >= 0 ? codeIndex + 1 : 1;
-
-  const teamAId = beforeScore.slice(teamAStart).join("_");
-  const teamBId = tokens.slice(scoreIndex + 3, -1).join("_");
-  if (!teamAId || !teamBId) return null;
-  return {
-    teamAId,
-    teamBId,
-    scoreA: Number(tokens[scoreIndex]),
-    scoreB: Number(tokens[scoreIndex + 2]),
-  };
-}
-
-function parseCompactRivalsFile(stem) {
-  const match = stem.match(/^Rivals_(?<series>\d+)_(?<suffix>[a-z])_(?<pair>.+)$/i);
-  if (!match?.groups) return null;
-  const pair = splitCompactTeamPair(match.groups.pair);
-  if (!pair) return null;
-  return {
-    teamAId: FILENAME_TEAM_ALIASES[pair[0]] || pair[0],
-    teamBId: FILENAME_TEAM_ALIASES[pair[1]] || pair[1],
-    inferTeamsFromPlayers: true,
-  };
-}
-
-function splitCompactTeamPair(pair) {
-  const compact = normalizeNameKey(pair);
-  const aliases = Object.keys(FILENAME_TEAM_ALIASES).sort((a, b) => b.length - a.length);
-  for (const left of aliases) {
-    for (const right of aliases) {
-      if (compact === `${left}x${right}`) return [left, right];
-    }
-  }
-  return null;
 }
 
 function buildPlayerLookups(metadata) {

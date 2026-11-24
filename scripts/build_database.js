@@ -24,48 +24,7 @@ const zlib = require("zlib");
 const ROOT = path.resolve(__dirname, "..");
 const OUTPUT = path.join(ROOT, "database.json");
 
-// --- Stubs de navegador: app.js referencia DOM/fetch no topo do arquivo ---
-const noop = () => {};
-const stubElement = {
-  innerHTML: "",
-  addEventListener: noop,
-  removeEventListener: noop,
-  querySelector: () => null,
-  querySelectorAll: () => [],
-  classList: { add: noop, remove: noop, toggle: noop, contains: () => false },
-  style: {},
-  dataset: {},
-  setAttribute: noop,
-  appendChild: noop,
-  focus: noop,
-};
-globalThis.window = globalThis;
-globalThis.document = {
-  title: "",
-  getElementById: () => stubElement,
-  querySelector: () => null,
-  querySelectorAll: () => [],
-  createElement: () => ({ ...stubElement }),
-  addEventListener: noop,
-  removeEventListener: noop,
-  body: stubElement,
-  documentElement: stubElement,
-};
-globalThis.location = { hash: "" };
-globalThis.history = { pushState: noop, replaceState: noop };
-globalThis.requestAnimationFrame = () => 0;
-// init() do app.js dispara sozinho; com fetch pendente para sempre ele para
-// na primeira await sem efeitos colaterais, e o build chama o pipeline direto.
-globalThis.fetch = () => new Promise(noop);
-
-function loadScript(relPath) {
-  const source = fs.readFileSync(path.join(ROOT, relPath), "utf8");
-  (0, eval)(source);
-}
-
-loadScript("raating-core.js");
-loadScript("ranking-core.js");
-loadScript("app.js");
+require("./carrega_app.js");
 
 const codec = require(path.join(ROOT, "db-codec.js"));
 const { checkTeamSuccessions } = require("./team_successions.js");

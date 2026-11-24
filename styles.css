@@ -5339,25 +5339,6 @@ td {
   font-weight: 800;
 }
 
-.tournament-stage-track {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-  padding: 12px;
-}
-
-.tournament-stage-card {
-  display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) auto;
-  gap: 12px;
-  align-items: center;
-  min-width: 0;
-  border: 1px solid rgba(var(--frio-2-rgb), 0.15);
-  background: #162235;
-  padding: 12px;
-}
-
-.tournament-stage-card strong,
 .tournament-team-card strong,
 .tournament-placement-card strong {
   display: block;
@@ -5367,8 +5348,6 @@ td {
   white-space: nowrap;
 }
 
-.tournament-stage-card small,
-.tournament-stage-card em,
 .tournament-team-card small,
 .tournament-team-card em,
 .tournament-placement-card small {
@@ -7193,25 +7172,6 @@ a.tournament-bracket-match:hover {
   color: var(--muted);
   font-size: var(--text-xs);
   font-weight: 700;
-}
-
-.tournament-stat-expand {
-  min-height: 30px;
-  border: 1px solid rgba(var(--frio-2-rgb), 0.22);
-  border-radius: var(--radius-sm);
-  background: #17263b;
-  color: var(--ink);
-  cursor: pointer;
-  font: inherit;
-  font-size: var(--text-2xs);
-  font-weight: 800;
-  padding: 0 12px;
-  white-space: nowrap;
-}
-
-.tournament-stat-expand:hover {
-  border-color: rgba(65, 212, 155, 0.36);
-  background: #1b2e47;
 }
 
 .tournament-stat-list {

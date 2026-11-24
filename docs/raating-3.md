@@ -36,6 +36,7 @@ Em `applyRoundSwingStats`, no `app.js`.
   - Célula que falta (elenco maior que 5) e round sem o papel do vencedor caem na tabela simétrica do `metadata.json`.
 - **Cada morte:** a vítima soma a mudança da chance do time dela. O lado de quem matou soma o contrário, dividido entre os inimigos da vítima que deram dano nela no round, na proporção do dano cru (`damageByVictim`, do round inteiro, porque a Riot não dá a hora do dano). Sem dano registrado, tudo vai para quem matou.
 - **Abate em aliado:** quem matou leva a perda inteira, a vítima não perde nada, e os vivos do rival dividem o ganho. **Suicídio ou morte sem autor:** a vítima fica com a perda, e os vivos do rival dividem o ganho.
+- **Fora do swing, abate é só o de inimigo** (decisão do dono, 23/11/2026). A morte pela própria ação (spike, habilidade) e o abate em aliado seguem sendo morte de quem morreu, mas não dão abate a ninguém: ficam de fora dos pontos de abate, do "K" do KAST, do multi-kill e do first kill, do jogador e da equipe. São 2.698 e 92 de 388.289 abates. O K do placar vem da Riot e já não contava quase nenhum deles. Antes, a nota contava, e mudou pouco: na carreira, mediana 0,002 e no máximo 0,019; o MVP de 28 mapas mudou, e o ranking de equipes não.
 - **Plantio:** o salto da chance do ataque vai para os vivos do ataque em partes iguais e é cobrado dos vivos da defesa.
 - **Fim do round**, pelo motivo da Riot (`roundResult`): desarme em `defuseRoundTime`; explosão em `plantRoundTime + 45000`, com 50 ms de folga; eliminação na morte que deixa a defesa sem vivos, ou o ataque sem vivos e sem spike. Nada depois do fim conta. O que falta para 100% vai para os vivos do vencedor naquele momento e é cobrado dos vivos do perdedor (ou do time inteiro, se ninguém sobrou).
 - **Soma zero:** o swing de todo round soma zero.
@@ -64,7 +65,7 @@ Em `applyRoundSwingStats`, no `app.js`.
 | Salto do plantio para os vivos do ataque | escolha |
 | Resíduo do fim do round para os vivos | escolha (a HLTV descreve algo parecido) |
 | Fim do round pelo motivo da Riot | escolha do dono |
-| Abate em aliado e suicídio | escolha do dono |
+| Abate em aliado e suicídio | escolha do dono (no swing e, desde 23/11/2026, fora dele) |
 | Reta da economia 2,095 - 2,074·p | estimativa; p medido |
 | Dano com o multiplicador inteiro | oficial |
 | KAST da nota sem ajuste de economia | lacuna |

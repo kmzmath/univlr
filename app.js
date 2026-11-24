@@ -27584,7 +27584,12 @@ function aggregateMatchPlayerRoundStats(players, roundResults, metadata) {
       }
 
       const kills = row.kills || [];
-      killsCountRound.set(puuid, (killsCountRound.get(puuid) || 0) + kills.length);
+      // Abate e so o de inimigo (decisao do dono, 23/11/2026): a morte pela
+      // propria acao (spike, habilidade) e o abate em aliado nao entram no KAST,
+      // no multi-kill, nos pontos de abate nem no first kill. O swing ja os
+      // tratava como perda. Sao 2.698 e 92 de 388 mil abates.
+      const abates = kills.filter((kill) => String(kill.victim || "") !== puuid && sideByPuuid.get(String(kill.victim || "")) !== sideByPuuid.get(puuid));
+      killsCountRound.set(puuid, (killsCountRound.get(puuid) || 0) + abates.length);
       for (const kill of kills) {
         const time = kill.timeSinceRoundStartMillis;
         if (time === null || time === undefined) continue;
@@ -27596,7 +27601,8 @@ function aggregateMatchPlayerRoundStats(players, roundResults, metadata) {
         if (eventsSeen.has(key)) continue;
         eventsSeen.add(key);
         const assistants = (kill.assistants || []).map(String).filter((item) => sideByPuuid.has(item));
-        events.push({ time: Number(time), killer, victim, assistants });
+        // `abate`: so o de inimigo da credito a quem matou (ver acima).
+        events.push({ time: Number(time), killer, victim, assistants, abate: Boolean(killer) && killer !== victim && sideByPuuid.get(killer) !== sideByPuuid.get(victim) });
         victimsSet.add(victim);
         assistants.forEach((assistant) => assistantSet.add(assistant));
       }
@@ -27685,7 +27691,7 @@ function applyFirstDuelStats(events, stats, sideByPuuid) {
   const firstTime = events[0].time;
   for (const event of events) {
     if (event.time !== firstTime) break;
-    if (event.killer && stats.has(event.killer)) stats.get(event.killer).firstKills += 1;
+    if (event.abate && stats.has(event.killer)) stats.get(event.killer).firstKills += 1;
     if (event.victim && sideByPuuid.has(event.victim) && stats.has(event.victim)) stats.get(event.victim).firstDeaths += 1;
   }
 }
@@ -27744,7 +27750,7 @@ function applyEffectiveDamage(damageByVictim, armorExtraByPuuid, events, stats, 
 function applyEcoKillDeathStats(events, stats) {
   for (const event of events) {
     const multiplier = RaaRatingCore.finiteNumber(event.ecoMultiplier, 1);
-    if (event.killer && stats.has(event.killer)) stats.get(event.killer).eKillPoints += multiplier;
+    if (event.abate && stats.has(event.killer)) stats.get(event.killer).eKillPoints += multiplier;
     if (event.victim && stats.has(event.victim)) stats.get(event.victim).eDeathPoints += multiplier;
   }
 }
@@ -28157,7 +28163,9 @@ function calculateMatchTeamStats(roundResults, teamA, teamB, playerTeamByPuuid) 
     if (kills.length) {
       const firstKill = kills.slice().sort((a, b) => a.timeSinceRoundStartMillis - b.timeSinceRoundStartMillis)[0];
       const killerTeamId = playerTeamByPuuid.get(firstKill.killer);
-      if (killerTeamId) rows[killerTeamId].firstKills += 1;
+      // Como no first kill do jogador: morte pela propria acao ou por aliado nao e abertura de ninguem.
+      const deInimigo = firstKill.killer !== firstKill.victim && playerTeamByPuuid.get(firstKill.victim) !== killerTeamId;
+      if (killerTeamId && deInimigo) rows[killerTeamId].firstKills += 1;
     }
   }
 
